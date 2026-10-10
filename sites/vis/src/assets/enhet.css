@@ -1,57 +1,47 @@
-/* Enhetsrammer, portert fra hengsel.no (sites/hengsel/src/components/Enhet.astro, fasit docs/design/hengsel/Enhet.dc.html).
-   Der er innholdet et bilde som skaleres med cqw; her er innholdet levende sider, så målene står i px ved designbredden:
-   - telefon (iPhone): 414 × 844, ramme 12, radius 58, skjerm radius 46, statuslinje 54 med «09.41» og batteri, hjemindikator
-   - PC (Studio Display): 856 bred, sort skjermkant 15 med aluminiumsring, innhold 16:10, stang 19 % × 100 og fot 31 % × 12
-   Rammefargen er alltid Warm Black (#1B1713), som på hengsel.no. Skyggen er den eneste utenfor Kundens reise (enhetsrammer). */
-:root{--ramme:#1B1713;--skygge:0 1px 2px rgba(49,38,29,.06),0 12px 40px -12px rgba(49,38,29,.22)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--skygge:0 1px 2px rgba(0,0,0,.3),0 16px 40px -12px rgba(0,0,0,.6)}}
-:root[data-theme="dark"]{--skygge:0 1px 2px rgba(0,0,0,.3),0 16px 40px -12px rgba(0,0,0,.6)}
+/* Enhetsrammer: Apples Product Bezels (pakke 10.10, assets/rammer/*.webp, gjennomsiktig skjermhull). Bildet ligger under rammen og
+   klippes med skjermens hjørner; rammen tegnes oppå som ::after og brukes som den er (ikke beskåret, vippet eller speilvendt, ingen
+   skygge ut av skjermen). Innholdet er alltid et skjermbilde fra src/skjermbilder (lagt inn av assets/bilder.js), object-fit cover fra toppen.
+   Skjermhull i prosent av rammens bredde/høyde (left, top, width, height) og hjørneradius:
+   - Studio Display (.pc-ramme)  2160 × 1664: 2.59 · 3.37 · 94.81 · 69.23, radius 1.2 % / 1.6 %, skjermen er 1920 × 1080
+   - iPhone 18 (.tlf)            1174 × 2400: 5.37 · 2.50 · 89.27 · 95.00, radius 14 % / 6.1 %, skjermen er 1206 × 2622, ingen statuslinje (rammen har island)
+   - iPad liggende (.ipad-ramme) 2400 × 1740: 5.00 · 6.84 · 90.00 · 86.32, radius 1.2 % / 1.6 %, skjermen er 2732 × 2048
+   - MacBook (.mac-ramme)        2400 × 1565: 12.63 · 14.19 · 74.75 · 71.63, radius 1 % / 1.4 %, skjermen er 2408 × 1506
+   Rammene brukes aldri mindre enn 200 px høye. Det finnes ingen stående iPad-ramme, så stående iPad-bilder brukes ikke. */
+:root{--skjermbunn:#F2E9DB}
 
-/* Telefon: legg klassen på rammen, skjermen er første barn, <span class="hjem"> sist */
-.tlf{width:414px;max-width:100%;aspect-ratio:414/844;box-sizing:border-box;padding:12px;border-radius:58px;background:var(--ramme);border:0;
-  box-shadow:0 0 0 1px var(--line),var(--skygge);position:relative;display:flex;flex-direction:column;justify-self:center}
-.tlf>.skjerm{flex:1;min-height:0;height:auto;border-radius:46px;overflow:hidden;background:var(--bg);color:var(--fg);padding-bottom:22px}
-.tlf .sb{height:54px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:650 15px/1 var(--sans);font-variant-numeric:tabular-nums}
-.tlf .sb svg{display:block}
-.tlf>.hjem{position:absolute;left:50%;bottom:15px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--fg);opacity:.9;pointer-events:none}
+.pc-ramme,.mac-ramme{max-width:900px}
+.ipad-ramme{max-width:1000px}
+.tlf{max-width:360px}
+.pc-ramme,.tlf,.ipad-ramme,.mac-ramme{position:relative;box-sizing:border-box;margin-left:auto;margin-right:auto;min-width:0}
+.pc-ramme::after,.tlf::after,.ipad-ramme::after,.mac-ramme::after{content:"";position:absolute;inset:0;background-repeat:no-repeat;background-size:100% 100%;pointer-events:none}
 
-/* PC: <div class="pc-ramme"><div class="skjermkant"> …appen… </div><span class="stang"></span><span class="fot"></span></div> */
-.pc-ramme{display:flex;flex-direction:column;align-items:center;width:min(856px,100%);margin:0 auto;min-width:0}
-.pc-ramme>.skjermkant{width:100%;box-sizing:border-box;background:#0e0e10;border-radius:14px;padding:15px;
-  box-shadow:0 0 0 1px #a2a3a7,0 0 0 3px #c9cacd,0 0 0 4px #a2a3a7,var(--skygge)}
-.pc-ramme>.skjermkant>*{border-radius:2px;border:0;aspect-ratio:16/10;min-height:0;height:auto;overflow:auto;background:var(--bg)}
-.pc-ramme>.stang{width:19%;height:100px;background:#c9cacd;border-left:1px solid #a2a3a7;border-right:1px solid #a2a3a7;clip-path:polygon(3% 0,97% 0,100% 100%,0 100%);box-sizing:border-box;display:block}
-.pc-ramme>.fot{width:31%;height:12px;background:#b6b7ba;border-radius:0 0 8px 8px;display:block}
+/* Studio Display: <div class="pc-ramme"><div class="skjermkant"><div class="skjerm"></div></div><span class="stang"></span><span class="fot"></span></div>
+   (stang og fot er med i rammebildet og tegnes ikke lenger) */
+.pc-ramme{width:min(900px,100%);aspect-ratio:2160/1664}
+.pc-ramme::after{background-image:url(/assets/rammer/studio-display.webp)}
+.pc-ramme>.skjermkant{position:absolute;left:2.59%;top:3.37%;width:94.81%;height:69.23%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--skjermbunn)}
+.pc-ramme>.skjermkant>.skjerm{width:100%;height:100%}
+.pc-ramme>.stang,.pc-ramme>.fot{display:none}
 
-/* Mobil: rammene faller bort, skjermen blir et kort i full bredde (som før) */
-@media (max-width:640px){
-  .tlf{width:100%;aspect-ratio:auto;padding:0;background:none;box-shadow:none;border-radius:0}
-  .tlf>.skjerm{border-radius:var(--r);border:1px solid var(--line);padding-bottom:0}
-  .tlf .sb{padding:0 22px}
-  .tlf>.hjem{display:none}
-  .pc-ramme>.skjermkant{padding:0;background:none;box-shadow:none;border-radius:0}
-  .pc-ramme>.skjermkant>*{aspect-ratio:auto;border-radius:var(--r);border:1px solid var(--line)}
-  .pc-ramme>.stang,.pc-ramme>.fot{display:none}
-}
+/* iPhone 18: skjermen er første barn, <span class="hjem"> (gammel hjemindikator) tegnes ikke, rammen har island og kanter */
+.tlf{width:min(360px,100%);aspect-ratio:1174/2400;justify-self:center}
+.tlf::after{background-image:url(/assets/rammer/iphone-18.webp)}
+.tlf>.skjerm{position:absolute;left:5.37%;top:2.5%;width:89.27%;height:95%;border-radius:14%/6.1%;overflow:hidden;background:var(--skjermbunn)}
+.tlf>.hjem{display:none}
 
-/* Skjermbilder fra designfilene (src/skjermbilder, lagt inn av assets/bilder.js): bildet fyller skjermflaten med
-   object-fit cover fra toppen. Studio Display-flaten er 1180 × 740; høyere bilder (kundeportalens PC-sider) kan
-   rulles i skjermen. Telefon- og iPad-bildene har egen statuslinje; ute-*-bildene får en fra rammen (data-sb). */
-.pc-ramme>.skjermkant>.skjerm{aspect-ratio:1180/740;overflow:auto;background:var(--bg);display:block;scrollbar-width:thin}
-.skjerm>img.sk{display:block;width:100%;height:auto;object-fit:cover;object-position:top} /* aldri beskåret i høyden: skjermen ruller */
-.tlf>.skjerm{display:flex;flex-direction:column}
-.tlf>.skjerm>img.sk{flex:1;min-height:0;height:100%}
-.tlf .sb .batteri{width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px;box-sizing:border-box}
+/* iPad liggende */
+.ipad-ramme{width:min(1000px,100%);aspect-ratio:2400/1740}
+.ipad-ramme::after{background-image:url(/assets/rammer/ipad-liggende.webp)}
+.ipad-ramme>.skjerm{position:absolute;left:5%;top:6.84%;width:90%;height:86.32%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--skjermbunn)}
 
-/* iPad (Hengsel Ute), portert fra hengsel.no: 1212 × 852 liggende, ramme 16, radius 36, skjerm 1180 × 820 radius 22,
-   statuslinje 40 med «09.41 · tor. 8. okt.» når bildet ikke har egen. Stående (ute-ipad-staaende) snus rammen. */
-.ipad-ramme{width:min(1212px,100%);aspect-ratio:1212/852;box-sizing:border-box;padding:16px;border-radius:36px;background:var(--ramme);
-  box-shadow:0 0 0 1px var(--line),var(--skygge);display:flex;flex-direction:column;margin:0 auto;min-width:0}
-.ipad-ramme>.skjerm{flex:1;min-height:0;border-radius:22px;overflow:hidden;background:var(--bg);color:var(--fg);display:flex;flex-direction:column}
-.ipad-ramme .sb{height:40px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font:650 14px/1 var(--sans);font-variant-numeric:tabular-nums}
-.ipad-ramme .sb .batteri{width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px;box-sizing:border-box}
-.ipad-ramme>.skjerm>img.sk{flex:1;min-height:0;height:100%}
-.ipad-ramme.staaende{width:min(560px,100%);aspect-ratio:852/1212}
+/* MacBook */
+.mac-ramme{width:min(900px,100%);aspect-ratio:2400/1565}
+.mac-ramme::after{background-image:url(/assets/rammer/macbook.webp)}
+.mac-ramme>.skjerm{position:absolute;left:12.63%;top:14.19%;width:74.75%;height:71.63%;border-radius:1%/1.4%;overflow:hidden;background:var(--skjermbunn)}
+
+/* Skjermen er et bilde (assets/bilder.js legger <img class="sk"> i .skjerm). Kundens reise legger SMS-varselet oppå (.notif). */
+.skjerm{position:relative;display:block}
+.skjerm>img.sk{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
 
 /* ‹ › og teller under rammen, og enhetsvelgeren (PC · iPad · Telefon) over */
 .sk-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -60,18 +50,6 @@
 .enhet{min-width:0}
 .enhet[hidden]{display:none}
 
-@media (max-width:640px){
-  .ipad-ramme,.ipad-ramme.staaende{padding:6px;border-radius:14px}
-  .ipad-ramme>.skjerm{border-radius:10px}
-  .ipad-ramme .sb{padding:0 14px}
-}
-@media (max-width:640px){
-  .tlf>.skjerm>img.sk{flex:none;height:auto}
-  .pc-ramme>.skjermkant>.skjerm{aspect-ratio:auto;max-height:70vh}
-}
-/* Telefonbilder med egen statuslinje (kundeportalen, CRM på telefon) fyller hele skjermen; hjemindikatoren ligger oppå */
-.tlf[data-bilder]:not([data-sb])>.skjerm{padding-bottom:0}
-/* Hel skjerm: bildet (390 × 844) har egen statuslinje og hjemindikator, så rammen gir plass til hele skjermen og tegner ingen hjemindikator */
-.tlf.hel{aspect-ratio:414/868}
-.tlf.hel>.skjerm>img.sk{flex:none;height:100%}
-@media (max-width:640px){.tlf.hel{aspect-ratio:auto}.tlf.hel>.skjerm>img.sk{height:auto}}
+/* Romkort og flater på forsiden: ferdig sammensatte bilder av enhet + skjerm på gjennomsiktig bunn (lages av scripts/skjermbilder-vis.mjs), vist hele */
+.bilde.enhet-bilde{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;padding:14px 12px;background:var(--soft)}
+.bilde.enhet-bilde>img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:0;border-radius:0}

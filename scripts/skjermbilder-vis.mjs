@@ -5,8 +5,8 @@
  *  - Alle sider (og 404) på 390, 1280 og 1440 px, lys og mørk: ingen konsollfeil (CSP fra _headers gjelder),
  *    ingen vannrett rulling, ingen forespørsler til andre verter, og Newsreader og Inter lastes fra /fonts/.
  *  - Skjermbilder av forsiden, /system/, /reise/, /sv/ og 404 på mobil (390) og PC (1440) til docs/skjermbilder/vis-*.png.
- *  - Romkortbildene på forsiden for rom uten CRM_v4-skjermbilde: rommet på 1440 × 900 (16:10, lys, øverst til venstre) som webp til
- *    sites/vis/src/img/rom-*.webp. Bildene ligger i repoet og følger med i neste bygg (ingen bilder fra hengsel.no).
+ *  - Romkortbildene på forsiden for rom uten skjermbilde fra designfilene: rommet på 1920 × 1080 (lys, øverst) i Studio Display-rammen
+ *    som webp til sites/vis/src/img/rom-*.webp. Bildene ligger i repoet og følger med i neste bygg (ingen bilder fra hengsel.no).
  *
  * Kjør etter `npm run build`: node scripts/skjermbilder-vis.mjs
  * Chromium: PLAYWRIGHT_BROWSERS_PATH, eller CHROMIUM_PATH for en bestemt fil.
@@ -16,6 +16,7 @@ import sharp from "sharp";
 import { mkdir, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startServer } from "./statisk-server.mjs";
+import { enhet, tilWebp } from "./lib/rammer.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const dist = join(rot, "sites", "vis", "dist");
@@ -81,20 +82,20 @@ for (const v of visninger) {
     await ctx.close();
   }
 }
-// Romkortbildene: 1440 × 900 i lys modus, 1,5× oppløsning, webp i src/img (brukes av index.html og side.js)
-// Bare rom uten skjermbilde fra CRM_v4 (README «Regel for skjermbilder»); de andre bruker src/skjermbilder.
-const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "hvitevarer", "gevinst", "leverandor", "leder", "veikart", "dokumenter", "sv", "system"];
+// Romkortbildene for rom uten skjermbilde fra designfilene: rommet selv på 1920 × 1080 (lys, øverst) i Studio Display-rammen
+// (scripts/lib/rammer.mjs), webp med gjennomsiktig bunn i src/img. Rommene med skjermbilder lages av scripts/rammer-vis.mjs.
+const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "hvitevarer", "gevinst", "leverandor", "leder", "veikart", "sv", "system"];
 {
   const img = join(rot, "sites", "vis", "src", "img");
   await mkdir(img, { recursive: true });
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.5, colorScheme: "light", reducedMotion: "reduce" });
+  const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1, colorScheme: "light", reducedMotion: "reduce" });
   for (const r of rom) {
     const page = await ctx.newPage();
     await page.goto(`${base}/${r}/`, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
     const png = await page.screenshot({ fullPage: false });
-    await sharp(png).webp({ quality: 80 }).toFile(join(img, `rom-${r}.webp`));
+    await tilWebp(await enhet("pc", png), join(img, `rom-${r}.webp`), { bredde: 960 });
     await page.close();
   }
   await ctx.close();

@@ -9,7 +9,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [x] Leverandørløsningen: lysbildet ikke høyere enn innholdet.
 - [x] Montasjeplan: ukekolonner brede nok til at korttekst ikke brekker per ord.
 - [x] Skjermbilder i rammene kommer fra designfilene i CRM_v4 (`src/skjermbilder/`, README «Regel for skjermbilder»): ingen tegnet UI, ingen bilder fra kjørende demo. Aldri PC-bildet i iPad- eller telefonrammen.
-- [x] Enhetsrammer fra hengsel.no: iPhone i Kundens reise, Min side mobil, Montørappen og Tegningen; Studio Display i Prøv CRM, Min side PC og Firmaleder.
+- [x] Alle skjermbilder i Apples rammer (README «Apple-rammer»): ingen bilde uten ramme (unntak: A4-arkene i Dokumentene), ingen bilde utenfor skjermhullet, ingen dobbel statuslinje på iPhone, rammer minst 200 px høye.
 
 ## Logo
 - [ ] Hengsel-logoen er SVG fra logopakken (`src/assets/logo/hengsel-crm-logo-lys.svg` / `-mork.svg` som `<img>`, byttes med CSS) (merke + «engsel» + hake over «CRM», konturert tekst). Aldri strukket, rotert eller i andre farger.
@@ -39,10 +39,10 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 
 ## Forsiden
 - [ ] Toppfelt: logo 40 px + strek + «Visningsrommet»; SN-logo høyre; ingen meny.
-- [ ] «Slik henger det sammen»: tre kort med bilde 16:10, eyebrow (Kontoret/Kunden/Montøren), tittel, FLOW-tekst ordrett. Telefonbildet 58 % bredt, toppjustert.
+- [ ] «Slik henger det sammen»: fire kort (2 i bredden) med enhetsbilde, eyebrow (Butikken/Montøren/Kunden/Leverandøren), tittel, FLOW-tekst ordrett.
 - [ ] Kjeden «Lead › … › Reklamasjon» 14 px/500 i `--muted`.
 - [ ] Rollevelger `.btn`, valgt `.btn.dark`. Filtrerer kortene, lagrer i localStorage og `?rolle=`.
-- [ ] Romkort: bilde 16:10 → type-pille `.pill.info.nodot` → tittel 1,45 rem → én setning → lenketekst med « ›» nederst. Like høye. 4 / 2 / 1 i bredden (1440 / 1180 iPad / 390).
+- [ ] Romkort: enhetsbilde 4:3 → type-pille `.pill.info.nodot` → tittel 1,45 rem → én setning → lenketekst med « ›» nederst. Like høye. 4 / 2 / 1 i bredden (1440 / 1180 iPad / 390).
 - [ ] Hover på kort: kantfarge `--sand`, ingen løft.
 - [ ] Bunn: «Alle data i Visningsrommet er oppdiktet.» + «Levert med [Hengsel 30 px]» + familiebåndet (`gjeldende="hengsel.no"`).
 
