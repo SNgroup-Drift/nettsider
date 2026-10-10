@@ -8,12 +8,12 @@ Alle skjermbilder av løsningen på vis.hengsel.no kommer fra **designfilene i C
 
 | Rom | Studio Display | iPad | iPhone |
 |---|---|---|---|
-| Prøv CRM | `crm-min-dag` → `crm-bestilling` → `crm-tilbud` → `crm-tilbud-kunde` → `crm-montasje` (steg 1 / 2 / 3 / 4 = bilde 1 / 2 / 4 / 5) | `crm-ipad-leder` → `crm-ipad-kontrollmal` → `crm-ipad-belastninger` → `crm-ipad-innstillinger` | `crm-tlf-ordre` |
+| Prøv CRM | `crm-min-dag` → `crm-bestilling` → `crm-tilbud` → `crm-tilbud-kunde` → `crm-montasje` (steg 1 / 2 / 3 / 4 = bilde 1 / 2 / 4 / 5; steg 4 heter «Se kontrollmålet», bilde 5 er Kontrollmål til v4 har en montasjeplan) | `crm-ipad-leder` → `crm-ipad-kontrollmal` → `crm-ipad-belastninger` → `crm-ipad-innstillinger` | `crm-tlf-ordre` |
 | Firmaleder | `crm-resultater` → `crm-salgstavla` → `crm-montasje` → `crm-saker` → `crm-moduler` (steg 1 = bilde 1, 2 = 4, 3 og 4 = 3) | `crm-ipad-leder`, `crm-ipad-belastninger` | `crm-tlf-min-dag`, `crm-tlf-kundekort` |
 | Montørappen (Hengsel Ute) | – | `ute-ipad-i-dag`, `ute-ipad-ks` | `ute-i-dag` → `ute-jobb-under` → `ute-ks` → `ute-ks-kamera` → `ute-avvik` → `ute-punkter` → `ute-punktkort` → `ute-ferdig` → `ute-typeskilt` (steg: 2, 3, 5, 8) |
 | Tegningen | `crm-mal-skisser` (steg 4) | `ute-ipad-bildeverktoy` (steg 3) | `ute-laser` (steg 1, 2, 5) |
-| Kundens Min side | PC-bryter: `portal-mitt-kjokken` → `portal-oppgraderinger` → `portal-status` → `portal-nytt-kjokken` | – | Mobil-bryter: `portal-tlf-nytt-kjokken` → `portal-tlf-levering` → `portal-tlf-montering` → `portal-tlf-mine-kjop`; steg n viser bilde n i begge |
-| Kundens reise | – | – | steg 1–2 `portal-tlf-nytt-kjokken`, 3–5 `portal-tlf-levering`, 6 `portal-tlf-montering`, 7–8 `portal-tlf-mine-kjop`; varselet glir inn oppå |
+| Kundens Min side | PC-bryter: `portal-mitt-kjokken` → `portal-oppgraderinger` → `portal-status` → `portal-nytt-kjokken` (v2, til v4) | – | Mobil-bryter: `kundeportal-k03` → `k04` → `k06` → `k08` → `portal-tlf-levering` → `portal-tlf-nytt-kjokken`; stegene viser k06 (tilvalg), k08 (godkjenn), levering og nytt kjøkken («Meld en feil»), PC følger med |
+| Kundens reise | – | – | `kundeportal-k03` → `k04` → `k06` → `k08` (steg 1–4), `portal-tlf-levering` (5), `portal-tlf-montering` (6), `portal-tlf-nytt-kjokken` (7–8, til v4); varselet glir inn oppå |
 | Ordrens reise («Selgeren ser», alle på PC) | scene 1 `crm-tilbud`, 2–3 `crm-tilbud-kunde`, 4–6 `crm-ordre-kontrollmal`, 7 `crm-montasje`, 8 `crm-etterkalkyle` | – | – |
 | Romkort og flater på forsiden | ferdig sammensatte bilder av enhet + skjermbilde (`src/img/rom-*.webp`, `flate-*.webp`, `hero.webp`), se «Apple-rammer» |  |  |
 

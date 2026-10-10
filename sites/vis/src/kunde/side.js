@@ -1,6 +1,6 @@
 (function(){
-/* Skjermbilde per steg (kundeportalen fra CRM_v4): 1–2 nytt kjøkken, 3–5 levering, 6 montering, 7–8 mine kjøp */
-var BILDE=[0,0,1,1,1,2,3,3],TLF=Skjermbilder.lag(document.getElementById('tlf'));
+/* Skjermbilde per steg (kundeportalen): 1–4 kundeportal-k03 → k04 → k06 → k08 (v3), 5 levering, 6 montering, 7–8 FDV og «Meld en feil» (portal-tlf-*, til v4) */
+var BILDE=[0,1,2,3,4,5,6,6],TLF=Skjermbilder.lag(document.getElementById('tlf'));
 var S=[
 {t:'Tilbudet',w:'Tilbud',clk:'09:12',n:['E-post','Tilbudet ditt fra Kjøkkenstudio Hamar er klart'],h:'Tilbudet kommer i Min side',p:'Hanne får tilbudet med tegninger, design og pris. Hun kan se opsjonene, sammenligne og stille spørsmål der.',bak:['Tilbudet er laget fra CET uten taste-arbeid','Pris og leveringstid kommer fra leverandørene']},
 {t:'Signering',w:'Kontrakt',clk:'19:40',n:['Min side','Kontrakten er klar til signering'],h:'Signerer med BankID via Penneo',p:'Hanne leser kontrakten og signerer på mobilen. Hun får bekreftelse med en gang.',bak:['Kontrakten kontrolleres mot ordren','Montasjen settes til uke 46','Leveringsukene regnes bakover']},
