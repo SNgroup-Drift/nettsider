@@ -12,6 +12,7 @@ import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
 import "@sngroup/design/fonts.css";
 import "../styles/tokens.css";
 import "../styles/hengsel.css";
+import Enhet from "../components/Enhet.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
 
 const { versjon, epost, oppdatert } = APPTEST;
@@ -53,6 +54,12 @@ const BOKSER = [
 ];
 
 const NYTT = APPTEST.nytt;
+// Tre skjermer fra appen i iPhone 18-ramme (pakke CRM_v4, INSTRUKS.md)
+const SKJERMER = [
+  { bilde: "ute-i-dag", tekst: "I dag", alt: "Hengsel Ute: I dag med neste jobb" },
+  { bilde: "ute-ks", tekst: "KS", alt: "Hengsel Ute: KS-sjekkliste" },
+  { bilde: "ute-laser", tekst: "Laser", alt: "Hengsel Ute: laser koblet til målingen på bildet" },
+];
 const KJENT_AVVIK = "";
 ---
 <BaseLayout
@@ -106,6 +113,15 @@ const KJENT_AVVIK = "";
             </article>
           ))}
         </div>
+      </section>
+
+      <section class="h-innhold skjermer" aria-label="Slik ser appen ut">
+        {SKJERMER.map((k) => (
+          <figure>
+            <Enhet bilde={k.bilde} type="phone" alt={k.alt} ratio={2.1} zoom={false} />
+            <figcaption class="dempet">{k.tekst}</figcaption>
+          </figure>
+        ))}
       </section>
 
       <section class="kolonner-baand">
@@ -184,6 +200,10 @@ const KJENT_AVVIK = "";
   .testere { display: grid; gap: 12px; padding-block: clamp(40px, 6vw, 64px); }
   .testere h2 { font-size: var(--t-h2); line-height: 1.15; }
   .testere p { margin: 0; max-width: 62ch; }
+
+  .skjermer { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 3vw, 40px); max-width: 920px; margin-top: clamp(40px, 6vw, 72px); }
+  .skjermer figure { margin: 0; display: grid; gap: 12px; justify-items: center; min-width: 0; }
+  .skjermer figcaption { font-size: 0.92rem; }
 
   .kolonner-baand { background: var(--beige-3); margin-top: clamp(48px, 7vw, 96px); padding-block: clamp(48px, 7vw, 80px); }
   .kolonner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }

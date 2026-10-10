@@ -23,10 +23,10 @@ export const FLOW: { who: string; title: string; text: string }[] = [
 /** Sju steg: tittel, tekst, bilde, enhet, hvor (metalinjen), alt */
 export const STEG: [string, string, string, "phone" | "pc", string, string][] = [
   ["Befaring", "Mål og bilder tas på stedet med laser og telefon, rett inn på kunden. Målene følger tilbudet videre.", "ute-laser", "phone", "Hengsel Ute", "Hengsel Ute: mål med laser"],
-  ["Tilbud", "Tegningen fra CET blir tilbud med bilde og pris. Kunden får det i kundeportalen og kan velge tilvalg.", "tilbudet", "pc", "Hengsel CRM", "Hengsel CRM: tilbudet"],
-  ["Ordre og bestilling", "Signert avtale blir ordre. Bestilling går per leverandør, og ordrebekreftelsen leses mot bestillingen.", "bestilling", "pc", "Hengsel CRM", "Hengsel CRM: bestilling"],
-  ["Levering", "Leveringsdag til kunden på SMS. Mottak på lager og utkjøring registreres i appen.", "ordre-og-montasje", "pc", "Hengsel CRM", "Hengsel CRM: ordre og montasje"],
-  ["Montering", "Montøren har tegning, varer og KS på telefonen. Punkter som krever bilde åpner kameraet.", "ute-ks", "phone", "Hengsel Ute", "Hengsel Ute: KS"],
+  ["Tilbud", "Tegningen fra CET blir tilbud med bilde og pris. Kunden får det i kundeportalen og kan velge tilvalg.", "crm-tilbud", "pc", "Hengsel CRM", "Hengsel CRM: tilbudslisten"],
+  ["Ordre og bestilling", "Signert avtale blir ordre. Bestilling går per leverandør, og ordrebekreftelsen leses mot bestillingen.", "crm-bestilling", "pc", "Hengsel CRM", "Hengsel CRM: bestilling"],
+  ["Levering", "Leveringsdag til kunden på SMS. Mottak på lager og utkjøring registreres i appen.", "crm-ordre-kontrollmal", "pc", "Hengsel CRM", "Hengsel CRM: ordre med kontrollmål og tildeling"],
+  ["Montering", "Montøren har tegning, varer og KS på telefonen. Punkter som krever bilde åpner kameraet.", "ute-ks", "phone", "Hengsel Ute", "Hengsel Ute: KS-sjekklisten"],
   ["Punkter og saker", "Restpunkter og avvik med bilde, nummerert på kunden. Saken går til butikken med en gang.", "ute-punkter", "phone", "Hengsel Ute", "Hengsel Ute: punkter hos kunden"],
   ["Ferdig og faktura", "Kunden signerer på stedet. Faktura går til regnskapet, og etterkalkylen viser hva jobben ga.", "ute-ferdig", "phone", "Hengsel Ute", "Hengsel Ute: ferdig montert"],
 ];
@@ -51,7 +51,7 @@ export const GREP: [string, string, string, string, string?, string?][] = [
   ["I dag", "Neste jobb øverst, med adresse, hva som mangler og åpne restpunkter. «På vei» varsler kunden.", "ute-i-dag", "Hengsel Ute: I dag med neste jobb"],
   ["Befaring med laser", "Bosch-laseren kobles til over Bluetooth. Velg et mål på bildet, trykk på laseren, og tallet står der med kilde.", "ute-laser", "Hengsel Ute: mål på bildet fra Bosch-laser"],
   ["Varer og tegning på jobben", "Tegning og spesifikasjon, mål og skisser, bilder og restpunkter samlet på jobben. Før, under og etter.", "ute-jobb-under", "Hengsel Ute: jobben under arbeid"],
-  ["KS punkt for punkt", "OK, avvik eller ikke relevant. Punkter som krever bilde åpner kameraet med en gang.", "ute-ks", "Hengsel Ute: KS-sjekkliste", "ute-ks-kamera", "Hengsel Ute: KS-punkt med kamera"],
+  ["KS punkt for punkt", "OK, avvik eller ikke relevant. Punkter som krever bilde åpner kameraet med en gang.", "ute-ks", "Hengsel Ute: KS-sjekkliste med punkt som krever bilde"],
   ["Typeskilt på hvitevarer", "Fotografer typeskiltet. Modell og serienummer legges på produktene hos kunden og følger med til FDV og reklamasjon.", "ute-typeskilt", "Hengsel Ute: hvitevarer skannet fra typeskilt"],
   ["Avvik med bilde", "Hva som er galt, bilde og om det trengs ny vare. Saken går til butikken med en gang.", "ute-avvik", "Hengsel Ute: meld avvik"],
   ["Merking av punkter", "Punkter markeres rett på bildet og får et nummer som følger kunden fra befaring til reklamasjon. Før- og etterbilde på hvert punkt.", "ute-punkter", "Hengsel Ute: punktliste på kunden", "ute-punktkort", "Hengsel Ute: punkt med før- og etterbilde"],
@@ -60,10 +60,10 @@ export const GREP: [string, string, string, string, string?, string?][] = [
 
 /** For kontoret, fire faner: tittel, tekst, bilde, alt */
 export const KONTOR: [string, string, string, string][] = [
-  ["Ledertavle", "Frister og tall for butikken, per selger og per uke. Det som haster står øverst.", "leder", "Hengsel CRM: ledertavle"],
-  ["Montasjeplan", "Hvem som monterer hva, når kontrollmålene må være tatt, og monteringskalkylen per jobb.", "montasje", "Hengsel CRM: montasjeplan"],
-  ["Bestilling", "Bestilling per leverandør. Ordrebekreftelsen leses mot bestillingen, og avvik merkes.", "bestilling", "Hengsel CRM: bestilling med ordrebekreftelse"],
-  ["Økonomi", "Fakturastatus mot PowerOffice Go og etterkalkyle per ordre.", "etterkalkyle", "Hengsel CRM: etterkalkyle"],
+  ["Ledertavle", "Frister og tall for butikken, per selger og per uke. Det som haster står øverst.", "crm-resultater", "Hengsel CRM: ledertavle"],
+  ["Montasjeplan", "Hvem som monterer hva, når kontrollmålene må være tatt, og monteringskalkylen per jobb.", "crm-montasje", "Hengsel CRM: kontrollmål per ordre i montasjeplanen"],
+  ["Bestilling", "Bestilling per leverandør. Ordrebekreftelsen leses mot bestillingen, og avvik merkes.", "crm-bestilling", "Hengsel CRM: bestilling"],
+  ["Økonomi", "Fakturastatus mot PowerOffice Go og etterkalkyle per ordre.", "crm-etterkalkyle", "Hengsel CRM: etterkalkyle"],
 ];
 
 export const PORTAL = ["Tilbudet med bilde, pris og tilvalg", "Kjøpsavtale med e-signering", "Leveringsdag og montering", "Punkter, FDV og dokumenter etterpå"];
