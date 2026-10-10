@@ -17,6 +17,13 @@ Alle skjermbilder av løsningen på vis.hengsel.no kommer fra **designfilene i C
 | Ordrens reise («Selgeren ser», alle på PC) | scene 1 `crm-tilbud`, 2–3 `crm-tilbud-kunde`, 4–6 `crm-ordre-kontrollmal`, 7 `crm-montasje`, 8 `crm-etterkalkyle` | – | – |
 | Romkort og flater på forsiden | ferdig sammensatte bilder av enhet + skjermbilde (`src/img/rom-*.webp`, `flate-*.webp`, `hero.webp`), se «Apple-rammer» |  |  |
 
+### Forsiden etter fil 62 (11.10)
+
+Forsiden følger fasit 62 («Visningsrommet: ny forside», `delt/pakke-v3/fasit` på grenen `pakke-v3`): mørk (`data-theme="dark"`), toppmeny med ankere (Forstå · Prøv · Dokumenter · Presenter · Logg inn på CRM, ≡ under 768 px), hero «Hele løsningen, rom for rom.» med Studio Display, iPad og iPhone (ett skjermbilde under 1280 px), og fire seksjoner: **Forstå på ti minutter** (Ordrens reise 4 min, Kundens reise 3 min, Systemkartet 3 min; sveiperad under 768 px), **Prøv selv** (fire gruppekort: Butikken, Montøren, Kunden, Leverandøren, med antall rom), **Det kunden og butikken får i hånden** (fem ark) og **Presenter og regn**. Rollevalget («Jeg er») filtrerer alle seksjonene og skjuler tomme.
+- Rommene og rollene ligger i `assets/rom.js` (`g` = gruppe). Gruppekortene lenker til `/butikken/`, `/montoren/`, `/kunden/` og `/leverandoren/`, som lister rommene; `/rom/` lister alle. Rolle følger med som `?rolle=` og lagres i `vis-rolle`.
+- Antall rom per gruppe regnes fra `rom.js` (Butikken 4, Montøren 3, Kunden 1, Leverandøren 2, til sammen 20), ikke tallene i fasiten (7/3/1/2, «21 rom»): de tre rommene i Forstå, seks i Presenter og dokumentene ligger utenfor Prøv selv.
+- Bildene er ferdige enhetsbilder fra `scripts/rammer-vis.mjs` (`forsta-*`, `flate-*`, `hero*.webp`). `crm-tilbud`, `crm-tilbud-kunde`, `portal-tilbud`, `portal-*` på PC og `ute-ipad-*` brukes ikke i hero eller romkort (venter på v4).
+
 ### Apple-rammer (pakke 10.10: `CRM_v4.zip`, `INSTRUKS.md`)
 
 Alle skjermbilder vises i Apples Product Bezels (`src/assets/rammer/*.webp`, gjennomsiktig skjermhull). Bildet ligger under rammen og klippes med skjermens hjørner; rammen brukes som den er (ikke beskåret, vippet eller speilvendt, ingen skygge ut av skjermen). Komponenten er `assets/enhet.css` (`.pc-ramme`, `.tlf`, `.ipad-ramme`, `.mac-ramme`) med `assets/bilder.js`; markupen i rommene er uendret.

@@ -57,7 +57,7 @@ await writeFile(join(fonts, "fonts.css"), css);
 const sites = join(her, "..");
 const img = join(dist, "img");
 await mkdir(img, { recursive: true });
-const forside = (await readFile(join(src, "index.html"), "utf8")) + (await readFile(join(src, "side.js"), "utf8"));
+const forside = (await readFile(join(src, "index.html"), "utf8")) + (await readFile(join(src, "assets", "rom.js"), "utf8"));
 const bilder = [...new Set([...forside.matchAll(/\/img\/([a-z0-9-]+\.(?:webp|svg))/g)].map((m) => m[1]))];
 for (const navn of bilder) {
   if (navn.startsWith("sn-logo") || navn.startsWith("rom-")) continue;
