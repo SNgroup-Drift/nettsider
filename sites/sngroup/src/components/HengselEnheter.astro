@@ -1,0 +1,74 @@
+---
+/**
+ * Hengsel-delen: CRM i Studio Display og montørappen i iPhone 18, i samme innbyrdes størrelse (telefonen ca. 30 % av skjermens bredde).
+ * Fanene under velger hvilken skjerm i appen som vises. Teksten står ved siden av enhetene, aldri oppå.
+ */
+import Enhet from "./Enhet.astro";
+
+const faner = [
+  { id: "dag", label: "I dag", bilde: "ute-i-dag.png", alt: "Montørappen Hengsel Ute: dagens jobber" },
+  { id: "jobb", label: "Jobb", bilde: "ute-jobb-under.png", alt: "Montørappen Hengsel Ute: en jobb under arbeid" },
+  { id: "ks", label: "KS", bilde: "ute-ks.png", alt: "Montørappen Hengsel Ute: kvalitetssjekk" },
+];
+---
+<div class="gruppe" data-enheter>
+  <div class="rad">
+    <div class="skjerm">
+      <Enhet type="studio-display" bilde="crm-salgstavla.png" alt="CRM by Hengsel: salgstavla for leder" />
+    </div>
+    <div class="telefon">
+      {faner.map((f, i) => (
+        <div id={`hp-${f.id}`} role="tabpanel" aria-labelledby={`hf-${f.id}`} data-panel={f.id} hidden={i !== 0}>
+          <Enhet type="iphone-18" bilde={f.bilde} alt={f.alt} loading={i === 0 ? "eager" : "lazy"} />
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="faner" role="tablist" aria-label="Skjermer i montørappen">
+    {faner.map((f, i) => (
+      <button type="button" role="tab" id={`hf-${f.id}`} aria-controls={`hp-${f.id}`} aria-selected={String(i === 0)} tabindex={i === 0 ? 0 : -1} data-fane={f.id}>
+        {f.label}
+      </button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .gruppe { width: 100%; max-width: 640px; margin-inline: auto; display: grid; gap: 20px; justify-items: center; }
+  .rad { width: 100%; display: flex; align-items: flex-end; justify-content: space-between; gap: 4%; }
+  .skjerm { flex: 0 0 71%; }
+  .telefon { flex: 0 0 21.5%; }
+  [hidden] { display: none; }
+  .faner { display: flex; gap: 4px; border: 1px solid var(--linje); border-radius: var(--radius-pille); padding: 4px; }
+  .faner button { border: 0; background: transparent; color: var(--tekst); border-radius: var(--radius-pille); min-height: 44px; min-width: 64px; padding: 0 16px; font-size: 15px; }
+  .faner button[aria-selected="true"] { background: var(--tekst); color: var(--bakgrunn); }
+  @media (max-width: 860px) {
+    .rad { flex-direction: column; align-items: center; gap: 16px; }
+    .skjerm { flex: none; width: 100%; }
+    .telefon { flex: none; width: 30%; }
+  }
+</style>
+
+<script>
+  const gruppe = document.querySelector<HTMLElement>("[data-enheter]");
+  if (gruppe) {
+    const faner = [...gruppe.querySelectorAll<HTMLButtonElement>("[data-fane]")];
+    const paneler = [...gruppe.querySelectorAll<HTMLElement>("[data-panel]")];
+    const vis = (id: string, fokus = false) => {
+      for (const f of faner) {
+        const valgt = f.dataset.fane === id;
+        f.setAttribute("aria-selected", String(valgt));
+        f.tabIndex = valgt ? 0 : -1;
+        if (valgt && fokus) f.focus();
+      }
+      for (const p of paneler) p.hidden = p.dataset.panel !== id;
+    };
+    faner.forEach((f, i) => {
+      f.addEventListener("click", () => vis(f.dataset.fane!));
+      f.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        vis(faner[(i + (e.key === "ArrowRight" ? 1 : faner.length - 1)) % faner.length].dataset.fane!, true);
+      });
+    });
+  }
+</script>

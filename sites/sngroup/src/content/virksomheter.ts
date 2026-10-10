@@ -36,8 +36,8 @@ export const virksomheter: Virksomhet[] = [
     id: "kjokken",
     navn: "Kjøkken og interiør",
     tekst:
-      "Studio Sigdal Innlandet selger og monterer kjøkken, bad og garderobe fra Sigdal. Vi tegner sammen med kunden i butikk og følger jobben helt til siste skapdør er justert.",
-    kort: "Studio Sigdal Innlandet – kjøkken, bad og garderobe fra Sigdal, med butikker på Hamar, Lillehammer og Gjøvik.",
+      "Vi selger og monterer kjøkken, bad og garderobe. Vi tegner sammen med kunden i butikk og følger jobben helt til siste skapdør er justert.",
+    kort: "Kjøkken, bad og garderobe, med butikker på Hamar, Lillehammer og Gjøvik.",
     stikkord: ["Hamar", "Lillehammer", "Gjøvik", "Kjøkken", "Bad", "Garderobe"],
     lenker: [],
     planLenke: { href: "#rad-kjokken", label: "Les mer" },
