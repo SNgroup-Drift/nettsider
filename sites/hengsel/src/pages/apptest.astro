@@ -14,7 +14,9 @@ import "../styles/tokens.css";
 import "../styles/hengsel.css";
 import { APPTEST, erTodo } from "../apptest-lenker";
 
-const { versjon, epost } = APPTEST;
+const { versjon, epost, oppdatert } = APPTEST;
+// «Siste oppdatering»: datoen står som ÅÅÅÅ-MM-DD i apptest-lenker.ts
+const oppdatertTekst = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${oppdatert}T12:00:00Z`));
 const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-350.woff2", "/fonts/TWKLausanne-650.woff2"];
 
 const BOKSER = [
@@ -50,18 +52,7 @@ const BOKSER = [
   },
 ];
 
-const NYTT: string[] = [
-  "Kompakt visning og tre tettheter",
-  "Nytt målark som ikke dekker bildet",
-  "Pil og ring i bildeverktøyet",
-  "Laser med alle tilstander",
-  "KS med kamera",
-  "Utlevering bare av skannede kolli",
-  "Kø som overlever appdrap",
-  "«Klar uten nett»",
-  "Face ID-frysen rettet",
-  "Knip-zoom og Apple Pencil på iPad",
-];
+const NYTT = APPTEST.nytt;
 const KJENT_AVVIK = "";
 ---
 <BaseLayout
@@ -128,6 +119,7 @@ const KJENT_AVVIK = "";
           </div>
           <div class="kolonne">
             <h2>Hva er nytt i {versjon}</h2>
+            <p class="dempet oppdatert">Siste oppdatering: {oppdatertTekst}</p>
             <ul>
               {NYTT.length ? NYTT.map((p) => <li>{p}</li>) : <li class="dempet">Punktene kommer.</li>}
               {KJENT_AVVIK && <li><b>Kjent avvik:</b> {KJENT_AVVIK}</li>}
@@ -197,6 +189,7 @@ const KJENT_AVVIK = "";
   .kolonner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
   .kolonne { display: grid; gap: 16px; align-content: start; }
   .kolonne h2 { font-size: var(--t-h2); line-height: 1.15; }
+  .oppdatert { margin: 0; font-size: 0.92rem; }
   .kolonne ul { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; max-width: 62ch; }
   /* Deep Blue gir bare 3,95:1 mot Beige 3; den mørkere blåen fra tokens.css gir 4,5:1 */
   .kolonne a { color: var(--info-tekst); text-decoration: underline; text-underline-offset: 3px; }
