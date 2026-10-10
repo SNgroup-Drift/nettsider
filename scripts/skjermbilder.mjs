@@ -158,7 +158,7 @@ for (const [navn, { base }] of Object.entries(servere)) {
   const synlig = (id) => page.$eval(`#${id}`, (el) => !el.hidden);
   meld((await synlig("steg-1")) && !(await synlig("steg-2")), "hengsel: sju steg viser steg 1 først");
   await page.click("#steg-fane-2");
-  meld((await synlig("steg-2")) && (await src("steg-2")) === "/img/crm-tilbud.webp", "hengsel: steg 2 viser Tilbud på PC (crm-tilbud.webp)");
+  meld((await synlig("steg-2")) && (await src("steg-2")) === "/img/portal-kjokken.webp", "hengsel: steg 2 viser Tilbud i kundeportalen (portal-kjokken.webp)");
   await page.click("#steg-2 [data-neste]");
   meld((await synlig("steg-3")) && (await page.getAttribute("#steg-fane-3", "aria-selected")) === "true", "hengsel: Neste går til steg 3");
   await page.click("#kontor-fane-2");

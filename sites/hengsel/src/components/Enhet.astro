@@ -1,13 +1,13 @@
 ---
 /**
- * Skjermbilde i Apple-ramme (pakke CRM_v4 10.10.2026, INSTRUKS.md; se docs/bilder.md).
+ * Skjermbilde i Apple-ramme (pakke v3 11.10.2026, INSTRUKS.md; se docs/bilder.md).
  *  - pc: Studio Display. mac: MacBook. phone: iPhone 18. ipad: iPad liggende.
  * Rammen er Apples Product Bezel som den er (ramme-*.webp, gjennomsiktig skjermhull). Skjermbildet ligger under den og
  * klippes med skjermens hjørner. Hullene (prosent av rammens bredde og høyde) er målt i rammefilene.
  * Rammen skaleres med container-enheter: bredden er min(største bredde, plassen, plassen × ratio × B/H), der ratio er
  * største høyde i forhold til bredden på plassen. Klikk på bildet åpner lysboksen (scripts/lysboks.ts) med bildet i full
- * størrelse (data-full), med mindre zoom er av. Bildet fyller hullet (cover, fra toppen); passer ikke formatet (mer enn 3 %),
- * vises hele bildet (contain) med skjermens bakgrunn rundt.
+ * størrelse (data-full), med mindre zoom er av. Bildet fyller hullet (object-fit: cover fra toppen, som i INSTRUKS); med
+ * fit="contain" vises hele bildet med skjermens bakgrunn rundt (for bilder som ikke har hullets format).
  */
 import { MAAL, RAMMER, src } from "../scripts/bilder";
 
@@ -20,20 +20,18 @@ interface Props {
   forst?: boolean;
   /** Uten lysboks (sider som ikke har den): bildet er ikke en knapp */
   zoom?: boolean;
+  /** cover: bildet fyller skjermhullet og klippes fra bunnen. contain: hele bildet vises. */
+  fit?: "cover" | "contain";
 }
-const { bilde, alt, type, ratio = 0.75, forst = false, zoom = true } = Astro.props;
+const { bilde, alt, type, ratio = 0.75, forst = false, zoom = true, fit = "cover" } = Astro.props;
 const [w, h] = MAAL[bilde] ?? [0, 0];
 const [ramme, rw, rh] = RAMMER[type];
 const r = { 0.75: "r75", 0.8: "r80", 1: "r100", 1.1: "r110", 1.4: "r140", 1.8: "r180", 2.1: "r210" }[ratio];
-/* Skjermhullets sideforhold (bredde × rammens bredde / høyde × rammens høyde) */
-const HULL = { pc: [94.81, 69.23], mac: [74.75, 71.69], ipad: [90, 86.32], phone: [89.27, 95] } as const;
-const hullForhold = (HULL[type][0] * rw) / (HULL[type][1] * rh);
-const passer = w > 0 && Math.abs(w / h - hullForhold) / hullForhold <= 0.03;
 const lasting = forst ? "eager" : "lazy";
 ---
 <div class:list={["enhet", r]}>
   <div class:list={["ramme", type]}>
-    <div class:list={["hull", { inni: !passer }]}>
+    <div class:list={["hull", { inni: fit === "contain" }]}>
       {zoom
         ? (
           <button type="button" class="zoom" data-zoom aria-label={`Forstørr skjermbildet: ${alt}`}>
@@ -60,7 +58,7 @@ const lasting = forst ? "eager" : "lazy";
   /* Skjermhullet: left, top, width, height i prosent av rammen; hjørnene som i rammen */
   .hull { position: absolute; overflow: hidden; background: #F2E9DB; }
   .pc .hull { left: 2.59%; top: 3.37%; width: 94.81%; height: 69.23%; border-radius: 1.2% / 1.6%; }
-  .mac .hull { left: 12.67%; top: 14.19%; width: 74.75%; height: 71.69%; border-radius: 1% / 1.4%; }
+  .mac .hull { left: 12.63%; top: 14.19%; width: 74.75%; height: 71.63%; border-radius: 1% / 1.4%; }
   .ipad .hull { left: 5%; top: 6.84%; width: 90%; height: 86.32%; border-radius: 1.2% / 1.6%; }
   .phone .hull { left: 5.37%; top: 2.5%; width: 89.27%; height: 95%; border-radius: 14% / 6.1%; }
 
