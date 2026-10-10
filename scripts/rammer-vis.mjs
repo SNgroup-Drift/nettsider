@@ -12,36 +12,50 @@ import { join } from "node:path";
 import { enhet, tilWebp, skjermbilder, img } from "./lib/rammer.mjs";
 
 const sb = (n) => join(skjermbilder, `${n}.webp`);
-// romkort: [slug, enhet, skjermbilde, bredde/høyde]
+// romkort og flater: [slug, enhet, skjermbilde (eller liste av skjermbilder for flere telefoner ved siden av hverandre)]
+// Enheter veksler som i fasit 62: Studio Display, MacBook, iPad og iPhone 18; aldri samme ramme på to kort ved siden av hverandre.
 const rom = [
-  ["reise", "pc", "crm-tilbud-kunde"],
+  ["reise", "pc", "crm-etterkalkyle"],
   ["crm", "pc", "crm-min-dag"],
-  ["kunde", "tlf", "portal-tlf-nytt-kjokken"],
+  ["kunde", "tlf", "kundeportal-k04"],
   ["montor", "tlf", "ute-i-dag"],
-  ["minside", "pc", "portal-mitt-kjokken"],
+  ["minside", "tlf", ["kundeportal-k06", "kundeportal-k08"]],
   ["tegning", "tlf", "ute-laser"],
-  ["firmaleder", "pc", "crm-resultater"],
+  ["firmaleder", "ipad", "crm-ipad-leder"],
 ];
-// flater på forsiden (Butikken, Montøren, Kunden, Leverandøren)
+// flater (Butikken, Montøren, Kunden, Leverandøren)
 const flater = [
-  ["butikken", "mac", "mb-crm-min-dag"],
-  ["montoren", "tlf", "ute-ks"],
-  ["kunden", "tlf", "portal-tlf-nytt-kjokken"],
-  ["leverandoren", "ipad", "crm-ipad-ordre"],
+  ["butikken", "pc", "crm-salgstavla"],
+  ["montoren", "tlf", "ute-i-dag"],
+  ["kunden", "tlf", ["kundeportal-k03", "kundeportal-k04"]],
+  ["leverandoren", "mac", "crm-bestilling"],
 ];
 const mal = (t) => (t === "tlf" ? { hoyde: 760 } : { bredde: 960 });
-for (const [slug, t, s] of rom) await tilWebp(await enhet(t, sb(s)), join(img, `rom-${slug}.webp`), mal(t));
-for (const [slug, t, s] of flater) await tilWebp(await enhet(t, sb(s)), join(img, `flate-${slug}.webp`), mal(t));
+const tomt = (w, h) => ({ create: { width: w, height: h, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } });
+async function lag(t, sk) {
+  if (!Array.isArray(sk)) return enhet(t, sb(sk));
+  const deler = await Promise.all(sk.map(async (n) => sharp(await enhet(t, sb(n))).resize({ height: 1200 }).png().toBuffer()));
+  const m = await Promise.all(deler.map((d) => sharp(d).metadata()));
+  const gap = 90, W = m.reduce((a, x) => a + x.width, 0) + gap * (m.length - 1);
+  let x = 0;
+  return sharp(tomt(W, 1200)).composite(deler.map((d, i) => { const c = { input: d, left: x, top: 0 }; x += m[i].width + gap; return c; })).png().toBuffer();
+}
+for (const [slug, t, s] of rom) await tilWebp(await lag(t, s), join(img, `rom-${slug}.webp`), mal(t));
+for (const [slug, t, s] of flater) await tilWebp(await lag(t, s), join(img, `flate-${slug}.webp`), mal(t));
 
-// Hero: Studio Display (crm-tilbud) og iPhone (ute-i-dag) sammen, telefonen i riktig størrelsesforhold til skjermen (høyde ≈ 40 % av Studio Display-rammen)
+// Hero (fasit 62): Studio Display (crm-min-dag; v3 crm-tilbud har «Blek Blue» og et klikkmerke), iPad (crm-ipad-leder) nede til venstre og iPhone (ute-i-dag) nede til høyre
 {
-  const pc = await sharp(await enhet("pc", sb("crm-tilbud"))).resize({ width: 1240 }).png().toBuffer();
-  const pcM = await sharp(pc).metadata();
-  const tlf = await sharp(await enhet("tlf", sb("ute-i-dag"))).resize({ height: Math.round(pcM.height * 0.62) }).png().toBuffer();
-  const tM = await sharp(tlf).metadata();
-  const W = pcM.width + Math.round(tM.width * 0.45), H = pcM.height;
-  const buf = await sharp({ create: { width: W, height: H, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
-    .composite([{ input: pc, left: 0, top: 0 }, { input: tlf, left: W - tM.width, top: H - tM.height }]).png().toBuffer();
+  const W = 1500;
+  const pc = await sharp(await enhet("pc", sb("crm-min-dag"))).resize({ width: Math.round(W * 0.88) }).png().toBuffer();
+  const ipad = await sharp(await enhet("ipad", sb("crm-ipad-leder"))).resize({ width: Math.round(W * 0.48) }).png().toBuffer();
+  const tlf = await sharp(await enhet("tlf", sb("ute-i-dag"))).resize({ width: Math.round(W * 0.26) }).png().toBuffer();
+  const [pM, iM, tM] = await Promise.all([pc, ipad, tlf].map((b) => sharp(b).metadata()));
+  const H = pM.height + Math.round(W * 0.14);
+  const buf = await sharp(tomt(W, H)).composite([
+    { input: pc, left: Math.round(W * 0.02), top: 0 },
+    { input: ipad, left: 0, top: H - iM.height - Math.round(W * 0.02) },
+    { input: tlf, left: W - tM.width, top: H - tM.height },
+  ]).png().toBuffer();
   const i = await sharp(buf).webp({ quality: 88, alphaQuality: 100, effort: 5 }).toFile(join(img, "hero.webp"));
   console.log(`hero.webp ${i.width}×${i.height}`);
 }
