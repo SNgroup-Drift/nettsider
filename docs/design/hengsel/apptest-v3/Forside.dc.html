@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker</title>
+  <link rel="icon" href="hengsel.no/logo/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div ref="{{ root }}" style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
+
+  <section data-screen-label="Forside · hero" style="padding:clamp(40px,6vw,80px) 0 clamp(48px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:clamp(32px,5vw,56px)">
+      <div style="display:flex; flex-direction:column; gap:20px; max-width:820px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">CRM · montørapp · kundeportal</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Fra første tegning til ferdig kjøkken.</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:62ch; text-wrap:pretty">Hengsel er løsningen for kjøkken- og interiørbutikker. Salg, tilbud, bestilling, montasje og kundeportal ligger på samme ordre og samme kundekort.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px; padding-top:4px">
+          <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="Priser-og-demo.dc.html#demo" hint-size="130px,44px">Be om demo</x-import>
+          <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="Slik-virker-det.dc.html" hint-size="180px,44px">Slik virker det</x-import>
+        </div>
+      </div>
+      <div style="position:relative; width:100%; padding-bottom:6%">
+        <div style="width:80%; margin-left:auto; margin-right:4%">
+          <dc-import name="Enhet" type="display" dark="{{ dark }}" hint-size="100%,560px">
+            <dc-import name="CrmSkjerm" skjerm="minDag" enhet="pc" dark="{{ dark }}" hint-size="1440px,810px"></dc-import>
+          </dc-import>
+        </div>
+        <div style="position:absolute; left:0; bottom:0; width:36%">
+          <dc-import name="Enhet" type="ipad" src="hengsel.no/ios/ipad-idag-lys.png" src-dark="hengsel.no/ios/ipad-idag-mork.png" dark="{{ dark }}" alt="Hengsel Ute på iPad: I dag med jobben til Kari Nordmann" hint-size="100%,300px"></dc-import>
+        </div>
+        <div style="position:absolute; right:0; bottom:0; width:17%">
+          <dc-import name="Enhet" type="iphone" src="hengsel.no/ios/idag-lys.png" src-dark="hengsel.no/ios/idag-mork.png" dark="{{ dark }}" alt="Hengsel Ute på iPhone: I dag med neste jobb" hint-size="100%,380px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · tre løfter" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">01</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Ett sted for kunden.</h2>
+        <p style="margin:0; color:var(--muted)">Tilbud, ordre, bestilling, montering, saker og faktura på samme kundekort.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">02</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Montøren slipper papir.</h2>
+        <p style="margin:0; color:var(--muted)">Jobben, tegningene, målene og KS-sjekklista ligger i lomma.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">03</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Kunden følger med selv.</h2>
+        <p style="margin:0; color:var(--muted)">Kundeportal med tilvalg, leveringsdag, punkter og dokumenter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · ordrens reise" style="padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:40px">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px 40px">
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:640px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Ordrens reise</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Én ordre fra befaring til faktura.</h2>
+        </div>
+        <a href="Slik-virker-det.dc.html" style="color:var(--accent); text-decoration:none; font-weight:500">Se hele reisen i åtte scener →</a>
+      </div>
+      <ol style="{{ reiseListe }}">
+        <sc-for list="{{ reise }}" as="r" hint-placeholder-count="8">
+          <li style="{{ r.li }}">
+            <span style="{{ r.dot }}">{{ r.n }}</span>
+            <div style="display:flex; flex-direction:column; gap:4px; min-width:0">
+              <b style="font-weight:600; font-size:1rem">{{ r.t }}</b>
+              <span style="font-size:.92rem; color:var(--muted); line-height:1.5">{{ r.s }}</span>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · sidene" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:32px">
+      <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Se nærmere på</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:16px">
+        <sc-for list="{{ kort }}" as="k" hint-placeholder-count="7">
+          <a href="{{ k.href }}" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:8px; color:var(--ink); text-decoration:none; min-height:150px; box-sizing:border-box" style-hover="border-color:var(--ink); color:var(--ink)">
+            <span style="font-family:Newsreader, Georgia, serif; font-size:1.6rem; line-height:1.15">{{ k.t }}</span>
+            <span style="color:var(--muted); font-size:.98rem; line-height:1.55; flex:1">{{ k.s }}</span>
+            <span style="color:var(--accent); font-weight:500; font-size:.95rem">{{ k.cta }} →</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · demo" style="padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:24px 48px">
+      <div style="display:flex; flex-direction:column; gap:12px; max-width:620px">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Vil dere se Hengsel i bruk?</h2>
+        <p style="margin:0; color:var(--muted); font-size:1.18rem">Vi viser løsningen med en ordre fra start til slutt. Ring oss eller be om demo.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px">
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="Priser-og-demo.dc.html#demo" hint-size="130px,44px">Be om demo</x-import>
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="tel:+4745410001" hint-size="170px,44px">+47 454 10 001</x-import>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, w: 1440 };
+  root = React.createRef();
+  componentDidMount() {
+    this.applyTheme();
+    const el = this.root.current;
+    if (el) { const m = () => { const w = el.clientWidth; if (w && w !== this.state.w) this.setState({ w }); }; this.ro = new ResizeObserver(m); this.ro.observe(el); m(); }
+  }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  renderVals() {
+    const narrow = this.state.w < 820;
+    const R = [
+      ['Befaring', 'Mål og bilder hos kunden, rett inn på kundekortet.'],
+      ['Tilbud', 'Import fra CET, egen PDF og e-signering.'],
+      ['Aksept', 'Kunden aksepterer og velger tilvalg i portalen.'],
+      ['Bestilling', 'Bestilling til leverandør med ordrebekreftelse.'],
+      ['Levering', 'Kolli på lager, utkjøring med signatur.'],
+      ['Montering', 'Plan, KS-sjekkliste og laser i Hengsel Ute.'],
+      ['Punkter', 'Ett nummersystem fra montør til kontor til kunde.'],
+      ['Ferdig og faktura', 'Kundens signatur, faktura til PowerOffice.'],
+    ];
+    return {
+      root: this.root, dark: this.state.dark,
+      reiseListe: narrow
+        ? { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }
+        : { listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, minmax(0,1fr))', gap: 16, backgroundImage: 'linear-gradient(var(--line), var(--line))', backgroundSize: '100% 1px', backgroundPosition: '0 18px', backgroundRepeat: 'no-repeat' },
+      reise: R.map(([t, s], i) => ({
+        n: String(i + 1), t, s,
+        li: narrow ? { display: 'flex', gap: 16, paddingBottom: 20, borderLeft: i < 7 ? '1px solid var(--line)' : '1px solid transparent', marginLeft: 18, paddingLeft: 0 } : { display: 'flex', flexDirection: 'column', gap: 14 },
+        dot: { width: 36, height: 36, borderRadius: 999, flex: 'none', display: 'grid', placeItems: 'center', background: i === 0 || i === 7 ? 'var(--accent)' : 'var(--surface)', color: i === 0 || i === 7 ? 'var(--accent-ink)' : 'var(--ink)', border: '1px solid ' + (i === 0 || i === 7 ? 'var(--accent)' : 'var(--line)'), fontSize: 14, fontWeight: 600, fontVariantNumeric: 'tabular-nums', marginLeft: narrow ? -18 : 0, boxSizing: 'border-box' },
+      })),
+      kort: [
+        { t: 'CRM', s: 'Min dag, kundekort, tilbud, ordre, bestilling og montasjeplan. På PC, iPad og telefon.', cta: 'Prøv demoen', href: 'CRM.dc.html' },
+        { t: 'Hengsel Ute', s: 'Montørappen for iPhone og iPad. Jobben, KS, avvik og punkter, også uten dekning.', cta: 'Se appen', href: 'Ute.dc.html' },
+        { t: 'Kundeportal', s: 'Kunden aksepterer tilbudet, velger tilvalg og følger leveringen selv.', cta: 'Se kundens side', href: 'Kundeportal.dc.html' },
+        { t: 'Slik virker det', s: 'Ordrens reise i åtte scener, med det selgeren ser og det som skjer bak kulissene.', cta: 'Følg ordren', href: 'Slik-virker-det.dc.html' },
+        { t: 'Dokumenter', s: 'Tilbud, kjøpsavtale, arbeidsordre, KS-rapport og ferdigmelding, laget rett fra ordren.', cta: 'Bla i dokumentene', href: 'Dokumenter.dc.html' },
+        { t: 'Integrasjoner', s: 'CET, PowerOffice, Penneo, Tradeplace og lasermåler via Bluetooth. Data lagres i EU.', cta: 'Se systemkartet', href: 'Integrasjoner.dc.html' },
+        { t: 'Priser og demo', s: 'Hva som inngår, hvordan oppstarten går, og hvordan dere får en demo.', cta: 'Be om demo', href: 'Priser-og-demo.dc.html' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
