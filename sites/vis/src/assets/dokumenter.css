@@ -18,7 +18,7 @@
 .lages{display:grid;gap:24px;padding-top:8px;border-top:1px solid var(--line)}
 .lages-hode{display:grid;gap:8px;padding-top:24px}
 .lages-hode h3{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
-.lages-kort{margin:0;font-size:14px;line-height:1.55;color:var(--muted);max-width:90ch}
+.lages-kort{margin-top:6px}
 .lages-liste{list-style:none;margin:0;padding:0;display:grid;gap:28px}
 .lages-steg{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px}
 @media (min-width:900px){.lages-steg{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;padding:24px 28px}.lages-steg:nth-child(even) .lages-tekst{order:2}}

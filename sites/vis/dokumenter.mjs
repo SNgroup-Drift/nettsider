@@ -39,7 +39,7 @@ function lagesHtml(dok) {
   const rom = l.rom.map((r) => `<a href="${esc(r.u)}">${esc(r.t)} ›</a>`).join("");
   return `<section class="lages" aria-labelledby="lages-${dok.id}">
   <div class="lages-hode"><span class="eyebrow">Slik lages det</span><h3 id="lages-${dok.id}">${esc(dok.t)}: fra ordren til ferdig PDF</h3>
-  <p class="lages-kort">${dok.lages.map((t, i) => `${i + 1}. ${LAGES_STEG[i]}: ${esc(t)}`).join(" · ")}</p></div>
+  <ol class="dv-steg lages-kort" aria-label="De fem delene av jobben">${dok.lages.map((t, i) => `<li><span class="dv-eb liten">${i + 1} · ${LAGES_STEG[i]}</span><span>${esc(t)}</span></li>`).join("")}</ol></div>
   <ol class="lages-liste">
 ${steg}
   </ol>
