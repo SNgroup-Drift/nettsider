@@ -74,19 +74,19 @@ export const REF = [
   {
     "name": "Basseløkka",
     "place": "Buran",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 174
   },
   {
     "name": "Saupstad Torg",
     "place": "Saupstad",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 119
   },
   {
     "name": "Leangen",
     "place": "Leangen",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 116
   }
 ];
@@ -95,7 +95,7 @@ export const PROSJEKTER = [
   {
     "name": "Basseløkka",
     "phase": "–",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 174,
     "place": "Buran",
     "year": "2023–2025"
@@ -103,7 +103,7 @@ export const PROSJEKTER = [
   {
     "name": "Saupstad Torg",
     "phase": "trinn 1",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 119,
     "place": "Saupstad",
     "year": "2024–2025"
@@ -111,7 +111,7 @@ export const PROSJEKTER = [
   {
     "name": "Leangen",
     "phase": "Tunet",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 116,
     "place": "Leangen",
     "year": "2023–2026"
@@ -119,7 +119,7 @@ export const PROSJEKTER = [
   {
     "name": "Gildheim",
     "phase": "trinn 1",
-    "brand": "HTH",
+    "brand": "Kjøkken",
     "units": 87,
     "place": "Leangen",
     "year": "2025–2026"
@@ -127,7 +127,7 @@ export const PROSJEKTER = [
   {
     "name": "Lysangen",
     "phase": "–",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 54,
     "place": "Leangen",
     "year": "2024–2025"
@@ -135,7 +135,7 @@ export const PROSJEKTER = [
   {
     "name": "Leangenbukta",
     "phase": "Byvilla 3",
-    "brand": "Sigdal",
+    "brand": "Kjøkken",
     "units": 14,
     "place": "Lade",
     "year": "2022"
