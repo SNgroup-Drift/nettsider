@@ -38,7 +38,7 @@ export const STEG: [string, string][] = [
 export const UTE: [string, string, string, string][] = [
   ["I dag", "Neste jobb, På vei, og det du må vite før du starter.", "ute-i-dag", "Hengsel Ute: I dag med neste jobb, adresse og åpne restpunkter"],
   ["Jobben", "Tegning, mål, bilder og restpunkter i faner.", "ute-jobb-under", "Hengsel Ute: jobben med tegning, mål, bilder og restpunkter"],
-  ["Laser", "Målene rett inn i bildet.", "ute-laser", "Hengsel Ute: Bosch-laseren kobles til og måler rett inn i bildet"],
+  ["Laser", "Målene rett inn i bildet.", "ute-laser", "Hengsel Ute: laseren kobles til og måler rett inn i bildet"],
   ["Kvalitetssjekk", "Punkt for punkt. OK med bilde åpner kameraet.", "ute-ks", "Hengsel Ute: KS-sjekkliste, punkt som krever bilde («Ta bilde først»)"],
   ["Meld avvik", "Bilde med pil, og om det trengs ny vare.", "ute-avvik", "Hengsel Ute: meld avvik med bilde og valg om ny vare"],
   ["Punkter hos kunden", "Ett nummersystem, samme nummer i CRM og portal.", "ute-punkter", "Hengsel Ute: punktlisten på kunden med nummer og status"],
