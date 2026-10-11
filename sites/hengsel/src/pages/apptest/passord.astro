@@ -1,55 +1,61 @@
 ---
 /**
- * Passordsiden for /apptest (K-107), i samme profil som apptest.astro (10.10.2026).
+ * Passordsiden for /apptest (K-107, ny etter Claude Design «apptest v3»: Apptest-passord.dc.html).
  * Serveres av Workeren (worker/apptest.ts) i stedet for /apptest når informasjonskapselen mangler eller er ugyldig.
  * Tilstand tom: som bygget. Tilstand feil: Workeren fjerner «hidden» på [data-feil] og setter aria-invalid på #passord.
- * Ligger under /apptest/, så den nås bare gjennom Workeren.
+ * Ligger under /apptest/, så den nås bare gjennom Workeren. Uten skript.
  */
 import Side from "../../layouts/Side.astro";
-import { APPTEST } from "../../apptest-lenker";
-
-const { epost } = APPTEST;
+import ApptestHode from "../../components/ApptestHode.astro";
+import ApptestIkon from "../../components/ApptestIkon.astro";
+import { EPOST } from "../../content/forside";
 ---
 <Side
-  title="Test Hengsel Ute · Hengsel"
-  description="Siden er for inviterte testere."
+  title="Test Hengsel – passord"
+  description="Siden er for dem som er invitert til å teste appen."
   robots="noindex,nofollow"
+  utenMeny
 >
-  <div class="side">
-    <main id="innhold" class="midt">
-      <form method="post" action="/apptest" class="skjema">
-        <div class="tekst">
-          <h1>Test Hengsel Ute</h1>
-          <p class="dempet">Skriv passordet du fikk sammen med lenken.</p>
-        </div>
-        <div class="felt">
-          <label for="passord">Passord</label>
-          <input class="input" id="passord" name="passord" type="password" autocomplete="current-password" required aria-describedby="passord-feil" />
-        </div>
-        <p class="feil" id="passord-feil" role="alert" data-feil hidden>Feil passord. Prøv igjen, eller spør Eirik.</p>
-        <button class="knapp" type="submit">Åpne</button>
-      </form>
-    </main>
-  </div>
+  <ApptestHode slot="hode" />
+  <main id="innhold" class="a-side midt">
+    <form method="post" action="/apptest" class="skjema">
+      <ApptestIkon />
+      <div class="tekst">
+        <h1>Test Hengsel</h1>
+        <p class="dempet">Siden er for dem som er invitert til å teste appen. Skriv inn passordet du har fått.</p>
+      </div>
+      <div class="felt">
+        <label for="passord">Passord</label>
+        <input class="input" id="passord" name="passord" type="password" autocomplete="current-password" required aria-describedby="passord-feil" />
+      </div>
+      <div class="feil" id="passord-feil" role="alert" data-feil hidden><b>Feil passord.</b> Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.</div>
+      <button class="btn primary stor" type="submit">Åpne</button>
+      <p class="dempet liten">Har du ikke fått passord? Skriv til <a href={`mailto:${EPOST}`}>{EPOST}</a>.</p>
+    </form>
+  </main>
 </Side>
 
 <style>
-  /* Samme profil som apptest.astro: Off White, Beige 3 kort og bunn, pillknapper */
-  .side { flex: 1; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
-  .dempet { color: var(--muted); margin: 0; }
-  a { color: var(--accent); }
-  .rad { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
-  .midt { display: grid; place-items: center; padding: clamp(32px, 8vw, 96px) clamp(16px, 4vw, 40px); }
-  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 4vw, 36px); background: var(--flate); display: grid; gap: 18px; }
-  .tekst { display: grid; gap: 8px; }
-  h1 { font-size: var(--t-h1); line-height: 1.08; }
-  .felt { display: grid; gap: 6px; }
-  .felt label { font: 500 0.9rem var(--f-body); }
-  .input { border-radius: 0; min-height: 48px; }
-  .feil { margin: 0; padding: 12px 14px; background: var(--flate-myk); box-shadow: inset 3px 0 0 var(--bad); font-weight: 600; }
-  .knapp {
-    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: var(--r-pill);
-    border: 1px solid var(--accent); background: var(--accent); color: var(--bg); font: 650 1rem var(--f-body); cursor: pointer;
-  }
-  .knapp:hover { background: var(--accent); border-color: var(--accent); }
+  /* Samme profil som /apptest: flaten er Beige 4, kortet Off White */
+  .a-side { --a-flate: var(--beige-4); background: var(--a-flate); color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) .a-side { --a-flate: var(--flate-myk); } }
+  :global(html:root[data-theme="dark"]) .a-side { --a-flate: var(--flate-myk); }
+  :global(header.sidehode) { --a-flate: var(--beige-4); }
+  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) :global(header.sidehode) { --a-flate: var(--flate-myk); } }
+  :global(html:root[data-theme="dark"]) :global(header.sidehode) { --a-flate: var(--flate-myk); }
+
+  .dempet { color: var(--muted); }
+  .liten { font-size: 0.92rem; }
+  .midt { display: flex; align-items: center; justify-content: center; padding: clamp(40px, 8vw, 112px) var(--pad); }
+  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 5vw, 40px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); display: flex; flex-direction: column; gap: 24px; }
+  .tekst { display: flex; flex-direction: column; gap: 10px; }
+  h1 { font-size: clamp(2.2rem, 5vw, 2.8rem); line-height: 1.05; }
+  .felt { display: flex; flex-direction: column; gap: 6px; }
+  .felt label { font: 500 0.92rem var(--f-body); }
+  .input { min-height: 52px; font-size: 17px; width: 100%; box-sizing: border-box; }
+  .input[aria-invalid="true"] { border-color: var(--bad); }
+  .liten a { text-decoration: underline; text-underline-offset: 3px; }
+  .feil { background: var(--bad-soft); color: var(--ink); border-radius: var(--r-field); padding: 12px 14px; box-shadow: inset 3px 0 0 var(--bad); font-size: 0.95rem; }
+  .feil b { font-weight: var(--w-strong); }
+  .stor { min-height: 56px; width: 100%; font-size: 1.05rem; }
 </style>

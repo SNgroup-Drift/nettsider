@@ -17,7 +17,7 @@ import { mkdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 const rot = resolve(import.meta.dirname, "..");
-const ut = join(rot, "docs", "skjermbilder");
+const ut = join(rot, "claude", "k172-skjermbilder", "worker");
 await mkdir(ut, { recursive: true });
 const BASE = process.env.BASE ?? "http://localhost:8787";
 const vars = await readFile(join(rot, "sites", "hengsel", ".dev.vars"), "utf8").catch(() => "");
@@ -82,7 +82,7 @@ for (const [v, [farge, modus]] of visninger.flatMap((v) => modi.map((m) => [v, m
   await page.fill("#passord", "feil-passord");
   await Promise.all([page.waitForLoadState("networkidle"), page.click("button[type=submit]")]);
   meld(await page.isVisible("[data-feil]"), `feil passord viser feilmeldingen (${sfx})`);
-  meld((await page.textContent("[data-feil]")).trim() === "Feil passord. Prøv igjen, eller spør Eirik.", `feilmeldingen har riktig tekst (${sfx})`);
+  meld((await page.textContent("[data-feil]")).trim() === "Feil passord. Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.", `feilmeldingen har riktig tekst (${sfx})`);
   if (v.navn === "mobil") await page.screenshot({ path: join(ut, `apptest-passord-feil-${sfx}.png`), fullPage: true });
   await sjekkAxe(page, `passordsiden med feil (${sfx})`);
 
@@ -100,20 +100,24 @@ for (const [v, [farge, modus]] of visninger.flatMap((v) => modi.map((m) => [v, m
   await page.waitForTimeout(800);
   const fil = `apptest-${sfx}.png`;
   await page.screenshot({ path: join(ut, fil), fullPage: true });
-  console.log(`  bilde: docs/skjermbilder/${fil}`);
-  meld(await page.isVisible("h1:has-text('Test Hengsel Ute')"), `/apptest vises etter innlogging (${sfx})`);
+  console.log(`  bilde: claude/k172-skjermbilder/worker/${fil}`);
+  meld(await page.isVisible("h1:has-text('Test Hengsel')"), `/apptest vises etter innlogging (${sfx})`);
   const { sw, cw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
   meld(sw <= cw, `/apptest (${sfx}): bredde ${sw}/${cw}`);
   // Demobrukerne (K-114): passordet settes inn av Workeren fra DEMO_PASSORD. Verdien skrives aldri ut.
-  const demoSynlig = await page.isVisible("[data-demopassord]");
+  // Hver rolle har en <span data-demopassord="{rolle}">; den første rollen (Montør) er synlig, og Kopier er skjult uten hemmeligheten.
+  const synlig = page.locator("[data-demopassord]:visible").first();
   if (DEMO) {
-    meld(demoSynlig && (await page.textContent("[data-demopassord-verdi]")) === DEMO, `demopassordet står på siden etter innlogging (${sfx})`);
+    meld((await synlig.textContent()) === DEMO, `demopassordet står på siden etter innlogging (${sfx})`);
+    const alle = await page.locator("[data-demopassord]").evaluateAll((l) => l.map((e) => e.textContent));
+    meld(alle.length === 4 && alle.every((t) => t === DEMO), `alle fire rollene viser demopassordet (${sfx})`);
     meld(!(await page.locator("[data-uten-demopassord]").count()), `«Passordet får du av den som inviterte deg» er fjernet (${sfx})`);
-    await page.click("[data-kopier]");
-    await page.waitForFunction(() => document.querySelector("[data-kopier]")?.textContent === "Kopiert", null, { timeout: 5000 }).catch(() => {});
-    meld((await page.textContent("[data-kopier]")) === "Kopiert" && (await page.evaluate(() => navigator.clipboard.readText())) === DEMO, `Kopier legger demopassordet på utklippstavlen (${sfx})`);
+    const knapp = page.locator("[data-demopassord-knapp]:visible").first();
+    await knapp.click();
+    await page.waitForFunction(() => [...document.querySelectorAll("[data-demopassord-knapp]")].some((k) => k.textContent === "Kopiert"), null, { timeout: 5000 }).catch(() => {});
+    meld((await knapp.textContent()) === "Kopiert" && (await page.evaluate(() => navigator.clipboard.readText())) === DEMO, `Kopier legger demopassordet på utklippstavlen (${sfx})`);
   } else {
-    meld(!demoSynlig && (await page.isVisible("[data-uten-demopassord]")), `uten DEMO_PASSORD står «Passordet får du av den som inviterte deg» (${sfx})`);
+    meld((await synlig.textContent()) === "••••••••" && (await page.locator("[data-demopassord-knapp]:visible").count()) === 0 && (await page.locator("[data-uten-demopassord]:visible").count()) > 0, `uten DEMO_PASSORD står «Passordet får du av den som inviterte deg» (${sfx})`);
   }
   const pdf = await page.request.get(`${BASE}/apptest/Logg_inn_i_demoen.pdf`);
   meld(pdf.status() === 200 && (pdf.headers()["content-type"] ?? "").includes("pdf"), `PDF-en er tilgjengelig etter innlogging (${sfx})`);

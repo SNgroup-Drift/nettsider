@@ -74,14 +74,16 @@ async function apptest(req: Request, env: Env, url: URL): Promise<Response> {
 }
 
 /**
- * K-114: demopassordet settes inn i HTML-en for innloggede (bare bak passordet til /apptest). Uten hemmeligheten står linjen
- * skjult, og «Passordet får du av den som inviterte deg» vises i stedet. Passordet er aldri i de statiske filene.
+ * K-114: demopassordet settes inn i HTML-en for innloggede (bare bak passordet til /apptest). Hver rolle har sin egen
+ * <span data-demopassord="{rolle}"> (alle viser det samme felles passordet) og en «Kopier»-knapp med [data-demopassord-knapp].
+ * Uten hemmeligheten står spanen med «••••••••», knappene er skjult og «Passordet får du av den som inviterte deg» vises.
+ * Passordet er aldri i de statiske filene.
  */
 function medDemopassord(svar: Response, passord: string | undefined): Response {
   if (!passord || !(svar.headers.get("Content-Type") ?? "").startsWith("text/html")) return svar;
   return new HTMLRewriter()
-    .on("[data-demopassord-verdi]", { element: (el) => el.setInnerContent(passord) })
-    .on("[data-demopassord]", { element: (el) => el.removeAttribute("hidden") })
+    .on("[data-demopassord]", { element: (el) => el.setInnerContent(passord) })
+    .on("[data-demopassord-knapp]", { element: (el) => el.removeAttribute("hidden") })
     .on("[data-uten-demopassord]", { element: (el) => el.remove() })
     .transform(svar);
 }

@@ -21,17 +21,18 @@ test("Workeren låser siden uten hemmelighet og setter inn demopassordet med sam
   const side = les("src/pages/apptest.astro");
   assert.match(worker, /status: 503/);
   assert.match(worker, /DEMO_PASSORD/);
-  for (const merke of ["data-demopassord-verdi", "data-demopassord", "data-uten-demopassord"]) {
+  for (const merke of ["data-demopassord", "data-demopassord-knapp", "data-uten-demopassord"]) {
     assert.ok(worker.includes(`[${merke}]`), `Workeren mangler ${merke}`);
     assert.ok(side.includes(merke), `apptest.astro mangler ${merke}`);
   }
-  // Demopassordet står aldri i siden: verdien er tom i det som bygges
-  assert.match(side, /<code data-demopassord-verdi><\/code>/);
+  // Demopassordet står aldri i siden: hver rolle har en span med bare prikker, og Workeren fyller den inn
+  assert.match(side, /<span[^>]*data-demopassord=\{r\.id\}>••••••••<\/span>/);
+  assert.match(side, /data-demopassord-knapp hidden/);
 });
 
 test("passordsiden har teksten fra bestillingen", () => {
   const s = les("src/pages/apptest/passord.astro");
-  for (const tekst of ["Skriv passordet du fikk sammen med lenken.", "Feil passord. Prøv igjen, eller spør Eirik.", ">Åpne</button>", 'autocomplete="current-password"', 'type="password"']) {
+  for (const tekst of ["Siden er for dem som er invitert til å teste appen. Skriv inn passordet du har fått.", "Feil passord.</b> Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.", ">Åpne</button>", 'autocomplete="current-password"', 'type="password"', 'action="/apptest"', "data-feil hidden", 'id="passord"']) {
     assert.ok(s.includes(tekst), `passord.astro mangler ${tekst}`);
   }
 });
