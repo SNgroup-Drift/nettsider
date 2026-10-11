@@ -13,31 +13,12 @@
 <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
-<style>
-.wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:32px}
-section{display:grid;gap:20px}
-section>h2{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:0}
-section>p{margin:-8px 0 0;color:var(--muted);max-width:62ch}
-figure{margin:0;display:grid;gap:14px;align-content:start;min-width:0}
-/* Arket: siden (A4) på Beige 3 med 24 px skygge. Dette er dokumentarkene, ikke kort (README: skygge bare her og i varselet i Kundens reise). */
-.ark{display:block;background:#fff;line-height:0;box-shadow:0 8px 24px rgba(49,38,29,.16);border-radius:0;transition:box-shadow var(--dur) var(--ease)}
-.ark:hover{box-shadow:0 8px 24px rgba(49,38,29,.26)}
-.ark:focus-visible{outline:none;box-shadow:0 8px 24px rgba(49,38,29,.16),var(--focus)}
-.ark img{display:block;width:100%;height:auto;aspect-ratio:1654/2339}
-.ark.ligg img{aspect-ratio:2339/1654}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ark,:root:not([data-theme="light"]) .ark:hover{box-shadow:0 8px 24px rgba(0,0,0,.55)}}
-:root[data-theme="dark"] .ark,:root[data-theme="dark"] .ark:hover{box-shadow:0 8px 24px rgba(0,0,0,.55)}
-figcaption{display:grid;gap:2px;line-height:1.45}
-figcaption b{font-weight:600;font-size:15px}
-figcaption span{font-size:14px;color:var(--muted)}
-/* Forsiden: de tre kundevendte dokumentene, større enn i lista */
-.forside{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;align-items:start}
-/* Resten som liste: aldri bredere enn 420 px */
-.liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,420px));gap:32px 24px;justify-content:start;align-items:start}
-.liste .ligg{grid-column:auto}
-@media (max-width:900px){.forside{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}}
-@media (max-width:640px){.wrap{padding-inline:16px}.forside figure,.liste figure{max-width:420px}}
-</style>
+<link rel="stylesheet" href="/assets/enhet.css">
+<link rel="stylesheet" href="/assets/dokumenter/a4.css">
+<link rel="stylesheet" href="/assets/dokumenter/dokumentvisning.css">
+<link rel="stylesheet" href="/assets/dokumenter.css">
+<!--a4-stil-->
+<style>.wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:32px}@media (max-width:640px){.wrap{padding-inline:16px}}</style>
 </head>
 <body>
 <div class="topbar"><span class="topl"><a class="back" href="/">‹ Visningsrommet</a><span class="sep" aria-hidden="true"></span><!--hengsel-logo 28--></span><span class="pill nodot">Oppdiktede data</span></div>
@@ -45,58 +26,13 @@ figcaption span{font-size:14px;color:var(--muted)}
   <header class="sidehode">
     <div class="eyebrow">Det kunden får i hånden</div>
     <h1>Dokumentene</h1>
-    <p class="lede">Dokumentene Hengsel lager fra ordren, som A4-sider med Hengsel-logoen i topp og Hengsel-merket i bunnlinjen. Trykk på et ark for å se det i full størrelse.</p>
+    <p class="lede">Hengsel lager dokumentene av det som allerede står på ordren: forside, alle sider, vilkår, signatur og vedlegg. Velg et dokument, bla side for side, og se hvordan det lages fra ordren i CRM til ferdig PDF. Alt er eksempler: butikknavn og kunde er oppdiktet, og «Din logo» er butikkens egen.</p>
   </header>
 
-  <section aria-labelledby="kunde">
-    <h2 id="kunde">Det kunden får</h2>
-    <div class="forside">
-      <figure>
-        <a class="ark" href="/dokumenter/dok-tilbud.webp" target="_blank" rel="noopener" aria-label="Åpne tilbudet, forsiden, i full størrelse (nytt vindu)"><img src="/dokumenter/dok-tilbud.webp" alt="Tilbudet, forside: bilde av kjøkkenet, tittel og totalpris" width="1654" height="2339"></a>
-        <figcaption><b>Tilbudet</b><span>Forsiden med bilde, tilbudsnummer og totalpris.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark" href="/dokumenter/dok-monteringsrapport.webp" target="_blank" rel="noopener" aria-label="Åpne monteringsrapporten i full størrelse (nytt vindu)"><img src="/dokumenter/dok-monteringsrapport.webp" alt="Monteringsrapport: kvalitetssikring av jobben med kundens signatur" width="1654" height="2339"></a>
-        <figcaption><b>Monteringsrapporten</b><span>KS-rapport med kundens signatur.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark" href="/dokumenter/dok-fdv.webp" target="_blank" rel="noopener" aria-label="Åpne FDV-pakken i full størrelse (nytt vindu)"><img src="/dokumenter/dok-fdv.webp" alt="Leveringspakke del 2: forsiden på FDV-pakken, «Alt om kjøkkenet ditt»" width="1654" height="2339"></a>
-        <figcaption><b>FDV-pakken</b><span>Leveringspakke del 2, forsiden.</span></figcaption>
-      </figure>
-    </div>
-  </section>
+  <!--dokumentvisning-->
 
-  <section aria-labelledby="flere">
-    <h2 id="flere">Flere dokumenter</h2>
-    <div class="liste">
-      <figure>
-        <a class="ark" href="/dokumenter/dok-tilbud-s2.webp" target="_blank" rel="noopener" aria-label="Åpne tilbudet, side 2, i full størrelse (nytt vindu)"><img src="/dokumenter/dok-tilbud-s2.webp" alt="Tilbudet, side 2: «Kort fortalt» med valg, priser og betaling" width="1654" height="2339" loading="lazy" decoding="async"></a>
-        <figcaption><b>Tilbudet, side 2</b><span>«Kort fortalt»: valgene, prisen per gruppe og betalingen.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark" href="/dokumenter/dok-kjopsavtale.webp" target="_blank" rel="noopener" aria-label="Åpne kjøpsavtalen, forsiden, i full størrelse (nytt vindu)"><img src="/dokumenter/dok-kjopsavtale.webp" alt="Kjøpsavtalen, forside med stemningsbilde" width="1654" height="2339" loading="lazy" decoding="async"></a>
-        <figcaption><b>Kjøpsavtalen</b><span>Forsiden med stemningsbilde.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark" href="/dokumenter/dok-kjopsavtale-sign.webp" target="_blank" rel="noopener" aria-label="Åpne signeringssiden i full størrelse (nytt vindu)"><img src="/dokumenter/dok-kjopsavtale-sign.webp" alt="Kjøpsavtalen, siste side: felt for e-signatur" width="1654" height="2339" loading="lazy" decoding="async"></a>
-        <figcaption><b>Kjøpsavtalen, signering</b><span>Siden med felt for e-signatur.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark" href="/dokumenter/dok-punktrapport.webp" target="_blank" rel="noopener" aria-label="Åpne punktrapporten i full størrelse (nytt vindu)"><img src="/dokumenter/dok-punktrapport.webp" alt="Punktrapport: oversiktsbilde med punkter og liste" width="1654" height="2339" loading="lazy" decoding="async"></a>
-        <figcaption><b>Punktrapporten</b><span>Oversikt, punkter og status per fase.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark ligg" href="/dokumenter/dok-tilvalgsliste.webp" target="_blank" rel="noopener" aria-label="Åpne tilvalgslisten i full størrelse (nytt vindu)"><img src="/dokumenter/dok-tilvalgsliste.webp" alt="Tilvalg for kjøperne (liggende A4): invitasjon, valg, frist og grunnlag" width="2339" height="1654" loading="lazy" decoding="async"></a>
-        <figcaption><b>Tilvalgslisten</b><span>Hvordan kjøperne velger selv. Liggende A4.</span></figcaption>
-      </figure>
-      <figure>
-        <a class="ark ligg" href="/dokumenter/dok-anbud.webp" target="_blank" rel="noopener" aria-label="Åpne anbudet, forsiden, i full størrelse (nytt vindu)"><img src="/dokumenter/dok-anbud.webp" alt="Anbud, forside (liggende A4): kjøkken og garderobe til et boligprosjekt" width="2339" height="1654" loading="lazy" decoding="async"></a>
-        <figcaption><b>Anbudet</b><span>Forsiden. Anbudet er en liggende presentasjon på A4.</span></figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <p class="foot">Demoen er ikke koblet til ekte data. Sidene er fra designfilene. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Demoen er ikke koblet til ekte data. Dokumentene er de samme som på hengsel.no/dokumenter, og skjermbildene er fra designfilene. Skrifter: Newsreader og Inter.</p>
 </div>
+<script src="/assets/dokumenter/dokumentvisning.js" defer></script>
 </body>
 </html>

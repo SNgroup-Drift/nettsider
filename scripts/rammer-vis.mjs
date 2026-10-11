@@ -7,8 +7,10 @@
  *
  * Kjør: node scripts/rammer-vis.mjs   (npm run rammer:vis)
  */
+import { chromium } from "playwright";
 import sharp from "sharp";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { startServer } from "./statisk-server.mjs";
 import { enhet, tilWebp, skjermbilder, img } from "./lib/rammer.mjs";
 
 const sb = (n) => join(skjermbilder, `${n}.webp`);
@@ -70,7 +72,17 @@ for (const [slug, t, s] of flater) await tilWebp(await lag(t, s), join(img, `fla
 
 // Dokumentene: A4-arket uten ramme (bare myk skygge på gjennomsiktig bunn)
 {
-  const ark = await sharp(join(skjermbilder, "..", "dokumenter", "dok-tilbud.webp")).resize({ height: 640 }).png().toBuffer();
+  // Tilbudets forside slik den gjengis fra de felles dokumentdataene (K-161; ingen dok-*.webp lenger). Krever `npm run build -w sites/vis`.
+  const server = await startServer(resolve(import.meta.dirname, "..", "sites", "vis", "dist"));
+  const nettleser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+  const side = await (await nettleser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2, colorScheme: "light" })).newPage();
+  await side.goto(`http://127.0.0.1:${server.address().port}/dokumenter/#tilbud`, { waitUntil: "networkidle" });
+  await side.evaluate(() => document.fonts.ready);
+  const a4 = side.locator("[data-panel=tilbud] .dv-side:not([hidden]) .a4");
+  const raa = await a4.screenshot();
+  await nettleser.close();
+  server.close();
+  const ark = await sharp(raa).resize({ height: 640 }).png().toBuffer();
   const m = await sharp(ark).metadata();
   const pad = 40, skygge = await sharp({ create: { width: m.width, height: m.height, channels: 4, background: { r: 49, g: 38, b: 29, alpha: 0.28 } } }).png().toBuffer();
   const blur = await sharp({ create: { width: m.width + 2 * pad, height: m.height + 2 * pad, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })

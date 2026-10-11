@@ -23,7 +23,11 @@
     },
     "./dokumenter/dokumentvisning": "./src/dokumenter/dokumentvisning.js",
     "./dokumenter/a4.css": "./src/dokumenter/a4.css",
-    "./dokumenter/dokumentvisning.css": "./src/dokumenter/dokumentvisning.css"
+    "./dokumenter/dokumentvisning.css": "./src/dokumenter/dokumentvisning.css",
+    "./dokumenter/lages": {
+      "types": "./src/dokumenter/lages.d.ts",
+      "default": "./src/dokumenter/lages.js"
+    }
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

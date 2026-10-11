@@ -63,8 +63,6 @@ h2{font:400 1.875rem/1.15 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:
 /* Dokumenter: fem ark, uten ramme */
 .ark-rad{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:end}
 .ark-rad a{display:flex;flex-direction:column;gap:8px;color:var(--fg);text-decoration:none;font-size:14px}
-.ark-rad img{display:block;width:100%;height:auto;border-radius:4px;background:#fff}
-.ark-rad a:hover img{opacity:.9}
 
 /* Presenter og regn: tekstkort */
 .tekstkort{padding:16px 16px 18px;gap:6px}

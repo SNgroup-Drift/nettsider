@@ -123,7 +123,10 @@ for (const rot of document.querySelectorAll("[data-dokvisning]")) {
   // Visningsrommet: #id i adressen åpner det dokumentet (lenker fra andre rom)
   if (rot.hasAttribute("data-hash")) {
     const fraHash = faner.findIndex((f) => "#" + f.dataset.dok === location.hash);
-    if (fraHash >= 0) velg(fraHash);
+    if (fraHash >= 0) {
+      velg(fraHash);
+      rot.scrollIntoView({ block: "start" });
+    }
     addEventListener("hashchange", () => {
       const k = faner.findIndex((f) => "#" + f.dataset.dok === location.hash);
       if (k >= 0) velg(k);
