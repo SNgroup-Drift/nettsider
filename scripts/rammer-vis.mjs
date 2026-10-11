@@ -23,6 +23,11 @@ const rom = [
   ["tegning", "tlf", "ute-laser"],
   ["firmaleder", "ipad", "crm-ipad-leder"],
 ];
+// «Forstå på ti minutter» (MacBook, iPhone; Systemkartet bruker rom-system.webp, rommet selv i Studio Display)
+const forsta = [
+  ["reise", "mac", "mb-crm-tilbud-kunde"],
+  ["kunde", "tlf", "portal-tilbud"],
+];
 // flater (Butikken, Montøren, Kunden, Leverandøren)
 const flater = [
   ["butikken", "pc", "crm-salgstavla"],
@@ -41,6 +46,7 @@ async function lag(t, sk) {
   return sharp(tomt(W, 1200)).composite(deler.map((d, i) => { const c = { input: d, left: x, top: 0 }; x += m[i].width + gap; return c; })).png().toBuffer();
 }
 for (const [slug, t, s] of rom) await tilWebp(await lag(t, s), join(img, `rom-${slug}.webp`), mal(t));
+for (const [slug, t, s] of forsta) await tilWebp(await lag(t, s), join(img, `forsta-${slug}.webp`), mal(t));
 for (const [slug, t, s] of flater) await tilWebp(await lag(t, s), join(img, `flate-${slug}.webp`), mal(t));
 
 // Hero (fasit 62): Studio Display (crm-tilbud, v4), iPad (crm-ipad-leder) nede til venstre og iPhone (ute-i-dag) nede til høyre
@@ -58,6 +64,8 @@ for (const [slug, t, s] of flater) await tilWebp(await lag(t, s), join(img, `fla
   ]).png().toBuffer();
   const i = await sharp(buf).webp({ quality: 88, alphaQuality: 100, effort: 5 }).toFile(join(img, "hero.webp"));
   console.log(`hero.webp ${i.width}×${i.height}`);
+  // Under 1280 px: bare Studio Display
+  await sharp(pc).webp({ quality: 88, alphaQuality: 100, effort: 5 }).toFile(join(img, "hero-enkel.webp"));
 }
 
 // Dokumentene: A4-arket uten ramme (bare myk skygge på gjennomsiktig bunn)

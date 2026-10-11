@@ -1,0 +1,125 @@
+/* Forsiden og oversiktssidene (/rom/, /butikken/, /montoren/, /kunden/, /leverandoren/) etter fil 62 «Visningsrommet: ny forside»
+   (docs: delt/pakke-v3/fasit). Mørk bakgrunn (data-theme="dark" på <html>), fire seksjoner etter formål: Forstå · Prøv · Dokumenter · Presenter. */
+body{min-height:100vh;display:flex;flex-direction:column}
+.inner{max-width:1200px;width:100%;margin:0 auto;padding-inline:clamp(20px,6vw,120px)}
+main{flex:1;display:flex;flex-direction:column}
+h1{font:400 clamp(2.5rem,5.6vw,4rem)/1 var(--serif);letter-spacing:-.025em;margin:0;text-wrap:balance}
+h2{font:400 1.875rem/1.15 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.ingress{font-size:1.18rem;line-height:1.5;color:var(--muted);max-width:52ch;margin:0;text-wrap:pretty}
+
+/* Topp: logo + Visningsrommet, ankermeny (≡ under 768 px) */
+.topp{border-bottom:1px solid var(--line)}
+.topp .inner{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:72px;padding-block:14px;position:relative}
+.hjem{display:flex;align-items:center;gap:14px;color:var(--fg);text-decoration:none;min-height:44px}
+.hjem:hover{text-decoration:none}
+.hjem .sep{width:1px;height:22px;background:var(--line);flex:none}
+.hjem b{font:500 15px/1 var(--sans)}
+.meny{display:flex;gap:28px;align-items:center;font-size:15px}
+.meny a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.meny a:hover,.meny a:focus-visible{color:var(--fg)}
+.meny a.crm{color:var(--fg)}
+.menyknapp{display:none;min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:var(--r-pill);background:transparent;color:var(--fg);font:500 20px/1 var(--sans);cursor:pointer}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;padding-block:72px 56px}
+.hero .tekst{display:grid;gap:20px;align-content:center}
+.hero h1{font-size:clamp(2.6rem,5vw,4rem)}
+.hero .bilde-hero{display:block;width:100%;height:auto}
+.hero .bilde-enkel{display:none}
+.velg{display:grid;gap:10px;margin-top:8px}
+.velg .label{font:500 14px/1.4 var(--sans);color:var(--muted)}
+.roles{display:flex;gap:8px;flex-wrap:wrap}
+.roles .btn{white-space:nowrap}
+.intro{color:var(--muted);font-size:15px;margin:0;min-height:1.6em;max-width:52ch}
+
+/* Seksjoner */
+.seksjon{padding-block:0 56px;display:grid;gap:20px}
+.seksjon[hidden]{display:none}
+.hode{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.hode span,.hode a{font-size:14px;color:var(--muted)}
+.hode a{color:var(--accent-tekst)}
+.rad3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.rad4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+
+/* Kort: bilde av enhet + skjermbilde (ferdig sammensatt), tekst under */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.rom,.gruppe-kort{display:flex;flex-direction:column;gap:10px;color:inherit;text-decoration:none;transition:border-color var(--dur) var(--ease)}
+.rom:hover,.gruppe-kort:hover{border-color:var(--sand);text-decoration:none}
+.rom[hidden],.gruppe-kort[hidden]{display:none}
+.bilde{border-radius:10px;overflow:hidden;background:var(--soft);display:flex;justify-content:center}
+.bilde img{display:block}
+.rom .pill{align-self:flex-start}
+.meta{font-size:13px;color:var(--muted)}
+.ktittel{font:400 1.5rem/1.2 var(--serif);letter-spacing:-.015em;text-wrap:balance}
+.gruppe-kort .ktittel{font-size:1.375rem}
+.rom p,.gruppe-kort p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;text-wrap:pretty}
+.go{margin-top:auto;font:500 15px/1.4 var(--sans);color:var(--accent-tekst)}
+.forsta .bilde{aspect-ratio:4/3;padding:14px 12px;align-items:center}
+.forsta .bilde img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.prov .bilde{aspect-ratio:auto;height:220px;align-items:flex-end;background:transparent;padding:0}
+.prov .bilde img{max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain}
+.gruppe-kort.valgt{border-color:var(--accent)}
+
+/* Dokumenter: fem ark, uten ramme */
+.ark-rad{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:end}
+.ark-rad a{display:flex;flex-direction:column;gap:8px;color:var(--fg);text-decoration:none;font-size:14px}
+.ark-rad img{display:block;width:100%;height:auto;border-radius:4px;background:#fff}
+.ark-rad a:hover img{opacity:.9}
+
+/* Presenter og regn: tekstkort */
+.tekstkort{padding:16px 16px 18px;gap:6px}
+.tekstkort .meta{margin-bottom:2px}
+.tekstkort .ktittel{font-size:1.25rem}
+.lenkerad{display:flex;gap:24px;flex-wrap:wrap;font-size:14px}
+.lenkerad a{color:var(--accent-tekst);min-height:44px;display:inline-flex;align-items:center}
+
+/* Undersider (/rom/, gruppene) */
+.side-hode{padding-block:48px 24px;display:grid;gap:12px}
+.side-hode .tilbake{font-size:15px;color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:56px}
+.grid .bilde{aspect-ratio:4/3;padding:14px 12px}
+.grid .bilde img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.note{color:var(--muted);font-size:15px;margin:0;max-width:62ch}
+.empty{color:var(--muted)}
+h3{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;margin:32px 0 16px;color:var(--muted)}
+
+/* Bunn */
+footer{border-top:1px solid var(--line)}
+footer .inner{padding-block:32px;display:flex;flex-direction:column;gap:20px}
+.levert{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.levert p{margin:0}
+.levert>span{display:inline-flex;align-items:center;gap:10px}
+.baand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 32px}
+.avsender{text-decoration:none!important;display:flex;align-items:center;gap:14px;color:var(--fg);min-height:44px;font:500 15px/1.4 var(--sans)}
+.avsender svg{flex:none;display:block}
+.strek-sn{fill:none;stroke:currentColor;stroke-width:2.4}
+.bue{fill:none;stroke:var(--accent);stroke-width:1.8}
+.baand ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;font-size:15px}
+.baand li{display:flex;align-items:center}
+.baand .skille{color:var(--muted);padding:0 10px}
+.baand .her{color:var(--fg);padding:10px 0}
+.baand li a{color:var(--muted);padding:10px 0;display:inline-block;text-decoration:none}
+.baand li a:hover{color:var(--fg)}
+
+/* Under 1280 px: hero-bildet krymper til ett skjermbilde */
+@media (max-width:1279px){
+  .hero .bilde-hero{display:none}
+  .hero .bilde-enkel{display:block;width:100%;height:auto}
+  .rad4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:48px 40px}
+  .ark-rad{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+/* Under 768 px: ≡-meny, Forstå-kortene som sveiperad, rollechips på én rad med rulling */
+@media (max-width:767px){
+  .menyknapp{display:inline-flex;align-items:center;justify-content:center}
+  .meny{display:none;position:absolute;top:100%;left:0;right:0;z-index:5;flex-direction:column;align-items:flex-start;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px clamp(20px,6vw,120px) 16px}
+  .meny.apen{display:flex}
+  .rad3.sveip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:calc(-1*clamp(20px,6vw,120px));padding-inline:clamp(20px,6vw,120px);scroll-padding-inline:clamp(20px,6vw,120px);padding-bottom:8px}
+  .rad3.sveip>*{flex:0 0 82%;scroll-snap-align:start}
+  .roles{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;margin-inline:calc(-1*clamp(20px,6vw,120px));padding-inline:clamp(20px,6vw,120px)}
+  .rad3,.rad4{grid-template-columns:minmax(0,1fr)}
+  .ark-rad{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hode{flex-direction:column;align-items:flex-start;gap:4px}
+}

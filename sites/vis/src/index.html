@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb">
+<html lang="nb" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,192 +7,88 @@
 <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/logo/png/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/logo/png/apple-touch-icon-180.png">
-<meta name="theme-color" content="#5074A9">
+<meta name="theme-color" content="#1B1713">
 <title>Visningsrommet</title>
 <link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <link rel="stylesheet" href="/assets/enhet.css">
-<style>
-/* Forside v2 (fasit: VisForside v2.dc.html, README «Forside v2»): hero i to kolonner med illustrasjon og rollevelger,
-   «Start her» på Off White-bånd, «Slik henger det sammen» + «Én ordre, åtte steg», «Alle rommene» med h3-grupper,
-   avslutning med kjøkkenillustrasjon, bunn med «Levert med» og familiebåndet. */
-body{min-height:100vh;display:flex;flex-direction:column}
-.inner{max-width:1180px;width:100%;margin:0 auto;padding-inline:24px}
-.toppfelt{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding-block:16px}
-.hjem{display:flex;align-items:center;gap:14px;color:var(--fg);text-decoration:none;min-height:44px}
-.hjem:hover{text-decoration:none}
-.hjem .sep{width:1px;height:22px;background:var(--line);flex:none}
-.hjem b{font:500 15px/1 var(--sans)}
-.sn{height:26px;width:auto;display:block;opacity:.9}
-.sn.mork{display:none}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sn.lys{display:none}:root:not([data-theme="light"]) .sn.mork{display:block}}
-:root[data-theme="dark"] .sn.lys{display:none}:root[data-theme="dark"] .sn.mork{display:block}
-main{flex:1;display:flex;flex-direction:column}
-h1{font:400 clamp(2.5rem,5.6vw,4.6rem)/1.02 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
-h2{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
-h3{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;margin:40px 0 16px;color:var(--muted)}
-.ingress{font-size:1.18rem;line-height:1.5;color:var(--muted);max-width:52ch;margin:0;text-wrap:pretty}
-/* Hero */
-.hero{padding-block:24px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px 48px;align-items:center}
-.hero .tekst{display:grid;gap:16px;align-content:center}
-.hero .ill{padding-bottom:16px;min-height:320px}
-.velg{display:grid;gap:8px;margin-top:8px}
-.velg .label{font:500 14px/1.4 var(--sans);color:var(--muted)}
-.roles{display:flex;gap:8px;flex-wrap:wrap}
-.intro{color:var(--muted);font-size:15px;margin:0;min-height:1.6em;max-width:52ch}
-/* Start her: Off White-bånd */
-.start{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.start .inner{padding-block:48px;display:grid;gap:20px}
-.start .hode{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
-.start .hode span{font-size:15px;color:var(--muted)}
-.start .grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.start .rom{background:var(--bg)}
-/* Slik henger det sammen */
-.flater{margin:48px 0 8px;display:grid;gap:16px}
-.tre{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
-.flate{display:grid;gap:12px;align-content:start;padding:16px 16px 20px}
-.flate .t{display:grid;gap:4px;padding:0 6px}
-.bilde{aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--soft);display:flex;justify-content:center;align-items:flex-start}
-.bilde img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
-.ktittel{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;text-wrap:balance}
-.flate p,.rom p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;text-wrap:pretty}
-.kjede{display:grid;gap:12px}
-.kjede ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px 8px}
-.kjede li{display:grid;gap:8px;justify-items:start;min-width:0}
-.kjede .strek{display:flex;align-items:center;gap:8px;width:100%}
-.kjede .strek i{width:10px;height:10px;border-radius:5px;background:var(--accent);flex:none}
-.kjede .strek s{height:1px;background:var(--line);flex:1;display:block;text-decoration:none}
-.kjede li:last-child .strek s{display:none}
-.kjede li span{font:500 14px/1.4 var(--sans)}
-/* Alle rommene */
-.alle{margin-top:48px}
-.note{color:var(--muted);font-size:15px;margin:8px 0 0;max-width:62ch}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.rom{display:flex;flex-direction:column;gap:10px;padding:12px 12px 20px;color:inherit;text-decoration:none;min-height:200px;transition:border-color var(--dur) var(--ease)}
-.rom:hover{border-color:var(--sand);text-decoration:none}
-.rom:focus-visible{border-radius:var(--r)}
-.rom .bilde{margin-bottom:4px;flex:none}
-.rom .pill{align-self:flex-start;margin-left:8px}
-.rom .ktittel,.rom p,.rom .go{padding:0 8px}
-.go{margin-top:auto;font:500 15px/1.4 var(--sans);color:var(--accent-tekst)}
-.empty{color:var(--muted)}
-.rommene{padding-bottom:64px}
-/* Avslutning */
-.om{background:var(--card);border-top:1px solid var(--line)}
-.om .inner{padding-block:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px 48px;align-items:center}
-.om .ill{padding:28px 32px 12px}
-.om .tekst{display:grid;gap:14px}
-.om p{margin:0;color:var(--muted);font-size:17px;max-width:48ch;text-wrap:pretty}
-.om p.liten{font-size:15px}
-.om code{font-size:15px}
-/* Bunn */
-footer{border-top:1px solid var(--line)}
-footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
-.levert{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.levert p{margin:0}
-.levert>span{display:inline-flex;align-items:center;gap:10px}
-.baand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 32px}
-.avsender{text-decoration:none!important;display:flex;align-items:center;gap:14px;color:var(--fg);min-height:44px;font:500 15px/1.4 var(--sans)}
-.avsender svg{flex:none;display:block}
-.strek-sn{fill:none;stroke:currentColor;stroke-width:2.4}
-.bue{fill:none;stroke:var(--accent);stroke-width:1.8}
-.baand ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;font-size:15px}
-.baand li{display:flex;align-items:center}
-.baand .skille{color:var(--muted);padding:0 10px}
-.baand .her{color:var(--fg);padding:10px 0}
-.baand li a{color:var(--muted);padding:10px 0;display:inline-block;text-decoration:none}
-.baand li a:hover{color:var(--fg)}
-@media (min-width:1100px){.rommene .grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:700px){.tre{grid-template-columns:repeat(2,minmax(0,1fr))}.flate .bilde.enhet-bilde{aspect-ratio:16/10}}
-@media (max-width:640px){.inner{padding-inline:16px}.hjem .hlogo{--h:30px}.sn{height:22px}.hero{padding-bottom:32px}.hero .ill{min-height:0;padding:24px 24px 8px}.om .ill{padding:20px 24px 6px}}
-</style>
+<link rel="stylesheet" href="/assets/forside.css">
 </head>
 <body>
-<header class="inner toppfelt">
-  <a class="hjem" href="/" aria-label="Visningsrommet – forsiden"><!--hengsel-logo 40--><span class="sep" aria-hidden="true"></span><b>Visningsrommet</b></a>
-  <span><img class="sn lys" src="/img/sn-logo.svg" alt="SN Group" width="42" height="26"><img class="sn mork" src="/img/sn-logo-mork.svg" alt="SN Group" width="42" height="26"></span>
+<header class="topp">
+  <div class="inner">
+    <a class="hjem" href="/" aria-label="Visningsrommet – forsiden"><!--hengsel-logo 30--><span class="sep" aria-hidden="true"></span><b>Visningsrommet</b></a>
+    <button type="button" class="menyknapp" id="menyknapp" aria-label="Meny" aria-expanded="false" aria-controls="meny">≡</button>
+    <nav class="meny" id="meny" aria-label="Seksjoner">
+      <a href="#forsta">Forstå</a><a href="#prov">Prøv</a><a href="#dokumenter">Dokumenter</a><a href="#presenter">Presenter</a><a class="crm" href="/crm/">Logg inn på CRM</a>
+    </nav>
+  </div>
 </header>
-
 <main>
   <section class="inner hero" aria-label="Velkommen">
     <div class="tekst">
       <span class="eyebrow">SN Group</span>
-      <h1>Visningsrommet</h1>
-      <p class="ingress">Her viser vi hele løsningen: CRM, montørappen Hengsel og koblingene til leverandørene. Velg hvem du er, så ser du det som er mest relevant for deg. Alle data er oppdiktet.</p>
+      <h1>Hele løsningen,<br>rom for rom.</h1>
+      <p class="ingress">CRM for butikken, Hengsel Ute for montøren, Min side for kunden og koblingene til leverandørene. Alt du ser her er oppdiktet, men virker.</p>
       <div class="velg">
-        <span class="label" id="velg">Velg hvem du er</span>
+        <span class="label" id="velg">Jeg er</span>
         <nav class="roles" id="roles" aria-labelledby="velg"></nav>
         <p class="intro" id="intro"></p>
       </div>
     </div>
-    <div class="ill"><img src="/img/hero.webp" alt="Hengsel CRM på en Studio Display (tilbud) og en iPad (leder) og Hengsel Ute på en iPhone (i dag)" width="1500" height="1227"></div>
-  </section>
-
-  <section class="start" aria-labelledby="start-h">
-    <div class="inner">
-      <div class="hode"><h2 id="start-h">Start her</h2><span>Tre rom som viser helheten på ti minutter</span></div>
-      <div class="grid" id="start"></div>
+    <div>
+      <img class="bilde-hero" src="/img/hero.webp" alt="Hengsel CRM på en Studio Display (tilbud), en iPad (leder) og Hengsel Ute på en iPhone (i dag)" width="1500" height="1227">
+      <img class="bilde-enkel" src="/img/hero-enkel.webp" alt="Hengsel CRM: tilbud på en Studio Display" width="1320" height="1017">
     </div>
   </section>
 
-  <div class="inner rommene">
-    <section class="flater" aria-labelledby="sammen">
-      <h2 id="sammen">Slik henger det sammen</h2>
-      <div class="tre">
-        <div class="card flate">
-          <div class="bilde enhet-bilde"><img src="/img/flate-butikken.webp" alt="Hengsel CRM: salgstavlen på en Studio Display" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Butikken</span><span class="ktittel">Hengsel CRM</span><p>Min dag, salgstavle, kundekort, tilbud, bestilling, ordre, montasje, saker og resultater. På PC, iPad og telefon.</p></div>
-        </div>
-        <div class="card flate">
-          <div class="bilde enhet-bilde"><img src="/img/flate-montoren.webp" alt="Hengsel Ute: i dag på en iPhone" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Montøren</span><span class="ktittel">Hengsel</span><p>Dagens jobber, varer og tegning, KS med typeskilt, avvik med bilde og ferdigmelding med kundens signatur.</p></div>
-        </div>
-        <div class="card flate">
-          <div class="bilde enhet-bilde"><img src="/img/flate-kunden.webp" alt="Min side på to iPhoner: hjem og tilbudet" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Kunden</span><span class="ktittel">Min side</span><p>Kunden ser tilbudet med bilde og pris, velger tilvalg, signerer og følger reisen til kjøkkenet er montert. Uten app.</p></div>
-        </div>
-        <div class="card flate">
-          <div class="bilde enhet-bilde"><img src="/img/flate-leverandoren.webp" alt="Hengsel CRM: kontrollmål på en MacBook" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Leverandøren</span><span class="ktittel">Ordre og bekreftelser</span><p>Ordrebekreftelser og fakturaer fra leverandørene leses inn og kobles til ordren, så avvik dukker opp uten manuelt arbeid.</p></div>
-        </div>
-      </div>
-      <div class="card kjede">
-        <span class="eyebrow">Én ordre, åtte steg</span>
-        <ol>
-          <li><span class="strek"><i></i><s></s></span><span>Lead</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Tilbud</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Kjøpsavtale</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Bestilling</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Levering</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Montering</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Faktura</span></li>
-          <li><span class="strek"><i></i><s></s></span><span>Reklamasjon</span></li>
-        </ol>
-      </div>
-    </section>
-
-    <h2 class="alle" id="alle">Alle rommene</h2>
-    <p class="note" id="note"></p>
-    <div id="out"></div>
-  </div>
-
-  <section class="om" aria-labelledby="om-h">
-    <div class="inner">
-      <div class="ill"><img src="/assets/ill/kjokken.png" alt="Ferdig montert kjøkken med øy" width="1400" height="807" loading="lazy"></div>
-      <div class="tekst">
-        <h2 id="om-h">Et utstillingsrom, ikke en salgsside.</h2>
-        <p>Visningsrommet er bare for inviterte. Del lenke til én rolle med <code>?rolle=selger</code>, <code>montor</code>, <code>leverandor</code> eller <code>nobia</code>.</p>
-        <p class="liten">Alle navn, kunder, ordre og tall er oppdiktet.</p>
-      </div>
+  <section class="inner seksjon forsta" id="forsta" aria-labelledby="forsta-h">
+    <div class="hode"><h2 id="forsta-h">Forstå på ti minutter</h2><span>Tre rom, i rekkefølge</span></div>
+    <div class="rad3 sveip">
+      <a class="card rom" href="/reise/" data-rom="reise"><span class="meta">1 · Simulering · 4 min</span><div class="bilde"><img src="/img/forsta-reise.webp" alt="Hengsel CRM: tilbudet slik kunden ser det, på en MacBook" loading="lazy"></div><span class="ktittel">Ordrens reise</span><p>Fra tegning i CET til montert kjøkken og faktura, i åtte scener.</p><span class="go">Spill av ›</span></a>
+      <a class="card rom" href="/kunde/" data-rom="kunde"><span class="meta">2 · Simulering · 3 min</span><div class="bilde"><img src="/img/forsta-kunde.webp" alt="Min side på en iPhone: tilbudet" loading="lazy"></div><span class="ktittel">Kundens reise</span><p>Det kunden ser i Min side og på SMS, fra tilbud til reklamasjon.</p><span class="go">Spill av ›</span></a>
+      <a class="card rom" href="/system/" data-rom="system"><span class="meta">3 · Oversikt · 3 min</span><div class="bilde"><img src="/img/rom-system.webp" alt="Systemkartet på en Studio Display" loading="lazy"></div><span class="ktittel">Systemkartet</span><p>Hva som går inn og ut av CRM, og hvor langt hver kobling er kommet.</p><span class="go">Åpne kartet ›</span></a>
     </div>
+  </section>
+
+  <section class="inner seksjon prov" id="prov" aria-labelledby="prov-h">
+    <div class="hode"><h2 id="prov-h">Prøv selv</h2><span>Klikk rundt med oppdiktede data. Ingen innlogging.</span></div>
+    <div class="rad4">
+      <a class="card gruppe-kort" href="/butikken/" data-gruppe="butikken"><div class="bilde"><img src="/img/flate-butikken.webp" alt="Hengsel CRM: salgstavlen på en Studio Display" loading="lazy"></div><span class="meta">Butikken</span><span class="ktittel">Hengsel CRM</span><p>Min dag, tilbud, bestilling, montasjeplan og kontroll.</p><span class="go"></span></a>
+      <a class="card gruppe-kort" href="/montoren/" data-gruppe="montoren"><div class="bilde"><img src="/img/flate-montoren.webp" alt="Hengsel Ute: i dag på en iPhone" loading="lazy"></div><span class="meta">Montøren</span><span class="ktittel">Hengsel Ute</span><p>Dagen, tegningen, laser, KS og ferdigmelding. Også for firmaleder.</p><span class="go"></span></a>
+      <a class="card gruppe-kort" href="/kunden/" data-gruppe="kunden"><div class="bilde"><img src="/img/flate-kunden.webp" alt="Min side på to iPhoner: hjem og tilbudet" loading="lazy"></div><span class="meta">Kunden</span><span class="ktittel">Min side</span><p>Tilvalg, signering, levering, montering og reklamasjon. Uten app.</p><span class="go"></span></a>
+      <a class="card gruppe-kort" href="/leverandoren/" data-gruppe="leverandoren"><div class="bilde"><img src="/img/flate-leverandoren.webp" alt="Hengsel CRM: kontrollmål på en MacBook" loading="lazy"></div><span class="meta">Leverandøren</span><span class="ktittel">Koblingene</span><p>Ordrebekreftelse på e-post, hvitevarer via Tradeplace, CET.</p><span class="go"></span></a>
+    </div>
+  </section>
+
+  <section class="inner seksjon" id="dokumenter" data-rom="dokumenter" aria-labelledby="dok-h">
+    <div class="hode"><h2 id="dok-h">Det kunden og butikken får i hånden</h2><a href="/dokumenter/">Alle 9 dokumenter ›</a></div>
+    <div class="ark-rad">
+      <a href="/dokumenter/"><img src="/dokumenter/dok-tilbud.webp" alt="Tilbudet, forside" width="1654" height="2339" loading="lazy"><span>Tilbudet</span></a>
+      <a href="/dokumenter/"><img src="/dokumenter/dok-kjopsavtale.webp" alt="Kjøpsavtalen, forside" width="1654" height="2339" loading="lazy"><span>Kjøpsavtalen</span></a>
+      <a href="/dokumenter/"><img src="/dokumenter/dok-monteringsrapport.webp" alt="Monteringsrapporten" width="1654" height="2339" loading="lazy"><span>Monteringsrapporten</span></a>
+      <a href="/dokumenter/"><img src="/dokumenter/dok-fdv.webp" alt="FDV og garanti, forside" width="1654" height="2339" loading="lazy"><span>FDV og garanti</span></a>
+      <a href="/dokumenter/"><img src="/dokumenter/dok-anbud.webp" alt="Anbud for prosjekt, forside (liggende)" width="2339" height="1654" loading="lazy"><span>Anbud for prosjekt</span></a>
+    </div>
+  </section>
+
+  <section class="inner seksjon" id="presenter" aria-labelledby="pres-h">
+    <div class="hode"><h2 id="pres-h">Presenter og regn</h2><span>For møter med ledelse, leverandører og Nobia</span></div>
+    <div class="rad4">
+      <a class="card rom tekstkort" href="/leverandor/" data-rom="leverandor"><span class="meta">Presentasjon</span><span class="ktittel">Leverandørløsningen</span><p>Tolv strømmer, krav og frister</p></a>
+      <a class="card rom tekstkort" href="/leder/" data-rom="leder"><span class="meta">Oversikt</span><span class="ktittel">Daglig leder</span><p>Ordrereserve, margin, risiko</p></a>
+      <a class="card rom tekstkort" href="/veikart/" data-rom="veikart"><span class="meta">Oversikt</span><span class="ktittel">Veikart og status</span><p>I drift, kvartal for kvartal</p></a>
+      <a class="card rom tekstkort" href="/gevinst/" data-rom="gevinst"><span class="meta">Verktøy</span><span class="ktittel">Gevinstkalkulator</span><p>Butikkens egne tall</p></a>
+    </div>
+    <div class="lenkerad"><a href="/sv/" data-rom="sv">För Nobia (svenska / English) ›</a><a href="/opplaering/" data-rom="opplaering">Opplæring for selgere ›</a><a href="/rom/" id="alle-rom">Alle rommene ›</a></div>
   </section>
 </main>
-
 <footer>
   <div class="inner">
-    <div class="levert"><p>Alle data i Visningsrommet er oppdiktet. <a href="/cdn-cgi/access/logout">Logg ut</a></p><span>Levert med <!--hengsel-logo 30--></span></div>
+    <div class="levert"><p>Et utstillingsrom, ikke en salgsside. Alle navn, kunder, ordre og tall er oppdiktet. <a href="/cdn-cgi/access/logout">Logg ut</a></p><span>Levert med <!--hengsel-logo 30--></span></div>
+    <div class="levert"><p>Del lenke til én rolle: <code>?rolle=selger</code> · <code>montor</code> · <code>leverandor</code> · <code>nobia</code></p></div>
     <aside class="baand" aria-label="SN Group">
       <a href="https://sngroup.no" class="avsender">
         <svg width="32" height="32" viewBox="0 0 44 44" aria-hidden="true"><g transform="translate(5,5)"><rect class="strek-sn" x="0" y="0" width="34" height="34"/><line class="strek-sn" x1="17" y1="0" x2="17" y2="21"/><line class="strek-sn" x1="0" y1="21" x2="34" y2="21"/><path class="bue" d="M17 21 A9 9 0 0 1 26 30"/></g></svg>
@@ -206,6 +102,7 @@ footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
     </aside>
   </div>
 </footer>
-<script src="/side.js"></script>
+<script src="/assets/rom.js"></script>
+<script src="/forside.js"></script>
 </body>
 </html>
