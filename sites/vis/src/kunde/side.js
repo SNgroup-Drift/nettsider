@@ -1,5 +1,5 @@
 (function(){
-/* Skjermbilde per steg (kundeportalen): 1–4 kundeportal-k03 → k04 → k06 → k08 (v3), 5 levering, 6 montering, 7–8 FDV og «Meld en feil» (portal-tlf-*, til v4) */
+/* Skjermbilde per steg (kundeportalen): 1–4 kundeportal-k03 → portal-tilbud (K04) → k06 → k08, 5 levering (K10), 6 montering (K12), 7–8 FDV (K14) og «Meld en feil» */
 var BILDE=[0,1,2,3,4,5,6,6],TLF=Skjermbilder.lag(document.getElementById('tlf'));
 var S=[
 {t:'Tilbudet',w:'Tilbud',clk:'09:12',n:['E-post','Tilbudet ditt fra Kjøkkenstudio Hamar er klart'],h:'Tilbudet kommer i Min side',p:'Hanne får tilbudet med tegninger, design og pris. Hun kan se opsjonene, sammenligne og stille spørsmål der.',bak:['Tilbudet er laget fra CET uten taste-arbeid','Pris og leveringstid kommer fra leverandørene']},
