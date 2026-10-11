@@ -25,7 +25,7 @@ import { PROSJEKTER } from "../content/innhold";
         <div class="tabell" tabindex="0" role="region" aria-label="Referanseprosjekter, tabellen kan rulles sideveis">
           <table>
             <thead>
-              <tr><th scope="col">Prosjekt</th><th scope="col">Byggetrinn</th><th scope="col">Merke</th><th scope="col" class="tall">Enheter</th><th scope="col">Sted</th><th scope="col">År</th></tr>
+              <tr><th scope="col">Prosjekt</th><th scope="col">Byggetrinn</th><th scope="col">Leveranse</th><th scope="col" class="tall">Enheter</th><th scope="col">Sted</th><th scope="col">År</th></tr>
             </thead>
             <tbody>
               {PROSJEKTER.map((p) => (
@@ -48,7 +48,7 @@ import { PROSJEKTER } from "../content/innhold";
               <h2 class="b-h3">{p.name}</h2>
               <dl>
                 <dt>Byggetrinn</dt><dd>{p.phase}</dd>
-                <dt>Merke</dt><dd>{p.brand}</dd>
+                <dt>Leveranse</dt><dd>{p.brand}</dd>
                 <dt>Enheter</dt><dd class="tall-v">{p.units}</dd>
                 <dt>Sted</dt><dd>{p.place}</dd>
                 <dt>År</dt><dd class="tall-v">{p.year}</dd>
