@@ -31,17 +31,19 @@ interface Props {
   /** Skjul «Din logo» selv om bildet er et I dag-skjermbilde */
   utenLogo?: boolean;
   class?: string;
+  /** Bildet har sin egen statuslinje (klokke, Dynamic Island): ingen statuslinje eller «Din logo» tegnes over det */
+  utenStatus?: boolean;
   /** Tegn statuslinjens symboldefinisjoner (id-ene sb-*). Sett false på alle rammer unntatt den første når flere ligger på samme side. */
   symboler?: boolean;
 }
 const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] } as const;
-const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true } = Astro.props;
+const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false } = Astro.props;
 const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
 const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
 // Følger bildet temaet? Slot: ja. Bilde: bare med mørk variant.
 const folgerTema = src ? !!srcDark : true;
 const sb = statusFarge === "hvit" ? "sb-hvit" : statusFarge === "svart" ? "sb-svart" : folgerTema ? "sb-auto" : "sb-svart";
-const visLogo = !!src && !utenLogo && /\/(ipad-)?idag-/.test(src) && type !== "display";
+const visLogo = !!src && !utenLogo && !utenStatus && /\/(ipad-)?idag-/.test(src) && type !== "display";
 const inset = type === "ipad" && !src ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
 const lasting = forst ? "eager" : "lazy";
 ---
@@ -71,11 +73,11 @@ const lasting = forst ? "eager" : "lazy";
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
         {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
         {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>}
-        <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
+        {!utenStatus && <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
           <text x="68" y="35" text-anchor="middle" class="klokke">9:41</text>
           <rect x="138.5" y="11" width="125" height="37" rx="18.5" fill="#000" />
           <g transform="translate(298 25)"><use href="#sb-signal" /></g><g transform="translate(323 25)"><use href="#sb-wifi" /></g><g transform="translate(346 24.5)"><use href="#sb-batteri" /></g>
-        </svg>
+        </svg>}
       </div>
     </div>
   )}

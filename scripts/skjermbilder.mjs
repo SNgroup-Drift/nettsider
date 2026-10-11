@@ -116,6 +116,33 @@ for (const side of [...HENGSEL_SIDER, { sti: "/personvern", fil: "personvern" },
   }
 }
 
+// 1d. hengsel.no/apptest og passordsiden (K-172): 390 og 1440 px, lys og mørk, til claude/k172-skjermbilder/
+const apptestUt = join(rot, "claude", "k172-skjermbilder");
+await mkdir(apptestUt, { recursive: true });
+for (const side of [{ sti: "/apptest", fil: "apptest" }, { sti: "/apptest/passord", fil: "apptest-passord" }]) {
+  for (const [bredde, dsf] of [[390, 2], [1440, 1]]) {
+    for (const modus of ["light", "dark"]) {
+      const ctx = await browser.newContext({ viewport: { width: bredde, height: bredde === 390 ? 844 : 900 }, deviceScaleFactor: dsf, isMobile: bredde === 390, hasTouch: bredde === 390, colorScheme: modus, reducedMotion: "reduce" });
+      const page = await ctx.newPage();
+      await page.goto(servere.hengsel.base + side.sti, { waitUntil: "networkidle" });
+      await page.evaluate(async () => {
+        document.querySelectorAll("img").forEach((i) => { i.loading = "eager"; i.decoding = "sync"; });
+        for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
+        window.scrollTo(0, 0);
+      });
+      await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 30000 });
+      await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(600);
+      await page.evaluate(() => document.fonts.ready);
+      const fil = `${side.fil}-${bredde}-${modus === "light" ? "lys" : "mork"}.png`;
+      await page.screenshot({ path: join(apptestUt, fil), fullPage: true });
+      console.log(`  bilde: claude/k172-skjermbilder/${fil}`);
+      await ctx.close();
+    }
+  }
+}
+
 // 2. 360 px uten vannrett rulling, og ingen konsollfeil, på alle sider
 for (const [navn, { base }] of Object.entries(servere)) {
   if (navn === "vis") continue; // Visningsrommet har egne sjekker på 390 og 1280 px: scripts/skjermbilder-vis.mjs
@@ -205,6 +232,108 @@ for (const [navn, { base }] of Object.entries(servere)) {
     meld(eksterne.length === 0, `hengsel${side.sti}: ingen eksterne forespørsler${eksterne.length ? `: ${eksterne.join(", ")}` : ""}`);
     const lagret = await page.evaluate(() => Object.keys(localStorage).concat(Object.keys(sessionStorage)));
     meld(lagret.length === 0 && (await ctx.cookies()).length === 0, `hengsel${side.sti}: ingenting lagres (localStorage, informasjonskapsler)`);
+    await ctx.close();
+  }
+}
+
+// 6. hengsel.no/apptest (K-172): CSP-regler, skrifter, eksterne forespørsler, CLS, kontrast, vannrett rulling, uten skript og telefongjenkjenning
+{
+  const base = servere.hengsel.base;
+  for (const sti of ["/apptest", "/apptest/passord"]) {
+    for (const modus of ["light", "dark"]) {
+      for (const bredde of [390, 1440]) {
+        const ctx = await browser.newContext({ viewport: { width: bredde, height: bredde === 390 ? 844 : 900 }, isMobile: bredde === 390, hasTouch: bredde === 390, colorScheme: modus });
+        const page = await ctx.newPage();
+        const konsoll = [];
+        page.on("console", (m) => m.type() === "error" && konsoll.push(m.text()));
+        page.on("pageerror", (e) => konsoll.push(e.message));
+        await page.addInitScript(() => {
+          window.__cls = 0;
+          new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: "layout-shift", buffered: true });
+        });
+        await page.goto(base + sti, { waitUntil: "networkidle" });
+        await page.waitForTimeout(1500);
+        const etikett = `hengsel${sti} (${modus}, ${bredde} px)`;
+        const kilde = await (await fetch(base + sti)).text();
+        meld(!/\sstyle="/.test(kilde), `${etikett}: ingen style-attributter i HTML`);
+        meld(!/<script(?![^>]*\bsrc=)(?![^>]*type="application\/(?:ld\+)?json")[^>]*>/.test(kilde), `${etikett}: ingen inline-skript`);
+        meld(konsoll.length === 0, `${etikett}: ingen konsollfeil${konsoll.length ? `: ${konsoll.join(" | ")}` : ""}`);
+        const skrifter = await page.evaluate(async () => { await document.fonts.ready; return [...new Set([...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/"/g, "")))]; });
+        meld(skrifter.every((f) => /Newsreader|Inter/.test(f)), `${etikett}: bare Newsreader og Inter lastet (${skrifter.join(", ")})`);
+        const eksterne = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => !r.name.startsWith(location.origin)).map((r) => r.name));
+        meld(eksterne.length === 0, `${etikett}: ingen eksterne forespørsler`);
+        const bredder = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
+        meld(bredder[0] <= bredder[1], `${etikett}: ingen vannrett rulling (${bredder[0]}/${bredder[1]})`);
+        const cls = await page.evaluate(() => window.__cls);
+        meld(cls === 0, `${etikett}: CLS ${cls}`);
+        // Kontrast: tekst mot nærmeste bakgrunn som ikke er gjennomsiktig, minst 4,5:1 (3:1 for tekst fra 24 px, eller 18,66 px og fet)
+        const lav = await page.evaluate(() => {
+          const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+          const les = (c) => { const m = c.match(/[\d.]+/g)?.map(Number); return m ? { rgb: m.slice(0, 3), a: m[3] ?? 1 } : null; };
+          const bg = (el) => { for (let e = el; e; e = e.parentElement) { const c = les(getComputedStyle(e).backgroundColor); if (c && c.a > 0.95) return c.rgb; } return [255, 255, 255]; };
+          const ut = [];
+          for (const el of document.body.querySelectorAll("*")) {
+            if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
+            const cs = getComputedStyle(el);
+            const r = el.getBoundingClientRect();
+            if (!r.width || !r.height || cs.visibility === "hidden" || cs.display === "none" || el.closest(".skjult, [hidden], .skip")) continue;
+            if (Number(cs.opacity) < 1) continue;
+            const f = les(cs.color);
+            const a = lum(f.rgb), b = lum(bg(el));
+            const k = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+            const px = parseFloat(cs.fontSize), fet = Number(cs.fontWeight) >= 700;
+            const krav = px >= 24 || (px >= 18.66 && fet) ? 3 : 4.5;
+            if (k < krav) ut.push(`${el.tagName.toLowerCase()}.${[...el.classList].join(".")} «${el.textContent.trim().slice(0, 24)}» ${k.toFixed(2)}`);
+          }
+          return ut.slice(0, 6);
+        });
+        meld(lav.length === 0, `${etikett}: kontrast minst 4,5:1${lav.length ? `: ${lav.join(" | ")}` : ""}`);
+        await ctx.close();
+      }
+    }
+  }
+  // Uten skript: bildet står stille, alle tre veiene vises, rollene byttes med radioknapper
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto(base + "/apptest", { waitUntil: "load" });
+    const veier = await page.locator("[data-vei]").evaluateAll((l) => l.filter((e) => e.getBoundingClientRect().height > 0).length);
+    meld(veier === 3, `hengsel/apptest uten skript: alle tre installeringsveiene vises (${veier})`);
+    await page.locator('label[for="rolle-utkjorer"]').click();
+    meld(await page.locator('[data-rolle="utkjorer"]').isVisible(), "hengsel/apptest uten skript: rollene byttes uten skript");
+    meld((await page.locator("[data-fremdrift]").textContent()).trim() === "0 av 8", "hengsel/apptest uten skript: sjekklista står på 0 av 8");
+    await ctx.close();
+  }
+  // Telefongjenkjenning, sjekkliste i localStorage, kopier og bildeveksling
+  const UA = {
+    iphone: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1",
+    android: "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Mobile Safari/537.36",
+  };
+  for (const [navn, ua, forventet] of [["iPhone", UA.iphone, "iphone"], ["Android", UA.android, "android"]]) {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, userAgent: ua });
+    const page = await ctx.newPage();
+    await page.goto(base + "/apptest", { waitUntil: "networkidle" });
+    const synlig = await page.locator("[data-vei]").evaluateAll((l) => l.filter((e) => e.getBoundingClientRect().height > 0).map((e) => e.dataset.vei));
+    meld(synlig.length === 1 && synlig[0] === forventet, `hengsel/apptest: ${navn} viser én vei (${synlig.join(", ")}), de andre bak «Andre telefoner»`);
+    await page.click("[data-andre]");
+    meld((await page.locator("[data-vei]").evaluateAll((l) => l.filter((e) => e.getBoundingClientRect().height > 0).length)) === 3, `hengsel/apptest: «Andre telefoner» viser de to andre veiene (${navn})`);
+    await ctx.close();
+  }
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto(base + "/apptest", { waitUntil: "networkidle" });
+    meld((await page.locator(".qr svg path").getAttribute("d"))?.length > 100 && (await page.locator(".qr").isVisible()), "hengsel/apptest: PC viser QR-koden (SVG laget ved bygging)");
+    await page.locator("label.sjekk-punkt").nth(0).click();
+    await page.locator("label.sjekk-punkt").nth(3).click();
+    meld((await page.locator("[data-fremdrift]").textContent()).trim() === "2 av 8", "hengsel/apptest: avkrysning gir «2 av 8»");
+    const lagret = await page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
+    meld(Object.keys(lagret).length === 1 && Object.keys(lagret)[0].startsWith("hengsel-apptest-sjekk-") && lagret[Object.keys(lagret)[0]] === "[0,3]", `hengsel/apptest: sjekklista lagres under ${Object.keys(lagret)[0]}`);
+    await page.reload({ waitUntil: "networkidle" });
+    meld((await page.locator("[data-fremdrift]").textContent()).trim() === "2 av 8", "hengsel/apptest: avkrysningene huskes etter ny innlasting");
+    // Bildeveksling: prikken bytter bilde
+    await page.locator("[data-prikk]").nth(2).click();
+    meld(await page.locator("[data-slide]").nth(2).evaluate((e) => e.classList.contains("on")), "hengsel/apptest: prikkene bytter bilde");
     await ctx.close();
   }
 }

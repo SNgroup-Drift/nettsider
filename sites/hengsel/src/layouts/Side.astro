@@ -19,10 +19,12 @@ interface Props {
   /** Overstyrer robots-taggen, f.eks. «noindex,nofollow» for /apptest */
   robots?: string;
   aktiv?: MenyNokkel | "";
+  /** Uten hovedmenyen: /apptest viser bare sitt eget sidehode (slot «hode») */
+  utenMeny?: boolean;
   /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title, description, noindex, robots, aktiv = "", delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+const { title, description, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
 ---
 <BaseLayout
   title={title}
@@ -36,7 +38,7 @@ const { title, description, noindex, robots, aktiv = "", delingsbilde = "https:/
   appleIkon="/logo/apple-touch-icon-180.png"
 >
   <div class="side">
-    <Meny aktiv={aktiv} />
+    {utenMeny ? <slot name="hode" /> : <Meny aktiv={aktiv} />}
     <slot />
     <Bunn />
   </div>

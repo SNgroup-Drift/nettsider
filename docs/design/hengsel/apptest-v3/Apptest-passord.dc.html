@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Test Hengsel – passord</title>
+  <link rel="icon" href="hengsel.no/logo/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--surface-soft); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div style="background:var(--surface-soft); color:var(--ink); min-height:100vh; display:flex; flex-direction:column">
+  <header style="border-bottom:1px solid var(--line)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); height:64px; display:flex; align-items:center">
+      <a href="Forside.dc.html" aria-label="Hengsel – til forsiden" style="display:flex">
+        <sc-if value="{{ lys }}" hint-placeholder-val="{{ true }}"><img src="hengsel.no/logo/hengsel-logo-lys.svg" alt="Hengsel" style="height:30px; width:auto; display:block"></sc-if>
+        <sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}"><img src="hengsel.no/logo/hengsel-logo-mork.svg" alt="Hengsel" style="height:30px; width:auto; display:block"></sc-if>
+      </a>
+    </div>
+  </header>
+  <main data-screen-label="Apptest · passord" style="flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(40px,8vw,112px) clamp(16px,4vw,40px)">
+    <form method="post" action="" onSubmit="{{ send }}" style="width:100%; max-width:440px; background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,5vw,40px); box-sizing:border-box; display:flex; flex-direction:column; gap:24px">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:84px; padding:14px 0 10px; background:var(--surface-highlight); border-radius:20px">
+        <img src="hengsel.no/logo/hengsel-app-ikon-lys.svg" alt="" aria-hidden="true" style="width:60px; height:60px; border-radius:14px; display:block">
+        <span style="font-size:12px; line-height:1">Hengsel</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.2rem,5vw,2.8rem); line-height:1.05; letter-spacing:-.015em">Test Hengsel</h1>
+        <p style="margin:0; color:var(--muted)">Siden er for dem som er invitert til å teste appen. Skriv inn passordet du har fått.</p>
+      </div>
+      <label style="display:flex; flex-direction:column; gap:6px">
+        <span style="font-size:.92rem; font-weight:500">Passord</span>
+        <input class="input" type="password" name="passord" autocomplete="current-password" required="{{ true }}" aria-invalid="{{ feilAria }}" aria-describedby="passord-feil" style="{{ feltStil }}">
+      </label>
+      <sc-if value="{{ feil }}" hint-placeholder-val="{{ false }}">
+        <div id="passord-feil" role="alert" style="background:var(--bad-soft); color:var(--ink); border-radius:10px; padding:12px 14px; box-shadow:inset 3px 0 0 var(--bad); font-size:.95rem"><b style="font-weight:600">Feil passord.</b> Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.</div>
+      </sc-if>
+      <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" size="lg" block="{{ true }}" dc-props="{{ blokkProps }}" type="submit" hint-size="100%,56px">Åpne</x-import>
+      <p style="margin:0; font-size:.92rem; color:var(--muted)">Har du ikke fått passord? Skriv til <a href="mailto:hei@hengsel.no">hei@hengsel.no</a>.</p>
+    </form>
+  </main>
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;},&quot;visFeil&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, feil: false };
+  componentDidMount() { this.applyTheme(); this.setState({ feil: new URLSearchParams(location.search).get('feil') === '1' }); }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  renderVals() {
+    const feil = this.state.feil || !!this.props.visFeil;
+    return {
+      dark: this.state.dark, lys: !this.state.dark, feil, blokkProps: { style: { boxSizing: 'border-box' } }, feilAria: feil ? 'true' : 'false',
+      feltStil: { minHeight: 52, fontSize: 17, width: '100%', boxSizing: 'border-box', borderColor: feil ? 'var(--bad)' : undefined },
+      send: e => { e.preventDefault(); this.setState({ feil: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+</helmet>
+<header ref="{{ root }}" style="position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid var(--line); font-family:Inter, Arial, sans-serif">
+  <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); height:64px; display:flex; align-items:center; gap:20px">
+    <a href="Forside.dc.html" aria-label="Hengsel – til forsiden" style="display:flex; align-items:center; flex:none">
+      <sc-if value="{{ lys }}" hint-placeholder-val="{{ true }}"><img src="hengsel.no/logo/hengsel-logo-lys.svg" alt="Hengsel" style="{{ logoStyle }}"></sc-if><sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}"><img src="hengsel.no/logo/hengsel-logo-mork.svg" alt="Hengsel" style="{{ logoStyle }}"></sc-if>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Hovedmeny" style="display:flex; gap:18px; margin-left:auto; font-size:.93rem; align-items:center">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="7">
+          <a href="{{ l.href }}" aria-current="{{ l.current }}" style="{{ l.style }}">{{ l.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="https://vis.hengsel.no" style="color:var(--ink); font-size:.93rem; text-decoration:none; padding-left:18px; border-left:1px solid var(--line)" style-hover="color:var(--accent)">Logg inn</a>
+    </sc-if>
+    <div style="{{ rightWrap }}">
+      <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="Priser-og-demo.dc.html#demo" dc-props="{{ demoProps }}" hint-size="120px,44px">Be om demo</x-import>
+      <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ toggle }}" aria-expanded="{{ open }}" aria-label="Meny" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center">{{ burger }}</button>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ panel }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="Hovedmeny" style="position:absolute; left:0; right:0; top:64px; background:var(--bg); border-bottom:1px solid var(--line); box-shadow:var(--shadow)">
+      <div style="max-width:1180px; margin:0 auto; padding:8px clamp(16px,4vw,40px) 20px; display:flex; flex-direction:column">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="7">
+          <a href="{{ l.href }}" aria-current="{{ l.current }}" style="{{ l.mStyle }}">{{ l.label }}</a>
+        </sc-for>
+        <a href="https://vis.hengsel.no" style="min-height:52px; display:flex; align-items:center; color:var(--accent); text-decoration:none; font-size:1.05rem">Logg inn i Visningsrommet →</a>
+      </div>
+    </nav>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:80},&quot;aktiv&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;crm&quot;,&quot;ute&quot;,&quot;portal&quot;,&quot;slik&quot;,&quot;dok&quot;,&quot;int&quot;,&quot;pris&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { w: 1440, open: false };
+  root = React.createRef();
+  componentDidMount() {
+    const el = this.root.current; if (!el) return;
+    const m = () => { const w = el.clientWidth; if (w && w !== this.state.w) this.setState({ w }); };
+    this.ro = new ResizeObserver(m); this.ro.observe(el); m();
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const a = this.props.aktiv ?? '';
+    const dark = !!this.props.dark;
+    const wide = this.state.w > 1180;
+    const L = [['crm','CRM','CRM.dc.html'],['ute','Hengsel Ute','Ute.dc.html'],['portal','Kundeportal','Kundeportal.dc.html'],['slik','Slik virker det','Slik-virker-det.dc.html'],['dok','Dokumenter','Dokumenter.dc.html'],['int','Integrasjoner','Integrasjoner.dc.html'],['pris','Priser og demo','Priser-og-demo.dc.html']];
+    return {
+      root: this.root, dark, lys: !dark, wide, narrow: !wide, open: this.state.open, panel: !wide && this.state.open,
+      demoProps: { style: { whiteSpace: 'nowrap', padding: this.state.w < 480 ? '0 16px' : undefined } },
+      burger: this.state.open ? '×' : '≡',
+      toggle: () => this.setState(s => ({ open: !s.open })),
+      logoSrc: dark ? 'hengsel.no/logo/hengsel-logo-mork.svg' : 'hengsel.no/logo/hengsel-logo-lys.svg',
+      logoStyle: { display: 'block', height: wide ? 34 : 30, width: 'auto' },
+      rightWrap: { marginLeft: wide ? 0 : 'auto', display: 'flex', gap: 8, alignItems: 'center' },
+      links: L.map(([k, label, href]) => ({
+        label, href, current: k === a ? 'page' : undefined,
+        style: { color: k === a ? 'var(--ink)' : 'var(--muted)', textDecoration: 'none', fontWeight: k === a ? 600 : 400, whiteSpace: 'nowrap' },
+        mStyle: { minHeight: 52, display: 'flex', alignItems: 'center', borderBottom: '1px solid var(--line)', color: 'var(--ink)', textDecoration: 'none', fontSize: '1.05rem', fontWeight: k === a ? 600 : 400 },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

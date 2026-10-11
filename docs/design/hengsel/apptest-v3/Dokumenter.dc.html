@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dokumenter – Hengsel</title>
+  <link rel="icon" href="hengsel.no/logo/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <script src="dokumenter-data.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="dok" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
+
+  <section data-screen-label="Dokumenter · visning" style="padding:clamp(40px,6vw,72px) 0 clamp(48px,6vw,88px)">
+    <div ref="{{ wrapRef }}" style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:28px">
+      <div style="display:flex; flex-direction:column; gap:16px; max-width:780px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Dokumenter</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Ferdige dokumenter, rett fra ordren.</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:62ch; text-wrap:pretty">Hengsel lager dokumentene av det som allerede står på ordren: forside, alle sider, vilkår, signatur og vedlegg. Velg et dokument og bla gjennom det side for side.</p>
+      </div>
+      <div role="tablist" aria-label="Dokumenter" style="display:flex; flex-wrap:wrap; gap:8px">
+        <sc-for list="{{ velger }}" as="d" hint-placeholder-count="9">
+          <button type="button" role="tab" aria-selected="{{ d.sel }}" onClick="{{ d.go }}" style="{{ d.style }}">{{ d.t }}</button>
+        </sc-for>
+      </div>
+
+      <div style="background:var(--surface-highlight); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Slik lages det</span>
+        <ol style="list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px">
+          <sc-for list="{{ lages }}" as="l" hint-placeholder-count="5">
+            <li style="background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:10px 12px; display:flex; flex-direction:column; gap:2px; position:relative">
+              <span style="font-size:.75rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">{{ l.steg }}</span>
+              <span style="font-size:.92rem; line-height:1.4">{{ l.t }}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+
+      <div style="{{ visGrid }}">
+        <div style="display:flex; flex-direction:column; gap:14px; align-items:center; min-width:0">
+          <button type="button" onClick="{{ apneLys }}" aria-label="Åpne siden i lysboksen" style="{{ arkKnapp }}">
+            <dc-import name="A4Side" side="{{ side }}" fot="{{ dok.fot }}" nr="{{ nr }}" total="{{ total }}" w="{{ arkW }}" ligg="{{ dok.ligg }}" hint-size="100%,560px"></dc-import>
+          </button>
+          <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap">
+            <button type="button" onClick="{{ forrige }}" disabled="{{ forste }}" aria-label="Forrige side" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer">‹</button>
+            <span style="font-size:.92rem; color:var(--muted); min-width:96px; text-align:center; font-variant-numeric:tabular-nums">{{ teller }}</span>
+            <button type="button" onClick="{{ neste }}" disabled="{{ siste }}" aria-label="Neste side" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer">›</button>
+            <button type="button" onClick="{{ apneLys }}" style="min-height:44px; padding:0 18px; border-radius:999px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:500 .92rem Inter, sans-serif; cursor:pointer" style-hover="background:var(--ink); color:var(--bg)">Åpne i lysboks</button>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px; min-width:0">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+            <span style="font-family:Newsreader, Georgia, serif; font-size:2rem; line-height:1.1">{{ dok.t }}</span>
+            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" dot="{{ false }}" hint-size="70px,22px">Eksempel</x-import>
+          </div>
+          <p style="margin:0; color:var(--muted)">{{ dok.s }}</p>
+          <ol style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; border-top:1px solid var(--line)">
+            <sc-for list="{{ innhold }}" as="p" hint-placeholder-count="5">
+              <li style="border-bottom:1px solid var(--line)"><button type="button" onClick="{{ p.go }}" aria-current="{{ p.cur }}" style="{{ p.style }}" style-hover="background:var(--surface-soft)"><span style="color:var(--muted); width:64px; flex:none; font-variant-numeric:tabular-nums">{{ p.nr }}</span><span>{{ p.navn }}</span></button></li>
+            </sc-for>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Dokumenter · Visningsrommet" style="background:var(--surface-highlight); padding:clamp(48px,6vw,80px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:12px">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:6px"><b style="font-weight:600">Butikkens navn på hver side</b><span style="color:var(--muted); font-size:.95rem">Logo, navn og adresse hentes fra innstillingene. Hengsel står lite i bunnlinjen.</span></div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:6px"><b style="font-weight:600">Alltid siste versjon</b><span style="color:var(--muted); font-size:.95rem">Dokumentet lages på nytt når ordren endres. Tidligere versjoner ligger på ordren.</span></div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:6px"><b style="font-weight:600">Signering og arkiv</b><span style="color:var(--muted); font-size:.95rem">Kjøpsavtalen signeres med BankID i Penneo. Signerte dokumenter lagres på ordren og i kundeportalen.</span></div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:6px"><b style="font-weight:600">Også i Visningsrommet</b><span style="color:var(--muted); font-size:.95rem">De samme dokumentene finnes i Visningsrommet. <a href="https://vis.hengsel.no" style="color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px">Logg inn</a></span></div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+
+  <sc-if value="{{ lys }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{ lysTittel }}" style="position:fixed; inset:0; z-index:100; background:#1B1713; color:#F1E9DE; display:flex; flex-direction:column">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px clamp(12px,3vw,24px); flex:none">
+        <span style="display:flex; align-items:center; gap:10px; min-width:0"><b style="font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ dok.t }}</b><span style="font-size:.78rem; padding:2px 8px; border-radius:999px; background:#3B3229; color:#F1E9DE">Eksempel</span></span>
+        <span style="font-size:.92rem; font-variant-numeric:tabular-nums; white-space:nowrap">{{ teller }}</span>
+        <button type="button" onClick="{{ lukkLys }}" aria-label="Lukk" style="width:44px; height:44px; border-radius:999px; border:1px solid #3B3229; background:#26201A; color:#F1E9DE; font-size:20px; cursor:pointer">×</button>
+      </div>
+      <div style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; gap:clamp(8px,2vw,24px); padding:0 clamp(8px,2vw,24px) 20px">
+        <button type="button" onClick="{{ forrige }}" disabled="{{ forste }}" aria-label="Forrige side" style="width:48px; height:48px; flex:none; border-radius:999px; border:1px solid #3B3229; background:#26201A; color:#F1E9DE; font-size:22px; cursor:pointer">‹</button>
+        <div style="box-shadow:0 8px 24px rgba(0,0,0,.55)">
+          <dc-import name="A4Side" side="{{ side }}" fot="{{ dok.fot }}" nr="{{ nr }}" total="{{ total }}" w="{{ lysW }}" ligg="{{ dok.ligg }}" hint-size="600px,850px"></dc-import>
+        </div>
+        <button type="button" onClick="{{ neste }}" disabled="{{ siste }}" aria-label="Neste side" style="width:48px; height:48px; flex:none; border-radius:999px; border:1px solid #3B3229; background:#26201A; color:#F1E9DE; font-size:22px; cursor:pointer">›</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, d: 0, p: 0, lys: false, cw: 1100, vw: 1280, vh: 800, ok: !!window.HENGSEL_DOK };
+  wrapRef = React.createRef();
+  componentDidMount() {
+    this.applyTheme();
+    const m = () => { const el = this.wrapRef.current; this.setState({ cw: el ? el.clientWidth : 1100, vw: innerWidth, vh: innerHeight }); };
+    this.ro = new ResizeObserver(m); if (this.wrapRef.current) this.ro.observe(this.wrapRef.current); addEventListener('resize', m); m();
+    this.key = e => { if (!this.state.lys) return; if (e.key === 'Escape') this.setState({ lys: false }); if (e.key === 'ArrowRight') this.flytt(1); if (e.key === 'ArrowLeft') this.flytt(-1); };
+    addEventListener('keydown', this.key);
+    if (!this.state.ok) this.poll = setInterval(() => { if (window.HENGSEL_DOK) { clearInterval(this.poll); this.setState({ ok: true }); } }, 50);
+  }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); removeEventListener('keydown', this.key); clearInterval(this.poll); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  flytt(n) { const DOK = window.HENGSEL_DOK || []; const tot = (DOK[this.state.d] || { sider: [1] }).sider.length; this.setState(s => ({ p: Math.max(0, Math.min(tot - 1, s.p + n)) })); }
+  renderVals() {
+    const DOK = window.HENGSEL_DOK || [{ t: '', s: '', fot: '', lages: [], sider: [{}] }];
+    const { d, p, cw, vw, vh } = this.state;
+    const dok = DOK[Math.min(d, DOK.length - 1)];
+    const n = dok.sider.length, side = dok.sider[Math.min(p, n - 1)];
+    const ligg = !!dok.ligg;
+    const to = cw >= 760;
+    const kolonne = to ? (cw - 48) * 1.4 / 2.4 : cw;
+    const arkW = Math.round(Math.min(ligg ? 640 : 520, kolonne));
+    const ratio = ligg ? 794 / 1123 : 1123 / 794;
+    const lysW = Math.round(Math.max(200, Math.min(vw - 150, (vh - 100) / ratio)));
+    const STEG = ['Ordren i CRM', 'Valg', 'Knapp', 'Ferdig PDF', 'Sendt'];
+    return {
+      dark: this.state.dark, wrapRef: this.wrapRef,
+      dok: { t: dok.t, s: dok.s, fot: dok.fot, ligg },
+      visGrid: { display: 'grid', gridTemplateColumns: to ? 'minmax(0,1.4fr) minmax(0,1fr)' : 'minmax(0,1fr)', gap: 48, alignItems: 'start' },
+      side, nr: Math.min(p, n - 1) + 1, total: n, arkW, lysW,
+      arkKnapp: { padding: 0, border: 0, background: 'transparent', cursor: 'zoom-in', boxShadow: '0 8px 24px rgba(49,38,29,.16), 0 0 0 1px var(--line)', display: 'block', lineHeight: 0 },
+      velger: DOK.map((x, i) => ({ t: x.t, sel: i === d ? 'true' : 'false', go: () => this.setState({ d: i, p: 0 }),
+        style: { minHeight: 44, padding: '0 16px', borderRadius: 999, border: '1px solid ' + (i === d ? 'var(--ink)' : 'var(--line)'), background: i === d ? 'var(--ink)' : 'var(--surface)', color: i === d ? 'var(--bg)' : 'var(--ink)', font: '400 .93rem Inter, sans-serif', cursor: 'pointer' } })),
+      lages: (dok.lages || []).map((t, i) => ({ steg: (i + 1) + ' · ' + STEG[i], t })),
+      innhold: dok.sider.map((s, i) => ({ navn: s.navn, nr: 'Side ' + (i + 1), cur: i === p ? 'page' : undefined, go: () => this.setState({ p: i }),
+        style: { width: '100%', display: 'flex', gap: 12, padding: '11px 10px', border: 0, background: i === p ? 'var(--surface-highlight)' : 'transparent', boxShadow: i === p ? 'inset 3px 0 0 var(--accent)' : 'none', color: 'var(--ink)', font: '400 .98rem Inter, sans-serif', cursor: 'pointer', textAlign: 'left' } })),
+      teller: `Side ${Math.min(p, n - 1) + 1} av ${n}`,
+      forste: p === 0, siste: p >= n - 1,
+      forrige: () => this.flytt(-1), neste: () => this.flytt(1),
+      lys: this.state.lys, lysTittel: dok.t + ' i lysboks',
+      apneLys: () => this.setState({ lys: true }), lukkLys: () => this.setState({ lys: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

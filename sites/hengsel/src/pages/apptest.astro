@@ -1,248 +1,475 @@
 ---
 /**
- * hengsel.no/apptest: slik tester du Hengsel Ute (10.10.2026). Fasit: «55 Hengsel apptest.dc.html» i Claude Design-arkivet,
- * samme profil som forsiden. Ingen skript, ingen sporing.
- * Ligger bak passord: Workeren (worker/apptest.ts) slipper bare inn med gyldig informasjonskapsel (K-107).
+ * hengsel.no/apptest: slik tester du Hengsel (K-172, etter Claude Design «apptest v3», docs/design/hengsel/apptest-v3/).
+ * Fasit: Apptest.dc.html og Apptest-valg.md. Komponentene og tokenene er hengsel.no 2.0 (Side, Enhet, Bunn, tokens.css).
  *
- * Siden har noindex,nofollow, står ikke i sitemap.txt og lenkes ikke fra forsiden, menyen eller bunnen
- * (scripts/sjekk-lenker.mjs passer på det). Lenker og versjon ligger i src/apptest-lenker.ts; en verdi som begynner
- * med «TODO_» gir en deaktivert knapp («Lenke kommer»).
+ * Ligger bak passord: Workeren (worker/apptest.ts) slipper bare inn med gyldig informasjonskapsel (K-107) og setter demopassordet
+ * inn i [data-demopassord] (K-114). Siden har noindex,nofollow, står ikke i sitemap.txt og lenkes ikke fra menyen
+ * (scripts/sjekk-lenker.mjs passer på det).
+ *
+ * Innholdet som endres: lenker, versjon og dato i apptest-lenker.ts; byggene, kjente feil, sjekkliste, roller og spørsmål i apptest-innhold.ts.
+ * Siden virker uten skript (scripts/apptest.ts): bildet står stille, alle tre installeringsveiene vises og rollene byttes med radioknapper.
  */
 import Side from "../layouts/Side.astro";
-import Enhet from "../components/EnhetBilde.astro";
+import Enhet from "../components/Enhet.astro";
+import ApptestHode from "../components/ApptestHode.astro";
+import ApptestIkon from "../components/ApptestIkon.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
+import { BYGG, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
+import { lagQr } from "../apptest-qr";
+import { EPOST } from "../content/forside";
 
-const { versjon, epost, oppdatert } = APPTEST;
-// «Siste oppdatering»: datoen står som ÅÅÅÅ-MM-DD i apptest-lenker.ts
-const oppdatertTekst = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${oppdatert}T12:00:00Z`));
+const { versjon, oppdatert } = APPTEST;
+const dato = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${iso}T12:00:00Z`));
+const qr = lagQr();
 
-const BOKSER = [
+const VEIER = [
   {
-    tittel: "iPhone",
-    steg: ["Installer TestFlight fra App Store.", "Åpne lenken under på telefonen.", "Trykk «Installer»."],
-    knapp: "Åpne i TestFlight", href: APPTEST.testflight, primar: true,
+    id: "iphone", tittel: "iPhone og iPad", via: "TestFlight", knapp: "Åpne i TestFlight", href: APPTEST.testflight,
+    steg: ["Installer TestFlight fra App Store.", "Trykk «Åpne i TestFlight» og så «Installer».", "Åpne Hengsel og logg inn med demobrukeren."],
   },
   {
-    tittel: "Android via Google Play",
-    steg: ["Åpne lenken under med Google-kontoen du bruker på telefonen.", "Trykk «Bli testbruker».", "Installer fra Play."],
-    knapp: "Bli testbruker", href: APPTEST.play, primar: true,
+    id: "android", tittel: "Android", via: "Google Play", knapp: "Bli tester i Google Play", href: APPTEST.play,
+    steg: ["Trykk knappen og godta invitasjonen.", "Installer Hengsel fra Google Play.", "Åpne Hengsel og logg inn med demobrukeren."],
   },
   {
-    tittel: "Android uten Play",
-    steg: ["Last ned APK-fila på telefonen.", "Tillat installasjon fra ukjent kilde når telefonen spør.", "Åpne fila og installer."],
-    knapp: "Last ned APK", href: APPTEST.apk, primar: false,
+    id: "apk", tittel: "Android uten Google Play", via: "APK-fil", knapp: "Last ned APK", href: APPTEST.apk,
+    steg: ["Last ned APK-fila.", "Åpne fila og tillat installering fra denne kilden.", "Installer, åpne Hengsel og logg inn."],
   },
 ];
 
-// Faste demobrukere (K-114). Brukernavn = rollen, e-post = brukernavn@demo.invalid. Passordet står ikke her: Workeren setter det inn
-// fra hemmeligheten DEMO_PASSORD for innloggede (worker/apptest.ts).
-const demoHengsel = [
-  ["montor1", "Montør", "I dag, jobbsiden, mål og skisse, KS, avvik og Ferdig montert."],
-  ["montor2", "Montør, polsk", "Appen på polsk."],
-  ["firmaleder1", "Firmaleder med team", "Forespørsler, svar og fordeling av jobber."],
-  ["firmaleder2", "Firmaleder uten ansatte", "Egne jobber og forespørsler."],
-  ["firmaleder3", "Firmaleder", "Garderobe, skyvedører og bad."],
-  ["utkjorer", "Utkjører", "Ruten, mottak på lager, levering og skade."],
-  ["selger1", "Selger", "Selgermodus i appen."],
-];
-const demoCrm = [
-  ["selger1 – selger6", "Selgere i tre butikker (selger2 og selger6 er prosjektselgere)"],
-  ["leder", "Leder og admin"],
-  ["montasjeleder", "Montasjeleder og bestilling"],
-  ["bestilling", "Bestilling"],
-  ["superadmin", "Superadmin"],
+const SLIDES = [
+  { bilde: "idag", navn: "I dag", alt: "Hengsel: I dag med neste jobb, adresse og knappen Jeg er på vei" },
+  { bilde: "jobben", navn: "Jobben", alt: "Hengsel: jobben med KS, På vei og tegning" },
+  { bilde: "ks", navn: "KS", alt: "Hengsel: KS-sjekkliste punkt for punkt" },
+  { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel: meld ferdig montert" },
 ];
 
-const NYTT = APPTEST.nytt;
-// Tre skjermer fra appen i iPhone 18-ramme (pakke CRM_v4, INSTRUKS.md)
-const SKJERMER = [
-  { bilde: "ute-i-dag", tekst: "I dag", alt: "Hengsel Ute: I dag med neste jobb" },
-  { bilde: "ute-ks", tekst: "KS", alt: "Hengsel Ute: KS-sjekkliste" },
-  { bilde: "ute-laser", tekst: "Laser", alt: "Laseren kobles til og måler rett inn i bildet" },
-];
-const KJENT_AVVIK = "";
+const bildeSrc = (b: string, tema: "lys" | "mork") => `/img/apptest/${b}-${tema}.webp`;
+const MAAL = { w: 600, h: 1305 };
+const harFeil = KJENTE_FEIL.length > 0;
 ---
 <Side
-  title={`Test Hengsel Ute · Hengsel`}
-  description="Slik installerer du testversjonen av Hengsel Ute på iPhone, iPad eller Android."
+  title="Test Hengsel – testversjon av montørappen"
+  description="Slik installerer og tester du testversjonen av Hengsel på iPhone, iPad eller Android."
   robots="noindex,nofollow"
+  utenMeny
 >
-  <div class="side">
-    <main id="innhold">
-      <section class="hero h-innhold">
-        <img src="/img/hengsel-app-ikon-lys.svg" alt="" width="96" height="96" class="ikon" />
+  <ApptestHode slot="hode" meldFeil />
+  <main id="innhold" class="a-side">
+    <section class="hero" aria-label="Test Hengsel">
+      <div class="h-innhold hero-rutenett">
         <div class="hero-tekst">
-          <h1>Test Hengsel Ute</h1>
-          <p class="lede">Versjon {versjon}. Du logger inn med kontoen du har fått fra arbeidsgiveren din. Velg telefonen din under.</p>
+          <span class="eyebrow">Testversjon {versjon} · sist oppdatert {dato(oppdatert)}</span>
+          <h1>Test Hengsel</h1>
+          <p class="lede">Appen montørene bruker på jobben. Installer testversjonen, logg inn med demobrukerne og si fra om alt som ikke virker.</p>
+          <div class="ikon"><ApptestIkon /></div>
         </div>
-      </section>
+        <div class="hero-bilder">
+          <div class="slides">
+            {SLIDES.map((s, i) => (
+              <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
+                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} srcDark={bildeSrc(s.bilde, "mork")} w={MAAL.w} h={MAAL.h} alt={s.alt} forst={i === 0} symboler={i === 0} utenStatus />
+              </div>
+            ))}
+          </div>
+          <div class="prikker" role="tablist" aria-label="Skjermbilder">
+            {SLIDES.map((s, i) => (
+              <button type="button" role="tab" class:list={["prikk", { on: i === 0 }]} aria-selected={i === 0 ? "true" : "false"} aria-label={s.navn} data-prikk><span></span></button>
+            ))}
+          </div>
+          <span class="slidenavn" aria-live="polite" data-slidenavn>{SLIDES[0].navn}</span>
+        </div>
+      </div>
+    </section>
 
-      <section class="h-innhold" aria-label="Slik installerer du appen">
-        <div class="bokser">
-          {BOKSER.map((b) => (
-            <article class="boks">
-              <h2>{b.tittel}</h2>
-              <ol>
-                {b.steg.map((s) => <li>{s}</li>)}
+    <section id="installer" class="band installer" aria-labelledby="installer-tittel" data-install>
+      <div class="h-innhold seksjon">
+        <div class="hode">
+          <span class="eyebrow">Installer</span>
+          <h2 id="installer-tittel"><span class="t-tlf">Installer på telefonen din.</span><span class="t-pc">Åpne siden på telefonen.</span></h2>
+        </div>
+        <div class="veier">
+          <div class="kort qr">
+            <div class="qr-rute">
+              <svg viewBox={`-2 -2 ${qr.storrelse + 4} ${qr.storrelse + 4}`} width="168" height="168" role="img" aria-label="QR-kode til hengsel.no/apptest" shape-rendering="crispEdges"><path d={qr.sti} /></svg>
+            </div>
+            <span>Skann med telefonen for å åpne siden der</span>
+          </div>
+          {VEIER.map((v) => (
+            <div class="kort vei" data-vei={v.id}>
+              <div class="vei-hode"><b>{v.tittel}</b><span>{v.via}</span></div>
+              <ol class="steg">
+                {v.steg.map((t, n) => <li><span class="nr">{n + 1}</span><span>{t}</span></li>)}
               </ol>
-              {erTodo(b.href)
-                ? <button type="button" class:list={["knapp", { primar: b.primar }]} disabled aria-disabled="true" title="Lenke kommer">{b.knapp}</button>
-                : <a class:list={["knapp", { primar: b.primar }]} href={b.href}>{b.knapp}</a>}
-            </article>
+              {erTodo(v.href)
+                ? <button type="button" class="btn primary blokk" disabled aria-disabled="true">Lenke kommer</button>
+                : <a class="btn primary blokk" href={v.href}>{v.knapp}</a>}
+            </div>
+          ))}
+          <button type="button" class="andre" data-andre aria-expanded="false">Andre telefoner</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="seksjon-luft" aria-labelledby="roller-tittel">
+      <div class="h-innhold seksjon roller">
+        <div class="roller-hode">
+          <div class="hode">
+            <span class="eyebrow">Hva du kan teste</span>
+            <h2 id="roller-tittel">Velg rollen din.</h2>
+          </div>
+        </div>
+        {ROLLER.map((r, i) => <input type="radio" class="radio" name="rolle" id={`rolle-${r.id}`} checked={i === 0} />)}
+        <div class="chips" role="group" aria-label="Roller">
+          {ROLLER.map((r) => <label class="chip" for={`rolle-${r.id}`}>{r.chip}</label>)}
+        </div>
+        {ROLLER.map((r) => (
+          <div class="rollekort" data-rolle={r.id}>
+            <div class="rolle-tekst">
+              <div class="rolle-hode">
+                <h3>{r.tittel}</h3>
+                <span class="dempet">{r.under}</span>
+              </div>
+              <ul class="punkter">
+                {r.punkter.map((p) => <li><span aria-hidden="true">→</span><span>{p}</span></li>)}
+              </ul>
+              <div class="bruker">
+                <span class="eyebrow">Demobruker</span>
+                <div class="bruker-rad">
+                  <div><span class="liten dempet">Brukernavn</span><span class="verdi" id={`bruker-${r.id}`}>{r.bruker}</span></div>
+                  <button type="button" class="btn liten-knapp kopier" data-kopier={`#bruker-${r.id}`}>Kopier</button>
+                </div>
+                <div class="strek"></div>
+                <div class="bruker-rad">
+                  <div>
+                    <span class="liten dempet">Passord</span>
+                    <span class="verdi passord" id={`passord-${r.id}`} data-demopassord={r.id}>••••••••</span>
+                    <span class="liten dempet" data-uten-demopassord>Passordet får du av den som inviterte deg.</span>
+                  </div>
+                  <button type="button" class="btn liten-knapp kopier" data-kopier={`#passord-${r.id}`} data-demopassord-knapp hidden>Kopier</button>
+                </div>
+                {r.merknad && <p class="liten dempet merknad">{r.merknad}</p>}
+              </div>
+              <a class="pdf" href="/apptest/Logg_inn_i_demoen.pdf" download>Alle demobrukere (PDF)</a>
+            </div>
+            <div class="rolle-bilde">
+              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} srcDark={bildeSrc(r.bilde, "mork")} w={MAAL.w} h={MAAL.h} alt={r.alt} symboler={false} utenStatus />
+            </div>
+          </div>
+        ))}
+        <span class="skjult" role="status" data-kopier-status></span>
+      </div>
+    </section>
+
+    <section class="band" aria-label="Sjekkliste og hva som er nytt">
+      <div class="h-innhold to-kolonner">
+        <div class="kolonne">
+          <div class="hode">
+            <span class="eyebrow">Sjekkliste for {versjon}</span>
+            <h2>Dette vil vi at du prøver.</h2>
+          </div>
+          <div class="kort sjekk" data-sjekk data-versjon={versjon}>
+            <div class="sjekk-topp">
+              <div class="sjekk-rad">
+                <b data-fremdrift>0 av {SJEKKLISTE.length}</b>
+                <span class="liten dempet">Huskes bare på denne telefonen</span>
+              </div>
+              <progress class="stolpe" value="0" max={SJEKKLISTE.length} aria-label="Fremdrift" data-stolpe>0 av {SJEKKLISTE.length}</progress>
+            </div>
+            <ul class="sjekk-liste">
+              {SJEKKLISTE.map((t, i) => (
+                <li>
+                  <label class="sjekk-punkt">
+                    <input type="checkbox" id={`sjekk-${i}`} />
+                    <span class="boks" aria-hidden="true"></span>
+                    <span class="sjekk-tekst">{t}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="kolonne">
+          <div class="hode">
+            <span class="eyebrow">Hva er nytt</span>
+            <h2>De siste byggene.</h2>
+          </div>
+          <ol class="tidslinje">
+            {BYGG.map((b, i) => (
+              <li class:list={["tid", { forst: i === 0, sist: i === BYGG.length - 1 }]}>
+                <div class="tid-spor" aria-hidden="true"><span class="prikkt"></span><span class="linje"></span></div>
+                <details open={i === 0}>
+                  <summary>
+                    <span class="tid-tittel">
+                      <b>Bygg {b.bygg} · {b.versjon}</b>
+                      <span class="dempet">{dato(b.dato)}</span>
+                      <span class="dempet liten">{[b.nummer.ios && `iOS ${b.nummer.ios}`, b.nummer.play && `Play ${b.nummer.play}`, b.nummer.apk && `APK ${b.nummer.apk}`].filter(Boolean).join(" · ")}</span>
+                    </span>
+                    <span class="pil" aria-hidden="true"></span>
+                  </summary>
+                  <ul>
+                    {b.nytt.map((l) => <li>{l}</li>)}
+                  </ul>
+                </details>
+              </li>
+            ))}
+          </ol>
+          <div class="kort feil">
+            <div class="feil-hode">
+              <b>Kjente feil</b>
+              {harFeil && <span class="pille warn">{KJENTE_FEIL.length === 1 ? "1 feil" : `${KJENTE_FEIL.length} feil`}</span>}
+            </div>
+            {harFeil
+              ? (
+                <ul class="feil-liste">
+                  {KJENTE_FEIL.map((f) => <li><span>{f.tekst}</span>{f.detalj && <span class="liten dempet">{f.detalj}</span>}</li>)}
+                </ul>
+              )
+              : <span class="pille ok">Ingen kjente feil akkurat nå</span>}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="meld-feil" class="seksjon-luft" aria-labelledby="meld-tittel">
+      <div class="h-innhold seksjon">
+        <div class="hode">
+          <span class="eyebrow">Meld feil</span>
+          <h2 id="meld-tittel">Si fra om alt som ikke virker.</h2>
+        </div>
+        <div class="meld-rutenett">
+          <div class="kort meld">
+            <span class="meld-ikon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></svg></span>
+            <div><b>Meg › Send feilrapport</b><span class="dempet">i appen</span></div>
+          </div>
+          <div class="kort meld">
+            <span class="meld-ikon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z" /><circle cx="12" cy="13" r="3" /></svg></span>
+            <div><b>Ta skjermbilde og send på e-post</b><a href={`mailto:${EPOST}?subject=Feil%20i%20testversjonen`}>{EPOST}</a></div>
+          </div>
+          <div class="kort meld">
+            <span class="meld-ikon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M12 18h.01" /></svg></span>
+            <div><b>TestFlight: rist telefonen</b><span class="pille">Bare iPhone</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="sporsmal-tittel">
+      <div class="h-innhold sporsmal">
+        <div class="hode">
+          <span class="eyebrow">Spørsmål og svar</span>
+          <h2 id="sporsmal-tittel">Står du fast?</h2>
+        </div>
+        <div class="kort faq">
+          {SPORSMAL.map((s) => (
+            <details>
+              <summary><span>{s.q}</span><span class="pluss" aria-hidden="true"></span></summary>
+              <p>{s.a}</p>
+            </details>
           ))}
         </div>
-      </section>
-
-      <section class="h-innhold demo" aria-labelledby="demo-tittel">
-        <div class="demotekst">
-          <h2 id="demo-tittel">Prøv med demobrukerne</h2>
-          <p class="dempet">I demoen er alt oppdiktet, og ingenting sendes ut. Velg «Demo» nederst på innloggingen i appen, og logg inn med brukernavnet og demopassordet. Alle brukerne har samme passord.</p>
-          <div class="passord" data-demopassord hidden>
-            <span>Demopassord</span>
-            <code data-demopassord-verdi></code>
-            <button type="button" class="knapp" data-kopier>Kopier</button>
-            <span class="skjult" role="status" data-kopier-status></span>
-          </div>
-          <p class="dempet" data-uten-demopassord>Passordet får du av den som inviterte deg.</p>
-          <p class="merknad">Foreløpig skriver du hele adressen: brukernavnet med <b>@demo.invalid</b> bak, for eksempel <b>montor1@demo.invalid</b>. Snart holder det med <b>montor1</b>.</p>
-          <a class="knapp" href="/apptest/Logg_inn_i_demoen.pdf" download>Last ned oversikten (PDF)</a>
-        </div>
-        <div class="brukerkort">
-          <div class="korthode"><h3>I appen</h3><span class="dempet">velg «Demo»</span></div>
-          <dl class="brukere">
-            {demoHengsel.map(([b, rolle, hva]) => (
-              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span><span class="dempet">{hva}</span></dd></div>
-            ))}
-          </dl>
-        </div>
-        <div class="brukerkort">
-          <div class="korthode"><h3>I CRM-et</h3><span class="dempet">nettleseren</span></div>
-          <dl class="brukere">
-            {demoCrm.map(([b, rolle]) => (
-              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span></dd></div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      <section class="h-innhold skjermer" aria-label="Slik ser appen ut">
-        {SKJERMER.map((k) => (
-          <figure>
-            <Enhet bilde={k.bilde} type="phone" alt={k.alt} ratio={2.1} zoom={false} />
-            <figcaption class="dempet">{k.tekst}</figcaption>
-          </figure>
-        ))}
-      </section>
-
-      <section class="kolonner-baand">
-        <div class="h-innhold kolonner">
-          <div class="kolonne">
-            <h2>Slik melder du feil</h2>
-            <ul>
-              <li><b>I appen:</b> Meg › Send feilrapport. Skriv hva du gjorde og hva som skjedde. Skjermbilde og logg følger med automatisk.</li>
-              <li><b>På e-post:</b> <a href={`mailto:${epost}`}>{epost}</a>.</li>
-            </ul>
-          </div>
-          <div class="kolonne">
-            <h2>Hva er nytt i {versjon}</h2>
-            <p class="dempet oppdatert">Siste oppdatering: {oppdatertTekst}</p>
-            <ul>
-              {NYTT.length ? NYTT.map((p) => <li>{p}</li>) : <li class="dempet">Punktene kommer.</li>}
-              {KJENT_AVVIK && <li><b>Kjent avvik:</b> {KJENT_AVVIK}</li>}
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section class="h-innhold testere" aria-labelledby="testere">
-        <h2 id="testere">Testere</h2>
-        <p>Tilgang har montører, firmaledere, utkjørere og ansatte som er invitert av Hengsel. Nye testere ber om tilgang på <a href={`mailto:${epost}`}>{epost}</a>. Oppgi navn og, for Android, e-postadressen til Google-kontoen på telefonen.</p>
-      </section>
-    </main>
-
-  </div>
+      </div>
+    </section>
+  </main>
 </Side>
 
 <script>
-  import "../scripts/kopier";
+  import "../scripts/apptest";
 </script>
 
 <style>
-  /* Profil: Off White, Warm Black, Deep Blue bare på primærknapper og lenker, linjer 1 px Beige 2, kvadratiske hjørner, ingen skygger */
-  .side { flex: 1; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
-  main { flex: 1; }
+  /* Flatene er Beige 4, båndene Beige 3 og kortene Off White. Deep Blue bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er Warm Black. */
+  .a-side { --a-flate: var(--beige-4); --a-lenke: #46699d; background: var(--a-flate); color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) .a-side { --a-flate: var(--flate-myk); --a-lenke: var(--accent); } }
+  :global(html:root[data-theme="dark"]) .a-side { --a-flate: var(--flate-myk); --a-lenke: var(--accent); }
+  :global(header.sidehode) { --a-flate: var(--beige-4); --a-lenke: #46699d; }
+  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) :global(header.sidehode) { --a-flate: var(--flate-myk); --a-lenke: var(--accent); } }
+  :global(html:root[data-theme="dark"]) :global(header.sidehode) { --a-flate: var(--flate-myk); --a-lenke: var(--accent); }
+
+  .a-side a:not(.btn) { color: var(--a-lenke); }
   .dempet { color: var(--muted); }
-  a { color: var(--accent); }
-  .rad { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
+  .liten { font-size: 0.88rem; }
+  .hode { display: flex; flex-direction: column; gap: 10px; }
+  .hode h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); line-height: 1.08; }
+  .seksjon { display: flex; flex-direction: column; gap: 28px; }
+  .band { background: var(--surface-highlight); padding-block: clamp(48px, 6vw, 88px); }
+  .seksjon-luft { padding-block: clamp(48px, 6vw, 88px); }
+  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-sizing: border-box; }
 
+  /* Hero */
+  .hero { padding-block: clamp(36px, 6vw, 80px) clamp(40px, 6vw, 88px); }
+  .hero-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(36px, 6vw, 80px); align-items: center; }
+  .hero-tekst { display: flex; flex-direction: column; gap: 20px; min-width: 0; align-items: flex-start; }
+  .hero h1 { font-size: clamp(2.75rem, 6vw, 4.6rem); line-height: 1; }
+  .hero .lede { font-size: 1.18rem; max-width: 44ch; }
+  .ikon { margin-top: 8px; }
+  .hero-bilder { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
+  .slides { position: relative; width: 100%; max-width: 320px; }
+  .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 700ms var(--ease); }
+  .slide:first-child { position: relative; }
+  .slide.on { opacity: 1; pointer-events: auto; }
+  .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
+  :global(html.js) .prikker { visibility: visible; }
+  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
+  .prikk span { width: 8px; height: 8px; border-radius: 999px; background: var(--surface-highlight-strong); transition: background var(--dur); }
+  .prikk.on span { background: var(--ink); }
+  .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
+  @media (max-width: 759px) { .slides { max-width: 250px; } }
 
-  .hero { display: flex; align-items: flex-start; gap: clamp(20px, 3vw, 32px); padding-block: clamp(40px, 6vw, 72px) clamp(32px, 5vw, 56px); }
-  .ikon { width: 96px; height: 96px; flex: none; display: block; }
-  .hero-tekst { display: grid; gap: 16px; }
-  h1 { font-size: var(--t-hero); line-height: 1.02; }
+  /* Installer: PC viser QR-koden og alle tre veiene i fire kort; telefonen én vei med tre steg og en stor knapp */
+  .veier { display: flex; flex-direction: column; gap: 16px; max-width: 560px; }
+  .qr { display: none; }
+  .vei { padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+  .vei-hode { display: flex; flex-direction: column; gap: 2px; }
+  .vei-hode b { font-weight: var(--w-strong); font-size: 1.1rem; }
+  .vei-hode span { color: var(--muted); font-size: 0.95rem; }
+  .steg { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .steg li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.98rem; line-height: 1.5; }
+  .nr { width: 26px; height: 26px; flex: none; border-radius: 999px; border: 1px solid var(--line); background: var(--a-flate); display: grid; place-items: center; font-size: 13px; font-weight: var(--w-strong); font-variant-numeric: tabular-nums; margin-top: 1px; }
+  .blokk { width: 100%; }
+  .t-pc { display: none; }
+  .andre { display: none; align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--a-lenke); font-size: 1rem; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
-  /* Tre kort i Beige 3 uten kantlinje, pillknapper (fil 60 W2) */
-  .bokser { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .boks { background: var(--flate); padding: 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-  .boks h2 { font-size: 1.75rem; line-height: 1.1; }
-  ol { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; font-size: 0.94rem; line-height: 1.5; color: var(--muted); }
-  ol li::marker { font-weight: 600; }
-
-  .knapp {
-    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; margin-top: auto;
-    border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 1rem var(--f-body);
-    text-decoration: none; border-radius: var(--r-pill); box-sizing: border-box; white-space: nowrap;
+  /* Uten skript: PC-bredde viser fire kort, smalt viser alle tre veiene under hverandre */
+  @media (min-width: 760px) {
+    .installer:not([data-modus]) .veier { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: stretch; max-width: none; }
+    .installer:not([data-modus]) .qr { display: flex; }
+    .installer:not([data-modus]) .t-pc { display: inline; }
+    .installer:not([data-modus]) .t-tlf { display: none; }
   }
-  .knapp.primar { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-  .knapp.primar:hover { background: var(--accent); border-color: var(--accent); text-decoration: none; }
-  .knapp:disabled { opacity: 0.45; cursor: not-allowed; }
-  .knapp:disabled:hover { opacity: 0.45; }
+  .installer[data-modus="pc"] .veier { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: stretch; max-width: none; }
+  .installer[data-modus="pc"] .qr { display: flex; }
+  .installer[data-modus="pc"] .t-pc { display: inline; }
+  .installer[data-modus="pc"] .t-tlf { display: none; }
+  .qr { padding: 22px; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+  .qr-rute { background: #fbf9f6; border-radius: var(--r-field); padding: 12px; line-height: 0; }
+  .qr-rute path { fill: #31261d; }
+  .qr span { font-size: 0.98rem; max-width: 22ch; }
 
-  /* Demobrukerne (K-114): tekst øverst, to brukerkort under */
-  .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; padding-block: clamp(40px, 6vw, 72px) 0; }
-  .demotekst { display: grid; gap: 16px; justify-items: start; }
-  .demotekst h2 { font-size: var(--t-h1); line-height: 1.08; }
-  .demotekst p { margin: 0; max-width: 62ch; }
-  .merknad { padding: 12px 14px; background: var(--flate); font-size: 0.94rem; }
-  .passord { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 16px 20px; background: var(--flate); font-size: 1.125rem; }
-  .passord[hidden] { display: none; }
-  .passord code { font-family: ui-monospace, Menlo, monospace; font-weight: 600; word-break: break-all; }
-  .passord .knapp { min-height: 40px; padding: 0 18px; margin-top: 0; }
-  .skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .brukerkort { background: var(--flate); padding: 24px 28px; display: grid; gap: 8px; align-content: start; min-width: 0; }
-  .korthode { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-  .korthode h3 { font-size: var(--t-h2); line-height: 1.15; margin: 0; }
-  .brukere { margin: 0; display: grid; }
-  .brukere > div { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 4px 16px; padding-block: 10px; border-top: 1px solid var(--linje); }
-  .brukere dt { font-weight: 600; }
-  .brukere dd { margin: 0; display: grid; gap: 2px; }
-  .brukere code { font-family: ui-monospace, Menlo, monospace; font-size: 0.95rem; }
+  /* Telefonvisning med skript: hovedveien først, de andre bak «Andre telefoner» */
+  .installer[data-modus="tlf"] .hoved, .installer[data-modus="tlf"] .vei.hoved { order: -1; }
+  .installer[data-modus="tlf"] .vei.hoved { padding: 22px; gap: 20px; }
+  .installer[data-modus="tlf"] .vei.hoved .vei-hode b { font-size: 1.15rem; }
+  .installer[data-modus="tlf"] .vei.hoved .btn { min-height: 56px; font-size: 1.05rem; }
+  .installer[data-modus="tlf"] .vei:not(.hoved) { display: none; }
+  .installer[data-modus="tlf"].andre-apen .vei:not(.hoved) { display: flex; }
+  .installer[data-modus="tlf"] .vei:not(.hoved) .btn { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .installer[data-modus="tlf"] .andre { display: inline-flex; align-items: center; order: 1; }
+  .installer[data-modus="tlf"] .vei:not(.hoved) { order: 2; }
 
-  .testere { display: grid; gap: 12px; padding-block: clamp(40px, 6vw, 64px); }
-  .testere h2 { font-size: var(--t-h2); line-height: 1.15; }
-  .testere p { margin: 0; max-width: 62ch; }
+  /* Roller: radioknapper i stedet for skript. Uten skript fungerer fanene også */
+  .roller-hode { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px; }
+  .radio { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: -4px; }
+  .chip { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; box-sizing: border-box; border-radius: 999px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 0.95rem var(--f-body); cursor: pointer; transition: background var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .chip:hover { background: var(--surface-highlight); }
+  .rollekort { display: none; padding: clamp(20px, 3vw, 40px); border-radius: var(--r-lg); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 5vw, 64px); align-items: center; background: var(--surface); border: 1px solid var(--line); box-sizing: border-box; }
+  #rolle-montor:checked ~ .rollekort[data-rolle="montor"],
+  #rolle-firmaleder:checked ~ .rollekort[data-rolle="firmaleder"],
+  #rolle-utkjorer:checked ~ .rollekort[data-rolle="utkjorer"],
+  #rolle-lager:checked ~ .rollekort[data-rolle="lager"] { display: grid; }
+  #rolle-montor:checked ~ .chips label[for="rolle-montor"],
+  #rolle-firmaleder:checked ~ .chips label[for="rolle-firmaleder"],
+  #rolle-utkjorer:checked ~ .chips label[for="rolle-utkjorer"],
+  #rolle-lager:checked ~ .chips label[for="rolle-lager"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  #rolle-montor:focus-visible ~ .chips label[for="rolle-montor"],
+  #rolle-firmaleder:focus-visible ~ .chips label[for="rolle-firmaleder"],
+  #rolle-utkjorer:focus-visible ~ .chips label[for="rolle-utkjorer"],
+  #rolle-lager:focus-visible ~ .chips label[for="rolle-lager"] { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  .rolle-tekst { display: flex; flex-direction: column; gap: 22px; min-width: 0; align-items: flex-start; }
+  .rolle-hode { display: flex; flex-direction: column; gap: 6px; }
+  .rolle-hode h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.12; }
+  .punkter { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .punkter li { display: flex; gap: 12px; align-items: flex-start; }
+  .punkter li > span:first-child { color: var(--muted); }
+  .bruker { align-self: stretch; background: var(--a-flate); border-radius: var(--r-field); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .bruker-rad { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .bruker-rad > div { display: flex; flex-direction: column; min-width: 0; }
+  .verdi { font-weight: var(--w-medium); overflow-wrap: anywhere; }
+  .passord { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+  .strek { height: 1px; background: var(--line); }
+  .merknad { margin: 0; }
+  .liten-knapp { min-height: 44px; padding: 0 16px; font-size: 0.92rem; }
+  /* «Kopier» trenger skript: uten det er knappene usynlige (de tar plassen, så siden ikke hopper) */
+  .kopier { visibility: hidden; }
+  :global(html.js) .kopier { visibility: visible; }
+  .pdf { min-height: 44px; display: flex; align-items: center; }
+  .rolle-bilde { width: 100%; max-width: 260px; justify-self: center; }
 
-  .skjermer { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 3vw, 40px); max-width: 920px; margin-top: clamp(40px, 6vw, 72px); }
-  .skjermer figure { margin: 0; display: grid; gap: 12px; justify-items: center; min-width: 0; }
-  .skjermer figcaption { font-size: 0.92rem; }
+  /* Sjekkliste og hva er nytt */
+  .to-kolonner { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(40px, 5vw, 56px); align-items: start; }
+  .kolonne { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .sjekk { overflow: hidden; }
+  .sjekk-topp { padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); }
+  .sjekk-rad { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .sjekk-rad b { font-weight: var(--w-strong); font-variant-numeric: tabular-nums; }
+  .stolpe { appearance: none; -webkit-appearance: none; width: 100%; height: 6px; border: 0; border-radius: 999px; overflow: hidden; background: var(--surface-highlight-strong); color: var(--ink); }
+  .stolpe::-webkit-progress-bar { background: var(--surface-highlight-strong); border-radius: 999px; }
+  .stolpe::-webkit-progress-value { background: var(--ink); border-radius: 999px; transition: width 160ms var(--ease); }
+  .stolpe::-moz-progress-bar { background: var(--ink); border-radius: 999px; }
+  .sjekk-liste { margin: 0; padding: 0; list-style: none; }
+  .sjekk-liste li { border-bottom: 1px solid var(--line); }
+  .sjekk-liste li:last-child { border-bottom: 0; }
+  .sjekk-punkt { position: relative; min-height: 52px; padding: 10px 22px; display: flex; align-items: center; gap: 14px; cursor: pointer; box-sizing: border-box; }
+  .sjekk-punkt:hover { background: var(--a-flate); }
+  .sjekk-punkt input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .boks { width: 24px; height: 24px; flex: none; border-radius: 7px; box-sizing: border-box; border: 1.5px solid var(--soft); display: grid; place-items: center; transition: background var(--dur); }
+  .boks::after { content: ""; width: 6px; height: 11px; border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg) translate(-1px, -1px); opacity: 0; }
+  .sjekk-punkt input:checked + .boks { background: var(--ink); border-color: var(--ink); }
+  .sjekk-punkt input:checked + .boks::after { opacity: 1; }
+  .sjekk-punkt input:focus-visible + .boks { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+  .sjekk-punkt input:checked ~ .sjekk-tekst { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--soft); }
 
-  .kolonner-baand { background: var(--flate); margin-top: clamp(48px, 7vw, 96px); padding-block: clamp(48px, 7vw, 80px); }
-  .kolonner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
-  .kolonne { display: grid; gap: 16px; align-content: start; }
-  .kolonne h2 { font-size: var(--t-h2); line-height: 1.15; }
-  .oppdatert { margin: 0; font-size: 0.92rem; }
-  .kolonne ul { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; max-width: 62ch; }
-  /* Deep Blue gir bare 3,95:1 mot Beige 3; den mørkere blåen fra tokens.css gir 4,5:1 */
-  .kolonne a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .tidslinje { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+  .tid { display: grid; grid-template-columns: 20px 1fr; gap: 14px; }
+  .tid-spor { display: flex; flex-direction: column; align-items: center; }
+  .prikkt { width: 12px; height: 12px; border-radius: 999px; box-sizing: border-box; margin-top: 4px; flex: none; background: var(--surface); border: 2px solid var(--beige-1); }
+  .tid.forst .prikkt { background: var(--ink); border-color: var(--ink); }
+  .linje { width: 1px; flex: 1; background: var(--line); margin-top: 4px; }
+  .tid.sist .linje { background: transparent; }
+  .tid details { padding-bottom: 18px; min-width: 0; }
+  .tid summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: -12px; list-style: none; }
+  .tid summary::-webkit-details-marker { display: none; }
+  .tid-tittel { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .tid-tittel b { font-weight: var(--w-strong); font-variant-numeric: tabular-nums; }
+  .pil { width: 8px; height: 8px; flex: none; border: solid var(--muted); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg) translate(-2px, -2px); transition: transform var(--dur) var(--ease); }
+  .tid details[open] .pil { transform: rotate(-135deg) translate(-2px, -2px); }
+  .tid details ul { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .tid details li { color: var(--muted); font-size: 0.98rem; line-height: 1.5; }
 
+  .feil { padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .feil-hode { display: flex; justify-content: space-between; align-items: center; gap: 12px; align-self: stretch; }
+  .feil-hode b { font-weight: var(--w-strong); font-size: 1.05rem; }
+  .feil-liste { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; align-self: stretch; }
+  .feil-liste li { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: var(--a-flate); border-radius: var(--r-field); }
+  .pille.ok { background: var(--ok-soft); color: var(--ok); min-height: 26px; }
+  .pille.warn { background: var(--warn-soft); color: var(--warn); min-height: 26px; }
 
-  @media (min-width: 860px) {
-    .bokser { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .kolonner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .demo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .demotekst { grid-column: 1 / -1; }
-  }
-  @media (max-width: 480px) {
-    .hero { flex-direction: column; }
-    .knapp { white-space: normal; text-align: center; }
+  /* Meld feil */
+  .meld-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+  .meld { padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start; }
+  .meld > div { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; align-items: flex-start; }
+  .meld b { font-weight: var(--w-strong); }
+  .meld a, .meld .dempet { font-size: 0.95rem; }
+  .meld-ikon { width: 44px; height: 44px; flex: none; border-radius: var(--r-field); background: var(--a-flate); display: grid; place-items: center; }
+  .meld-ikon svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Spørsmål og svar */
+  .sporsmal { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px clamp(32px, 6vw, 80px); align-items: start; }
+  .faq { overflow: hidden; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq details:last-child { border-bottom: 0; }
+  .faq summary { min-height: 56px; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; box-sizing: border-box; list-style: none; font-weight: var(--w-medium); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .pluss { width: 14px; height: 14px; flex: none; position: relative; color: var(--muted); }
+  .pluss::before, .pluss::after { content: ""; position: absolute; background: currentColor; left: 0; right: 0; top: 6px; height: 1.5px; }
+  .pluss::after { transform: rotate(90deg); transition: transform var(--dur) var(--ease); }
+  .faq details[open] .pluss::after { transform: rotate(0deg); }
+  .faq p { padding: 0 22px 18px; color: var(--muted); max-width: 58ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: none; }
   }
 </style>

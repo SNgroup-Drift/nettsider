@@ -11,5 +11,8 @@
   "dependencies": {
     "@sngroup/design": "*",
     "astro": "^7.3.6"
+  },
+  "devDependencies": {
+    "qrcode-generator": "^1.4.4"
   }
 }
