@@ -5,6 +5,7 @@
  * - Uten gyldig informasjonskapsel: passordsiden (dist/apptest/passord.html), 200 for /apptest.
  * - POST /apptest med riktig passord: 303 til /apptest og informasjonskapsel med HMAC-signatur. Feil passord: 401.
  * - Mangler hemmelighetene APPTEST_PASSORD eller APPTEST_NOKKEL: 503, siden er låst.
+ * - Innloggede får demopassordet (hemmeligheten DEMO_PASSORD) satt inn i /apptest (K-114). Mangler den, står siden uten.
  * - Signaturnøkkelen avhenger av både APPTEST_NOKKEL og APPTEST_PASSORD, så et nytt passord gjør gamle
  *   informasjonskapsler ugyldige.
  * - Alle svar får X-Robots-Tag: noindex, nofollow og Cache-Control: private, no-store.
@@ -14,6 +15,8 @@ interface Env {
   ASSETS: { fetch(req: Request | string | URL, init?: RequestInit): Promise<Response> };
   APPTEST_PASSORD?: string;
   APPTEST_NOKKEL?: string;
+  /** K-114: felles passord for demobrukerne. Settes inn på /apptest for innloggede. Hemmelighet, aldri i repoet. */
+  DEMO_PASSORD?: string;
 }
 
 const KAKE = "hengsel_apptest";
@@ -67,7 +70,20 @@ async function apptest(req: Request, env: Env, url: URL): Promise<Response> {
   if (url.pathname === "/apptest/passord" || url.pathname === "/apptest/passord.html") {
     return new Response(null, { status: 303, headers: { Location: "/apptest" } });
   }
-  return env.ASSETS.fetch(req);
+  return medDemopassord(await env.ASSETS.fetch(req), env.DEMO_PASSORD);
+}
+
+/**
+ * K-114: demopassordet settes inn i HTML-en for innloggede (bare bak passordet til /apptest). Uten hemmeligheten står linjen
+ * skjult, og «Passordet får du av den som inviterte deg» vises i stedet. Passordet er aldri i de statiske filene.
+ */
+function medDemopassord(svar: Response, passord: string | undefined): Response {
+  if (!passord || !(svar.headers.get("Content-Type") ?? "").startsWith("text/html")) return svar;
+  return new HTMLRewriter()
+    .on("[data-demopassord-verdi]", { element: (el) => el.setInnerContent(passord) })
+    .on("[data-demopassord]", { element: (el) => el.removeAttribute("hidden") })
+    .on("[data-uten-demopassord]", { element: (el) => el.remove() })
+    .transform(svar);
 }
 
 /** Passordsiden fra de statiske filene. Ved feil passord vises feilmeldingen og feltet merkes som ugyldig. */

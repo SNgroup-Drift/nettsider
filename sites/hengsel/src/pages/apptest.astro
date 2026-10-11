@@ -13,6 +13,7 @@ import "@sngroup/design/fonts.css";
 import "../styles/tokens.css";
 import "../styles/hengsel.css";
 import Enhet from "../components/Enhet.astro";
+import UteLogo from "../components/UteLogo.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
 
 const { versjon, epost, oppdatert } = APPTEST;
@@ -38,6 +39,25 @@ const BOKSER = [
   },
 ];
 
+// Faste demobrukere (K-114). Brukernavn = rollen, e-post = brukernavn@demo.invalid. Passordet står ikke her: Workeren setter det inn
+// fra hemmeligheten DEMO_PASSORD for innloggede (worker/apptest.ts).
+const demoHengsel = [
+  ["montor1", "Montør", "I dag, jobbsiden, mål og skisse, KS, avvik og Ferdig montert."],
+  ["montor2", "Montør, polsk", "Appen på polsk."],
+  ["firmaleder1", "Firmaleder med team", "Forespørsler, svar og fordeling av jobber."],
+  ["firmaleder2", "Firmaleder uten ansatte", "Egne jobber og forespørsler."],
+  ["firmaleder3", "Firmaleder", "Garderobe, skyvedører og bad."],
+  ["utkjorer", "Utkjører", "Ruten, mottak på lager, levering og skade."],
+  ["selger1", "Selger", "Selgermodus i appen."],
+];
+const demoCrm = [
+  ["selger1 – selger6", "Selgere i tre butikker (selger2 og selger6 er prosjektselgere)"],
+  ["leder", "Leder og admin"],
+  ["montasjeleder", "Montasjeleder og bestilling"],
+  ["bestilling", "Bestilling"],
+  ["superadmin", "Superadmin"],
+];
+
 const NYTT = APPTEST.nytt;
 // Tre skjermer fra appen i iPhone 18-ramme (pakke CRM_v4, INSTRUKS.md)
 const SKJERMER = [
@@ -58,15 +78,7 @@ const KJENT_AVVIK = "";
   <div class="side">
     <header class="topp">
       <div class="h-innhold rad">
-        <a href="/" class="logo" aria-label="Hengsel – forside">
-          <!-- hengsel-ute-logo-lys.svg, inline så «engsel» settes i TWK Lausanne (teksten i fila er <text>, ikke konturer) -->
-          <svg viewBox="-4 -4 460 128" height="36" aria-hidden="true" class="logo-svg">
-            <g><rect x="0" y="0" width="10" height="72" rx="1" fill="#8FA9D1"/><rect x="0" y="0" width="10" height="4.2" rx="1" fill="#C3B5A7"/><rect x="0" y="2.8" width="10" height="1.4" fill="#C3B5A7"/><rect x="0" y="67.8" width="10" height="4.2" rx="1" fill="#C3B5A7"/><rect x="0" y="67.8" width="10" height="1.4" fill="#C3B5A7"/><rect x="1.8" y="6.7" width="6.4" height="4.6" rx="2.3" fill="#C3B5A7"/><rect x="2.5" y="7.1" width=".6" height="3.8" fill="#5074A9"/><rect x="6.9" y="7.1" width=".6" height="3.8" fill="#5074A9"/><ellipse cx="5" cy="9" rx="1.4" ry="1" fill="#8FA9D1"/><rect x="2.6" y="28" width="4.8" height="16" rx="2.4" fill="#C3B5A7"/><rect x="3" y="33.5" width="4" height=".6" fill="#5074A9"/><rect x="3" y="38.5" width="4" height=".6" fill="#5074A9"/><ellipse cx="5" cy="36" rx="1" ry="1.5" fill="#8FA9D1"/><rect x="3.5" y="51" width="3" height="13.5" rx="1.5" fill="#5074A9"/><rect x="35.1" y="0" width="14" height="27.6" fill="#C3B5A7"/><rect x="12.5" y="0" width="22" height="23.8" fill="#C3B5A7"/><rect x="12.5" y="25.3" width="22" height="2.3" fill="#8FA9D1"/><rect x="12.5" y="39" width="39.1" height="6" fill="#C3B5A7"/><rect x="35.1" y="46.5" width="14" height="25.5" fill="#C3B5A7"/><rect x="37.8" y="49.4" width="2.5" height="6.1" rx="1.25" fill="#5074A9"/><rect x="12.5" y="46.5" width="22" height="25.5" fill="#C3B5A7"/><circle cx="18" cy="49.6" r="1.5" fill="#5074A9"/><circle cx="23.5" cy="49.6" r="1.5" fill="#5074A9"/><circle cx="28.9" cy="49.6" r="1.5" fill="#5074A9"/><rect x="15" y="52.6" width="17" height="2.3" rx="1.15" fill="#5074A9"/><rect x="15.4" y="56.6" width="16.2" height="13" rx=".4" fill="#5074A9"/><rect x="51" y="0" width=".6" height="39" fill="#5074A9"/><rect x="51" y="45" width=".6" height="27" fill="#5074A9"/><rect x="51.6" y="0" width="22" height="72" fill="#C3B5A7"/><rect x="54.3" y="36.5" width="2.5" height="6.1" rx="1.25" fill="#5074A9"/></g>
-            <text font-weight="350" font-size="96" letter-spacing="-1.5" x="80" y="69" fill="#31261D">engsel</text>
-            <text x="378" y="112" text-anchor="end" font-weight="650" font-size="20" letter-spacing="2.4" fill="#31261D" fill-opacity=".6">UTE</text>
-            <path d="M385 94 l9 9 l18 -20" fill="none" stroke="#5074A9" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+        <UteLogo />
         <a class="tilbake" href="/">‹ Tilbake til hengsel.no</a>
       </div>
     </header>
@@ -93,6 +105,38 @@ const KJENT_AVVIK = "";
                 : <a class:list={["knapp", { primar: b.primar }]} href={b.href}>{b.knapp}</a>}
             </article>
           ))}
+        </div>
+      </section>
+
+      <section class="h-innhold demo" aria-labelledby="demo-tittel">
+        <div class="demotekst">
+          <h2 id="demo-tittel">Prøv med demobrukerne</h2>
+          <p class="dempet">I demoen er alt oppdiktet, og ingenting sendes ut. Velg «Demo» nederst på innloggingen i appen, og logg inn med brukernavnet og demopassordet. Alle brukerne har samme passord.</p>
+          <div class="passord" data-demopassord hidden>
+            <span>Demopassord</span>
+            <code data-demopassord-verdi></code>
+            <button type="button" class="knapp" data-kopier>Kopier</button>
+            <span class="skjult" role="status" data-kopier-status></span>
+          </div>
+          <p class="dempet" data-uten-demopassord>Passordet får du av den som inviterte deg.</p>
+          <p class="merknad">Foreløpig skriver du hele adressen: brukernavnet med <b>@demo.invalid</b> bak, for eksempel <b>montor1@demo.invalid</b>. Snart holder det med <b>montor1</b>.</p>
+          <a class="knapp" href="/apptest/Logg_inn_i_demoen.pdf" download>Last ned oversikten (PDF)</a>
+        </div>
+        <div class="brukerkort">
+          <div class="korthode"><h3>I appen</h3><span class="dempet">velg «Demo»</span></div>
+          <dl class="brukere">
+            {demoHengsel.map(([b, rolle, hva]) => (
+              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span><span class="dempet">{hva}</span></dd></div>
+            ))}
+          </dl>
+        </div>
+        <div class="brukerkort">
+          <div class="korthode"><h3>I CRM-et</h3><span class="dempet">nettleseren</span></div>
+          <dl class="brukere">
+            {demoCrm.map(([b, rolle]) => (
+              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span></dd></div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -139,6 +183,10 @@ const KJENT_AVVIK = "";
   </div>
 </BaseLayout>
 
+<script>
+  import "../scripts/kopier";
+</script>
+
 <style>
   /* Profil: Off White, Warm Black, Deep Blue bare på primærknapper og lenker, linjer 1 px Beige 2, kvadratiske hjørner, ingen skygger */
   .side { min-height: 100vh; display: flex; flex-direction: column; background: var(--off-white); color: var(--warm-black); }
@@ -149,9 +197,6 @@ const KJENT_AVVIK = "";
 
   .topp { border-bottom: 1px solid var(--beige-2); }
   .topp .rad { min-height: 64px; padding-block: 10px; }
-  .logo { display: flex; align-items: center; min-height: 44px; }
-  .logo-svg { height: 36px; width: auto; display: block; font-family: var(--f-body); }
-  .logo:focus-visible { border-radius: 0; }
   .tilbake { font-size: 0.94rem; }
   .merke { height: 24px; width: auto; display: block; }
 
@@ -173,9 +218,29 @@ const KJENT_AVVIK = "";
     text-decoration: none; border-radius: var(--r-pill); box-sizing: border-box; white-space: nowrap;
   }
   .knapp.primar { background: var(--deep-blue); border-color: var(--deep-blue); color: var(--off-white); font-weight: 650; }
-  .knapp.primar:hover { opacity: 0.88; text-decoration: none; }
+  .knapp.primar:hover { background: var(--info-tekst); border-color: var(--info-tekst); text-decoration: none; }
   .knapp:disabled { opacity: 0.45; cursor: not-allowed; }
   .knapp:disabled:hover { opacity: 0.45; }
+
+  /* Demobrukerne (K-114): tekst øverst, to brukerkort under */
+  .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; padding-block: clamp(40px, 6vw, 72px) 0; }
+  .demotekst { display: grid; gap: 16px; justify-items: start; }
+  .demotekst h2 { font-size: var(--t-h1); line-height: 1.08; }
+  .demotekst p { margin: 0; max-width: 62ch; }
+  .merknad { padding: 12px 14px; background: var(--beige-3); font-size: 0.94rem; }
+  .passord { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 16px 20px; background: var(--beige-3); font-size: 1.125rem; }
+  .passord[hidden] { display: none; }
+  .passord code { font-family: ui-monospace, Menlo, monospace; font-weight: 650; word-break: break-all; }
+  .passord .knapp { min-height: 40px; padding: 0 18px; margin-top: 0; }
+  .skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .brukerkort { background: var(--beige-3); padding: 24px 28px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+  .korthode { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .korthode h3 { font-size: var(--t-h2); line-height: 1.15; margin: 0; }
+  .brukere { margin: 0; display: grid; }
+  .brukere > div { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 4px 16px; padding-block: 10px; border-top: 1px solid var(--beige-2); }
+  .brukere dt { font-weight: 650; }
+  .brukere dd { margin: 0; display: grid; gap: 2px; }
+  .brukere code { font-family: ui-monospace, Menlo, monospace; font-size: 0.95rem; }
 
   .testere { display: grid; gap: 12px; padding-block: clamp(40px, 6vw, 64px); }
   .testere h2 { font-size: var(--t-h2); line-height: 1.15; }
@@ -201,6 +266,8 @@ const KJENT_AVVIK = "";
   @media (min-width: 860px) {
     .bokser { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .kolonner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .demo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .demotekst { grid-column: 1 / -1; }
   }
   @media (max-width: 480px) {
     .hero { flex-direction: column; }
