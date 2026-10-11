@@ -4,19 +4,19 @@ var fmt=function(n){return n.toLocaleString('nb-NO')+' kr'};
 var MONT=47,ONSKET=46;
 var P=[
  {id:'b1',m:'Bosch',lev:'BSH',kat:'Platetopp',navn:'Induksjonstopp',mod:'IND-80 Flex',need:80,net:9450,veil:14990,lager:'lager'},
- {id:'s1',m:'Siemens',lev:'BSH',kat:'Platetopp',navn:'Induksjonstopp med avtrekk',mod:'IQ IND-80 Air',need:80,net:18900,veil:27990,lager:'2u'},
+ {id:'s1',m:'Bosch',lev:'BSH',kat:'Platetopp',navn:'Induksjonstopp med avtrekk',mod:'IQ IND-80 Air',need:80,net:18900,veil:27990,lager:'2u'},
  {id:'a1',m:'AEG',lev:'Electrolux',kat:'Stekeovn',navn:'Stekeovn med damp',mod:'OVN-60 Steam',need:60,net:11200,veil:16990,lager:'lager'},
  {id:'mi1',m:'Miele',lev:'Miele',kat:'Stekeovn',navn:'Stekeovn med pyrolyse',mod:'H-60 Pure',need:60,net:15800,veil:22990,lager:'rest'},
  {id:'b2',m:'Bosch',lev:'BSH',kat:'Oppvaskmaskin',navn:'Oppvaskmaskin, integrert',mod:'SMV-60 Silence',need:60,net:7900,veil:11490,lager:'lager'},
  {id:'mi2',m:'Miele',lev:'Miele',kat:'Oppvaskmaskin',navn:'Oppvaskmaskin, integrert',mod:'G-60 Vi',need:60,net:12400,veil:17990,lager:'2u'},
  {id:'a2',m:'AEG',lev:'Electrolux',kat:'Kjøl/frys',navn:'Kjøl/frys, integrert',mod:'KF-178 Int',need:178,net:10900,veil:15990,lager:'lager'},
- {id:'s2',m:'Siemens',lev:'BSH',kat:'Kjøl/frys',navn:'Kjøl/frys, integrert XL',mod:'KF-194 Int',need:194,net:13600,veil:19990,lager:'lager'},
+ {id:'s2',m:'Bosch',lev:'BSH',kat:'Kjøl/frys',navn:'Kjøl/frys, integrert XL',mod:'KF-194 Int',need:194,net:13600,veil:19990,lager:'lager'},
  {id:'sm1',m:'Smeg',lev:'Smeg',kat:'Ventilator',navn:'Veggventilator',mod:'VENT-90 Line',need:90,net:8700,veil:12990,lager:'2u'},
  {id:'a3',m:'AEG',lev:'Electrolux',kat:'Ventilator',navn:'Integrert ventilator',mod:'VENT-80 Slim',need:80,net:4900,veil:7490,lager:'lager'}
 ];
 var SLOT={'Platetopp':[80,'Utsparing i benkeplata','cm bredde'],'Stekeovn':[60,'Ovnsnisje i høyskap','cm bredde'],'Oppvaskmaskin':[60,'Nisje under benk','cm bredde'],'Kjøl/frys':[178,'Nisjehøyde i høyskap','cm'],'Ventilator':[90,'Plass over platetopp','cm bredde']};
 var LAGER={lager:['På lager','ok',42],'2u':['2 uker','info',43],rest:['Restordre uke 49','warn',49]};
-var BRANDS=['Alle','Bosch','Siemens','AEG','Miele','Smeg'],KATS=['Alle','Platetopp','Stekeovn','Oppvaskmaskin','Kjøl/frys','Ventilator'];
+var BRANDS=['Alle','Bosch','AEG','Miele','Smeg'],KATS=['Alle','Platetopp','Stekeovn','Oppvaskmaskin','Kjøl/frys','Ventilator'];
 var ONR={BSH:'BSH 4501 2287',Electrolux:'EL 778 140',Miele:'MI 31 0092',Smeg:'SM 24 5518'};
 var S,timers=[];
 var byId=function(id){return P.filter(function(p){return p.id===id})[0]};
@@ -53,7 +53,7 @@ function tab1(){
  var qt;$('q').oninput=function(){S.q=this.value;clearTimeout(qt);qt=setTimeout(function(){fetchLive(500);renderList()},250)};
  $('cb').querySelectorAll('button').forEach(function(b){b.onclick=function(){S.brand=b.textContent;fetchLive(500);tab1()}});
  $('ck').querySelectorAll('button').forEach(function(b){b.onclick=function(){S.kat=b.textContent==='Alle typer'?'Alle':b.textContent;fetchLive(500);tab1()}});
- $('fill').onclick=function(){S.sel={'Platetopp':'b1','Stekeovn':'mi1','Oppvaskmaskin':'b2','Kjøl/frys':'s2','Ventilator':'sm1'};S.keep={};step('velg');log('Bergs ønsker lagt på ordren: <b>5 hvitevarer</b> fra Bosch, Miele, Siemens og Smeg.');render()};
+ $('fill').onclick=function(){S.sel={'Platetopp':'b1','Stekeovn':'mi1','Oppvaskmaskin':'b2','Kjøl/frys':'s2','Ventilator':'sm1'};S.keep={};step('velg');log('Bergs ønsker lagt på ordren: <b>5 hvitevarer</b> fra Bosch, Miele og Smeg.');render()};
  if(S.sent){$('fill').disabled=true}
  $('next').onclick=function(){go(2)};
  renderList()}

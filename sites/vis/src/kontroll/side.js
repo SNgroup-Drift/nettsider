@@ -2,7 +2,7 @@
 var $=function(i){return document.getElementById(i)};
 var fmt=function(n){return n.toLocaleString('nb-NO')};
 var K={
- sig:{t:'Sigdal-ordre: tegning mot bekreftelse',ctx:'Ordre 24-0791 · Familien Berg · Hamar',docs:[['Tegning','Nobia-XML fra CET'],['Bekreftelse','OB fra Sigdal (PDF)']],
+ sig:{t:'Fabrikkordre: tegning mot bekreftelse',ctx:'Ordre 24-0791 · Familien Berg · Hamar',docs:[['Tegning','Nobia-XML fra CET'],['Bekreftelse','OB fra fabrikken (PDF)']],
   cols:['Element','Tegning','Bekreftelse'],
   rows:[
    ['Benkeskap 60, 2 skuffer','Front Eik natur','Front Eik natur'],

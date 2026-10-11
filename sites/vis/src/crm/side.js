@@ -5,6 +5,6 @@ Skjermbilder.guide({guide:document.getElementById('guide'),velger:velger,forste:
   avvik:{enhet:'pc',vis:[V.pc,0]},
   faktura:{enhet:'pc',vis:[V.pc,1]},
   cet:{enhet:'pc',vis:[V.pc,3]},
-  plan:{enhet:'pc',vis:[V.pc,3]}
+  plan:{enhet:'pc',vis:[V.pc,4]}
 }});
 })();
