@@ -43,7 +43,7 @@ export const UTE: [string, string, string, string][] = [
   ["Meld avvik", "Bilde med pil, og om det trengs ny vare.", "ute-avvik", "Hengsel Ute: meld avvik med bilde og valg om ny vare"],
   ["Punkter hos kunden", "Ett nummersystem, samme nummer i CRM og portal.", "ute-punkter", "Hengsel Ute: punktlisten på kunden med nummer og status"],
   ["Før og etter", "Punktkortet dokumenterer at det er løst.", "ute-punktkort", "Hengsel Ute: punktkort med før- og etterbilde"],
-  ["Ferdig montert", "Kundens signatur på skjermen.", "ute-ferdig", "Hengsel Ute: klar for ferdigmelding"],
+  ["Ferdig montert", "Klar for ferdigmelding.", "ute-ferdig", "Hengsel Ute: klar for ferdigmelding"],
   ["Typeskilt", "Hvitevaren fotograferes og legges på kunden.", "ute-typeskilt", "Hengsel Ute: hvitevarer skannet fra typeskilt"],
 ];
 export const UTE_IPAD_ALT = "Hengsel Ute på iPad: bildeverktøyet med punkter på bildet og punktliste til høyre";

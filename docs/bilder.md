@@ -38,12 +38,11 @@ Kundeportalen, Integrasjoner, priser og om, kontakt.
   alltid med innholdet: `crm-resultater` er Leder › Oversikt. Alt-tekstene i `src/content/forside.ts` beskriver det bildene faktisk viser.
 - **iPad:** `ute-ipad-bildeverktoy` er 2360 × 1640 (1,44:1, v4) og fyller hullet i `ipad-liggende` uten beskjæring. Det finnes ingen bildetilpasning
   (`fit`, `contain`) i `Enhet.astro`.
-- **Tekst og bilde som ikke stemmer helt:** fasit-teksten «Kundens signatur på skjermen» står ved `ute-ferdig`, som i v7 viser «Klar for ferdigmelding».
-  Bilde og tekst er gjort som fasiten; si fra om pakken skal ha et eget signaturbilde.
-- **Topplogo:** `Side.astro` bruker `hengsel-logo-lys.svg` som i fil 60 (var CRM-logo før). Sidebakgrunnen er Off White; kortene er Beige 3.
+- **Ferdig montert:** teksten er «Klar for ferdigmelding» (som bildet i v7), ikke «Kundens signatur på skjermen» fra fil 60.
+- **Topplogo:** `Side.astro` bruker `hengsel-logo-lys.svg` som i fil 60 (var CRM-logo før). Sidebakgrunnen er Off White; kortene er Beige 3. Begge er avgjort å beholde.
 - **Appknapper:** `/apptest` er skjult (passordvegg, noindex, ikke lenket), så «App Store · TestFlight» og «Google Play» er deaktiverte knapper
   (`TODO_…` i `src/content/forside.ts`) til lenkene er avklart. «Bli tester» er `mailto:test@hengsel.no`.
-- **Ikke i fasit, men beholdt:** kontaktskjemaet med plantegning og bunnen.
+- **Ikke i fasit, men beholdt:** kontaktskjemaet med plantegning og bunnen. Avgjort å beholde, i likhet med deaktiverte appknapper og faner i «For kontoret».
 - **/apptest** følger W2 (korttekster, pillknapper, «‹ Tilbake til hengsel.no», to kolonner, bunn med merke). Beholdt fra tidligere beskjed: Ute-logoen
   øverst, versjon og «Hva er nytt» fra `apptest-lenker.ts` (Action), «Siste oppdatering», «Testere» og tre iPhone-skjermer.
 - Ikke i bruk i pakkene: `ipad13/*`, Duo-rammen `iphone-aapen`, `pc/*` (ingen MacBook-ramme på siden).
@@ -53,3 +52,5 @@ Kundeportalen, Integrasjoner, priser og om, kontakt.
 `npm test` (lenker og bilder i `img/` svarer 200, pluss enhetstestene) og `node scripts/skjermbilder.mjs` (ni telefoner i Hengsel Ute, fire
 kontorfaner med lysboks, ingen eksterne forespørsler, ingen informasjonskapsler). Sett i nettleser på PC 1440 og telefon 390, lyst og mørkt: forside
 og /apptest. Ingen kuttede kanter, ingen dobbel statuslinje, ingen merkenavn, bildene fyller skjermhullet.
+
+/apptest er gjennomgått på 1440 og 390: ingen dobbel statuslinje (bildene har ingen statuslinje, rammen har island), og ingen kundenavn eller Sigdal/Nobia. Appskjermen `ute-laser` viser lasermålernes produktnavn (Bosch GLM, Leica DISTO, Hilti PD-S); de er en del av bildet fra pakken.
