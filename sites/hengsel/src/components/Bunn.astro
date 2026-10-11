@@ -1,62 +1,54 @@
 ---
-/**
- * Bunnen på hengsel.no: SN Group-båndet og bunnteksten. Fasit: docs/design/hengsel/Bunn.dc.html (10.10.2026).
- * demo = linjen om demodata (bare på forsiden, der skjermbildene vises). epost = adressen i bunnteksten (hei@hengsel.no),
- * tlf = telefonnummeret etter e-posten (vises bare når det er satt).
- */
-import { selskap } from "../content/selskap";
-
-interface Props { demo?: boolean; forside?: boolean; epost?: string; tlf?: string }
-const { demo = false, forside = false, epost = selskap.epost, tlf } = Astro.props;
-const tlfHref = tlf ? `tel:${tlf.replace(/\s/g, "")}` : undefined;
+/** Bunnen (Bunn.dc.html): Hengsel-merket, to lenkegrupper, kontakt og selskapslinja. Tekst ordrett fra LES-MEG.md. */
+import { BUNN_MER, BUNN_PRODUKT } from "../content/nav";
+import { EPOST, TEL, TEL_HREF } from "../content/forside";
 ---
-<aside class="baand" aria-label="SN Group" data-familiegrep="familiebaand">
-  <div class="h-innhold rad">
-    <a href="https://sngroup.no" class="avsender">
-      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-        <rect width="32" height="32" rx="7" class="flate" />
-        <path d="M8 8h16v16H8z" class="strek" stroke-width="2.5" />
-        <path d="M16 8v8h8" class="strek" stroke-width="1.5" />
-        <circle cx="8" cy="24" r="2" class="punkt" />
-      </svg>
-      <span>En del av SN Group</span>
-    </a>
-    <nav aria-label="Søstersider" class="sider">
-      <a href="https://sngroup.no">sngroup.no</a>
-      <span aria-hidden="true">·</span>
-      <span aria-current="page" class="her">hengsel.no</span>
-      <span aria-hidden="true">·</span>
-      <a href="https://byggem.no">byggem.no</a>
-    </nav>
-  </div>
-</aside>
 <footer class="bunn">
-  <div class="h-innhold rad">
-    <span>Hengsel · {selskap.navn} · org.nr. {selskap.orgnr} · <a href={`mailto:${epost}`}>{epost}</a>{tlf && <> · <a href={tlfHref} class="tlf">{tlf}</a></>}</span>
-    {demo && <span>Skjermbildene viser demodata. Navn og tall er ikke ekte.</span>}
-    <span class="lenker"><a href="/personvern">Personvern</a><span aria-hidden="true">·</span>{forside ? <a href="#hjem">Til toppen</a> : <a href="/">Til forsiden</a>}</span>
+  <div class="rutenett">
+    <div class="merke">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-logo-mork.svg" />
+        <img src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="460" height="112" loading="lazy" />
+      </picture>
+      <p>CRM, montørapp og kundeportal for kjøkken- og interiørbutikker.</p>
+    </div>
+    <nav aria-label="Produkt">
+      <span class="tittel">Produkt</span>
+      {BUNN_PRODUKT.map(([t, h]) => <a href={h}>{t}</a>)}
+    </nav>
+    <nav aria-label="Mer">
+      <span class="tittel">Mer</span>
+      {BUNN_MER.map(([t, h]) => <a href={h}>{t}</a>)}
+    </nav>
+    <div class="kontakt">
+      <span class="tittel">Kontakt</span>
+      <a href={TEL_HREF}>{TEL}</a>
+      <a href={`mailto:${EPOST}`}>{EPOST}</a>
+      <span class="dempet">Enromvegen 173, 7026 Trondheim</span>
+    </div>
+  </div>
+  <div class="linje">
+    <div class="linje-inn">
+      <span>Hengsel · ES-HOLDING AS · org.nr. 927 363 585</span>
+      <span>Skjermbildene viser demodata. Navn og tall er ikke ekte.</span>
+      <a href="/personvern">Personvern</a>
+    </div>
   </div>
 </footer>
 
 <style>
-  .baand { background: var(--bg); color: var(--ink); border-top: 1px solid var(--line); }
-  .baand .rad {
-    padding-block: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px;
-  }
-  .avsender { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 0.95rem; }
-  .avsender:hover { text-decoration: none; }
-  svg { flex: none; display: block; }
-  .flate { fill: var(--ink); }
-  .strek { fill: none; stroke: var(--bg); }
-  .punkt { fill: var(--dusty-blue); }
-  .sider { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 0.95rem; color: var(--muted); }
-  .sider a { color: var(--muted); }
-  .sider a:hover { color: var(--ink); }
-  .her { color: var(--ink); }
-
-  .bunn { border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--muted); background: var(--bg); }
-  .bunn .rad { padding-block: 32px 40px; display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
-  .bunn a { color: inherit; }
-  .lenker { display: flex; gap: 8px; }
-  .tlf { white-space: nowrap; }
+  .bunn { background: var(--bg); color: var(--ink); border-top: 1px solid var(--line); font-size: 0.95rem; }
+  .rutenett, .linje-inn { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; box-sizing: border-box; padding-inline: var(--pad); }
+  .rutenett { padding-block: 48px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; }
+  .merke { display: flex; flex-direction: column; gap: 12px; }
+  .merke img { height: 30px; width: auto; align-self: flex-start; }
+  .merke p { color: var(--muted); line-height: 1.55; max-width: 30ch; }
+  nav, .kontakt { display: flex; flex-direction: column; gap: 4px; }
+  .tittel { font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  a { color: var(--ink); display: inline-flex; align-items: center; min-height: 32px; }
+  a:hover { color: var(--accent); }
+  .dempet { color: var(--muted); }
+  .linje { border-top: 1px solid var(--line); }
+  .linje-inn { padding-block: 20px 28px; display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; font-size: 0.88rem; color: var(--muted); }
+  .linje-inn a { min-height: 0; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 </style>

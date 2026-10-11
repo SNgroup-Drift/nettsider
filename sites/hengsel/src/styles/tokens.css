@@ -5,14 +5,14 @@
   Lastes etter @sngroup/design/tokens.css og overstyrer den (html:root har høyere spesifisitet enn :root).
 
   Avvik fra designsystemet, for minst 4,5:1 kontrast på tekst (WCAG AA):
+  - Info-piller og -bannere er Beige 3 med Warm Black-tekst (Eirik 11.10), ikke lyseblå. Deep Blue er bare hovedknapper, lenker og fokusring.
   - --tekst-svak (dempet hjelpetekst) er #6E6355, ikke #8A7F72 (3,7:1 mot Off White).
-  - Tekst i info-piller er #43649A og i ok-piller #376C49 (designsystemet: 3,9:1 og 4,3:1).
+  - Tekst i ok-piller er #376C49 (designsystemet: 4,3:1).
 */
 html:root {
-  /* Skrift: Reckless Standard M og TWK Lausanne (public/fonts, @font-face i hengsel.css). Reserve: Newsreader og Inter,
-     selvhostet fra @fontsource (@sngroup/design/fonts.css). */
-  --font-overskrift: "Reckless Standard M", "Newsreader Variable", Georgia, "Times New Roman", serif;
-  --font-tekst: "TWK Lausanne", "Inter Variable", "Helvetica Neue", Arial, sans-serif;
+  /* Skrift: Newsreader (overskrifter) og Inter (tekst), selvhostet fra @fontsource (@sngroup/design/fonts.css). */
+  --font-overskrift: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-tekst: "Inter Variable", "Helvetica Neue", Arial, sans-serif;
 
   /* Merkevarefarger (bare disse åtte) */
   --warm-black: #31261d;
@@ -40,8 +40,8 @@ html:root {
   --tekst-svak: #6e6355;            /* 5,6:1 mot Off White, 4,9:1 mot Beige 3 */
   --aksent: var(--deep-blue);       /* 4,5:1 mot Off White */
   --pa-aksent: var(--off-white);
-  --aksent-myk: #e3eaf4;
-  --info-tekst: #43649a;
+  --aksent-myk: var(--beige-3);     /* beige i stedet for lyseblå (Eirik 11.10): piller, merker, valgte felt, info-bannere */
+  --info-tekst: var(--warm-black);
   --ok: #376c49;   --ok-myk: #e4eee6;
   --feil: #8e3522; --feil-myk: #f4e1db;
   --skygge: 0 1px 2px rgb(49 38 29 / 0.06), 0 12px 40px -12px rgb(49 38 29 / 0.22); /* bare enhetsrammene */
@@ -91,8 +91,8 @@ html:root {
     --tekst-svak: #9a8e80;          /* 4,5:1 mot #2F2820 */
     --aksent: var(--dusty-blue);
     --pa-aksent: #1b1713;
-    --aksent-myk: #25303f;
-    --info-tekst: var(--dusty-blue);
+    --aksent-myk: #3b3229;
+    --info-tekst: #f1e9de;
     --ok: #8cc39b;   --ok-myk: #1f2e23;
     --feil: #e69a87; --feil-myk: #36211c;
     --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
@@ -117,8 +117,8 @@ html:root[data-theme="dark"] {
   --tekst-svak: #9a8e80;
   --aksent: var(--dusty-blue);
   --pa-aksent: #1b1713;
-  --aksent-myk: #25303f;
-  --info-tekst: var(--dusty-blue);
+  --aksent-myk: #3b3229;
+  --info-tekst: #f1e9de;
   --ok: #8cc39b;   --ok-myk: #1f2e23;
   --feil: #e69a87; --feil-myk: #36211c;
   --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);

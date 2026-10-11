@@ -35,7 +35,7 @@ Uttrykket er varmt, rolig, nordisk og samtidig. Farger og typografi er hentet fr
 - **Farger:** bare åtte – Warm Black #31261D, Off White #FBF9F6, Beige 4 #F8F2EC, Beige 3 #F2E9DB, Beige 2 #E4D4C4, Beige 1 #C3B5A7, Deep Blue #5074A9, Dusty Blue #9CA9BD. Status ok #3F7A52, varsel #8A5D14, feil #8E3522 brukes bare i piller og varsler, alltid med tekst. Aldri ren hvit, aldri rosa/magenta, ingen lilla.
 - **Fargevekt:** flatene er papir og sand. Deep Blue er sparsom aksent: primærknapp, lenker, fokus, valgt rad. Farge gir dybde, ikke lekenhet.
 - **Mørk modus:** flater #1B1713 (app) og #26201A (kort), tekst #F1E9DE, aksent Dusty Blue, myke statusfarger. Settes med `data-theme="dark"` på `<html>` eller et hvilket som helst element. For å følge systemvalget: sett `data-theme` fra `matchMedia('(prefers-color-scheme: dark)')` i JS.
-- **Typografi:** titler og store tall i Reckless Neue Regular (reserve Newsreader 400, så Georgia). Tekst, knapper og etiketter i TWK Lausanne 350 (reserve Inter 400). Underoverskrifter i Lausanne 650 (Inter 600) – aldri på store overskrifter. Serif aldri under 1,45 rem og aldri bare versaler. Positiv sperring (0,06 em) bare på eyebrow. Tabular-nums i tabeller og nøkkeltall. Brødtekst 17 px / 1,6, maks 62 tegn.
+- **Typografi:** titler og store tall i Newsreader 400 (Reckless er fjernet, K-160, så Georgia). Tekst, knapper og etiketter i TWK Lausanne 350 (reserve Inter 400). Underoverskrifter i Lausanne 650 (Inter 600) – aldri på store overskrifter. Serif aldri under 1,45 rem og aldri bare versaler. Positiv sperring (0,06 em) bare på eyebrow. Tabular-nums i tabeller og nøkkeltall. Brødtekst 17 px / 1,6, maks 62 tegn.
 - **Bakgrunner:** ensfargede flater. Ingen gradienter, mønstre, teksturer eller illustrasjoner. Seksjonsbånd veksler mellom Off White og Beige 3. Bilder er interiørfoto av kjøkken – varme, lyse, naturlig lys, rolige farger – vist i kort med avrundede hjørner.
 - **Kort:** Off White på Beige 3, 1 px Beige 2-ramme, radius 14 px, luft 20/22 px. Svevekort har ingen ramme og myk, varm skygge (`--shadow`). Ikke kort på kort; inne i kort brukes Beige 4-fliser (radius 10) for nøkkel/verdi.
 - **Radier:** 8 (små), 10 (felt, fliser), 14 (kort), 20 (store flater), pille (knapper, piller, faner).
@@ -67,8 +67,6 @@ Fasit: `guidelines/hengsel-merke.md` (besluttet 06.10.2026). Hengsel er CRM-syst
 - **Filer (endelige, 09.10.2026):** `assets/logo/` – `hengsel-crm-logo-lys/-mork/-bla.svg`, `hengsel-ute-logo-lys/-mork/-bla.svg`, `hengsel-logo-lys/-mork/-bla.svg` (uten produktnavn), `hengsel-merke-lys/-mork/-bla.svg`, `hengsel-app-ikon-lys/-mork/-android/-mono.svg`. Teksten er konturer – filene kan brukes rett ut. Forrige merke ligger i `assets/arkiv/v1-dorer/`. Utforskingen ligger i `guidelines/Logo-utforsking.html`.
 
 ## Fonter
-- **Titler:** `fonts/RecklessStandardM-Regular.woff2` er lagt inn under familienavnet «Reckless Neue» (400). Merk: fila er Reckless Standard M, ikke nødvendigvis Reckless Neue – bekreft at dette er riktig snitt.
-- **Tekst:** TWK Lausanne 250, 350 og 650 ligger i `fonts/` (woff2 + woff). Det finnes ingen 500-fil, så vekt 500 (knapper, etiketter, eyebrow) vises som 350. Send 500 hvis den finnes.
 
 ---
 
