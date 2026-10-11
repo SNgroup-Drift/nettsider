@@ -9,7 +9,7 @@ Alle montørbildene fra fil 36 tatt på nytt med nye navn: kunden heter Kari Nor
   - ute-ks-kamera (MV16)
   - ute-ks (MV16.1, «Ta bilde først»)
   - ute-avvik (MV17)
-  - ute-punkter (MV14)
+  - ute-punkter (MV14, filterraden rettet)
   - ute-punktkort (MV15)
   - ute-ferdig (MV1.3)
   - ute-typeskilt (MV19.8)
