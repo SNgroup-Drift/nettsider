@@ -77,6 +77,9 @@ if (skjema) {
     const data: Record<string, string> = {};
     for (const [k, v] of new FormData(skjema)) data[k] = String(v);
     try {
+      // Tjeneren avviser forespørsler under 3 sekunder etter at skjemaet ble vist (robotvern): vent ut resten
+      const rest = 3200 - (Date.now() - Number(tid.value));
+      if (rest > 0) await new Promise((r) => setTimeout(r, rest));
       const svar = await fetch(skjema.action, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
