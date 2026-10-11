@@ -134,13 +134,11 @@ for (const navn of nettsteder) {
   } catch {
     mangler.push("dist/404.html mangler");
   }
-  // /apptest (hengsel.no, testsiden): ingen andre sider lenker dit, den står ikke i sitemap, og den har noindex,nofollow
+  // /apptest (hengsel.no, testsiden): «Bli tester» og «App Store» lenker dit (hengsel.no 2.0, K-160), men den står ikke i sitemap og har noindex,nofollow
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
     if (side.startsWith("/apptest")) {
       if (!/<meta name="robots" content="noindex,\s?nofollow">/.test(html)) mangler.push(`${side}: mangler robots noindex,nofollow`);
-    } else if (/\shref="(?:https:\/\/hengsel\.no)?\/apptest/.test(html)) {
-      mangler.push(`${side}: lenker til /apptest`);
     }
   }
   try {
