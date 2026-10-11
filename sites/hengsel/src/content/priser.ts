@@ -61,6 +61,8 @@ export const DEMO = {
   // Ikke i LES-MEG (nødvendige for tilgjengelighet og reserve): korte feilmeldinger per felt og reserveteksten
   feltFeil: { epost: "Skriv en gyldig e-postadresse.", tlf: "Skriv et gyldig telefonnummer." },
   reserve: { tittel: "Forespørselen ble ikke sendt.", lenke: "Send den som e-post i stedet", emne: "Demo av Hengsel" },
+  // Vises når e-postsending ikke er slått på: ingen feilmelding, bare lenken til e-post
+  reserveNoytral: { tittel: "Send forespørselen på e-post til hei@hengsel.no.", lenke: "Åpne e-post" },
   utenSkript: "Skjemaet trenger JavaScript for å kunne sendes.",
   utenSkriptLenke: "Send e-post i stedet",
 } as const;

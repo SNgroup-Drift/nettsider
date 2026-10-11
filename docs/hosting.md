@@ -144,16 +144,20 @@ Skjemaet «Be om demo» på `/priser-og-demo` (K-160) sender med `fetch` til `PO
 - **Validering på tjeneren:** navn 1–120 tegn, e-post (enkel sjekk, bare ASCII) eller telefon (6–20 siffer), minst én av dem, butikk
   maks 120, «Hva vil dere se?» maks 1000, antall avdelinger fra fast liste (`1`, `2-3`, `4+`). Kontrolltegn og linjeskift avvises i
   alle felt som kan havne i e-posthoder.
-- **Svar:** `200 {ok:true}`, `400 {ok:false, feil:{felt:melding}}`, `503 {ok:false, reserve:"mailto"}` når e-post ikke kan sendes.
+- **Svar:** `200 {ok:true}` (e-post sendt), `200 {ok:true, levert:false, reserve:"mailto"}` (e-postbindingen finnes ikke, se under),
+  `400 {ok:false, feil:{felt:melding}}`, `503 {ok:false, reserve:"mailto"}` når bindingen finnes, men Cloudflare avviser sendingen.
   Ingenting lagres, og det logges ingen persondata (bare feilkoden fra Cloudflare).
-- **E-post:** bindingen `DEMO_EPOST` (`send_email` i `wrangler.jsonc`, `destination_address: hei@hengsel.no`). Workeren bygger rå
+- **E-post (foreløpig AV, Eirik 11.10):** `send_email`-blokken er tatt ut av `wrangler.jsonc` (står som kommentar der). Koden sjekker om
+  bindingen `DEMO_EPOST` finnes og sender bare da; slås e-post på senere ved å legge blokken tilbake, uten kodeendring.
+  Bindingen er `send_email` med `destination_address: hei@hengsel.no`. Workeren bygger rå
   MIME for hånd (`EmailMessage` fra `cloudflare:email`, emnet RFC 2047, UTF-8 base64-kropp, `Reply-To` til kundens e-post) fra
   `demo@hengsel.no`. Ingen npm-pakker, ingen nøkler eller hemmeligheter i repoet.
-- **Reserve:** mangler bindingen, eller Cloudflare avviser sendingen (Email Routing ikke slått på, avsender ikke på sonen,
-  destinasjon ikke verifisert), svarer ruten 503, og siden viser en `mailto:hei@hengsel.no`-lenke med utfylt emne og innhold, pluss
-  telefonnummeret.
+- **Reserve:** mangler bindingen (slik det er nå), validerer ruten forespørselen og svarer 200 med `levert:false`; siden viser da uten
+  feilmelding «Send forespørselen på e-post til hei@hengsel.no.» med en `mailto:`-lenke med utfylt emne og innhold, pluss telefonnummeret.
+  Finnes bindingen, men Cloudflare avviser sendingen (Email Routing ikke slått på, avsender ikke på sonen, destinasjon ikke
+  verifisert), svarer ruten 503, og siden viser mailto-lenken med teksten «Forespørselen ble ikke sendt.».
 - **Det Eirik må slå på i Cloudflare:** se `docs/k160-cloudflare-skjema.md`.
-- **Test lokalt:** `npm run build -w sites/hengsel`, så `npx wrangler dev -c sites/hengsel/wrangler.jsonc`. Lokalt simulerer wrangler
+- **Test lokalt:** `npm run build -w sites/hengsel`, så `npx wrangler dev -c sites/hengsel/wrangler.jsonc`. Uten `send_email`-blokken viser skjemaet mailto-lenken. Med blokken lagt tilbake simulerer wrangler lokalt
   `send_email` og skriver e-posten som `.eml`-fil under `sites/hengsel/.wrangler/tmp/email/` (ingen ekte sending). `npm test` kjører
   `scripts/demo.test.mjs`.
 

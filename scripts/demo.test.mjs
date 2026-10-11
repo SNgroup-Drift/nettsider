@@ -135,10 +135,13 @@ test("ugyldig type, ugyldig JSON og for stor body", async () => {
   assert.equal(lengde.svar.status, 413);
 });
 
-test("mangler bindingen, eller send() kaster: 503 {ok:false, reserve:'mailto'}", async () => {
+test("mangler bindingen: 200 {ok:true, levert:false, reserve:'mailto'} (ingen feil); send() som kaster: 503 {ok:false, reserve:'mailto'}", async () => {
   let r = await kjor(be(), {});
-  assert.equal(r.svar.status, 503);
-  assert.deepEqual(r.data, { ok: false, reserve: "mailto" });
+  assert.equal(r.svar.status, 200);
+  assert.deepEqual(r.data, { ok: true, levert: false, reserve: "mailto" });
+  // Ugyldig forespørsel uten binding får fortsatt valideringsfeil
+  r = await kjor(be({ ...gyldig, navn: "" }), {});
+  assert.equal(r.svar.status, 400);
   const feilende = { DEMO_EPOST: { send: async () => { throw Object.assign(new Error("kari@butikknavn.no"), { code: "E_SENDER_NOT_VERIFIED" }); } } };
   const logg = [];
   const orig = console.error;
@@ -194,9 +197,9 @@ test("MIME: uten e-post ingen Reply-To; uten butikk brukes navnet i emnet; langt
 
 // ---- Konfigurasjon ----
 
-test("wrangler.jsonc har send_email-bindingen og /api/demo i run_worker_first", () => {
+test("wrangler.jsonc har /api/demo i run_worker_first og ingen aktiv send_email-binding (e-post er ikke slått på, K-160)", () => {
   const rot = join(import.meta.dirname, "..", "sites", "hengsel");
   const w = JSON.parse(readFileSync(join(rot, "wrangler.jsonc"), "utf8").replace(/^\s*\/\/.*$/gm, ""));
-  assert.deepEqual(w.send_email, [{ name: "DEMO_EPOST", destination_address: "hei@hengsel.no" }]);
+  assert.equal(w.send_email, undefined);
   assert.ok(w.assets.run_worker_first.includes("/api/demo"));
 });

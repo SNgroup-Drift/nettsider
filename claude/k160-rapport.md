@@ -34,7 +34,7 @@ Felles (alle sider): `layouts/Side.astro` med fast meny (`Meny.astro`), ny bunn 
 - /kundeportal: fanene er én tablist som endrer utseende (liste på telefon, piller på PC).
 - /ute bruker `ipad-bildeverktoy-laser.webp` («Lasermåler» i bildet) i stedet for designets PNG. Ute-logoen er `<picture>` av SVG-ene og får Inter i «engsel» (ingen webfont i SVG-bilde).
 - /priser-og-demo: sju punkter under «Dette inngår» (som LES-MEG; oppgaven nevnte ikke antall). Noen små feiltekster står ikke i LES-MEG: «Skriv en gyldig e-postadresse.», «Skriv et gyldig telefonnummer.», «Forespørselen ble ikke sendt.», «Send den som e-post i stedet» og tekst for uten-JS.
-- Uten JavaScript kan demoskjemaet ikke sendes (tidsfeltet `t` settes av skriptet); da vises mailto-lenke. Uten JS vises ellers første tilstand på alle interaktive sider (på /slik-virker-det alle åtte scener som liste).
+- Uten JavaScript kan demoskjemaet ikke sendes (tidsfeltet `t` settes av skriptet); da vises mailto-lenke. Foreløpig vises mailto-lenken også med JavaScript, siden e-postsending er av (se 5). Uten JS vises ellers første tilstand på alle interaktive sider (på /slik-virker-det alle åtte scener som liste).
 - iPad-rammen og iPhone-rammen er tegnet i CSS som i designet; Studio Display bruker bezelfilen.
 - Ikke gjort: skjermlesertest og ekte Safari/iOS-test (bare Chromium/Playwright).
 - `public/apptest/Logg_inn_i_demoen.pdf` (uendret, del av /apptest) inneholder fortsatt merkenavn fra demodata; /apptest skulle beholdes som den er.
@@ -56,16 +56,16 @@ Felles (alle sider): `layouts/Side.astro` med fast meny (`Meny.astro`), ny bunn 
 
 ## 4. Tester
 
-`npm run build` (alle nettsteder) OK · `npm test`: 32/32 node-tester og lenkesjekk 308 forespørsler, 0 feil · `node scripts/skjermbilder.mjs`: 0 feil · `wrangler deploy --dry-run` OK med `send_email`-binding.
+`npm run build` (alle nettsteder) OK · `npm test`: node-tester (inkl. 16+ for /api/demo) og lenkesjekk 308 forespørsler, 0 feil · `node scripts/skjermbilder.mjs`: 0 feil · `wrangler deploy --dry-run` OK uten `send_email`-binding.
 
-## 5. Hva Eirik må slå på i Cloudflare (skjemaet)
+## 5. Demoskjemaet og e-post (oppdatert 11.10 kl. 22.44, Eirik: flett uten e-postsending)
 
-Detaljer og testtrinn: `docs/k160-cloudflare-skjema.md`. Kort:
-1. **Email Routing på hengsel.no-sonen** (dashbordet: Compute › Email Service › Email Routing → hengsel.no → slå på; godta MX/SPF-postene). Sjekk først om hengsel.no allerede har e-post et annet sted – Email Routing bytter MX.
-2. **Verifiser `hei@hengsel.no` som destinasjon** (Destination addresses; trykk «Verify email address» i e-posten Cloudflare sender). Bindingen `DEMO_EPOST` er låst til denne adressen.
-3. **Avsender `demo@hengsel.no`** må ligge på sonen (dekket av trinn 1; postkasse trengs ikke). Vises «Email Sending»: «Onboard Domain» for hengsel.no (anbefalt for levering).
-4. Ingen nøkler eller secrets. Bindingen står i `wrangler.jsonc`. **Risiko:** hvis Workers Builds avviser deploy fordi destinasjonen ikke er verifisert ennå, gjør trinn 1–2 før PR-en flettes (eller fjern `send_email`-blokken midlertidig; da svarer ruten 503 og siden viser mailto-reserven).
-Før dette er på, viser siden «Forespørselen ble ikke sendt.» med mailto-lenke og telefonnummer.
+**E-postsending er foreløpig AV, og ingenting må gjøres i Cloudflare før fletting.**
+- `send_email`-blokken er fjernet fra `sites/hengsel/wrangler.jsonc` (står som kommentar med teksten som skal tilbake).
+- `/api/demo` validerer som før (honeypot, tidssjekk, origin, størrelse). Uten bindingen `DEMO_EPOST` svarer den `200 {ok:true, levert:false, reserve:"mailto"}`, og siden viser uten feilmelding «Send forespørselen på e-post til hei@hengsel.no.» med knappen «Åpne e-post» (mailto med utfylt emne og innhold) og telefonnummeret. Teksten står ikke i LES-MEG (ny, nøytral).
+- Koden for Email Routing ligger i `worker/demo.ts` bak sjekken på om bindingen finnes. Finnes den og sendingen feiler, svarer ruten 503 og siden viser mailto-lenken med «Forespørselen ble ikke sendt.».
+- Slå på senere uten kodeendring: gjør trinn 1–3 i `docs/k160-cloudflare-skjema.md` (Email Routing på hengsel.no, verifiser hei@hengsel.no, avsender demo@hengsel.no), legg blokken `"send_email": [{ "name": "DEMO_EPOST", "destination_address": "hei@hengsel.no" }]` tilbake i `wrangler.jsonc` og oppdater den ene testen som forventer at blokken mangler.
+- Risikoen for at deploy feiler pga. uverifisert destinasjon er borte, siden bindingen ikke deployes.
 
 ## 6. Appbilder som skal byttes etter K-159
 

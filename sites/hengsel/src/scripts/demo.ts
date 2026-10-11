@@ -18,6 +18,15 @@ if (skjema) {
   const takkTekst = takk.querySelector<HTMLElement>("[data-takk-tekst]")!;
   const takkStandard = takkTekst.dataset.ufullstendig ?? "";
   const felter = (n: string) => skjema.elements.namedItem(n) as HTMLInputElement | HTMLTextAreaElement;
+  const reserveTittel = reserve.querySelector<HTMLElement>("[data-reserve-tittel]")!;
+  const feilTittel = reserveTittel.textContent ?? "";
+  const feilLenke = mailto.textContent ?? "";
+  // noytral: e-post er ikke slått på, så teksten er en vanlig oppfordring og ikke en feilmelding
+  const visReserve = (noytral: boolean) => {
+    reserveTittel.textContent = noytral ? skjema.dataset.noytralTittel || feilTittel : feilTittel;
+    mailto.textContent = noytral ? skjema.dataset.noytralLenke || feilLenke : feilLenke;
+    vis(reserve);
+  };
   const feltFeil = (n: string) => skjema.querySelector<HTMLElement>(`[data-felt-feil="${n}"]`);
   const adresse = skjema.dataset.epost || "hei@hengsel.no";
   const emne0 = skjema.dataset.reserveEmne || "Demo av Hengsel";
@@ -85,7 +94,9 @@ if (skjema) {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(data),
       });
-      const json = (await svar.json().catch(() => null)) as { ok?: boolean; feil?: Record<string, string> } | null;
+      const json = (await svar.json().catch(() => null)) as { ok?: boolean; levert?: boolean; reserve?: string; feil?: Record<string, string> } | null;
+      // E-postsending er ikke slått på (levert: false): ingen feilmelding, bare lenken til e-post
+      if (svar.ok && json?.ok && json.levert === false && json.reserve === "mailto") { lagMailto(); visReserve(true); return; }
       if (svar.ok && json?.ok) { lykkes(); return; }
       const f = json?.feil;
       const kjente = ["navn", "epost", "tlf"];
@@ -99,10 +110,10 @@ if (skjema) {
         return;
       }
       lagMailto();
-      vis(reserve);
+      visReserve(false);
     } catch {
       lagMailto();
-      vis(reserve);
+      visReserve(false);
     } finally {
       sender = false;
       send.disabled = false;

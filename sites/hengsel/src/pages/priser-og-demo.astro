@@ -59,7 +59,7 @@ const f = DEMO.felt;
         </div>
 
         <div class="skjemaboks">
-          <form id="demo-skjema" method="post" action="/api/demo" novalidate data-demo data-epost={DEMO.kontakt.epost} data-reserve-emne={DEMO.reserve.emne}>
+          <form id="demo-skjema" method="post" action="/api/demo" novalidate data-demo data-epost={DEMO.kontakt.epost} data-reserve-emne={DEMO.reserve.emne} data-noytral-tittel={DEMO.reserveNoytral.tittel} data-noytral-lenke={DEMO.reserveNoytral.lenke}>
             <div class="rutenett">
               <div class="field">
                 <label for="demo-navn">{f.navn.l}</label>
@@ -118,7 +118,7 @@ const f = DEMO.felt;
               <b>{DEMO.feilTittel}</b> {DEMO.feilTekst}
             </div>
             <div class="varsel reserve" role="alert" tabindex="-1" data-reserve hidden>
-              <b>{DEMO.reserve.tittel}</b>
+              <b data-reserve-tittel>{DEMO.reserve.tittel}</b>
               <a class="btn" href={MAILTO} data-mailto>{DEMO.reserve.lenke}</a>
               <span>{DEMO.ring}</span>
             </div>

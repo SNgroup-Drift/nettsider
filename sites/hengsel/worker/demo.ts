@@ -7,9 +7,11 @@
  * - Tidssjekk: feltet «t» (millisekunder siden 1970, satt av skriptet når skjemaet ble vist) må være mellom 3 sekunder og 24 timer gammelt.
  * - Validering: navn 1–120 tegn, e-post (enkel sjekk) eller telefon (6–20 siffer), minst én av dem, butikk maks 120, «Hva vil dere se?»
  *   maks 1000, antall avdelinger fra en fast liste. Kontrolltegn og linjeskift avvises i alle felt som kan havne i e-posthoder.
- * - Svar: 200 {ok:true} · 400 {ok:false, feil:{felt:melding}} · 403 · 405 · 413 · 415 · 503 {ok:false, reserve:"mailto"}.
- * - E-post: Cloudflare-bindingen DEMO_EPOST (send_email, destination_address hei@hengsel.no) med rå MIME bygd her. Mangler bindingen
- *   eller kastes det en feil, svarer ruten 503 {reserve:"mailto"}, og siden viser mailto-lenken som reserve.
+ * - Svar: 200 {ok:true} (uten binding: {ok:true, levert:false, reserve:"mailto"}) · 400 {ok:false, feil:{felt:melding}} · 403 · 405 · 413 · 415 · 503 {ok:false, reserve:"mailto"}.
+ * - E-post: Cloudflare-bindingen DEMO_EPOST (send_email, destination_address hei@hengsel.no) med rå MIME bygd her. Bindingen er
+ *   valgfri (K-160, Eirik 11.10): mangler den, valideres forespørselen som vanlig og ruten svarer 200 {ok:true, levert:false, reserve:"mailto"},
+ *   og siden viser mailto-lenken til hei@hengsel.no uten feilmelding. Slås e-posten på senere (send_email-blokken tilbake i wrangler.jsonc,
+ *   se docs/k160-cloudflare-skjema.md), sendes e-posten uten kodeendring. Kastes det en feil ved sending, svarer ruten 503 {reserve:"mailto"}.
  * - Ingenting lagres, og det logges ingen persondata (bare feilkoden fra Cloudflare).
  *
  * Importerer ingenting fra cloudflare:email på toppnivå, så filen kan testes i Node (scripts/demo.test.mjs).
@@ -81,7 +83,8 @@ export async function handterDemo(
   if (!felt) return json(400, { ok: false, feil });
 
   const bind = env.DEMO_EPOST;
-  if (!bind) return json(503, { ok: false, reserve: "mailto" });
+  // Uten e-postbinding (ikke slått på ennå): ingen feil, siden viser mailto-lenken
+  if (!bind) return json(200, { ok: true, levert: false, reserve: "mailto" });
   try {
     const raw = byggMime(felt, new Date(na), crypto.randomUUID());
     await bind.send(await lagMelding(AVSENDER, MOTTAKER, raw));

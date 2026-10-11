@@ -18,9 +18,9 @@
     "not_found_handling": "404-page",
     // /personvern serverer personvern.html; /personvern.html sendes til /personvern
     "html_handling": "auto-trailing-slash"
-  },
-  // Demoskjemaet (/api/demo) sender e-post til hei@hengsel.no med Cloudflare Email Routing. Det krever at Email Routing er slått på
-  // for hengsel.no-sonen, at hei@hengsel.no er verifisert som destinasjon, og at avsenderen demo@hengsel.no ligger på sonen.
-  // Uten dette svarer ruten 503 og siden viser mailto-reserven. Se docs/k160-cloudflare-skjema.md.
-  "send_email": [{ "name": "DEMO_EPOST", "destination_address": "hei@hengsel.no" }]
+  }
+  // Demoskjemaet (/api/demo): e-postsending er IKKE slått på ennå (Eirik 11.10). Uten send_email-bindingen svarer ruten 200 og siden viser
+  // mailto-lenken til hei@hengsel.no uten feilmelding. Slå på e-post senere ved å legge denne blokken tilbake (ingen kodeendring) etter å ha
+  // fulgt docs/k160-cloudflare-skjema.md (Email Routing på hengsel.no, hei@hengsel.no verifisert som destinasjon):
+  //   "send_email": [{ "name": "DEMO_EPOST", "destination_address": "hei@hengsel.no" }]
 }

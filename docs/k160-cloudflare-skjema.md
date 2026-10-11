@@ -1,7 +1,22 @@
 # K-160: Cloudflare for demoskjemaet (hengsel.no/priser-og-demo)
 
+> **Status 11.10 kl. 22.44 (Eirik): e-postsending er foreløpig AV.** `send_email`-blokken er tatt ut av `sites/hengsel/wrangler.jsonc`
+> (den står som kommentar der). `/api/demo` validerer forespørselen og svarer `200 {ok:true, levert:false, reserve:"mailto"}`, og siden
+> viser uten feilmelding «Send forespørselen på e-post til hei@hengsel.no.» med en `mailto:`-lenke (emne og innhold utfylt) og
+> telefonnummeret. Ingenting må gjøres i Cloudflare for at PR-en kan flettes. Koden for Email Routing ligger i `worker/demo.ts` bak en
+> sjekk på om bindingen `DEMO_EPOST` finnes, så den kan slås på senere **uten kodeendring**: følg «Slå på e-post senere» under.
+
+## Slå på e-post senere
+1. Gjør trinn 1–3 under «Trinn for trinn» i Cloudflare (Email Routing på hengsel.no, verifiser hei@hengsel.no, avsender demo@hengsel.no).
+2. Legg denne blokken tilbake i `sites/hengsel/wrangler.jsonc` (rett før den siste `}`, med komma etter `assets`-blokken):
+   ```jsonc
+   "send_email": [{ "name": "DEMO_EPOST", "destination_address": "hei@hengsel.no" }]
+   ```
+3. Oppdater testen `wrangler.jsonc har /api/demo i run_worker_first og ingen aktiv send_email-binding` i `scripts/demo.test.mjs`
+   (den forventer i dag at blokken mangler), og publiser. Test etter «Slik tester du».
+
 Skjemaet «Be om demo» sender e-post til **hei@hengsel.no** fra **demo@hengsel.no** med en Cloudflare-binding (`send_email`).
-Bindingen står allerede i `sites/hengsel/wrangler.jsonc` (`DEMO_EPOST`), så koden trenger ingen endring. Det som gjenstår er tre
+Bindingen (`DEMO_EPOST`) er foreløpig tatt ut av `sites/hengsel/wrangler.jsonc` (se øverst); koden trenger ingen endring for å slå den på. Det som gjenstår er tre
 ting i Cloudflare-dashbordet, på samme konto som hengsel.no. Ingen nøkler eller hemmeligheter skal inn noe sted.
 
 ## Trinn for trinn
@@ -19,7 +34,7 @@ ting i Cloudflare-dashbordet, på samme konto som hengsel.no. Ingen nøkler elle
    slått på (trinn 1 dekker `@hengsel.no`). `demo@hengsel.no` trenger ikke å finnes som postkasse og trenger ingen routing-regel.
    Viser dashbordet også **Email Sending** (Email Service): velg **Onboard Domain**, hengsel.no, og godta postene som legges inn
    (underdomenet `cf-bounce` med MX, SPF, DKIM og DMARC). Det gir best levering, og er påkrevd hvis Cloudflare avviser sendingen uten.
-4. **Publiser nettstedet** som vanlig. `send_email`-bindingen følger med fra `wrangler.jsonc`; det er ingenting å legge inn under
+4. **Legg `send_email`-blokken tilbake i `wrangler.jsonc` og publiser** (se «Slå på e-post senere»); det er ingenting å legge inn under
    Settings › Bindings for hånd.
 
 ## Slik tester du
@@ -39,13 +54,14 @@ ting i Cloudflare-dashbordet, på samme konto som hengsel.no. Ingen nøkler elle
    `{"ok":true}` betyr at e-posten er levert til Cloudflare. `{"ok":false,"reserve":"mailto"}` (status 503) betyr at noe i oppsettet
    over mangler.
 
-## Hva skjer hvis det ikke er slått på
+## Hva skjer når e-post ikke er slått på (slik det er nå)
 
-Ingenting går tapt, og siden ser ikke ødelagt ut. Når Cloudflare ikke kan sende (Email Routing av, avsender ikke på sonen,
-destinasjon ikke verifisert, bindingen mangler), svarer `/api/demo` med 503, og siden viser **«Forespørselen ble ikke sendt.»** med
-knappen **«Send den som e-post i stedet»** (`mailto:hei@hengsel.no` med emne og alt besøkende skrev, ferdig utfylt) og «Du kan også
-ringe +47 454 10 001.». Samme reserve vises hvis nettleseren ikke når Workeren. Uten JavaScript er knappen deaktivert og siden viser
-e-postlenken. Forespørslene kommer da bare inn hvis besøkende selv sender e-posten, så slå på trinn 1 til 3 før lansering.
+Ingenting går tapt, og besøkende ser ingen feilmelding. Uten bindingen svarer `/api/demo` 200 med `levert:false`, og siden viser
+**«Send forespørselen på e-post til hei@hengsel.no.»** med knappen **«Åpne e-post»** (`mailto:hei@hengsel.no` med emne og alt
+besøkende skrev, ferdig utfylt) og «Du kan også ringe +47 454 10 001.». Uten JavaScript er knappen deaktivert og siden viser
+e-postlenken. Forespørslene kommer bare inn hvis besøkende selv sender e-posten. Finnes bindingen, men Cloudflare avviser sendingen
+(Email Routing av, avsender ikke på sonen, destinasjon ikke verifisert), svarer ruten 503 og siden viser mailto-lenken med teksten
+«Forespørselen ble ikke sendt.».
 
 ## Kilder
 
