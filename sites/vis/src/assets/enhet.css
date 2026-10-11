@@ -4,7 +4,7 @@
    Skjermhull i prosent av rammens bredde/høyde (left, top, width, height) og hjørneradius:
    - Studio Display (.pc-ramme)  2160 × 1664: 2.59 · 3.37 · 94.81 · 69.23, radius 1.2 % / 1.6 %, skjermen er 1920 × 1080
    - iPhone 18 (.tlf)            1174 × 2400: 5.37 · 2.50 · 89.27 · 95.00, radius 14 % / 6.1 %, skjermen er 1206 × 2622, ingen statuslinje (rammen har island)
-   - iPad liggende (.ipad-ramme) 2400 × 1740: 5.00 · 6.84 · 90.00 · 86.32, radius 1.2 % / 1.6 %, skjermen er 2732 × 2048
+   - iPad liggende (.ipad-ramme) 2400 × 1740: 5.00 · 6.84 · 90.00 · 86.32, radius 1.2 % / 1.6 %, skjermen er 2360 × 1640 (iPad Air 11″, 1,44:1)
    - MacBook (.mac-ramme)        2400 × 1565: 12.63 · 14.19 · 74.75 · 71.63, radius 1 % / 1.4 %, skjermen er 2408 × 1506
    Rammene brukes aldri mindre enn 200 px høye. Det finnes ingen stående iPad-ramme, så stående iPad-bilder brukes ikke. */
 :root{--skjermbunn:#F2E9DB}
