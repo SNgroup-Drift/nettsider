@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#5074A9"></rect><text x="50" y="62" font-size="30" text-anchor="middle" fill="#F3EADD" font-family="Georgia">60</text></svg></template>
+  <style>
+    @font-face { font-family: 'Reckless Standard M'; src: url('public/fonts/RecklessStandardM-Regular.woff2') format('woff2'); font-weight: 300 500; }
+    @font-face { font-family: 'TWK Lausanne'; src: url('public/fonts/TWKLausanne-350.woff2') format('woff2'); font-weight: 300 549; }
+    @font-face { font-family: 'TWK Lausanne'; src: url('public/fonts/TWKLausanne-650.woff2') format('woff2'); font-weight: 550 800; }
+    html, body { margin:0; background:#FBF9F6; color:#31261D; font-family:'TWK Lausanne',system-ui,sans-serif; font-weight:350; }
+    a { color:#31261D; text-decoration:none; } a:hover { opacity:.72; }
+  </style>
+</helmet>
+<section style="padding:64px;width:max-content;min-width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:72px;background:#FBF9F6">
+<div style="display:flex;flex-direction:column;gap:12px;max-width:1000px"><span style="font-size:14px;color:rgba(49,38,29,.72)">60 hengsel.no · FORSLAG 10.10</span><h1 style="font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:56px;line-height:58px;letter-spacing:-0.025em;margin:0">hengsel.no og /apptest</h1><p style="margin:0;font-size:18px;line-height:27px;color:rgba(49,38,29,.72);text-wrap:pretty">Forside (W1) og testerside (W2) i 1440 px. Sigdal-profil: Off White, Warm Black, Deep Blue som eneste aksent, Reckless fra 20 px, Lausanne ellers, kvadratiske hjørner, ingen skygger. Skjermbildene er fra fil 36 (eksport/hengsel-no). Lenker merket TODO fylles av Eirik.</p></div>
+
+<div id="W1" data-screen-label="W1 Forside" style="display:flex;flex-direction:column;gap:16px;flex:none">
+<div style="display:flex;align-items:center;gap:10px"><span style="height:26px;padding:0 10px;background:#31261D;color:#FBF9F6;display:inline-flex;align-items:center;font-size:13px;font-weight:650">W1</span><span style="font-family:'Reckless Standard M',Georgia,serif;font-size:28px;line-height:30px">Forside</span></div>
+<div style="width:1440px;background:#FBF9F6;border:1px solid #E4D4C4;box-sizing:border-box;display:flex;flex-direction:column">
+
+  <div style="position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:72px;border-bottom:1px solid rgba(49,38,29,.16);background:#FBF9F6">
+    <img src="logo/hengsel-logo-lys.svg" alt="Hengsel" style="height:28px;display:block">
+    <div style="display:flex;gap:32px;font-size:15px"><a href="#">Produkt</a><a href="#">Hengsel Ute</a><a href="#">Priser</a><a href="#">Om</a><a href="#">Logg inn</a></div>
+    <a href="#" style="height:44px;padding:0 22px;background:#5074A9;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;font-size:15px;font-weight:650">Be om demo</a>
+  </div>
+
+  <div style="display:grid;grid-template-columns:7fr 5fr;gap:48px;padding:96px 64px 64px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <h2 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:64px;line-height:1;letter-spacing:-0.025em;text-wrap:pretty">Kjøkkenbutikkens arbeidsflate, fra første befaring til siste restpunkt.</h2>
+      <p style="margin:0;font-size:20px;line-height:1.3;color:rgba(49,38,29,.72);max-width:560px;text-wrap:pretty">Hengsel samler salg, bestilling, montering og oppfølging i ett system. CRM på kontoret, Hengsel Ute på telefonen hos kunden.</p>
+      <div style="display:flex;gap:12px"><a href="#" style="height:48px;padding:0 24px;background:#5074A9;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;font-size:16px;font-weight:650">Be om demo</a><a href="#ute" style="height:48px;padding:0 24px;border:1px solid #31261D;border-radius:999px;display:inline-flex;align-items:center;font-size:16px">Se Hengsel Ute</a></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end"><img src="eksport/hengsel-no/ute-i-dag.webp" alt="" style="width:300px;display:block;border:1px solid rgba(49,38,29,.16)"></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:0 64px 96px">
+    <div style="background:#F2E9DB;padding:28px;display:flex;flex-direction:column;gap:10px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:24px;line-height:1.1">Ett sted for kunden.</div><p style="margin:0;font-size:16px;line-height:1.4;color:rgba(49,38,29,.72)">Tilbud, ordre, bestilling, montering, saker og faktura på samme kundekort.</p></div>
+    <div style="background:#F2E9DB;padding:28px;display:flex;flex-direction:column;gap:10px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:24px;line-height:1.1">Montøren slipper papir.</div><p style="margin:0;font-size:16px;line-height:1.4;color:rgba(49,38,29,.72)">Jobben, tegningene, målene og KS-sjekklista ligger i lomma.</p></div>
+    <div style="background:#F2E9DB;padding:28px;display:flex;flex-direction:column;gap:10px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:24px;line-height:1.1">Kunden følger med selv.</div><p style="margin:0;font-size:16px;line-height:1.4;color:rgba(49,38,29,.72)">Kundeportal med tilvalg, leveringsdag, punkter og dokumenter.</p></div>
+  </div>
+
+  <div style="padding:0 64px 96px;display:flex;flex-direction:column;gap:32px">
+    <h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:-0.025em">Slik går en jobb gjennom Hengsel</h3>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:16px;border-top:1px solid rgba(49,38,29,.16);padding-top:20px">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">01</span><div style="font-weight:650;font-size:16px">Befaring</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Mål og bilder hos kunden, rett inn på kundekortet.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">02</span><div style="font-weight:650;font-size:16px">Tilbud</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Import fra CET, egen PDF og e-signering.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">03</span><div style="font-weight:650;font-size:16px">Ordre og bestilling</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Bestilling til leverandør med ordrebekreftelse.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">04</span><div style="font-weight:650;font-size:16px">Levering</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Kolli på lager, utkjøring med signatur.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">05</span><div style="font-weight:650;font-size:16px">Montering</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Plan, KS-sjekkliste og laser i Hengsel Ute.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">06</span><div style="font-weight:650;font-size:16px">Punkter og saker</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Ett nummersystem fra montør til kontor til kunde.</p></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(49,38,29,.56)">07</span><div style="font-weight:650;font-size:16px">Ferdig og faktura</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(49,38,29,.72)">Kundens signatur, faktura til PowerOffice.</p></div>
+    </div>
+  </div>
+
+  <div id="ute" style="background:#31261D;color:#FBF9F6;padding:96px 64px;display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:720px">
+      <img src="logo/hengsel-ute-mork.svg" alt="Hengsel Ute" style="height:32px;display:block;align-self:flex-start">
+      <h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:48px;line-height:1;letter-spacing:-0.025em;text-wrap:pretty">Dagen ute, samlet på én skjerm.</h3>
+      <p style="margin:0;font-size:18px;line-height:1.3;color:rgba(251,249,246,.72);text-wrap:pretty">Appen for montøren og utkjøreren. Virker uten dekning, sender når du er på nett igjen.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:24px">
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-i-dag.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">I dag</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Neste jobb, På vei, og det du må vite før du starter.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-jobb-under.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Jobben</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Tegning, mål, bilder og restpunkter i faner.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-laser.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Laser</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Målene rett inn i bildet.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-ks.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Kvalitetssjekk</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Punkt for punkt. OK med bilde åpner kameraet.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-avvik.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Meld avvik</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Bilde med pil, og om det trengs ny vare.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-punkter.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Punkter hos kunden</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Ett nummersystem, samme nummer i CRM og portal.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-punktkort.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Før og etter</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Punktkortet dokumenterer at det er løst.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-ferdig.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Ferdig montert</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Kundens signatur på skjermen.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><img src="eksport/hengsel-no/ute-typeskilt.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)"><div style="font-weight:650;font-size:15px">Typeskilt</div><p style="margin:0;font-size:14px;line-height:1.4;color:rgba(251,249,246,.72)">Hvitevaren fotograferes og legges på kunden.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px;justify-content:flex-end"><div style="display:flex;flex-direction:column;gap:10px"><a href="#" style="height:44px;padding:0 20px;border:1px solid #FBF9F6;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:15px">App Store · TestFlight</a><a href="#" style="height:44px;padding:0 20px;border:1px solid #FBF9F6;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:15px">Google Play</a><a href="#W2" style="height:44px;padding:0 20px;background:#FBF9F6;color:#31261D;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:650">Bli tester</a></div></div>
+    </div>
+    <img src="eksport/hengsel-no/ute-ipad-bildeverktoy.webp" alt="" style="width:100%;display:block;border:1px solid rgba(251,249,246,.16)">
+  </div>
+
+  <div style="display:grid;grid-template-columns:5fr 7fr;gap:48px;padding:96px 64px;align-items:center;border-bottom:1px solid rgba(49,38,29,.16)">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:-0.025em">For kontoret</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.4"><div>Leder-tavle med frister og tall</div><div style="border-top:1px solid rgba(49,38,29,.16);padding-top:12px">Montasjeplan og kontrollmål</div><div style="border-top:1px solid rgba(49,38,29,.16);padding-top:12px">Bestilling med ordrebekreftelse og lager</div><div style="border-top:1px solid rgba(49,38,29,.16);padding-top:12px">Økonomi med faktura og PowerOffice</div></div>
+    </div>
+    <div style="aspect-ratio:16/10;background:#F2E9DB;display:flex;align-items:center;justify-content:center;font-size:14px;color:rgba(49,38,29,.56)">Skjermbilde: CRM, Leder-tavle (TODO)</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:7fr 5fr;gap:48px;padding:96px 64px;align-items:center;border-bottom:1px solid rgba(49,38,29,.16)">
+    <div style="display:flex;flex-direction:column;gap:20px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:-0.025em">Kundeportalen</h3><p style="margin:0;font-size:18px;line-height:1.4;color:rgba(49,38,29,.72);max-width:560px;text-wrap:pretty">Kunden ser tilvalg, leveringsdag, punkter og FDV-dokumenter på sin egen side. Ingen innlogging å huske, lenken kommer på SMS.</p></div>
+    <div style="display:flex;justify-content:flex-end"><div style="width:260px;aspect-ratio:9/19.5;background:#F2E9DB;display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(49,38,29,.56);text-align:center;padding:16px;box-sizing:border-box">Skjermbilde: kundeportal på telefon (TODO)</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:96px 64px;border-bottom:1px solid rgba(49,38,29,.16)">
+    <div style="display:flex;flex-direction:column;gap:16px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Integrasjoner</h3><p style="margin:0;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72)">Nobia og CET-import · PowerOffice Go · Penneo e-signering · Bosch laser · SMS og e-post · Feilovervåking</p></div>
+    <div style="display:flex;flex-direction:column;gap:16px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Trygghet</h3><p style="margin:0;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72)">Data lagres i EU. Roller og butikktilgang styrer hvem som ser hva. Logg på alle endringer. Daglig sikkerhetskopi.</p></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:96px 64px">
+    <div style="display:flex;flex-direction:column;gap:16px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Priser</h3><p style="margin:0;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72)">Pris etter antall butikker og brukere.</p><a href="#" style="height:44px;padding:0 20px;border:1px solid #31261D;border-radius:999px;display:inline-flex;align-items:center;font-size:15px;align-self:flex-start">Be om tilbud</a></div>
+    <div style="display:flex;flex-direction:column;gap:16px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Om Hengsel</h3><p style="margin:0;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72);text-wrap:pretty">Hengsel er laget av SN Group, som selv driver kjøkkenbutikker i Innlandet. Vi bygde det vi manglet.</p><a href="#" style="font-size:15px;text-decoration:underline">sngroup.no</a></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:32px 64px;background:#F2E9DB;font-size:14px;color:rgba(49,38,29,.72)">
+    <img src="logo/hengsel-merke-lys.svg" alt="" style="height:24px;display:block">
+    <div style="display:flex;gap:24px"><a href="#">hei@hengsel.no</a><a href="#">Personvern</a><a href="#W2">Bli tester</a><a href="#">Logg inn</a></div>
+    <span>© 2026 SN Group</span>
+  </div>
+</div>
+</div>
+
+<div id="W2" data-screen-label="W2 /apptest" style="display:flex;flex-direction:column;gap:16px;flex:none">
+<div style="display:flex;align-items:center;gap:10px"><span style="height:26px;padding:0 10px;background:#31261D;color:#FBF9F6;display:inline-flex;align-items:center;font-size:13px;font-weight:650">W2</span><span style="font-family:'Reckless Standard M',Georgia,serif;font-size:28px;line-height:30px">/apptest</span></div>
+<div style="width:1440px;background:#FBF9F6;border:1px solid #E4D4C4;box-sizing:border-box;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:72px;border-bottom:1px solid rgba(49,38,29,.16)">
+    <img src="logo/hengsel-logo-lys.svg" alt="Hengsel" style="height:28px;display:block">
+    <a href="#W1" style="font-size:15px">‹ Tilbake til hengsel.no</a>
+  </div>
+  <div style="padding:96px 64px 64px;display:flex;flex-direction:column;gap:16px;max-width:760px">
+    <h2 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:56px;line-height:1;letter-spacing:-0.025em">Test Hengsel Ute</h2>
+    <p style="margin:0;font-size:18px;line-height:1.4;color:rgba(49,38,29,.72);text-wrap:pretty">Versjon 1.6.0. Du logger inn med kontoen du har fått fra arbeidsgiveren din. Velg telefonen din under.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:0 64px 64px">
+    <div style="background:#F2E9DB;padding:32px;display:flex;flex-direction:column;gap:16px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:28px;line-height:1.1">iPhone</div><p style="margin:0;font-size:15px;line-height:1.5;color:rgba(49,38,29,.72)">1. Installer TestFlight fra App Store.<br>2. Åpne lenken under på telefonen.<br>3. Trykk «Installer».</p><a href="#" style="height:48px;background:#5074A9;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:650;margin-top:auto">Åpne i TestFlight</a><span style="font-size:12px;color:rgba(49,38,29,.56)">TODO: TestFlight-lenke</span></div>
+    <div style="background:#F2E9DB;padding:32px;display:flex;flex-direction:column;gap:16px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:28px;line-height:1.1">Android via Google Play</div><p style="margin:0;font-size:15px;line-height:1.5;color:rgba(49,38,29,.72)">1. Åpne lenken under med Google-kontoen du bruker på telefonen.<br>2. Trykk «Bli testbruker».<br>3. Installer fra Play.</p><a href="#" style="height:48px;background:#5074A9;color:#FBF9F6;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:650;margin-top:auto">Bli testbruker</a><span style="font-size:12px;color:rgba(49,38,29,.56)">TODO: Play Internal testing-lenke</span></div>
+    <div style="background:#F2E9DB;padding:32px;display:flex;flex-direction:column;gap:16px"><div style="font-family:'Reckless Standard M',Georgia,serif;font-size:28px;line-height:1.1">Android uten Play</div><p style="margin:0;font-size:15px;line-height:1.5;color:rgba(49,38,29,.72)">1. Last ned APK-fila på telefonen.<br>2. Tillat installasjon fra ukjent kilde når telefonen spør.<br>3. Åpne fila og installer.</p><a href="#" style="height:48px;border:1px solid #31261D;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;margin-top:auto">Last ned APK</a><span style="font-size:12px;color:rgba(49,38,29,.56)">expo.dev/artifacts/eas/BvyOesdn…apk · versionCode 21</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:64px;border-top:1px solid rgba(49,38,29,.16)">
+    <div style="display:flex;flex-direction:column;gap:12px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Slik melder du feil</h3><p style="margin:0;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72)">I appen: Meg › Send feilrapport. Skriv hva du gjorde og hva som skjedde. Skjermbilde og logg følger med automatisk. Eller send e-post til <a href="#" style="text-decoration:underline">test@hengsel.no</a>.</p></div>
+    <div style="display:flex;flex-direction:column;gap:12px"><h3 style="margin:0;font-family:'Reckless Standard M',Georgia,serif;font-weight:400;font-size:28px;line-height:1.1">Hva er nytt i 1.6.0</h3><ul style="margin:0;padding-left:18px;font-size:16px;line-height:1.5;color:rgba(49,38,29,.72)"><li>Kompakt visning som standard. Velg Kompakt, Standard eller Stor under Meg › Visning.</li><li>Nytt målark i bildeverktøyet som aldri dekker det du har valgt.</li><li>Pil og ring i bildeverktøyet.</li><li>Tydelig laserstatus.</li><li>Kvalitetssjekk: OK med bilde åpner kameraet.</li><li>Punkter hos kunden med ett nummersystem.</li><li>Meld avvik med bilde og markering.</li></ul><p style="margin:0;font-size:14px;color:rgba(49,38,29,.56)">Kjent avvik: tekster kan kuttes i Stor visning på små skjermer.</p></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:32px 64px;background:#F2E9DB;font-size:14px;color:rgba(49,38,29,.72)"><img src="logo/hengsel-merke-lys.svg" alt="" style="height:24px;display:block"><span>© 2026 SN Group</span></div>
+</div>
+</div>
+</section>
+</x-dc>
+</body>
+</html>
