@@ -1,17 +1,21 @@
 ---
 /**
- * hengsel.no – forsiden. Fasit: docs/design/hengsel/56 Hengsel forside.dc.html (Claude Design, 10.10.2026).
- * Fjorten deler: sidehode og bunn (layouts/Side.astro), hero med Min dag på PC, tre løfter, tre flater, sju steg som
- * pillefaner, moduler (11), Hengsel Ute (åtte grep, iPad, utkjører/firmaleder), for kontoret som faner, kundeportalen,
- * integrasjoner og trygghet, priser, om, be om demo (skjema + plantegning). Tekst ordrett i content/forside.ts.
- * Skript (ingen inline, CSP script-src 'self'): fanene (scripts/faner.ts), lysboksen (scripts/lysboks.ts),
- * demoskjemaet (scripts/kontakt.ts), som åpner en ferdig utfylt e-post, og koordinatene i plantegningen
- * (scripts/plantegning.ts). Uten skript vises steg 1 og første rolle. Ingenting lagres. Ingen lenke til /apptest.
+ * hengsel.no – forsiden. Fasit: W1 i docs/design/hengsel/60 hengsel.no.dc.html (pakke v8, 11.10.2026) for oppbygning, tekst og rekkefølge:
+ * sidehode og bunn (layouts/Side.astro), hero med telefon, tre løfter, sju steg i én rad, Hengsel Ute (mørk, ni skjermer og
+ * iPad), for kontoret, kundeportalen, integrasjoner og trygghet, priser og om. Ikke i fil 60, men beholdt: «Be om demo» (skjema og
+ * plantegning), siden alle «Be om demo»-knappene peker dit. Tekst ordrett i content/forside.ts; bildene er fra Apple-pakkene
+ * (docs/bilder.md), ikke fra fil 60.
+ * Skript (ingen inline, CSP script-src 'self'): skjermene under «For kontoret» (scripts/faner.ts), lysboksen (scripts/lysboks.ts),
+ * demoskjemaet (scripts/kontakt.ts), som åpner en ferdig utfylt e-post, og plantegningen (scripts/plantegning.ts). Uten skript
+ * vises første skjerm. Ingenting lagres. Ingen lenke til /apptest (testerne ber om tilgang på e-post).
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
 import PlantegningEntre from "../components/PlantegningEntre.astro";
-import { EPOST, FLOW, GREP, INTEG, KONTOR, LOFTER, MODULER, PORTAL, PORTAL_TELEFONER, STEG, TEL, TEL_HREF, TRYGG } from "../content/forside";
+import uteLogo from "../assets/hengsel-ute-logo-mork.svg?raw";
+import {
+  APPLENKER, EPOST, INTEGRASJONER, KONTOR, LOFTER, PORTAL_ALT, PORTAL_BILDE, STEG, TEL, TEL_HREF, TRYGGHET, UTE, UTE_IPAD_ALT, erTodo,
+} from "../content/forside";
 
 const nr = (i: number) => String(i + 1).padStart(2, "0");
 ---
@@ -24,9 +28,8 @@ const nr = (i: number) => String(i + 1).padStart(2, "0");
 >
   <main id="innhold">
     <section class="hero" aria-label="Hengsel">
-      <div class="h-innhold hero-inn">
+      <div class="h-innhold hero-grid">
         <div class="hero-tekst">
-          <span class="eyebrow">For kjøkken- og interiørbutikker</span>
           <h1>Kjøkkenbutikkens arbeidsflate, fra første befaring til siste restpunkt.</h1>
           <p class="lede hero-lede">Hengsel samler salg, bestilling, montering og oppfølging i ett system. CRM på kontoret, Hengsel Ute på telefonen hos kunden.</p>
           <div class="knapper">
@@ -34,236 +37,126 @@ const nr = (i: number) => String(i + 1).padStart(2, "0");
             <a class="btn" href="#ute">Se Hengsel Ute</a>
           </div>
         </div>
-        <div class="hero-enheter">
-          <Enhet bilde="crm-tilbud" type="pc" alt="Tilbudssiden i Hengsel CRM: pris, neste steg og samtale om tilbudet" ratio={0.8} forst />
-          <div class="hero-telefon">
-            <Enhet bilde="ute-i-dag" type="phone" alt="I dag i Hengsel Ute: neste jobb med adresse og åpne restpunkter" ratio={2.1} forst />
-          </div>
+        <div class="hero-telefon">
+          <Enhet bilde="ute-i-dag" type="phone" alt="I dag i Hengsel Ute: neste jobb med adresse og åpne restpunkter" ratio={2.1} forst />
         </div>
       </div>
     </section>
 
-    <section id="produkt" class="seksjon h-flate" aria-label="Tre løfter">
+    <section id="produkt" class="lofter" aria-label="Tre løfter">
       <div class="h-innhold tre">
         {LOFTER.map(([t, s]) => (
-          <article class="card kort"><h2 class="h3">{t}</h2><p class="dempet">{s}</p></article>
+          <article class="lofte"><h2 class="lofte-tittel">{t}</h2><p class="dempet">{s}</p></article>
         ))}
       </div>
     </section>
 
-    <section id="sammenheng" class="seksjon">
+    <section id="jobb" class="jobb">
       <div class="h-innhold">
-        <div class="hode">
-          <span class="eyebrow">Slik henger det sammen</span>
-          <h2>Tre flater, samme ordre.</h2>
-          <p class="lede">Kontoret jobber i CRM-et, kunden i Min side og montøren i Hengsel Ute. Alt ligger på samme ordre, fra lead til reklamasjon.</p>
-        </div>
-        <div class="tre">
-          {FLOW.map((f) => (
-            <article class="card kort"><span class="hvem">{f.who}</span><h3>{f.title}</h3><p class="dempet">{f.text}</p></article>
+        <h2 class="seksjon-tittel">Slik går en jobb gjennom Hengsel</h2>
+        <ol class="steg">
+          {STEG.map(([t, s], i) => (
+            <li><span class="meta">{nr(i)}</span><b>{t}</b><p class="dempet">{s}</p></li>
           ))}
-        </div>
-      </div>
-    </section>
-
-    <section id="jobb" class="seksjon h-flate">
-      <div class="h-innhold stabel" data-faner>
-        <div class="hode-tekst">
-          <span class="eyebrow">Sju steg</span>
-          <h2>Slik går en jobb gjennom Hengsel.</h2>
-          <p class="lede">Trykk på et steg for å se skjermen.</p>
-        </div>
-        <div role="tablist" aria-label="Steg i jobben" class="faner">
-          {STEG.map(([t], i) => (
-            <button type="button" role="tab" id={`steg-fane-${i + 1}`} class="tab" aria-selected={i === 0 ? "true" : "false"} aria-controls={`steg-${i + 1}`}>
-              <span class="nr">{nr(i)}</span>{t}
-            </button>
-          ))}
-        </div>
-        {STEG.map(([t, s, bilde, type, hvor, alt], i) => (
-          <div id={`steg-${i + 1}`} role="tabpanel" aria-labelledby={`steg-fane-${i + 1}`} class:list={["steg", type]} data-panel hidden={i !== 0}>
-            <div class="steg-tekst">
-              <span class="meta">Steg {i + 1} av 7 · {hvor}</span>
-              <h3 class="h2">{t}</h3>
-              <p class="dempet stor">{s}</p>
-              <div class="knapper tett">
-                <button type="button" class="btn" data-forrige aria-label="Forrige steg" disabled={i === 0}>← Forrige</button>
-                <button type="button" class="btn primary" data-neste aria-label="Neste steg" disabled={i === STEG.length - 1}>Neste →</button>
-              </div>
-            </div>
-            <Enhet bilde={bilde} type={type} alt={alt} ratio={type === "phone" ? 1.1 : 0.8} />
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section id="moduler" class="seksjon">
-      <div class="h-innhold">
-        <div class="hode">
-          <span class="eyebrow">Moduler</span>
-          <h2>Start med det dere trenger. Slå på resten etter hvert.</h2>
-          <p class="lede">Løsningen er delt i elleve moduler som følger arbeidsflyten. Hver butikk velger hvilke som er på.</p>
-        </div>
-        <ol class="moduler">
-          {MODULER.map(([b, s], i) => (
-            <li><span class="meta">{nr(i)}</span><b>{b}</b><span class="dempet liten">{s}</span></li>
-          ))}
-          <li class="tom" aria-hidden="true"></li>
         </ol>
       </div>
     </section>
 
-    <section id="ute" class="seksjon h-flate">
-      <div class="h-innhold stabel-stor">
+    <section id="ute" class="ute" aria-labelledby="ute-tittel">
+      <div class="h-innhold ute-inn">
         <div class="ute-hode">
-          <img src="/logo/hengsel-app-ikon-lys.svg" alt="App-ikonet til Hengsel Ute" width="96" height="96" class="ute-ikon" loading="lazy" decoding="async" />
-          <div class="hode-tekst">
-            <span class="eyebrow">Hengsel Ute</span>
-            <h2>Hengsel Ute. Dagen ute, samlet på én skjerm.</h2>
-            <p class="lede">Montøren får jobben, tegningene, målene og KS-sjekklista på telefonen. Det som registreres hos kunden, står på ordren hos kontoret med en gang.</p>
-            <p class="dempet liten">Hengsel Ute følger med Hengsel, for iPhone, iPad og Android.</p>
-          </div>
+          <div class="ute-logo" role="img" aria-label="Hengsel Ute" set:html={uteLogo}></div>
+          <h2 id="ute-tittel">Dagen ute, samlet på én skjerm.</h2>
+          <p class="lede">Appen for montøren og utkjøreren. Virker uten dekning, sender når du er på nett igjen.</p>
         </div>
-        <div class="grep">
-          {GREP.map(([t, s, a, altA, b, altB], i) => (
-            <div class:list={["rad", { speilet: i % 2 === 1, to: !!b }]}>
-              <div class="rad-tekst">
-                <span class="meta">{nr(i)}</span>
-                <h3 class="h2">{t}</h3>
-                <p class="dempet stor">{s}</p>
-              </div>
-              <div class="rad-bilder">
-                <Enhet bilde={a} type="phone" alt={altA} ratio={1.8} />
-                {b && <Enhet bilde={b} type="phone" alt={altB ?? ""} ratio={1.8} />}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div class="stabel-liten">
-          <div class="hode-tekst">
-            <h3 class="h2">Merking på iPad</h3>
-            <p class="dempet stor bred">Samme bildeverktøy på iPad: bildet til venstre, punktene på kunden i panelet til høyre. Laseren står tilkoblet over målraden.</p>
-          </div>
-          <Enhet bilde="ute-ipad-bildeverktoy" type="ipad" alt="Bildeverktøyet på iPad: punkter på bildet og punktliste til høyre" ratio={0.75} />
-        </div>
-        <div class="to">
-          <article class="card kort tett-kort">
-            <span class="hvem">Også i Hengsel Ute</span>
-            <h3>Utkjører</h3>
-            <p class="dempet">Ruten for dagen, mottak på lager, levering hos kunden og skade med bilde.</p>
-          </article>
-          <article class="card kort tett-kort">
-            <span class="hvem">Også i Hengsel Ute</span>
-            <h3>Firmaleder</h3>
-            <p class="dempet">Forespørsler fra butikken, svar og fordeling av jobber på egne montører.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="kontoret" class="seksjon">
-      <div class="h-innhold stabel" data-faner>
-        <div class="hode-tekst">
-          <span class="eyebrow">For kontoret</span>
-          <h2>Det kontoret trenger, på én skjerm.</h2>
-          <p class="lede">Velg en rolle for å se skjermen.</p>
-        </div>
-        <div role="tablist" aria-label="Skjermer for kontoret" class="faner">
-          {KONTOR.map(([t], i) => (
-            <button type="button" role="tab" id={`kontor-fane-${i + 1}`} class="tab" aria-selected={i === 0 ? "true" : "false"} aria-controls={`kontor-${i + 1}`}>{t}</button>
-          ))}
-        </div>
-        {KONTOR.map(([t, s, bilde, alt], i) => (
-          <div id={`kontor-${i + 1}`} role="tabpanel" aria-labelledby={`kontor-fane-${i + 1}`} class="kontor" data-panel hidden={i !== 0}>
-            <Enhet bilde={bilde} type="pc" alt={alt} ratio={0.8} />
-            <div class="steg-tekst">
-              <h3 class="h2">{t}</h3>
-              <p class="dempet stor">{s}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section id="kundeportalen" class="seksjon h-flate">
-      <div class="h-innhold stabel">
-        <div class="portal">
-          <div class="hode-tekst">
-            <span class="eyebrow">Kundeportalen</span>
-            <h2>Kunden følger med selv.</h2>
-            <p class="lede">Kunden ser tilvalg, leveringsdag, punkter og FDV-dokumenter på sin egen side. Ingen innlogging å huske, lenken kommer på SMS.</p>
-          </div>
-          <ul class="punkter">
-            {PORTAL.map((p) => <li>{p}</li>)}
-          </ul>
-        </div>
-        <Enhet bilde="kundeportal-pc" type="mac" alt="Kundeportalen på PC: Mitt kjøkken med pris, tilvalg og dokumenter" ratio={0.8} />
-        <div class="portal-telefoner">
-          {PORTAL_TELEFONER.map(([bilde, tekst, alt]) => (
-            <figure>
+        <ul class="ute-skjermer">
+          {UTE.map(([t, s, bilde, alt]) => (
+            <li>
               <Enhet bilde={bilde} type="phone" alt={alt} ratio={2.1} />
-              <figcaption class="dempet">{tekst}</figcaption>
-            </figure>
+              <b>{t}</b>
+              <p>{s}</p>
+            </li>
+          ))}
+          <li class="ute-knapper">
+            {erTodo(APPLENKER.appStore)
+              ? <button type="button" class="knapp-lys" disabled aria-disabled="true" title="Lenke kommer">App Store · TestFlight</button>
+              : <a class="knapp-lys" href={APPLENKER.appStore}>App Store · TestFlight</a>}
+            {erTodo(APPLENKER.googlePlay)
+              ? <button type="button" class="knapp-lys" disabled aria-disabled="true" title="Lenke kommer">Google Play</button>
+              : <a class="knapp-lys" href={APPLENKER.googlePlay}>Google Play</a>}
+            <a class="knapp-lys fylt" href={APPLENKER.bliTester}>Bli tester</a>
+          </li>
+        </ul>
+        <div class="ute-ipad">
+          <Enhet bilde="ute-ipad-bildeverktoy" type="ipad" alt={UTE_IPAD_ALT} ratio={0.75} />
+        </div>
+      </div>
+    </section>
+
+    <section id="kontoret" class="kontoret">
+      <div class="h-innhold k-grid" data-faner>
+        <div class="k-tekst">
+          <h2 class="seksjon-tittel">For kontoret</h2>
+          <div role="tablist" aria-label="Skjermer for kontoret" class="k-liste">
+            {KONTOR.map(([tekst], i) => (
+              <button type="button" role="tab" id={`kontor-fane-${i + 1}`} class="k-rad" aria-selected={i === 0 ? "true" : "false"} aria-controls={`kontor-${i + 1}`}>{tekst}</button>
+            ))}
+          </div>
+        </div>
+        <div class="k-bilde">
+          {KONTOR.map(([, bilde, alt], i) => (
+            <div id={`kontor-${i + 1}`} role="tabpanel" aria-labelledby={`kontor-fane-${i + 1}`} data-panel hidden={i !== 0}>
+              <Enhet bilde={bilde} type="pc" alt={alt} ratio={0.8} />
+            </div>
           ))}
         </div>
       </div>
     </section>
 
-    <section id="integrasjoner" class="seksjon">
-      <div class="h-innhold delt to-kol">
-        <div class="kolonne">
-          <div class="hode-tekst">
-            <span class="eyebrow">Integrasjoner</span>
-            <h2>Kobler seg på det dere allerede bruker.</h2>
-          </div>
-          <ul class="integ">
-            {INTEG.map(([navn, tekst]) => <li class="card"><b>{navn}</b><span class="dempet liten">{tekst}</span></li>)}
-          </ul>
+    <section id="kundeportalen" class="portal">
+      <div class="h-innhold portal-grid">
+        <div class="portal-tekst">
+          <h2 class="seksjon-tittel">Kundeportalen</h2>
+          <p class="lede">Kunden ser tilvalg, leveringsdag, punkter og FDV-dokumenter på sin egen side. Ingen innlogging å huske, lenken kommer på SMS.</p>
         </div>
-        <div class="kolonne">
-          <div class="hode-tekst">
-            <span class="eyebrow">Trygghet</span>
-            <h2>Kort og nøkternt.</h2>
-          </div>
-          <ul class="trygg">
-            {TRYGG.map(([t, s]) => <li><b>{t}</b><span class="dempet liten">{s}</span></li>)}
-          </ul>
+        <div class="portal-telefon">
+          <Enhet bilde={PORTAL_BILDE} type="phone" alt={PORTAL_ALT} ratio={2.1} />
         </div>
       </div>
     </section>
 
-    <section id="priser" class="seksjon h-flate">
-      <div class="h-innhold delt om-grid">
-        <div class="hode-tekst">
-          <span class="eyebrow">Priser</span>
-          <h2>Pris etter antall butikker og brukere.</h2>
+    <section id="integrasjoner" class="to-kolonner">
+      <div class="h-innhold to-grid">
+        <div class="liten-blokk">
+          <h2 class="blokk-tittel">Integrasjoner</h2>
+          <p class="dempet">{INTEGRASJONER}</p>
         </div>
-        <div class="stabel-liten">
-          <p class="lede">Dere betaler per butikk per måned, med antall brukere. Ingen bindingstid utover oppsigelsestiden. Vi setter opp løsningen sammen med dere.</p>
-          <div><a class="btn primary" href="#kontakt">Be om tilbud</a></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="om" class="seksjon">
-      <div class="h-innhold delt om-grid">
-        <div class="hode-tekst">
-          <span class="eyebrow">Om oss</span>
-          <h2>Bygget i en kjøkkenbutikk.</h2>
-        </div>
-        <div class="om-tekst">
-          <p>Hengsel er laget av SN Group, som selv driver kjøkkenbutikker i Innlandet. Vi brukte løsningen i egen drift først, med egne selgere, montører og kunder.</p>
-          <p>Det som ikke fungerte i butikken, ble endret. Vi bygde det vi manglet. Nå tilbyr vi det til andre kjøkken- og interiørbutikker i Norden.</p>
-          <a href="https://sngroup.no" class="sn">sngroup.no →</a>
+        <div class="liten-blokk">
+          <h2 class="blokk-tittel">Trygghet</h2>
+          <p class="dempet">{TRYGGHET}</p>
         </div>
       </div>
     </section>
 
-    <section id="kontakt" class="seksjon h-flate">
+    <section class="to-kolonner">
+      <div class="h-innhold to-grid">
+        <div id="priser" class="liten-blokk">
+          <h2 class="blokk-tittel">Priser</h2>
+          <p class="dempet">Pris etter antall butikker og brukere.</p>
+          <div><a class="btn" href="#kontakt">Be om tilbud</a></div>
+        </div>
+        <div id="om" class="liten-blokk">
+          <h2 class="blokk-tittel">Om Hengsel</h2>
+          <p class="dempet">Hengsel er laget av SN Group, som selv driver kjøkkenbutikker i Innlandet. Vi bygde det vi manglet.</p>
+          <a href="https://sngroup.no" class="sn">sngroup.no</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="kontakt-sek">
       <div class="h-innhold delt kontakt">
         <div class="kontakt-tekst">
-          <span class="eyebrow">Be om demo</span>
-          <h2>Se løsningen med deres egne kjøkken.</h2>
+          <h2 class="seksjon-tittel">Se løsningen med deres egne kjøkken.</h2>
           <p class="lede">Vi går gjennom en ordre som ligner deres, fra befaring til faktura. Det tar rundt en time, på Teams eller i butikken.</p>
           <p class="dempet">Eller ta kontakt på <a href={`mailto:${EPOST}`} class="epost">{EPOST}</a> eller <a href={TEL_HREF} class="epost tlf">{TEL}</a></p>
           <div class="plan"><PlantegningEntre /></div>
@@ -298,77 +191,90 @@ const nr = (i: number) => String(i + 1).padStart(2, "0");
 
 <style>
   .dempet { color: var(--muted); }
-  .liten { font-size: 0.95rem; line-height: 1.5; }
-  .stor { font-size: 1.08rem; max-width: 44ch; }
-  .stor.bred { max-width: 62ch; }
-  .meta { font-size: 0.82rem; color: var(--soft); font-variant-numeric: tabular-nums; }
-  .hvem { font-size: 0.9rem; color: var(--soft); }
-  .h2 { font-size: var(--t-h2); line-height: 1.15; }
-  .h3 { font-size: var(--t-h3); line-height: 1.2; }
-  .seksjon { padding-block: var(--seksjon); }
-  .hode { display: grid; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 760px; }
-  .hode-tekst { display: grid; gap: 14px; align-content: start; max-width: 760px; min-width: 0; }
-  .stabel { display: grid; gap: clamp(28px, 4vw, 40px); }
-  .stabel-stor { display: grid; gap: clamp(32px, 5vw, 56px); }
-  .stabel-liten { display: grid; gap: 20px; align-content: start; min-width: 0; }
+  .meta { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); font-variant-numeric: tabular-nums; }
+  .seksjon-tittel { font-size: var(--t-h1); line-height: 1; letter-spacing: -0.025em; }
+  .blokk-tittel { font-size: var(--t-h2); line-height: 1.1; }
   .knapper { display: flex; flex-wrap: wrap; gap: 12px; }
-  .knapper.tett { gap: 8px; padding-top: 8px; }
 
-  /* Kort: tre i bredden fra 860 px */
-  .tre, .to { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .kort { padding: 28px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-  .tett-kort { padding: 24px; gap: 8px; }
+  /* Hero: tekst 7/12, telefon 5/12 */
+  .hero { padding-block: clamp(48px, 8vw, 96px) clamp(40px, 6vw, 64px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 48px); align-items: center; }
+  .hero-tekst { display: grid; gap: 24px; justify-items: start; }
+  .hero-lede { font-size: 1.22rem; line-height: 1.3; max-width: 560px; }
+  .hero-telefon { width: min(300px, 100%); justify-self: center; }
 
-  /* Hero */
-  .hero { padding-block: clamp(48px, 8vw, 104px) clamp(40px, 6vw, 72px); }
-  .hero-inn { display: grid; gap: clamp(32px, 5vw, 56px); }
-  .hero-tekst { display: grid; gap: 22px; max-width: 820px; }
-  .hero-lede { font-size: 1.22rem; }
-  /* Kundeportalen på telefon, under PC-skjermen: to og to på smal skjerm, fire på bred */
-  .portal-telefoner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; width: 100%; max-width: 1040px; margin-inline: auto; }
-  .portal-telefoner figure { margin: 0; display: grid; gap: 12px; justify-items: center; min-width: 0; }
-  .portal-telefoner figcaption { font-size: 0.92rem; }
-  @media (min-width: 900px) { .portal-telefoner { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } }
-  /* Studio Display og iPhone sammen. Telefonen står foran skjermens nedre høyre hjørne, litt større enn i virkeligheten (11,6 % av skjermens bredde) for at skjermen skal kunne leses */
-  .hero-enheter { position: relative; width: min(856px, 100%); margin-inline: auto; }
-  .hero-telefon { position: absolute; right: 2%; bottom: 0; width: 22%; }
-  @media (min-width: 700px) { .hero-telefon { width: 18%; } }
+  /* Tre løfter: Beige 3-flater uten ramme */
+  .lofter { padding-bottom: clamp(48px, 7vw, 96px); }
+  .tre { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .lofte { background: var(--surface-highlight); padding: 28px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .lofte-tittel { font-size: 1.5rem; line-height: 1.1; }
 
-  /* Faner (sju steg, for kontoret) */
-  .faner { display: flex; flex-wrap: wrap; gap: 8px; }
-  .steg, .kontor { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
-  .steg-tekst { display: grid; gap: 12px; align-content: start; min-width: 0; }
-
-  /* Moduler: ruter med 1 px skille, radius 14 rundt */
-  .moduler {
-    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-    gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
+  /* Sju steg i én rad */
+  .jobb { padding-bottom: clamp(48px, 7vw, 96px); }
+  .jobb .h-innhold { display: grid; gap: 32px; }
+  .steg {
+    list-style: none; margin: 0; padding: 20px 0 0; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px;
   }
-  .moduler li { background: var(--surface); padding: 22px 22px 24px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+  .steg li { display: grid; gap: 6px; align-content: start; min-width: 0; }
+  .steg b { font-size: 1rem; }
+  .steg p { font-size: 0.875rem; line-height: 1.4; }
 
-  /* Hengsel Ute */
-  .ute-hode { display: flex; flex-direction: column; gap: clamp(20px, 3vw, 40px); align-items: flex-start; }
-  .ute-ikon { width: 96px; height: 96px; display: block; flex: none; }
-  .grep { display: grid; gap: clamp(40px, 6vw, 80px); }
-  .rad { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
-  .rad-tekst { display: grid; gap: 10px; align-content: start; min-width: 0; }
-  .rad-bilder { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; justify-items: center; width: 100%; max-width: 360px; justify-self: center; }
-  .rad.to .rad-bilder { max-width: none; }
+  /* Hengsel Ute: mørk seksjon */
+  .ute { background: var(--warm-black); color: var(--off-white); padding-block: var(--seksjon); }
+  .ute-inn { display: grid; gap: 40px; }
+  .ute-hode { display: grid; gap: 16px; max-width: 720px; justify-items: start; }
+  .ute-logo :global(svg) { display: block; height: 32px; width: auto; }
+  .ute-logo :global(text) { font-family: var(--f-body); }
+  .ute-hode h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: -0.025em; }
+  .ute .lede { color: rgb(251 249 246 / 0.72); font-size: 1.125rem; line-height: 1.3; }
+  .ute-skjermer { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; }
+  .ute-skjermer li { display: grid; gap: 8px; align-content: start; min-width: 0; }
+  .ute-skjermer b { font-size: 0.94rem; margin-top: 4px; }
+  .ute-skjermer p { font-size: 0.875rem; line-height: 1.4; color: rgb(251 249 246 / 0.72); }
+  .ute-knapper { align-content: end; gap: 10px; }
+  .knapp-lys {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; box-sizing: border-box;
+    border: 1px solid var(--off-white); border-radius: var(--r-pill); background: transparent; color: var(--off-white);
+    font: 500 0.94rem var(--f-body); text-align: center; text-decoration: none; cursor: pointer;
+  }
+  .knapp-lys:hover { background: var(--off-white); color: var(--warm-black); text-decoration: none; }
+  .knapp-lys.fylt { background: var(--off-white); color: var(--warm-black); font-weight: 650; }
+  .knapp-lys.fylt:hover { opacity: 0.88; }
+  .knapp-lys:disabled { opacity: 0.55; cursor: not-allowed; }
+  .knapp-lys:disabled:hover { background: transparent; color: var(--off-white); }
+  .ute :focus-visible { box-shadow: 0 0 0 2px var(--warm-black), 0 0 0 4px var(--off-white); }
+  .ute-ipad { display: grid; justify-items: center; }
 
-  /* Integrasjoner og trygghet, priser, om, be om demo: to kolonner fra 860 px */
+  /* For kontoret: punktene (5/12) og skjermen (7/12) */
+  .kontoret, .portal, .to-kolonner { padding-block: var(--seksjon); border-bottom: 1px solid var(--line); }
+  .k-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); align-items: center; }
+  .k-tekst { display: grid; gap: 20px; align-content: start; }
+  .k-liste { display: grid; font-size: 1.0625rem; line-height: 1.4; }
+  .k-rad {
+    text-align: left; background: none; border: 0; border-top: 1px solid var(--line); padding: 12px 0; min-height: 44px;
+    font: inherit; color: var(--muted); cursor: pointer;
+  }
+  .k-rad:first-child { border-top: 0; padding-top: 0; }
+  .k-rad:hover { color: var(--ink); }
+  .k-rad[aria-selected="true"] { color: var(--ink); font-weight: 650; }
+  .k-bilde { min-width: 0; }
+
+  /* Kundeportalen: tekst 7/12, telefon 5/12 */
+  .portal-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); align-items: center; }
+  .portal-tekst { display: grid; gap: 20px; align-content: start; }
+  .portal-tekst .lede { font-size: 1.125rem; line-height: 1.4; max-width: 560px; }
+  .portal-telefon { width: min(260px, 100%); justify-self: center; }
+
+  /* Integrasjoner og trygghet, priser og om: to kolonner */
+  .to-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); }
+  .liten-blokk { display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .liten-blokk p { line-height: 1.5; }
+  .sn { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; justify-self: start; }
+
+  /* Be om demo: skjema og plantegning (ikke i fil 60) */
+  .kontakt-sek { padding-block: var(--seksjon); background: var(--surface-highlight); }
   .delt { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
-  /* Kundeportalen: tekst (7/12) og punktene (5/12) bunnjustert over skjermen i full bredde; én kolonne på mobil */
-  .portal { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: end; }
-  .punkter { list-style: none; margin: 0; padding: 0; display: grid; align-self: end; }
-  .punkter li { padding: 12px 0; border-top: 1px solid var(--line); color: var(--muted); }
-  .kolonne { display: grid; gap: 20px; align-content: start; min-width: 0; }
-  .integ { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .integ li { padding: 18px 22px; display: grid; gap: 4px; align-content: start; min-width: 0; }
-  .trygg { list-style: none; margin: 0; padding: 0; display: grid; }
-  .trygg li { padding: 14px 0; border-top: 1px solid var(--line); display: grid; gap: 2px; }
-  .om-tekst { display: grid; gap: 16px; color: var(--muted); font-size: 1.08rem; min-width: 0; }
-  .sn { font-weight: 650; color: var(--ink); justify-self: start; }
-
   .kontakt-tekst { display: grid; gap: 18px; align-content: start; min-width: 0; }
   .epost { font-weight: 650; color: var(--ink); }
   .tlf { white-space: nowrap; }
@@ -379,26 +285,23 @@ const nr = (i: number) => String(i + 1).padStart(2, "0");
   .notis { font-size: 0.88rem; color: var(--muted); }
   .notis a { text-decoration: underline; text-underline-offset: 3px; } /* lenke i løpende tekst: ikke bare farge */
 
-  @media (max-width: 579px) { .moduler .tom { display: none; } }
+  @media (min-width: 640px) {
+    .steg { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .ute-skjermer { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   @media (min-width: 860px) {
+    .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .hero-telefon { justify-self: end; }
     .tre { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .to { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    /* Samme kolonnedeling og fast minste høyde uansett om steget viser telefon eller PC, så siden ikke flytter seg */
-    .steg { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: 720px; }
-    .kontor { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); }
-    .ute-hode { flex-direction: row; }
-    .rad { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-    .rad.speilet { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-    .rad.to { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
-    .rad.to.speilet { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); }
-    .rad.speilet .rad-tekst { order: 2; }
-    .rad.speilet .rad-bilder { order: 1; justify-self: start; }
-    .rad:not(.speilet) .rad-bilder { justify-self: end; }
-    .rad.to .rad-bilder { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .portal { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-    .to-kol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .om-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); }
+    .k-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .portal-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .portal-telefon { justify-self: end; }
+    .to-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .kontakt { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+  }
+  @media (min-width: 1100px) {
+    .steg { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .ute-skjermer { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px 24px; }
   }
 
   /* Lysboks: ensfarget bakgrunn, bildet i full størrelse, Esc eller klikk lukker */

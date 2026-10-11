@@ -1,8 +1,8 @@
 ---
 /**
  * Ramme for hengsel.no: familiens BaseLayout med Hengsel-profilen, sidehodet (Toppfelt, som i v1.3) og bunnen
- * (Bunn: SN Group-båndet og bunnteksten). Fasit: docs/design/hengsel/Sidehode.dc.html og Bunn.dc.html (10.10.2026).
- * Sidehodet er sticky: logo (hengsel-crm-logo-lys.svg, 42 px på PC og 36 under 900 px), menyen
+ * (Bunn: SN Group-båndet og bunnteksten). Fasit: docs/design/hengsel/Sidehode.dc.html og Bunn.dc.html (10.10.2026); logoen følger fil 60 (W1).
+ * Sidehodet er sticky: logo (hengsel-logo-lys.svg som i fil 60, 30 px på PC og 26 under 900 px), menyen
  * Produkt · Hengsel Ute · Priser · Om · Logg inn, og «Be om demo» → #kontakt. Under 900 px skjules menypunktene,
  * som i fasit; knappen står. «Logg inn» vises bare når miljøvariabelen LOGIN er satt ved bygging (astro.config.mjs).
  * Brukes av forsiden, personvern og 404. Bare lys modus.
@@ -53,7 +53,7 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
   <div class="side" id="hjem">
     <Toppfelt
       hjem={forside ? "#hjem" : "/"}
-      ordmerke="Hengsel CRM"
+      ordmerke="Hengsel"
       kompakt
       fast
       strek
@@ -63,7 +63,7 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
       kontaktTekst="Be om demo"
       lenker={meny}
     >
-      <img slot="logo" class="logo" src="/logo/hengsel-crm-logo-lys.svg" alt="" width="460" height="128" />
+      <img slot="logo" class="logo" src="/logo/hengsel-logo-lys.svg" alt="" width="460" height="112" />
     </Toppfelt>
     <slot />
     <Bunn demo={demo} forside={forside} epost={EPOST} tlf={TEL} />
@@ -72,6 +72,6 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
 
 <style>
   .side { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
-  .logo { display: block; height: 42px; width: auto; }
-  @media (max-width: 900px) { .logo { height: 36px; } }
+  .logo { display: block; height: 30px; width: auto; }
+  @media (max-width: 900px) { .logo { height: 26px; } }
 </style>

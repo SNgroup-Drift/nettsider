@@ -6,7 +6,7 @@
  *    og byggem.no (/, /prosjekter, /kontakt, /personvern og 404) til docs/skjermbilder/ (filene starter med «hengsel-» og «byggem-»).
  *  - Alle sider på alle nettsteder: ingen vannrett rulling ved 360 px, ingen konsollfeil (CSP fra _headers gjelder).
  *  - Plantegningen: et klikk på et rom bytter tekst og åpner riktig rad.
- *  - hengsel.no: fanene (sju steg, for kontoret) bytter skjermbilde, lysboksen åpner og lukker, og ingenting lagres.
+ *  - hengsel.no: «For kontoret» (fire faner) bytter skjermbilde, Hengsel Ute har ni telefoner, lysboksen åpner og lukker, og ingenting lagres.
  *  - Hvilke skrifter som faktisk lastes.
  *
  * Kjør etter `npm run build`: npm run skjermbilder
@@ -157,14 +157,12 @@ for (const [navn, { base }] of Object.entries(servere)) {
   const page = await ctx.newPage();
   await page.goto(servere.hengsel.base + "/", { waitUntil: "networkidle" });
   const src = (id) => page.$eval(`#${id} img`, (i) => i.getAttribute("src"));
-  // Forsiden etter fil 56 (10.10): sju steg og «for kontoret» er pillefaner (scripts/faner.ts), skjermbildene åpnes i
-  // lysboksen (scripts/lysboks.ts), og ingenting lagres.
+  // Forsiden etter fil 60 (pakke v8): «For kontoret» er en liste som fungerer som faner (scripts/faner.ts), skjermbildene åpnes i
+  // lysboksen (scripts/lysboks.ts), Hengsel Ute har ni telefoner, og ingenting lagres.
   const synlig = (id) => page.$eval(`#${id}`, (el) => !el.hidden);
-  meld((await synlig("steg-1")) && !(await synlig("steg-2")), "hengsel: sju steg viser steg 1 først");
-  await page.click("#steg-fane-2");
-  meld((await synlig("steg-2")) && (await src("steg-2")) === "/img/crm-tilbud.webp", "hengsel: steg 2 viser Tilbud på PC (crm-tilbud.webp)");
-  await page.click("#steg-2 [data-neste]");
-  meld((await synlig("steg-3")) && (await page.getAttribute("#steg-fane-3", "aria-selected")) === "true", "hengsel: Neste går til steg 3");
+  meld((await synlig("kontor-1")) && !(await synlig("kontor-2")) && (await src("kontor-1")) === "/img/crm-resultater.webp", "hengsel: «For kontoret» viser Leder-tavlen først (crm-resultater.webp)");
+  const telefoner = await page.$$eval("#ute .ute-skjermer .hull img", (l) => l.length);
+  meld(telefoner === 9, `hengsel: Hengsel Ute viser ni telefoner (${telefoner})`);
   await page.click("#kontor-fane-2");
   meld((await synlig("kontor-2")) && (await src("kontor-2")) === "/img/crm-montasje.webp", "hengsel: «For kontoret» bytter til Montasjeplan (crm-montasje.webp)");
   await page.click("#kontor-2 [data-zoom]");
