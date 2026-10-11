@@ -1,0 +1,309 @@
+---
+/**
+ * Kundeportalen tegnet som ekte HTML i naturlig størrelse (PortalSkjerm.dc.html): telefon (402 × 874) og PC (1440 × 810).
+ * Legges i sporet til Enhet.astro (type="iphone" eller "display"), som skalerer den inn i rammen (scripts/skala.ts).
+ *
+ * Alle fem stegene ligger i markupen som egne «skjermer» ([data-steg]); bare steg 1 vises uten JS (de andre har hidden fra bygget).
+ * scripts/kundeportal.ts bytter steg og lar SMS-en gli inn øverst (telefon) eller nederst til høyre (PC).
+ * Tekst og data: src/content/kundeportal.ts (ordrett fra LES-MEG.md). Oppdiktet demoinnhold er merket «Eksempel» (.eks).
+ * Lyseblå flater er beige (Eirik 11.10). «Din logo» med «by Hengsel» øverst; Hengsel-merket står bare nederst i menyen på PC.
+ * Ingen style-attributter (CSP): alt styres av klasser, og farger kommer fra tokens.
+ */
+import { PORTAL as P, STEG } from "../content/kundeportal";
+import type { Steg } from "../content/kundeportal";
+
+interface Props {
+  enhet: "telefon" | "pc";
+  /** Hvilket steg som vises uten JS */
+  forste?: Steg;
+}
+const { enhet, forste = "tilbud" } = Astro.props;
+const pc = enhet === "pc";
+const tlf = !pc;
+const idx = (s: Steg) => STEG.findIndex((x) => x.id === s);
+// Reisen: hvor mange punkter som er gjort (design: montering 3, fdv 5, ellers 2)
+const naa = (s: Steg) => (s === "montering" ? 3 : s === "fdv" ? 5 : 2);
+const sideTittel: Partial<Record<Steg, string>> = { levering: P.levering.tittel, montering: P.montering.tittel, fdv: P.fdv.oppsummert };
+const fliser: Partial<Record<Steg, string[][]>> = { levering: P.levering.fliser, montering: P.montering.fliser, fdv: P.fdv.fliser };
+const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
+---
+<div class={`portal ${enhet}`} data-portal={enhet}>
+  {STEG.map((st) => {
+    const k = st.id;
+    const i = idx(k);
+    return (
+      <div class="skjerm-steg" data-steg={k} hidden={k !== forste}>
+        {pc && (
+          <aside class="meny">
+            <span class="logo-rad"><span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span></span>
+            {P.meny.map((m) => (
+              <div class:list={["m", { aktiv: m.l === aktivMeny(k) }]}><span>{m.l}</span><span class="n">{m.n}</span></div>
+            ))}
+            <div class="bunn-meny">
+              <div class="bruker"><span class="avatar">{P.kunde.init}</span><span class="navn"><span>{P.kunde.navn}</span><span class="dempet">{P.kunde.firma}</span></span></div>
+              <div class="levert">
+                <span class="dempet">{P.levertMed}</span>
+                <picture>
+                  <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-logo-mork.svg" />
+                  <img src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="99" height="24" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+            </div>
+          </aside>
+        )}
+        <div class="hoved">
+          {tlf && (
+            <>
+              <div class="statusfelt"></div>
+              <div class="topp">
+                <span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>
+                <span class="avatar stor">{P.kunde.init}</span>
+              </div>
+            </>
+          )}
+          {pc && (
+            <div class="pc-hode">
+              <div class="pc-tekst"><span class="ordre">{P.ordrelinje}</span><span class="pc-h1">{P.pcTittel[k]}</span></div>
+              <span class="skriv">{P.selger.skriv}</span>
+            </div>
+          )}
+          <div class="rutenett">
+            <div class="hovedkort">
+              {k === "tilbud" && (
+                <>
+                  <div class="bilde">{P.tilbud.bilde}</div>
+                  <div class="kolonne tett"><span class="h2">{P.tilbud.navn}</span><span class="liten dempet">{P.tilbud.versjon}</span></div>
+                  {tlf && <div class="sum"><span class="t15">{P.tilbud.total[0]}</span><span class="tall s30">{P.tilbud.total[1]}</span></div>}
+                  {P.tilbud.rader.map(([l, v]) => (<div class="rad"><span>{l}</span><span class="dempet nowrap">{v} ›</span></div>))}
+                  {tlf && (
+                    <div class="bunn-blokk"><span class="knapp">{P.tilbud.aksepter}</span><span class="notat">{P.tilbud.notat}</span></div>
+                  )}
+                </>
+              )}
+              {k === "tilvalg" && (
+                <>
+                  <div class="tittelrad"><span class="h2">{P.tilvalg.tittel}</span><span class="piller"><span class="eks">{P.eksempel}</span><span class="pille warn">{P.tilvalg.frist}</span></span></div>
+                  <span class="t15 dempet">{P.tilvalg.ingress}</span>
+                  {P.tilvalg.valg.map((v) => (
+                    <div class="rad valg">
+                      <span class:list={["boks-v", { pa: v.på }]}>{v.på ? "✓" : ""}</span>
+                      <span class="kolonne grow"><span class="t16">{v.l}</span><span class="notat">{v.s}</span></span>
+                      <span class="t15 tall">{v.p}</span>
+                    </div>
+                  ))}
+                  {tlf && (
+                    <>
+                      <div class="sum"><span class="t15">{P.tilvalg.nyTotal[0]}</span><span class="tall s28">{P.tilvalg.nyTotal[1]}</span></div>
+                      <span class="knapp auto-topp">{P.tilvalg.send}</span>
+                    </>
+                  )}
+                </>
+              )}
+              {k === "levering" && (
+                <>
+                  <div class="tittelrad"><span class="h2">{P.levering.tittel}</span><span class="eks">{P.eksempel}</span></div>
+                  {P.levering.reise.map(([t, s], n) => (
+                    <div class="reise">
+                      <span class:list={["punkt", { ferdig: n < naa(k), na: n === naa(k) }]}>{n < naa(k) ? "✓" : ""}</span>
+                      <span class="kolonne reise-t"><span class:list={["t16", { sterk: n === naa(k) }]}>{t}</span><span class="liten dempet">{s}</span></span>
+                    </div>
+                  ))}
+                  <div class="info"><b>{P.levering.for}</b><span class="dempet">{P.levering.forTekst}</span></div>
+                </>
+              )}
+              {k === "montering" && (
+                <>
+                  <div class="kolonne tett">
+                    <div class="tittelrad"><span class="h2">{P.montering.tittel}</span><span class="eks">{P.eksempel}</span></div>
+                    <span class="liten dempet">{P.montering.under}</span>
+                  </div>
+                  <div class="kolonne fremdrift"><div class="spor"><div class="fyll"></div></div><span class="notat">{P.montering.ks}</span></div>
+                  <b class="t15 topp4">{P.montering.punkterTittel}</b>
+                  {P.montering.punkter.map((p) => (
+                    <div class="rad mellom">
+                      <span class="kolonne min0"><span class="t16"><b class="tall">{p.nr}</b> · {p.t}</span><span class="notat">{p.s}</span></span>
+                      <span class={`pille ${p.tone}`}>{p.pille}</span>
+                    </div>
+                  ))}
+                  <span class="notat">{P.montering.notat}</span>
+                </>
+              )}
+              {k === "fdv" && (
+                <>
+                  <div class="kolonne tett">
+                    <div class="tittelrad"><span class="h2">{P.fdv.tittel}</span><span class="eks">{P.eksempel}</span></div>
+                    <span class="liten dempet">{P.fdv.under}</span>
+                  </div>
+                  <div class="okboks"><b>{P.fdv.ok[0]}</b> {P.fdv.ok[1]}</div>
+                  <b class="t15 topp4">{P.fdv.dokTittel}</b>
+                  {P.fdv.dok.map(([l, s]) => (
+                    <div class="rad mellom">
+                      <span class="kolonne"><span class="t16">{l}</span><span class="notat">{s}</span></span>
+                      <span class="apne">{P.fdv.apne}</span>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+
+            {pc && (
+              <div class="side">
+                <div class="kort">
+                  {k === "tilbud" && (
+                    <>
+                      <b class="t16">{P.tilbud.pris}</b>
+                      <div class="sum plain"><span class="t15">{P.tilbud.total[0]}</span><span class="tall s34">{P.tilbud.total[1]}</span></div>
+                      <span class="knapp">{P.tilbud.aksepter}</span>
+                      <span class="notat">{P.tilbud.notat}</span>
+                    </>
+                  )}
+                  {k === "tilvalg" && (
+                    <>
+                      <div class="tittelrad"><b class="t16">{P.tilvalg.valgt}</b><span class="eks">{P.eksempel}</span></div>
+                      {P.tilvalg.valgtRader.map(([l, v]) => (<div class="valgt-rad"><span>{l}</span><span class="tall">{v}</span></div>))}
+                      <div class="sum"><span class="t15">{P.tilvalg.nyTotal[0]}</span><span class="tall s30">{P.tilvalg.nyTotal[1]}</span></div>
+                      <span class="knapp">{P.tilvalg.send}</span>
+                    </>
+                  )}
+                  {i >= 2 && (
+                    <>
+                      <div class="tittelrad"><b class="t16">{sideTittel[k]}</b><span class="eks">{P.eksempel}</span></div>
+                      <div class="fliser">
+                        {(fliser[k] ?? []).map(([kk, v]) => (<div class="flis"><div class="notat">{kk}</div><div class="t15">{v}</div></div>))}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div class="kort">
+                  <b class="t16">{P.selger.tittel}</b>
+                  <div class="selger"><span class="avatar stor">{P.selger.init}</span><span class="kolonne t15"><span>{P.selger.navn}</span><span class="notat">{P.selger.linje}</span></span></div>
+                  <div class="melding"><span class="notat små">{P.selger.fra} · {P.melding[k].tid}</span><div>{P.melding[k].t}</div></div>
+                  <div class="felt">{P.selger.skrivFelt}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div class="sms" data-sms>
+          <div class="sms-topp"><span class="sms-fra"><b>{P.smsAvsender}</b><span class="eks">{P.eksempel}</span></span><span>{P.smsNaa}</span></div>
+          <span class="sms-tekst">{st.sms}</span>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<style>
+  /* Naturlig størrelse: Enhet.astro skalerer. Fonten er Inter (--f-body), overskriftene Newsreader. */
+  .portal { width: 100%; height: 100%; font-family: var(--f-body); color: var(--ink); line-height: 1.4; -webkit-font-smoothing: antialiased; text-align: left; }
+  .skjerm-steg { position: relative; display: flex; width: 100%; height: 100%; background: var(--bg); overflow: hidden; box-sizing: border-box; }
+  .skjerm-steg[hidden] { display: none; }
+  .dempet { color: var(--muted); }
+  .tall { font-variant-numeric: tabular-nums; }
+  .nowrap { white-space: nowrap; }
+  .t15 { font-size: 15px; } .t16 { font-size: 16px; }
+  .liten { font-size: 14px; }
+  .notat { font-size: 13px; color: var(--muted); }
+  .notat.små { font-size: 12px; }
+  .kolonne { display: flex; flex-direction: column; }
+  .kolonne.tett { gap: 2px; }
+  .kolonne.grow { flex: 1; }
+  .min0 { min-width: 0; }
+  b { font-weight: 600; }
+  .h2 { font-family: var(--f-display); font-size: 30px; line-height: 1.1; letter-spacing: -0.015em; }
+  .pc .h2 { font-size: 32px; }
+  .s28 { font-family: var(--f-display); font-size: 28px; } .s30 { font-family: var(--f-display); font-size: 30px; } .s34 { font-family: var(--f-display); font-size: 34px; }
+  .tittelrad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .piller { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .topp4 { padding-top: 4px; }
+  .pille.warn { background: var(--warn-soft); color: var(--warn); }
+  .pille.ok { background: var(--ok-soft); color: var(--ok); }
+
+  .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+  .dinlogo .boks { border: 1.5px dashed var(--beige-1); border-radius: 6px; display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
+  .dinlogo .av { color: var(--muted); letter-spacing: 0.02em; }
+  .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
+  .telefon .dinlogo .av { font-size: 11px; }
+  .pc .dinlogo .boks { height: 40px; padding: 0 18px; font-size: 15px; }
+  .pc .dinlogo .av { font-size: 12px; }
+  .avatar { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
+  .avatar.stor { width: 40px; height: 40px; font-size: 14px; }
+
+  .knapp { min-height: 52px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 500; font-size: 17px; }
+  .sum { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--ink); padding-top: 12px; }
+  .rad { display: flex; justify-content: space-between; font-size: 16px; padding: 11px 0; border-top: 1px solid var(--line); gap: 12px; }
+  .rad.mellom { align-items: center; }
+  .rad.valg { align-items: center; justify-content: flex-start; }
+  .boks-v { width: 24px; height: 24px; border-radius: 6px; flex: none; display: grid; place-items: center; font-size: 14px; border: 1.5px solid var(--beige-1); box-sizing: border-box; color: var(--accent-ink); }
+  .boks-v.pa { background: var(--accent); border-color: var(--accent); }
+  .reise { display: flex; gap: 14px; align-items: flex-start; }
+  .reise-t { padding-bottom: 6px; }
+  .punkt { width: 24px; height: 24px; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 13px; border: 1.5px solid var(--beige-1); box-sizing: border-box; margin-top: 2px; color: var(--bg); }
+  .punkt.ferdig { background: var(--ok); border-color: var(--ok); }
+  .punkt.na { background: var(--accent); border-color: var(--accent); }
+  .sterk { font-weight: 600; }
+  .info { background: var(--surface-highlight); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+  .spor { height: 8px; border-radius: 999px; background: var(--surface-highlight-strong); overflow: hidden; }
+  .fyll { width: 66%; height: 100%; background: var(--accent); }
+  .fremdrift { gap: 6px; }
+  .okboks { background: var(--ok-soft); border-radius: 10px; padding: 12px 16px; font-size: 15px; box-shadow: inset 3px 0 0 var(--ok); }
+  .okboks b { color: var(--ok); }
+  .apne { font-size: 14px; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .bilde { height: 150px; border-radius: 10px; background: var(--surface-highlight-strong); display: grid; place-items: center; color: var(--muted); font-size: 14px; }
+  .pc .bilde { height: 230px; }
+  .bunn-blokk { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+  .auto-topp { margin-top: auto; }
+
+  /* Hoveddel */
+  .hoved { flex: 1; min-width: 0; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
+  .telefon .hoved { gap: 14px; padding: 0 20px 20px; background: var(--bg); }
+  .pc .hoved { gap: 24px; padding: 32px 40px; background: var(--surface-app); }
+  .statusfelt { height: 54px; flex: none; }
+  .topp { display: flex; align-items: center; justify-content: space-between; padding: 6px 20px 14px; margin: 0 -20px; border-bottom: 1px solid var(--line); }
+  .rutenett { min-height: 0; }
+  .telefon .rutenett { display: flex; flex-direction: column; flex: 1; padding-top: 6px; }
+  .pc .rutenett { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .telefon .hovedkort { display: flex; flex-direction: column; gap: 14px; flex: 1; min-height: 0; }
+  .pc .hovedkort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .pc-hode { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  .pc-tekst { display: flex; flex-direction: column; gap: 4px; }
+  .ordre { font-size: 14px; color: var(--muted); }
+  .pc-h1 { font-family: var(--f-display); font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; }
+  .skriv { min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--ink); display: inline-flex; align-items: center; font-size: 15px; font-weight: 500; flex: none; box-sizing: border-box; }
+
+  /* Menyen på PC */
+  .meny { width: 248px; flex: none; box-sizing: border-box; padding: 28px 14px 24px; display: flex; flex-direction: column; gap: 2px; border-right: 1px solid var(--line); background: var(--surface-soft); }
+  .logo-rad { padding: 0 12px 24px; display: flex; }
+  .m { display: flex; justify-content: space-between; align-items: center; min-height: 42px; padding: 0 12px; border-radius: 10px; font-size: 15px; }
+  .m.aktiv { font-weight: 600; background: var(--surface-highlight-strong); }
+  .m .n { font-size: 13px; color: var(--muted); }
+  .bunn-meny { margin-top: auto; padding: 12px; display: flex; flex-direction: column; gap: 14px; }
+  .bruker { display: flex; align-items: center; gap: 10px; }
+  .navn { display: flex; flex-direction: column; font-size: 14px; line-height: 1.4; }
+  .levert { display: flex; flex-direction: column; gap: 4px; font-size: 12px; align-items: flex-start; }
+  .levert img { display: block; height: 24px; width: auto; }
+
+  /* Sidekort på PC */
+  .side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .sum.plain { border-top: 0; padding-top: 0; }
+  .valgt-rad { display: flex; justify-content: space-between; font-size: 15px; }
+  .fliser { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .flis { background: var(--surface-soft); border-radius: 10px; padding: 10px 14px; }
+  .selger { display: flex; align-items: center; gap: 12px; }
+  .melding { background: var(--surface-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .felt { min-height: 44px; border-radius: 10px; border: 1px solid var(--line); padding: 0 14px; display: flex; align-items: center; color: var(--muted); font-size: 14px; box-sizing: border-box; }
+
+  /* SMS-varselet: glir inn øverst (telefon) eller nederst til høyre (PC). Uten glid ved redusert bevegelse. */
+  .sms { position: absolute; z-index: 5; background: var(--surface); padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow), 0 0 0 1px var(--line); visibility: hidden; pointer-events: none; transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s 420ms; }
+  .telefon .sms { left: 10px; right: 10px; top: 58px; border-radius: 20px; transform: translateY(-160%); }
+  .pc .sms { right: 24px; bottom: 20px; width: 380px; border-radius: 14px; transform: translateY(180%); }
+  .portal .sms.inn { transform: translateY(0); visibility: visible; transition-delay: 0s; }
+  .sms-topp { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .sms-fra { display: flex; align-items: center; gap: 8px; }
+  .sms-fra b { color: var(--ink); }
+  .sms-tekst { font-size: 15px; line-height: 1.4; }
+  @media (prefers-reduced-motion: reduce) {
+    .portal .sms, .portal .sms.inn { transition: none; transform: none; }
+  }
+</style>
