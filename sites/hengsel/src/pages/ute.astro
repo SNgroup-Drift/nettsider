@@ -1,0 +1,173 @@
+---
+/**
+ * /ute: montørappen. Fasit: docs/design/hengsel-no-2.0/Ute.dc.html, tekstene ordrett fra LES-MEG.md.
+ * Seks steg (faner med ARIA, piltaster og Forrige/Neste, scripts/ute.ts). Uten skript står første steg åpent.
+ * Alle steg ligger i samme ramme (like store), så stegbytte gir ingen layoutskift.
+ */
+import Side from "../layouts/Side.astro";
+import Enhet from "../components/Enhet.astro";
+import logoMork from "../assets/hengsel-ute-logo-mork.svg";
+import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, IPAD, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
+
+const n = STEG.length;
+---
+<Side
+  title="Hengsel Ute – montørappen for iPhone og iPad"
+  description={HERO.ingress}
+  aktiv="ute"
+>
+  <main id="innhold">
+    <section class="sek ute-hero">
+      <div class="h-innhold ute-rutenett">
+        <div class="ute-venstre">
+          <div class="ute-hode">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset={logoMork.src} />
+              <img class="ute-logo" src="/logo/hengsel-ute-logo-lys.svg" alt={HERO.logoAlt} width="122" height="34" fetchpriority="high" />
+            </picture>
+            <h1>{HERO.tittel}</h1>
+            <p class="lede">{HERO.ingress}</p>
+          </div>
+          <div class="steg" role="tablist" aria-label={STEG_ARIA} aria-orientation="vertical" data-ute>
+            {STEG.map((s, i) => (
+              <button type="button" role="tab" id={`ute-fane-${s.nokkel}`} aria-controls={`ute-panel-${s.nokkel}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} class="steg-knapp">
+                <span class="nr">{i + 1}</span>
+                <span class="tekst"><b>{s.tittel}</b><span>{s.tekst}</span></span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div class="ute-hoyre">
+          <div class="telefon" data-ute-paneler>
+            {STEG.map((s, i) => (
+              <div role="tabpanel" id={`ute-panel-${s.nokkel}`} aria-labelledby={`ute-fane-${s.nokkel}`} hidden={i !== 0} data-panel>
+                <Enhet type="iphone" src={`/img/app/${s.nokkel}-lys.webp`} srcDark={`/img/app/${s.nokkel}-mork.webp`} w={402} h={874} alt={s.alt} forst={i === 0} symboler={i === 0} />
+              </div>
+            ))}
+          </div>
+          <div class="bla" data-ute-bla>
+            <button type="button" class="rund" data-forrige aria-label={FORRIGE} disabled>‹</button>
+            <span class="teller" aria-live="polite" data-teller>{`1 av ${n}`}</span>
+            <button type="button" class="rund" data-neste aria-label={NESTE}>›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sek flate">
+      <div class="h-innhold ipad">
+        <div class="ipad-hode">
+          <div class="sek-hode">
+            <span class="eyebrow">{IPAD.eyebrow}</span>
+            <h2>{IPAD.tittel}</h2>
+          </div>
+          <p class="dempet">{IPAD.tekst}</p>
+        </div>
+        <div class="ipad-ramme">
+          <Enhet type="ipad" src={IPAD.bilde} w={IPAD.w} h={IPAD.h} alt={IPAD.alt} symboler={false} />
+        </div>
+      </div>
+    </section>
+
+    <section class="sek">
+      <div class="h-innhold nett">
+        <div class="nett-bilde">
+          <Enhet type="iphone" src={UTEN_NETT.lys} srcDark={UTEN_NETT.mork} w={402} h={874} alt={UTEN_NETT.alt} symboler={false} />
+        </div>
+        <div class="nett-tekst">
+          <span class="eyebrow">{UTEN_NETT.eyebrow}</span>
+          <h2>{UTEN_NETT.tittel}</h2>
+          <p class="dempet">{UTEN_NETT.tekst}</p>
+          <div class="card fra-appen">
+            <span class="eyebrow">{UTEN_NETT.fraAppen}</span>
+            <b>{UTEN_NETT.venter}</b>
+            <span class="dempet">{UTEN_NETT.sitat}</span>
+          </div>
+          <ul class="piler">
+            {UTEN_NETT.punkter.map((t) => <li><span class="pil" aria-hidden="true">→</span><span>{t}</span></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sek flate bli-tester">
+      <div class="h-innhold tester">
+        <div class="tester-tekst">
+          <img src="/logo/hengsel-app-ikon-lys.svg" alt="" aria-hidden="true" width="64" height="64" loading="lazy" />
+          <div class="tester-ord">
+            <h2>{BLI_TESTER.tittel}</h2>
+            <p class="dempet">{BLI_TESTER.tekst}</p>
+          </div>
+        </div>
+        <div class="tester-knapper">
+          <a class="btn primary" href={APPTEST_URL}>{BLI_TESTER.knapp}</a>
+          <a class="btn" href={APPTEST_URL}>{BLI_TESTER.appStore}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Side>
+
+<script>
+  import "../scripts/ute";
+</script>
+
+<style>
+  .dempet { color: var(--muted); margin: 0; }
+  .ute-hero { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); }
+  .ute-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .ute-venstre { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .ute-hode { display: flex; flex-direction: column; gap: 16px; }
+  .ute-hode h1 { font-size: clamp(2.5rem, 5vw, 4.2rem); }
+  .ute-hode .lede { font-size: 1.18rem; max-width: 52ch; }
+  .ute-logo { height: 34px; width: auto; align-self: flex-start; display: block; }
+
+  .steg { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+  .steg-knapp {
+    display: flex; gap: 16px; align-items: flex-start; width: 100%; padding: 14px 12px; min-height: 44px; border: 0; border-bottom: 1px solid var(--line);
+    background: transparent; color: var(--ink); font: inherit; text-align: left; cursor: pointer; border-radius: 0; box-sizing: border-box;
+  }
+  .steg-knapp:hover { background: var(--surface-soft); }
+  .steg-knapp[aria-selected="true"] { background: var(--surface-highlight); box-shadow: inset 3px 0 0 var(--accent); }
+  .steg-knapp:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 0; }
+  .steg-knapp[aria-selected="true"]:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--accent); }
+  .nr {
+    width: 28px; height: 28px; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; margin-top: 1px;
+    background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box;
+  }
+  .steg-knapp[aria-selected="true"] .nr { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .tekst { display: flex; flex-direction: column; gap: 2px; }
+  .tekst b { font-weight: 600; font-size: 1.05rem; }
+  .tekst span { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+  .ute-hoyre { display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0; }
+  .telefon { width: 100%; max-width: 400px; }
+  .bla { display: flex; gap: 8px; align-items: center; }
+  .rund { width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 18px; line-height: 1; cursor: pointer; padding: 0; }
+  .rund:hover:not(:disabled) { border-color: var(--ink); }
+  .rund:disabled { opacity: 0.45; cursor: not-allowed; }
+  .teller { font-size: 0.92rem; color: var(--muted); min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
+
+  .ipad { display: flex; flex-direction: column; gap: 32px; }
+  .ipad-hode { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px 48px; align-items: end; }
+  .ipad-hode p { font-size: 1.05rem; }
+  .ipad-ramme { width: 100%; max-width: 1040px; margin: 0 auto; }
+
+  .nett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .nett-bilde { width: 100%; max-width: 340px; justify-self: center; }
+  .nett-tekst { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .nett-tekst p { font-size: 1.05rem; }
+  .fra-appen { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; }
+  .fra-appen b { font-size: 1.05rem; }
+  .piler { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .piler li { display: flex; gap: 12px; }
+  .pil { color: var(--accent); }
+
+  .bli-tester { padding-block: clamp(48px, 6vw, 80px); }
+  .tester { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 48px; }
+  .tester-tekst { display: flex; gap: 20px; align-items: center; max-width: 640px; }
+  .tester-tekst img { width: 64px; height: 64px; border-radius: 15px; flex: none; }
+  .tester-ord { display: flex; flex-direction: column; gap: 6px; }
+  .tester-ord h2 { font-size: clamp(1.75rem, 3vw, 2.4rem); line-height: 1.1; }
+  .tester-knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+</style>
