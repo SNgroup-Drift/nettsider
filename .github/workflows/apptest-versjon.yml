@@ -1,0 +1,158 @@
+# hengsel.no/apptest: holder versjon, APK-lenke, «Siste oppdatering» og «Hva er nytt» à jour fra EAS og byggnotatene.
+#
+# - Hver dag kl. 06.00 norsk tid (cron i UTC, to tider, og et steg som bare slipper gjennom kl. 06 i Oslo, sommer og vinter)
+#   og når den startes for hånd (Actions › Apptest-versjon › Run workflow; «dry_run» viser bare endringen).
+# - Henter siste FINISHED bygg per plattform og siste EAS Update på grenen preview (eas-cli, hemmeligheten EXPO_TOKEN),
+#   og «Hva er nytt» fra claude/hengsel-bygg-<n>.md på demo i SNgroup-Drift/innlandet-crm-sync (hemmeligheten CRM_LESETOKEN, lesetilgang).
+# - Skriver til sites/hengsel/src/apptest-lenker.ts og åpner (eller oppdaterer) én PR fra grenen apptest-versjon.
+#   Merger aldri selv, og slår ikke på auto-merge. Ingenting skjer uten en PR som en person slår sammen.
+# - Logikken ligger i scripts/apptest-versjon.mjs (testet i scripts/apptest-versjon.test.mjs). Se docs/hosting.md.
+#
+# Krever at Actions får lage PR-er: Settings › Actions › General › Workflow permissions › «Allow GitHub Actions to create
+# and approve pull requests». Tidsplanen kjører bare fra standardgrenen (main), så filen må være på main for at den skal gå.
+name: Apptest-versjon
+
+on:
+  schedule:
+    - cron: "0 4 * * *" # 06.00 sommertid
+    - cron: "0 5 * * *" # 06.00 vintertid
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Bare vis endringen. Ingen gren, ingen PR."
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: apptest-versjon
+  cancel-in-progress: false
+
+env:
+  EAS_CLI: "16" # eas.json krever >= 16.0.0
+  CRM_REPO: SNgroup-Drift/innlandet-crm-sync
+  CRM_GREN: demo # byggnotatene (claude/hengsel-bygg-<n>.md) ligger på demo, ikke på main
+
+jobs:
+  tid:
+    name: Er det 06 i Oslo?
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      kjor: ${{ steps.sjekk.outputs.kjor }}
+    steps:
+      - id: sjekk
+        env:
+          HENDELSE: ${{ github.event_name }}
+        run: |
+          if [ "$HENDELSE" = "schedule" ] && [ "$(TZ=Europe/Oslo date +%H)" != "06" ]; then
+            echo "kjor=false" >> "$GITHUB_OUTPUT"
+            echo "Klokka er ikke 06 i Oslo (den andre av de to tidene). Hopper over."
+          else
+            echo "kjor=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  versjon:
+    name: Oppdater /apptest
+    needs: tid
+    if: needs.tid.outputs.kjor == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Sjekk at hemmelighetene finnes
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          CRM_LESETOKEN: ${{ secrets.CRM_LESETOKEN }}
+        run: |
+          for navn in EXPO_TOKEN CRM_LESETOKEN; do
+            if [ -z "${!navn}" ]; then
+              echo "::error::Hemmeligheten $navn mangler i repoet (Settings › Secrets and variables › Actions)."
+              exit 1
+            fi
+          done
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # Bare det som trengs: app.json (prosjekt-ID for eas-cli) og byggnotatene. Ikke resten av CRM-repoet.
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.CRM_REPO }}
+          ref: ${{ env.CRM_GREN }}
+          token: ${{ secrets.CRM_LESETOKEN }}
+          path: crm
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            montorapp/app.json
+            montorapp/eas.json
+            claude/hengsel-bygg-*.md
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Kjør testene for skriptet
+        run: node --test scripts/apptest-versjon.test.mjs
+
+      - name: Installer eas-cli
+        run: npm install --global "eas-cli@${EAS_CLI}"
+
+      - name: Hent bygg og update fra EAS
+        working-directory: crm/montorapp
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_NO_VCS: "1"
+          CI: "1"
+        run: |
+          eas build:list --platform ios --status finished --limit 20 --json --non-interactive > "$RUNNER_TEMP/ios.json"
+          eas build:list --platform android --status finished --limit 30 --json --non-interactive > "$RUNNER_TEMP/android.json"
+          eas update:list --branch preview --json --non-interactive > "$RUNNER_TEMP/update.json"
+
+      - name: Oppdater apptest-lenker.ts
+        id: oppdater
+        run: |
+          node scripts/apptest-versjon.mjs \
+            --ios "$RUNNER_TEMP/ios.json" \
+            --android "$RUNNER_TEMP/android.json" \
+            --update "$RUNNER_TEMP/update.json" \
+            --claude crm/claude \
+            --sammendrag "$RUNNER_TEMP/pr.md"
+
+      - name: Vis endringen
+        if: steps.oppdater.outputs.endret == 'true'
+        run: git --no-pager diff -- sites/hengsel/src/apptest-lenker.ts
+
+      - name: Åpne eller oppdater PR (aldri merge)
+        if: steps.oppdater.outputs.endret == 'true' && !inputs.dry_run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSJON: ${{ steps.oppdater.outputs.versjon }}
+          APK_BYGG: ${{ steps.oppdater.outputs.apk_bygg }}
+        run: |
+          gren=apptest-versjon
+          tittel="apptest: Hengsel Ute ${VERSJON} (APK bygg ${APK_BYGG})"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$gren"
+          git add sites/hengsel/src/apptest-lenker.ts
+          git commit -m "$tittel"
+          # Grenen er bare for denne workflowen; hver kjøring bygger den på nytt fra main
+          git push --force origin "HEAD:refs/heads/$gren"
+          nummer=$(gh pr list --head "$gren" --base main --state open --json number --jq '.[0].number // empty')
+          if [ -n "$nummer" ]; then
+            gh pr edit "$nummer" --title "$tittel" --body-file "$RUNNER_TEMP/pr.md"
+            echo "Oppdaterte PR #$nummer"
+          else
+            gh pr create --base main --head "$gren" --title "$tittel" --body-file "$RUNNER_TEMP/pr.md"
+          fi
+
+      - name: Skriv sammendrag
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/pr.md" ]; then cat "$RUNNER_TEMP/pr.md" >> "$GITHUB_STEP_SUMMARY"; fi

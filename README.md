@@ -35,6 +35,7 @@ scripts/
   sjekk-lenker.mjs        npm test: alle interne lenker på de bygde sidene svarer 200
   skjermbilder.mjs        Skjermbilder og nettlesersjekker (360 px, konsoll, CSP)
   skjermbilder-apptest.mjs  Skjermbilder og sjekker av hengsel.no/apptest mot wrangler dev (passordet)
+  apptest-versjon.mjs     Oppdaterer versjon, APK, dato og «Hva er nytt» på /apptest fra EAS og byggnotatene (kjøres av .github/workflows/apptest-versjon.yml; testet av apptest-versjon.test.mjs)
   skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene)
   csp-hasher.mjs          Legger hashen for inline-CSS inn i CSP-en i dist/_headers
   statisk-server.mjs      Liten server som løser stier og 404 som Cloudflare Workers

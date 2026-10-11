@@ -4,7 +4,7 @@ import Section from "@sngroup/design/components/Section.astro";
 import CompanyRow from "@sngroup/design/components/CompanyRow.astro";
 import ContactBlock from "@sngroup/design/components/ContactBlock.astro";
 import Plantegning from "../components/Plantegning.astro";
-import Telefon from "../components/Telefon.astro";
+import HengselEnheter from "../components/HengselEnheter.astro";
 import { virksomheter } from "../content/virksomheter";
 import { selskap } from "../content/selskap";
 ---
@@ -39,7 +39,7 @@ import { selskap } from "../content/selskap";
       <Fragment slot="tittel">Hvert rom er en <em>virksomhet</em>.</Fragment>
       <Fragment slot="ingress">
         ES-HOLDING AS driver med kjøp, salg og utleie av fast eiendom og eierskap i andre selskaper. Selskapene i
-        gruppen driver blant annet Studio Sigdal Innlandet.
+        gruppen driver blant annet kjøkkenbutikker på Hamar, Lillehammer og Gjøvik.
       </Fragment>
       <div class="rader">
         {virksomheter.map((v, i) => (
@@ -62,9 +62,12 @@ import { selskap } from "../content/selskap";
       <div class="wrap hg">
         <div>
           <div class="label">App for montører</div>
-          <h2>Hengsel</h2>
+          <h2 class="hg-logo">
+            <img class="lys" src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="460" height="112" />
+            <img class="mork" src="/logo/hengsel-logo-mork.svg" alt="" width="460" height="112" />
+          </h2>
           <p class="lede">
-            Montørappen for montører og montasjefirmaer som jobber for Studio Sigdal Innlandet. Prøv den til høyre.
+            Montørappen for montører og montasjefirmaer som jobber for kjøkkenbutikkene i gruppen. Bla gjennom skjermene til høyre.
           </p>
           <ul class="egenskaper">
             <li>Dagens jobber, tegninger og varer</li>
@@ -75,7 +78,7 @@ import { selskap } from "../content/selskap";
           </ul>
           <a href="/personvern" class="pill">Personvern for Hengsel <span aria-hidden="true">→</span></a>
         </div>
-        <Telefon />
+        <HengselEnheter />
       </div>
     </section>
 
@@ -115,8 +118,16 @@ import { selskap } from "../content/selskap";
   .chip[aria-pressed="true"] i { background: var(--aksent); }
   .rader { border-top: 1px solid var(--linje-svak); }
   .hengsel { padding-block: var(--seksjon); }
-  .hg { display: grid; grid-template-columns: 1fr 0.9fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
-  .hg h2 { font-size: clamp(64px, 9vw, 128px); font-style: italic; line-height: 0.95; margin-top: 16px; }
+  .hg { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .hg-logo { margin: 16px 0 0; line-height: 0; }
+  .hg-logo img { height: clamp(48px, 7vw, 88px); width: auto; display: block; }
+  .hg-logo .mork { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme="light"])) .hg-logo .lys { display: none; }
+    :global(html:not([data-theme="light"])) .hg-logo .mork { display: block; }
+  }
+  :global(html[data-theme="dark"]) .hg-logo .lys { display: none; }
+  :global(html[data-theme="dark"]) .hg-logo .mork { display: block; }
   .egenskaper { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
   .egenskaper li { display: flex; gap: 12px; align-items: baseline; color: var(--tekst-dempet); }
   .egenskaper li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--aksent); flex: none; transform: translateY(-2px); }
