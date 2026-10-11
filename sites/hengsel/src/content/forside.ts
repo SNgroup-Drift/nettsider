@@ -51,7 +51,7 @@ export const GREP: [string, string, string, string, string?, string?][] = [
   ["I dag", "Neste jobb øverst, med adresse, hva som mangler og åpne restpunkter. «På vei» varsler kunden.", "ute-i-dag", "Hengsel Ute: I dag med neste jobb"],
   ["Befaring med laser", "Bosch-laseren kobles til over Bluetooth. Velg et mål på bildet, trykk på laseren, og tallet står der med kilde.", "ute-laser", "Hengsel Ute: mål på bildet fra Bosch-laser"],
   ["Varer og tegning på jobben", "Tegning og spesifikasjon, mål og skisser, bilder og restpunkter samlet på jobben. Før, under og etter.", "ute-jobb-under", "Hengsel Ute: jobben under arbeid"],
-  ["KS punkt for punkt", "OK, avvik eller ikke relevant. Punkter som krever bilde åpner kameraet med en gang.", "ute-ks", "Hengsel Ute: KS-sjekkliste, OK på et punkt som krever bilde åpner kameraet"],
+  ["KS punkt for punkt", "OK, avvik eller ikke relevant. Punkter som krever bilde åpner kameraet med en gang.", "ute-ks", "Hengsel Ute: KS-sjekkliste, punkt som krever bilde («Ta bilde først»)", "ute-ks-kamera", "Hengsel Ute: OK på punktet åpner kameraet"],
   ["Typeskilt på hvitevarer", "Fotografer typeskiltet. Modell og serienummer legges på produktene hos kunden og følger med til FDV og reklamasjon.", "ute-typeskilt", "Hengsel Ute: hvitevarer skannet fra typeskilt"],
   ["Avvik med bilde", "Hva som er galt, bilde og om det trengs ny vare. Saken går til butikken med en gang.", "ute-avvik", "Hengsel Ute: meld avvik"],
   ["Merking av punkter", "Punkter markeres rett på bildet og får et nummer som følger kunden fra befaring til reklamasjon. Før- og etterbilde på hvert punkt.", "ute-punkter", "Hengsel Ute: punktliste på kunden", "ute-punktkort", "Hengsel Ute: punkt med før- og etterbilde"],
