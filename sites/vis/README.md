@@ -8,19 +8,19 @@ Alle skjermbilder av løsningen på vis.hengsel.no kommer fra **designfilene i C
 
 | Rom | Studio Display | iPad | iPhone |
 |---|---|---|---|
-| Prøv CRM | `crm-min-dag` → `crm-bestilling` → `crm-tilbud` → `crm-tilbud-kunde` (steg 1 / 2 / 3 / 4 = bilde 1 / 2 / 4 / 4; «Se kontrollmålet» viser nabobildet fordi designfilene ikke har en montasjeplan på PC) | `crm-ipad-leder` → `crm-ipad-kontrollmal` → `crm-ipad-belastninger` → `crm-ipad-innstillinger` | `crm-tlf-ordre` |
+| Prøv CRM | `crm-min-dag` → `crm-bestilling` → `crm-tilbud` → `crm-tilbud-kunde` → `crm-ordre-kontrollmal` (steg 1 / 2 / 3 / 4 = bilde 1 / 2 / 4 / 5; «Se kontrollmålet» viser `crm-ordre-kontrollmal`) | `crm-ipad-leder` → `crm-ipad-kontrollmal` → `crm-ipad-belastninger` → `crm-ipad-innstillinger` | `crm-tlf-ordre` |
 | Firmaleder | `crm-resultater` → `crm-salgstavla` → `crm-saker` → `crm-moduler` (steg 1 = bilde 1, 2 = 3, 3 og 4 = 2) | `crm-ipad-leder`, `crm-ipad-belastninger` | `crm-tlf-min-dag`, `crm-tlf-kundekort` |
 | Montørappen (Hengsel Ute) | – | `ute-ipad-i-dag`, `ute-ipad-ks` | `ute-i-dag` → `ute-jobb-under` → `ute-ks` → `ute-ks-kamera` → `ute-avvik` → `ute-punkter` → `ute-punktkort` → `ute-ferdig` → `ute-typeskilt` (steg: 2, 3, 5, 8) |
 | Tegningen | `crm-mal-skisser` (steg 4) | `ute-ipad-bildeverktoy` (steg 3) | `ute-laser` (steg 1, 2, 5) |
 | Kundens Min side | PC-bryter: `kundeportal-pc` → `crm-tilbud-kunde` (v4) | – | Mobil-bryter: `kundeportal-k03` → `portal-tilbud` → `k06` → `k08` → `portal-levering` → `portal-montering` → `portal-fdv`; stegene viser k06 (tilvalg), k08 (godkjenn), levering (K10) og FDV (K14, «Meld en feil»), PC følger med |
-| Kundens reise | – | – | `kundeportal-k03` → `portal-tilbud` → `k06` → `k08` (steg 1–4), `portal-levering` (5), `portal-montering` (6), `portal-fdv` (7–8); varselet glir inn oppå |
+| Kundens reise | – | – | `kundeportal-k03` → `portal-tilbud` → `k06` → `k08` i karusellen; stegene viser k03 (1), k08 (2, kjøpsavtalen), k06 (3–4, oppgraderinger), `portal-levering` (5), `portal-montering` (6), `portal-fdv` (7–8); varselet glir inn oppå |
 | Ordrens reise («Selgeren ser», alle på PC) | scene 1 `crm-tilbud`, 2–3 `crm-tilbud-kunde`, 4–6 `crm-ordre-kontrollmal`, 7 `crm-ordre-kontrollmal` (nabobildet), 8 `crm-etterkalkyle` | – | – |
 | Romkort og flater på forsiden | ferdig sammensatte bilder av enhet + skjermbilde (`src/img/rom-*.webp`, `flate-*.webp`, `hero.webp`), se «Apple-rammer» |  |  |
 
 ### Forsiden etter fil 62 (11.10)
 
 Forsiden følger fasit 62 («Visningsrommet: ny forside», `delt/pakke-v3/fasit` på grenen `pakke-v3`): mørk (`data-theme="dark"`), toppmeny med ankere (Forstå · Prøv · Dokumenter · Presenter · Logg inn på CRM, ≡ under 768 px), hero «Hele løsningen, rom for rom.» med Studio Display, iPad og iPhone (ett skjermbilde under 1280 px), og fire seksjoner: **Forstå på ti minutter** (Ordrens reise 4 min, Kundens reise 3 min, Systemkartet 3 min; sveiperad under 768 px), **Prøv selv** (fire gruppekort: Butikken, Montøren, Kunden, Leverandøren, med antall rom), **Det kunden og butikken får i hånden** (fem ark) og **Presenter og regn**. Rollevalget («Jeg er») filtrerer alle seksjonene og skjuler tomme.
-- Rommene og rollene ligger i `assets/rom.js` (`g` = gruppe). Gruppekortene lenker til `/butikken/`, `/montoren/`, `/kunden/` og `/leverandoren/`, som lister rommene; `/rom/` lister alle. Rolle følger med som `?rolle=` og lagres i `vis-rolle`.
+- Rommene og rollene ligger i `assets/rom.js` (`g` = gruppe). Gruppekortene lenker til `/butikken/`, `/montoren/`, `/kunden/` og `/leverandoren/`, som lister rommene; `/rom/` lister alle. Rolle følger med som `?rolle=` (selger, montor, leverandor, nobia; `sigdal` virker som alias) og lagres i `vis-rolle`.
 - Antall rom per gruppe regnes fra `rom.js` (Butikken 4, Montøren 3, Kunden 1, Leverandøren 2, til sammen 20), ikke tallene i fasiten (7/3/1/2, «21 rom»): de tre rommene i Forstå, seks i Presenter og dokumentene ligger utenfor Prøv selv.
 - Bildene er ferdige enhetsbilder fra `scripts/rammer-vis.mjs` (`forsta-*`, `flate-*`, `hero*.webp`). `crm-tilbud`, `crm-tilbud-kunde`, `portal-tilbud`, `portal-*` på PC og `ute-ipad-*` brukes ikke i hero eller romkort (venter på v4).
 

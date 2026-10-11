@@ -54,7 +54,7 @@ function vUtb(){
  h+='<div><span>Levert valg</span><b>'+lev+' av 24</b><em>'+Math.round(lev/24*100)+' % av kjøperne</em></div>';
  h+='<div><span>Sum tilvalg</span><b>'+fmt(sum)+' kr</b><em>Faktureres kjøperne direkte</em></div>';
  h+='<div><span>Dager til tilvalgsfrist</span><b>'+(S.fristB?'Ute':OG.B.dager+' dager')+'</b><em>Oppgang B, '+OG.B.frist+'</em></div>';
- h+='<div><span>Leveranse per oppgang</span><b style="font-size:1.45rem;line-height:1.2">A uke 48<br>B uke 3</b><em>Bekreftet med Sigdal</em></div></div>';
+ h+='<div><span>Leveranse per oppgang</span><b style="font-size:1.45rem;line-height:1.2">A uke 48<br>B uke 3</b><em>Bekreftet med fabrikken</em></div></div>';
  h+='<section class="card box"><div class="bh"><h2>Strandkanten, byggetrinn 2</h2><button class="btn" type="button" id="remind"'+(mangler.length?'':' disabled')+'>Send påminnelse til de som ikke har valgt</button></div>';
  h+='<div class="legend">'+['ikke','velger','levert','passert','last'].map(function(k){return '<span><i class="u '+k+'" style="min-height:0;padding:0"></i>'+ST[k]+'</span>'}).join('')+'</div>';
  h+='<div class="bld" role="grid" aria-label="Leiligheter etter etasje og nummer"><span></span><div class="og" style="grid-column:2/span 3">Oppgang A</div><span></span><div class="og" style="grid-column:6/span 3">Oppgang B</div>';
@@ -118,7 +118,7 @@ function counts(o){
   var ch=cetChanges(c);if(ch.length&&(u.st==='levert'||u.st==='last'))r.cet.push([u.id,ch])});
  return r}
 function vBest(){
- var h='<section class="card box"><h2>Samlet bestilling per oppgang</h2><p class="note">Når tilvalgsfristen er ute, samles alle valg i oppgangen til én bestilling hos Sigdal. Leiligheter uten valg får standardkjøkkenet for sin type.</p></section>';
+ var h='<section class="card box"><h2>Samlet bestilling per oppgang</h2><p class="note">Når tilvalgsfristen er ute, samles alle valg i oppgangen til én bestilling hos fabrikken. Leiligheter uten valg får standardkjøkkenet for sin type.</p></section>';
  ['A','B'].forEach(function(o){
   var r=counts(o),open=ogOpen(o),done=S.bestilt[o],U=all().filter(function(u){return og(u.id)===o});
   var sum=0;
@@ -159,7 +159,7 @@ function wire(){var V=$('view'),q=function(s){return V.querySelector(s)};
  V.querySelectorAll('[data-best]').forEach(function(b){b.onclick=function(){var o=b.dataset.best,U=all().filter(function(u){return og(u.id)===o}),r=counts(o),i=0;S.busy=true;render();
   (function tick(){if(i<U.length){var u=U[i++];u.st='last';S.pop[u.id]=1;render();setTimeout(tick,110);return}
    S.busy=false;S.bestilt[o]=1;step('best');
-   log('<b>Samlet bestilling for oppgang '+o+'</b> laget: 12 kjøkken til Sigdal, '+r.f.H+' hvit matt, '+r.f.E+' eik, '+r.f.G+' grønn. Levering '+OG[o].lev+'.');
+   log('<b>Samlet bestilling for oppgang '+o+'</b> laget: 12 kjøkken til fabrikken, '+r.f.H+' hvit matt, '+r.f.E+' eik, '+r.f.G+' grønn. Levering '+OG[o].lev+'.');
    log('Ordre per enhet opprettet i CRM, tilvalg fakturert kjøper direkte, standard fakturert utbygger.');
    log('CET: <b>'+r.cet.length+' tegninger</b> merket for endring hos prosjektselgeren. Alle 12 enheter står som Låst.');
    render()})()}});

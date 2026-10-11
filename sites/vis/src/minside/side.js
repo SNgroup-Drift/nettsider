@@ -9,7 +9,7 @@ Skjermbilder.guide({guide:$('guide'),reset:$('reset'),logg:log,
   start:function(){$('log').innerHTML='';log('','Tilbud T-1204 sendt til Min side.')},
   steg:{
     tilvalg:{vis:[V.tlf,2],logg:[['','Kunden la til <b>Belysning under overskap</b>. Tilbudet er oppdatert: 256 700 kr.']]},
-    godkjenn:{vis:[V.tlf,3],logg:[['','<b>Tilbud godkjent</b> av kunden. Kontrakt laget med riktige vilkår.'],['','<b>Kontrakt signert.</b> Ordren er Vunnet og står som Klar til bestilling hos Ingrid.'],['','Ingrid bestilte, og Sigdal bekreftet levering <b>uke 47</b>. Leveringsuka er lagt ut på Min side.']]},
+    godkjenn:{vis:[V.tlf,3],logg:[['','<b>Tilbud godkjent</b> av kunden. Kontrakt laget med riktige vilkår.'],['','<b>Kontrakt signert.</b> Ordren er Vunnet og står som Klar til bestilling hos Ingrid.'],['','Ingrid bestilte, og fabrikken bekreftet levering <b>uke 47</b>. Leveringsuka er lagt ut på Min side.']]},
     lev:{vis:[V.tlf,4],logg:[['','Kunden bekreftet levering: <b>Noen er hjemme</b>. Instruksen er lagt på ordren til sjåfør og montør.']]},
     feil:{vis:[V.tlf,6],logg:[['','<b>Reklamasjon R-0412</b> fra kunden: Skade på front, med bilde. Sak til Ingrid med frist i morgen.']]}
   }});

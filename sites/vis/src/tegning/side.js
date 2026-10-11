@@ -12,7 +12,7 @@ Skjermbilder.guide({guide:$('guide'),reset:$('reset'),velger:velger,forste:'tlf'
   steg:{
     sel:{enhet:'tlf',vis:[V.tlf,0]},
     done:{enhet:'tlf',vis:[V.tlf,0],logg:[['Hengsel','Piotr meldte <em>B5</em> ferdig montert. 7 av 12.','09:41']]},
-    av:{enhet:'ipad',vis:[V.ipad,0],logg:[['Hengsel','Avvik på <em>O3</em>: Skade, med bilde. Plassert i tegningen.','09:48'],['CRM','Sak opprettet på LI-10087 med skapnummer O3. Ingrid ser den i Min dag.','09:48'],['CRM','Reklamasjon klargjort til Sigdal med varelinjene til O3.','09:49']]},
+    av:{enhet:'ipad',vis:[V.ipad,0],logg:[['Hengsel','Avvik på <em>O3</em>: Skade, med bilde. Plassert i tegningen.','09:48'],['CRM','Sak opprettet på LI-10087 med skapnummer O3. Ingrid ser den i Min dag.','09:48'],['CRM','Reklamasjon klargjort til fabrikken med varelinjene til O3.','09:49']]},
     view:{enhet:'pc',vis:[V.pc,0]},
     send:{enhet:'tlf',vis:[V.tlf,0],logg:[['Hengsel','Piotr sendte tegningen med status til selger: 7 ferdig, 2 avvik.','10:05'],['CRM','Ingrid fikk varsel. Avvik ligger på ordren med skapnummer: <em>O2</em>, <em>O3</em>.','10:05'],['CRM','Kunden ser fremdriften på Min side.','10:06']]}
   }});

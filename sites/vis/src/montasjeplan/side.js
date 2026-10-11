@@ -12,12 +12,12 @@ function seed(){return [
  {id:'0798',k:'Strand',s:'Hamar',sig:46,o:[],t:'arne',w:47,st:'sendt'},
  {id:'0769',k:'Bakke',s:'Lillehammer',sig:45,o:[['Benkeplate',46]],t:'lars',w:48,st:'akseptert'},
  {id:'0821',k:'Haugen',s:'Hamar',sig:48,o:[['Benkeplate',49]],t:null,w:null,st:'ny'},
- {id:'0817',k:'Sætre',s:'Lillehammer',sig:47,o:[['Armatur Tapwell',48]],t:null,w:null,st:'ny'},
+ {id:'0817',k:'Sætre',s:'Lillehammer',sig:47,o:[['Armatur',48]],t:null,w:null,st:'ny'},
  {id:'0826',k:'Moen',s:'Gjøvik',sig:48,o:[],t:null,w:null,st:'ny'}]}
 var O,FERIE,SEL,STEPS,REPLAN;
 function byId(id){return O.filter(function(o){return o.id===id})[0]}
 function latest(o){return o.o.reduce(function(m,x){return Math.max(m,x[1])},o.sig)}
-function latestName(o){var m=latest(o),n=o.o.filter(function(x){return x[1]===m});return n.length?n[0][0].toLowerCase():'kjøkkenet fra Sigdal'}
+function latestName(o){var m=latest(o),n=o.o.filter(function(x){return x[1]===m});return n.length?n[0][0].toLowerCase():'kjøkkenet fra fabrikken'}
 function inCell(t,w){return O.filter(function(o){return o.t===t&&o.w===w})}
 function isFerie(t,w){return FERIE[t+'|'+w]}
 /* Regler: feil stopper forespørselen, advarsel gjør ikke */
@@ -41,7 +41,7 @@ function pillOf(o){
  return '<span class="pill">Ikke sendt</span>'}
 function cardHtml(o){var is=issues(o),f=is.some(function(x){return x[0]==='f'}),a=is.length>0;
  var cls=f?'feil':a?'adv':o.st==='akseptert'?'ok':'';
- var lv='Sigdal u'+o.sig+o.o.map(function(x){return ' · '+x[0]+' u'+x[1]}).join('');
+ var lv='Fabrikken u'+o.sig+o.o.map(function(x){return ' · '+x[0]+' u'+x[1]}).join('');
  return '<div role="button" tabindex="0" class="job '+cls+'" draggable="true" data-id="'+o.id+'" aria-pressed="'+(SEL===o.id)+'"><span class="grip" aria-hidden="true"></span>'+
   '<span class="n"><b>'+o.k+'</b><span>'+o.s+' · '+o.id+'</span></span><span class="lv">'+lv+'</span>'+pillOf(o)+
   is.map(function(x){return '<span class="iss '+x[0]+'" title="'+x[1].replace(/"/g,'&quot;')+'">'+(x[2]||((x[0]==='f'?'Feil: ':'')+x[1]))+'</span>'}).join('')+'</div>'}
@@ -127,7 +127,7 @@ function endP(e,cancel){if(!P||e.pointerId!==P.pid)return;var p=P;P=null;if(p.g)
 $('board').addEventListener('pointerup',function(e){endP(e,false)});
 $('board').addEventListener('pointercancel',function(e){endP(e,true)});
 function init(){O=seed();FERIE={};SEL=null;STEPS={};$('log').innerHTML='';[].forEach.call($('guide').children,function(li){li.classList.remove('d')});
- log('Ordrebekreftelser fra Sigdal og leverandører er lest inn. Leveringsukene står på kortene.');
+ log('Ordrebekreftelser fra fabrikken og leverandører er lest inn. Leveringsukene står på kortene.');
  log('<b>Berg</b> og <b>Nilsen</b> er ikke sendt til montasjefirmaet: planen har feil.');
  render()}
 $('reset').onclick=init;
