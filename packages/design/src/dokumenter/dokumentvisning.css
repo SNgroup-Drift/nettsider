@@ -15,6 +15,7 @@
 .dv-fane:hover { border-color: var(--ink); }
 .dv-fane[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
+.dv-panel[hidden] { display: none; }
 .dv-panel { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
 .dv-lages { background: var(--surface-highlight); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
 .dv-steg { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
