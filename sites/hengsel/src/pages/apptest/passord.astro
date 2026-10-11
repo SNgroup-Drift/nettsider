@@ -9,9 +9,10 @@ import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
 import "@sngroup/design/fonts.css";
 import "../../styles/tokens.css";
 import "../../styles/hengsel.css";
+import UteLogo from "../../components/UteLogo.astro";
 import { APPTEST } from "../../apptest-lenker";
 
-const { versjon, epost } = APPTEST;
+const { epost } = APPTEST;
 const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-350.woff2", "/fonts/TWKLausanne-650.woff2"];
 ---
 <BaseLayout
@@ -25,44 +26,44 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
   <div class="side">
     <header class="topp">
       <div class="h-innhold rad">
-        <a href="/" class="logo" aria-label="Hengsel – forside"><img src="/img/hengsel-merke-lys.svg" alt="" width="37" height="36" /></a>
-        <span class="eyebrow">Testversjon · {versjon}</span>
+        <UteLogo />
+        <a class="tilbake" href="/">‹ Tilbake til hengsel.no</a>
       </div>
     </header>
     <main id="innhold" class="midt">
       <form method="post" action="/apptest" class="skjema">
         <div class="tekst">
-          <span class="eyebrow">Hengsel Ute</span>
           <h1>Test Hengsel Ute</h1>
-          <p class="dempet">Siden er for inviterte testere. Skriv inn passordet du har fått.</p>
+          <p class="dempet">Skriv passordet du fikk sammen med lenken.</p>
         </div>
         <div class="felt">
           <label for="passord">Passord</label>
           <input class="input" id="passord" name="passord" type="password" autocomplete="current-password" required aria-describedby="passord-feil" />
         </div>
-        <p class="feil" id="passord-feil" role="alert" data-feil hidden>Feil passord. Prøv igjen.</p>
-        <button class="knapp" type="submit">Gå videre</button>
+        <p class="feil" id="passord-feil" role="alert" data-feil hidden>Feil passord. Prøv igjen, eller spør Eirik.</p>
+        <button class="knapp" type="submit">Åpne</button>
       </form>
     </main>
     <footer class="bunn">
       <div class="h-innhold rad">
-        <span>Hengsel · <a href={`mailto:${epost}`}>{epost}</a></span>
-        <a href="/">Til hengsel.no</a>
+        <img src="/img/hengsel-merke-lys.svg" alt="" height="24" class="merke" />
+        <span>© 2026 SN Group</span>
       </div>
     </footer>
   </div>
 </BaseLayout>
 
 <style>
+  /* Samme profil som apptest.astro: Off White, Beige 3 kort og bunn, pillknapper */
   .side { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; background: var(--off-white); color: var(--warm-black); }
-  .dempet { color: var(--muted); }
+  .dempet { color: var(--muted); margin: 0; }
+  a { color: var(--deep-blue); }
   .rad { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
   .topp { border-bottom: 1px solid var(--beige-2); }
   .topp .rad { min-height: 64px; padding-block: 10px; }
-  .logo { display: flex; align-items: center; min-height: 44px; }
-  .logo img { height: 36px; width: auto; display: block; }
+  .tilbake { font-size: 0.94rem; }
   .midt { display: grid; place-items: center; padding: clamp(32px, 8vw, 96px) clamp(16px, 4vw, 40px); }
-  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 4vw, 36px); border: 1px solid var(--beige-2); display: grid; gap: 18px; }
+  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 4vw, 36px); background: var(--beige-3); display: grid; gap: 18px; }
   .tekst { display: grid; gap: 8px; }
   h1 { font-size: var(--t-h1); line-height: 1.08; }
   .felt { display: grid; gap: 6px; }
@@ -70,11 +71,11 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
   .input { border-radius: 0; min-height: 48px; }
   .feil { margin: 0; padding: 12px 14px; background: var(--beige-4); box-shadow: inset 3px 0 0 var(--bad); font-weight: 650; }
   .knapp {
-    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 0;
-    border: 1px solid var(--deep-blue); background: var(--deep-blue); color: var(--off-white); font: 500 1rem var(--f-body); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: var(--r-pill);
+    border: 1px solid var(--deep-blue); background: var(--deep-blue); color: var(--off-white); font: 650 1rem var(--f-body); cursor: pointer;
   }
-  .knapp:hover { opacity: 0.88; }
-  .bunn { border-top: 1px solid var(--beige-2); font-size: 0.92rem; color: var(--muted); }
+  .knapp:hover { background: var(--info-tekst); border-color: var(--info-tekst); }
+  .bunn { background: var(--beige-3); font-size: 0.92rem; color: var(--muted); }
   .bunn .rad { padding-block: 24px; flex-wrap: wrap; }
-  .bunn a { color: inherit; }
+  .merke { height: 24px; width: auto; display: block; }
 </style>

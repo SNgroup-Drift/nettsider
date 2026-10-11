@@ -1,6 +1,7 @@
 // Cloudflare Worker for hengsel: statiske filer fra ./dist. Bygg med `npm run build -w sites/hengsel` først. Se docs/hosting.md.
 // Skriptet i worker/apptest.ts kjører BARE for /apptest og alt under (passordet, K-107). Resten av hengsel.no
-// serveres som statiske filer uten kode. Hemmelighetene APPTEST_PASSORD og APPTEST_NOKKEL settes med
+// serveres som statiske filer uten kode. Hemmelighetene APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD (K-114, vises på
+// /apptest for innloggede) settes med
 // `npx wrangler secret put … -c sites/hengsel/wrangler.jsonc`, aldri i repoet.
 // Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/hengsel/wrangler.jsonc`.
 {

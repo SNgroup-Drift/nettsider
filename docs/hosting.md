@@ -142,10 +142,13 @@ Slik virker det:
   Skriptet kjører bare for de stiene. Alt annet serveres som statiske filer, uten kode.
 - Uten gyldig informasjonskapsel viser `/apptest` passordsiden (`dist/apptest/passord.html`). Skjemaet sender passordet med
   POST til `/apptest`. Riktig passord gir 303 til `/apptest` og informasjonskapselen `hengsel_apptest` (HttpOnly, Secure,
-  SameSite=Lax, Path=/apptest, 30 dager). Feil passord gir 401 og «Feil passord. Prøv igjen.».
+  SameSite=Lax, Path=/apptest, 30 dager). Feil passord gir 401 og «Feil passord. Prøv igjen, eller spør Eirik.».
 - Informasjonskapselen er en utløpstid og en HMAC-signatur, ikke passordet. Signaturnøkkelen lages av `APPTEST_NOKKEL` og
   `APPTEST_PASSORD`, så når passordet byttes, må alle skrive det nye.
 - Mangler en av hemmelighetene, er siden låst (503 «Siden er låst. Passordet er ikke satt opp ennå.»).
+- Demobrukerne (K-114): delen «Prøv med demobrukerne» står på `/apptest`, og Workeren setter demopassordet inn fra hemmeligheten
+  `DEMO_PASSORD` (`data-demopassord`, `data-demopassord-verdi`, `data-uten-demopassord`) bare for innloggede. Mangler den, står
+  «Passordet får du av den som inviterte deg.». PDF-en `/apptest/Logg_inn_i_demoen.pdf` ligger bak samme passord.
 - Alle svar fra `/apptest` har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`.
 
 ### Sette eller bytte passordet
@@ -159,7 +162,8 @@ openssl rand -base64 32                                                    # lag
 npx wrangler secret put APPTEST_NOKKEL -c sites/hengsel/wrangler.jsonc    # … og lim den inn her
 ```
 
-Begge må settes før `/apptest` kan åpnes. Nøkkelen settes én gang. For å bytte passord kjøres bare den første
+Begge må settes før `/apptest` kan åpnes. Demopassordet settes på samme måte (valgfritt, siden fungerer uten):
+`npx wrangler secret put DEMO_PASSORD -c sites/hengsel/wrangler.jsonc`. Nøkkelen settes én gang. For å bytte passord kjøres bare den første
 kommandoen på nytt; gamle informasjonskapsler slutter da å virke. Bytter du `APPTEST_NOKKEL`, må også alle logge inn på
 nytt. Hemmelighetene skal aldri stå i repoet, i en innsjekket `.dev.vars` eller i rapporter.
 
@@ -213,7 +217,7 @@ Oppsett én gang:
 Lag `sites/hengsel/.dev.vars` (står i `.gitignore`, sjekkes aldri inn) med et testpassord:
 
 ```sh
-printf 'APPTEST_PASSORD=%s\nAPPTEST_NOKKEL=%s\n' "et-testpassord" "$(openssl rand -base64 32)" > sites/hengsel/.dev.vars
+printf 'APPTEST_PASSORD=%s\nAPPTEST_NOKKEL=%s\nDEMO_PASSORD=%s\n' "et-testpassord" "$(openssl rand -base64 32)" "et-demopassord" > sites/hengsel/.dev.vars
 npm run build -w sites/hengsel
 npx wrangler dev -c sites/hengsel/wrangler.jsonc          # http://localhost:8787/apptest
 node scripts/skjermbilder-apptest.mjs                       # skjermbilder og sjekker mot wrangler dev
