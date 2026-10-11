@@ -5,12 +5,11 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | Nettsted | Mappe | Innhold |
 |---|---|---|
 | sngroup.no | `sites/sngroup` | Forsiden med plantegningen, virksomhetene, Hengsel, kontakt, `/personvern` (montørappen Hengsel) og `/design` |
-| hengsel.no | `sites/hengsel` | Forside, personvern og 404 (K-87 del 4) |
+| hengsel.no | `sites/hengsel` | hengsel.no 2.0 (K-160): forside, /crm, /ute, /kundeportal, /slik-virker-det, /dokumenter, /integrasjoner, /priser-og-demo (skjema til /api/demo), personvern, /apptest og 404 |
 | byggem.no | `sites/byggem` | Forside, prosjekter, kontakt, personvern og 404 (K-87 del 5) |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
-Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Eneste unntak er
-hengsel.no/apptest, som ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel (se docs/hosting.md).
+Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md).
 
 ## Oppsett
 
@@ -30,7 +29,7 @@ sites/<navn>/           Ett Astro-prosjekt per nettsted
   public/_headers         Sikkerhetshoder (Cloudflare Workers, statiske filer)
   public/_redirects       Stibaserte omdirigeringer (www → apex gjøres i Cloudflare, se docs/hosting.md)
   wrangler.jsonc          Worker-oppsett: navn, dist som statiske filer, 404-side (ingen nøkler; kode bare for hengsel.no/apptest)
-  worker/apptest.ts       (bare hengsel) Passordet for /apptest
+  worker/                 (bare hengsel) index.ts sender /apptest til apptest.ts (passordet) og /api/demo til demo.ts (demoskjemaet)
 scripts/
   sjekk-lenker.mjs        npm test: alle interne lenker på de bygde sidene svarer 200
   skjermbilder.mjs        Skjermbilder og nettlesersjekker (360 px, konsoll, CSP)

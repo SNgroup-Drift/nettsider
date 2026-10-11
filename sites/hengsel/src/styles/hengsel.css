@@ -2,14 +2,11 @@
   hengsel.no – skrift, designsystemets navn og grunnklasser.
   Fasit: docs/design/hengsel/_ds/…/tokens/*.css (Hengsel designsystem v1.0) og <helmet> i «56 Hengsel forside.dc.html»
   (10.10.2026). Form som i fil 51: kort med radius 14 og 1 px Beige 2-ramme, pilleknapper (primær Deep Blue, sekundær
-  omriss), eyebrow i versaler, Reckless i titler, TWK Lausanne 350/650 ellers, 17 px / 1,6.
+  omriss), eyebrow i versaler, Newsreader i titler, Inter ellers, 17 px / 1,6.
 
   Designsystemets variabler (--bg, --ink, --muted …) peker på familiens variabler i tokens.css, så lys og mørk modus
   styres ett sted. Avvik: --soft er #6E6355 i stedet for #8A7F72 (tekst trenger 4,5:1, se tokens.css).
 */
-@font-face { font-family: "Reckless Standard M"; src: url("/fonts/RecklessStandardM-Regular.woff2") format("woff2"); font-weight: 300 500; font-display: swap; }
-@font-face { font-family: "TWK Lausanne"; src: url("/fonts/TWKLausanne-350.woff2") format("woff2"); font-weight: 300 549; font-display: swap; }
-@font-face { font-family: "TWK Lausanne"; src: url("/fonts/TWKLausanne-650.woff2") format("woff2"); font-weight: 550 800; font-display: swap; }
 
 :root {
   --bg: var(--bakgrunn);
@@ -30,8 +27,9 @@
 
   --f-display: var(--font-overskrift);
   --f-body: var(--font-tekst);
-  --w-body: 350;
-  --w-strong: 650;
+  --w-body: 400;
+  --w-medium: 500;
+  --w-strong: 600;
   --t-eyebrow: 0.82rem;
   --r-sm: 8px; --r-field: 10px; --r: 14px; --r-lg: 20px; --r-pill: 999px;
   --wrap: 1180px;
@@ -102,3 +100,30 @@ input, button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .btn:active:not(:disabled) { transform: none; }
 }
+
+/* ---- hengsel.no 2.0: felles deler for sidene ---- */
+:root {
+  --surface-app: var(--beige-3);
+  --warn: #8a5d14; --warn-soft: #f5ead3;
+  --ok-soft: var(--ok-myk);
+  --w-medium: 500;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --surface-app: #1b1713; --warn: #e2b468; --warn-soft: #33281a; }
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
+.app-flate { --app-flate: var(--surface-app); }
+:root { --app-flate: var(--surface-app); }
+
+/* Seksjoner (designets mønster): luft over og under, båndene veksler mellom sideflaten og Beige 3 */
+.sek { padding-block: clamp(56px, 7vw, 96px); }
+.sek.flate { background: var(--surface-highlight); }
+.sek-hode { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
+
+/* Piller: beige i stedet for lyseblå (Eirik 11.10). «Eksempel» på oppdiktet demoinnhold. */
+.pille { display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--r-pill); background: var(--surface-highlight-strong); color: var(--ink); font: 500 0.78rem/1 var(--f-body); white-space: nowrap; }
+.pille.info { background: var(--accent-soft); color: var(--info-tekst); }
+.eks { display: inline-flex; align-items: center; min-height: 22px; padding: 0 9px; border-radius: var(--r-pill); background: var(--surface-highlight-strong); color: var(--ink); font: 500 0.74rem/1 var(--f-body); letter-spacing: 0.02em; white-space: nowrap; }
+
+.skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

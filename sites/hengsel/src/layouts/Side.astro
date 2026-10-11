@@ -1,77 +1,48 @@
 ---
 /**
- * Ramme for hengsel.no: familiens BaseLayout med Hengsel-profilen, sidehodet (Toppfelt, som i v1.3) og bunnen
- * (Bunn: SN Group-båndet og bunnteksten). Fasit: docs/design/hengsel/Sidehode.dc.html og Bunn.dc.html (10.10.2026); logoen følger fil 60 (W1).
- * Sidehodet er sticky: logo (hengsel-logo-lys.svg som i fil 60, 30 px på PC og 26 under 900 px), menyen
- * Produkt · Hengsel Ute · Priser · Om · Logg inn, og «Be om demo» → #kontakt. Under 900 px skjules menypunktene,
- * som i fasit; knappen står. «Logg inn» vises bare når miljøvariabelen LOGIN er satt ved bygging (astro.config.mjs).
- * Brukes av forsiden, personvern og 404. Bare lys modus.
+ * Ramme for hengsel.no 2.0: familiens BaseLayout, den faste menyen (Meny.astro) og bunnen (Bunn.astro).
+ * Fasit: docs/design/hengsel-no-2.0 (Meny.dc.html, Bunn.dc.html). Lys og mørk følger systemet (prefers-color-scheme).
+ * Skriftene er Newsreader og Inter fra @sngroup/design/fonts.css. Alle sider bruker denne rammen, også /personvern, /apptest og 404.
  */
 import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
 import "@sngroup/design/fonts.css";
-import Toppfelt from "@sngroup/design/components/Toppfelt.astro";
-import Bunn from "../components/Bunn.astro";
 import "../styles/tokens.css";
 import "../styles/hengsel.css";
-import { LOGIN } from "astro:env/server";
-import { EPOST, TEL } from "../content/forside";
+import Meny from "../components/Meny.astro";
+import Bunn from "../components/Bunn.astro";
+import type { MenyNokkel } from "../content/nav";
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
-  /** Forsiden: lenkene i menyen peker til ankre på samme side, logoen og «Til toppen» til #hjem */
-  forside?: boolean;
-  /** Linjen om demodata i bunnteksten (forsiden, der skjermbildene vises) */
-  demo?: boolean;
-  /** Delingsbilde (og:image) som full URL, f.eks. https://hengsel.no/og.png */
+  /** Overstyrer robots-taggen, f.eks. «noindex,nofollow» for /apptest */
+  robots?: string;
+  aktiv?: MenyNokkel | "";
+  /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title, description, noindex, forside = false, demo = false, delingsbilde } = Astro.props;
-const h = forside ? "" : "/";
-const meny = [
-  { label: "Produkt", href: `${h}#produkt` },
-  { label: "Hengsel Ute", href: `${h}#ute` },
-  { label: "Priser", href: `${h}#priser` },
-  { label: "Om", href: `${h}#om` },
-  ...(LOGIN ? [{ label: "Logg inn", href: LOGIN }] : []),
-];
-const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-350.woff2", "/fonts/TWKLausanne-650.woff2"];
+const { title, description, noindex, robots, aktiv = "", delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
 ---
 <BaseLayout
   title={title}
   description={description}
   noindex={noindex}
+  robots={robots}
   delingsbilde={delingsbilde}
-  tema="light"
-  temafarge={["#5074A9", "#5074A9"]}
+  temafarge={["#FBF9F6", "#1B1713"]}
   ikon={{ href: "/logo/favicon.svg", type: "image/svg+xml" }}
   ikon32="/logo/favicon-32.png"
   appleIkon="/logo/apple-touch-icon-180.png"
-  forhandslast={skrifter}
 >
-  <div class="side" id="hjem">
-    <Toppfelt
-      hjem={forside ? "#hjem" : "/"}
-      ordmerke="Hengsel"
-      kompakt
-      fast
-      strek
-      skjulUnder={900}
-      kontaktVariant="fylt"
-      kontaktHref={`${h}#kontakt`}
-      kontaktTekst="Be om demo"
-      lenker={meny}
-    >
-      <img slot="logo" class="logo" src="/logo/hengsel-logo-lys.svg" alt="" width="460" height="112" />
-    </Toppfelt>
+  <div class="side">
+    <Meny aktiv={aktiv} />
     <slot />
-    <Bunn demo={demo} forside={forside} epost={EPOST} tlf={TEL} />
+    <Bunn />
   </div>
 </BaseLayout>
 
 <style>
   .side { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
-  .logo { display: block; height: 30px; width: auto; }
-  @media (max-width: 900px) { .logo { height: 26px; } }
+  .side > :global(main) { flex: 1; }
 </style>

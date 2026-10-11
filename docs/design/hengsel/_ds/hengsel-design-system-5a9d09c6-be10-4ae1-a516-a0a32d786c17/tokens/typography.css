@@ -1,7 +1,7 @@
 /* Hengsel – typografi v1.0 */
 :root {
-  --f-display: "Reckless Neue", "Newsreader", Georgia, serif; /* @kind font */ /* titler og store tall, alltid 400 */
-  --f-body: "TWK Lausanne", "Inter", "Helvetica Neue", Arial, sans-serif; /* @kind font */
+  --f-display: "Newsreader", Georgia, serif; /* @kind font */ /* titler og store tall, alltid 400 */
+  --f-body: "Inter", "Helvetica Neue", Arial, sans-serif; /* @kind font */
   --w-body: 350; /* @kind font */ /* Inter-reserve: 400 */
   --w-medium: 500; /* @kind font */ /* knapper, etiketter, eyebrow */
   --w-strong: 650; /* @kind font */ /* underoverskrifter. Inter-reserve: 600 */

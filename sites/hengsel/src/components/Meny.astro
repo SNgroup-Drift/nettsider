@@ -1,0 +1,69 @@
+---
+/**
+ * Fast meny (Meny.dc.html): logo, sju lenker, «Logg inn» til Visningsrommet og «Be om demo» som alltid er synlig.
+ * Under 1180 px erstattes lenkene av ≡ (designet; ved 900–1180 px er det ikke plass til sju lenker). Menypanelet åpnes av scripts/meny.ts.
+ */
+import { LOGG_INN, MENY, type MenyNokkel } from "../content/nav";
+interface Props { aktiv?: MenyNokkel | "" }
+const { aktiv = "" } = Astro.props;
+---
+<header class="meny" data-meny>
+  <div class="rad">
+    <a class="logo" href="/" aria-label="Hengsel – til forsiden">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-logo-mork.svg" />
+        <img src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="460" height="112" />
+      </picture>
+    </a>
+    <nav class="lenker" aria-label="Hovedmeny">
+      {MENY.map(([k, t, h]) => <a href={h} aria-current={k === aktiv ? "page" : undefined}>{t}</a>)}
+      <a class="logginn" href={LOGG_INN}>Logg inn</a>
+    </nav>
+    <div class="hoyre">
+      <a class="btn primary demo" href="/priser-og-demo#demo">Be om demo</a>
+      <button type="button" class="burger" aria-expanded="false" aria-controls="meny-panel" aria-label="Meny" data-burger>
+        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path class="strek apen" d="M3 5h14M3 10h14M3 15h14" /><path class="strek lukk" d="M4.5 4.5l11 11M15.5 4.5l-11 11" /></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="panel" id="meny-panel" aria-label="Meny" hidden data-panel>
+    <div class="panel-inn">
+      {MENY.map(([k, t, h]) => <a href={h} aria-current={k === aktiv ? "page" : undefined}>{t}</a>)}
+      <a class="panel-logginn" href={LOGG_INN}>Logg inn i Visningsrommet →</a>
+    </div>
+  </nav>
+</header>
+<script>
+  import "../scripts/meny";
+</script>
+
+<style>
+  .meny { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .rad { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding-inline: var(--pad); box-sizing: border-box; height: var(--topp); display: flex; align-items: center; gap: 20px; }
+  .logo { display: flex; align-items: center; flex: none; min-height: 44px; }
+  .logo img { display: block; height: 34px; width: auto; }
+  .lenker { display: flex; gap: 18px; margin-left: auto; align-items: center; font-size: 0.93rem; }
+  .lenker a { color: var(--muted); white-space: nowrap; }
+  .lenker a:hover, .lenker a[aria-current="page"] { color: var(--ink); text-decoration: none; }
+  .lenker a[aria-current="page"] { font-weight: var(--w-strong); }
+  .lenker .logginn { color: var(--ink); padding-left: 18px; border-left: 1px solid var(--line); }
+  .lenker .logginn:hover { color: var(--accent); }
+  .hoyre { display: flex; gap: 8px; align-items: center; }
+  .demo { padding-inline: 20px; }
+  .burger { display: none; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; place-items: center; padding: 0; }
+  .burger .strek { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  .burger .lukk, .burger[aria-expanded="true"] .apen { display: none; }
+  .burger[aria-expanded="true"] .lukk { display: block; }
+  .panel { position: absolute; left: 0; right: 0; top: var(--topp); background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
+  .panel-inn { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding: 8px var(--pad) 20px; box-sizing: border-box; display: flex; flex-direction: column; }
+  .panel-inn a { min-height: 52px; display: flex; align-items: center; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
+  .panel-inn a[aria-current="page"] { font-weight: var(--w-strong); }
+  .panel-inn .panel-logginn { border-bottom: 0; color: var(--accent); }
+  @media (max-width: 1180px) {
+    .lenker { display: none; }
+    .hoyre { margin-left: auto; }
+    .burger { display: grid; }
+  }
+  @media (max-width: 480px) { .demo { padding-inline: 16px; } .logo img { height: 30px; } }
+  @media (min-width: 1181px) { .panel { display: none; } }
+</style>

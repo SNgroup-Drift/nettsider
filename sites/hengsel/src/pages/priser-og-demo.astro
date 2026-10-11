@@ -1,0 +1,202 @@
+---
+/**
+ * /priser-og-demo: «Dette inngår», «Oppstart» og «Be om demo» med skjema. Fasit: docs/design/hengsel-no-2.0/Priser-og-demo.dc.html.
+ * Ingen priser (Eirik): «Pris etter antall butikker og brukere. Be om tilbud.» Tekster og data i content/priser.ts.
+ *
+ * Skjemaet er <form method="post" action="/api/demo"> (Workeren, worker/demo.ts). scripts/demo.ts sender det med fetch uten sideskifte,
+ * setter tidsfeltet «t» og viser feil, takk og mailto-reserven. Uten skript kan skjemaet ikke sendes (tidsfeltet mangler, og knappen er
+ * deaktivert fra bygget), så en <noscript>-melding viser e-postlenken i stedet.
+ */
+import Side from "../layouts/Side.astro";
+import { SIDE, INNGAR, OPPSTART, DEMO, MAILTO } from "../content/priser";
+import { TEL_HREF } from "../content/forside";
+const f = DEMO.felt;
+---
+<Side title={SIDE.tittel} description={SIDE.beskrivelse} aktiv="pris">
+  <main id="innhold">
+    <section class="sek inngar" aria-labelledby="h1">
+      <div class="h-innhold kolonne">
+        <div class="hode">
+          <span class="eyebrow">{SIDE.eyebrow}</span>
+          <h1 id="h1">{SIDE.h1}</h1>
+          <p class="lede">{SIDE.lede}</p>
+        </div>
+        <div class="to">
+          <div class="boks">
+            <h2 class="eyebrow">Dette inngår</h2>
+            <ul class="liste">
+              {INNGAR.map(([t, s]) => (
+                <li><span class="hake" aria-hidden="true">✓</span><span class="tekst"><b>{t}</b><span class="svak">{s}</span></span></li>
+              ))}
+            </ul>
+          </div>
+          <div class="boks">
+            <div class="rad">
+              <h2 class="eyebrow">{OPPSTART.eyebrow}</h2>
+              <span class="eks">{OPPSTART.merke}</span>
+            </div>
+            <p class="dempet">{OPPSTART.ingress}</p>
+            <ol class="steg">
+              {OPPSTART.steg.map(([t, s], i) => (
+                <li class="card"><span class="nr" aria-hidden="true">{i + 1}</span><span class="tekst"><b>{t}</b><span class="svak">{s}</span></span></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sek flate demo" id="demo" aria-labelledby="demo-h">
+      <div class="h-innhold to">
+        <div class="venstre">
+          <h2 id="demo-h">{DEMO.h2}</h2>
+          <p class="dempet stor">{DEMO.ingress}</p>
+          <div class="card kontakt">
+            <span class="eyebrow">{DEMO.kontakt.eyebrow}</span>
+            <a class="tlf" href={TEL_HREF}>{DEMO.kontakt.tel}</a>
+            <a class="epost" href={MAILTO}>{DEMO.kontakt.epost}</a>
+          </div>
+        </div>
+
+        <div class="skjemaboks">
+          <form id="demo-skjema" method="post" action="/api/demo" novalidate data-demo data-epost={DEMO.kontakt.epost} data-reserve-emne={DEMO.reserve.emne} data-noytral-tittel={DEMO.reserveNoytral.tittel} data-noytral-lenke={DEMO.reserveNoytral.lenke}>
+            <div class="rutenett">
+              <div class="field">
+                <label for="demo-navn">{f.navn.l}</label>
+                <input class="input" id="demo-navn" name="navn" type="text" autocomplete="name" placeholder={f.navn.ph} maxlength="120" required aria-required="true" aria-describedby="demo-feil" />
+              </div>
+              <div class="field">
+                <label for="demo-butikk">{f.butikk.l}</label>
+                <input class="input" id="demo-butikk" name="butikk" type="text" autocomplete="organization" placeholder={f.butikk.ph} maxlength="120" />
+              </div>
+              <div class="field">
+                <label for="demo-epost">{f.epost.l}</label>
+                <input class="input" id="demo-epost" name="epost" type="email" autocomplete="email" placeholder={f.epost.ph} maxlength="254" aria-describedby="demo-feil demo-epost-feil" />
+                <p class="felt-feil" id="demo-epost-feil" data-felt-feil="epost" hidden>{DEMO.feltFeil.epost}</p>
+              </div>
+              <div class="field">
+                <label for="demo-tlf">{f.tlf.l}</label>
+                <input class="input" id="demo-tlf" name="tlf" type="tel" autocomplete="tel" placeholder={f.tlf.ph} maxlength="30" aria-describedby="demo-feil demo-tlf-feil" />
+                <p class="felt-feil" id="demo-tlf-feil" data-felt-feil="tlf" hidden>{DEMO.feltFeil.tlf}</p>
+              </div>
+            </div>
+
+            <fieldset class="avd">
+              <legend>{DEMO.avdelinger.l}</legend>
+              <div class="valg">
+                {DEMO.avdelinger.valg.map(([v, t]) => (
+                  <span class="valg-et">
+                    <input class="skjult" type="radio" name="avdelinger" id={`demo-avd-${v}`} value={v} checked={v === DEMO.avdelinger.standard} />
+                    <label for={`demo-avd-${v}`}>{t}</label>
+                  </span>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="demo-melding">{f.melding.l}</label>
+              <textarea class="input" id="demo-melding" name="melding" rows="4" maxlength="1000" placeholder={f.melding.ph}></textarea>
+            </div>
+
+            <!-- Honeypot: skjult for alle, også skjermlesere. Roboter fyller det ut. -->
+            <div class="skjult" aria-hidden="true">
+              <label for="demo-nettsted">Nettsted</label>
+              <input type="text" id="demo-nettsted" name="nettsted" tabindex="-1" autocomplete="off" value="" />
+            </div>
+            <input type="hidden" name="t" value="" data-tid />
+
+            <div class="rad-send">
+              <button class="btn primary" type="submit" data-send disabled>{DEMO.send}</button>
+              <span class="svak">{DEMO.ring}</span>
+            </div>
+
+            <noscript>
+              <p class="dempet">{DEMO.utenSkript} <a href={MAILTO}>{DEMO.utenSkriptLenke}</a></p>
+            </noscript>
+
+            <div class="varsel feil" id="demo-feil" role="alert" tabindex="-1" data-feil hidden>
+              <b>{DEMO.feilTittel}</b> {DEMO.feilTekst}
+            </div>
+            <div class="varsel reserve" role="alert" tabindex="-1" data-reserve hidden>
+              <b data-reserve-tittel>{DEMO.reserve.tittel}</b>
+              <a class="btn" href={MAILTO} data-mailto>{DEMO.reserve.lenke}</a>
+              <span>{DEMO.ring}</span>
+            </div>
+          </form>
+
+          <div class="takk" tabindex="-1" role="status" data-takk hidden>
+            <span class="takk-h" data-takk-tekst data-ufullstendig={DEMO.takk(DEMO.takkReserveNavn)}>{DEMO.takk(DEMO.takkReserveNavn)}</span>
+            <p class="dempet">{DEMO.takkTekst}</p>
+            <button class="btn" type="button" data-ny>{DEMO.ny}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Side>
+
+<script>
+  import "../scripts/demo";
+</script>
+
+<style>
+  .kolonne { display: flex; flex-direction: column; gap: 40px; }
+  .inngar { padding-top: clamp(40px, 6vw, 72px); }
+  .hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
+  .to { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(24px, 4vw, 48px); align-items: start; }
+  .boks { display: flex; flex-direction: column; gap: 12px; }
+  .boks h2 { font-size: var(--t-eyebrow); line-height: 1.3; letter-spacing: 0.06em; }
+  .rad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .dempet { color: var(--muted); }
+  .svak { color: var(--muted); font-size: 0.95rem; }
+  .liste, .steg { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+  .liste li { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .hake { color: var(--accent); flex: none; }
+  .tekst { display: flex; flex-direction: column; }
+  .steg { gap: 12px; margin-top: 4px; }
+  .steg li { display: flex; gap: 16px; }
+  .nr { width: 32px; height: 32px; border-radius: 999px; background: var(--surface-highlight); flex: none; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+  .steg .tekst { gap: 2px; }
+
+  .demo { scroll-margin-top: 72px; }
+  .venstre { display: flex; flex-direction: column; gap: 20px; }
+  .venstre h2 { font-size: var(--t-h1); }
+  .stor { font-size: 1.05rem; }
+  .kontakt { display: flex; flex-direction: column; gap: 10px; }
+  .tlf { font-family: var(--f-display); font-size: 2rem; line-height: 1.1; color: var(--ink); }
+  .tlf:hover { color: var(--accent); text-decoration: none; }
+  .epost { font-size: 1.05rem; }
+
+  .skjemaboks { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(20px, 3vw, 32px); }
+  form { display: flex; flex-direction: column; gap: 16px; }
+  .rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; }
+  .input { background: var(--bg); }
+  textarea.input { padding: 12px 14px; line-height: 1.5; resize: vertical; min-height: 7rem; }
+  .input[aria-invalid="true"] { border-color: var(--bad); }
+  .felt-feil { margin: 0; color: var(--bad); font-size: 0.88rem; }
+  .avd { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .avd legend { padding: 0; font: 500 0.9rem var(--f-body); margin-bottom: 6px; }
+  .valg { display: flex; flex-wrap: wrap; gap: 8px; }
+  .valg-et { position: relative; }
+  .valg-et label {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; box-sizing: border-box;
+    border: 1px solid var(--line); background: var(--bg); color: var(--ink); font-size: 0.95rem; cursor: pointer;
+  }
+  .valg-et label:hover { border-color: var(--ink); }
+  .valg-et input:checked + label { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .valg-et input:focus-visible + label { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  .rad-send { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .rad-send .btn { min-height: 48px; padding: 0 26px; }
+  .rad-send .svak { font-size: 0.88rem; }
+  .varsel { border-radius: var(--r-field); padding: 12px 16px; font-size: 0.95rem; }
+  .varsel:focus { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  .varsel.feil { background: var(--bad-soft); box-shadow: inset 3px 0 0 var(--bad); }
+  .varsel.feil:focus { box-shadow: inset 3px 0 0 var(--bad), 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  .varsel.feil b { color: var(--bad); font-weight: 600; }
+  .varsel.reserve { background: var(--surface-highlight); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .takk { display: flex; flex-direction: column; gap: 12px; padding: 12px 0; }
+  .takk:focus { outline: none; }
+  .takk:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  .takk-h { font-family: var(--f-display); font-size: 2rem; line-height: 1.1; }
+  .takk .btn { align-self: flex-start; }
+</style>

@@ -1,71 +1,134 @@
 ---
 /**
- * Skjermbilde i Apple-ramme (pakke v6 11.10.2026, INSTRUKS.md; se docs/bilder.md).
- *  - pc: Studio Display. mac: MacBook. phone: iPhone 18. ipad: iPad liggende.
- * Rammen er Apples Product Bezel som den er (ramme-*.webp, gjennomsiktig skjermhull). Skjermbildet ligger under den og
- * klippes med skjermens hjørner. Hullene (prosent av rammens bredde og høyde) er målt i rammefilene.
- * Rammen skaleres med container-enheter: bredden er min(største bredde, plassen, plassen × ratio × B/H), der ratio er
- * største høyde i forhold til bredden på plassen. Klikk på bildet åpner lysboksen (scripts/lysboks.ts) med bildet i full
- * størrelse (data-full), med mindre zoom er av. Bildet fyller hullet (object-fit: cover fra toppen, som i INSTRUKS); det finnes
- * ingen annen tilpasning. Hver ramme har sitt eget bildeformat: Studio Display 16:9 (display/), MacBook 16:10 (pc/), iPad 4:3
- * (ipad13/), iPhone 18 1206 × 2622 (ios/).
+ * Enhetsramme (Enhet.dc.html): Studio Display (type="display"), iPad (type="ipad") og iPhone (type="iphone") med iOS-statuslinje.
+ *
+ * Innholdet er enten et bilde (src, og srcDark for mørk modus: <picture> med prefers-color-scheme) eller HTML i sporet (slot),
+ * tegnet i naturlig størrelse (nw × nh: display 1440 × 810, iPad 1180 × 820, iPhone 402 × 874) og skalert til skjermen av scripts/skala.ts.
+ * Bredden på rammen er 100 % av plassen; sett maks bredde på omslaget. Ingen style-attributter (CSP style-src 'self').
+ *
+ *  - Studio Display bruker bezelen public/img/ramme-studio-display.webp; iPad og iPhone er tegnet i CSS (#1B1713).
+ *  - Statuslinjen: iPhone «9:41» med Dynamic Island, signal, Wi-Fi og batteri; iPad «9:41 man. 12. okt.», Wi-Fi og batteri.
+ *    Svart i lys modus og hvit i mørk; bilder uten mørk variant (src uten srcDark) har alltid svart. statusFarge overstyrer.
+ *  - «Din logo / by Hengsel» ligger over I dag-skjermbildene (idag-*, ipad-idag-*), som i designet.
+ *  - Bilder: bredde og høyde er satt (ingen CLS); lazy under bretten, `forst` for det øverste.
  */
-import { MAAL, RAMMER, src } from "../scripts/bilder";
+import Skjermbilde from "./Skjermbilde.astro";
 
 interface Props {
-  bilde: string;
-  alt: string;
-  type: "pc" | "mac" | "phone" | "ipad";
-  ratio?: 0.75 | 0.8 | 1 | 1.1 | 1.4 | 1.8 | 2.1;
-  /** Første skjermbilde på siden lastes med en gang, resten når de nærmer seg */
+  type: "display" | "ipad" | "iphone";
+  src?: string;
+  srcDark?: string;
+  /** Naturlig størrelse på bildet (px), for width/height */
+  w?: number;
+  h?: number;
+  alt?: string;
+  /** Størrelsen innholdet i sporet er tegnet i. Standard etter type. */
+  nw?: number;
+  nh?: number;
+  statusFarge?: "auto" | "hvit" | "svart";
+  /** Øverste bilde på siden: lastes med en gang */
   forst?: boolean;
-  /** Uten lysboks (sider som ikke har den): bildet er ikke en knapp */
-  zoom?: boolean;
+  /** Skjul «Din logo» selv om bildet er et I dag-skjermbilde */
+  utenLogo?: boolean;
+  class?: string;
+  /** Tegn statuslinjens symboldefinisjoner (id-ene sb-*). Sett false på alle rammer unntatt den første når flere ligger på samme side. */
+  symboler?: boolean;
 }
-const { bilde, alt, type, ratio = 0.75, forst = false, zoom = true } = Astro.props;
-const [w, h] = MAAL[bilde] ?? [0, 0];
-const [ramme, rw, rh] = RAMMER[type];
-const r = { 0.75: "r75", 0.8: "r80", 1: "r100", 1.1: "r110", 1.4: "r140", 1.8: "r180", 2.1: "r210" }[ratio];
+const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] } as const;
+const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true } = Astro.props;
+const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
+const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
+// Følger bildet temaet? Slot: ja. Bilde: bare med mørk variant.
+const folgerTema = src ? !!srcDark : true;
+const sb = statusFarge === "hvit" ? "sb-hvit" : statusFarge === "svart" ? "sb-svart" : folgerTema ? "sb-auto" : "sb-svart";
+const visLogo = !!src && !utenLogo && /\/(ipad-)?idag-/.test(src) && type !== "display";
+const inset = type === "ipad" && !src ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
 const lasting = forst ? "eager" : "lazy";
 ---
-<div class:list={["enhet", r]}>
-  <div class:list={["ramme", type]}>
-    <div class="hull">
-      {zoom
-        ? (
-          <button type="button" class="zoom" data-zoom aria-label={`Forstørr skjermbildet: ${alt}`}>
-            <img src={src(bilde)} data-full={src(bilde)} alt={alt} width={w} height={h} loading={lasting} fetchpriority={forst ? "high" : undefined} decoding="async" />
-          </button>
-        )
-        : <img src={src(bilde)} alt={alt} width={w} height={h} loading={lasting} fetchpriority={forst ? "high" : undefined} decoding="async" />}
+<div class:list={["enhet", type, sb, klasse]} data-enhet>
+  {type === "display" && (
+    <div class="ramme">
+      <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+      </div>
+      <img class="bezel" src="/img/ramme-studio-display.webp" alt="" width="2160" height="1664" loading={lasting} decoding="async" aria-hidden="true" />
     </div>
-    <img class="bezel" src={src(ramme)} alt="" width={rw} height={rh} loading={lasting} decoding="async" aria-hidden="true" />
-  </div>
+  )}
+  {type === "ipad" && (
+    <div class="ramme">
+      <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+        {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>}
+        <svg class="status" viewBox="0 0 1180 24" aria-hidden="true">
+          <text x="22" y="17" class="klokke">9:41</text><text x="68" y="17" class="klokke dato">man. 12. okt.</text>
+          <g transform="translate(1100 6)"><use href="#sb-wifi" /></g><g transform="translate(1122 5.5)"><use href="#sb-batteri" /></g>
+        </svg>
+      </div>
+    </div>
+  )}
+  {type === "iphone" && (
+    <div class="ramme">
+      <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+        {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>}
+        <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
+          <text x="68" y="35" text-anchor="middle" class="klokke">9:41</text>
+          <rect x="138.5" y="11" width="125" height="37" rx="18.5" fill="#000" />
+          <g transform="translate(298 25)"><use href="#sb-signal" /></g><g transform="translate(323 25)"><use href="#sb-wifi" /></g><g transform="translate(346 24.5)"><use href="#sb-batteri" /></g>
+        </svg>
+      </div>
+    </div>
+  )}
+  {symboler && <svg width="0" height="0" class="sym" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="sb-signal"><rect x="0" y="8" width="3.2" height="4" rx="1" /><rect x="5.2" y="5.5" width="3.2" height="6.5" rx="1" /><rect x="10.4" y="3" width="3.2" height="9" rx="1" /><rect x="15.6" y="0" width="3.2" height="12" rx="1" /></g>
+      <g id="sb-wifi"><path d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5L16 3.6C13.9 1.6 11.3.5 8.5.5S3.1 1.6 1 3.6l1.2 1.2C3.9 3.2 6.1 2.3 8.5 2.3z" /><path d="M8.5 5.6c1.5 0 2.9.6 3.9 1.5l1.2-1.2C12.3 4.6 10.5 3.8 8.5 3.8S4.7 4.6 3.4 5.9l1.2 1.2c1-.9 2.4-1.5 3.9-1.5z" /><path d="M8.5 8.6c.7 0 1.3.3 1.8.7l-1.8 2.2-1.8-2.2c.5-.4 1.1-.7 1.8-.7z" /></g>
+      <g id="sb-batteri"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".4" /><rect x="2" y="2" width="20" height="9" rx="2.2" /><rect x="24.6" y="4.4" width="1.8" height="4.2" rx=".9" fill-opacity=".45" /></g>
+    </defs>
+  </svg>}
 </div>
 
+<script>
+  import "../scripts/skala";
+</script>
+
 <style>
-  .enhet { container-type: inline-size; width: 100%; min-width: 0; display: flex; justify-content: center; }
-  .r75 { --ratio: 0.75; } .r80 { --ratio: 0.8; } .r100 { --ratio: 1; } .r110 { --ratio: 1.1; } .r140 { --ratio: 1.4; } .r180 { --ratio: 1.8; } .r210 { --ratio: 2.1; }
-  .ramme {
-    --w: 2160; --h: 1664; --maks: 856px; position: relative; flex: none; min-width: 0; aspect-ratio: var(--w) / var(--h);
-    width: min(var(--maks), 100cqw, calc(100cqw * var(--ratio) * var(--w) / var(--h)));
-  }
-  .ramme.mac { --w: 2400; --h: 1565; --maks: 856px; }
-  .ramme.ipad { --w: 2400; --h: 1740; --maks: 1100px; }
-  .ramme.phone { --w: 1174; --h: 2400; --maks: 414px; }
-
-  /* Skjermhullet: left, top, width, height i prosent av rammen; hjørnene som i rammen */
-  .hull { position: absolute; overflow: hidden; background: #F2E9DB; }
-  .pc .hull { left: 2.59%; top: 3.37%; width: 94.81%; height: 69.23%; border-radius: 1.2% / 1.6%; }
-  .mac .hull { left: 12.63%; top: 14.19%; width: 74.75%; height: 71.63%; border-radius: 1% / 1.4%; }
-  .ipad .hull { left: 5%; top: 6.84%; width: 90%; height: 86.32%; border-radius: 1.2% / 1.6%; }
-  .phone .hull { left: 5.37%; top: 2.5%; width: 89.27%; height: 95%; border-radius: 14% / 6.1%; }
-
-  /* Knappen fyller hullet (en <button> sentrerer ellers innholdet loddrett) */
-  .zoom { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; box-sizing: border-box; }
-  .zoom:focus-visible { box-shadow: inset 0 0 0 3px var(--accent); }
-  .hull img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-
-  /* Rammen over bildet; klikk går gjennom til bildet */
+  .enhet { width: 100%; min-width: 0; position: relative; }
+  .sym { position: absolute; }
+  .ramme { position: relative; width: 100%; }
+  .skjerm { position: absolute; overflow: hidden; background: var(--app-flate); container-type: inline-size; }
+  .skjerm :global(img.innhold) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .skala { position: absolute; left: 0; top: 0; width: calc(var(--nw) * 1px); height: calc(var(--nh) * 1px); transform-origin: 0 0; transform: scale(var(--k, 0.0001)); }
   .bezel { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* Studio Display: skjermhullet i bezelen (prosent av rammen) */
+  .display .ramme { aspect-ratio: 2160 / 1664; }
+  .display .skjerm { left: 2.59%; top: 3.37%; width: 94.81%; height: 69.23%; }
+  /* iPad */
+  .ipad .ramme { aspect-ratio: 1212 / 852; box-sizing: border-box; background: #1b1713; border-radius: 3.2% / 4.4%; padding: 1.32%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .ipad .skjerm { position: relative; width: 100%; height: 100%; border-radius: 1.9% / 2.7%; }
+  .ipad .skala { translate: 0 calc(var(--inset, 0) * 1px); }
+  /* iPhone */
+  .iphone .ramme { aspect-ratio: 426 / 898; box-sizing: border-box; background: #1b1713; border-radius: 15.5% / 7.3%; padding: 2.8%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .iphone .skjerm { position: relative; width: 100%; height: 100%; border-radius: 13.7% / 6.3%; }
+
+  /* Statuslinjen ligger øverst på skjermen og skaleres med den */
+  .status { position: absolute; left: 0; top: 0; width: 100%; height: auto; z-index: 20; pointer-events: none; fill: currentColor; font-family: -apple-system, "SF Pro Text", "SF Pro", var(--f-body); font-weight: 600; }
+  .iphone .klokke { font-size: 17px; letter-spacing: -0.01em; }
+  .ipad .klokke { font-size: 14px; }
+  .ipad .dato { font-weight: 600; }
+  .sb-svart .status { color: #000; }
+  .sb-hvit .status { color: #fff; }
+  .sb-auto .status { color: #000; }
+  @media (prefers-color-scheme: dark) { .sb-auto .status { color: #fff; } }
+
+  .dinlogo { position: absolute; z-index: 15; display: flex; flex-direction: column; gap: 3px; align-items: flex-start; pointer-events: none; transform-origin: 0 0; font-family: var(--f-body); }
+  .iphone .dinlogo { right: 4%; top: 6.4%; align-items: flex-end; transform-origin: 100% 0; transform: scale(var(--k, 1)); }
+  .ipad .dinlogo { left: 6.3%; top: 3.4%; transform: scale(var(--k, 1)); }
+  .dinlogo .boks { height: 30px; padding: 0 14px; border: 1.5px dashed #c3b5a7; border-radius: 6px; display: flex; align-items: center; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: #31261d; box-sizing: border-box; }
+  .dinlogo .av { font-size: 10px; color: #5e564c; letter-spacing: 0.02em; }
+  @media (prefers-color-scheme: dark) {
+    .dinlogo[data-lys-mork="tema"] .boks { border-color: #6b5d50; color: #f1e9de; }
+    .dinlogo[data-lys-mork="tema"] .av { color: #c3b5a7; }
+  }
 </style>

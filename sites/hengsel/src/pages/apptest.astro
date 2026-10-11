@@ -8,18 +8,13 @@
  * (scripts/sjekk-lenker.mjs passer på det). Lenker og versjon ligger i src/apptest-lenker.ts; en verdi som begynner
  * med «TODO_» gir en deaktivert knapp («Lenke kommer»).
  */
-import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
-import "@sngroup/design/fonts.css";
-import "../styles/tokens.css";
-import "../styles/hengsel.css";
-import Enhet from "../components/Enhet.astro";
-import UteLogo from "../components/UteLogo.astro";
+import Side from "../layouts/Side.astro";
+import Enhet from "../components/EnhetBilde.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
 
 const { versjon, epost, oppdatert } = APPTEST;
 // «Siste oppdatering»: datoen står som ÅÅÅÅ-MM-DD i apptest-lenker.ts
 const oppdatertTekst = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${oppdatert}T12:00:00Z`));
-const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-350.woff2", "/fonts/TWKLausanne-650.woff2"];
 
 const BOKSER = [
   {
@@ -67,22 +62,12 @@ const SKJERMER = [
 ];
 const KJENT_AVVIK = "";
 ---
-<BaseLayout
+<Side
   title={`Test Hengsel Ute · Hengsel`}
   description="Slik installerer du testversjonen av Hengsel Ute på iPhone, iPad eller Android."
   robots="noindex,nofollow"
-  tema="light"
-  temafarge={["#FBF9F6", "#1B1713"]}
-  forhandslast={skrifter}
 >
   <div class="side">
-    <header class="topp">
-      <div class="h-innhold rad">
-        <UteLogo />
-        <a class="tilbake" href="/">‹ Tilbake til hengsel.no</a>
-      </div>
-    </header>
-
     <main id="innhold">
       <section class="hero h-innhold">
         <img src="/img/hengsel-app-ikon-lys.svg" alt="" width="96" height="96" class="ikon" />
@@ -174,14 +159,8 @@ const KJENT_AVVIK = "";
       </section>
     </main>
 
-    <footer class="bunn">
-      <div class="h-innhold rad">
-        <img src="/img/hengsel-merke-lys.svg" alt="" height="24" class="merke" />
-        <span>© 2026 SN Group</span>
-      </div>
-    </footer>
   </div>
-</BaseLayout>
+</Side>
 
 <script>
   import "../scripts/kopier";
@@ -189,16 +168,12 @@ const KJENT_AVVIK = "";
 
 <style>
   /* Profil: Off White, Warm Black, Deep Blue bare på primærknapper og lenker, linjer 1 px Beige 2, kvadratiske hjørner, ingen skygger */
-  .side { min-height: 100vh; display: flex; flex-direction: column; background: var(--off-white); color: var(--warm-black); }
+  .side { flex: 1; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
   main { flex: 1; }
   .dempet { color: var(--muted); }
-  a { color: var(--deep-blue); }
+  a { color: var(--accent); }
   .rad { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
 
-  .topp { border-bottom: 1px solid var(--beige-2); }
-  .topp .rad { min-height: 64px; padding-block: 10px; }
-  .tilbake { font-size: 0.94rem; }
-  .merke { height: 24px; width: auto; display: block; }
 
   .hero { display: flex; align-items: flex-start; gap: clamp(20px, 3vw, 32px); padding-block: clamp(40px, 6vw, 72px) clamp(32px, 5vw, 56px); }
   .ikon { width: 96px; height: 96px; flex: none; display: block; }
@@ -207,18 +182,18 @@ const KJENT_AVVIK = "";
 
   /* Tre kort i Beige 3 uten kantlinje, pillknapper (fil 60 W2) */
   .bokser { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .boks { background: var(--beige-3); padding: 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .boks { background: var(--flate); padding: 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
   .boks h2 { font-size: 1.75rem; line-height: 1.1; }
   ol { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; font-size: 0.94rem; line-height: 1.5; color: var(--muted); }
-  ol li::marker { font-weight: 650; }
+  ol li::marker { font-weight: 600; }
 
   .knapp {
     display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; margin-top: auto;
-    border: 1px solid var(--warm-black); background: transparent; color: var(--warm-black); font: 500 1rem var(--f-body);
+    border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 1rem var(--f-body);
     text-decoration: none; border-radius: var(--r-pill); box-sizing: border-box; white-space: nowrap;
   }
-  .knapp.primar { background: var(--deep-blue); border-color: var(--deep-blue); color: var(--off-white); font-weight: 650; }
-  .knapp.primar:hover { background: var(--info-tekst); border-color: var(--info-tekst); text-decoration: none; }
+  .knapp.primar { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .knapp.primar:hover { background: var(--accent); border-color: var(--accent); text-decoration: none; }
   .knapp:disabled { opacity: 0.45; cursor: not-allowed; }
   .knapp:disabled:hover { opacity: 0.45; }
 
@@ -227,18 +202,18 @@ const KJENT_AVVIK = "";
   .demotekst { display: grid; gap: 16px; justify-items: start; }
   .demotekst h2 { font-size: var(--t-h1); line-height: 1.08; }
   .demotekst p { margin: 0; max-width: 62ch; }
-  .merknad { padding: 12px 14px; background: var(--beige-3); font-size: 0.94rem; }
-  .passord { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 16px 20px; background: var(--beige-3); font-size: 1.125rem; }
+  .merknad { padding: 12px 14px; background: var(--flate); font-size: 0.94rem; }
+  .passord { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 16px 20px; background: var(--flate); font-size: 1.125rem; }
   .passord[hidden] { display: none; }
-  .passord code { font-family: ui-monospace, Menlo, monospace; font-weight: 650; word-break: break-all; }
+  .passord code { font-family: ui-monospace, Menlo, monospace; font-weight: 600; word-break: break-all; }
   .passord .knapp { min-height: 40px; padding: 0 18px; margin-top: 0; }
   .skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .brukerkort { background: var(--beige-3); padding: 24px 28px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+  .brukerkort { background: var(--flate); padding: 24px 28px; display: grid; gap: 8px; align-content: start; min-width: 0; }
   .korthode { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
   .korthode h3 { font-size: var(--t-h2); line-height: 1.15; margin: 0; }
   .brukere { margin: 0; display: grid; }
-  .brukere > div { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 4px 16px; padding-block: 10px; border-top: 1px solid var(--beige-2); }
-  .brukere dt { font-weight: 650; }
+  .brukere > div { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 4px 16px; padding-block: 10px; border-top: 1px solid var(--linje); }
+  .brukere dt { font-weight: 600; }
   .brukere dd { margin: 0; display: grid; gap: 2px; }
   .brukere code { font-family: ui-monospace, Menlo, monospace; font-size: 0.95rem; }
 
@@ -250,18 +225,15 @@ const KJENT_AVVIK = "";
   .skjermer figure { margin: 0; display: grid; gap: 12px; justify-items: center; min-width: 0; }
   .skjermer figcaption { font-size: 0.92rem; }
 
-  .kolonner-baand { background: var(--beige-3); margin-top: clamp(48px, 7vw, 96px); padding-block: clamp(48px, 7vw, 80px); }
+  .kolonner-baand { background: var(--flate); margin-top: clamp(48px, 7vw, 96px); padding-block: clamp(48px, 7vw, 80px); }
   .kolonner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
   .kolonne { display: grid; gap: 16px; align-content: start; }
   .kolonne h2 { font-size: var(--t-h2); line-height: 1.15; }
   .oppdatert { margin: 0; font-size: 0.92rem; }
   .kolonne ul { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; max-width: 62ch; }
   /* Deep Blue gir bare 3,95:1 mot Beige 3; den mørkere blåen fra tokens.css gir 4,5:1 */
-  .kolonne a { color: var(--info-tekst); text-decoration: underline; text-underline-offset: 3px; }
+  .kolonne a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
-  .bunn { background: var(--beige-3); font-size: 0.92rem; color: var(--muted); }
-  .bunn .rad { padding-block: 24px; flex-wrap: wrap; }
-  .bunn a { color: inherit; }
 
   @media (min-width: 860px) {
     .bokser { grid-template-columns: repeat(3, minmax(0, 1fr)); }

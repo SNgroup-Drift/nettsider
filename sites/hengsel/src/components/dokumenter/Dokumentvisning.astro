@@ -1,0 +1,52 @@
+---
+/**
+ * Gjenbrukbar dokumentvisning: dokumentvelger, «Slik lages det»-stripe, A4-ark med bla-knapper, innholdsliste og lysboks.
+ * Tar dokumentene som prop (src/content/dokumenter-data.ts) og har ingen egne tekster utover det faste (Slik lages det, knappene).
+ *
+ * Ytelse: bare det første dokumentet ligger i DOM-en; de andre ligger i <template> og settes inn av scripts/dokumentvisning.ts når de velges.
+ * Alle sider unntatt den viste er hidden, så bildene (lazy) ikke lastes før de vises. Uten skript vises første side av første dokument.
+ * Kolonnemalene i tabellene lages som klasser (CSP: ingen style-attributter) og ligger i én <style> her.
+ * Fasit: Dokumenter.dc.html. Se docs/dokumentvisning.md for bruk i Visningsrommet.
+ */
+import "../../styles/dokumentvisning.css";
+import type { Dokument } from "../../content/dokumenter-data";
+import Dokumentpanel from "./Dokumentpanel.astro";
+import { a4DynamiskCss } from "./a4-stil";
+
+interface Props {
+  dokumenter: Dokument[];
+  /** Id på «Dokumenter»-velgeren, for flere visninger på samme side */
+  id?: string;
+}
+const { dokumenter, id = "dok" } = Astro.props;
+const css = a4DynamiskCss(dokumenter);
+---
+<div class="dv" data-dokvisning>
+  <style is:inline set:html={css}></style>
+  <div class="dv-velger" role="tablist" aria-label="Dokumenter">
+    {dokumenter.map((d, i) => (
+      <button type="button" class="dv-fane" role="tab" id={`${id}-fane-${d.id}`} aria-controls={`${id}-panel-${d.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} data-dok={d.id}>{d.t}</button>
+    ))}
+  </div>
+  {dokumenter.map((d, i) => (
+    <div class="dv-panel" role="tabpanel" id={`${id}-panel-${d.id}`} aria-labelledby={`${id}-fane-${d.id}`} data-panel={d.id} data-ligg={d.ligg ? "ja" : undefined} hidden={i > 0}>
+      {i === 0 ? <Dokumentpanel dok={d} /> : <template><Dokumentpanel dok={d} /></template>}
+    </div>
+  ))}
+
+  <dialog class="lys" data-lysboks aria-label="Dokument i lysboks">
+    <div class="lys-topp">
+      <span class="lys-tittel"><b data-lys-tittel></b><span class="lys-eks">Eksempel</span></span>
+      <span class="lys-teller" data-lys-teller></span>
+      <button type="button" class="lys-rund" data-lukk aria-label="Lukk">×</button>
+    </div>
+    <div class="lys-scene">
+      <button type="button" class="lys-rund stor" data-lys-forrige aria-label="Forrige side">‹</button>
+      <div class="lys-side" data-lys-side></div>
+      <button type="button" class="lys-rund stor" data-lys-neste aria-label="Neste side">›</button>
+    </div>
+  </dialog>
+</div>
+<script>
+  import "../../scripts/dokumentvisning";
+</script>

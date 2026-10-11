@@ -5,31 +5,17 @@
  * Tilstand tom: som bygget. Tilstand feil: Workeren fjerner «hidden» på [data-feil] og setter aria-invalid på #passord.
  * Ligger under /apptest/, så den nås bare gjennom Workeren.
  */
-import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
-import "@sngroup/design/fonts.css";
-import "../../styles/tokens.css";
-import "../../styles/hengsel.css";
-import UteLogo from "../../components/UteLogo.astro";
+import Side from "../../layouts/Side.astro";
 import { APPTEST } from "../../apptest-lenker";
 
 const { epost } = APPTEST;
-const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-350.woff2", "/fonts/TWKLausanne-650.woff2"];
 ---
-<BaseLayout
+<Side
   title="Test Hengsel Ute · Hengsel"
   description="Siden er for inviterte testere."
   robots="noindex,nofollow"
-  tema="light"
-  temafarge={["#FBF9F6", "#1B1713"]}
-  forhandslast={skrifter}
 >
   <div class="side">
-    <header class="topp">
-      <div class="h-innhold rad">
-        <UteLogo />
-        <a class="tilbake" href="/">‹ Tilbake til hengsel.no</a>
-      </div>
-    </header>
     <main id="innhold" class="midt">
       <form method="post" action="/apptest" class="skjema">
         <div class="tekst">
@@ -44,38 +30,26 @@ const skrifter = ["/fonts/RecklessStandardM-Regular.woff2", "/fonts/TWKLausanne-
         <button class="knapp" type="submit">Åpne</button>
       </form>
     </main>
-    <footer class="bunn">
-      <div class="h-innhold rad">
-        <img src="/img/hengsel-merke-lys.svg" alt="" height="24" class="merke" />
-        <span>© 2026 SN Group</span>
-      </div>
-    </footer>
   </div>
-</BaseLayout>
+</Side>
 
 <style>
   /* Samme profil som apptest.astro: Off White, Beige 3 kort og bunn, pillknapper */
-  .side { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; background: var(--off-white); color: var(--warm-black); }
+  .side { flex: 1; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }
   .dempet { color: var(--muted); margin: 0; }
-  a { color: var(--deep-blue); }
+  a { color: var(--accent); }
   .rad { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
-  .topp { border-bottom: 1px solid var(--beige-2); }
-  .topp .rad { min-height: 64px; padding-block: 10px; }
-  .tilbake { font-size: 0.94rem; }
   .midt { display: grid; place-items: center; padding: clamp(32px, 8vw, 96px) clamp(16px, 4vw, 40px); }
-  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 4vw, 36px); background: var(--beige-3); display: grid; gap: 18px; }
+  .skjema { width: 100%; max-width: 440px; box-sizing: border-box; padding: clamp(24px, 4vw, 36px); background: var(--flate); display: grid; gap: 18px; }
   .tekst { display: grid; gap: 8px; }
   h1 { font-size: var(--t-h1); line-height: 1.08; }
   .felt { display: grid; gap: 6px; }
   .felt label { font: 500 0.9rem var(--f-body); }
   .input { border-radius: 0; min-height: 48px; }
-  .feil { margin: 0; padding: 12px 14px; background: var(--beige-4); box-shadow: inset 3px 0 0 var(--bad); font-weight: 650; }
+  .feil { margin: 0; padding: 12px 14px; background: var(--flate-myk); box-shadow: inset 3px 0 0 var(--bad); font-weight: 600; }
   .knapp {
     display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: var(--r-pill);
-    border: 1px solid var(--deep-blue); background: var(--deep-blue); color: var(--off-white); font: 650 1rem var(--f-body); cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--bg); font: 650 1rem var(--f-body); cursor: pointer;
   }
-  .knapp:hover { background: var(--info-tekst); border-color: var(--info-tekst); }
-  .bunn { background: var(--beige-3); font-size: 0.92rem; color: var(--muted); }
-  .bunn .rad { padding-block: 24px; flex-wrap: wrap; }
-  .merke { height: 24px; width: auto; display: block; }
+  .knapp:hover { background: var(--accent); border-color: var(--accent); }
 </style>

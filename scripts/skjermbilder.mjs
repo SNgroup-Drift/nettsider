@@ -6,7 +6,7 @@
  *    og byggem.no (/, /prosjekter, /kontakt, /personvern og 404) til docs/skjermbilder/ (filene starter med «hengsel-» og «byggem-»).
  *  - Alle sider på alle nettsteder: ingen vannrett rulling ved 360 px, ingen konsollfeil (CSP fra _headers gjelder).
  *  - Plantegningen: et klikk på et rom bytter tekst og åpner riktig rad.
- *  - hengsel.no: «For kontoret» (fire faner) bytter skjermbilde, Hengsel Ute har ni telefoner, lysboksen åpner og lukker, og ingenting lagres.
+ *  - hengsel.no 2.0 (K-160): de åtte sidene på 390 og 1440 px, lys og mørk, til claude/k160-skjermbilder/; på hver side: ingen konsollfeil, ingen style-attributter eller inline-skript, bilder med width/height, bare Newsreader og Inter, ingen eksterne forespørsler, ingenting lagres.
  *  - Hvilke skrifter som faktisk lastes.
  *
  * Kjør etter `npm run build`: npm run skjermbilder
@@ -28,6 +28,12 @@ const meld = (ok, tekst) => {
   console.log(`${ok ? "✓" : "✗"} ${tekst}`);
 };
 
+// De åtte sidene på hengsel.no 2.0 (K-160)
+const HENGSEL_SIDER = [
+  { sti: "/", fil: "forside" }, { sti: "/crm", fil: "crm" }, { sti: "/ute", fil: "ute" }, { sti: "/kundeportal", fil: "kundeportal" },
+  { sti: "/slik-virker-det", fil: "slik-virker-det" }, { sti: "/dokumenter", fil: "dokumenter" }, { sti: "/integrasjoner", fil: "integrasjoner" },
+  { sti: "/priser-og-demo", fil: "priser-og-demo" },
+];
 const servere = {};
 for (const navn of await readdir(join(rot, "sites"))) {
   const s = await startServer(join(rot, "sites", navn, "dist"));
@@ -56,7 +62,6 @@ for (const side of [{ sti: "/", fil: "forside" }, { sti: "/personvern", fil: "pe
 
 // 1b. Skjermbilder av hengsel.no og byggem.no (filene starter med «hengsel-» og «byggem-»)
 const andreSider = [
-  ...[{ sti: "/", fil: "forside" }, { sti: "/personvern", fil: "personvern" }, { sti: "/finnes-ikke", fil: "404" }].map((s) => ({ ...s, nett: "hengsel" })),
   ...[{ sti: "/", fil: "forside" }, { sti: "/prosjekter", fil: "prosjekter" }, { sti: "/kontakt", fil: "kontakt" }, { sti: "/personvern", fil: "personvern" }, { sti: "/finnes-ikke", fil: "404" }].map((s) => ({ ...s, nett: "byggem" })),
 ];
 for (const side of andreSider) {
@@ -84,10 +89,37 @@ for (const side of andreSider) {
   }
 }
 
+// 1c. hengsel.no 2.0 (K-160): de åtte sidene på 390 og 1440 px, lys og mørk, til claude/k160-skjermbilder/
+const hengselUt = join(rot, "claude", "k160-skjermbilder");
+await mkdir(hengselUt, { recursive: true });
+for (const side of [...HENGSEL_SIDER, { sti: "/personvern", fil: "personvern" }, { sti: "/finnes-ikke", fil: "404" }]) {
+  for (const [bredde, dsf] of [[390, 2], [1440, 1]]) {
+    for (const modus of ["light", "dark"]) {
+      const ctx = await browser.newContext({ viewport: { width: bredde, height: bredde === 390 ? 844 : 900 }, deviceScaleFactor: dsf, isMobile: bredde === 390, hasTouch: bredde === 390, colorScheme: modus, reducedMotion: "reduce" });
+      const page = await ctx.newPage();
+      await page.goto(servere.hengsel.base + side.sti, { waitUntil: "networkidle" });
+      await page.evaluate(async () => {
+        document.querySelectorAll("img").forEach((i) => { i.loading = "eager"; i.decoding = "sync"; });
+        for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
+        window.scrollTo(0, 0);
+      });
+      await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 30000 });
+      await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(600);
+      await page.evaluate(() => document.fonts.ready);
+      const fil = `${side.fil}-${bredde}-${modus === "light" ? "lys" : "mork"}.png`;
+      await page.screenshot({ path: join(hengselUt, fil), fullPage: true });
+      console.log(`  bilde: claude/k160-skjermbilder/${fil}`);
+      await ctx.close();
+    }
+  }
+}
+
 // 2. 360 px uten vannrett rulling, og ingen konsollfeil, på alle sider
 for (const [navn, { base }] of Object.entries(servere)) {
   if (navn === "vis") continue; // Visningsrommet har egne sjekker på 390 og 1280 px: scripts/skjermbilder-vis.mjs
-  const sider = navn === "sngroup" ? ["/", "/personvern", "/design", "/404"] : navn === "byggem" ? ["/", "/prosjekter", "/kontakt", "/personvern", "/404"] : navn === "hengsel" ? ["/", "/personvern", "/404", "/apptest", "/apptest/passord"] : ["/", "/personvern", "/404"];
+  const sider = navn === "sngroup" ? ["/", "/personvern", "/design", "/404"] : navn === "byggem" ? ["/", "/prosjekter", "/kontakt", "/personvern", "/404"] : navn === "hengsel" ? [...HENGSEL_SIDER.map((x) => x.sti), "/personvern", "/404", "/apptest", "/apptest/passord"] : ["/", "/personvern", "/404"];
   for (const sti of sider) {
     for (const modus of ["light", "dark"]) {
       const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, colorScheme: modus, isMobile: true, hasTouch: true });
@@ -151,36 +183,30 @@ for (const [navn, { base }] of Object.entries(servere)) {
   await ctx.close();
 }
 
-// 5. hengsel.no: fanene og lagringen
+// 5. hengsel.no 2.0: skrifter, eksterne forespørsler, lagring, bildemål og CSP-regler på alle åtte sidene
 {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
-  const page = await ctx.newPage();
-  await page.goto(servere.hengsel.base + "/", { waitUntil: "networkidle" });
-  const src = (id) => page.$eval(`#${id} img`, (i) => i.getAttribute("src"));
-  // Forsiden etter fil 60 (pakke v8): «For kontoret» er en liste som fungerer som faner (scripts/faner.ts), skjermbildene åpnes i
-  // lysboksen (scripts/lysboks.ts), Hengsel Ute har ni telefoner, og ingenting lagres.
-  const synlig = (id) => page.$eval(`#${id}`, (el) => !el.hidden);
-  meld((await synlig("kontor-1")) && !(await synlig("kontor-2")) && (await src("kontor-1")) === "/img/crm-resultater.webp", "hengsel: «For kontoret» viser Leder-tavlen først (crm-resultater.webp)");
-  const telefoner = await page.$$eval("#ute .ute-skjermer .hull img", (l) => l.length);
-  meld(telefoner === 9, `hengsel: Hengsel Ute viser ni telefoner (${telefoner})`);
-  await page.click("#kontor-fane-2");
-  meld((await synlig("kontor-2")) && (await src("kontor-2")) === "/img/crm-montasje.webp", "hengsel: «For kontoret» bytter til Montasjeplan (crm-montasje.webp)");
-  await page.click("#kontor-2 [data-zoom]");
-  meld(await page.$eval("[data-lysboks]", (d) => d.open && d.querySelector("img").getAttribute("src") === "/img/crm-montasje.webp"), "hengsel: lysboksen åpner skjermbildet i full størrelse");
-  await page.keyboard.press("Escape");
-  meld(!(await page.$eval("[data-lysboks]", (d) => d.open)), "hengsel: Esc lukker lysboksen");
-  const lagret = await page.evaluate(() => Object.keys(localStorage));
-  meld(lagret.length === 0 && (await ctx.cookies()).length === 0, `hengsel: ingenting i localStorage, ingen informasjonskapsler (${lagret.join(", ")})`);
-  const skrifter = await page.evaluate(async () => {
-    await document.fonts.ready;
-    return [...document.fonts].filter((f) => f.status === "loaded").map((f) => `${f.family} ${f.style} ${f.weight}`);
-  });
-  console.log(`\nhengsel.no, skrifter lastet på forsiden: ${[...new Set(skrifter)].join("; ")}`);
-  const filer = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => r.name.endsWith(".woff2")).map((r) => r.name.split("/").pop()));
-  console.log(`hengsel.no, skriftfiler hentet: ${filer.join(", ")}`);
-  const eksterne = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => !r.name.startsWith(location.origin)).map((r) => r.name));
-  meld(eksterne.length === 0, `hengsel: ingen eksterne forespørsler${eksterne.length ? `: ${eksterne.join(", ")}` : ""}`);
-  await ctx.close();
+  const base = servere.hengsel.base;
+  for (const side of HENGSEL_SIDER) {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    const konsoll = [];
+    page.on("console", (m) => m.type() === "error" && konsoll.push(m.text()));
+    page.on("pageerror", (e) => konsoll.push(e.message));
+    await page.goto(base + side.sti, { waitUntil: "networkidle" });
+    const kilde = await (await fetch(base + side.sti)).text();
+    meld(!/\sstyle="/.test(kilde), `hengsel${side.sti}: ingen style-attributter i HTML (CSP style-src)`);
+    meld(!/<script(?![^>]*\bsrc=)(?![^>]*type="application\/(?:ld\+)?json")[^>]*>/.test(kilde), `hengsel${side.sti}: ingen inline-skript`);
+    meld(konsoll.length === 0, `hengsel${side.sti}: ingen konsollfeil (CSP gjelder)${konsoll.length ? `: ${konsoll.join(" | ")}` : ""}`);
+    const mal = await page.evaluate(() => [...document.images].filter((i) => !i.getAttribute("width") || !i.getAttribute("height")).map((i) => i.getAttribute("src")));
+    meld(mal.length === 0, `hengsel${side.sti}: alle bilder har width og height${mal.length ? `: ${mal.join(", ")}` : ""}`);
+    const skrifter = await page.evaluate(async () => { await document.fonts.ready; return [...new Set([...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/"/g, "")))]; });
+    meld(skrifter.every((f) => /Newsreader|Inter/.test(f)), `hengsel${side.sti}: bare Newsreader og Inter lastet (${skrifter.join(", ")})`);
+    const eksterne = await page.evaluate(() => performance.getEntriesByType("resource").filter((r) => !r.name.startsWith(location.origin)).map((r) => r.name));
+    meld(eksterne.length === 0, `hengsel${side.sti}: ingen eksterne forespørsler${eksterne.length ? `: ${eksterne.join(", ")}` : ""}`);
+    const lagret = await page.evaluate(() => Object.keys(localStorage).concat(Object.keys(sessionStorage)));
+    meld(lagret.length === 0 && (await ctx.cookies()).length === 0, `hengsel${side.sti}: ingenting lagres (localStorage, informasjonskapsler)`);
+    await ctx.close();
+  }
 }
 
 await browser.close();
