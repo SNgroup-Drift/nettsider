@@ -16,16 +16,19 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** Overstyrer robots-taggen, f.eks. «noindex,nofollow» for /apptest */
+  robots?: string;
   aktiv?: MenyNokkel | "";
   /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title, description, noindex, aktiv = "", delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+const { title, description, noindex, robots, aktiv = "", delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
 ---
 <BaseLayout
   title={title}
   description={description}
   noindex={noindex}
+  robots={robots}
   delingsbilde={delingsbilde}
   temafarge={["#FBF9F6", "#1B1713"]}
   ikon={{ href: "/logo/favicon.svg", type: "image/svg+xml" }}

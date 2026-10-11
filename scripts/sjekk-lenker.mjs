@@ -116,7 +116,7 @@ for (const navn of nettsteder) {
   }
   let antallBilder = 0;
   try {
-    for (const f of (await readdir(join(dist, "img"))).filter((f) => !f.startsWith("."))) {
+    for (const f of (await readdir(join(dist, "img"), { recursive: true, withFileTypes: true })).filter((e) => e.isFile() && !e.name.startsWith(".")).map((e) => join(e.parentPath, e.name).slice(join(dist, "img").length + 1))) {
       const r = await fetch(new URL(`/img/${f}`, base));
       sjekket++;
       antallBilder++;
