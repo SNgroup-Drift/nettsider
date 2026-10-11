@@ -25,7 +25,7 @@ html:root {
   --dusty-blue: #9ca9bd;
 
   /* Familiens semantiske navn */
-  --bakgrunn: var(--beige-4);       /* sideflaten (fil 56: mykere enn Off White) */
+  --bakgrunn: var(--off-white);     /* sideflaten (fil 60: Off White; kort og bånd er Beige 3) */
   --flate: var(--beige-3);          /* seksjonsbånd */
   --kort: var(--off-white);         /* kort, ruter og felt */
   --flate-myk: #efe5d6;             /* --surface-soft i fil 56 (Beige 4 er sideflaten) */

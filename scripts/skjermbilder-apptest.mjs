@@ -85,6 +85,15 @@ for (const v of visninger) {
   // Siden etter innlogging
   await loggInn(page);
   await page.evaluate(() => document.fonts.ready);
+  // Telefonbildene (loading="lazy") skal være lastet før helsidebildet: eager, rull gjennom siden, vent på lasting og dekoding
+  await page.evaluate(async () => {
+    document.querySelectorAll("img").forEach((i) => { i.loading = "eager"; i.decoding = "sync"; });
+    for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 30000 });
+  await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
+  await page.waitForTimeout(800);
   const fil = `apptest-${v.navn}.png`;
   await page.screenshot({ path: join(ut, fil), fullPage: true });
   console.log(`  bilde: docs/skjermbilder/${fil}`);

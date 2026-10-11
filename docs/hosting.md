@@ -172,8 +172,41 @@ curl -sI https://hengsel.no/apptest | grep -iE '^HTTP|x-robots|cache-control|con
 ### Bytte lenker og versjon
 
 Alt ligger i `sites/hengsel/src/apptest-lenker.ts`: versjon, TestFlight-lenken, Google Play-lenken (intern testing),
-APK-fila og e-postadressen. En verdi som begynner med `TODO_` gir en deaktivert knapp med teksten «Lenke kommer».
-Bytt verdien, commit og push.
+APK-fila, «Siste oppdatering», «Hva er nytt» og e-postadressen. En verdi som begynner med `TODO_` gir en deaktivert knapp
+med teksten «Lenke kommer». Bytt verdien, commit og push.
+
+Området mellom `// <apptest-versjon>` og `// </apptest-versjon>` (versjon, APK, dato og «Hva er nytt») skrives av
+Action-en under. Rediger det ikke for hånd; neste kjøring overskriver det.
+
+### Automatisk versjon (`.github/workflows/apptest-versjon.yml`)
+
+Action-en holder versjon, APK-lenke, «Siste oppdatering» og «Hva er nytt» à jour uten at noen skriver dem inn:
+
+- **Når:** hver dag kl. 06.00 norsk tid (to cron-tider i UTC, 04 og 05, og et steg som bare slipper gjennom kl. 06 i Oslo),
+  og for hånd under Actions › Apptest-versjon › Run workflow. «dry_run» viser bare endringen. GitHub kan forsinke
+  planlagte kjøringer; en kjøring som havner utenfor kl. 06 i Oslo hoppes over, og neste dag tar det igjen.
+- **Fra EAS** (`eas-cli`, `EXPO_TOKEN`): siste `FINISHED` bygg per plattform og siste EAS Update på grenen `preview`.
+  APK-en er det nyeste ferdige Android-bygget med en `.apk`-lenke på expo.dev (AAB-ene til Play hoppes over). Versjonen er
+  APK-ens `appVersion`. «Siste oppdatering» er den nyeste av APK-bygget, iOS-bygget (samme versjon) og EAS Update med
+  kjøretid lik versjonen, som dato i Oslo.
+- **«Hva er nytt»** leses fra `claude/hengsel-bygg-<n>.md` på **demo** i `SNgroup-Drift/innlandet-crm-sync`
+  (`CRM_LESETOKEN`, lesetilgang). Filen velges på tittelen `# Hengsel bygg <n> (<versjon>)`, med høyeste `<n>` for versjonen.
+  Punktene står i en del med overskriften `## Hva er nytt` (eller `## Hva er nytt i <versjon>`) som punktliste, én linje
+  per punkt (ordrett, maks 15 punkter og 200 tegn per punkt). Mangler delen, beholdes dagens punkter hvis versjonen er den
+  samme; ellers tømmes lista og siden viser «Punktene kommer.». PR-en sier fra om det.
+- **PR:** hvis noe er endret, committes `apptest-lenker.ts` på grenen `apptest-versjon` (bygges på nytt fra `main` hver
+  gang), og én PR åpnes eller oppdateres. **Den merger aldri selv og slår ikke på auto-merge.** Er alt som før, skjer ingenting.
+- **Verdiene valideres** før de skrives (versjon `x.y.z`, APK-lenke bare `https://expo.dev/artifacts/eas/….apk`, dato,
+  lengder) og settes inn som JSON-strenger. Testene ligger i `scripts/apptest-versjon.test.mjs` og kjøres av `npm test`.
+
+Oppsett én gang:
+
+1. Secrets i repoet (Settings › Secrets and variables › Actions): `EXPO_TOKEN` (lesetilgang til prosjektet `montorapp`
+   i `hamar-innredning-as` holder) og `CRM_LESETOKEN` (lesetilgang til `innlandet-crm-sync`). Mangler en av dem, stopper
+   kjøringen med en tydelig feil.
+2. Settings › Actions › General › Workflow permissions: «Allow GitHub Actions to create and approve pull requests».
+3. Filen må ligge på `main` for at tidsplanen og «Run workflow» skal virke.
+4. Kjør den første gangen for hånd med «dry_run» på, og se at diffen er den du venter.
 
 ### Teste lokalt
 
