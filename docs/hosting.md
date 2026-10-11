@@ -3,7 +3,7 @@
 Bestemt 07.10.2026 (erstatter Pages-beslutningen fra 04.10): hvert nettsted er sin egen Cloudflare Worker med
 statiske filer, bygd med **Workers Builds** og Git-integrasjon fra samme repo (`SNgroup-Drift/sngroup-nettsider`).
 Workerne serverer `sites/<navn>/dist`. Unntaket er `hengsel`, som har et lite skript bare for `/apptest` (passordet, se
-«hengsel.no/apptest» under). Eirik kobler Cloudflare til GitHub selv.
+«hengsel.no/apptest» under) og `/api/demo` (demoskjemaet, se «hengsel.no/api/demo» under). Eirik kobler Cloudflare til GitHub selv.
 
 Repoet har ingen API-nøkler, ingen kontoinformasjon, ingen hemmeligheter og ingen wrangler-innlogging. Det eneste
 Cloudflare-oppsettet i repoet er `sites/<navn>/wrangler.jsonc` (her sngroup; hengsel har i tillegg `main`, `binding` og
@@ -124,11 +124,38 @@ curl -s -o /dev/null -w '%{http_code}\n' https://sngroup.no/finnes-ikke   # skal
 
 - Cloudflare Web Analytics / Zaraz: ikke slå på (ingen sporing). Web Analytics ville også trenge en endring i CSP-en.
 - Ingen `main` i wrangler.jsonc og ingen Worker-kode: nettstedene er rent statiske.
-- Ingen `main` og ingen Worker-kode for sngroup og byggem: de er rent statiske. hengsel har bare skriptet for `/apptest`.
+- Ingen `main` og ingen Worker-kode for sngroup og byggem: de er rent statiske. hengsel har bare skriptet for `/apptest` og `/api/demo`.
 - Ingen bindinger (KV, D1, R2) og ingen `account_id` i repoet. Den eneste hemmeligheten er passordet for
   hengsel.no/apptest, og den ligger bare i Cloudflare.
-- `run_worker_first`: bare `["/apptest", "/apptest/*"]` i hengsel. Ikke utvid den; resten av nettstedet skal ikke gå
+- `run_worker_first`: bare `["/apptest", "/apptest/*", "/api/demo"]` i hengsel. Ikke utvid den; resten av nettstedet skal ikke gå
   gjennom kode.
+
+## hengsel.no/api/demo (demoskjemaet)
+
+Skjemaet «Be om demo» på `/priser-og-demo` (K-160) sender med `fetch` til `POST /api/demo`. Koden ligger i
+`sites/hengsel/worker/demo.ts`; `worker/index.ts` er inngangen (`main`) og sender `/api/demo` dit og `/apptest*` til
+`worker/apptest.ts`, som er uendret. Stien står i `assets.run_worker_first`, ellers ville den ha blitt servert som statisk fil.
+
+- **Metode og kontroll:** bare POST (ellers 405 med `Allow: POST`). `Origin` må være nettstedets egen adresse (ellers 403), body
+  maks 8 KB (413), JSON eller `application/x-www-form-urlencoded` (415).
+- **Spamvern:** skjult felt `nettsted` (honeypot: utfylt gir 200 `{ok:true}`, men ingenting sendes) og tidsfeltet `t` (settes av
+  `src/scripts/demo.ts` når skjemaet vises; må være mellom 3 sekunder og 24 timer gammelt). Uten JavaScript kan skjemaet derfor ikke
+  sendes; siden viser da en e-postlenke i stedet.
+- **Validering på tjeneren:** navn 1–120 tegn, e-post (enkel sjekk, bare ASCII) eller telefon (6–20 siffer), minst én av dem, butikk
+  maks 120, «Hva vil dere se?» maks 1000, antall avdelinger fra fast liste (`1`, `2-3`, `4+`). Kontrolltegn og linjeskift avvises i
+  alle felt som kan havne i e-posthoder.
+- **Svar:** `200 {ok:true}`, `400 {ok:false, feil:{felt:melding}}`, `503 {ok:false, reserve:"mailto"}` når e-post ikke kan sendes.
+  Ingenting lagres, og det logges ingen persondata (bare feilkoden fra Cloudflare).
+- **E-post:** bindingen `DEMO_EPOST` (`send_email` i `wrangler.jsonc`, `destination_address: hei@hengsel.no`). Workeren bygger rå
+  MIME for hånd (`EmailMessage` fra `cloudflare:email`, emnet RFC 2047, UTF-8 base64-kropp, `Reply-To` til kundens e-post) fra
+  `demo@hengsel.no`. Ingen npm-pakker, ingen nøkler eller hemmeligheter i repoet.
+- **Reserve:** mangler bindingen, eller Cloudflare avviser sendingen (Email Routing ikke slått på, avsender ikke på sonen,
+  destinasjon ikke verifisert), svarer ruten 503, og siden viser en `mailto:hei@hengsel.no`-lenke med utfylt emne og innhold, pluss
+  telefonnummeret.
+- **Det Eirik må slå på i Cloudflare:** se `docs/k160-cloudflare-skjema.md`.
+- **Test lokalt:** `npm run build -w sites/hengsel`, så `npx wrangler dev -c sites/hengsel/wrangler.jsonc`. Lokalt simulerer wrangler
+  `send_email` og skriver e-posten som `.eml`-fil under `sites/hengsel/.wrangler/tmp/email/` (ingen ekte sending). `npm test` kjører
+  `scripts/demo.test.mjs`.
 
 ## hengsel.no/apptest (passord)
 
@@ -138,7 +165,8 @@ ligger bak ett felles passord, står ikke i menyen, i `sitemap.txt` eller i lenk
 
 Slik virker det:
 
-- `sites/hengsel/wrangler.jsonc` har `"main": "./worker/apptest.ts"` og `assets.run_worker_first: ["/apptest", "/apptest/*"]`.
+- `sites/hengsel/wrangler.jsonc` har `"main": "./worker/index.ts"` (sender `/api/demo` til `worker/demo.ts` og alt annet til `worker/apptest.ts`)
+  og `assets.run_worker_first: ["/apptest", "/apptest/*", "/api/demo"]`.
   Skriptet kjører bare for de stiene. Alt annet serveres som statiske filer, uten kode.
 - Uten gyldig informasjonskapsel viser `/apptest` passordsiden (`dist/apptest/passord.html`). Skjemaet sender passordet med
   POST til `/apptest`. Riktig passord gir 303 til `/apptest` og informasjonskapselen `hengsel_apptest` (HttpOnly, Secure,
