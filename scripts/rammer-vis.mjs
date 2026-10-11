@@ -25,7 +25,7 @@ const rom = [
 ];
 // «Forstå på ti minutter» (MacBook, iPhone; Systemkartet bruker rom-system.webp, rommet selv i Studio Display)
 const forsta = [
-  ["reise", "mac", "crm-tilbud-kunde"],
+  ["reise", "mac", "mb-crm-tilbud-kunde"],
   ["kunde", "tlf", "portal-tilbud"],
 ];
 // flater (Butikken, Montøren, Kunden, Leverandøren)
