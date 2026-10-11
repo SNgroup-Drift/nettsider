@@ -34,7 +34,6 @@ står i `Enhet.astro`.
   var samme skjerm som `ute-ks-kamera`, og er byttet ut.
 - **Navn i Ute-bildene:** alle `ute-*` fra v7 (og `ute-i-dag` fra v5) har Kari Nordmann og Ola. «Jobb»-fanen som nevnes i v7-oppdraget finnes ikke på hengsel.no
   (den ligger på sngroup.no); `ute-jobb-under` brukes i grep 3, «Varer og tegning på jobben».
-- `ute-punkter` (v7) har et rad med filterchips som er delvis klippet øverst i listen (som i designfilen); bildet er brukt som det er.
 - Steg 4 (Levering) viser `portal-levering` («Bekreft leveringsdag») i stedet for et CRM-bilde; stegets undertekst heter «Kundeportalen».
 - De fire portalbildene under MacBook-skjermen følger lista over kundeportalen (tilbud, leveringsdag og montering, FDV). Ny rad i
   `index.astro` (`.portal-telefoner`): fire telefoner på bred skjerm, to og to på smal. Ikke i fil 60 (som ikke ligger i repoet).
