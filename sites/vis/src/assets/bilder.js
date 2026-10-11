@@ -1,17 +1,14 @@
-/* Skjermbilder fra designfilene i enhetsrammene (README «Regel for skjermbilder»).
+/* Skjermbilder fra designfilene i Apples enhetsrammer (README «Regel for skjermbilder», assets/enhet.css).
    Et element med data-bilder="navn,navn,…" får bildene fra /skjermbilder/<navn>.webp lagt i sin .skjerm,
-   én om gangen, med ‹ › og teller under rammen når det er flere. data-alt gir alt-teksten, data-sb legger en
-   statuslinje øverst (for bilder uten egen), data-ingen-nav dropper ‹ ›.
+   én om gangen, med ‹ › og teller under rammen når det er flere. data-alt gir alt-teksten, data-ingen-nav dropper ‹ ›.
+   Bildene har ingen statuslinje (iPhone-rammen har island), så ingen tegnes.
    Skjermbilder.velger(tabs) bytter mellom [data-enhet]-rammer (PC · iPad · Telefon), og Skjermbilder.guide(…)
    kobler «Prøv dette»-stegene til bilder og til loggen «Samtidig i Hengsel». Ingen inline-skript (CSP). */
 window.Skjermbilder=(function(){
   function lag(frame){
     var liste=frame.dataset.bilder.split(',').map(function(s){return s.trim()}).filter(Boolean);
     var skjerm=frame.querySelector('.skjerm'),i=0,nav=null;
-    if(frame.dataset.sb!==undefined){var sb=document.createElement('div');sb.className='sb';sb.setAttribute('aria-hidden','true');
-      sb.innerHTML='<span>'+(frame.dataset.sb||'09.41')+'</span><span class="batteri"></span>';skjerm.appendChild(sb)}
     var img=document.createElement('img');img.className='sk';img.decoding='async';skjerm.appendChild(img);
-    img.addEventListener('load',function(){frame.classList.toggle('staaende',img.naturalHeight>img.naturalWidth)});
     if(liste.length>1&&frame.dataset.ingenNav===undefined){
       nav=document.createElement('div');nav.className='sk-nav';
       nav.innerHTML='<button type="button" class="btn" data-d="-1" aria-label="Forrige skjermbilde">‹</button><span class="sk-tall" aria-live="polite"></span><button type="button" class="btn" data-d="1" aria-label="Neste skjermbilde">›</button>';

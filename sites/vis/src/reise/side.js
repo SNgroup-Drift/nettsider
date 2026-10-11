@@ -10,10 +10,10 @@
 
   var HEAD_LI={t:'Ordre 10087',s:'Hanne Liksomlien · Lillehammer · montasje uke 46'};
   var FIVE=[
-    {id:'sig',name:'Sigdal',what:'Kjøkken, 54 linjer',ref:'LI-10087-1',out:'CET-ordresetting',back:'OB som XML'},
+    {id:'sig',name:'Fabrikken',what:'Kjøkken, 54 linjer',ref:'LI-10087-1',out:'CET-ordresetting',back:'OB som XML'},
     {id:'bsh',name:'BSH',what:'Hvitevarer, 4 linjer',ref:'LI-10087-2',out:'Tradeplace',back:'Tradeplace-melding'},
     {id:'cor',name:'Corinor',what:'Benkeplate, 2 linjer',ref:'LI-10087-3',out:'E-post · PDF',back:'PDF lest med AI'},
-    {id:'tap',name:'Tapwell',what:'Kjøkkenarmatur, 1 linje',ref:'LI-10087-4',out:'EDI (Pagero)',back:'EDI-bekreftelse',warn:true},
+    {id:'tap',name:'Armaturleverandør',what:'Kjøkkenarmatur, 1 linje',ref:'LI-10087-4',out:'EDI (Pagero)',back:'EDI-bekreftelse',warn:true},
     {id:'ror',name:'Røros Metall',what:'Ventilator, 1 linje',ref:'LI-10087-5',out:'E-post · PDF',back:'PDF lest med AI'}
   ];
   function fiveRows(st,txt){return FIVE.map(function(s){return{id:s.id,who:s.name,what:s.what,ref:s.ref,st:st,txt:txt}})}
@@ -28,7 +28,7 @@
     {id:'f',who:'Fronter og håndtak',what:'16 linjer · fra CET',hidden:1},
     {id:'s',who:'Sokkel, lister og tilpasning',what:'8 linjer · fra CET',hidden:1},
     {id:'d',who:'Tegninger',what:'Plan, oppriss og 3D · PDF',hidden:1}],
-   nodes:[{id:'cet',name:'CET',chan:'Selgerens tegning'},{id:'pl',name:'Sigdal prisliste',chan:'Gjeldende priser'}],
+   nodes:[{id:'cet',name:'CET',chan:'Selgerens tegning'},{id:'pl',name:'Fabrikkens prisliste',chan:'Gjeldende priser'}],
    card:{kind:'note',lbl:'Tilbudet er klart',t:'54 linjer fra CET',p:'Ingen import og ingen skriving. Selgeren har bare tegnet.'},
    script:function(){
     at(300,function(){cap('Kunden er opprettet i CRM. Navn og prosjektnummer 10087 går til CET, så ingen skriver det to ganger.');pk('cet','out','Kunde 10087',1500)});
@@ -44,18 +44,18 @@
    lead:'Selgeren legger til hvitevarer, armatur, ventilator og benkeplate fra katalogen. Pris, lager og leveringstid kommer fra leverandøren.',
    head:{t:'Tilbud 10087',s:'Hanne Liksomlien · Lillehammer · til kunden'},
    rows:[
-    {id:'sig',who:'Sigdal',what:'Kjøkken, 54 linjer · fra CET',st:'ok',txt:'Fra CET'},
+    {id:'sig',who:'Fabrikken',what:'Kjøkken, 54 linjer · fra CET',st:'ok',txt:'Fra CET'},
     {id:'bsh',who:'BSH',what:'Induksjon, stekeovn, oppvask, kjøl/frys',hidden:1},
-    {id:'tap',who:'Tapwell',what:'Kjøkkenarmatur',hidden:1},
+    {id:'tap',who:'Armaturleverandør',what:'Kjøkkenarmatur',hidden:1},
     {id:'ror',who:'Røros Metall',what:'Ventilator',hidden:1},
     {id:'cor',who:'Corinor',what:'Benkeplate, mål fra tegningen',hidden:1}],
-   nodes:[{id:'tp',name:'Tradeplace',chan:'BSH: pris og lager i sanntid'},{id:'tf',name:'Tapwell',chan:'Produktfil'},{id:'rf',name:'Røros Metall',chan:'Produktfil'},{id:'cf',name:'Corinor',chan:'Prisliste'},{id:'min',name:'Kunden · Min side',chan:'Tilbud til kunden'}],
+   nodes:[{id:'tp',name:'Tradeplace',chan:'BSH: pris og lager i sanntid'},{id:'tf',name:'Armaturleverandør',chan:'Produktfil'},{id:'rf',name:'Røros Metall',chan:'Produktfil'},{id:'cf',name:'Corinor',chan:'Prisliste'},{id:'min',name:'Kunden · Min side',chan:'Tilbud til kunden'}],
    card:{kind:'note',lbl:'Sendt til kunden',t:'Hanne ser tilbudet i Min side',p:'Fem leverandører i ett tilbud, med leveringstid per vare.'},
    script:function(){
     at(300,function(){cap('Ingen gamle regneark: prisene kommer fra leverandørens egne filer, med gyldighet.')});
     at(1400,function(){cap('BSH via Tradeplace: pris og lagerstatus i sanntid.');pk('tp','in','Pris + lager',1500)});
     at(2900,function(){show('bsh');st('bsh','ok','På lager · 2 uker');nd('tp','ok')});
-    at(3300,function(){cap('Tapwell og Røros Metall: produktfil med pris og gyldighet.');pk('tf','in','Produktfil',1500)});
+    at(3300,function(){cap('Armaturleverandøren og Røros Metall: produktfil med pris og gyldighet.');pk('tf','in','Produktfil',1500)});
     at(4800,function(){show('tap');st('tap','ok','3 uker');nd('tf','ok')});
     at(4900,function(){pk('rf','in','Produktfil',1500)});
     at(6400,function(){show('ror');st('ror','ok','2 uker');nd('rf','ok')});
@@ -69,10 +69,10 @@
    lead:'Kunden signerer med BankID. Montasjen settes til uke 46, og leveringsukene regnes bakover med ledetiden til hver leverandør.',
    head:{t:'Ordre 10087',s:'Hanne Liksomlien · Lillehammer · signeres'},
    rows:[
-    {id:'sig',who:'Sigdal',what:'Ledetid 4 uker',ref:'LI-10087-1',txt:'Venter'},
+    {id:'sig',who:'Fabrikken',what:'Ledetid 4 uker',ref:'LI-10087-1',txt:'Venter'},
     {id:'bsh',who:'BSH',what:'Ledetid 2 uker',ref:'LI-10087-2',txt:'Venter'},
     {id:'cor',who:'Corinor',what:'Ledetid 2 uker',ref:'LI-10087-3',txt:'Venter'},
-    {id:'tap',who:'Tapwell',what:'Ledetid 3 uker',ref:'LI-10087-4',txt:'Venter'},
+    {id:'tap',who:'Armaturleverandør',what:'Ledetid 3 uker',ref:'LI-10087-4',txt:'Venter'},
     {id:'ror',who:'Røros Metall',what:'Ledetid 2 uker',ref:'LI-10087-5',txt:'Venter'}],
    nodes:[{id:'bank',name:'BankID',chan:'Kunden signerer'},{id:'hen',name:'Hengsel · montørplan',chan:'Montasjejobb'},{id:'led',name:'Leverandørdata',chan:'Ledetider'}],
    card:{kind:'note',lbl:'Klar til bestilling',t:'Alt er på plass uke 45',p:'Én uke før montøren kommer. Bestillingene kan gå ut.'},
@@ -104,7 +104,7 @@
    lead:'Bekreftelsene kommer tilbake på fem forskjellige måter. CRM sjekker alle linje for linje. Selgeren ser bare det som avviker.',
    head:HEAD_LI,rows:fiveRows('sent','Sendt'),
    nodes:FIVE.map(function(s){return{id:s.id,name:s.name,chan:s.back}}),
-   card:{kind:'task',lbl:'Min dag · ny oppgave',t:'Avvik på bekreftelse fra Tapwell (LI-10087-4)',p:'Bekreftet 2 stk kjøkkenarmatur, bestilt 1. Kontroller og svar leverandøren.'},
+   card:{kind:'task',lbl:'Min dag · ny oppgave',t:'Avvik på bekreftelse fra armaturleverandøren (LI-10087-4)',p:'Bekreftet 2 stk kjøkkenarmatur, bestilt 1. Kontroller og svar leverandøren.'},
    script:function(){
     at(400,function(){cap('Bekreftelsene kommer inn i den formen leverandøren kan sende.')});
     FIVE.forEach(function(s,i){
@@ -114,17 +114,17 @@
         else{nd(s.id,'ok');st(s.id,'ok','Bekreftet','Alle linjer stemmer: artikkel, antall, pris og uke')}
       });
     });
-    at(8800,function(){card();cap('Fire bekreftelser stemmer, og selgeren ser ingenting av dem. Tapwell avviker, så selgeren får én oppgave i Min dag.')});
+    at(8800,function(){card();cap('Fire bekreftelser stemmer, og selgeren ser ingenting av dem. Armaturleverandøren avviker, så selgeren får én oppgave i Min dag.')});
     at(11500,done);
    }},
-  {t:'Endring og rest',where:'Ordre › Sigdal',flow:'Endring ut, OB inn',
+  {t:'Endring og rest',where:'Ordre › Fabrikken',flow:'Endring ut, OB inn',
    lead:'Kunden bytter en front før siste endringsdag. Endringen og resten kommer merket, så CRM vet hva som er nytt.',
-   head:{t:'Sigdal · LI-10087-1',s:'Siste endringsdag (ENDFØR) fredag uke 42'},
+   head:{t:'Fabrikken · LI-10087-1',s:'Siste endringsdag (ENDFØR) fredag uke 42'},
    rows:[
     {id:'frt',who:'Front, høyskap',what:'Glassfront byttes til tett front',ref:'LI-10087-1',txt:'Bestilt'},
     {id:'ob',who:'Endrings-OB',what:'1 linje ny, 1 linje utgår',ref:'LI-10087-1',hidden:1},
     {id:'rest',who:'Rest: sokkel, 2 stk',what:'Merket med opprinnelig ordre',ref:'LI-10087-1',hidden:1}],
-   nodes:[{id:'kunde',name:'Kunden · Min side',chan:'Endringsønske'},{id:'sig',name:'Sigdal',chan:'CET-ordresetting'},{id:'hen',name:'Hengsel · montør',chan:'Arbeidsordre'}],
+   nodes:[{id:'kunde',name:'Kunden · Min side',chan:'Endringsønske'},{id:'sig',name:'Fabrikken',chan:'CET-ordresetting'},{id:'hen',name:'Hengsel · montør',chan:'Arbeidsordre'}],
    card:{kind:'note',lbl:'Ingen oppgave til selgeren',t:'Montøren ser at sokkelen kommer uke 47',p:'Endringen er bekreftet og kontrollert. Resten er planlagt inn i montasjen.'},
    script:function(){
     at(300,function(){cap('Kunden vil bytte en glassfront til tett front. Det er før siste endringsdag.');pk('kunde','in','Ny front',1500)});
@@ -142,7 +142,7 @@
    lead:'Kunden får beskjed om dag og tidsvindu. Montøren ser hva som er levert, og melder avvik med bilde rett fra appen.',
    head:{t:'Ordre 10087',s:'Levering uke 45 · montasje uke 46'},
    rows:fiveRows('', 'Bestilt').concat([{id:'avv',who:'Avvik: skadet sidepanel',what:'Meldt av montør, med bilde',ref:'LI-10087-1',hidden:1}]),
-   nodes:[{id:'tr',name:'Transportør',chan:'Sporing (API)'},{id:'kunde',name:'Kunden',chan:'SMS via Unifon'},{id:'hen',name:'Hengsel · montør',chan:'Montørappen'},{id:'sig',name:'Sigdal',chan:'Reklamasjon'}],
+   nodes:[{id:'tr',name:'Transportør',chan:'Sporing (API)'},{id:'kunde',name:'Kunden',chan:'SMS via Unifon'},{id:'hen',name:'Hengsel · montør',chan:'Montørappen'},{id:'sig',name:'Fabrikken',chan:'Reklamasjon'}],
    card:{kind:'note',lbl:'Ingen telefon',t:'Erstatningen kommer uke 47',p:'Selgeren ser avviket og svaret, men trenger ikke ringe noen.'},
    script:function(){
     at(300,function(){cap('To virkedager før kommer leveringsvarselet med dag og tidsvindu.');pk('tr','in','Leveringsvarsel',1500)});
@@ -155,8 +155,8 @@
     at(7600,function(){cap('Uke 46: montøren åpner jobben i Hengsel og ser hva som er levert og hva som kommer.');pk('hen','out','Arbeidsordre',1500)});
     at(9300,function(){cap('Montøren finner et skadet sidepanel og melder avvik med bilde.');pk('hen','in','Avvik + bilde',1500,true)});
     at(10800,function(){nd('hen','warn');show('avv');st('avv','warn','Reklamert')});
-    at(11300,function(){cap('Reklamasjonen går rett til Sigdal med referanse og bilde.');pk('sig','out','Reklamasjon',1500)});
-    at(13000,function(){cap('Sigdal svarer med erstatning uke 47.');pk('sig','in','Erstatning uke 47',1500)});
+    at(11300,function(){cap('Reklamasjonen går rett til fabrikken med referanse og bilde.');pk('sig','out','Reklamasjon',1500)});
+    at(13000,function(){cap('Fabrikken svarer med erstatning uke 47.');pk('sig','in','Erstatning uke 47',1500)});
     at(14500,function(){nd('sig','ok');nd('hen','ok');st('avv','ok','Erstatning uke 47');card()});
     at(16300,done);
    }},

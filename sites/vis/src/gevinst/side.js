@@ -6,7 +6,7 @@ var UKER=46,AARSVERK=1650;
 // [id, label, standard, min, max, steg, enhet, hint, desimaler]
 var INN=[
  ['ordre','Kjøkkenordre per år',220,20,1200,10,'stk'],
- ['best','Leverandørbestillinger per ordre',5,1,15,1,'stk','Sigdal, benkeplate, hvitevarer, armatur og lignende'],
+ ['best','Leverandørbestillinger per ordre',5,1,15,1,'stk','Kjøkken, benkeplate, hvitevarer, armatur og lignende'],
  ['time','Timekost inkl. sosiale kostnader',650,300,1500,10,'kr'],
  ['selg','Antall selgere',6,1,40,1,'stk'],
  ['avv','Ordre med avvik i ordrebekreftelsen i dag',12,0,50,1,'%'],

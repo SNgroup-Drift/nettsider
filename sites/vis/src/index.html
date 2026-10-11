@@ -13,6 +13,7 @@
 <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
+<link rel="stylesheet" href="/assets/enhet.css">
 <style>
 /* Forside v2 (fasit: VisForside v2.dc.html, README «Forside v2»): hero i to kolonner med illustrasjon og rollevelger,
    «Start her» på Off White-bånd, «Slik henger det sammen» + «Én ordre, åtte steg», «Alle rommene» med h3-grupper,
@@ -50,12 +51,11 @@ h3{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;margin:40px 0 16px;c
 .start .rom{background:var(--bg)}
 /* Slik henger det sammen */
 .flater{margin:48px 0 8px;display:grid;gap:16px}
-.tre{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.tre{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .flate{display:grid;gap:12px;align-content:start;padding:16px 16px 20px}
 .flate .t{display:grid;gap:4px;padding:0 6px}
 .bilde{aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--soft);display:flex;justify-content:center;align-items:flex-start}
 .bilde img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
-.bilde.tlf img{width:58%;height:auto;margin-top:18px;border-radius:14px 14px 0 0;box-shadow:0 1px 2px rgba(49,38,29,.06),0 12px 40px -12px rgba(49,38,29,.22)}
 .ktittel{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;text-wrap:balance}
 .flate p,.rom p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;text-wrap:pretty}
 .kjede{display:grid;gap:12px}
@@ -104,7 +104,8 @@ footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
 .baand .her{color:var(--fg);padding:10px 0}
 .baand li a{color:var(--muted);padding:10px 0;display:inline-block;text-decoration:none}
 .baand li a:hover{color:var(--fg)}
-@media (min-width:1100px){.rommene .grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:1100px){.rommene .grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:700px){.tre{grid-template-columns:repeat(2,minmax(0,1fr))}.flate .bilde.enhet-bilde{aspect-ratio:16/10}}
 @media (max-width:640px){.inner{padding-inline:16px}.hjem .hlogo{--h:30px}.sn{height:22px}.hero{padding-bottom:32px}.hero .ill{min-height:0;padding:24px 24px 8px}.om .ill{padding:20px 24px 6px}}
 </style>
 </head>
@@ -126,7 +127,7 @@ footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
         <p class="intro" id="intro"></p>
       </div>
     </div>
-    <div class="ill"><img src="/assets/ill/planlegging.png" alt="Tegnebordet: laptop med kjøkkentegning, prøver og tegnebrett" width="1400" height="1105"></div>
+    <div class="ill"><img src="/img/hero.webp" alt="Hengsel CRM på en Studio Display (tilbud) og en iPad (leder) og Hengsel Ute på en iPhone (i dag)" width="1500" height="1227"></div>
   </section>
 
   <section class="start" aria-labelledby="start-h">
@@ -141,16 +142,20 @@ footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
       <h2 id="sammen">Slik henger det sammen</h2>
       <div class="tre">
         <div class="card flate">
-          <div class="bilde"><img src="/skjermbilder/crm-min-dag.webp" alt="Hengsel CRM: Min dag" width="1600" height="1000" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Kontoret</span><span class="ktittel">Hengsel CRM</span><p>Min dag, salgstavle, kundekort, tilbud, bestilling, ordre, montasje, saker og resultater. På PC, iPad og telefon.</p></div>
+          <div class="bilde enhet-bilde"><img src="/img/flate-butikken.webp" alt="Hengsel CRM: salgstavlen på en Studio Display" loading="lazy"></div>
+          <div class="t"><span class="eyebrow">Butikken</span><span class="ktittel">Hengsel CRM</span><p>Min dag, salgstavle, kundekort, tilbud, bestilling, ordre, montasje, saker og resultater. På PC, iPad og telefon.</p></div>
         </div>
         <div class="card flate">
-          <div class="bilde"><img src="/skjermbilder/portal-mitt-kjokken.webp" alt="Min side på PC: Mitt kjøkken" width="1600" height="1000" loading="lazy"></div>
+          <div class="bilde enhet-bilde"><img src="/img/flate-montoren.webp" alt="Hengsel Ute: i dag på en iPhone" loading="lazy"></div>
+          <div class="t"><span class="eyebrow">Montøren</span><span class="ktittel">Hengsel</span><p>Dagens jobber, varer og tegning, KS med typeskilt, avvik med bilde og ferdigmelding med kundens signatur.</p></div>
+        </div>
+        <div class="card flate">
+          <div class="bilde enhet-bilde"><img src="/img/flate-kunden.webp" alt="Min side på to iPhoner: hjem og tilbudet" loading="lazy"></div>
           <div class="t"><span class="eyebrow">Kunden</span><span class="ktittel">Min side</span><p>Kunden ser tilbudet med bilde og pris, velger tilvalg, signerer og følger reisen til kjøkkenet er montert. Uten app.</p></div>
         </div>
         <div class="card flate">
-          <div class="bilde tlf"><img src="/skjermbilder/ute-i-dag.webp" alt="Hengsel Ute: I dag" width="780" height="1512" loading="lazy"></div>
-          <div class="t"><span class="eyebrow">Montøren</span><span class="ktittel">Hengsel</span><p>Dagens jobber, varer og tegning, KS med typeskilt, avvik med bilde og ferdigmelding med kundens signatur.</p></div>
+          <div class="bilde enhet-bilde"><img src="/img/flate-leverandoren.webp" alt="Hengsel CRM: kontrollmål på en MacBook" loading="lazy"></div>
+          <div class="t"><span class="eyebrow">Leverandøren</span><span class="ktittel">Ordre og bekreftelser</span><p>Ordrebekreftelser og fakturaer fra leverandørene leses inn og kobles til ordren, så avvik dukker opp uten manuelt arbeid.</p></div>
         </div>
       </div>
       <div class="card kjede">
@@ -178,7 +183,7 @@ footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
       <div class="ill"><img src="/assets/ill/kjokken.png" alt="Ferdig montert kjøkken med øy" width="1400" height="807" loading="lazy"></div>
       <div class="tekst">
         <h2 id="om-h">Et utstillingsrom, ikke en salgsside.</h2>
-        <p>Visningsrommet er bare for inviterte. Del lenke til én rolle med <code>?rolle=selger</code>, <code>montor</code>, <code>leverandor</code> eller <code>sigdal</code>.</p>
+        <p>Visningsrommet er bare for inviterte. Del lenke til én rolle med <code>?rolle=selger</code>, <code>montor</code>, <code>leverandor</code> eller <code>nobia</code>.</p>
         <p class="liten">Alle navn, kunder, ordre og tall er oppdiktet.</p>
       </div>
     </div>
