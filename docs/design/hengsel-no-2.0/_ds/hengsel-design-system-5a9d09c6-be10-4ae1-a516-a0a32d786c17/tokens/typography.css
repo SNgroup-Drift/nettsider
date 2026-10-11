@@ -1,0 +1,23 @@
+/* Hengsel – typografi v1.0 */
+:root {
+  --f-display: "Reckless Neue", "Newsreader", Georgia, serif; /* @kind font */ /* titler og store tall, alltid 400 */
+  --f-body: "TWK Lausanne", "Inter", "Helvetica Neue", Arial, sans-serif; /* @kind font */
+  --w-body: 350; /* @kind font */ /* Inter-reserve: 400 */
+  --w-medium: 500; /* @kind font */ /* knapper, etiketter, eyebrow */
+  --w-strong: 650; /* @kind font */ /* underoverskrifter. Inter-reserve: 600 */
+
+  --t-hero: clamp(2.5rem, 5.6vw, 4.6rem); /* @kind font */ /* lh 1.02 */
+  --t-h1:   clamp(2rem, 3.6vw, 3rem); /* @kind font */ /* lh 1.08 */
+  --t-h2:   1.75rem; /* @kind font */ /* lh 1.15 */
+  --t-h3:   1.45rem; /* @kind font */ /* lh 1.2 – minste serif-størrelse */
+  --t-stat: 2.25rem; /* @kind font */
+  --t-lede: 1.18rem; /* @kind font */
+  --t-body: 1.0625rem; /* @kind font */ /* 17 px, lh 1.6 */
+  --t-small: .92rem; /* @kind font */
+  --t-eyebrow: .82rem; /* @kind font */ /* versaler, 500, .06em */
+
+  --lh-hero: 1.02; /* @kind font */ --lh-h1: 1.08; /* @kind font */ --lh-h2: 1.15; /* @kind font */ --lh-h3: 1.2; /* @kind font */ --lh-body: 1.6; /* @kind font */
+  --tracking-display: -.015em; /* @kind font */
+  --tracking-eyebrow: .06em; /* @kind font */
+  --measure: 62ch; /* @kind font */
+}

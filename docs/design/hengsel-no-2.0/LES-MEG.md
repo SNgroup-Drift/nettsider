@@ -1,0 +1,1438 @@
+# hengsel.no 2.0 – LES-MEG (K-160)
+
+Design først. Åtte sider som Design Components (.dc.html), tegnet for PC 1440 og telefon 390, lys og mørk. Åpne `Oversikt.dc.html` for å se én side i alle fire visningene, eller åpne en side direkte. Legg til `?tema=lys` eller `?tema=mork` i adressen for å låse temaet; ellers følger siden systemvalget.
+
+## Filer
+- Sider: Forside, CRM, Ute, Kundeportal, Slik-virker-det, Dokumenter, Integrasjoner, Priser-og-demo (.dc.html)
+- Felles deler: A4Side (én A4-side, stående eller liggende, brukt i visningen og lysboksen), PortalSkjerm (kundeportalen på telefon og PC, med meny til venstre på PC), Meny (fast meny, ≡ under 1180 px, «Be om demo» alltid synlig, «Logg inn» til Visningsrommet), Bunn, Enhet (Studio Display, iPad, iPhone), CrmSkjerm (CRM-skjermene i demoen på PC, iPad og telefon)
+- dokumenter-data.js: innholdet i de ni dokumentene (oppdiktet eksempel)
+- Kontroll.dc.html: automatisk sjekk av alle åtte sider i fire visninger (kontrast, overflyt, bilder, engelske ord)
+- Bilder: `hengsel.no/ios/` (skjermer fra iOS runde 2 og 3, lys og mørk), `hengsel.no/img/` (rammer og bildeverktøyet på iPad), `hengsel.no/logo/`
+- `_ds/` designsystemet, `support.js` kjøretøy for .dc.html, `github.md` kobling til repoet
+
+## Skrift og farger
+Newsreader 400 i overskrifter, Inter 400/500/600 i tekst (Google Fonts i prototypen, selvhostes i Astro). Farger fra Hengsel-designsystemet: Off White, Warm Black, beigene og Deep Blue som aksent, mørk modus med designsystemets mørke roller. Tekst i info-piller er #43649A i lys modus (som i sites/hengsel/src/styles/tokens.css), fordi designsystemets Deep Blue på lys blå gir 3,9:1.
+
+## Lenker og skjema
+- «Bli tester» og «App Store» går til https://hengsel.no/apptest. Ingen knapper med «lenke kommer».
+- «Logg inn» går til https://vis.hengsel.no (meny, mobilmeny, bunn og Dokumenter).
+- Demoskjemaet er et skjema uten mailto. Feltene er navn, butikk, e-post, telefon, antall avdelinger og «Hva vil dere se?». Navn og e-post eller telefon er påkrevd. Mottaket lages av Code senere; i designet viser «Send forespørsel» takkemeldingen.
+- Telefon +47 454 10 001 og hei@hengsel.no er fra dagens side. Personvern peker til hengsel.no/personvern.
+
+## Merknader
+- Butikkens logo: inne i skjermbildene av CRM, montørappen, kundeportalen og dokumentene står en nøytral plassholder «Din logo» (stiplet ramme) med «by Hengsel» i liten tekst under. Hengsel står bare én gang per skjerm. CRM: sidemenyen på PC/iPad og toppen på telefon (Hengsel CRM-logoen er fjernet). Kundeportal: sidemenyen på PC og toppen på telefon («Levert med Hengsel» er fjernet). Dokumentene: «Din logo | Butikknavn Hamar» øverst og «by Hengsel» i bunnlinjen. Montørappen: «Din logo» ligger over I dag-skjermbildet på iPhone og iPad. Nettstedets meny og bunn har fortsatt Hengsel-merket. Det finnes ingen innloggings- eller Meg-skjerm på nettstedet, så de er ikke endret.
+- /dokumenter viser ni komplette dokumenter, side for side: Tilbud (5 sider), Kjøpsavtale (forside, avtalen, vilkår, signering, vedlegg 1), Ordrebekreftelse (3), Anbud og tilvalgsliste (liggende, 4), Monteringsrapport med KS (2), Punktrapport (2), Leveringspakke og FDV (5), Montasjeplan (liggende, 2) og Faktura (2). Forbilde: dokumentmalene i Visningsrommet (sites/vis/src/dokumenter). Forsidebildet er beskåret fra dok-tilbud.webp i repoet.
+- Hvert dokument har en «Slik lages det»-stripe i fem steg (Ordren i CRM → Valg → Knapp → Ferdig PDF → Sendt), innholdsliste med sidetall, bla-knapper og lysboks («Side 3 av 5», piltaster og Esc). Alt innhold er merket «Eksempel».
+- Statuslinje i alle telefon- og iPad-rammer (felles Enhet-ramme): iPhone med «9:41», Dynamic Island, mobilsignal, Wi-Fi og batteri; iPad med «9:41 man. 12. okt.», Wi-Fi og batteri. Svart i lys modus, hvit i mørk; svart over lyse skjermbilder også i mørk modus (bildeverktøyet på iPad). Ikonene er tegnet etter SF Symbols (cellularbars, wifi, battery.100percent). Klokka bruker systemskriften (SF Pro på Apple-enheter, ellers Inter). Innholdet starter under statuslinja: iOS-skjermene har 62 px toppfelt, CRM og kundeportal på telefon 54 px, CRM på iPad er flyttet ned 24 px. Nettstedet har ingen iPhone Duo-rammer; regelen gjelder rammen hvis de legges til.
+- /kundeportal viser samme løp på telefon og PC med bryteren «Telefon · PC»: tilbud og aksept, tilvalg, levering, montering og FDV. PC-visningen ligger i Studio Display-rammen, med Butikknavn og meny til venstre og «Levert med» Hengsel nederst. SMS-varselet glir inn øverst på telefon og nederst til høyre på PC.
+- Oppdiktet demoinnhold er merket med en liten «Eksempel»-pille der det vises: SMS-ene, tilvalg med priser, leverings- og monteringsdatoer (Levering, Montering og FDV i portalen), A4-dokumentene, oppstartstegene, og scene 4 og 6 i Slik virker det.
+- CRM_skjermbilder.zip var ikke vedlagt. CRM-skjermene i demoen er tegnet i HTML etter skjermbildene i repoet (Min dag, Saker, Tilbud, Montasje), med nøytrale navn (Butikknavn, Kari Nordmann, Leverandør A, Montasjefirma A).
+- Telefonskjermene i Hengsel Ute er fra iOS-designet: HI2.1.1 I dag, HI2.1.2 uten nett, HI2.2.2 Jobben, HI2.4.1 KS, HI2.5.2 Meld avvik, HI2.5.3 Ferdig montert, HI3.4.2 punktlista, og HI2.1.4 delt visning på iPad.
+- Bildeverktøyet på iPad er dagens skjermbilde fra repoet, med laserens modellnavn byttet til «Lasermåler» (pillen øverst og linjen «Lasermåler tilkoblet · velg et mål og trykk på knappen på laseren.»).
+- Integrasjoner med navn: CET, PowerOffice Go, Penneo, Tradeplace. Laseren heter «lasermåler via Bluetooth» overalt.
+- Ingen priser er skrevet.
+
+## Gjennomgang 11.10.2026
+Etter dokumentene og statuslinja: Kontroll kjørt på alle åtte sider i fire visninger. Ingen overflyt, ingen manglende bilder, ingen engelske ord. Statuslinja og bildeteksten på dokumentforsidene ligger over bilder og er sjekket på skjermbilder i stedet (Kontroll hopper over dem). Gjenstående flagg er designsystemets knapper i mørk modus og «Bli tester» i lys modus, som er målt før knappestilen lastes; de er kontrollert på skjermbilder.
+Kundeportal kontrollert på nytt etter PC-visningen, både i telefonmodus og PC-modus: OK i alle fire visninger (ingen kontrastfeil, ingen overflyt, ingen manglende bilder). Hele Kontroll kjørt på nytt etter «Eksempel»-merkene: ingen nye funn.
+Sjekket alle åtte sider i fire visninger (PC 1440 lys, PC 1440 mørk, telefon 390 lys, telefon 390 mørk) med Kontroll.dc.html: ingen horisontal overflyt, ingen manglende bilder, ingen engelske ord. Kontrastfeil som ble rettet: info-piller (3,9:1), Deep Blue-lenker på Beige 3 (4,0:1), valgt stegnummer i mørk modus (1,7:1) og undertittelen i Hengsel-noden i mørk modus. Kontrollen flagger designsystemets knapper i mørk modus fordi stilarket lastes etter målingen; knappene er kontrollert på skjermbilder og har riktig kontrast.
+Sett på skjermbilder: Forside (telefon, lys, med åpen meny), Ute (PC, mørk), Dokumenter (telefon, mørk), Integrasjoner (telefon og PC, lys), CRM (PC og telefon, mørk). «Be om demo» brøt over to linjer på telefon; rettet. Lange navn i systemkartet ble for brede ved middels bredde; rettet.
+Ikke sjekket: skjermlesere og tastaturnavigasjon, ekte iPhone/iPad/Safari, og innholdet i iOS-skjermbildene (de er bilder; teksten der er ordrett fra iOS-designet). Skjermbildene i Kontroll måles i nettleserens skjulte rammer, ikke på fysiske enheter.
+
+## Tekstene ordrett
+Alle tekster på sidene, i rekkefølge. «Fast tekst» står i sidemalen. «Faner, steg og data» er tekstene i fanene, stegene, scenene og dokumentene.
+
+### / (forside) · Forside.dc.html
+
+**Fast tekst**
+
+- CRM · montørapp · kundeportal
+- Fra første tegning til ferdig kjøkken.
+- Hengsel er løsningen for kjøkken- og interiørbutikker. Salg, tilbud, bestilling, montasje og kundeportal ligger på samme ordre og samme kundekort.
+- Be om demo
+- Slik virker det
+- 01
+- Ett sted for kunden.
+- Tilbud, ordre, bestilling, montering, saker og faktura på samme kundekort.
+- 02
+- Montøren slipper papir.
+- Jobben, tegningene, målene og KS-sjekklista ligger i lomma.
+- 03
+- Kunden følger med selv.
+- Kundeportal med tilvalg, leveringsdag, punkter og dokumenter.
+- Ordrens reise
+- Én ordre fra befaring til faktura.
+- Se hele reisen i åtte scener →
+- Se nærmere på
+- Vil dere se Hengsel i bruk?
+- Vi viser løsningen med en ordre fra start til slutt. Ring oss eller be om demo.
+- +47 454 10 001
+- (alt) Hengsel Ute på iPad: I dag med jobben til Kari Nordmann
+- (alt) Hengsel Ute på iPhone: I dag med neste jobb
+
+**Faner, steg og data**
+
+- (prefers-color-scheme: dark)
+- Befaring
+- Mål og bilder hos kunden, rett inn på kundekortet.
+- Tilbud
+- Import fra CET, egen PDF og e-signering.
+- Aksept
+- Kunden aksepterer og velger tilvalg i portalen.
+- Bestilling
+- Bestilling til leverandør med ordrebekreftelse.
+- Levering
+- Kolli på lager, utkjøring med signatur.
+- Montering
+- Plan, KS-sjekkliste og laser i Hengsel Ute.
+- Punkter
+- Ett nummersystem fra montør til kontor til kunde.
+- Ferdig og faktura
+- Kundens signatur, faktura til PowerOffice.
+- CRM
+- Min dag, kundekort, tilbud, ordre, bestilling og montasjeplan. På PC, iPad og telefon.
+- Prøv demoen
+- Hengsel Ute
+- Montørappen for iPhone og iPad. Jobben, KS, avvik og punkter, også uten dekning.
+- Se appen
+- Kundeportal
+- Kunden aksepterer tilbudet, velger tilvalg og følger leveringen selv.
+- Se kundens side
+- Slik virker det
+- Ordrens reise i åtte scener, med det selgeren ser og det som skjer bak kulissene.
+- Følg ordren
+- Dokumenter
+- Tilbud, kjøpsavtale, arbeidsordre, KS-rapport og ferdigmelding, laget rett fra ordren.
+- Bla i dokumentene
+- Integrasjoner
+- CET, PowerOffice, Penneo, Tradeplace og lasermåler via Bluetooth. Data lagres i EU.
+- Se systemkartet
+- Priser og demo
+- Hva som inngår, hvordan oppstarten går, og hvordan dere får en demo.
+- Be om demo
+
+### /crm · CRM.dc.html
+
+**Fast tekst**
+
+- Hengsel CRM
+- Hele butikken på én skjerm.
+- Klikk deg gjennom en vanlig morgen: et avvik i ordrebekreftelsen, en ny tegning fra CET og montasjeplanen etterpå.
+- I CRM
+- Samme kundekort for selger, kontor og leder.
+- Be om demo
+- Se hele ordrens reise →
+- (aria-label) Steg i demoen
+- (aria-label) Enhet
+
+**Faner, steg og data**
+
+- (prefers-color-scheme: dark)
+- Min dag
+- Min dag viser det som venter på deg, sortert etter hva som haster.
+- Avviket i ordrebekreftelsen ligger øverst. Trykk på raden for å åpne ordren.
+- Avvik
+- Hengsel sammenligner ordrebekreftelsen med ordren, linje for linje.
+- Benkeplaten er 20 mm i OB og 30 mm i ordren. Trykk «Be om ny OB».
+- Import fra CET
+- Ny tegning fra CET.
+- Hengsel viser hva som er endret fra forrige versjon og hva det gjør med prisen, før du importerer.
+- Montasjeplan
+- Klar for montering.
+- Ny OB er bekreftet, og jobben ligger i montasjeplanen. Montøren får den i Hengsel Ute.
+- PC
+- Telefon
+- 0 auto
+- Neste: 
+- Start på nytt
+- Det som venter på deg i dag: meldinger, avvik, frister og oppfølging.
+- Samtaler og salgstavle
+- Henvendelser og tilbud i faser, med påminnelse når kunden ikke svarer.
+- Kundekort
+- Tilbud, ordre, bestilling, montering, saker og faktura på samme kundekort.
+- Tilbud
+- Import fra CET, prisgrupper, monteringskalkyle og e-signering.
+- Ordre og bestilling
+- Bestilling med ordrebekreftelse og lager.
+- Montasje
+- Montasjeplan og kontrollmål.
+- Saker
+- Reklamasjoner, avvik, hvitevaresaker og restpunkter.
+- Leder og resultater
+- Leder-tavle med frister og tall.
+- Økonomi
+- Økonomi med faktura og PowerOffice.
+
+### /ute · Ute.dc.html
+
+**Fast tekst**
+
+- Montøren slipper papir.
+- Montørappen for iPhone og iPad. Jobben, tegningene, målene og KS-sjekklista ligger i lomma.
+- På iPad
+- Bildeverktøyet.
+- Punkter, mål, piler og tekst rett på bildet, med Apple Pencil eller finger. Laseren kobles til, og målene går rett inn i bildet. Punktlista til høyre har samme nummer som i CRM og kundeportalen.
+- Virker uten dekning
+- Kjelleren, hytta og nybygget uten nett.
+- Alt montøren sender inn, legges først i en kø på telefonen og vises med en gang som om det var sendt. Når nettet kommer tilbake, sendes køen av seg selv.
+- Fra appen
+- Venter på nett
+- «Alt er lagret på telefonen og sendes av seg selv når nettet er tilbake. Ingenting går tapt.»
+- Bilder, avvik, KS, ferdigmelding, restpunkt og kundens signatur.
+- «Klar uten nett» henter dagens jobber før du kjører.
+- Pillen øverst viser hva som venter: «3 venter på nett».
+- Bli tester
+- Hengsel Ute er i test på iPhone, iPad og Android. Testsiden har lenkene og forteller hvordan du melder feil.
+- App Store
+- (alt) Hengsel Ute
+- (aria-label) Steg i appen
+- (aria-label) Forrige steg
+- (aria-label) Neste steg
+- (alt) Hengsel Ute på iPad: bildeverktøyet med punkter på bildet og punktliste til høyre
+- (alt) Hengsel Ute uten nett: I dag med varsel om at bilder og kryss sendes når nettet er tilbake
+
+**Faner, steg og data**
+
+- (prefers-color-scheme: dark)
+- I dag
+- Neste jobb, På vei, og det du må vite før du starter.
+- Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei
+- Jobben
+- Tegning, mål, bilder og restpunkter samlet før, under og etter.
+- Hengsel Ute: jobben med Noe mangler, Før og Under
+- KS
+- Punkt for punkt. OK med bilde åpner kameraet.
+- Hengsel Ute: KS-sjekkliste punkt for punkt
+- Avvik
+- Bilde med pil, og om det trengs ny vare.
+- Hengsel Ute: meld avvik med bilde
+- Punkter
+- Ett nummersystem, samme nummer i CRM og portal.
+- Hengsel Ute: punktlista på kunden med nummer og status
+- Ferdig
+- Ferdig montert, eller det som gjenstår med dato.
+- Hengsel Ute: meld ferdig montert
+
+### /kundeportal · Kundeportal.dc.html
+
+**Fast tekst**
+
+- Kundeportalen
+- Kunden følger med selv.
+- Fra tilbudet til FDV-permen, på telefonen eller PC-en. Kunden får en SMS når noe er nytt, og svarer i portalen i stedet for på e-post og telefon.
+- Vis SMS-en igjen
+- På samme ordre
+- Det kunden gjør, ser selgeren med en gang.
+- (aria-label) Kundens reise
+- (aria-label) Enhet
+
+**Faner, steg og data**
+
+- (prefers-color-scheme: dark)
+- Tilbud og aksept
+- Tegning, pris og betalingsplan. Kunden aksepterer og signerer med BankID.
+- Hei Kari. Tilbudet på kjøkkenet er klart. Du finner det i kundeportalen.
+- Tilvalg
+- Oppgraderinger med pris, frem til endringsfristen.
+- Endringsfrist fredag 16. oktober. Velg tilvalg i kundeportalen før fristen.
+- Levering
+- Leveringsdag, tidsrom og hva som må være klart.
+- Kjøkkenet leveres tirsdag 17. november mellom 07.00 og 09.00.
+- Montering
+- Hvem som monterer, hvor langt de har kommet, og punktene.
+- Montør En er på vei og er fremme ca. 07.30.
+- FDV
+- Dokumenter, garantier og ferdigmelding etter montering.
+- Kjøkkenet er ferdig montert. FDV og garantier ligger i kundeportalen.
+- Telefon
+- PC
+- Melding
+- Spørsmål fra kunden kommer inn i Min dag og på kundekortet.
+- Aksept og signatur
+- Tilbudet blir ordre når kunden signerer i kundeportalen.
+- Valgene oppdaterer ordren og prisen før endringsfristen.
+- Punkter
+- Samme nummer i CRM, Hengsel Ute og kundeportalen.
+
+### /slik-virker-det · Slik-virker-det.dc.html
+
+**Fast tekst**
+
+- Ordrens reise
+- Én ordre, åtte scener.
+- Følg kjøkkenet til Kari Nordmann fra befaring til faktura. For hver scene ser du hva selgeren ser i Hengsel, og hva som skjer bak kulissene.
+- Selgeren ser
+- Eksempel
+- Bak kulissene
+- Prøv CRM-demoen
+- Min dag, avvik, import fra CET og montasjeplan.
+- Se montørappen
+- I dag, jobben, KS, avvik, punkter og ferdig.
+- Be om demo
+- Vi viser reisen med en ordre fra start til slutt.
+- (aria-label) Scener
+- (aria-label) Forrige scene
+
+**Faner, steg og data**
+
+- Befaring
+- Selgeren eller montøren måler opp hos kunden med Hengsel Ute. Mål, bilder og skisser legges rett på kundekortet.
+- Befaring hos Kari Nordmann ferdig
+- 14 bilder · 6 mål · Oppdiktet allé 8
+- Ny
+- Kontrollmål vegg A
+- 2 460 mm · målt med laser
+- Mål
+- Min dag og kundekortet
+- Bildene sendes fra køen på telefonen, også etter en tur uten dekning.
+- Lasermålene lagres sammen med bildet de hører til.
+- Befaringen blir en aktivitet på kundekortet.
+- Tilbud
+- Tegningen hentes fra CET, og tilbudet lages med prisgrupper og monteringskalkyle.
+- Tilbud HA-T-2231 v3 sendt
+- 257 700 kr · gjelder til 15. oktober
+- Sendt
+- Ring Kari – tilbudet åpnet 3 ganger
+- 6 dager i fasen
+- Oppfølging
+- Salgstavla og Min dag
+- Artikler og tegninger importeres fra CET.
+- Tilbudet blir en PDF med butikkens logo.
+- Kunden får tilbudet i kundeportalen og en SMS.
+- Aksept
+- Kunden aksepterer tilbudet i kundeportalen og signerer kjøpsavtalen med BankID.
+- Kari signerte kjøpsavtalen
+- BankID · i dag 09.24
+- Signert
+- Tilbud v3 ble ordre O-2417
+- 41 linjer · montering uke 47
+- Ordre
+- Kundekortet og ordren
+- Kjøpsavtalen sendes til Penneo for signering.
+- Den signerte avtalen lagres på ordren.
+- Ordren opprettes med alle linjene fra tilbudet.
+- Tilvalg
+- Frem til endringsfristen velger kunden oppgraderinger i portalen. Selgeren ser valgene med en gang.
+- Kari valgte 2 tilvalg
+- Benkeplate 30 mm · LED under overskap · + 9 100 kr
+- Bekreft endringsfrist
+- Ordre O-2417 · fredag 16. oktober
+- Frist
+- Min dag og ordren
+- Tilvalgene legges som linjer på ordren.
+- Prisen og betalingsplanen oppdateres.
+- Etter fristen låses tilvalgene i portalen.
+- Bestilling
+- Ordren bestilles hos leverandørene. Ordrebekreftelsen kontrolleres mot ordren før den godtas.
+- Kontroller OB – avvik på benkeplate
+- Leverandør A · 20 mm i stedet for 30 mm
+- Avvik
+- Bestilling sendt
+- 41 linjer · 3 leverandører
+- Min dag og bestillingen
+- Bestillingen går til leverandøren, hvitevarer via Tradeplace.
+- Ordrebekreftelsen sammenlignes med ordren, linje for linje.
+- Avvik havner i Min dag hos selgeren.
+- Levering
+- Kolliene tas imot på lager og kjøres ut. Kunden får beskjed om leveringstid.
+- 14 av 14 kolli mottatt
+- Lager · Leverandør A og B
+- Klar
+- Utkjøring tirsdag 17. november
+- 07.00–09.00 · Utkjører To
+- Plan
+- Ordren og montasjeplanen
+- Kolli registreres på lager i appen.
+- Utkjøreren får ruten og kvitterer med kundens signatur.
+- Kunden får SMS med leveringstid.
+- Montering og punkter
+- Montøren har jobben i Hengsel Ute. Avvik og restpunkter får nummer og følges opp til de er løst.
+- Montør En er på vei
+- Kari Nordmann · dag 1 av 3
+- På vei
+- Restpunkt 14-3
+- Sokkel mangler 40 mm mot vegg
+- Åpen
+- Min dag, ordren og saker
+- Montøren har plan, tegning og KS-sjekkliste i Hengsel Ute.
+- Avvik og restpunkter har samme nummer i CRM, app og portal.
+- Lasermåleren kobles til via Bluetooth og måler rett inn i bildet.
+- Ferdig og faktura
+- Kunden signerer ferdigmeldingen på montørens telefon. FDV legges i portalen, og fakturaen går til regnskapet.
+- Ferdig montert
+- Kari signerte 19. november · KS 12 av 12
+- Ferdig
+- Sluttfaktura overført
+- PowerOffice Go · 10 % av 266 800 kr
+- Faktura
+- Ordren og økonomi
+- Kundens signatur lagres med KS-rapporten.
+- FDV og garantier legges i kundeportalen.
+- Fakturaen overføres til PowerOffice Go.
+- (prefers-color-scheme: dark)
+- Vises i 
+- Neste: 
+
+### /dokumenter · Dokumenter.dc.html
+
+**Fast tekst**
+
+- Dokumenter
+- Ferdige dokumenter, rett fra ordren.
+- Hengsel lager dokumentene av det som allerede står på ordren: forside, alle sider, vilkår, signatur og vedlegg. Velg et dokument og bla gjennom det side for side.
+- Slik lages det
+- Åpne i lysboks
+- Eksempel
+- Butikkens navn på hver side
+- Logo, navn og adresse hentes fra innstillingene. Hengsel står lite i bunnlinjen.
+- Alltid siste versjon
+- Dokumentet lages på nytt når ordren endres. Tidligere versjoner ligger på ordren.
+- Signering og arkiv
+- Kjøpsavtalen signeres med BankID i Penneo. Signerte dokumenter lagres på ordren og i kundeportalen.
+- Også i Visningsrommet
+- De samme dokumentene finnes i Visningsrommet.
+- Logg inn
+- (aria-label) Dokumenter
+- (aria-label) Åpne siden i lysboksen
+- (aria-label) Forrige side
+- (aria-label) Neste side
+- (aria-label) Lukk
+
+**Faner, steg og data**
+
+- Escape
+- ArrowRight
+- ArrowLeft
+- (prefers-color-scheme: dark)
+- Ordren i CRM
+- Valg
+- Knapp
+- Ferdig PDF
+- Sendt
+- Side 
+-  i lysboks
+
+### /integrasjoner · Integrasjoner.dc.html
+
+**Fast tekst**
+
+- Integrasjoner
+- Koblet til det dere bruker.
+- Tegningen kommer fra CET, avtalen signeres i Penneo, og fakturaen går til PowerOffice. Velg en kobling for å se hva som går inn og ut.
+- Valgt kobling
+- Inn i Hengsel
+- Ut fra Hengsel
+- Brukes i:
+- Sikkerhet
+- Kundens data, trygt lagret.
+- EU-lagring
+- Data lagres i EU.
+- Roller
+- Roller og butikktilgang styrer hvem som ser hva.
+- Logg
+- Logg på alle endringer.
+- Sikkerhetskopi
+- Daglig sikkerhetskopi.
+- Hengsel eies av ES-HOLDING AS, org.nr. 927 363 585. Spørsmål om personvern og databehandleravtale:
+- hei@hengsel.no
+
+**Faner, steg og data**
+
+- CET
+- Tegning og artikler
+- Tegneren lagrer i CET, og selgeren henter tegningen inn i tilbudet. Hengsel viser hva som er endret fra forrige versjon.
+- Tegninger, artikler og priser
+- Tilbud
+- Penneo
+- E-signering
+- Kjøpsavtalen signeres med BankID. Signert avtale kommer tilbake til ordren.
+- Signert avtale og tidspunkt
+- Kjøpsavtalen til signering
+- Kundeportal og ordre
+- PowerOffice Go
+- Regnskap
+- Fakturaer og kunder overføres til regnskapet, med forskudd og sluttfaktura etter betalingsplanen.
+- Betalingsstatus
+- Kunder og fakturaer
+- Økonomi
+- Tradeplace
+- Hvitevarer
+- Bestilling av hvitevarer går via Tradeplace. Ordrebekreftelsen kontrolleres mot ordren.
+- Ordrebekreftelse og leveringsdato
+- Bestilling
+- Hengsel
+- CRM · Ute · Kundeportal
+- Én ordre og ett kundekort. Koblingene leser og skriver til samme ordre.
+- Alt over
+- Hele løsningen
+- Lasermåler
+- Via Bluetooth
+- Lasermåleren kobles til Hengsel Ute via Bluetooth. Målet går rett inn i bildet montøren tegner på.
+- Lasermål
+- Hengsel Ute
+- SMS og e-post
+- Varsler
+- Kunden får SMS når noe er nytt i portalen. Montøren får varsel om nye jobber og endringer.
+- Leveringsstatus
+- Kundeportal og Hengsel Ute
+- Leverandører
+- Bestilling og OB
+- Bestilling til leverandør med ordrebekreftelse. Avvik i OB havner i Min dag.
+- Ordrebekreftelse
+- Feilovervåking
+- Drift
+- Feil i løsningen varsles til oss, slik at vi kan rette dem raskt.
+- Feilmeldinger
+- (prefers-color-scheme: dark)
+- .78rem
+- 1.6rem
+- .95rem
+
+### /priser-og-demo · Priser-og-demo.dc.html
+
+**Fast tekst**
+
+- Priser og demo
+- Hele løsningen, fra første dag.
+- Pris etter antall butikker og brukere. Be om tilbud.
+- Dette inngår
+- Oppstart
+- Eksempel
+- Vi går gjennom stegene sammen med dere.
+- Be om demo
+- Vi viser Hengsel med en ordre fra start til slutt, og svarer på det dere lurer på.
+- Ring eller skriv
+- +47 454 10 001
+- hei@hengsel.no
+- Antall avdelinger
+- Hva vil dere se?
+- Send forespørsel
+- Du kan også ringe +47 454 10 001.
+- Mangler noe.
+- Fyll inn navn og e-post eller telefon.
+- Takk, .
+- Vi har fått forespørselen og tar kontakt for å avtale tid.
+- Ny forespørsel
+- (placeholder) For eksempel montasjeplan og kundeportal
+
+**Faner, steg og data**
+
+- (prefers-color-scheme: dark)
+- 4 eller flere
+- CRM på PC, iPad og telefon
+- Min dag, kundekort, tilbud, ordre, bestilling, montasje, saker og resultater.
+- Hengsel Ute
+- Montørappen for iPhone, iPad og Android, også for utkjører og lager.
+- Kundeportal
+- Tilbud, aksept, tilvalg, levering og FDV.
+- Dokumenter
+- Tilbud, kjøpsavtale, arbeidsordre, KS-rapport og ferdigmelding med butikkens logo.
+- Koblinger
+- CET, PowerOffice Go, Penneo, Tradeplace, lasermåler via Bluetooth, SMS og e-post.
+- Drift og sikkerhet
+- Data lagres i EU. Logg på alle endringer. Daglig sikkerhetskopi.
+- Oppdateringer og hjelp
+- Nye versjoner, og hjelp på telefon og e-post.
+- Demo
+- Vi viser løsningen med en ordre fra start til slutt.
+- Oppsett
+- Butikker, brukere, roller, logo, prislister og maler for dokumentene.
+- Opplæring
+- Selgere, kontor og montører, hver med sin del av løsningen.
+- I drift
+- Vi følger opp de første ukene og justerer oppsettet med dere.
+- Navn
+- Kari Nordmann
+- Butikk
+- Butikknavn
+- E-post
+- kari@butikknavn.no
+- Telefon
+- for forespørselen
+
+### Felles: meny · Meny.dc.html
+
+**Fast tekst**
+
+- Logg inn
+- Be om demo
+- Logg inn i Visningsrommet →
+- (aria-label) Hengsel – til forsiden
+- (alt) Hengsel
+- (aria-label) Hovedmeny
+- (aria-label) Meny
+
+**Faner, steg og data**
+
+- CRM
+- Hengsel Ute
+- Kundeportal
+- Slik virker det
+- Dokumenter
+- Integrasjoner
+- Priser og demo
+- 1.05rem
+
+### Felles: bunn · Bunn.dc.html
+
+**Fast tekst**
+
+- CRM, montørapp og kundeportal for kjøkken- og interiørbutikker.
+- Produkt
+- CRM
+- Hengsel Ute
+- Kundeportal
+- Dokumenter
+- Mer
+- Slik virker det
+- Integrasjoner og sikkerhet
+- Priser og demo
+- Logg inn
+- Kontakt
+- +47 454 10 001
+- hei@hengsel.no
+- Enromvegen 173, 7026 Trondheim
+- Hengsel · ES-HOLDING AS · org.nr. 927 363 585
+- Skjermbildene viser demodata. Navn og tall er ikke ekte.
+- Personvern
+- (alt) Hengsel
+- (aria-label) Produkt
+- (aria-label) Mer
+
+### Felles: CRM-skjermene i demoen · CrmSkjerm.dc.html
+
+**Fast tekst**
+
+- Butikknavn
+- Kristine B.
+- Selger · Butikknavn
+- KB
+- God morgen, Kristine.
+- I dag
+- 6 igjen
+- Kontroller OB – avvik på benkeplate
+- Avvik
+- Ordre O-2417 · Kari Nordmann · OB mottatt i dag 06.12
+- I ordren
+- Benkeplate 30 mm
+- I OB
+- Benkeplate 20 mm
+- Leverandør
+- Leverandør A
+- Levering
+- uke 46
+- Åpne ordren
+- eller trykk på raden
+- Kunder › Kari Nordmann › Ordre O-2417
+- Kjøkken – Kari Nordmann
+- Ordre O-2417 · montering uke 47 · Montasjefirma A
+- Avvik i ordrebekreftelsen.
+- Benkeplate 20 mm i OB, 30 mm i ordren · Leverandør A
+- Ordrebekreftelse fra Leverandør A
+- Linje
+- Ordre
+- OB
+- Status
+- Be om ny OB
+- Godta OB
+- Siste på ordren
+- Kunder › Kari Nordmann › Tilbud
+- HA-T-2231 · versjon 3 · 257 700 kr · gjelder til 15. oktober
+- Hent fra CET
+- Ny tegning
+- Tegning 5971 · R09 · lagret i CET i dag 08.14
+- Skap
+- 23
+- Artikler
+- 41
+- Tegninger
+- 3 ark
+- Endret fra versjon 3
+- Ny pris inkl. mva
+- 263 900 kr
+- Importer som versjon 4
+- Avbryt
+- Uke 47 · 16.–20. november · 6 monteringer · 1 uten montør
+- Montasjeplan
+- Firma og montør
+- Man 16.
+- Tir 17.
+- Ons 18.
+- Tor 19.
+- Fre 20.
+- Ny OB bekreftet.
+- Benkeplate 30 mm leveres uke 46 · Kari Nordmann er satt opp tirsdag og onsdag.
+- (alt) Hengsel CRM
+
+**Faner, steg og data**
+
+- Min dag
+- Ordre
+- Tilbud
+- Montasje
+- Samtaler
+- Salgstavle
+- Kunder
+- Saker
+- Resultater
+- Kari skrev i kundeportalen
+- Tilbud v3 · «Kan oppvaskmaskinen flyttes nærmere vasken?» · 07.42
+- Melding
+- Kontroller OB – avvik på benkeplate
+- Ordre O-2417 · Leverandør A · 20 mm i stedet for 30 mm
+- Avvik
+- Ring Kari – tilbudet åpnet 3 ganger
+- Tilbud HA-T-2231 v3 · 257 700 kr · 6 dager i fasen
+- Oppfølging
+- Møte kl. 14.00 · befaring hos Ola
+- Eksempelveien 4 · kjøkken
+- Møte
+- Bekreft endringsfrist
+- Ordre O-2417 · fredag 16. oktober
+- Frist
+- Sak R-2026-0163 venter på svar
+- Kari Nordmann · servicenummer mangler · 3 dager
+- Sak
+- Montør En
+- Montasjefirma A
+- Kari Nordmann · Kjøkken
+- Ny · bekreftet
+- Dag 2
+- Ola Nordmann · Bad
+- Bekreftet
+- Montør To
+- Per Nordmann · Kjøkken
+- Lise Nordmann · Garderobe
+- Venter svar
+- Montør Tre
+- Montasjefirma B
+- Butikknavn · Utstilling
+- Nina Nordmann · Kjøkken
+- Uten montør
+- Venter på firma
+- Tor Nordmann · Kjøkken
+- Mangler montør
+- -.015em
+- mandag 12. oktober · 6 ting venter
+- mandag 12. oktober · uke 42 · Butikknavn · 6 ting venter på deg
+- 1,31 mill
+- av 1,40 mill i oktober · 94 %
+- dekningsgrad · mål 34 %
+- tilbud til ordre
+- åpne tilbud · 2,1 mill
+- Benkeplate
+- 30 mm
+- 20 mm
+- Skap
+- 23 stk
+- OK
+- Hvitevarer
+- 4 stk
+- Levering
+- uke 46
+- OB mottatt fra Leverandør A
+- Hengsel fant 1 avvik mot ordren
+- fre.
+- Bestilling sendt · 41 linjer
+- tor.
+- Kari signerte kjøpsavtalen
+- Benkeplate 30 mm (var 20 mm)
+- + 6 200 kr
+- Overskap 60 cm flyttet til venstre vegg
+- 0 kr
+- Sokkel 2 400 mm erstattet av 2 × 1 200 mm
+- Tir 17. og ons 18. · Montør En
+- Ny
+- Man 16. og tir 17. · Montør To
+- Tor 19. · Montør To
+- Fre 20. · uten montør
+- Mangler
+- Mer
+
+### Felles: kundeportalen på telefon og PC · PortalSkjerm.dc.html
+
+**Fast tekst**
+
+- Butikknavn
+- KN
+- Kari Nordmann
+- Kjøkken Nordmann
+- Levert med
+- Kjøkken Nordmann · Ordre O-2417 · Oppdiktet allé 8, 2850 Lena
+- Skriv til Kristine
+- Bilde fra tegningen
+- Tilbud v3 · gyldig til 15.10.2026
+- Totalt inkl. mva
+- 257 700 kr
+- Aksepter tilbudet
+- Etterpå lager vi kjøpsavtalen. Den signeres med BankID i Penneo.
+- Tilvalg
+- Eksempel
+- Frist fre. 16.10
+- Velg før endringsfristen. Selgeren ser valgene dine med en gang.
+- Ny total
+- 266 800 kr
+- Send tilvalg
+- Levering
+- Før levering
+- Ryddig vei inn og plass til 14 kolli i garasje eller gang.
+- Montering
+- Montør En · dag 2 av 3 · ferdig torsdag 19. november
+- KS 8 av 12 punkter
+- Punkter på kjøkkenet
+- Punktene har samme nummer hos montøren og i butikken.
+- Kjøkkenet ditt
+- Ferdig montert torsdag 19. november
+- Alle punkter er løst.
+- 3 av 3 lukket etter montering.
+- Dokumenter
+- Åpne
+- Pris
+- Valgt
+- Tilbud v3
+- 2 tilvalg
+- + 9 100 kr
+- Selgeren din
+- KB
+- Kristine B.
+- Butikknavn · 900 00 001
+- Kari ·
+- Skriv til Kristine …
+- SMS · Butikknavn
+- nå
+- (alt) Hengsel
+
+**Faner, steg og data**
+
+- Oversikt
+- Tilbud og avtale
+- Tilvalg
+- Levering og montering
+- Dokumenter
+- Meldinger
+- Levering
+- tir. 17. november
+- Tid
+- Kolli
+- Montering
+- 17.–19. november
+- Montør
+- Montør En
+- Dag
+- 2 av 3
+- Åpne punkter
+- Ferdig
+- tor. 19. november
+- Ferdig montert
+- 19. november
+- KS
+- 12 av 12
+- Punkter
+- 0 åpne
+- Garanti
+- 5 år
+- Hei Kari, her er tilbudet ditt.
+- Velg tilvalg før fristen.
+- Kjøkkenet er på vei.
+- Montøren er i gang.
+- Hei Kari, her er kjøkkenet ditt.
+- Oppsummert
+- Kan oppvaskmaskinen flyttes nærmere vasken?
+- Takk for i dag. Sokkelen ved vinduet ser litt kort ut.
+- Takk for hjelpen med tilvalgene.
+- i dag 07.42
+- i går 16.10
+- fredag 09.30
+- Tegningen
+- 3 ark
+- Prisgrupper
+- Tilbud, vilkår
+- Betalingsplan
+- Benkeplate 30 mm
+- i stedet for 20 mm
+- + 6 200 kr
+- LED under overskap
+- 4 lister med dimmer
+- + 2 900 kr
+- Skuffeinnredning i eik
+- 3 skuffer
+- + 3 400 kr
+- Håndtak i messing
+- 23 stk
+- + 1 800 kr
+- Bestilt
+- fredag 9. oktober
+- Ordrebekreftelse mottatt
+- mandag 12. oktober
+- tirsdag 17. november · 07.00–09.00
+- 17.–19. november · Montør En
+- kundens signatur og FDV
+- Sokkel mangler 40 mm mot vegg
+- Montering · bilde fra montøren
+- Åpen
+- Fuge mangler bak komfyr
+- KS · i dag
+- Sokkel mot vegg, 40 mm
+- Montering · løst i går
+- Løst
+- FDV-dokumentasjon
+- PDF · 24 sider
+- Garantibevis
+- Innredning og hvitevarer
+- Vedlikehold av benkeplate
+- PDF · 2 sider
+- Hvitevarer
+- 4 bruksanvisninger
+- Ferdigmelding
+- Signert 19. november
+
+### Felles: A4-side · A4Side.dc.html
+
+**Fast tekst**
+
+- Butikknavn
+- Hamar
+- Illustrasjon laget fra tegningen. Endelig utseende kan avvike.
+- Ref.
+- Punkt
+- Status
+- Sist endret
+- Montør og firma
+- Laget i Hengsel
+- (alt) Hengsel
+
+**Faner, steg og data**
+
+- Løst
+- OK
+- Utgått
+- Åpen
+- -.015em
+
+### Felles: enhetsrammer og statuslinje · Enhet.dc.html
+
+**Fast tekst**
+
+- 9:41
+- man. 12. okt.
+
+### Dokumentene · dokumenter-data.js
+
+- Kari Nordmann
+- Oppdiktet allé 8, 2850 Lena
+- OK
+- Tilbud
+- Forside, kort fortalt, tegning, artikler og vilkår.
+- Tilbud HA-T-2231 · versjon 3 · 
+- Tilbud HA-T-2231 på kundekortet
+- Prisgruppe 3 og betalingsplan
+- «Lag tilbud»
+- Tilbud.pdf · 5 sider
+- Kundeportal og e-post
+- Forside
+- Tilbud · Kjøkken
+- Kjøkkenet til 
+- HA-T-2231 · versjon 3
+- Dato
+- 22. september 2026
+- Gyldig til
+- 15. oktober 2026
+- Selger
+- Kristine B.
+- 257 700 kr
+- inkl. mva, frakt og montering
+- Kort fortalt
+- Takk for et hyggelig møte. Her er tilbudet på kjøkkenet slik vi tegnet det sammen. Alt står i kundeportalen, der du også kan velge oppgraderinger og godta tilbudet.
+- Dette får du
+- Front
+- Eik natur, matt lakk
+- Benkeplate
+- Laminat eik, 20 mm
+- Grep
+- Sort stang, 160 mm
+- Vask og batteri
+- Blandebatteri
+- Hvitevarer
+- Platetopp, ovn, oppvask, kjøl/frys
+- Belysning
+- Spot i tak
+- Pris
+- Skap og fronter
+- 168 400 kr
+- 46 900 kr
+- 31 800 kr
+- 10 600 kr
+- Frakt og montering
+- 18 900 kr
+- Totalt inkl. mva
+- Betaling
+- Ved signering (30 %)
+- 77 310 kr
+- Ved levering (60 %)
+- 154 620 kr
+- Etter montering (10 %)
+- 25 770 kr
+- Slik går du videre
+- 1. Se tegningene og velg eventuelle oppgraderinger i kundeportalen.
+- 2. Godta tilbudet der når du er fornøyd. Tilbudet gjelder til 15. oktober.
+- 3. Vi sender kjøpsavtalen til signering med BankID og bestiller.
+- Tegningen
+- Tegning 5971 · R08 fra CET. Kontrollmålene tas ved befaring før bestilling.
+- Tegning 5971 · ark 1 av 3 · plan
+- Ark 2 · vegg A
+- Ark 3 · vegg B
+- Artikler
+- 23 skap og 41 linjer. Utdrag, gruppert slik de står i tegningen.
+- Pos.
+- Artikkel
+- Antall
+- Underskap 60 cm, 3 skuffer
+- 22 400 kr
+- Underskap 80 cm, vask
+- 7 900 kr
+- Høyskap 60 cm, integrert kjøl/frys
+- 12 600 kr
+- Overskap 60 cm, 2 hyller
+- 19 800 kr
+- Front eik natur, matt lakk
+- 58 200 kr
+- Sokkel og lister
+- 6 300 kr
+- Benkeplate laminat eik 20 mm
+- Platetopp induksjon 60 cm
+- 11 900 kr
+- Stekeovn 60 cm
+- 13 400 kr
+- Oppvaskmaskin integrert
+- 9 800 kr
+- Blandebatteri og vask
+- Vilkår
+- Kort om det som gjelder for tilbudet. Fullstendige leveringsvilkår følger kjøpsavtalen.
+- Gyldighet
+- Tilbudet gjelder til 15. oktober 2026. Priser kan endres etter fristen.
+- Kontrollmål
+- Endelig bestilling skjer etter kontrollmål hos kunden. Avvik fra tegningen avtales skriftlig.
+- Endringsfrist
+- Endringer kan gjøres i kundeportalen frem til 14 dager før levering.
+- Levering og montering
+- Leveringsuke bekreftes i ordrebekreftelsen. Vann, strøm og ventilasjon klargjøres av kunden.
+- Etter betalingsplanen: 30 % ved signering, 60 % ved levering og 10 % etter montering.
+- Reklamasjon
+- Etter forbrukerkjøpsloven. Punkter meldes i kundeportalen og får eget nummer.
+- Kjøpsavtale
+- Forside, innhold, vilkår, signering og vedlegg.
+- Kjøpsavtale · Ordre O-2417 · 
+- Kunden godtar tilbud v3 i portalen
+- Tilvalg, betalingsplan og vilkår
+- «Send til signering»
+- Kjøpsavtale.pdf · 5 sider
+- Penneo og kundeportal
+- Kjøpsavtale · Kjøkken
+- Ordre
+- O-2417
+- 12. oktober 2026
+- Innhold
+- Avtalen
+- Avtalen gjelder kjøkken etter tegning 5971 med tilvalgene under. Prisene er inkludert mva.
+- Partene
+- Kjøper
+- Butikknavn AS, Storgata 1, 2317 Hamar
+- Kontakt kjøper
+- 900 00 000 · kari@eksempel.no
+- Kontakt selger
+- Kristine B. · 900 00 001
+- Det som kjøpes
+- Kjøkken etter tegning 5971, 3 ark
+- 238 800 kr
+- Tilvalg: benkeplate 30 mm
+- 6 200 kr
+- Tilvalg: LED under overskap
+- 2 900 kr
+- Kjøpesum inkl. mva
+- 266 800 kr
+- Betaling og levering
+- Ved signering · 30 %
+- 80 040 kr
+- Ved levering · 60 %
+- 160 080 kr
+- Etter montering · 10 %
+- 26 680 kr
+- Levering
+- uke 46 · montering uke 47
+- Alminnelige leveringsvilkår for kjøkken og innredning.
+- Avtalens innhold
+- Avtalen består av denne kjøpsavtalen, tegningen, artikkellisten og disse vilkårene. Ved motstrid gjelder kjøpsavtalen.
+- Endringer
+- Endringer etter signering avtales skriftlig i kundeportalen. Etter endringsfristen fredag 16. oktober kan endringer gi ny leveringstid og pris.
+- Selger tar kontrollmål før bestilling. Kjøper sørger for at rommet er klart som avtalt.
+- Leveringsdag varsles på SMS og i kundeportalen. Kjøper sørger for adkomst og plass til kolli.
+- Montering
+- Montering skjer etter tegning. Rørlegger og elektriker er ikke med, med mindre det står i avtalen.
+- Faktura sendes etter betalingsplanen med 14 dagers forfall.
+- Mangler og reklamasjon
+- Mangler meldes i kundeportalen. Reklamasjon etter forbrukerkjøpsloven.
+- Angrerett
+- Varer laget etter kjøpers mål og ønsker omfattes ikke av angreretten.
+- Signering
+- Avtalen signeres digitalt med BankID via Penneo. Kjøper signerer først, deretter motsignerer selger. Når begge har signert, får dere avtalen på e-post, og den ligger i kundeportalen.
+- Kjøper · 
+- Signeres med BankID
+- Selger · Kristine B., Butikknavn
+- Med signaturen bekrefter partene at de har lest og godtatt avtalen med vedlegg. Avtalen er utferdiget digitalt. Penneo legger til et signaturark med bevis for identitet og tidspunkt.
+- Vedlegg 1
+- Vedlegg 1 · Tegning og artikler
+- Tegning 5971 · R09 og artikkellisten slik de var ved signering.
+- Tegning 5971 · R09 · plan
+- Skap
+- 23 stk
+- Fronter
+- 31 stk
+- 4 stk
+- Linjer i artikkellisten
+- Ordrebekreftelse
+- Varelinjer, levering, endringer og leverandørenes bekreftelser.
+- Ordrebekreftelse · Ordre O-2417 · 
+- Ordre O-2417 i CRM
+- OB fra leverandørene kontrollert
+- «Send ordrebekreftelse»
+- Ordrebekreftelse.pdf · 3 sider
+- Ordre O-2417
+- Ordre O-2417 · Hamar
+- Takk for bestillingen. Her er det vi har bestilt til kjøkkenet ditt, og når det kommer.
+- Kunde
+- Leveringsadresse
+- tirsdag 17. november
+- 17.–19. november
+- Bestilt
+- Varegruppe
+- Leverandør
+- Leverandør A
+- uke 46
+- Benkeplate 30 mm
+- Leverandør B
+- uke 45
+- Vask og blandebatteri
+- Leverandør C
+- LED under overskap
+- Levering og betaling
+- Endret siden tilbudet
+- Benkeplate 30 mm (var 20 mm)
+- + 6 200 kr
+- + 2 900 kr
+- Ny kjøpesum inkl. mva
+- Betalt ved signering
+- Faktureres ved levering
+- Faktureres etter montering
+- Før levering
+- Ryddig vei inn og plass til 14 kolli i garasje eller gang.
+- Vann og strøm klargjort der tegningen viser.
+- Endringsfrist er passert. Nye endringer avtales med selger.
+- Vedlegg
+- Vedlegg · leverandørenes bekreftelser
+- Hengsel sammenligner hver bekreftelse med ordren, linje for linje.
+- OB-nr.
+- Mottatt
+- Status
+- A-77120
+- OK etter ny OB
+- B-3391
+- C-1180
+- Første OB fra Leverandør A hadde benkeplate 20 mm. Ny OB med 30 mm er mottatt og godkjent 12. oktober.
+- Anbud og tilvalgsliste
+- Liggende A4 til boligprosjekt: forside, leveransen, tilvalg og liste.
+- Anbud A-2026-031 · Prosjekt Eksempelhagen · Byggmester A
+- Prosjekt i CRM med 24 enheter
+- Standard og tilvalg per leilighet
+- «Lag anbud»
+- Anbud.pdf · 4 sider
+- Byggmester og prosjektportal
+- Anbud · Boligprosjekt
+- Kjøkken og garderobe til Prosjekt Eksempelhagen
+- Byggmester A · 24 leiligheter · innflytting høsten 2027
+- Anbud
+- A-2026-031
+- 1. oktober 2026
+- 1. desember 2026
+- Kontakt
+- Leveransen
+- Leilighetstype
+- Kjøkken
+- Garderobe
+- Pris per enhet
+- 2-roms
+- Rett vegg 3,0 m
+- 1 skap
+- 84 000 kr
+- 3-roms
+- L-kjøkken 4,2 m
+- 2 skap
+- 118 000 kr
+- 4-roms
+- L-kjøkken med øy
+- 3 skap
+- 164 000 kr
+- Sum 24 enheter eks. mva
+- 2 744 000 kr
+- Prisene gjelder standard leveranse. Tilvalg betales av kjøper og faktureres via byggmester.
+- Tilvalg for kjøperne
+- Kjøperne velger selv, dere får grunnlaget
+- Hver kjøper får tilgang til kundeportalen med tegning av sin leilighet, standard og mulige oppgraderinger med pris. Dere ser status for alle leiligheter i prosjektportalen.
+- Invitasjon
+- Kjøper får e-post med lenke til kundeportalen.
+- Valg
+- Standard eller oppgradering, pris inkl. påslag.
+- Frist
+- Påminnelse 7 og 2 dager før. Etter frist: standard.
+- Grunnlag
+- Dere får sum per leilighet til fakturering av kjøper.
+- Tilvalgsliste
+- Tilvalg
+- Gjelder
+- Standard
+- Oppgradering
+- Alle
+- Hvit matt
+- Eik natur
+- Laminat 30 mm
+- Kompaktlaminat 12 mm
+- 7 400 kr
+- Knott børstet stål
+- Stang sort 160 mm
+- 1 900 kr
+- 3- og 4-roms
+- Oppvask
+- Integrert 60 cm
+- Integrert, høy modell
+- 3 200 kr
+- Hvite dører
+- Speildør
+- 2 600 kr
+- Monteringsrapport med KS
+- Kvalitetssjekk, bilder, restpunkt, hvitevarer og signaturer.
+- Monteringsrapport · Ordre O-2417 · 
+- Jobben i Hengsel Ute
+- KS-sjekkliste med bilder
+- «Ferdig montert» og kundens signatur
+- Monteringsrapport.pdf · 2 sider
+- Ordren og kundeportal
+- Kvalitetssjekk
+- Kjøkken, 
+- Monteringsrapport
+- Montert 19. november 2026
+- Adresse
+- Montør
+- Montør En, Montasjefirma A
+- Tid
+- 17.–19. november · 21,5 timer
+- Skap i vater og lodd
+- Alle skap kontrollert med lasermåler
+- Skjøt forseglet, fall mot vask 2 mm
+- Oppvaskmaskin tilkoblet og testet
+- Fronter og hengsler
+- Justert, lik spalte 3 mm
+- Sokkel
+- Mangler 40 mm ved vegg, kappet og montert
+- Fuge bak komfyr
+- Manglet, fuget dag 3
+- LED under overskap virker
+- Rydding
+- Emballasje tatt med
+- Bilder
+- Oversikt
+- Benkeplate skjøt
+- Sokkel ved vegg
+- Etter rydding
+- Signatur
+- Restpunkter og signatur
+- Restpunkter
+- 14-3 · Sokkel mangler 40 mm mot vegg
+- Løst 19.11
+- 14-5 · Sokkel mot vegg, 40 mm
+- Løst 18.11
+- 14-6 · Fuge mangler bak komfyr
+- Hvitevarer registrert
+- Hvitevare
+- Modell
+- Serienr.
+- Platetopp induksjon
+- PT-60-I
+- Stekeovn
+- SO-60-P
+- Oppvaskmaskin
+- OM-60-I
+- Kjøl/frys integrert
+- KF-178
+- Kunde · signert på skjerm 19. november 2026 kl. 14.10
+- Montør En
+- Montør · Montasjefirma A
+- Punktrapport
+- Alle punkter på kunden med nummer, fase og status.
+- Punktrapport · Ordre O-2417 · 
+- Punktene på kundekortet
+- Fase, status og bilder
+- «Lag punktrapport»
+- Punktrapport.pdf · 2 sider
+- Kunde, montør eller leverandør
+- Nordmann, Lena · Kjøkken
+- Ordre O-2417 · montert 19.11.2026 · Montør En · rapport laget 20.11.2026
+- Punkter totalt
+- Åpne
+- Løst
+- Utgått
+- Oversiktsbilde med punkter · kjøkken, bilde 3
+- Befaring
+- Vannrør i vei for skuff under vask. Flyttes 60 mm mot høyre.
+- Rørlegger (kunde) · 05.11
+- Hull i vegg bak oppvaskmaskin.
+- Montør En · 08.10
+- Sokkel mangler 40 mm mot vegg, må kappes.
+- Montør En · 19.11
+- Punkter
+- Punkter, fortsatt
+- Stikkontakt flyttes 20 cm for å komme bak kjøleskap.
+- Elektriker (kunde) · 05.11
+- Sokkel mot vegg, 40 mm.
+- Montør En · 18.11
+- KS
+- Fuge mangler bak komfyr.
+- Ripe i front under vask. Ny front bestilt.
+- Kristine B. · 02.12
+- Punktene har samme nummer i CRM, Hengsel Ute og kundeportalen.
+- Leveringspakke og FDV
+- Forside, FDV, garanti, hvitevarer og dokumentliste.
+- Leveringspakke · Ordre O-2417 · 
+- Ordren etter ferdigmelding
+- FDV for valgte materialer og hvitevarer
+- «Lag leveringspakke»
+- Leveringspakke.pdf · 5 sider
+- Kundeportal, «Kjøkkenet ditt»
+- Leveringspakke · Del 2
+- Alt om kjøkkenet ditt
+-  · Montert 19. november 2026
+- FDV
+- Drift og vedlikehold for skap, fronter og benkeplate
+- Garanti
+- Hva som gjelder, og hvordan du melder fra
+- Vedlikehold
+- Årlig: juster hengsler, sjekk fuger
+- Typeskilt, modellnummer og garantibevis
+- Du finner alt dette i kundeportalen også. Logg inn med telefonnummeret ditt, så ligger dokumentene der så lenge kjøkkenet står.
+- Forvaltning, drift og vedlikehold
+- Fronter i eik, matt lakk
+- Tørk av med lett fuktig klut og mildt såpevann. Unngå skurende midler og mikrofiberkluter med slipeeffekt.
+- Benkeplate laminat 30 mm
+- Bruk skjærebrett og grytebrikker. Tørk opp vann ved skjøter og rundt vask med en gang.
+- Skuffer og hengsler
+- Juster hengsler med skrutrekker ved behov. Skuffer justeres med hjulet bak frontfestet.
+- Årlig sjekk
+- Juster dører som henger.
+- Sjekk fugen rundt vask og bak komfyr.
+- Rens fettfilteret i ventilatoren.
+- Garanti og reklamasjon
+- Skap og skrog
+- 5 år
+- Hengsler og skuffeskinner
+- 2 år
+- etter produsentens garanti
+- 5 år etter forbrukerkjøpsloven
+- Slik melder du fra
+- 1. Logg inn i kundeportalen og velg «Meld punkt».
+- 2. Ta bilde og skriv kort hva som er feil.
+- 3. Punktet får nummer, og du ser status der.
+- Registrert av montøren fra typeskiltet ved montering.
+- Garanti til
+- nov. 2028
+- Typeskilt platetopp
+- Typeskilt stekeovn
+- Typeskilt oppvask
+- Typeskilt kjøl/frys
+- Dokument
+- Sider
+- Tegning 5971 · R09
+- Bruksanvisninger hvitevarer
+- Vedlikehold av benkeplate
+- Garantibevis innredning
+- Montasjeplan
+- Liggende A4 per uke, med arbeidsordrene for hver jobb.
+- Montasjeplan · uke 47 · Butikknavn Hamar
+- Montasjeplanen i CRM
+- Uke 47, alle montører
+- «Skriv ut uke»
+- Montasjeplan.pdf · 2 sider
+- Montører og montasjefirma
+- Uke 47
+- Montasjeplan uke 47
+- 16.–20. november 2026
+- 6 monteringer · 1 uten montør
+- Man 16.
+- Tir 17.
+- Ons 18.
+- Tor 19.
+- Fre 20.
+- Montasjefirma A
+- Kjøkken · dag 1
+- Kjøkken · dag 2
+- Kjøkken · dag 3
+- Montør To
+- Per Nordmann
+- Lise Nordmann
+- Garderobe · venter svar
+- Montør Tre
+- Montasjefirma B
+- Butikknavn
+- Utstilling
+- Nina Nordmann
+- Uten montør
+- Venter på firma
+- Tor Nordmann
+- Kjøkken · mangler montør
+- Arbeidsordrer
+- Arbeidsordrer uke 47
+- Start
+- Kolli
+- Merknad
+- tir. 07.30
+- Ny OB, benkeplate 30 mm
+- Eksempelveien 4, Hamar
+- man. 07.30
+- Prøvegata 2, Gjøvik
+- tor. 08.00
+- Venter svar fra firma
+- Testvegen 9, Brumunddal
+- ons. 07.30
+- Kontrollmål OK
+- Demoveien 1, Lillehammer
+- fre.
+- Mangler montør
+- Faktura
+- Sluttfaktura etter montering, med betalingsoversikt.
+- Faktura 26-1184 · Ordre O-2417 · 
+- Sluttfaktura 10 % etter betalingsplanen
+- «Fakturer»
+- Faktura.pdf · 2 sider
+- PowerOffice Go og e-post
+- Sluttfaktura
+- Faktura 26-1184
+- 20. november 2026
+- O-2417 · Kjøkken
+- Forfall
+- 4. desember 2026
+- KID
+- Beskrivelse
+- Beløp eks. mva
+- Mva
+- Kjøkken etter kjøpsavtale, 10 % etter montering
+- 21 344 kr
+- 5 336 kr
+- Sum eks. mva
+- Mva 25 %
+- Å betale
+- Kontonummer 0000 00 00000 · Butikknavn AS
+- Merk betalingen med KID 0026118400417.
+- Betalingsoversikt
+- Betalt ved signering · 12.10
+- − 80 040 kr
+- Betalt ved levering · 17.11
+- − 160 080 kr
+- Denne fakturaen
+- Fakturaen er overført til regnskapet. Spørsmål om fakturaen sendes til Butikknavn i kundeportalen.
