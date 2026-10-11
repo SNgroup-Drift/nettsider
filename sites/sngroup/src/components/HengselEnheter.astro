@@ -1,7 +1,7 @@
 ---
 /**
  * Hengsel-delen: CRM i Studio Display og montørappen i iPhone 18, i samme innbyrdes størrelse (telefonen ca. 30 % av skjermens bredde).
- * Fanene under velger hvilken skjerm i appen som vises. Teksten står ved siden av enhetene, aldri oppå.
+ * Fanene under velger hvilken skjerm i appen eller kundeportalen som vises. Teksten står ved siden av enhetene, aldri oppå.
  */
 import Enhet from "./Enhet.astro";
 
@@ -9,12 +9,13 @@ const faner = [
   { id: "dag", label: "I dag", bilde: "ute-i-dag.png", alt: "Montørappen Hengsel Ute: dagens jobber" },
   { id: "jobb", label: "Jobb", bilde: "ute-jobb-under.png", alt: "Montørappen Hengsel Ute: en jobb under arbeid" },
   { id: "ks", label: "KS", bilde: "ute-ks.png", alt: "Montørappen Hengsel Ute: kvalitetssjekk" },
+  { id: "kunde", label: "Kundeportal", bilde: "portal-tilbud.png", alt: "Kundeportalen: tilbudet" },
 ];
 ---
 <div class="gruppe" data-enheter>
   <div class="rad">
     <div class="skjerm">
-      <Enhet type="studio-display" bilde="crm-salgstavla.png" alt="CRM by Hengsel: salgstavla for leder" />
+      <Enhet type="studio-display" bilde="crm-tilbud.png" alt="CRM by Hengsel: tilbudssiden" />
     </div>
     <div class="telefon">
       {faner.map((f, i) => (
@@ -24,7 +25,7 @@ const faner = [
       ))}
     </div>
   </div>
-  <div class="faner" role="tablist" aria-label="Skjermer i montørappen">
+  <div class="faner" role="tablist" aria-label="Skjermer på telefonen">
     {faner.map((f, i) => (
       <button type="button" role="tab" id={`hf-${f.id}`} aria-controls={`hp-${f.id}`} aria-selected={String(i === 0)} tabindex={i === 0 ? 0 : -1} data-fane={f.id}>
         {f.label}
