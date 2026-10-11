@@ -1,7 +1,7 @@
 # Skjermbilder og Apple-rammer på hengsel.no
 
-Kilde: pakke v4 (11.10.2026, `delt/pakke-v4/INSTRUKS.md`, ligger på grenen `demo`) for filene den har, og pakke v3 (`delt/pakke-v3/` på
-grenen `pakke-v3`) for resten. Rammene er Apples Product Bezels med gjennomsiktig skjermhull (`public/img/ramme-*.webp`, uendret fra
+Kilde: pakke v5 (`delt/pakke-v5/` på grenen `pakke-v5`) for `crm-montasje`, `ute-i-dag` og `ute-ks`, pakke v4 (`delt/pakke-v4/`, grenen
+`pakke-v4`) for filene den har, og pakke v3 (`delt/pakke-v3/`, grenen `pakke-v3`) for resten. Rammene er Apples Product Bezels med gjennomsiktig skjermhull (`public/img/ramme-*.webp`, uendret fra
 v3 til v4); skjermbildet ligger under rammen og klippes til hullet med hjørneradius, `object-fit: cover`, `object-position: top`
 (`src/components/Enhet.astro`). Rammen er ikke beskåret, vippet eller speilvendt, og har ingen skygge. Skjermbildene er WebP
 (kvalitet 80–82) laget av PNG-ene i pakkene, uten endring i oppløsning. Skjermhull (andel av rammen): tabellen i INSTRUKS.md; verdiene
@@ -11,22 +11,27 @@ står i `Enhet.astro`.
 
 | Sted | Ramme | Bilde (pakke) |
 |---|---|---|
-| Hero | Studio Display + iPhone 18 | `crm-tilbud` (v4) + `ute-i-dag` (v3) |
-| Sju steg 1 Befaring / 5 Montering / 6 Punkter og saker / 7 Ferdig og faktura | iPhone 18 | `ute-laser` / `ute-ks` / `ute-punkter` / `ute-ferdig` (v3) |
+| Hero | Studio Display + iPhone 18 | `crm-tilbud` (v4) + `ute-i-dag` (v5) |
+| Sju steg 1 Befaring / 5 Montering / 6 Punkter og saker / 7 Ferdig og faktura | iPhone 18 | `ute-laser` (v3) / `ute-ks` (v5) / `ute-punkter` (v3) / `ute-ferdig` (v3) |
 | Sju steg 2 Tilbud / 3 Ordre og bestilling | Studio Display | `crm-tilbud` (v4) / `crm-bestilling` (v3) |
 | Sju steg 4 Levering | iPhone 18 | `portal-levering` (v4, kundeportalen) |
-| Hengsel Ute, åtte grep | iPhone 18 | `ute-i-dag`, `ute-laser`, `ute-jobb-under`, `ute-ks` + `ute-ks-kamera`, `ute-typeskilt`, `ute-avvik`, `ute-punkter` + `ute-punktkort`, `ute-ferdig` (v3) |
+| Hengsel Ute, åtte grep | iPhone 18 | `ute-i-dag` (v5), `ute-laser`, `ute-jobb-under`, `ute-ks` (v5), `ute-typeskilt`, `ute-avvik`, `ute-punkter` + `ute-punktkort`, `ute-ferdig` (v3) |
 | Merking på iPad | iPad liggende | `ute-ipad-bildeverktoy` (v4, 2360 × 1640) |
-| For kontoret (fire faner) | Studio Display | `crm-resultater` (v3, Ledertavle), `crm-ordre-kontrollmal` (v4, Montasjeplan), `crm-bestilling` (v3), `crm-etterkalkyle` (v3) |
+| For kontoret (fire faner) | Studio Display | `crm-resultater` (v3, Ledertavle), `crm-montasje` (v5, Montasjeplan), `crm-bestilling` (v3), `crm-etterkalkyle` (v3) |
 | Kundeportalen | MacBook | `kundeportal-pc` (v4) |
 | Kundeportalen, under PC-skjermen | iPhone 18 ×4 | `portal-tilbud`, `portal-levering`, `portal-montering`, `portal-fdv` (v4) |
-| /apptest | iPhone 18 ×3 | `ute-i-dag`, `ute-ks`, `ute-laser` (v3) |
+| /apptest | iPhone 18 ×3 | `ute-i-dag`, `ute-ks` (v5), `ute-laser` (v3) |
 
 ## Valg og avvik
 
-- **`crm-montasje` (v3) er ikke brukt**, slik v4 sier (den viser kontrollmål, og designfilene har ingen montasjeplan på PC). Fanen
-  «Montasjeplan» viser i stedet `crm-ordre-kontrollmal` (kontrollmål og tildeling av montør), som passer teksten om hvem som monterer
-  hva og når kontrollmålene må være tatt. Fjernet også: `crm-min-dag`, `portal-kjokken`, `kundeportalen-pc`.
+- **Montasjeplan:** fanen viser `crm-montasje` fra v5 (Mer › Montasje › Montasjeplan, uke 42 per montør og montasjefirma). v3-bildet med samme
+  navn viste kontrollmål og er byttet ut. `crm-ordre-kontrollmal` (v4) er ikke i bruk lenger, siden v5 sier at den bare skal brukes der det
+  handler om kontrollmål, og ingen side gjør det; filen er fjernet. Fjernet tidligere: `crm-min-dag`, `portal-kjokken`, `kundeportalen-pc`.
+- **KS-raden (grep 4) har én telefon:** `ute-ks` i v5 viser nå kameraet (OK åpner kameraet), akkurat som `ute-ks-kamera` fra v3. To bilder
+  ville vist samme skjerm to ganger, så `ute-ks-kamera` er tatt ut.
+- **Navn i bildene (v5):** `ute-i-dag` og `ute-ks` har Kari Nordmann og Ola. De andre Ute-bildene fra v3 (`ute-jobb-under`, `ute-laser`,
+  `ute-punkter`, `ute-punktkort`, `ute-avvik`, `ute-ferdig`, `ute-typeskilt`) kan fortsatt ha de gamle navnene (Tuva Skinnrud, Pål); v5 sier fra
+  hvis de skal tas på nytt. Det gjelder også `ute-i-dag`/`ute-ks` på /apptest (nå v5).
 - Steg 4 (Levering) viser `portal-levering` («Bekreft leveringsdag») i stedet for et CRM-bilde; stegets undertekst heter «Kundeportalen».
 - De fire portalbildene under MacBook-skjermen følger lista over kundeportalen (tilbud, leveringsdag og montering, FDV). Ny rad i
   `index.astro` (`.portal-telefoner`): fire telefoner på bred skjerm, to og to på smal. Ikke i fil 60 (som ikke ligger i repoet).

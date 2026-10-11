@@ -162,9 +162,9 @@ for (const [navn, { base }] of Object.entries(servere)) {
   await page.click("#steg-2 [data-neste]");
   meld((await synlig("steg-3")) && (await page.getAttribute("#steg-fane-3", "aria-selected")) === "true", "hengsel: Neste går til steg 3");
   await page.click("#kontor-fane-2");
-  meld((await synlig("kontor-2")) && (await src("kontor-2")) === "/img/crm-ordre-kontrollmal.webp", "hengsel: «For kontoret» bytter til Montasjeplan (crm-ordre-kontrollmal.webp)");
+  meld((await synlig("kontor-2")) && (await src("kontor-2")) === "/img/crm-montasje.webp", "hengsel: «For kontoret» bytter til Montasjeplan (crm-montasje.webp)");
   await page.click("#kontor-2 [data-zoom]");
-  meld(await page.$eval("[data-lysboks]", (d) => d.open && d.querySelector("img").getAttribute("src") === "/img/crm-ordre-kontrollmal.webp"), "hengsel: lysboksen åpner skjermbildet i full størrelse");
+  meld(await page.$eval("[data-lysboks]", (d) => d.open && d.querySelector("img").getAttribute("src") === "/img/crm-montasje.webp"), "hengsel: lysboksen åpner skjermbildet i full størrelse");
   await page.keyboard.press("Escape");
   meld(!(await page.$eval("[data-lysboks]", (d) => d.open)), "hengsel: Esc lukker lysboksen");
   const lagret = await page.evaluate(() => Object.keys(localStorage));
