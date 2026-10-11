@@ -59,5 +59,5 @@ export const KONTOR: [string, string, string][] = [
 export const PORTAL_BILDE = "portal-tilbud";
 export const PORTAL_ALT = "Kundeportalen på telefon: tilbudet med bilde, pris og knappen «Aksepter tilbudet»";
 
-export const INTEGRASJONER = "Nobia og CET-import · PowerOffice Go · Penneo e-signering · Bosch laser · SMS og e-post · Feilovervåking";
+export const INTEGRASJONER = "Nobia og CET-import · PowerOffice Go · Penneo e-signering · Lasermåler · SMS og e-post · Feilovervåking";
 export const TRYGGHET = "Data lagres i EU. Roller og butikktilgang styrer hvem som ser hva. Logg på alle endringer. Daglig sikkerhetskopi.";
