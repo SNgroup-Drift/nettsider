@@ -1,0 +1,11 @@
+/* Hengsel – skrift.
+   Titler: Reckless (RecklessStandardM-Regular) registrert som «Reckless Neue», bare 400.
+   Tekst: TWK Lausanne 250 / 350 / 650. 500 (knapper, etiketter) finnes ikke som fil og faller til 350.
+   Newsreader og Inter lastes fortsatt fra Google Fonts som reserve. */
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400&family=Inter:wght@400;500;600&display=swap");
+
+@font-face { font-family: "Reckless Neue"; src: url("../fonts/RecklessStandardM-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
+@font-face { font-family: "TWK Lausanne"; src: url("../fonts/TWKLausanne-250.woff2") format("woff2"), url("../fonts/TWKLausanne-250.woff") format("woff"); font-weight: 250; font-style: normal; font-display: swap; }
+@font-face { font-family: "TWK Lausanne"; src: url("../fonts/TWKLausanne-350.woff2") format("woff2"), url("../fonts/TWKLausanne-350.woff") format("woff"); font-weight: 350; font-style: normal; font-display: swap; }
+@font-face { font-family: "TWK Lausanne"; src: url("../fonts/TWKLausanne-650.woff2") format("woff2"), url("../fonts/TWKLausanne-650.woff") format("woff"); font-weight: 650; font-style: normal; font-display: swap; }
