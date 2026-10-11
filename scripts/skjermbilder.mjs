@@ -65,12 +65,16 @@ for (const side of andreSider) {
       const ctx = await browser.newContext({ ...v, colorScheme: modus, reducedMotion: "reduce" });
       const page = await ctx.newPage();
       await page.goto(servere[side.nett].base + side.sti, { waitUntil: "networkidle" });
-      // Rull gjennom siden så alle skjermbildene (loading="lazy") er lastet før helsidebildet
+      // Skjermbildene (loading="lazy") skal være lastet før helsidebildet: sett dem til eager, rull gjennom siden og vent til alle er ferdige
       await page.evaluate(async () => {
+        document.querySelectorAll("img").forEach((i) => { i.loading = "eager"; i.decoding = "sync"; });
         for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
         window.scrollTo(0, 0);
       });
+      await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 30000 });
+      await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
       await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(800);
       await page.evaluate(() => document.fonts.ready);
       const fil = `${side.nett}-${side.fil}-${v.navn}-${modus === "light" ? "lys" : "mork"}.png`;
       await page.screenshot({ path: join(ut, fil), fullPage: true });

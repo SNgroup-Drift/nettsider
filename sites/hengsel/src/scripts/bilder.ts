@@ -1,14 +1,14 @@
 /**
- * Skjermbildene i public/img: mål i piksler for Enhet.astro (kilde: Apple-pakkene v5, v4 og v3, 11.10.2026, se docs/bilder.md).
+ * Skjermbildene i public/img: mål i piksler for Enhet.astro (kilde: Apple-pakkene v6, v5, v4 og v3, 11.10.2026, se docs/bilder.md).
  * Rammene (ramme-*.webp) er Apples Product Bezels med gjennomsiktig skjermhull; skjermbildene ligger under dem.
  */
 /** Bredde og høyde i piksler, så nettleseren kan sette av plass før bildet er lastet */
 export const MAAL: Record<string, [number, number]> = {
-  "crm-bestilling": [2880, 1800],
-  "crm-etterkalkyle": [2880, 1800],
-  "crm-montasje": [2880, 1800],
-  "crm-resultater": [2880, 1800],
-  "crm-tilbud": [2880, 1800],
+  "crm-bestilling": [2560, 1440],
+  "crm-etterkalkyle": [2560, 1440],
+  "crm-montasje": [2560, 1440],
+  "crm-resultater": [2560, 1440],
+  "crm-tilbud": [2560, 1440],
   "kundeportal-pc": [2880, 1800],
   "portal-fdv": [1206, 2622],
   "portal-levering": [1206, 2622],
@@ -17,7 +17,7 @@ export const MAAL: Record<string, [number, number]> = {
   "ute-avvik": [1206, 2622],
   "ute-ferdig": [1206, 2622],
   "ute-i-dag": [1206, 2622],
-  "ute-ipad-bildeverktoy": [2360, 1640],
+  "ute-ipad-bildeverktoy": [2732, 2048],
   "ute-jobb-under": [1206, 2622],
   "ute-ks": [1206, 2622],
   "ute-laser": [1206, 2622],
