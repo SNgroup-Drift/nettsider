@@ -1,40 +1,48 @@
-# Dokumentvisning: gjenbruk i Visningsrommet (K-161)
+# Dokumentvisning: felles for hengsel.no og Visningsrommet (K-160, K-161)
 
-Visningen på hengsel.no/dokumenter er bygd for å kunne brukes en gang til. Dataene er atskilt fra visningen, og visningen tar dataene som parameter.
+Dokumentene vises på to steder: hengsel.no/dokumenter (Astro) og vis.hengsel.no/dokumenter (ren HTML, `sites/vis`). Begge leser **samme datafil**, så et dokument endres bare ett sted.
 
-## Filene (alle i `sites/hengsel/src/`)
+## Filene (`packages/design/src/dokumenter/`)
 
-| Fil | Hva | Avhengigheter |
+| Fil | Hva |
+|---|---|
+| `data.js` + `data.d.ts` | De ni dokumentene (`DOKUMENTER`), `LAGES_STEG`, `A4`, typene (`Dokument`, `DokSide`, `Blokk` …). Ren data, ingen Astro eller DOM. |
+| `lages.js` + `lages.d.ts` | «Slik lages det» per dokument i Visningsrommet: 3–5 steg (tittel, tekst, knappen som trykkes, skjermbilde fra CRM-designfilene), hva som skjer etterpå (PDF, e-post, SMS, signering, lagring) og lenker til rommene. |
+| `render.js` + `render.d.ts` | `renderA4Side(side, { fot, nr, total, ligg, forst })` gir HTML for én A4-side. Brukes av begge stedene. Alle tekster escapes. |
+| `a4-stil.js` + `.d.ts` | `a4DynamiskCss(dokumenter)`, `malKlasse`, `hhKlasse`: kolonnemaler og bildehøyder som klasser. |
+| `a4.css` | A4-papiret. Skalerer med bredden uten skript (container-enheter, `--u` = én designpiksel). Papiret er alltid lyst. |
+| `dokumentvisning.css` | Velger, stripe, bla-knapper, innholdsliste, lysboks. Trenger variablene `--bg --surface --surface-soft --surface-highlight --line --ink --muted --accent --f-display --f-body`. |
+| `dokumentvisning.js` | Faner, bla (knapper, ← →, sveip), innholdsliste, lysboks, `#id` i adressen (når `data-hash` står på `[data-dokvisning]`). Vanlig JavaScript. |
+
+Pakken eksporterer dem som `@sngroup/design/dokumenter/data`, `…/render`, `…/a4-stil`, `…/lages`, `…/a4.css`, `…/dokumentvisning.css` og `…/dokumentvisning`.
+
+## hengsel.no
+
+`sites/hengsel/src/content/dokumenter-data.ts` re-eksporterer `data.js`. `A4Side.astro` kaller `renderA4Side` (`set:html`), `Dokumentpanel.astro` og `Dokumentvisning.astro` lager panelene (første dokument i DOM, resten i `<template>`), og Astro bundler skriptet og CSS-en fra pakken.
+
+## Visningsrommet (`sites/vis`)
+
+`bygg.mjs` kopierer `a4.css`, `dokumentvisning.css` og `dokumentvisning.js` til `dist/assets/dokumenter/` og forsidebildet `dok-forside.webp` (fra `sites/hengsel/public/img`) til `dist/img/`. `sites/vis/dokumenter.mjs` lager HTML av de felles dataene og `bygg.mjs` setter den inn der markørene står:
+
+| Markør | Gir | Brukes i |
 |---|---|---|
-| `content/dokumenter-data.ts` | De ni dokumentene (`DOKUMENTER`), typene (`Dokument`, `DokSide`, `Blokk` …), `LAGES_STEG`, `A4` | Ingen. Ren TS, ingen Astro eller DOM. |
-| `components/dokumenter/a4-stil.ts` | `a4DynamiskCss(dokumenter)`, `malKlasse`, `hhKlasse` | Ren TS |
-| `components/dokumenter/A4Side.astro` | Én A4-side, stående eller liggende, alle sidetyper | Astro |
-| `components/dokumenter/Dokumentpanel.astro` | Ett dokument: «Slik lages det», arket, bla-knapper, innholdsliste | Astro |
-| `components/dokumenter/Dokumentvisning.astro` | Velger, paneler (første ferdig, resten i `<template>`), lysboks (`<dialog>`) | Astro |
-| `scripts/dokumentvisning.ts` | Faner, bla, innholdsliste, lysboks, fokusfelle | Ingen (vanlig TS) |
-| `styles/a4.css` | A4-papiret. Skalerer med bredden uten skript (container-enheter, `--u` = én designpiksel) | Ingen |
-| `styles/dokumentvisning.css` | Velger, stripe, bla-knapper, innholdsliste, lysboks | Variablene `--bg --surface --surface-soft --surface-highlight --line --ink --muted --accent --f-display --f-body` |
+| `<!--dokumentvisning-->` | Velger, ni dokumenter med ark og bla-knapper, «Slik lages det» | `src/dokumenter/index.html` |
+| `<!--a4-stil-->` | `<style>` med kolonnemaler og bildehøyder | alle sider som viser A4 |
+| `<!--a4-ark:id:side:Tittel-->` | Ett lite ark som lenke til `/dokumenter/#id` | forsiden |
 
-Forsidebildet er `public/img/dok-forside.webp` (1200 × 768), hentet fra `/img/dok-forside.webp`. Skriftene hentes fra `--a4-skrift` og `--a4-overskrift`, med «Inter Variable»/«Inter» og «Newsreader Variable»/«Newsreader» som reserve (Visningsrommet bruker «Inter» og «Newsreader», så det virker uten endring).
+Det finnes ingen dokumentbilder (`dok-*.webp` er fjernet). Romkortet `src/img/rom-dokumenter.webp` lages av `npm run rammer:vis` fra en gjengitt tilbudsforside (krever `npm run build -w sites/vis` først).
 
-## Dataene
+Lenker til et dokument: `/dokumenter/#tilbud`, `#kjopsavtale`, `#ob`, `#anbud`, `#montering`, `#punkt`, `#fdv`, `#plan`, `#faktura`.
 
-`DOKUMENTER` er en vanlig liste og kan serialiseres: `JSON.stringify(DOKUMENTER)` (typene er bare TS og forsvinner). Et dokument har `id`, `t`, `s`, `fot`, `lages` (fem tekster), `ligg` (liggende) og `sider`. En side har enten `forside`, `todelt` eller `blokker`; blokkene er en union på `type` (se `Blokk`). Under bygging kan andre byggetrinn importere filen direkte (`import { DOKUMENTER } from ".../dokumenter-data.ts"` via esbuild/tsx/Astro) eller lese en JSON-utgave. Teksten er oppdiktet eksempelinnhold og vises med «Eksempel»-merking; nytt innhold skal ikke nevne merkenavn.
+## Endre eller legge til et dokument
 
-## Slik brukes visningen
+1. Rediger `data.js` (side, blokk eller tekst). Begge stedene følger med ved neste bygg.
+2. Legg til `LAGES.<id>` i `lages.js` (3–5 steg, skjermbilder fra `sites/vis/src/skjermbilder`). `scripts/dokumenter.test.mjs` feiler om et dokument mangler «Slik lages det», om et skjermbilde ikke finnes, eller om et merkenavn dukker opp.
+3. Bruk nøytrale demonavn (Butikknavn, Kari Nordmann, Leverandør A). «Din logo» øverst og «by Hengsel» i bunnlinjen, aldri to Hengsel-logoer.
 
-I en Astro-side: `<Dokumentvisning dokumenter={DOKUMENTER} />` (eller et utvalg). Komponenten importerer selv CSS-en og laster skriptet (Astro bundler `<script>`). Siden må ha variablene over; i `sites/hengsel` kommer de fra `styles/hengsel.css` og `tokens.css`. CSP: ingen `style`-attributter eller innebygde skript brukes. Kolonnemalene i tabellene ligger i én `<style>` fra `a4DynamiskCss()` (hashes av `scripts/csp-hasher.mjs` i hengsel; Visningsrommet må tillate eller hashe den).
+## Tilgjengelighet og ytelse
 
-## Hva som må til for at `sites/vis` (ren HTML uten Astro) kan bruke den
-
-Markup lages av Astro-komponentene, så det trengs ett mellomledd. Valgene, enklest først:
-
-1. **Fragment fra hengsel-bygget.** Legg en Astro-side (eller endepunkt) i `sites/hengsel` som bare gir `<Dokumentvisning dokumenter={DOKUMENTER} />` som HTML-fragment (uten meny og bunn), og la `sites/vis/bygg.mjs` sette fragmentet inn der det står en markør (som den allerede gjør med `<!--hengsel-logo N-->`). Kopier `_astro/*.css` og `_astro/Dokumentvisning*.js` fra `sites/hengsel/dist` til `dist/` i vis og lenk dem. Bygg hengsel først (rekkefølgen i rot-skriptet).
-2. **Astro Container API** (`experimental_AstroContainer`) i et eget byggetrinn som rendrer `Dokumentvisning.astro` til en streng. Ikke prøvd.
-3. **Egen gjengiver i ren JS** over de samme dataene. Klassene i `a4.css` og `dokumentvisning.css` og `data-*`-attributtene i `scripts/dokumentvisning.ts` er kontrakten; skriptet og stilene kan brukes uendret. Mest arbeid (A4Side er ca. 150 linjer markup).
-
-Uansett: skriptet og de to CSS-filene kan gjenbrukes som de er (`esbuild --bundle --minify scripts/dokumentvisning.ts`), og Visningsrommets CSP må tillate egne skript og stil fra samme opprinnelse. Visningsrommets dokumentmaler (`sites/vis/src/dokumenter/*.webp`) er forbildet og kan beholdes som forhåndsbilder til de ni dokumentene.
-
-## Lysboksen (tilgjengelighet)
-
-`<dialog>` med `showModal()` (resten av siden er inert), egen fokusfelle, Esc lukker, ← og → blar, `aria-label` «Åpne siden i lysboksen», «Forrige side», «Neste side», «Lukk» og «Dokumenter» (fanelisten). Fokus går tilbake til knappen som åpnet den. På telefon (under 700 px) vises arket i lesbar størrelse og kan rulles, knappene ligger under.
+- Arket (`[data-ark]`) har `tabindex="0"`; ← og → blar når arket eller knappene har fokus. Sveip til sidene på berøringsskjerm (også i lysboksen). Teller «Side 2 av 6» (`aria-live`).
+- Lysboksen er en modal `<dialog>` (`showModal()`, inert bakgrunn), egen fokusfelle, Esc lukker, fokus går tilbake til knappen som åpnet den. På telefon (under 700 px) vises arket i lesbar størrelse og kan rulles.
+- Bare det første dokumentet ligger i DOM-en; de andre i `<template>`. Alle sider unntatt den viste er `hidden`, og forsidebildene er `loading="lazy"`. Bilder har `width` og `height` (CLS 0).
+- `scripts/skjermbilder-vis.mjs` sjekker bla med tastatur og sveip, lazy-lasting, bilder uten mål eller alt, lysboks, CLS og kontrast (4,5:1) på `/dokumenter/` på 390 og 1280 px, lys og mørk.

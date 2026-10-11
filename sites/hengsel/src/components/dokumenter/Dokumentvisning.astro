@@ -8,10 +8,10 @@
  * Kolonnemalene i tabellene lages som klasser (CSP: ingen style-attributter) og ligger i én <style> her.
  * Fasit: Dokumenter.dc.html. Se docs/dokumentvisning.md for bruk i Visningsrommet.
  */
-import "../../styles/dokumentvisning.css";
-import type { Dokument } from "../../content/dokumenter-data";
+import "@sngroup/design/dokumenter/dokumentvisning.css";
+import type { Dokument } from "@sngroup/design/dokumenter/data";
 import Dokumentpanel from "./Dokumentpanel.astro";
-import { a4DynamiskCss } from "./a4-stil";
+import { a4DynamiskCss } from "@sngroup/design/dokumenter/a4-stil";
 
 interface Props {
   dokumenter: Dokument[];
@@ -48,5 +48,5 @@ const css = a4DynamiskCss(dokumenter);
   </dialog>
 </div>
 <script>
-  import "../../scripts/dokumentvisning";
+  import "@sngroup/design/dokumenter/dokumentvisning";
 </script>

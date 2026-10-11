@@ -266,6 +266,7 @@
     clearAll();cur=n;playing=false;
     var sc=SCENES[n-1];
     $('sceneNo').textContent=n;$('title').textContent=sc.t;$('lead').textContent=sc.lead;$('flowLbl').textContent=sc.flow;$('where').textContent=sc.where;
+    $('dokLenke').hidden=!(n===2||n===3);
     $('ohT').textContent=sc.head.t;$('ohS').textContent=sc.head.s;
     bilde(n);
     $('finale').classList.remove('show');

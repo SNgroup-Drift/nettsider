@@ -3,7 +3,7 @@
  * Ett dokument i Dokumentvisning: «Slik lages det»-stripen, arket med bla-knapper og innholdslisten.
  * Brukes både direkte (første dokument) og inni <template> (de andre, så de ikke gir DOM før de velges).
  */
-import { LAGES_STEG, type Dokument } from "../../content/dokumenter-data";
+import { LAGES_STEG, type Dokument } from "@sngroup/design/dokumenter/data";
 import A4Side from "./A4Side.astro";
 
 interface Props { dok: Dokument; forst?: boolean }
@@ -20,7 +20,7 @@ const total = dok.sider.length;
 </div>
 <div class="dv-vis">
   <div class="dv-ark-kol">
-    <div class:list={["dv-ark", { ligg: dok.ligg }]} data-ark>
+    <div class:list={["dv-ark", { ligg: dok.ligg }]} data-ark tabindex="0" role="group" aria-label={`${dok.t}: bla med piltastene eller sveip`}>
       {dok.sider.map((side, i) => (
         <div class="dv-side" data-side hidden={i > 0}>
           <A4Side side={side} fot={dok.fot} nr={i + 1} total={total} ligg={dok.ligg} forst={forst && i === 0} />

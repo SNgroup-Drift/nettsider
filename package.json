@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/demo.test.mjs && node scripts/sjekk-lenker.mjs",
+    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/demo.test.mjs scripts/dokumenter.test.mjs && node scripts/sjekk-lenker.mjs",
     "skjermbilder": "node scripts/skjermbilder.mjs",
     "skjermbilder:vis": "node scripts/skjermbilder-vis.mjs",
     "rammer:vis": "node scripts/rammer-vis.mjs",

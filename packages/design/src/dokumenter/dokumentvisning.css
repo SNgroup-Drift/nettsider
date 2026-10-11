@@ -15,6 +15,7 @@
 .dv-fane:hover { border-color: var(--ink); }
 .dv-fane[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
+.dv-panel[hidden] { display: none; }
 .dv-panel { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
 .dv-lages { background: var(--surface-highlight); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
 .dv-steg { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
@@ -23,7 +24,7 @@
 .dv-vis { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: start; }
 @media (min-width: 900px) { .dv-vis { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; } }
 .dv-ark-kol { display: flex; flex-direction: column; gap: 14px; align-items: center; min-width: 0; }
-.dv-ark { position: relative; width: 100%; max-width: 520px; box-shadow: 0 8px 24px rgba(49, 38, 29, 0.16), 0 0 0 1px var(--line); }
+.dv-ark { touch-action: pan-y; position: relative; width: 100%; max-width: 520px; box-shadow: 0 8px 24px rgba(49, 38, 29, 0.16), 0 0 0 1px var(--line); }
 .dv-ark.ligg { max-width: 640px; }
 .dv-side[hidden] { display: none; }
 .dv-zoom { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; border-radius: 0; }

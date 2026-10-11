@@ -1,15 +1,15 @@
 ---
 /**
- * Én A4-side (fasit: A4Side.dc.html), stående eller liggende. Alle sidetyper: forside, todelt oppbygning og blokkene i Blokk
- * (h, kv, linjer, tabell, boks, tekst, klausuler, bilder, bilde, sign, signbokser, stats, ks, punkter, plan).
+ * Én A4-side (fasit: A4Side.dc.html), stående eller liggende. Markeringen lages av den felles gjengiveren
+ * (packages/design/src/dokumenter/render.js), som Visningsrommet også bruker, så sidene er like begge steder.
  *
- * Siden skalerer med bredden den får (CSS container-enheter, se styles/a4.css): sett bredden på omslaget eller i --a4-maks. Ingen skript.
+ * Siden skalerer med bredden den får (CSS container-enheter, se a4.css): sett bredden på omslaget eller i --a4-maks. Ingen skript.
  * Kolonnemaler og bildehøyder blir klasser; reglene lages av a4DynamiskCss() (Dokumentvisning legger dem i én <style>).
  * Merket øverst er «Din logo | Butikknavn Hamar», og «by Hengsel» står i bunnlinjen. Papiret er alltid lyst.
  */
-import "../../styles/a4.css";
-import type { Blokk, DokSide } from "../../content/dokumenter-data";
-import { hhKlasse, malKlasse } from "./a4-stil";
+import "@sngroup/design/dokumenter/a4.css";
+import type { DokSide } from "@sngroup/design/dokumenter/data";
+import { renderA4Side } from "@sngroup/design/dokumenter/render";
 
 interface Props {
   side: DokSide;
@@ -23,166 +23,6 @@ interface Props {
   class?: string;
 }
 const { side, fot, nr, total, ligg = false, forst = false, class: klasse } = Astro.props;
-const fs = side.forside;
-const td = side.todelt;
-const faseKlasse = (f: string) => ({ Befaring: "befaring", KS: "ks", Reklamasjon: "reklamasjon" })[f as "KS"] ?? "";
-const statusKlasse = (s: string) => (s === "Løst" || s === "OK" ? "ok" : s === "Utgått" || s === "Åpen" ? "gul" : "");
-const blokker: Blokk[] = side.blokker ?? [];
+const html = renderA4Side(side, { fot, nr, total, ligg, forst, klasse });
 ---
-<div class:list={["a4", { ligg }, klasse]} role="group" aria-label={`Side ${nr} av ${total}`} data-a4>
-  <div class="a4-ark">
-    {fs && (
-      <>
-        <div class="a4-foto">
-          <img src="/img/dok-forside.webp" alt="" width="1200" height="768" loading={forst ? "eager" : "lazy"} fetchpriority={forst ? "high" : undefined} decoding="async" />
-          <div class="a4-plate a4-merke">
-            <span class="a4-dinlogo">Din logo</span><span class="a4-skille"></span>
-            <span class="a4-butikk"><span>Butikknavn</span><b>Hamar</b></span>
-          </div>
-          <span class="a4-bildetekst">Illustrasjon laget fra tegningen. Endelig utseende kan avvike.</span>
-        </div>
-        <div class="a4-fs">
-          <span class="a4-eb">{fs.eyebrow}</span>
-          <span class="a4-disp a4-fs-tittel">{fs.tittel}</span>
-          <span class="a4-fs-under">{fs.under}</span>
-          {fs.meta && (
-            <div class="a4-meta">
-              {fs.meta.map(([k, v]) => <div class="a4-mk"><span>{k}</span><span>{v}</span></div>)}
-            </div>
-          )}
-          {fs.pris && <div class="a4-pris"><span class="a4-disp">{fs.pris}</span><span>{fs.prisTekst}</span></div>}
-          {fs.fliser && (
-            <>
-              <div class="a4-fliser">
-                {fs.fliser.map(([t, s], i) => <div class="a4-flis"><span class="a4-disp">{i + 1}</span><b>{t}</b><span>{s}</span></div>)}
-              </div>
-              <span class="a4-fs-tekst">{fs.tekst}</span>
-            </>
-          )}
-        </div>
-      </>
-    )}
-    {!fs && (
-      <div class="a4-sd">
-        <div class="a4-topp">
-          <div class="a4-merke">
-            <span class="a4-dinlogo">Din logo</span><span class="a4-skille"></span>
-            <span class="a4-butikk"><span>Butikknavn</span><b>Hamar</b></span>
-          </div>
-          <span class="a4-hoyre">{(side.hoyre ?? []).map((r) => <span>{r}</span>)}</span>
-        </div>
-        {side.eyebrow && !td && <span class="a4-eb">{side.eyebrow}</span>}
-        {td && (
-          <div class="a4-todelt">
-            <div class="a4-todelt-v">
-              <span class="a4-eb">{td.eyebrow}</span>
-              <span class="a4-disp a4-tittel">{td.t}</span>
-              <span>{td.s}</span>
-            </div>
-            <div class="a4-todelt-h">
-              {td.steg.map(([t, s], i) => (
-                <div class="a4-steg"><span class="a4-steg-n">{i + 1}</span><span class="a4-steg-t"><b>{t}</b><span>{s}</span></span></div>
-              ))}
-            </div>
-          </div>
-        )}
-        {side.tittel && <span class="a4-disp a4-tittel">{side.tittel}</span>}
-        {side.ingress && <span class="a4-ingress">{side.ingress}</span>}
-        {blokker.map((b) => (
-          <>
-            {b.type === "h" && <span class="a4-disp a4-h">{b.t}</span>}
-            {b.type === "kv" && (
-              <div class={`a4-kv a4-kv-${b.kol}`}>
-                {b.kv.map((k) => <div class="a4-kvk"><span>{k.k}</span><span>{k.v}</span></div>)}
-              </div>
-            )}
-            {b.type === "linjer" && (
-              <div class="a4-kol">
-                {b.rader.map((r) => <div class="a4-lin"><span>{r.l}</span><span>{r.v}</span></div>)}
-                {b.sum && <div class="a4-sum"><span>{b.sum.l}</span><span>{b.sum.v}</span></div>}
-              </div>
-            )}
-            {b.type === "tabell" && (
-              <div class="a4-kol" role="table">
-                <div class:list={["a4-tr", "hode", malKlasse(b.mal)]} role="row">{b.kol.map((c) => <span role="columnheader">{c}</span>)}</div>
-                {b.rader.map((r) => <div class:list={["a4-tr", malKlasse(b.mal)]} role="row">{r.c.map((c) => <span role="cell">{c}</span>)}</div>)}
-                {b.sum && <div class="a4-sum liten"><span>{b.sum.l}</span><span>{b.sum.v}</span></div>}
-              </div>
-            )}
-            {b.type === "boks" && (
-              <div class="a4-boks">
-                {b.t && <b>{b.t}</b>}
-                {b.linjer.map((l) => <span>{l}</span>)}
-              </div>
-            )}
-            {b.type === "tekst" && <span class="a4-tekst">{b.t}</span>}
-            {b.type === "klausuler" && (
-              <div class="a4-kol">
-                {b.rader.map((k) => (
-                  <div class="a4-kl"><span class="a4-disp">{k.nr}</span><span><b>{k.t}</b><span>{k.s}</span></span></div>
-                ))}
-              </div>
-            )}
-            {b.type === "bilder" && (
-              <div class={`a4-bilder a4-n${b.rader.length}`}>
-                {b.rader.map((x) => <div class="a4-bild"><div class:list={["a4-plass", hhKlasse(b.hh)]}></div><span>{x}</span></div>)}
-              </div>
-            )}
-            {b.type === "bilde" && <div class:list={["a4-plass", "stor", hhKlasse(b.hh)]}><span>{b.t}</span></div>}
-            {b.type === "sign" && (
-              <div class="a4-sign">
-                {b.rader.map((g) => <div><span class="a4-sign-navn">{g.navn}</span><span class="a4-sign-rolle">{g.rolle}</span></div>)}
-              </div>
-            )}
-            {b.type === "signbokser" && (
-              <div class="a4-sb">
-                {b.rader.map((g) => <div><b>{g.t}</b><span>{g.s}</span></div>)}
-              </div>
-            )}
-            {b.type === "stats" && (
-              <div class="a4-stats">
-                {b.rader.map((s) => <div class="a4-stat"><span>{s.k}</span><span class="a4-disp">{s.v}</span></div>)}
-              </div>
-            )}
-            {b.type === "ks" && (
-              <div class="a4-kol">
-                {b.rader.map((k) => (
-                  <div class="a4-ks"><span>{k.p}</span><span>{k.m}</span><span><span class:list={["a4-prikk", { avvik: k.avvik }]}></span>{k.s}</span></div>
-                ))}
-              </div>
-            )}
-            {b.type === "punkter" && (
-              <div class="a4-kol" role="table">
-                <div class="a4-pk hode" role="row"><span role="columnheader">Ref.</span><span role="columnheader"></span><span role="columnheader">Punkt</span><span role="columnheader">Status</span><span role="columnheader">Sist endret</span></div>
-                {b.rader.map((p) => (
-                  <div class="a4-pk rad" role="row">
-                    <span class="a4-pk-ref" role="cell"><b>{p.ref}</b><span class:list={["a4-fase", faseKlasse(p.fase)]}>{p.fase}</span></span>
-                    <span class="a4-pk-bilde" role="cell"></span>
-                    <span role="cell">{p.t}</span>
-                    <b class:list={["a4-pk-s", statusKlasse(p.s)]} role="cell">{p.s}</b>
-                    <span class="a4-pk-sist" role="cell">{p.sist}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {b.type === "plan" && (
-              <div class="a4-kol" role="table">
-                <div class="a4-pl hode" role="row"><span role="columnheader">Montør og firma</span>{b.dager.map((d) => <span role="columnheader">{d}</span>)}</div>
-                {b.rader.map((r) => (
-                  <div class="a4-pl rad" role="row">
-                    <span class="a4-pl-m" role="rowheader"><span>{r.navn}</span><span>{r.firma}</span></span>
-                    {r.celler.map((c) => <span class:list={["a4-celle", c.tone]} role="cell">{c.tone !== "tom" && <><span>{c.t}</span><span>{c.s}</span></>}</span>)}
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        ))}
-      </div>
-    )}
-    <div class="a4-fot">
-      <span>{fot}</span>
-      <span><span>by Hengsel</span><span class="a4-tab">Side {nr} av {total}</span></span>
-    </div>
-  </div>
-</div>
+<Fragment set:html={html} />

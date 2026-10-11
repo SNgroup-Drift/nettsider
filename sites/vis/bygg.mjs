@@ -13,6 +13,7 @@
 import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
+import { a4Ark, a4Stil, dokumentvisningHtml } from "./dokumenter.mjs";
 
 const her = import.meta.dirname;
 const src = join(her, "src");
@@ -55,6 +56,11 @@ await writeFile(join(fonts, "fonts.css"), css);
 // Romkortbildene (src/img/rom-*.webp, lages av scripts/skjermbilder-vis.mjs) ligger i src/img og er alt kopiert.
 // Andre skjermbilder hentes fra hengsel.no og SN-logoen fra sngroup.no, så de ikke ligger dobbelt i repoet.
 const sites = join(her, "..");
+// Dokumentene (K-161): CSS og skript deles med hengsel.no fra packages/design/src/dokumenter. Forsidebildet på A4-arkene (1200 × 768) hentes
+// fra hengsel.no, og selve arkene lages av de felles dataene (dokumenter.mjs), så det ikke finnes dokumentbilder å holde i synk.
+const dokKilde = join(her, "..", "..", "packages", "design", "src", "dokumenter");
+await mkdir(join(dist, "assets", "dokumenter"), { recursive: true });
+for (const fil of ["a4.css", "dokumentvisning.css", "dokumentvisning.js"]) await cp(join(dokKilde, fil), join(dist, "assets", "dokumenter", fil));
 const img = join(dist, "img");
 await mkdir(img, { recursive: true });
 const forside = (await readFile(join(src, "index.html"), "utf8")) + (await readFile(join(src, "assets", "rom.js"), "utf8"));
@@ -64,6 +70,8 @@ for (const navn of bilder) {
   if (await stat(join(src, "img", navn)).catch(() => null)) continue;
   await cp(join(sites, "hengsel", "public", "img", navn), join(img, navn));
 }
+await mkdir(img, { recursive: true });
+await cp(join(sites, "hengsel", "public", "img", "dok-forside.webp"), join(img, "dok-forside.webp"));
 await cp(join(sites, "sngroup", "public", "logo.svg"), join(img, "sn-logo.svg"));
 await cp(join(sites, "sngroup", "public", "logo-mork.svg"), join(img, "sn-logo-mork.svg"));
 
@@ -81,7 +89,11 @@ async function settInnLogo(dir) {
     if (e.isDirectory()) await settInnLogo(sti);
     else if (e.name.endsWith(".html")) {
       const tekst = await readFile(sti, "utf8");
-      const ny = tekst.replace(/<!--hengsel-logo (\d+)-->/g, (_, n) => hengselLogo(Number(n)));
+      const ny = tekst
+        .replace(/<!--hengsel-logo (\d+)-->/g, (_, n) => hengselLogo(Number(n)))
+        .replace("<!--dokumentvisning-->", () => dokumentvisningHtml())
+        .replace("<!--a4-stil-->", () => a4Stil())
+        .replace(/<!--a4-ark:([a-z]+):(\d+):([^>]*?)-->/g, (_, id, side, tittel) => a4Ark(id, Number(side), tittel));
       if (ny !== tekst) { await writeFile(sti, ny); sider++; }
     }
   }

@@ -51,6 +51,7 @@
 .row.flag .check{color:var(--warn)}
 
 /* Melding til selgeren: flis med 3 px venstrestrek (varsel eller ok) */
+.dok-lenke{margin:0;font-size:15px}.dok-lenke a{min-height:44px;display:inline-flex;align-items:center}
 .msg{gap:4px;padding:14px 16px;box-shadow:inset 3px 0 0 var(--warn);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
 .msg.show{opacity:1;transform:none}
 .msg.note{box-shadow:inset 3px 0 0 var(--ok)}
@@ -133,6 +134,7 @@
         <div class="rows" id="rows"></div>
       </div>
       <div class="tile msg" id="card" aria-live="polite"><span class="lbl" id="cLbl"></span><b id="cT"></b><p id="cP"></p></div>
+      <p class="dok-lenke" id="dokLenke" hidden><a href="/dokumenter/#kjopsavtale">Se kjøpsavtalen systemet lager, side for side ›</a></p>
     </section>
 
     <section class="card pane" aria-label="Bak kulissene">
