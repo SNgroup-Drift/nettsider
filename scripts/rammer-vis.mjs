@@ -15,9 +15,9 @@ const sb = (n) => join(skjermbilder, `${n}.webp`);
 // romkort og flater: [slug, enhet, skjermbilde (eller liste av skjermbilder for flere telefoner ved siden av hverandre)]
 // Enheter veksler som i fasit 62: Studio Display, MacBook, iPad og iPhone 18; aldri samme ramme på to kort ved siden av hverandre.
 const rom = [
-  ["reise", "pc", "crm-etterkalkyle"],
+  ["reise", "pc", "crm-tilbud"],
   ["crm", "pc", "crm-min-dag"],
-  ["kunde", "tlf", "kundeportal-k04"],
+  ["kunde", "tlf", "portal-tilbud"],
   ["montor", "tlf", "ute-i-dag"],
   ["minside", "tlf", ["kundeportal-k06", "kundeportal-k08"]],
   ["tegning", "tlf", "ute-laser"],
@@ -25,15 +25,15 @@ const rom = [
 ];
 // «Forstå på ti minutter» (MacBook, iPhone; Systemkartet bruker rom-system.webp, rommet selv i Studio Display)
 const forsta = [
-  ["reise", "mac", "crm-etterkalkyle"],
-  ["kunde", "tlf", "kundeportal-k04"],
+  ["reise", "mac", "crm-tilbud-kunde"],
+  ["kunde", "tlf", "portal-tilbud"],
 ];
 // flater (Butikken, Montøren, Kunden, Leverandøren)
 const flater = [
   ["butikken", "pc", "crm-salgstavla"],
   ["montoren", "tlf", "ute-i-dag"],
-  ["kunden", "tlf", ["kundeportal-k03", "kundeportal-k04"]],
-  ["leverandoren", "mac", "crm-bestilling"],
+  ["kunden", "tlf", ["kundeportal-k03", "portal-tilbud"]],
+  ["leverandoren", "mac", "crm-ordre-kontrollmal"],
 ];
 const mal = (t) => (t === "tlf" ? { hoyde: 760 } : { bredde: 960 });
 const tomt = (w, h) => ({ create: { width: w, height: h, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } });
@@ -49,10 +49,10 @@ for (const [slug, t, s] of rom) await tilWebp(await lag(t, s), join(img, `rom-${
 for (const [slug, t, s] of forsta) await tilWebp(await lag(t, s), join(img, `forsta-${slug}.webp`), mal(t));
 for (const [slug, t, s] of flater) await tilWebp(await lag(t, s), join(img, `flate-${slug}.webp`), mal(t));
 
-// Hero (fasit 62): Studio Display (crm-min-dag; v3 crm-tilbud har «Blek Blue» og et klikkmerke), iPad (crm-ipad-leder) nede til venstre og iPhone (ute-i-dag) nede til høyre
+// Hero (fasit 62): Studio Display (crm-tilbud, v4), iPad (crm-ipad-leder) nede til venstre og iPhone (ute-i-dag) nede til høyre
 {
   const W = 1500;
-  const pc = await sharp(await enhet("pc", sb("crm-min-dag"))).resize({ width: Math.round(W * 0.88) }).png().toBuffer();
+  const pc = await sharp(await enhet("pc", sb("crm-tilbud"))).resize({ width: Math.round(W * 0.88) }).png().toBuffer();
   const ipad = await sharp(await enhet("ipad", sb("crm-ipad-leder"))).resize({ width: Math.round(W * 0.48) }).png().toBuffer();
   const tlf = await sharp(await enhet("tlf", sb("ute-i-dag"))).resize({ width: Math.round(W * 0.26) }).png().toBuffer();
   const [pM, iM, tM] = await Promise.all([pc, ipad, tlf].map((b) => sharp(b).metadata()));
