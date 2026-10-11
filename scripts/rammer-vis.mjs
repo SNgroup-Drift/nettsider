@@ -33,7 +33,7 @@ const flater = [
   ["butikken", "pc", "crm-salgstavla"],
   ["montoren", "tlf", "ute-i-dag"],
   ["kunden", "tlf", ["kundeportal-k03", "portal-tilbud"]],
-  ["leverandoren", "mac", "crm-ordre-kontrollmal"],
+  ["leverandoren", "mac", "mb-crm-ordre-kontrollmal"],
 ];
 const mal = (t) => (t === "tlf" ? { hoyde: 760 } : { bredde: 960 });
 const tomt = (w, h) => ({ create: { width: w, height: h, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } });
