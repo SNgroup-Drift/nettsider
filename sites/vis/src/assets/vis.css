@@ -87,6 +87,7 @@ a{color:var(--accent-tekst);text-underline-offset:3px}
 :root[data-theme="dark"] .hlogo .lys{display:none}
 :root[data-theme="dark"] .hlogo .mork{display:block}
 .eyebrow .hlogo{text-transform:none}
+.eyebrow.navn{text-transform:none;letter-spacing:0}  /* produktnavn skrives aldri med store bokstaver (HENGSEL) */
 
 /* Illustrasjoner (assets/ill): alltid på fast flis Beige 3, også i mørk modus. Radius 20, padding 32/36. Én per seksjon, aldri bak tekst. */
 .ill{background:#F2E9DB;border-radius:var(--r-lg);padding:32px 36px;display:grid;align-items:end}

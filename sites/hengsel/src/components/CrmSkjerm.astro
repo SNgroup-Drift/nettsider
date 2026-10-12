@@ -16,6 +16,7 @@ const aktivMeny = CRM_AKTIV_MENY[skjerm];
 const stat = interaktiv ? {} : { inert: true, role: "img", "aria-label": CRM_ALT };
 const rader = MINDAG_RADER.slice(0, tlf ? 5 : 6);
 const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f === "Ordre" && skjerm !== "minDag");
+import { APPTEST } from "../apptest-lenker";
 ---
 <div class:list={["crm", enhet, skjerm]} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
   {!tlf && (
@@ -23,10 +24,13 @@ const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f
       <div class="logo"><span class="dinlogo"><span class="boks">Din logo</span></span></div>
       {CRM_MENY.map(([l, n]) => <div class:list={["mi", { aktiv: l === aktivMeny }]}><span>{l}</span><span class="n">{n}</span></div>)}
       <div class="bruker"><div class="ink">{CRM_BRUKER[0]}</div><div>{CRM_BRUKER[1]}</div></div>
-      <picture class="hengsel-crm">
-        <source media="(prefers-color-scheme: dark)" srcset="/logo/crm-aksent-mork.svg" />
-        <img src="/logo/crm-aksent-lys.svg" alt="CRM" width="270" height="108" loading="lazy" decoding="async" />
-      </picture>
+      <div class="hengsel-crm">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="/logo/crm-aksent-mork.svg" />
+          <img src="/logo/crm-aksent-lys.svg" alt="CRM" width="270" height="108" loading="lazy" decoding="async" />
+        </picture>
+        <span>v. {APPTEST.versjon}</span>
+      </div>
     </aside>
   )}
   <div class="hoved">
@@ -161,7 +165,8 @@ const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f
   .mi { display: flex; justify-content: space-between; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; font-size: 15px; }
   .mi.aktiv { font-weight: 600; background: var(--surface-highlight-strong); }
   .mi .n { color: var(--muted); font-size: 13px; font-weight: 400; }
-  .hengsel-crm { padding: 0 12px 4px; display: flex; }
+  .hengsel-crm { padding: 0 12px 4px; display: flex; align-items: center; gap: 8px; }
+  .hengsel-crm span { font-size: 11px; color: var(--muted); }
   .hengsel-crm img { display: block; height: 16px; width: auto; }
   .bruker { margin-top: auto; padding: 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
 
