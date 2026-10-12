@@ -1,4 +1,5 @@
 {
+  "color-space-for-untagged-svg-colors": "srgb",
   "fill": {
     "automatic-gradient": "srgb:0.31373,0.45490,0.66275,1.00000"
   },
@@ -15,20 +16,20 @@
       "name": "Stift",
       "layers": [
         {
-          "name": "stift",
+          "name": "Stift",
           "image-name": "3-stift.svg",
           "glass": true,
-          "fill-specializations": [
+          "image-name-specializations": [
             {
               "appearance": "dark",
-              "value": {
-                "solid": "srgb:0.61176,0.66275,0.74118,1.00000"
-              }
+              "value": "3-stift-mork.svg"
             }
           ]
         }
       ],
+      "lighting": "combined",
       "specular": true,
+      "blur-material": null,
       "shadow": {
         "kind": "neutral",
         "opacity": 0.6
@@ -36,19 +37,20 @@
       "translucency": {
         "enabled": false,
         "value": 0
-      },
-      "blur-material": null
+      }
     },
     {
       "name": "Høyre blad",
       "layers": [
         {
-          "name": "blad-hoyre",
+          "name": "Høyre blad",
           "image-name": "2-blad-hoyre.svg",
           "glass": true
         }
       ],
+      "lighting": "combined",
       "specular": true,
+      "blur-material": null,
       "shadow": {
         "kind": "neutral",
         "opacity": 0.5
@@ -62,12 +64,14 @@
       "name": "Venstre blad",
       "layers": [
         {
-          "name": "blad-venstre",
+          "name": "Venstre blad",
           "image-name": "1-blad-venstre.svg",
           "glass": true
         }
       ],
+      "lighting": "combined",
       "specular": true,
+      "blur-material": null,
       "shadow": {
         "kind": "neutral",
         "opacity": 0.45
