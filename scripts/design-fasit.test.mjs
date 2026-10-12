@@ -132,20 +132,21 @@ test("/skjermer og /last-ned peker på filer som finnes", () => {
   assert.equal([...zip.toString("latin1").matchAll(/logo\/[\w-]+\.svg/g)].length / 2, 32, "zip-fila skal ha 32 logoer");
 });
 
-test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Lausanne eller Reckless på sidene", () => {
+test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlandet, Lausanne eller Reckless på sidene eller i nedlastingene", () => {
   bygd();
-  // Nedlastingene (tokens.ts og hengsel.tokens.json) er designsystemets filer, uendret, og har kundetemaeksempelet med en ekte kunde: de er de eneste unntakene
-  const UNNTAK = new Set(["ds/tokens/hengsel.tokens.json", "ds/tokens/tokens.ts"]);
-  const GAMMELT = /by Hengsel|\bengsel\b|H-merke|h-merke|hengsel-merke-liten|v2-h-merke|Lausanne|Reckless|Gjennom linsa/;
+  const GAMMELT = /by Hengsel|Sigdal|innlandet|\bengsel\b|H-merke|h-merke|hengsel-merke-liten|v2-h-merke|Lausanne|Reckless|Gjennom linsa/i;
   const treff = [];
   for (const f of alle(dist).filter((f) => /\.(html|css|js|txt|svg|webmanifest)$/.test(f))) {
     const t = les(dist, f);
     const sjekk = f.endsWith(".html") ? tekst(t) + " " + [...t.matchAll(/(?:alt|title|aria-label)="([^"]*)"/g)].map((m) => m[1]).join(" ") : t;
-    if (!UNNTAK.has(f) && (FORBUDT.test(sjekk) || GAMMELT.test(sjekk))) treff.push(`${f}: ${(sjekk.match(FORBUDT) ?? sjekk.match(GAMMELT))[0]}`);
+    if ((FORBUDT.test(sjekk) || GAMMELT.test(sjekk))) treff.push(`${f}: ${(sjekk.match(FORBUDT) ?? sjekk.match(GAMMELT))[0]}`);
   }
   assert.deepEqual(treff, []);
-  // Unntakene skal være akkurat de to, og bare med kundetemaeksempelet
-  for (const f of UNNTAK) assert.ok(existsSync(join(dist, f)));
+  // Ingen unntak: heller ikke nedlastingene (hengsel.tokens.json og tokens.ts, som er designsystemets filer) har ekte kundenavn eller Sigdal-skrifter (K-190)
+  for (const f of ["ds/tokens/hengsel.tokens.json", "ds/tokens/tokens.ts", "ds/tokens/tokens.css"]) {
+    const t = les(dist, f);
+    assert.ok(!/sigdal|innlandet|lausanne|reckless/i.test(t), `${f} har et forbudt navn`);
+  }
   // Skjermbildene er lagd av scripts/fiktive-skjermer.mjs, som feiler på FORBUDT i teksten før bildet tas
 });
 
