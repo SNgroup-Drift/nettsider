@@ -13,6 +13,7 @@
  *   PC-skjermer er 1440 × 900 i designet. Studio Display-rammen er 16:9, så <navn>.webp er vinduet skalert til 90 % og midtstilt på 16:9
  *   (hele menyen med merket nederst er med). mb-<navn>.webp er hele 16:10 (MacBook-rammen).
  *
+ * K-182: SKJERMER_UT=/sti skriver bare de valgte skjermene dit (ingen endring i Visningsrommet, sngroup.no eller kartet).
  * Kjør: NPM_DIR=/sti/til/mappe-med-react-og-babel DESIGN=/sti/til/docs/design/v4 node scripts/fiktive-skjermer.mjs [navn …]
  *   NPM_DIR: mappe med node_modules for react@18.3.1, react-dom@18.3.1 og @babel/standalone@7.29.0 (designfilene henter dem fra unpkg).
  */
@@ -23,7 +24,9 @@ import { FORBUDT, finnRammer, forbered, startDesign, taInnhold } from "./lib/des
 
 const rot = resolve(import.meta.dirname, "..");
 const DESIGN = process.env.DESIGN ?? "/home/user/innlandet-crm-sync/docs/design/v4";
-const UT = join(rot, "sites", "vis", "src", "skjermbilder");
+// SKJERMER_UT: skriv til en annen mappe (K-182: sites/design/public/skjermer) uten å røre Visningsrommet, sngroup.no og kartet deres
+const UT_EGEN = process.env.SKJERMER_UT ? resolve(process.env.SKJERMER_UT) : null;
+const UT = UT_EGEN ?? join(rot, "sites", "vis", "src", "skjermbilder");
 const versjon = (await readFile(join(rot, "sites", "hengsel", "src", "apptest-lenker.ts"), "utf8")).match(/versjon: "([^"]+)"/)[1];
 
 const E = "crm/eksport/CRM sju skjermer.dc.html";
@@ -54,6 +57,7 @@ export const SKJERMER = [
   pc("crm-salgstavla", E, "eksport:crm-salgstavla"),
   pc("crm-resultater", E, "eksport:crm-resultater"),
   pc("crm-tilbud", "crm/10 Tilbud.dc.html", "T01.1 Tilbudslista", 0, { mb: false }),
+  pc("crm-samtaler", "crm/10 Tilbud.dc.html", "T07.1 Logg samtale", 0, { mb: false }),
   pc("crm-tilbud-kunde", "crm/10 Tilbud.dc.html", "T08.1 Tilbud og kunde", 0, { mb: true }),
   pc("crm-ordre-kontrollmal", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.1 Ordre › Kontrollmål", 0, { mb: true }),
   pc("crm-moduler", "crm/50 Moduler og punktrapport.dc.html", "I31 Moduler (superadmin)", 0, { mb: true }),
@@ -205,6 +209,14 @@ export async function lagAlle(valgte = []) {
   }
   await design.lukk();
   if (process.env.TEKST) await writeFile(process.env.TEKST, JSON.stringify(tekster, null, 1));
+  if (UT_EGEN) {
+    console.log(`${utfall.length} bilder i ${UT}`);
+    if (feil.length) {
+      console.error(feil.join("\n"));
+      process.exitCode = 1;
+    }
+    return;
+  }
   // delkjøring: behold oppføringene for skjermer som ikke ble tatt på nytt
   let kart = { versjon, skjermer: utfall };
   if (valgte.length) {

@@ -1,0 +1,37 @@
+---
+/** Forsiden: hva fasiten er, og veien videre. Tallene kommer fra tokens. */
+import Side from "../layouts/Side.astro";
+import Logo from "../components/Logo.astro";
+import { designsystem, palett, roller, status } from "../lib/tokens";
+const SIDER = [
+  ["Merket", "/merke", "Symbolet og alle formene i aksent og ensfarget, på lys og mørk flate. Luft, minste størrelse, app-ikoner og kundens logo øverst."],
+  ["Farger", "/farger", `${roller.length} roller i lys og mørk med hex og kontrast, ${status.length} statustoner og regelen for kundens aksent.`],
+  ["Skrift", "/skrift", "Inter og Newsreader, skalaen, SF Pro på iPhone og kundetemaets valg av skrift."],
+  ["Komponenter", "/komponenter", "Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand og Sheet/Dialog, med hva de brukes til og ikke til."],
+  ["Skjermer", "/skjermer", "Fiktive skjermer fra CRM, kundeportalen, Hengsel Ute og hengsel.no."],
+  ["Last ned", "/last-ned", "Tokens (css, ts, json), skriftene og logopakken."],
+] as const;
+---
+<Side title="Hengsel designfasit" description="Designfasiten for Hengsel: merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer, generert fra designsystemets tokens.">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Designfasit · versjon {designsystem.versjon} · {designsystem.dato}</span>
+      <h1>Fasiten for Hengsel</h1>
+      <p class="lede">Én fasit som CRM, kundeportal, e-post og PDF, montørappen, Hengsel Ute og nettsidene henter fra. Siden er generert fra <code>hengsel.tokens.json</code>: {palett.length} merkevarefarger, {roller.length} roller i lys og mørk og {status.length} statustoner.</p>
+      <div class="rad-flex"><Logo form="symbol" hoyde={40} alt="Hengsel-symbolet" /><span class="dempet">Kunden først, Hengsel nederst.</span></div>
+    </div>
+    <section class="sek">
+      <div class="rutenett">
+        {SIDER.map(([navn, href, tekst]) => (
+          <a class="kort lenke" href={href}><h2 class="kort-tittel">{navn}</h2><p>{tekst}</p><span class="mer">Åpne →</span></a>
+        ))}
+      </div>
+    </section>
+    <section class="sek">
+      <header>
+        <h2>Slik henger det sammen</h2>
+        <p>Tokens ligger i <code>{designsystem.repo}</code> (<code>_ds/hengsel-designsystem</code>). Denne siden bruker en pinnet commit, <code>{designsystem.commit.slice(0, 8)}</code>, så den alltid viser det som faktisk ligger i systemet. En test feiler hvis siden og tokens er ulike. Siden er åpen, men ikke indeksert av søkemotorer.</p>
+      </header>
+    </section>
+  </div>
+</Side>

@@ -51,12 +51,6 @@ html:root {
   --ramme: #1b1713;                 /* telefon- og iPad-rammen */
   --lysboks: #1b1713;
 
-  /* Logoen (H-merket): grep og hake er Deep Blue i begge moduser */
-  --merke-dor: var(--beige-1);
-  --merke-linje: var(--warm-black);
-  --merke-grep: var(--deep-blue);
-  --merke-ord: var(--warm-black);
-  --merke-crm: rgb(49 38 29 / 0.56);
 
   /* Mål */
   /* 1180 px innhold + luft på sidene (designet bruker content-box, familiens .wrap border-box) */
@@ -81,7 +75,7 @@ html:root {
 
 @media (prefers-color-scheme: dark) {
   html:root:not([data-theme="light"]) {
-    --bakgrunn: #1b1713;
+    --bakgrunn: #1f1914;
     --flate: #2f2820;
     --kort: #26201a;
     --flate-myk: #2f2820;
@@ -93,21 +87,18 @@ html:root {
     --tekst-dempet: #c3b7a8;
     --tekst-svak: #9a8e80;          /* 4,5:1 mot #2F2820 */
     --aksent: var(--dusty-blue);
-    --pa-aksent: #1b1713;
+    --pa-aksent: #1f1914;
     --aksent-myk: #3b3229;
     --info-tekst: #f1e9de;
     --ok: #8cc39b;   --ok-myk: #1f2e23;
     --feil: #e69a87; --feil-myk: #36211c;
     --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
-    --merke-linje: var(--off-white);
-    --merke-ord: var(--off-white);
-    --merke-crm: rgb(251 249 246 / 0.6);
     color-scheme: dark;
   }
 }
 
 html:root[data-theme="dark"] {
-  --bakgrunn: #1b1713;
+  --bakgrunn: #1f1914;
   --flate: #2f2820;
   --kort: #26201a;
   --flate-myk: #2f2820;
@@ -119,14 +110,11 @@ html:root[data-theme="dark"] {
   --tekst-dempet: #c3b7a8;
   --tekst-svak: #9a8e80;
   --aksent: var(--dusty-blue);
-  --pa-aksent: #1b1713;
+  --pa-aksent: #1f1914;
   --aksent-myk: #3b3229;
   --info-tekst: #f1e9de;
   --ok: #8cc39b;   --ok-myk: #1f2e23;
   --feil: #e69a87; --feil-myk: #36211c;
   --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
-  --merke-linje: var(--off-white);
-  --merke-ord: var(--off-white);
-  --merke-crm: rgb(251 249 246 / 0.6);
   color-scheme: dark;
 }

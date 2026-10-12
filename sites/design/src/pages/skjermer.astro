@@ -1,0 +1,32 @@
+---
+/** Fiktive skjermer fra designfilene (CRM, kundeportal, Hengsel Ute) og hengsel.no, med merket v3. Ingen ekte navn: navn, tall og bilder er oppdiktet. */
+import Side from "../layouts/Side.astro";
+import Bilde from "../components/Bilde.astro";
+import { CRM, NETT, PORTAL, UTE } from "../lib/skjermer";
+---
+<Side title="Skjermer – Hengsel designfasit" description="Fiktive skjermer fra CRM, kundeportalen, Hengsel Ute og hengsel.no, med Hengsel-merket v3 og kundens logo øverst." aktiv="skjermer">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Skjermer · fiktive</span>
+      <h1>Slik ser fasiten ut i bruk</h1>
+      <p class="lede">Skjermene er gjengitt fra designfilene med nøytrale navn, ikke tatt fra kjørende systemer. Kundens logo står øverst («Din logo»), Hengsel lite nederst. Bytt Auto, Lys og Mørk i menyen for å se den andre utgaven. Kundeportalen er alltid lys.</p>
+    </div>
+    <section class="sek" id="crm">
+      <header><h2>CRM</h2><p>Min dag, Tilbud, Ordre og Samtaler på PC.</p></header>
+      <div class="skjerm-rutenett">{CRM.map((s) => <Bilde s={s} />)}</div>
+    </section>
+    <section class="sek" id="kundeportal">
+      <header><h2>Kundeportal</h2><p>Sluttkunden ser butikkens logo og kundetema. «Levert av Hengsel» står i bunnteksten.</p></header>
+      <div class="skjerm-rutenett smal">{PORTAL.slice(0, 1).map((s) => <Bilde s={s} />)}</div>
+      <div class="skjerm-rutenett">{PORTAL.slice(1).map((s) => <Bilde s={s} />)}</div>
+    </section>
+    <section class="sek" id="ute">
+      <header><h2>Hengsel Ute</h2><p>Montørappen på iPhone. Tekst følger systemet (SF Pro), titler er Newsreader.</p></header>
+      <div class="skjerm-rutenett smal">{UTE.map((s) => <Bilde s={s} />)}</div>
+    </section>
+    <section class="sek" id="hengsel-no">
+      <header><h2>hengsel.no</h2><p>Forsiden slik den er bygget i dag.</p></header>
+      <div class="skjerm-rutenett">{NETT.map((s) => <Bilde s={s} />)}</div>
+    </section>
+  </div>
+</Side>

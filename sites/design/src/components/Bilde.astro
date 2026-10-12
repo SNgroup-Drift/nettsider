@@ -1,0 +1,12 @@
+---
+/** Skjermbilde i lys og (der det finnes) mørk utgave: viser lys i lys utgave og mørk i mørk (systemet eller bryteren i menyen). 2× brukes på skarpe skjermer. */
+import type { Skjerm } from "../lib/skjermer";
+interface Props { s: Skjerm; }
+const { s } = Astro.props;
+const src = (mork: boolean) => ({ x1: `/skjermer/${s.fil}${mork ? "-mork" : ""}@1x.webp`, x2: `/skjermer/${s.fil}${mork ? "-mork" : ""}.webp` });
+---
+<figure class="enhet" data-skjerm={s.fil}>
+  <img class={s.mork ? "for-lys" : undefined} src={src(false).x1} srcset={`${src(false).x1} 1x, ${src(false).x2} 2x`} width={s.b} height={s.h} alt={s.alt} loading="lazy" />
+  {s.mork && <img class="for-mork" src={src(true).x1} srcset={`${src(true).x1} 1x, ${src(true).x2} 2x`} width={s.b} height={s.h} alt={`${s.alt} (mørk utgave)`} loading="lazy" />}
+  <figcaption>{s.tittel}{s.mork ? "" : " · alltid lys"}</figcaption>
+</figure>

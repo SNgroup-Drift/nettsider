@@ -13,7 +13,7 @@ Denne mappa inneholder alt som trengs for å bytte til det nye Hengsel-merket i 
 **Leddet:** to hengselblader og en stift i midten. Sammen danner de en H.
 - **Symbolet** er Hengsel. Det står alene der navnet står ved siden av uansett: app-ikon, favicon og profilbilde.
 - **Navnet** «Hengsel» står i Inter 500 ved siden av symbolet. Produktnavnet står i Inter 400. All tekst i SVG-ene er konturert.
-- **Farger** (ingen andre): Warm Black #31261D, Off White #FBF9F6, Deep Blue #5074A9, Dusty Blue #9CA9BD. Flatene er Beige 3 #F2E9DB og mørk #1B1713.
+- **Farger** (ingen andre): Warm Black #31261D, Off White #FBF9F6, Deep Blue #5074A9, Dusty Blue #9CA9BD. Flatene er Beige 3 #F2E9DB og mørk #1F1914.
 
 ## 2. Filer
 ```

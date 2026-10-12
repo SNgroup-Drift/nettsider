@@ -1,0 +1,163 @@
+{
+  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. Utfilene (tokens.css, tokens.ts, HengselTokens.swift, ../index.html) er generert. Ingen --mark-*-tokens: logoen er ferdige SVG-filer (assets/logo/), se guidelines/hengsel-merke.md.",
+  "versjon": "1.1.0",
+  "dato": "2026-10-12",
+
+  "palett": {
+    "$merknad": "De åtte merkevarefargene (Sigdal/Hengsel-profilen) pluss lys aksent for mørk flate. Brukes som råfarger; komponentene bruker rollene under.",
+    "warm-black": "#31261D",
+    "off-white": "#FBF9F6",
+    "beige-4": "#F8F2EC",
+    "beige-3": "#F2E9DB",
+    "beige-2": "#E4D4C4",
+    "beige-1": "#C3B5A7",
+    "deep-blue": "#5074A9",
+    "dusty-blue": "#9CA9BD",
+    "aksent-mork": "#8FA9D1"
+  },
+
+  "farge": {
+    "$merknad": "Roller. Hver rolle har lys og mørk verdi. Verdier fra 07 Lys og mork (src/tema/lys-mork.css) og montorapp/src/palett.ts. Rolle uten `mork` har samme verdi i begge utgaver.",
+    "flate-side":    { "lys": "#F2E9DB", "mork": "#1F1914", "bruk": "bakgrunn i rammen bak alt innhold" },
+    "flate-kort":    { "lys": "#FBF9F6", "mork": "#2A221C", "bruk": "kort, dialog, rader i lister (aldri #FFFFFF)" },
+    "flate-senket":  { "lys": "#F8F2EC", "mork": "#251E18", "bruk": "forhåndsvisning, tomme bildeflater, felt, sebrarader" },
+    "flate-valgt":   { "lys": "#E4D4C4", "mork": "#3A3028", "bruk": "valgt menypunkt og rad, chips, info-flate" },
+    "linje":         { "lys": "#E4D4C4", "mork": "rgba(242, 233, 219, 0.14)", "bruk": "skillelinjer i tabeller og kort" },
+    "kant":          { "lys": "rgba(49, 38, 29, 0.32)", "mork": "rgba(242, 233, 219, 0.32)", "bruk": "sekundærknapp, chips, felt uten fokus" },
+    "ramme":         { "lys": "#C3B5A7", "mork": "#000000", "bruk": "ytterkant på PC-skjermen" },
+    "tekst":         { "lys": "#31261D", "mork": "#F2E9DB", "bruk": "all tekst og ikoner" },
+    "tekst-dempet":  { "lys": "rgba(49, 38, 29, 0.72)", "mork": "rgba(242, 233, 219, 0.72)", "bruk": "undertekst, kolonnenavn, tellere" },
+    "tekst-svak":    { "lys": "#6F6458", "mork": "rgba(242, 233, 219, 0.56)", "bruk": "hjelpetekst, plassholdere" },
+    "tekst-invers":  { "lys": "#FBF9F6", "mork": "#1F1914", "bruk": "tekst på primærknapp med Warm Black-flate og valgt chip" },
+    "aksent":        { "lys": "#5074A9", "mork": "#8FA9D1", "bruk": "primærknapp, fremdrift, fokusring, ett element per visning" },
+    "aksent-trykk":  { "lys": "#405D88", "mork": "#7891B8", "bruk": "primærknapp ved peker/trykk" },
+    "aksent-tekst":  { "lys": "#3D5E8E", "mork": "#8FA9D1", "bruk": "lenker (blått er aldri tekst på beige uten denne)" },
+    "aksent-svak":   { "lys": "#9CA9BD", "mork": "#9CA9BD", "bruk": "Dusty Blue, sparsomt" },
+    "paa-aksent":    { "lys": "#FBF9F6", "mork": "#1F1914", "bruk": "tekst og ikoner på aksentflate" },
+    "overlegg":      { "lys": "rgba(20, 16, 12, 0.48)", "mork": "rgba(20, 16, 12, 0.48)", "bruk": "bak dialoger" },
+    "varsel-flate":  { "lys": "#5074A9", "mork": "#9DB8E0", "bruk": "toast, bånd, «Lagret», «Sendt» (varsler er blå, aldri brune)" },
+    "varsel-tekst":  { "lys": "#FBF9F6", "mork": "#14100C", "bruk": "tekst i varsel" },
+    "feil-flate":    { "lys": "#B8432F", "mork": "#B8432F", "bruk": "feilvarsel, rød med lys tekst i begge utgaver" },
+    "feil-tekst":    { "lys": "#FBF9F6", "mork": "#FBF9F6", "bruk": "tekst i feilvarsel" },
+    "alltid-mork":   { "lys": "#14100C", "mork": "#14100C", "bruk": "bildeeditor og kamera" }
+  },
+
+  "status": {
+    "$merknad": "Sju toner, hver farge betyr det samme overalt. fg = tekst og prikk, bg = flate, kant = ramme. Lys fra src/index.css og montorapp/src/palett.ts (TONER_LYS). Mørk fra TONER_MORK. `sannsynlig` (kant lys og hele mørk utgave) er foreslått i K-186 runde 2 i samme stil som de andre tonene, og er ikke tatt i bruk i noen app ennå.",
+    "noytral":    { "lys": { "fg": "#5E564C", "bg": "#ECE4D8", "kant": "#D9CFC2" }, "mork": { "fg": "#D9CFC2", "bg": "#3A2F26", "kant": "#5A4D41" } },
+    "info":       { "lys": { "fg": "#31261D", "bg": "#E4D4C4", "kant": "#C3B5A7" }, "mork": { "fg": "#F2E9DB", "bg": "#3A3028", "kant": "#6B6259" } },
+    "venter":     { "lys": { "fg": "#5A4A7C", "bg": "#E9E3F1", "kant": "#CFC4E0" }, "mork": { "fg": "#C2B3E0", "bg": "#3A3248", "kant": "#6E6090" } },
+    "sannsynlig": { "lys": { "fg": "#2E6466", "bg": "#DCEBEA", "kant": "#B3D1CF" }, "mork": { "fg": "#8FCACB", "bg": "#223B3C", "kant": "#4F7C7E" } },
+    "ok":         { "lys": { "fg": "#3B6547", "bg": "#E0EADB", "kant": "#B9CFB0" }, "mork": { "fg": "#9FC28A", "bg": "#2E3B2B", "kant": "#5E7A50" } },
+    "haster":     { "lys": { "fg": "#7A5212", "bg": "#F5E6C8", "kant": "#E4CFA0" }, "mork": { "fg": "#E9C46A", "bg": "#45371E", "kant": "#8A6E30" } },
+    "feil":       { "lys": { "fg": "#8E3522", "bg": "#F4E2DB", "kant": "#E4B8A8" }, "mork": { "fg": "#E5927A", "bg": "#47291F", "kant": "#8A4A38" } }
+  },
+
+  "skrift": {
+    "$merknad": "Hengsel har ETT skriftsett: Inter (tekst, tall, knapper, felt) og Newsreader (overskrifter og store tall). Begge er OFL og følger med Hengsel til alle kunder (assets/fonts/). Hengsel Ute på iPhone bruker systemskriften SF Pro til tekst og kontroller (Dynamic Type) og Newsreader bare til store titler. TWK Lausanne og Reckless Standard M er Sigdal-skrifter og hører til Sigdal-butikkenes kundetema (se `kundetema`), ikke til Hengsel. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift. Logoene er tegnet i Inter og konturert.",
+    "familie": {
+      "hengsel": {
+        "tekst": "'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif",
+        "overskrift": "'Newsreader', Georgia, 'Times New Roman', serif"
+      },
+      "ios": {
+        "tekst": "system",
+        "tittel": "Newsreader"
+      }
+    },
+    "vekt": {
+      "inter-normal": 400,
+      "inter-medium": 500,
+      "inter-sterk": 600,
+      "newsreader-normal": 400,
+      "newsreader-medium": 500
+    },
+    "storrelse": {
+      "$merknad": "[px, linjehøyde px]. PC-bredde. Se `storrelseSmal` for iPad og telefon.",
+      "h1": [36, 40],
+      "h2": [26, 30],
+      "tall": [34, 38],
+      "tittel": [15, 20],
+      "tekst": [14, 20],
+      "meta": [14, 20],
+      "minste": [12, 16]
+    },
+    "storrelseSmal": {
+      "nettbrett": { "maksBredde": 1199.98, "h1": [34, 38] },
+      "telefon": { "maksBredde": 767.98, "h1": [36, 40], "h2": [22, 26], "tall": [30, 34] }
+    }
+  },
+
+  "ios": {
+    "$merknad": "Hengsel Ute (iOS) bruker tokens på FLATENE: side, kort, senket og valgt. Knapper, lister og kontroller følger iOS (system). Navn → rolle. Blå tekst direkte på beige skal bruke `lenke` (aksent-tekst #3D5E8E, 5,5:1 mot #F2E9DB), aldri aksent #5074A9, som bare gir 4,0:1 mot #F2E9DB.",
+    "navn": {
+      "side": "flate-side",
+      "kort": "flate-kort",
+      "senket": "flate-senket",
+      "valgt": "flate-valgt",
+      "linje": "linje",
+      "tekst": "tekst",
+      "tekst-dempet": "tekst-dempet",
+      "tekst-svak": "tekst-svak",
+      "lenke": "aksent-tekst",
+      "aksent": "aksent",
+      "paa-aksent": "paa-aksent"
+    }
+  },
+
+  "kundetema": {
+    "$merknad": "Kunden (butikken) kan velge logo, aksent og skrift, men BARE på det sluttkunden ser: tilbud og kontrakt (PDF), e-post til kunde og kundeportal. Disse flatene er alltid lyse. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift og Hengsel-farger. Aksenten er én farge: minst 4,5:1 mot Off White (#FBF9F6), eller `paaAksent` gir minst 4,5:1 mot aksenten; og minst 3:1 mot mørk flate #1F1914 (grafikk).",
+    "gjelder": ["tilbud-og-kontrakt-pdf", "epost-til-kunde", "kundeportal"],
+    "gjelderIkke": ["crm", "montorapp", "hengsel-ute", "admin"],
+    "skriftKilder": ["fri liste", "egen fil med lisens bekreftet av kunden"],
+    "friListe": [
+      { "navn": "Inter", "rolle": "tekst", "vekter": [400, 500, 600], "merknad": "Hengsel-standard" },
+      { "navn": "DM Sans", "rolle": "tekst", "vekter": [400, 500, 600] },
+      { "navn": "Source Sans 3", "rolle": "tekst", "vekter": [400, 600] },
+      { "navn": "Newsreader", "rolle": "overskrift", "vekter": [400, 500], "merknad": "Hengsel-standard" },
+      { "navn": "Source Serif 4", "rolle": "overskrift", "vekter": [400, 500] },
+      { "navn": "Lora", "rolle": "overskrift", "vekter": [400, 500] }
+    ],
+    "eksempler": {
+      "studio-sigdal-innlandet": {
+        "navn": "Studio Sigdal Innlandet",
+        "logo": "sigdal",
+        "aksent": "#5074A9",
+        "paaAksent": "#FBF9F6",
+        "skrift": { "tekst": "TWK Lausanne", "overskrift": "Reckless Standard M", "kilde": "egen fil med lisens bekreftet av kunden" }
+      },
+      "eksempel-kjokken-as": {
+        "navn": "Eksempel Kjøkken AS",
+        "logo": "eksempel",
+        "aksent": "#2E7D6B",
+        "paaAksent": "#FBF9F6",
+        "skrift": { "tekst": "DM Sans", "overskrift": "Lora", "kilde": "fri liste" }
+      }
+    }
+  },
+
+  "radius": {
+    "kort-stor": 12,
+    "kort-lite": 8,
+    "felt": 6,
+    "bilde": 8,
+    "pille": 999
+  },
+
+  "avstand": {
+    "1": 4, "2": 8, "3": 12, "4": 16, "5": 20, "6": 24, "7": 32, "8": 40, "9": 56
+  },
+
+  "skygge": {
+    "$merknad": "Ingen skygger på sideinnhold. Lag: [x, y, blur, farge]. Bare overlegg (meny, nedtrekk, dialog) har skygge.",
+    "side": { "lys": [], "mork": [] },
+    "overlegg": {
+      "lys": [[0, 1, 2, "rgb(49 38 29 / 0.06)"], [0, 8, 24, "rgb(49 38 29 / 0.10)"]],
+      "mork": [[0, 1, 2, "rgb(0 0 0 / 0.3)"], [0, 8, 24, "rgb(0 0 0 / 0.4)"]]
+    },
+    "dialog": {
+      "lys": [[0, 24, 64, "rgb(49 38 29 / 0.18)"]],
+      "mork": [[0, 24, 64, "rgb(0 0 0 / 0.45)"]]
+    }
+  }
+}

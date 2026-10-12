@@ -1,0 +1,14 @@
+{
+  "name": "@sngroup/site-design",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node ../../scripts/lag-logopakke.mjs && astro build && node ../../scripts/csp-hasher.mjs dist",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^7.3.6"
+  }
+}

@@ -1,0 +1,215 @@
+/* GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
+ *
+ * Hengsel-designsystemet, versjon 1.1.0. Lys er standard. Mørk følger systemet, med disse overstyringene:
+ *   <html data-theme="light"> eller data-theme="dark"   fast utgave (design., admin., forhåndsvisning)
+ *   <html class="dark">                                  CRM (src/tema/lysMork.ts)
+ *   <html data-alltid-lys>                               kundeportal og offentlige sider: aldri mørk
+ * Ingen --mark-*: logoen er ferdige SVG-filer (assets/logo/). */
+
+:root {
+  --warm-black: #31261D;
+  --off-white: #FBF9F6;
+  --beige-4: #F8F2EC;
+  --beige-3: #F2E9DB;
+  --beige-2: #E4D4C4;
+  --beige-1: #C3B5A7;
+  --deep-blue: #5074A9;
+  --dusty-blue: #9CA9BD;
+  --aksent-mork: #8FA9D1;
+  --flate-side: #F2E9DB;
+  --flate-kort: #FBF9F6;
+  --flate-senket: #F8F2EC;
+  --flate-valgt: #E4D4C4;
+  --linje: #E4D4C4;
+  --kant: rgba(49, 38, 29, 0.32);
+  --ramme: #C3B5A7;
+  --tekst: #31261D;
+  --tekst-dempet: rgba(49, 38, 29, 0.72);
+  --tekst-svak: #6F6458;
+  --tekst-invers: #FBF9F6;
+  --aksent: #5074A9;
+  --aksent-trykk: #405D88;
+  --aksent-tekst: #3D5E8E;
+  --aksent-svak: #9CA9BD;
+  --paa-aksent: #FBF9F6;
+  --overlegg: rgba(20, 16, 12, 0.48);
+  --varsel-flate: #5074A9;
+  --varsel-tekst: #FBF9F6;
+  --feil-flate: #B8432F;
+  --feil-tekst: #FBF9F6;
+  --alltid-mork: #14100C;
+  --status-noytral-fg: #5E564C;
+  --status-noytral-bg: #ECE4D8;
+  --status-noytral-kant: #D9CFC2;
+  --status-info-fg: #31261D;
+  --status-info-bg: #E4D4C4;
+  --status-info-kant: #C3B5A7;
+  --status-venter-fg: #5A4A7C;
+  --status-venter-bg: #E9E3F1;
+  --status-venter-kant: #CFC4E0;
+  --status-sannsynlig-fg: #2E6466;
+  --status-sannsynlig-bg: #DCEBEA;
+  --status-sannsynlig-kant: #B3D1CF;
+  --status-ok-fg: #3B6547;
+  --status-ok-bg: #E0EADB;
+  --status-ok-kant: #B9CFB0;
+  --status-haster-fg: #7A5212;
+  --status-haster-bg: #F5E6C8;
+  --status-haster-kant: #E4CFA0;
+  --status-feil-fg: #8E3522;
+  --status-feil-bg: #F4E2DB;
+  --status-feil-kant: #E4B8A8;
+  --skygge-side: none;
+  --skygge-overlegg: 0 1px 2px rgb(49 38 29 / 0.06), 0 8px 24px rgb(49 38 29 / 0.10);
+  --skygge-dialog: 0 24px 64px rgb(49 38 29 / 0.18);
+  --skrift-familie-hengsel-tekst: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --skrift-familie-hengsel-overskrift: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --skrift-familie-ios-tekst: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --skrift-familie-ios-tittel: Newsreader;
+  --skrift-vekt-inter-normal: 400;
+  --skrift-vekt-inter-medium: 500;
+  --skrift-vekt-inter-sterk: 600;
+  --skrift-vekt-newsreader-normal: 400;
+  --skrift-vekt-newsreader-medium: 500;
+  --skrift-h1: 36px;
+  --skrift-h1-lh: 40px;
+  --skrift-h2: 26px;
+  --skrift-h2-lh: 30px;
+  --skrift-tall: 34px;
+  --skrift-tall-lh: 38px;
+  --skrift-tittel: 15px;
+  --skrift-tittel-lh: 20px;
+  --skrift-tekst: 14px;
+  --skrift-tekst-lh: 20px;
+  --skrift-meta: 14px;
+  --skrift-meta-lh: 20px;
+  --skrift-minste: 12px;
+  --skrift-minste-lh: 16px;
+  --radius-kort-stor: 12px;
+  --radius-kort-lite: 8px;
+  --radius-felt: 6px;
+  --radius-bilde: 8px;
+  --radius-pille: 999px;
+  --avstand-1: 4px;
+  --avstand-2: 8px;
+  --avstand-3: 12px;
+  --avstand-4: 16px;
+  --avstand-5: 20px;
+  --avstand-6: 24px;
+  --avstand-7: 32px;
+  --avstand-8: 40px;
+  --avstand-9: 56px;
+  color-scheme: light;
+}
+
+/* nettbrett */
+@media (max-width: 1199.98px) {
+  :root {
+    --skrift-h1: 34px;
+    --skrift-h1-lh: 38px;
+  }
+}
+
+/* telefon */
+@media (max-width: 767.98px) {
+  :root {
+    --skrift-h1: 36px;
+    --skrift-h1-lh: 40px;
+    --skrift-h2: 22px;
+    --skrift-h2-lh: 26px;
+    --skrift-tall: 30px;
+    --skrift-tall-lh: 34px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-alltid-lys]) {
+    --flate-side: #1F1914;
+    --flate-kort: #2A221C;
+    --flate-senket: #251E18;
+    --flate-valgt: #3A3028;
+    --linje: rgba(242, 233, 219, 0.14);
+    --kant: rgba(242, 233, 219, 0.32);
+    --ramme: #000000;
+    --tekst: #F2E9DB;
+    --tekst-dempet: rgba(242, 233, 219, 0.72);
+    --tekst-svak: rgba(242, 233, 219, 0.56);
+    --tekst-invers: #1F1914;
+    --aksent: #8FA9D1;
+    --aksent-trykk: #7891B8;
+    --aksent-tekst: #8FA9D1;
+    --paa-aksent: #1F1914;
+    --varsel-flate: #9DB8E0;
+    --varsel-tekst: #14100C;
+    --status-noytral-fg: #D9CFC2;
+    --status-noytral-bg: #3A2F26;
+    --status-noytral-kant: #5A4D41;
+    --status-info-fg: #F2E9DB;
+    --status-info-bg: #3A3028;
+    --status-info-kant: #6B6259;
+    --status-venter-fg: #C2B3E0;
+    --status-venter-bg: #3A3248;
+    --status-venter-kant: #6E6090;
+    --status-sannsynlig-fg: #8FCACB;
+    --status-sannsynlig-bg: #223B3C;
+    --status-sannsynlig-kant: #4F7C7E;
+    --status-ok-fg: #9FC28A;
+    --status-ok-bg: #2E3B2B;
+    --status-ok-kant: #5E7A50;
+    --status-haster-fg: #E9C46A;
+    --status-haster-bg: #45371E;
+    --status-haster-kant: #8A6E30;
+    --status-feil-fg: #E5927A;
+    --status-feil-bg: #47291F;
+    --status-feil-kant: #8A4A38;
+    --skygge-overlegg: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4);
+    --skygge-dialog: 0 24px 64px rgb(0 0 0 / 0.45);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"]:not([data-alltid-lys]),
+:root.dark:not([data-alltid-lys]) {
+  --flate-side: #1F1914;
+  --flate-kort: #2A221C;
+  --flate-senket: #251E18;
+  --flate-valgt: #3A3028;
+  --linje: rgba(242, 233, 219, 0.14);
+  --kant: rgba(242, 233, 219, 0.32);
+  --ramme: #000000;
+  --tekst: #F2E9DB;
+  --tekst-dempet: rgba(242, 233, 219, 0.72);
+  --tekst-svak: rgba(242, 233, 219, 0.56);
+  --tekst-invers: #1F1914;
+  --aksent: #8FA9D1;
+  --aksent-trykk: #7891B8;
+  --aksent-tekst: #8FA9D1;
+  --paa-aksent: #1F1914;
+  --varsel-flate: #9DB8E0;
+  --varsel-tekst: #14100C;
+  --status-noytral-fg: #D9CFC2;
+  --status-noytral-bg: #3A2F26;
+  --status-noytral-kant: #5A4D41;
+  --status-info-fg: #F2E9DB;
+  --status-info-bg: #3A3028;
+  --status-info-kant: #6B6259;
+  --status-venter-fg: #C2B3E0;
+  --status-venter-bg: #3A3248;
+  --status-venter-kant: #6E6090;
+  --status-sannsynlig-fg: #8FCACB;
+  --status-sannsynlig-bg: #223B3C;
+  --status-sannsynlig-kant: #4F7C7E;
+  --status-ok-fg: #9FC28A;
+  --status-ok-bg: #2E3B2B;
+  --status-ok-kant: #5E7A50;
+  --status-haster-fg: #E9C46A;
+  --status-haster-bg: #45371E;
+  --status-haster-kant: #8A6E30;
+  --status-feil-fg: #E5927A;
+  --status-feil-bg: #47291F;
+  --status-feil-kant: #8A4A38;
+  --skygge-overlegg: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4);
+  --skygge-dialog: 0 24px 64px rgb(0 0 0 / 0.45);
+  color-scheme: dark;
+}
+

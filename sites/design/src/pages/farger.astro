@@ -1,0 +1,151 @@
+---
+/** Farger: alle tokens i lys og mørk med hex og kontrast, de sju statustonene og regelen for kundens aksent. Genereres fra hengsel.tokens.json (src/lib/tokens.ts). */
+import Side from "../layouts/Side.astro";
+import { fargeKlasse, fmtKontrast, kontrastRader, kundeAksentSjekk, kundeEksempler, palett, roller, status, statusKontrast, toneKlasse, MODI, tokens, tilHex } from "../lib/tokens";
+const kontrastTabell = kontrastRader();
+const sk = statusKontrast();
+const eksempler = kundeEksempler.map((t) => ({ ...t, sjekk: kundeAksentSjekk(t.aksent, t.paaAksent) }));
+const fmt = (n: number) => fmtKontrast(n);
+---
+<Side title="Farger – Hengsel designfasit" description="Alle fargetokens i lys og mørk med hex og kontrast, de sju statustonene og regelen for kundens aksentfarge." aktiv="farger">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Farger · {roller.length} roller, {status.length} statustoner</span>
+      <h1>Beige flater, varm svart tekst, blå aksent</h1>
+      <p class="lede">Merkevarefargene er råfarger. Komponentene bruker rollene (<code>--flate-side</code>, <code>--tekst</code>, <code>--aksent</code> …), så mørk utgave bare bytter verdiene. Lys er standard og mørk følger enheten. Alt på denne siden er generert fra <code>hengsel.tokens.json</code>.</p>
+    </div>
+
+    <section class="sek" id="regler">
+      <header><h2>Reglene</h2></header>
+      <ul class="regler">
+        <li>Mørk bakgrunn er <code>{roller.find((r) => r.navn === "flate-side")?.mork}</code>. Aldri rent hvitt (<code>#FFFFFF</code>), aldri rosa eller magenta, ingen gradienter.</li>
+        <li>Bruk rollene, ikke råfargene, i komponenter.</li>
+        <li>Blått er en aksent: primærknapp, fremdrift, fokusring, lenker og ett element per visning. Aktiv fane og meny er Warm Black, ikke blå. Blå tekst på beige bruker alltid <code>--aksent-tekst</code>, aldri <code>--aksent</code>.</li>
+        <li>Beige i stedet for lyseblå der noe er valgt eller «info»: <code>--flate-valgt</code>.</li>
+        <li>Varsler er blå (<code>--varsel-flate</code>), feil er rød (<code>--feil-flate</code>). Kort har ikke fargekant til venstre.</li>
+        <li>Lys er standard. Mørk følger enheten. Kundeportalen og alt som skrives ut eller blir PDF er alltid lyst.</li>
+        <li>Status vises alltid med prikk og ord, aldri bare med farge.</li>
+        <li>Tekst har minst 4,5:1 mot flaten den står på, grafikk minst 3:1. Tabellene under er beregnet fra verdiene på siden.</li>
+      </ul>
+    </section>
+
+    <section class="sek" id="palett">
+      <header>
+        <h2>Merkevarefargene</h2>
+        <p>De åtte fargene i profilen, pluss lys aksent for mørk flate. Råfarger: ikke bruk dem direkte i komponenter.</p>
+      </header>
+      <div class="palett">
+        {palett.map((p) => (
+          <div><span class={`sv stor ${fargeKlasse(p.navn)}`} role="img" aria-label={`${p.navn} ${p.hex}`}></span><b>{p.navn}</b><code>{p.hex}</code></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="sek" id="roller">
+      <header>
+        <h2>Roller i lys og mørk</h2>
+        <p>Hver rolle har en lys og en mørk verdi. Rader med lik verdi i begge utgaver er like i begge.</p>
+      </header>
+      <div class="tabell" tabindex="0" role="region" aria-label="Roller i lys og mørk">
+        <table>
+          <thead><tr><th>Token</th><th>Lys</th><th>Mørk</th><th>Brukes til</th></tr></thead>
+          <tbody>
+            {roller.map((r) => (
+              <tr>
+                <td><code>--{r.navn}</code></td>
+                <td class="tall"><span class="verdi"><span class={`sv ${fargeKlasse(r.navn, "lys")}`} role="img" aria-label={`${r.navn} lys`}></span><code>{r.lys}</code></span></td>
+                <td class="tall"><span class="verdi"><span class={`sv ${fargeKlasse(r.navn, "mork")}`} role="img" aria-label={`${r.navn} mørk`}></span><code>{r.mork}</code></span></td>
+                <td>{r.bruk}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sek" id="kontrast">
+      <header>
+        <h2>Kontrast</h2>
+        <p>Beregnet etter WCAG 2.x ved bygging. Gjennomsiktige farger er blandet over flaten de ligger på. Verdiene er rundet ned, så «4,5:1» aldri er en avrundet 4,46. Tekst krever 4,5:1 og grafikk 3:1.</p>
+      </header>
+      <div class="tabell" tabindex="0" role="region" aria-label="Kontrast">
+        <table>
+          <thead><tr><th>Par</th><th>Krav</th><th>Lys</th><th>Mørk</th></tr></thead>
+          <tbody>
+            {kontrastTabell.map((k) => (
+              <tr data-par={k.id}>
+                <td>{k.hva}<div class="svak"><code>--{k.fg}</code> på <code>--{k.bg}</code></div></td>
+                <td class="tall">{fmt(k.krav)}</td>
+                {MODI.map((m) => <td class="tall"><span class={k[m] >= k.krav ? "ok" : "feil-tekst"}>{fmt(k[m])} {k[m] >= k.krav ? "✓ ok" : "✗ under kravet"}</span></td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="svak">Fargen <code>--aksent</code> (#5074A9) gir bare 4,0:1 mot <code>--flate-side</code> i lys utgave: den brukes til flater og grafikk, aldri til tekst direkte på beige. Lenker bruker <code>--aksent-tekst</code>.</p>
+    </section>
+
+    <section class="sek" id="status">
+      <header>
+        <h2>Statustoner</h2>
+        <p>Sju toner. Hver farge betyr det samme overalt i CRM, kundeportalen og Hengsel Ute. <b>fg</b> er tekst og prikk, <b>bg</b> er flaten og <b>kant</b> er rammen. «sannsynlig» er foreslått i K-186 runde 2 i samme stil som de andre og er ikke tatt i bruk i noen app ennå.</p>
+      </header>
+      <div class="tema-par">
+        {MODI.map((m) => (
+          <div class={`tema-${m}`}>
+            <span class="tema-navn">{m === "lys" ? "Lys" : "Mørk"}</span>
+            <div class="flate-kort tonerad">
+              {status.map((s) => <span class={`pille ${toneKlasse(s.navn, m)}`}><i></i>{s.navn}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="tabell" tabindex="0" role="region" aria-label="Statustoner">
+        <table>
+          <thead><tr><th>Tone</th><th>Lys: fg, bg, kant</th><th>Kontrast</th><th>Mørk: fg, bg, kant</th><th>Kontrast</th></tr></thead>
+          <tbody>
+            {status.map((s, i) => (
+              <tr data-tone={s.navn}>
+                <td><b>{s.navn}</b></td>
+                <td><code>{s.lys.fg}</code> <code>{s.lys.bg}</code> <code>{s.lys.kant}</code></td>
+                <td class="tall"><span class={sk[i].lys >= 4.5 ? "ok" : "feil-tekst"}>{fmt(sk[i].lys)}</span></td>
+                <td><code>{s.mork.fg}</code> <code>{s.mork.bg}</code> <code>{s.mork.kant}</code></td>
+                <td class="tall"><span class={sk[i].mork >= 4.5 ? "ok" : "feil-tekst"}>{fmt(sk[i].mork)}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sek" id="kundens-aksent">
+      <header>
+        <h2>Kundens aksentfarge</h2>
+        <p>Kunden kan velge én aksent, men bare på det sluttkunden ser: tilbud og kontrakt (PDF), e-post til kunde og kundeportal. Disse flatene er alltid lyse. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-farger.</p>
+      </header>
+      <ul class="regler">
+        <li>Aksenten må ha <b>minst 4,5:1 mot Off White</b> (<code>{tokens.palett["off-white"]}</code>), eller teksten på aksenten (<code>paaAksent</code>) må ha minst 4,5:1 mot aksenten.</li>
+        <li>Den må i tillegg ha <b>minst 3:1 mot mørk flate</b> (<code>{roller.find((r) => r.navn === "flate-side")?.mork}</code>), siden den kan stå som grafikk i mørke visninger.</li>
+        <li><b>Aksenten brukes ikke til liten brødtekst i mørk modus.</b> Den er en grafikkfarge der (knapper, streker, fremdrift), ikke en tekstfarge.</li>
+        <li>Bare én aksent. Statusfargene og Warm Black-teksten er Hengsels og kan ikke byttes. Aldri hvitt, rosa eller gradienter.</li>
+      </ul>
+      <div class="tabell" tabindex="0" role="region" aria-label="Kundens aksentfarge">
+        <table>
+          <thead><tr><th>Eksempelkunde</th><th>Aksent</th><th>Mot Off White</th><th>Tekst på aksent</th><th>Mot mørk flate</th><th>Godkjent</th></tr></thead>
+          <tbody>
+            {eksempler.map((e) => (
+              <tr data-kunde={e.id}>
+                <td>{e.navn}</td>
+                <td><span class="verdi"><span class={`sv f-kunde-${e.id}`} role="img" aria-label={`Aksent ${e.aksent}`}></span><code>{e.aksent}</code></span></td>
+                <td class="tall">{fmt(e.sjekk.motLys)}</td>
+                <td class="tall">{fmt(e.sjekk.tekstPaaAksent)}</td>
+                <td class="tall">{fmt(e.sjekk.motMork)}</td>
+                <td><span class={e.sjekk.lysOk && e.sjekk.morkOk ? "ok" : "feil-tekst"}>{e.sjekk.lysOk && e.sjekk.morkOk ? "✓ ok" : "✗ avvist"}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</Side>

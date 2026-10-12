@@ -29,19 +29,19 @@ sngroup.drift-697.workers.dev før denne filen kom.
 Workers & Pages → Create → Workers → Import a repository → velg `SNgroup-Drift/sngroup-nettsider`. For en Worker som
 finnes: Worker → Settings → Build.
 
-| | sngroup | hengsel | byggem |
-|---|---|---|---|
-| Worker-navn | `sngroup` | `hengsel` | `byggem` |
-| Git-gren for produksjon | `main` | `main` | `main` |
-| Build command | `npm run build -w sites/sngroup` | `npm run build -w sites/hengsel` | `npm run build -w sites/byggem` |
-| Deploy command | `npx wrangler deploy -c sites/sngroup/wrangler.jsonc` | `npx wrangler deploy -c sites/hengsel/wrangler.jsonc` | `npx wrangler deploy -c sites/byggem/wrangler.jsonc` |
-| Non-production branch deploy command (preview) | `npx wrangler versions upload -c sites/sngroup/wrangler.jsonc` | `npx wrangler versions upload -c sites/hengsel/wrangler.jsonc` | `npx wrangler versions upload -c sites/byggem/wrangler.jsonc` |
-| Path (rotmappe) | `/` | `/` | `/` |
-| Build variables | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
-| API-token | Eget token for nettsidene | Samme nettside-token | Samme nettside-token |
-| Build watch paths, include | `sites/sngroup/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/hengsel/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/byggem/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` |
-| Testadresse | https://sngroup.drift-697.workers.dev | https://hengsel.drift-697.workers.dev | https://byggem.drift-697.workers.dev |
-| Egne domener | `sngroup.no`, `www.sngroup.no` | `hengsel.no`, `www.hengsel.no` | `byggem.no`, `www.byggem.no` |
+| | sngroup | hengsel | byggem | design |
+|---|---|---|---|---|
+| Worker-navn | `sngroup` | `hengsel` | `byggem` | `design` |
+| Git-gren for produksjon | `main` | `main` | `main` | `main` |
+| Build command | `npm run build -w sites/sngroup` | `npm run build -w sites/hengsel` | `npm run build -w sites/byggem` | `npm run build -w sites/design` |
+| Deploy command | `npx wrangler deploy -c sites/sngroup/wrangler.jsonc` | `npx wrangler deploy -c sites/hengsel/wrangler.jsonc` | `npx wrangler deploy -c sites/byggem/wrangler.jsonc` | `npx wrangler deploy -c sites/design/wrangler.jsonc` |
+| Non-production branch deploy command (preview) | `npx wrangler versions upload -c sites/sngroup/wrangler.jsonc` | `npx wrangler versions upload -c sites/hengsel/wrangler.jsonc` | `npx wrangler versions upload -c sites/byggem/wrangler.jsonc` | `npx wrangler versions upload -c sites/design/wrangler.jsonc` |
+| Path (rotmappe) | `/` | `/` | `/` | `/` |
+| Build variables | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
+| API-token | Eget token for nettsidene | Samme nettside-token | Samme nettside-token | Samme nettside-token |
+| Build watch paths, include | `sites/sngroup/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/hengsel/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/byggem/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/design/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` |
+| Testadresse | https://sngroup.drift-697.workers.dev | https://hengsel.drift-697.workers.dev | https://byggem.drift-697.workers.dev | https://design.drift-697.workers.dev |
+| Egne domener | `sngroup.no`, `www.sngroup.no` | `hengsel.no`, `www.hengsel.no` | `byggem.no`, `www.byggem.no` | `design.hengsel.no` |
 
 **API-token:** bruk et eget token for nettsidene, ikke tokenet til CRM-demoen. Workers Builds lager det i
 dashbordet når Worker-en kobles til Git (eller velg et eksisterende nettside-token). Tokenet lagres bare hos Cloudflare,
@@ -84,6 +84,18 @@ riktig wrangler-fil, og watch paths gjør at en endring i `sites/hengsel` ikke b
    Cloudflare lager DNS-postene og sertifikatet selv når sonen ligger i samme konto.
 3. Gjør det samme for `hengsel.no` og `www.hengsel.no` i Worker-en `hengsel`, og `byggem.no` og `www.byggem.no` i
    Worker-en `byggem`.
+4. `design.hengsel.no` er et underdomene og ligger i Worker-en `design` (uten `www`, se «design.hengsel.no» under).
+
+## design.hengsel.no (K-182)
+
+Designfasiten for Hengsel (merket v3, farger i lys og mørk, skrift, komponenter, fiktive skjermer). Egen Worker `design` med bare statiske filer (`sites/design`, Astro, ingen skript fra tredjepart og ingen kode i Worker-en). Åpen, men `noindex` (meta og `X-Robots-Tag` i `_headers`), uten sitemap og uten Cloudflare Access (Eirik 12.10). Innstillingene står i tabellen over.
+
+- **Kilde:** siden genereres fra `sites/design/public/ds/tokens/hengsel.tokens.json`, som er den eneste kilden i Hengsel-designsystemet (`SNgroup-Drift/innlandet-crm-sync`, `_ds/hengsel-designsystem`). Filene er kopiert inn fra en **pinnet commit** (`sites/design/designsystem.pin.json`, med sha256 for hver fil), så bygget er reproduserbart og Workers Builds ikke trenger tilgang til det private repoet.
+- **Ny versjon av designsystemet:** `npm run design:hent -- --kilde /sti/til/innlandet-crm-sync --commit <sha>`, så `npm run build`, `npm test` og `npm run design:skjermbilder`. Ikke rediger filene i `public/ds` for hånd: `scripts/design-fasit.test.mjs` feiler hvis en fil ikke samsvarer med pin-fila, hvis `tokens.css` ikke samsvarer med JSON, eller hvis siden ikke viser verdiene i JSON.
+- **Bygging:** `npm run build -w sites/design` lager logopakken (`scripts/lag-logopakke.mjs`), bygger Astro og legger CSP-hashene inn i `dist/_headers`. Fargeflatene er CSS-klasser generert fra tokens (ingen `style=""`, siden CSP-en ikke tillater det).
+- **Bildene** (`public/skjermer`) er fiktive skjermer fra designfilene (`scripts/fiktive-skjermer.mjs`, med `SKJERMER_UT=sites/design/public/skjermer` for nye) og hengsel.no (`scripts/skjermer-hengsel-no.mjs`). `og.png` lages av `scripts/lag-og-design.mjs`.
+- **Sjekk:** `node scripts/skjermbilder-design.mjs` tar skjermbilder (390 og 1440 px, lys og mørk) og kjører axe (0 brudd på kontrast, 0 øvrige brudd), CSP-, konsoll- og overflytsjekk.
+- **Flytting fra Pages:** `design.hengsel.no` lå tidligere som custom domain på Pages-prosjektet `sngroup-nettsider`, som ikke har bygd siden PR #43. Trinnene for å flytte domenet til Worker-en `design` står i `claude/k182-rapport.md`.
 
 ## www til apex
 
