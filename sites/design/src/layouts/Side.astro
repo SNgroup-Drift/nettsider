@@ -5,6 +5,7 @@
  * Åpen men ikke indeksert: noindex i meta og i _headers (X-Robots-Tag). Ingen sporing, ingen eksterne ressurser.
  */
 import "@sngroup/hengsel-tokens/tokens.css";
+import "@sngroup/hengsel-tokens/tokens-mork-prover.css"; // K-202: mørke fargeprøver, bare under .mork-prover (ikke :root)
 import "@sngroup/hengsel-tokens/fonts.css";
 import "../styles/design.css";
 import inter from "@sngroup/hengsel-tokens/ds/assets/fonts/inter-latin-400-normal.woff2?url";
@@ -51,7 +52,7 @@ const css = lagFasitCss();
   </head>
   <body>
     <a class="skip" href="#innhold">Hopp til innholdet</a>
-    <div class="side">
+    <div class="side mork-prover">
       <Meny aktiv={aktiv} />
       <main id="innhold"><slot /></main>
       <Bunn />

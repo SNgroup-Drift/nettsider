@@ -1,0 +1,53 @@
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 1.1.0, commit 3099a27b). Ikke rediger for hånd.
+ *
+ * Mørke fargeprøver (--mork-*) til design.hengsel.no, som viser dem til appene og CRM-et. Bare under klassen .mork-prover, aldri på :root,
+ * og ingen media-spørring mot maskinens fargevalg: ingen side blir mørk av denne fila. Alle andre Hengsel-sider importerer den ikke. Se docs/design/hengsel-regler.md. */
+
+.mork-prover {
+  --mork-flate-side: #1F1914;
+  --mork-flate-kort: #2A221C;
+  --mork-flate-senket: #251E18;
+  --mork-flate-valgt: #3A3028;
+  --mork-linje: rgba(242, 233, 219, 0.14);
+  --mork-kant: rgba(242, 233, 219, 0.32);
+  --mork-ramme: #000000;
+  --mork-tekst: #F2E9DB;
+  --mork-tekst-dempet: rgba(242, 233, 219, 0.72);
+  --mork-tekst-svak: rgba(242, 233, 219, 0.56);
+  --mork-tekst-invers: #1F1914;
+  --mork-aksent: #8FA9D1;
+  --mork-aksent-trykk: #7891B8;
+  --mork-aksent-tekst: #8FA9D1;
+  --mork-aksent-svak: #9CA9BD;
+  --mork-paa-aksent: #1F1914;
+  --mork-overlegg: rgba(20, 16, 12, 0.48);
+  --mork-varsel-flate: #9DB8E0;
+  --mork-varsel-tekst: #14100C;
+  --mork-feil-flate: #B8432F;
+  --mork-feil-tekst: #FBF9F6;
+  --mork-alltid-mork: #14100C;
+  --mork-status-noytral-fg: #D9CFC2;
+  --mork-status-noytral-bg: #3A2F26;
+  --mork-status-noytral-kant: #5A4D41;
+  --mork-status-info-fg: #F2E9DB;
+  --mork-status-info-bg: #3A3028;
+  --mork-status-info-kant: #6B6259;
+  --mork-status-venter-fg: #C2B3E0;
+  --mork-status-venter-bg: #3A3248;
+  --mork-status-venter-kant: #6E6090;
+  --mork-status-sannsynlig-fg: #8FCACB;
+  --mork-status-sannsynlig-bg: #223B3C;
+  --mork-status-sannsynlig-kant: #4F7C7E;
+  --mork-status-ok-fg: #9FC28A;
+  --mork-status-ok-bg: #2E3B2B;
+  --mork-status-ok-kant: #5E7A50;
+  --mork-status-haster-fg: #E9C46A;
+  --mork-status-haster-bg: #45371E;
+  --mork-status-haster-kant: #8A6E30;
+  --mork-status-feil-fg: #E5927A;
+  --mork-status-feil-bg: #47291F;
+  --mork-status-feil-kant: #8A4A38;
+  --mork-skygge-side: none;
+  --mork-skygge-overlegg: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4);
+  --mork-skygge-dialog: 0 24px 64px rgb(0 0 0 / 0.45);
+}

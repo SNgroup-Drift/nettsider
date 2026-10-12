@@ -7,7 +7,7 @@
 
 :root {
   /* Lokale navn → delte roller */
-  --bg: var(--flate-kort);                  /* sideflaten */
+  --bg: var(--flate-kort);                  /* kort og felt-bakgrunn (meny, bunn, appskjermer); selve sidebakgrunnen er --flate-side (body og .side) */
   --surface: var(--flate-kort);             /* kort, ruter og felt */
   --surface-soft: var(--flate-senket);      /* senket flate: sidemeny, felt, rader */
   --surface-highlight: var(--flate-side);   /* seksjonsbånd */
@@ -58,14 +58,14 @@
 /* Designet setter html og body til 17 px (rem = 17 px); alle rem-størrelser i designet er målt mot det (K-174) */
 html { font-size: 17px; scroll-padding-top: calc(var(--topp) + 8px); }
 [hidden] { display: none !important; }
-body { font-size: 1rem; line-height: 1.6; font-weight: var(--w-body); }
+body { background: var(--flate-side); font-size: 1rem; line-height: 1.6; font-weight: var(--w-body); }
 h1, h2, h3 { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.015em; text-wrap: balance; margin: 0; }
 h1 { font-size: var(--t-hero); line-height: 1.02; }
 h2 { font-size: var(--t-h1); line-height: 1.08; }
 h3 { font-size: var(--t-h3); line-height: 1.2; }
 p { margin: 0; text-wrap: pretty; }
 b, strong { font-weight: var(--w-strong); }
-a { color: var(--accent); text-decoration: none; }
+a { color: var(--aksent-tekst); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 input, button { font: inherit; color: inherit; }
 :focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: var(--r-sm); }
