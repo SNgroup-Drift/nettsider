@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 // design.hengsel.no (K-182): Hengsel-designfasiten. Statisk side for Cloudflare Workers (statiske filer, se wrangler.jsonc), uten server, skript fra tredjepart
-// eller informasjonskapsler. Siden genereres fra public/ds/tokens/hengsel.tokens.json (pinnet, se designsystem.pin.json og scripts/hent-designsystem.mjs).
+// eller informasjonskapsler. Siden genereres fra packages/hengsel-tokens/ds/tokens/hengsel.tokens.json (pinnet, se packages/hengsel-tokens/designsystem.pin.json og scripts/hent-designsystem.mjs). public/ds kopieres dit ved bygging (scripts/kopier-ds.mjs).
 // CSS-en ligger inline; scripts/csp-hasher.mjs legger hashene inn i CSP-en i dist/_headers etter bygging.
 export default defineConfig({
   site: "https://design.hengsel.no",

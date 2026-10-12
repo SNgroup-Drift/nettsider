@@ -36,13 +36,9 @@ import { EPOST } from "../../content/forside";
 </Side>
 
 <style>
-  /* Samme profil som /apptest: flaten er Beige 4, kortet Off White */
-  .a-side { --a-flate: var(--beige-4); background: var(--a-flate); color: var(--ink); }
-  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) .a-side { --a-flate: var(--flate-myk); } }
-  :global(html:root[data-theme="dark"]) .a-side { --a-flate: var(--flate-myk); }
-  :global(header.sidehode) { --a-flate: var(--beige-4); }
-  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) :global(header.sidehode) { --a-flate: var(--flate-myk); } }
-  :global(html:root[data-theme="dark"]) :global(header.sidehode) { --a-flate: var(--flate-myk); }
+  /* Samme profil som /apptest: flaten er --flate-senket, kortet --flate-kort */
+  .a-side { --a-flate: var(--flate-senket); background: var(--a-flate); color: var(--ink); }
+  :global(header.sidehode) { --a-flate: var(--flate-senket); }
 
   .dempet { color: var(--muted); }
   .liten { font-size: 0.92rem; }

@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "node ../../scripts/lag-logopakke.mjs && astro build && node ../../scripts/csp-hasher.mjs dist",
+    "dev": "node ../../scripts/kopier-ds.mjs && astro dev",
+    "build": "node ../../scripts/kopier-ds.mjs && node ../../scripts/lag-logopakke.mjs && astro build && node ../../scripts/csp-hasher.mjs dist",
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.3.6"
+    "astro": "^7.3.6",
+    "@sngroup/hengsel-tokens": "*"
   }
 }

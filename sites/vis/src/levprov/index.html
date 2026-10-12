@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,53 +8,54 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Prøv som leverandør · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:16px}
 .steps{display:flex;gap:6px;flex-wrap:wrap}
-.steps span{font:500 13px/1.4 var(--sans);padding:5px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);color:var(--muted);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
-.steps span.on{background:var(--fg);border-color:var(--fg);color:var(--bg)}
-.steps span.d{background:var(--ok-soft);border-color:var(--ok-soft);color:var(--ok-tekst)}
+.steps span{font:500 13px/1.4 var(--skrift-familie-hengsel-tekst);padding:5px 12px;border-radius:var(--radius-pille);border:1px solid var(--linje);background:var(--flate-kort);color:var(--tekst-dempet);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.steps span.on{background:var(--tekst);border-color:var(--tekst);color:var(--tekst-invers)}
+.steps span.d{background:var(--status-ok-bg);border-color:var(--status-ok-bg);color:var(--status-ok-fg)}
 .lay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
 .wrap>.card,.lay>.card{display:grid;gap:12px;min-width:0;align-content:start}
-.card h2{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.card h2{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .card h3{margin:0}
-.mail{border:1px solid var(--line);border-radius:var(--r-field);overflow:hidden}
-.mail .hd{background:var(--soft);padding:10px 14px;font-size:14px;display:grid;gap:2px;line-height:1.45}
+.mail{border:1px solid var(--linje);border-radius:var(--radius-kort-lite);overflow:hidden}
+.mail .hd{background:var(--flate-senket);padding:10px 14px;font-size:14px;display:grid;gap:2px;line-height:1.45}
 .mail .hd b{font-weight:600}
 .mail .bd{padding:12px 14px;font-size:15px;display:grid;gap:8px;line-height:1.5}
 table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
-th{font:600 13px var(--sans);color:var(--muted)}
-tbody tr:hover td{background:var(--soft)}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--linje);vertical-align:top;line-height:1.45}
+th{font:600 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet)}
+tbody tr:hover td{background:var(--flate-senket)}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sc{display:grid;gap:8px}
-.sc button{text-align:left;border:1px solid transparent;background:var(--soft);border-radius:var(--r-field);padding:12px 16px;font:15px/1.45 var(--sans);color:var(--fg);cursor:pointer;display:grid;gap:2px;min-height:48px;transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease)}
-.sc button:hover{border-color:var(--sand)}
+.sc button{text-align:left;border:1px solid transparent;background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:12px 16px;font:15px/1.45 var(--skrift-familie-hengsel-tekst);color:var(--tekst);cursor:pointer;display:grid;gap:2px;min-height:48px;transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease)}
+.sc button:hover{border-color:var(--ramme)}
 .sc button b{font-weight:600}
-.sc button span{color:var(--muted);font-size:14px}
-.sc button.on{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 2px var(--accent-soft)}
+.sc button span{color:var(--tekst-dempet);font-size:14px}
+.sc button.on{border-color:var(--aksent);background:var(--flate-kort);box-shadow:0 0 0 2px var(--flate-valgt)}
 .read{display:grid;gap:6px}
-.fld{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:15px;line-height:1.45;padding:10px 14px;border-radius:var(--r-field);background:var(--soft);opacity:.35;transition:opacity var(--dur) var(--ease)}
+.fld{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:15px;line-height:1.45;padding:10px 14px;border-radius:var(--radius-kort-lite);background:var(--flate-senket);opacity:.35;transition:opacity var(--dur) var(--ease)}
 .fld.v{opacity:1}
-.fld span:first-child{color:var(--muted);font-size:14px}
+.fld span:first-child{color:var(--tekst-dempet);font-size:14px}
 .fld b{font-weight:600;overflow-wrap:anywhere}
-.res{border-radius:var(--r-field);background:var(--soft);padding:14px 16px;display:grid;gap:6px;font-size:15px;line-height:1.5}
-.res.ok{box-shadow:inset 3px 0 0 var(--ok)}
-.res.warn{box-shadow:inset 3px 0 0 var(--warn)}
+.res{border-radius:var(--radius-kort-lite);background:var(--flate-senket);padding:14px 16px;display:grid;gap:6px;font-size:15px;line-height:1.5}
+.res.ok{box-shadow:inset 3px 0 0 var(--status-ok-fg)}
+.res.warn{box-shadow:inset 3px 0 0 var(--status-haster-fg)}
 .res b{font-weight:600}
-.res p{margin:0;color:var(--muted)}
+.res p{margin:0;color:var(--tekst-dempet)}
 #out{display:grid;gap:12px}
-.reply{border:1px dashed var(--sand);border-radius:var(--r-field);padding:12px 14px;font-size:15px;line-height:1.5;display:grid;gap:6px;background:var(--bg)}
+.reply{border:1px dashed var(--ramme);border-radius:var(--radius-kort-lite);padding:12px 14px;font-size:15px;line-height:1.5;display:grid;gap:6px;background:var(--flate-side)}
 .lv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.lv div{background:var(--soft);border-radius:var(--r-field);padding:14px 16px;font-size:15px;line-height:1.5;display:grid;gap:6px;align-content:start}
-.lv b{font:600 17px/1.3 var(--sans)}
-.lv span:last-child{color:var(--muted)}
+.lv div{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:14px 16px;font-size:15px;line-height:1.5;display:grid;gap:6px;align-content:start}
+.lv b{font:600 17px/1.3 var(--skrift-familie-hengsel-tekst)}
+.lv span:last-child{color:var(--tekst-dempet)}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 .hide{display:none}
 @media (max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}.lv{grid-template-columns:minmax(0,1fr)}.fld{grid-template-columns:minmax(0,1fr) auto}.fld span:first-child{grid-column:1/-1}}

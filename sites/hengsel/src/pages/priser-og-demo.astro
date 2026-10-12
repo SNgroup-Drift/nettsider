@@ -155,7 +155,7 @@ const f = DEMO.felt;
   .tekst { display: flex; flex-direction: column; }
   .steg { gap: 12px; margin-top: 4px; }
   .steg li { display: flex; gap: 16px; }
-  .nr { width: 32px; height: 32px; border-radius: 999px; background: var(--surface-highlight); flex: none; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
+  .nr { width: 32px; height: 32px; border-radius: var(--radius-pille); background: var(--surface-highlight); flex: none; display: grid; place-items: center; font-weight: 600; font-size: 14px; }
   .steg .tekst { gap: 2px; }
 
   .demo { scroll-margin-top: 72px; }
@@ -179,7 +179,7 @@ const f = DEMO.felt;
   .valg { display: flex; flex-wrap: wrap; gap: 8px; }
   .valg-et { position: relative; }
   .valg-et label {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; box-sizing: border-box;
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); box-sizing: border-box;
     border: 1px solid var(--line); background: var(--bg); color: var(--ink); font-size: 0.95rem; cursor: pointer;
   }
   .valg-et label:hover { border-color: var(--ink); }

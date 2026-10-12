@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,11 +8,12 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Ordre- og fakturakontroll · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:16px}
@@ -21,32 +22,32 @@
 .lay>.card{display:grid;gap:12px;min-width:0;align-content:start}
 .lay h3{margin:0}
 .docs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
-.doc{background:var(--soft);border-radius:var(--r-field);padding:6px 12px;line-height:1.5}
+.doc{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:6px 12px;line-height:1.5}
 .doc b{font-weight:600}
 .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;font-size:15px;min-width:600px}
-th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;line-height:1.45}
-th{font:600 13px var(--sans);color:var(--muted);padding-block:8px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--linje);vertical-align:middle;line-height:1.45}
+th{font:600 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);padding-block:8px}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 tbody tr{transition:background var(--dur) var(--ease)}
-tbody tr:hover td{background:var(--soft)}
-tbody tr.scan td{background:var(--accent-soft)}
-tbody tr.bad td{background:var(--warn-soft)}
-tr.bad td.diff{color:var(--warn);font-weight:600}
+tbody tr:hover td{background:var(--flate-senket)}
+tbody tr.scan td{background:var(--flate-valgt)}
+tbody tr.bad td{background:var(--status-haster-bg)}
+tr.bad td.diff{color:var(--status-haster-fg);font-weight:600}
 td.st{width:110px}
 .flags{display:grid;gap:10px}
 .flag{gap:8px;font-size:15px;padding:12px 14px;line-height:1.45}
 .flag.ok .acts{align-items:center}
 .flag b{font-weight:600}
-.flag p{margin:0;color:var(--muted);font-size:14px}
+.flag p{margin:0;color:var(--tekst-dempet);font-size:14px}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 .flag .acts{gap:6px}
 .flag .btn{min-height:40px;padding:0 14px;font-size:14px}
 .sum{display:grid;gap:8px}
-.sum div{background:var(--soft);border-radius:var(--r-field);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.sum b{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
-.sum span{font-size:13px;color:var(--muted)}
-.empty{color:var(--muted);font-size:14px;margin:0}
+.sum div{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sum b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sum span{font-size:13px;color:var(--tekst-dempet)}
+.empty{color:var(--tekst-dempet);font-size:14px;margin:0}
 @media (max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.wrap{padding-inline:16px}.lay>.card{padding:16px}}
 </style>

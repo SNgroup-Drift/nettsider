@@ -1,0 +1,64 @@
+---
+/**
+ * K-192: felles ramme for Hengsel-sidene som er bygd med Astro (hengsel.no og admin.hengsel.no): <head>, de delte tokens og skriftene (selvhostet).
+ * Erstatter @sngroup/design/components/BaseLayout.astro, som er SN Groups ramme med SN Groups palett og mørk modus.
+ * Bare lys modus: ingen tema-attributt på html, ingen mørk theme-color. Adressefeltets farge er Off White fra pinnet hengsel.tokens.json.
+ * Ingen sporing, ingen informasjonskapsler, ingen eksterne ressurser.
+ */
+import "../tokens.css";
+import "../fonts.css";
+import "./grunn.css";
+import inter from "../ds/assets/fonts/inter-latin-400-normal.woff2?url";
+import newsreader from "../ds/assets/fonts/newsreader-latin-400-normal.woff2?url";
+import tokens from "../ds/tokens/hengsel.tokens.json";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Sti uten domene, f.eks. "/" eller "/personvern" */
+  path?: string;
+  noindex?: boolean;
+  /** Overstyrer robots-taggen, f.eks. "noindex, nofollow" */
+  robots?: string;
+  /** Delingsbilde som full URL */
+  delingsbilde?: string;
+  ikon?: { href: string; type: string };
+  appleIkon?: string;
+  ikon32?: string;
+  manifest?: string;
+  /** Skriftfiler som skal forhåndslastes. Standard: Newsreader og Inter 400 */
+  forhandslast?: string[];
+}
+const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, ikon = { href: "/favicon.svg", type: "image/svg+xml" }, appleIkon, ikon32, manifest, forhandslast = [newsreader, inter] } = Astro.props;
+// Nettstedene bygger med build.format «file» og trailingSlash «never», så Astro.url.pathname er «/index.html» og «/personvern.html».
+const renSti = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+const canonical = Astro.site ? new URL(renSti, Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {(robots || noindex) && <meta name="robots" content={robots ?? "noindex"} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {delingsbilde && <meta property="og:image" content={delingsbilde} />}
+    {delingsbilde && <meta name="twitter:card" content="summary_large_image" />}
+    <meta name="theme-color" content={tokens.palett["off-white"]} />
+    <link rel="icon" href={ikon.href} type={ikon.type} />
+    {ikon32 && <link rel="icon" href={ikon32} sizes="32x32" />}
+    {appleIkon && <link rel="apple-touch-icon" href={appleIkon} />}
+    {manifest && <link rel="manifest" href={manifest} />}
+    {forhandslast.map((f) => <link rel="preload" href={f} as="font" type="font/woff2" crossorigin />)}
+  </head>
+  <body>
+    <a class="skip" href="#innhold">Hopp til innholdet</a>
+    <slot />
+  </body>
+</html>

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * K-182: lager sites/design/public/last-ned/hengsel-logopakke.zip fra logoene i designsystemet (sites/design/public/ds/assets/logo, 32 SVG-filer)
+ * K-182: lager sites/design/public/last-ned/hengsel-logopakke.zip fra logoene i designsystemet (packages/hengsel-tokens/ds/assets/logo, 32 SVG-filer)
  * pluss lisensfilene for skriftene. Kjøres først i `npm run build -w sites/design`. Ren Node (zip uten komprimering), og alltid de samme bytene for de samme filene
  * (fast tidsstempel, sortert), så bygget er reproduserbart. Fila genereres, den er ikke i git.
  */
@@ -8,7 +8,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 const rot = resolve(import.meta.dirname, "..");
-const ds = join(rot, "sites", "design", "public", "ds");
+const ds = join(rot, "packages", "hengsel-tokens", "ds");
 const ut = join(rot, "sites", "design", "public", "last-ned");
 
 const crcTabell = Array.from({ length: 256 }, (_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
@@ -45,7 +45,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const logoer = (await readdir(join(ds, "assets", "logo"))).filter((f) => f.endsWith(".svg")).sort();
   if (logoer.length !== 32) throw new Error(`Forventet 32 logofiler i designsystemet, fant ${logoer.length}`);
   const les = (...s) => readFile(join(ds, ...s));
-  const les_meg = `Hengsel-logopakken (merke v3). Designsystem fra ${JSON.parse(await readFile(join(rot, "sites", "design", "designsystem.pin.json"), "utf8")).versjon}.
+  const les_meg = `Hengsel-logopakken (merke v3). Designsystem fra ${JSON.parse(await readFile(join(rot, "packages", "hengsel-tokens", "designsystem.pin.json"), "utf8")).versjon}.
 
 Åtte former, to utgaver (aksent og ensfarget), lys og mørk: 32 SVG-filer. Filnavn: {form}-{aksent-}{lys|mork}.svg (symbolet heter hengsel-symbol).
   aksent-lys   Warm Black med stift i Deep Blue. Standard på lys flate.

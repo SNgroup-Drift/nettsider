@@ -13,7 +13,7 @@ export const STEG_ARIA = "Steg i appen";
 export const FORRIGE = "Forrige steg";
 export const NESTE = "Neste steg";
 
-/** Steg i appen: nøkkel (bildefil: app/<nokkel>-lys.webp og -mork.webp), tittel, setning, alt-tekst */
+/** Steg i appen: nøkkel (bildefil: app/<nokkel>-lys.webp), tittel, setning, alt-tekst */
 export const STEG = [
   { nokkel: "idag", tittel: "I dag", tekst: "Neste jobb, På vei, og det du må vite før du starter.", alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei" },
   { nokkel: "jobben", tittel: "Jobben", tekst: "Tegning, mål, bilder og restpunkter samlet før, under og etter.", alt: "Hengsel Ute: jobben med Noe mangler, Før og Under" },
@@ -48,7 +48,6 @@ export const UTEN_NETT = {
   ],
   alt: "Hengsel Ute uten nett: I dag med varsel om at bilder og kryss sendes når nettet er tilbake",
   lys: "/img/app/uten-nett-lys.webp",
-  mork: "/img/app/uten-nett-mork.webp",
 } as const;
 
 export const BLI_TESTER = {

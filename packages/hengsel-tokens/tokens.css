@@ -1,0 +1,187 @@
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 1.1.0, commit 3099a27b). Ikke rediger for hånd.
+ *
+ * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
+ * Bare lys modus: ingen prefers-color-scheme, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
+ * Fargene endres i designsystemet (innlandet-crm-sync), og deretter pinnes ny commit med: npm run design:hent */
+
+:root {
+  /* Palett: de åtte merkevarefargene og lys aksent */
+  --warm-black: #31261D;
+  --off-white: #FBF9F6;
+  --beige-4: #F8F2EC;
+  --beige-3: #F2E9DB;
+  --beige-2: #E4D4C4;
+  --beige-1: #C3B5A7;
+  --deep-blue: #5074A9;
+  --dusty-blue: #9CA9BD;
+  --aksent-mork: #8FA9D1;
+
+  /* Roller, lys utgave (nettsidene har bare denne) */
+  --flate-side: #F2E9DB;
+  --flate-kort: #FBF9F6;
+  --flate-senket: #F8F2EC;
+  --flate-valgt: #E4D4C4;
+  --linje: #E4D4C4;
+  --kant: rgba(49, 38, 29, 0.32);
+  --ramme: #C3B5A7;
+  --tekst: #31261D;
+  --tekst-dempet: rgba(49, 38, 29, 0.72);
+  --tekst-svak: #6F6458;
+  --tekst-invers: #FBF9F6;
+  --aksent: #5074A9;
+  --aksent-trykk: #405D88;
+  --aksent-tekst: #3D5E8E;
+  --aksent-svak: #9CA9BD;
+  --paa-aksent: #FBF9F6;
+  --overlegg: rgba(20, 16, 12, 0.48);
+  --varsel-flate: #5074A9;
+  --varsel-tekst: #FBF9F6;
+  --feil-flate: #B8432F;
+  --feil-tekst: #FBF9F6;
+  --alltid-mork: #14100C;
+
+  /* Statustoner, lys: fg = tekst og prikk, bg = flate, kant = ramme */
+  --status-noytral-fg: #5E564C;
+  --status-noytral-bg: #ECE4D8;
+  --status-noytral-kant: #D9CFC2;
+  --status-info-fg: #31261D;
+  --status-info-bg: #E4D4C4;
+  --status-info-kant: #C3B5A7;
+  --status-venter-fg: #5A4A7C;
+  --status-venter-bg: #E9E3F1;
+  --status-venter-kant: #CFC4E0;
+  --status-sannsynlig-fg: #2E6466;
+  --status-sannsynlig-bg: #DCEBEA;
+  --status-sannsynlig-kant: #B3D1CF;
+  --status-ok-fg: #3B6547;
+  --status-ok-bg: #E0EADB;
+  --status-ok-kant: #B9CFB0;
+  --status-haster-fg: #7A5212;
+  --status-haster-bg: #F5E6C8;
+  --status-haster-kant: #E4CFA0;
+  --status-feil-fg: #8E3522;
+  --status-feil-bg: #F4E2DB;
+  --status-feil-kant: #E4B8A8;
+
+  /* Skygger */
+  --skygge-side: none;
+  --skygge-overlegg: 0 1px 2px rgb(49 38 29 / 0.06), 0 8px 24px rgb(49 38 29 / 0.10);
+  --skygge-dialog: 0 24px 64px rgb(49 38 29 / 0.18);
+
+  /* Skrift: Inter (tekst) og Newsreader (overskrifter), selvhostet (fonts.css) */
+  --skrift-familie-hengsel-tekst: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --skrift-familie-hengsel-overskrift: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --skrift-familie-ios-tekst: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --skrift-familie-ios-tittel: Newsreader;
+  --skrift-vekt-inter-normal: 400;
+  --skrift-vekt-inter-medium: 500;
+  --skrift-vekt-inter-sterk: 600;
+  --skrift-vekt-newsreader-normal: 400;
+  --skrift-vekt-newsreader-medium: 500;
+  --skrift-h1: 36px;
+  --skrift-h1-lh: 40px;
+  --skrift-h2: 26px;
+  --skrift-h2-lh: 30px;
+  --skrift-tall: 34px;
+  --skrift-tall-lh: 38px;
+  --skrift-tittel: 15px;
+  --skrift-tittel-lh: 20px;
+  --skrift-tekst: 14px;
+  --skrift-tekst-lh: 20px;
+  --skrift-meta: 14px;
+  --skrift-meta-lh: 20px;
+  --skrift-minste: 12px;
+  --skrift-minste-lh: 16px;
+
+  /* Radius og avstand */
+  --radius-kort-stor: 12px;
+  --radius-kort-lite: 8px;
+  --radius-felt: 6px;
+  --radius-bilde: 8px;
+  --radius-pille: 999px;
+  --avstand-1: 4px;
+  --avstand-2: 8px;
+  --avstand-3: 12px;
+  --avstand-4: 16px;
+  --avstand-5: 20px;
+  --avstand-6: 24px;
+  --avstand-7: 32px;
+  --avstand-8: 40px;
+  --avstand-9: 56px;
+
+  /* Mørke fargeprøver (--mork-*): vises som prøver på design.hengsel.no til appene og CRM-et. Ingen side bruker dem som sitt eget tema */
+  --mork-flate-side: #1F1914;
+  --mork-flate-kort: #2A221C;
+  --mork-flate-senket: #251E18;
+  --mork-flate-valgt: #3A3028;
+  --mork-linje: rgba(242, 233, 219, 0.14);
+  --mork-kant: rgba(242, 233, 219, 0.32);
+  --mork-ramme: #000000;
+  --mork-tekst: #F2E9DB;
+  --mork-tekst-dempet: rgba(242, 233, 219, 0.72);
+  --mork-tekst-svak: rgba(242, 233, 219, 0.56);
+  --mork-tekst-invers: #1F1914;
+  --mork-aksent: #8FA9D1;
+  --mork-aksent-trykk: #7891B8;
+  --mork-aksent-tekst: #8FA9D1;
+  --mork-aksent-svak: #9CA9BD;
+  --mork-paa-aksent: #1F1914;
+  --mork-overlegg: rgba(20, 16, 12, 0.48);
+  --mork-varsel-flate: #9DB8E0;
+  --mork-varsel-tekst: #14100C;
+  --mork-feil-flate: #B8432F;
+  --mork-feil-tekst: #FBF9F6;
+  --mork-alltid-mork: #14100C;
+  --mork-status-noytral-fg: #D9CFC2;
+  --mork-status-noytral-bg: #3A2F26;
+  --mork-status-noytral-kant: #5A4D41;
+  --mork-status-info-fg: #F2E9DB;
+  --mork-status-info-bg: #3A3028;
+  --mork-status-info-kant: #6B6259;
+  --mork-status-venter-fg: #C2B3E0;
+  --mork-status-venter-bg: #3A3248;
+  --mork-status-venter-kant: #6E6090;
+  --mork-status-sannsynlig-fg: #8FCACB;
+  --mork-status-sannsynlig-bg: #223B3C;
+  --mork-status-sannsynlig-kant: #4F7C7E;
+  --mork-status-ok-fg: #9FC28A;
+  --mork-status-ok-bg: #2E3B2B;
+  --mork-status-ok-kant: #5E7A50;
+  --mork-status-haster-fg: #E9C46A;
+  --mork-status-haster-bg: #45371E;
+  --mork-status-haster-kant: #8A6E30;
+  --mork-status-feil-fg: #E5927A;
+  --mork-status-feil-bg: #47291F;
+  --mork-status-feil-kant: #8A4A38;
+  --mork-skygge-side: none;
+  --mork-skygge-overlegg: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4);
+  --mork-skygge-dialog: 0 24px 64px rgb(0 0 0 / 0.45);
+
+  /* Kundens aksent, eksempler fra kundetema (bare det sluttkunden ser: minst 4,5:1 mot lys bakgrunn) */
+  --kunde-eksempel-interior-as-aksent: #B0523A;
+  --kunde-eksempel-interior-as-paa-aksent: #FBF9F6;
+  --kunde-eksempel-kjokken-as-aksent: #2E7D6B;
+  --kunde-eksempel-kjokken-as-paa-aksent: #FBF9F6;
+
+  color-scheme: light;
+}
+
+/* nettbrett */
+@media (max-width: 1199.98px) {
+  :root {
+    --skrift-h1: 34px;
+    --skrift-h1-lh: 38px;
+  }
+}
+
+/* telefon */
+@media (max-width: 767.98px) {
+  :root {
+    --skrift-h1: 36px;
+    --skrift-h1-lh: 40px;
+    --skrift-h2: 22px;
+    --skrift-h2-lh: 26px;
+    --skrift-tall: 30px;
+    --skrift-tall-lh: 34px;
+  }
+}

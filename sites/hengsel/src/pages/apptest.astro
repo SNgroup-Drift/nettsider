@@ -20,7 +20,7 @@ import { lagQr } from "../apptest-qr";
 import { EPOST } from "../content/forside";
 
 const { versjon, oppdatert } = APPTEST;
-const dato = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${iso}T12:00:00Z`));
+const dato = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${iso}T12:00:00Z`)); // dd.mm.åååå
 const qr = lagQr();
 
 const VEIER = [
@@ -47,7 +47,7 @@ const SLIDES = [
 
 // Skjermene er de fiktive demo-skjermene fra designet: iOS-skjermene (img/app, 402 × 874) og rollene uten iOS-skjerm (img/apptest, 2× og 1×, lages av scripts/fiktive-skjermer.mjs)
 const APP = new Set(["idag", "jobben", "ks", "avvik", "ferdig"]);
-const bildeSrc = (b: string, tema: "lys" | "mork") => (APP.has(b) ? `/img/app/${b}-${tema}.webp` : `/img/apptest/${b}-${tema}.webp`);
+const bildeSrc = (b: string, tema: "lys") => (APP.has(b) ? `/img/app/${b}-${tema}.webp` : `/img/apptest/${b}-${tema}.webp`);
 const maal = (b: string) => (APP.has(b) ? { w: 402, h: 874 } : { w: 780, h: 1688 });
 const harFeil = KJENTE_FEIL.length > 0;
 ---
@@ -72,7 +72,7 @@ const harFeil = KJENTE_FEIL.length > 0;
           <div class="slides">
             {SLIDES.map((s, i) => (
               <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
-                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} srcDark={bildeSrc(s.bilde, "mork")} w={maal(s.bilde).w} h={maal(s.bilde).h} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
+                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} w={maal(s.bilde).w} h={maal(s.bilde).h} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
               </div>
             ))}
           </div>
@@ -157,7 +157,7 @@ const harFeil = KJENTE_FEIL.length > 0;
               <a class="pdf" href="/apptest/Logg_inn_i_demoen.pdf" download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
-              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} srcDark={bildeSrc(r.bilde, "mork")} w={maal(r.bilde).w} h={maal(r.bilde).h} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
+              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} w={maal(r.bilde).w} h={maal(r.bilde).h} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
             </div>
           </div>
         ))}
@@ -283,13 +283,9 @@ const harFeil = KJENTE_FEIL.length > 0;
 </script>
 
 <style>
-  /* Flatene er Beige 4, båndene Beige 3 og kortene Off White. Deep Blue bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er Warm Black. */
-  .a-side { --a-flate: var(--beige-4); --a-lenke: #46699d; background: var(--a-flate); color: var(--ink); }
-  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) .a-side { --a-flate: var(--flate-myk); --a-lenke: var(--accent); } }
-  :global(html:root[data-theme="dark"]) .a-side { --a-flate: var(--flate-myk); --a-lenke: var(--accent); }
-  :global(header.sidehode) { --a-flate: var(--beige-4); --a-lenke: #46699d; }
-  @media (prefers-color-scheme: dark) { :global(html:root:not([data-theme="light"])) :global(header.sidehode) { --a-flate: var(--flate-myk); --a-lenke: var(--accent); } }
-  :global(html:root[data-theme="dark"]) :global(header.sidehode) { --a-flate: var(--flate-myk); --a-lenke: var(--accent); }
+  /* Flatene er --flate-senket, båndene --flate-side og kortene --flate-kort. Deep Blue bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er Warm Black. */
+  .a-side { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); background: var(--a-flate); color: var(--ink); }
+  :global(header.sidehode) { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); }
 
   .a-side a:not(.btn) { color: var(--a-lenke); }
   .dempet { color: var(--muted); }
@@ -317,7 +313,7 @@ const harFeil = KJENTE_FEIL.length > 0;
   .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
   :global(html.js) .prikker { visibility: visible; }
   .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
-  .prikk span { width: 8px; height: 8px; border-radius: 999px; background: var(--surface-highlight-strong); transition: background var(--dur); }
+  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); transition: background var(--dur); }
   .prikk.on span { background: var(--ink); }
   .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
   @media (max-width: 759px) { .slides { max-width: 250px; } }
@@ -331,7 +327,7 @@ const harFeil = KJENTE_FEIL.length > 0;
   .vei-hode span { color: var(--muted); font-size: 0.95rem; }
   .steg { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
   .steg li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.98rem; line-height: 1.5; }
-  .nr { width: 26px; height: 26px; flex: none; border-radius: 999px; border: 1px solid var(--line); background: var(--a-flate); display: grid; place-items: center; font-size: 13px; font-weight: var(--w-strong); font-variant-numeric: tabular-nums; margin-top: 1px; }
+  .nr { width: 26px; height: 26px; flex: none; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--a-flate); display: grid; place-items: center; font-size: 13px; font-weight: var(--w-strong); font-variant-numeric: tabular-nums; margin-top: 1px; }
   .blokk { width: 100%; }
   .t-pc { display: none; }
   .andre { display: none; align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--a-lenke); font-size: 1rem; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
@@ -348,8 +344,8 @@ const harFeil = KJENTE_FEIL.length > 0;
   .installer[data-modus="pc"] .t-pc { display: inline; }
   .installer[data-modus="pc"] .t-tlf { display: none; }
   .qr { padding: 22px; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
-  .qr-rute { background: #fbf9f6; border-radius: var(--r-field); padding: 12px; line-height: 0; }
-  .qr-rute path { fill: #31261d; }
+  .qr-rute { background: var(--flate-kort); border-radius: var(--r-field); padding: 12px; line-height: 0; }
+  .qr-rute path { fill: var(--tekst); }
   .qr span { font-size: 0.98rem; max-width: 22ch; }
 
   /* Telefonvisning med skript: hovedveien først, de andre bak «Andre telefoner» */
@@ -367,7 +363,7 @@ const harFeil = KJENTE_FEIL.length > 0;
   .roller-hode { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px; }
   .radio { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: -4px; }
-  .chip { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; box-sizing: border-box; border-radius: 999px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 0.95rem var(--f-body); cursor: pointer; transition: background var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .chip { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; box-sizing: border-box; border-radius: var(--radius-pille); border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 0.95rem var(--f-body); cursor: pointer; transition: background var(--dur) var(--ease), color var(--dur) var(--ease); }
   .chip:hover { background: var(--surface-highlight); }
   .rollekort { display: none; padding: clamp(20px, 3vw, 40px); border-radius: var(--r-lg); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 5vw, 64px); align-items: center; background: var(--surface); border: 1px solid var(--line); box-sizing: border-box; }
   #rolle-montor:checked ~ .rollekort[data-rolle="montor"],
@@ -409,17 +405,17 @@ const harFeil = KJENTE_FEIL.length > 0;
   .sjekk-topp { padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); }
   .sjekk-rad { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .sjekk-rad b { font-weight: var(--w-strong); font-variant-numeric: tabular-nums; }
-  .stolpe { appearance: none; -webkit-appearance: none; width: 100%; height: 6px; border: 0; border-radius: 999px; overflow: hidden; background: var(--surface-highlight-strong); color: var(--ink); }
-  .stolpe::-webkit-progress-bar { background: var(--surface-highlight-strong); border-radius: 999px; }
-  .stolpe::-webkit-progress-value { background: var(--ink); border-radius: 999px; transition: width 160ms var(--ease); }
-  .stolpe::-moz-progress-bar { background: var(--ink); border-radius: 999px; }
+  .stolpe { appearance: none; -webkit-appearance: none; width: 100%; height: 6px; border: 0; border-radius: var(--radius-pille); overflow: hidden; background: var(--surface-highlight-strong); color: var(--ink); }
+  .stolpe::-webkit-progress-bar { background: var(--surface-highlight-strong); border-radius: var(--radius-pille); }
+  .stolpe::-webkit-progress-value { background: var(--ink); border-radius: var(--radius-pille); transition: width 160ms var(--ease); }
+  .stolpe::-moz-progress-bar { background: var(--ink); border-radius: var(--radius-pille); }
   .sjekk-liste { margin: 0; padding: 0; list-style: none; }
   .sjekk-liste li { border-bottom: 1px solid var(--line); }
   .sjekk-liste li:last-child { border-bottom: 0; }
   .sjekk-punkt { position: relative; min-height: 52px; padding: 10px 22px; display: flex; align-items: center; gap: 14px; cursor: pointer; box-sizing: border-box; }
   .sjekk-punkt:hover { background: var(--a-flate); }
   .sjekk-punkt input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
-  .boks { width: 24px; height: 24px; flex: none; border-radius: 7px; box-sizing: border-box; border: 1.5px solid var(--soft); display: grid; place-items: center; transition: background var(--dur); }
+  .boks { width: 24px; height: 24px; flex: none; border-radius: var(--radius-felt); box-sizing: border-box; border: 1.5px solid var(--soft); display: grid; place-items: center; transition: background var(--dur); }
   .boks::after { content: ""; width: 6px; height: 11px; border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg) translate(-1px, -1px); opacity: 0; }
   .sjekk-punkt input:checked + .boks { background: var(--ink); border-color: var(--ink); }
   .sjekk-punkt input:checked + .boks::after { opacity: 1; }
@@ -429,7 +425,7 @@ const harFeil = KJENTE_FEIL.length > 0;
   .tidslinje { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
   .tid { display: grid; grid-template-columns: 20px 1fr; gap: 14px; }
   .tid-spor { display: flex; flex-direction: column; align-items: center; }
-  .prikkt { width: 12px; height: 12px; border-radius: 999px; box-sizing: border-box; margin-top: 4px; flex: none; background: var(--surface); border: 2px solid var(--beige-1); }
+  .prikkt { width: 12px; height: 12px; border-radius: var(--radius-pille); box-sizing: border-box; margin-top: 4px; flex: none; background: var(--surface); border: 2px solid var(--beige-1); }
   .tid.forst .prikkt { background: var(--ink); border-color: var(--ink); }
   .linje { width: 1px; flex: 1; background: var(--line); margin-top: 4px; }
   .tid.sist .linje { background: transparent; }

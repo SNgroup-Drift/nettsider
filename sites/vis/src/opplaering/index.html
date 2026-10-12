@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,54 +8,55 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Opplæring for selgere · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:20px 24px 40px;display:grid;gap:16px}
 .wrap>.sidehode{margin-bottom:8px}
 .prog{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.meter{flex:1;min-width:180px;height:6px;background:var(--line);border-radius:var(--r-pill);overflow:hidden}
-.meter i{display:block;height:100%;background:var(--accent);width:0;border-radius:var(--r-pill);transition:width var(--dur) var(--ease)}
+.meter{flex:1;min-width:180px;height:6px;background:var(--linje);border-radius:var(--radius-pille);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--aksent);width:0;border-radius:var(--radius-pille);transition:width var(--dur) var(--ease)}
 .layout{display:grid;grid-template-columns:288px minmax(0,1fr);gap:16px;align-items:start}
 /* Modul-navigasjonen: nummererte sirkler 24 px, 1,5 px --sand; ferdig = fylt --ok med hake; valgt = 3 px --accent-strek på --accent-soft */
-.nav{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px;display:grid;gap:2px;position:sticky;top:16px}
-.nav button{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:center;text-align:left;border:0;background:none;border-radius:var(--r-field);padding:9px 12px;font:400 15px/1.35 var(--sans);color:var(--fg);cursor:pointer;min-height:44px;transition:background var(--dur) var(--ease)}
-.nav button:hover{background:var(--soft)}
-.nav button.on{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent);font-weight:500}
-.nav button:focus-visible{border-radius:var(--r-field)}
-.nav .c{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--sand);display:grid;place-items:center;font:600 12px/1 var(--sans);color:var(--muted);transition:background var(--dur) var(--ease)}
-.nav button.d .c{background:var(--ok);border-color:var(--ok);color:var(--card)}
-.nav button.d{color:var(--muted)}
-.nav button.d.on{color:var(--fg)}
-.mod{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(20px,3vw,32px);display:grid;gap:16px;min-width:0}
-.mod h2{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
-.mod .intro{font-size:17px;color:var(--muted);margin:0;max-width:62ch}
+.nav{background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-stor);padding:8px;display:grid;gap:2px;position:sticky;top:16px}
+.nav button{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:center;text-align:left;border:0;background:none;border-radius:var(--radius-kort-lite);padding:9px 12px;font:400 15px/1.35 var(--skrift-familie-hengsel-tekst);color:var(--tekst);cursor:pointer;min-height:44px;transition:background var(--dur) var(--ease)}
+.nav button:hover{background:var(--flate-senket)}
+.nav button.on{background:var(--flate-valgt);box-shadow:inset 3px 0 0 var(--aksent);font-weight:500}
+.nav button:focus-visible{border-radius:var(--radius-kort-lite)}
+.nav .c{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ramme);display:grid;place-items:center;font:600 12px/1 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);transition:background var(--dur) var(--ease)}
+.nav button.d .c{background:var(--status-ok-fg);border-color:var(--status-ok-fg);color:var(--flate-kort)}
+.nav button.d{color:var(--tekst-dempet)}
+.nav button.d.on{color:var(--tekst)}
+.mod{background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-stor);padding:clamp(20px,3vw,32px);display:grid;gap:16px;min-width:0}
+.mod h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.mod .intro{font-size:17px;color:var(--tekst-dempet);margin:0;max-width:62ch}
 ol.st{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:s}
 ol.st li{counter-increment:s;position:relative;padding-left:40px;min-height:28px;line-height:1.6;padding-top:1px}
-ol.st li::before{position:absolute;left:0;top:1px;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent-tekst);display:grid;place-items:center;font:600 13px/1 var(--sans)}
+ol.st li::before{position:absolute;left:0;top:1px;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--flate-valgt);color:var(--aksent-tekst);display:grid;place-items:center;font:600 13px/1 var(--skrift-familie-hengsel-tekst)}
 ul.pt{margin:0;padding-left:20px;display:grid;gap:6px}
-.tip,.warnbox{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent);border-radius:var(--r-field);padding:12px 16px 12px 19px;font-size:15px;line-height:1.55}
+.tip,.warnbox{background:var(--flate-senket);box-shadow:inset 3px 0 0 var(--aksent);border-radius:var(--radius-kort-lite);padding:12px 16px 12px 19px;font-size:15px;line-height:1.55}
 .tip b,.warnbox b{display:block;margin-bottom:2px;font-weight:600}
-.warnbox{background:var(--warn-soft);box-shadow:inset 3px 0 0 var(--warn)}
-.warnbox b{color:var(--warn)}
+.warnbox{background:var(--status-haster-bg);box-shadow:inset 3px 0 0 var(--status-haster-fg)}
+.warnbox b{color:var(--status-haster-fg)}
 table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font:600 13px var(--sans);color:var(--muted)}
-tr:hover td{background:var(--soft)}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linje);vertical-align:top}
+th{font:600 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet)}
+tr:hover td{background:var(--flate-senket)}
 .tbl{overflow-x:auto}
-kbd,.ui{font:500 13px var(--sans);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:1px 6px;white-space:nowrap}
-.quiz{background:var(--soft);border-radius:var(--r-field);padding:16px;display:grid;gap:8px}
+kbd,.ui{font:500 13px var(--skrift-familie-hengsel-tekst);background:var(--flate-senket);border:1px solid var(--linje);border-radius:var(--radius-felt);padding:1px 6px;white-space:nowrap}
+.quiz{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:16px;display:grid;gap:8px}
 .quiz .q{font-weight:600}
-.quiz .btn{justify-content:flex-start;text-align:left;padding:10px 18px;line-height:1.4;background:var(--card);border-color:var(--line);transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
-.quiz .btn:hover{background:var(--card);border-color:var(--fg);color:var(--fg)}
-.quiz .btn.r,.quiz .btn.r:hover{background:var(--ok-soft);border-color:var(--ok);color:var(--ok-tekst)}
-.quiz .btn.f,.quiz .btn.f:hover{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
-.quiz .fb{font-size:14px;color:var(--muted);min-height:1.4em}
-.mod .foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:16px}
+.quiz .btn{justify-content:flex-start;text-align:left;padding:10px 18px;line-height:1.4;background:var(--flate-kort);border-color:var(--linje);transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.quiz .btn:hover{background:var(--flate-kort);border-color:var(--tekst);color:var(--tekst)}
+.quiz .btn.r,.quiz .btn.r:hover{background:var(--status-ok-bg);border-color:var(--status-ok-fg);color:var(--status-ok-fg)}
+.quiz .btn.f,.quiz .btn.f:hover{background:var(--status-haster-bg);border-color:var(--status-haster-fg);color:var(--status-haster-fg)}
+.quiz .fb{font-size:14px;color:var(--tekst-dempet);min-height:1.4em}
+.mod .foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--linje);padding-top:16px}
 .mod .foot .sp{flex:1}
 @media (max-width:860px){.layout{grid-template-columns:1fr}.nav{position:static;grid-template-columns:1fr 1fr}.nav button{font-size:14px;padding:8px 10px;gap:10px}}
 @media (max-width:640px){.wrap{padding:16px 16px 32px}.mod .foot .sp{display:none}}

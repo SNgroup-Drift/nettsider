@@ -1,40 +1,58 @@
 /*
-  hengsel.no – skrift, designsystemets navn og grunnklasser.
-  Fasit: docs/design/hengsel/_ds/…/tokens/*.css (Hengsel designsystem v1.0) og <helmet> i «56 Hengsel forside.dc.html»
-  (10.10.2026). Form som i fil 51: kort med radius 14 og 1 px Beige 2-ramme, pilleknapper (primær Deep Blue, sekundær
-  omriss), eyebrow i versaler, Newsreader i titler, Inter ellers, 17 px / 1,6.
-
-  Designsystemets variabler (--bg, --ink, --muted …) peker på familiens variabler i tokens.css, så lys og mørk modus
-  styres ett sted. Avvik: --soft er #6E6355 i stedet for #8A7F72 (tekst trenger 4,5:1, se tokens.css).
+  hengsel.no – skrift, mål og grunnklasser. Alle farger, skrifter og radier kommer fra de delte variablene i
+  @sngroup/hengsel-tokens/tokens.css (lastes av Hode.astro). Her finnes ingen fargeverdier, bare korte lokale navn som peker på
+  de delte variablene, så sidene slipper å skrive om hver regel. Bare lys modus.
+  Fasit for roller: design.hengsel.no (sites/design/src/styles/design.css).
 */
 
 :root {
-  --bg: var(--bakgrunn);
-  --surface: var(--kort);
-  --surface-soft: var(--flate-myk);
-  --surface-highlight: var(--flate);
-  --surface-highlight-strong: var(--flate-sterk);
+  /* Lokale navn → delte roller */
+  --bg: var(--flate-kort);                  /* sideflaten */
+  --surface: var(--flate-kort);             /* kort, ruter og felt */
+  --surface-soft: var(--flate-senket);      /* senket flate: sidemeny, felt, rader */
+  --surface-highlight: var(--flate-side);   /* seksjonsbånd */
+  --surface-highlight-strong: var(--flate-valgt); /* piller, avatarer, valgt */
   --line: var(--linje);
   --ink: var(--tekst);
   --muted: var(--tekst-dempet);
   --soft: var(--tekst-svak);
   --accent: var(--aksent);
-  --accent-ink: var(--pa-aksent);
-  --accent-soft: var(--aksent-myk);
-  --bad: var(--feil);
-  --bad-soft: var(--feil-myk);
-  --shadow: var(--skygge);
+  --accent-ink: var(--paa-aksent);
+  --accent-soft: var(--flate-valgt);        /* info: piller, merker, valgte felt */
+  --info-tekst: var(--tekst);
+  --ok: var(--status-ok-fg);
+  --ok-soft: var(--status-ok-bg);
+  --bad: var(--status-feil-fg);
+  --bad-soft: var(--status-feil-bg);
+  --warn: var(--status-haster-fg);
+  --warn-soft: var(--status-haster-bg);
+  --shadow: var(--skygge-overlegg);
+  --surface-app: var(--flate-side);         /* flaten inne i de fiktive appskjermene */
+  --app-flate: var(--surface-app);
 
-  --f-display: var(--font-overskrift);
-  --f-body: var(--font-tekst);
-  --w-body: 400;
-  --w-medium: 500;
-  --w-strong: 600;
+  --f-display: var(--skrift-familie-hengsel-overskrift);
+  --f-body: var(--skrift-familie-hengsel-tekst);
+  --w-body: var(--skrift-vekt-inter-normal);
+  --w-medium: var(--skrift-vekt-inter-medium);
+  --w-strong: var(--skrift-vekt-inter-sterk);
   --t-eyebrow: 0.82rem;
-  --r-sm: 8px; --r-field: 10px; --r: 14px; --r-lg: 20px; --r-pill: 999px;
+  --r-sm: var(--radius-kort-lite);
+  --r-field: var(--radius-kort-lite);
+  --r: var(--radius-kort-stor);
+  --r-lg: 20px;
+  --r-pill: var(--radius-pille);
   --wrap: 1180px;
   --pad: clamp(16px, 4vw, 40px);
+  --gutter: var(--pad);
   --topp: 64px;
+  --seksjon: clamp(64px, 9vw, 120px);
+  --t-hero: clamp(2.5rem, 5.6vw, 4.6rem);
+  --t-h1: clamp(2rem, 3.6vw, 3rem);
+  --t-h2: 1.75rem;
+  --t-h3: 1.45rem;   /* minste serif-størrelse */
+  --t-lede: 1.18rem;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 160ms;
 }
 
 /* Designet setter html og body til 17 px (rem = 17 px); alle rem-størrelser i designet er målt mot det (K-174) */
@@ -103,19 +121,9 @@ input, button { font: inherit; color: inherit; }
 }
 
 /* ---- hengsel.no 2.0: felles deler for sidene ---- */
-:root {
-  --surface-app: var(--beige-3);
-  --warn: #8a5d14; --warn-soft: #f5ead3;
-  --ok-soft: var(--ok-myk);
-  --w-medium: 500;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --surface-app: #1f1914; --warn: #e2b468; --warn-soft: #33281a; }
-}
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
 .app-flate { --app-flate: var(--surface-app); }
-:root { --app-flate: var(--surface-app); }
 
 /* Seksjoner (designets mønster): luft over og under, båndene veksler mellom sideflaten og Beige 3 */
 .sek { padding-block: clamp(56px, 7vw, 96px); }

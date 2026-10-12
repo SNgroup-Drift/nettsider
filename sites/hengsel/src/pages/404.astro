@@ -1,10 +1,10 @@
 ---
 import Side from "../layouts/Side.astro";
-import IkkeFunnet from "@sngroup/design/components/IkkeFunnet.astro";
-import Plantegningsstrek from "@sngroup/design/components/Plantegningsstrek.astro";
+import IkkeFunnet from "../components/IkkeFunnet.astro";
+import Plantegningsstrek from "../components/Plantegningsstrek.astro";
 ---
 <Side title="Siden finnes ikke · Hengsel" description="Siden finnes ikke." noindex>
-  <IkkeFunnet tittel="Dette rommet finnes ikke" ingress="Siden finnes ikke." oppsett="side" knapp="aksent">
+  <IkkeFunnet tittel="Dette rommet finnes ikke" ingress="Siden finnes ikke." oppsett="side">
     <div class="kort" slot="tegning"><Plantegningsstrek rom="entre" mangler /></div>
   </IkkeFunnet>
 </Side>

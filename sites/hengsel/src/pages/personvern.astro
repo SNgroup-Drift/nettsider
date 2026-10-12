@@ -1,6 +1,6 @@
 ---
 import Side from "../layouts/Side.astro";
-import PrivacyPage from "@sngroup/design/components/PrivacyPage.astro";
+import PrivacyPage from "../components/PrivacyPage.astro";
 import { personvern } from "../content/personvern";
 ---
 <Side title="Personvern · Hengsel" description="Personvernerklæring for nettsiden hengsel.no.">
@@ -14,5 +14,5 @@ import { personvern } from "../content/personvern";
 <style>
   .personvern { flex: 1; }
   .personvern :global(h2) { font-size: var(--t-h2); }
-  .personvern :global(.boks) { background: var(--beige-3); }
+  .personvern :global(.boks) { background: var(--flate-side); }
 </style>

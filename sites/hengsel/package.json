@@ -9,8 +9,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@sngroup/design": "*",
-    "astro": "^7.3.6"
+    "astro": "^7.3.6",
+    "@sngroup/hengsel-tokens": "*",
+    "@sngroup/hengsel-dokumenter": "*"
   },
   "devDependencies": {
     "qrcode-generator": "^1.4.4"

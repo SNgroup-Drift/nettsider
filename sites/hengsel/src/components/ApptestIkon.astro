@@ -1,5 +1,5 @@
 ---
-/** Appikonet på en Beige 3-flis med «Ute» under (Apptest.dc.html). Likt i lys og mørk modus. */
+/** Appikonet på en Beige 3-flis med «Ute» under (Apptest.dc.html). */
 ---
 <div class="flis">
   <img src="/logo/ute.svg" alt="" aria-hidden="true" width="60" height="60" />
@@ -8,6 +8,6 @@
 
 <style>
   .flis { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 84px; padding: 14px 0 10px; box-sizing: border-box; background: var(--surface-highlight); border-radius: var(--r-lg); }
-  .flis img { width: 60px; height: 60px; border-radius: 14px; display: block; box-shadow: 0 1px 2px rgb(49 38 29 / 0.18); }
+  .flis img { width: 60px; height: 60px; border-radius: var(--radius-kort-stor); display: block; box-shadow: 0 1px 2px color-mix(in srgb, var(--tekst) 18%, transparent); }
   .flis span { font-size: 12px; line-height: 1; color: var(--ink); }
 </style>

@@ -4,7 +4,7 @@ var R=ROM.R,C=ROM.C,cur=ROM.rolle();
 var roles=document.getElementById('roles'),out=document.getElementById('out');
 R.forEach(function(r){var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=r[1];b.dataset.r=r[0];b.onclick=function(){set(r[0])};roles.appendChild(b)});
 function set(r){cur=r;ROM.lagre(r);
- [].forEach.call(roles.children,function(b){b.classList.toggle('dark',b.dataset.r===r);b.setAttribute('aria-pressed',b.dataset.r===r)});
+ [].forEach.call(roles.children,function(b){b.classList.toggle('valgt',b.dataset.r===r);b.setAttribute('aria-pressed',b.dataset.r===r)});
  var info=R.filter(function(x){return x[0]===r})[0];document.getElementById('intro').textContent=info[2];
  var list=C.filter(function(c){return ROM.passer(c,r)}),h='';
  var groups=[['Se hvordan det henger sammen',['Simulering']],['Prøv selv',['Prøv selv']],['Presentasjoner og oversikter',['Presentasjon','Oversikt','Dokumenter']],['Opplæring',['Opplæring']]];

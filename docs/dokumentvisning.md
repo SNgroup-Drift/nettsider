@@ -2,7 +2,7 @@
 
 Dokumentene vises på to steder: hengsel.no/dokumenter (Astro) og vis.hengsel.no/dokumenter (ren HTML, `sites/vis`). Begge leser **samme datafil**, så et dokument endres bare ett sted.
 
-## Filene (`packages/design/src/dokumenter/`)
+## Filene (`packages/hengsel-dokumenter/src/`)
 
 | Fil | Hva |
 |---|---|
@@ -14,7 +14,7 @@ Dokumentene vises på to steder: hengsel.no/dokumenter (Astro) og vis.hengsel.no
 | `dokumentvisning.css` | Velger, stripe, bla-knapper, innholdsliste, lysboks. Trenger variablene `--bg --surface --surface-soft --surface-highlight --line --ink --muted --accent --f-display --f-body`. |
 | `dokumentvisning.js` | Faner, bla (knapper, ← →, sveip), innholdsliste, lysboks, `#id` i adressen (når `data-hash` står på `[data-dokvisning]`). Vanlig JavaScript. |
 
-Pakken eksporterer dem som `@sngroup/design/dokumenter/data`, `…/render`, `…/a4-stil`, `…/lages`, `…/a4.css`, `…/dokumentvisning.css` og `…/dokumentvisning`.
+Pakken eksporterer dem som `@sngroup/hengsel-dokumenter/data`, `…/render`, `…/a4-stil`, `…/lages`, `…/a4.css`, `…/dokumentvisning.css` og `…/dokumentvisning`.
 
 ## hengsel.no
 

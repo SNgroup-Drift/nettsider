@@ -1,9 +1,15 @@
 ---
 /**
- * Ramme for design.hengsel.no (K-182): <head> med designsystemets tokens og skrifter (selvhostet), favicon og og:image med merket v3, Meny og Bunn.
+ * Ramme for design.hengsel.no (K-182): <head> med de delte tokens (@sngroup/hengsel-tokens, K-192) og skrifter (selvhostet), favicon og og:image med merket v3, Meny og Bunn.
+ * Bare lys modus: ingen bryter, ingen mørk theme-color.
  * Åpen men ikke indeksert: noindex i meta og i _headers (X-Robots-Tag). Ingen sporing, ingen eksterne ressurser.
  */
+import "@sngroup/hengsel-tokens/tokens.css";
+import "@sngroup/hengsel-tokens/fonts.css";
 import "../styles/design.css";
+import inter from "@sngroup/hengsel-tokens/ds/assets/fonts/inter-latin-400-normal.woff2?url";
+import newsreader from "@sngroup/hengsel-tokens/ds/assets/fonts/newsreader-latin-400-normal.woff2?url";
+import tokens from "@sngroup/hengsel-tokens/tokens.json";
 import Meny from "../components/Meny.astro";
 import Bunn from "../components/Bunn.astro";
 import { lagFasitCss } from "../lib/tokens";
@@ -33,15 +39,13 @@ const css = lagFasitCss();
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#F2E9DB" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1F1914" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content={tokens.farge["flate-side"].lys} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon-180.png" />
-    <link rel="preload" href="/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="/ds/tokens/fonts.css" />
-    <link rel="stylesheet" href="/ds/tokens/tokens.css" />
+    <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <style is:inline set:html={css}></style>
   </head>
@@ -52,8 +56,5 @@ const css = lagFasitCss();
       <main id="innhold"><slot /></main>
       <Bunn />
     </div>
-    <script>
-      import "../scripts/tema";
-    </script>
   </body>
 </html>

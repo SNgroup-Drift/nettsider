@@ -28,7 +28,7 @@ var cur='sig',T=[],res={},run=false;
 Object.keys(K).forEach(function(k){var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=K[k].t;b.dataset.k=k;b.onclick=function(){load(k)};$('tabs').appendChild(b)});
 function at(ms,f){T.push(setTimeout(f,ms))}
 function load(k){T.forEach(clearTimeout);T=[];cur=k;res={};run=false;var d=K[k];
- [].forEach.call($('tabs').children,function(b){b.classList.toggle('dark',b.dataset.k===k);b.setAttribute('aria-pressed',b.dataset.k===k)});
+ [].forEach.call($('tabs').children,function(b){b.classList.toggle('valgt',b.dataset.k===k);b.setAttribute('aria-pressed',b.dataset.k===k)});
  $('ctx').textContent=d.ctx;$('docs').innerHTML=d.docs.map(function(x,i){return (i?'<span class="muted">mot</span>':'')+'<span class="doc"><b>'+x[0]+'</b> · '+x[1]+'</span>'}).join('');
  var num=k==='lev',nc=num?' class="n"':'';
  $('th').innerHTML='<tr><th>'+d.cols[0]+'</th><th'+nc+'>'+d.cols[1]+'</th><th'+nc+'>'+d.cols[2]+'</th><th class="st"></th></tr>';

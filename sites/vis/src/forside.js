@@ -7,7 +7,7 @@ function rom(u){return C.filter(function(c){return c.u===u})[0]}
 R.forEach(function(r){var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=r[1];b.dataset.r=r[0];b.onclick=function(){set(r[0])};roles.appendChild(b)});
 function set(r){
   cur=r;ROM.lagre(r);
-  [].forEach.call(roles.children,function(b){b.classList.toggle('dark',b.dataset.r===r);b.setAttribute('aria-pressed',b.dataset.r===r)});
+  [].forEach.call(roles.children,function(b){b.classList.toggle('valgt',b.dataset.r===r);b.setAttribute('aria-pressed',b.dataset.r===r)});
   info.textContent=R.filter(function(x){return x[0]===r})[0][2];
   // enkeltrom (kort, ark og lenker): data-rom="reise" → rommet /reise/
   [].forEach.call(document.querySelectorAll('[data-rom]'),function(e){var c=rom('/'+e.dataset.rom+'/');e.hidden=!(c&&ROM.passer(c,r))});

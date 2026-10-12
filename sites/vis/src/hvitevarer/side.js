@@ -45,8 +45,8 @@ function totals(){var n=0,v=0;chosen().forEach(function(p){n+=p.net;v+=p.veil});
 function tab1(){
  var h='<h2>Velg produkter</h2><p class="muted">Søk i katalogen fra BSH, Electrolux, Miele og Smeg. Ett produkt per type på ordren.</p>';
  h+='<div class="row"><input class="search" id="q" type="search" placeholder="Søk på merke, modell eller type" aria-label="Søk i katalogen" value="'+S.q.replace(/"/g,'&quot;')+'"><button class="btn" type="button" id="fill">Fyll inn Bergs ønsker</button></div>';
- h+='<div class="chips" id="cb" aria-label="Merke">'+BRANDS.map(function(b){return '<button type="button" class="btn'+(S.brand===b?' dark':'')+'" aria-pressed="'+(S.brand===b)+'">'+b+'</button>'}).join('')+'</div>';
- h+='<div class="chips" id="ck" aria-label="Type">'+KATS.map(function(b){return '<button type="button" class="btn'+(S.kat===b?' dark':'')+'" aria-pressed="'+(S.kat===b)+'">'+(b==='Alle'?'Alle typer':b)+'</button>'}).join('')+'</div>';
+ h+='<div class="chips" id="cb" aria-label="Merke">'+BRANDS.map(function(b){return '<button type="button" class="btn'+(S.brand===b?' valgt':'')+'" aria-pressed="'+(S.brand===b)+'">'+b+'</button>'}).join('')+'</div>';
+ h+='<div class="chips" id="ck" aria-label="Type">'+KATS.map(function(b){return '<button type="button" class="btn'+(S.kat===b?' valgt':'')+'" aria-pressed="'+(S.kat===b)+'">'+(b==='Alle'?'Alle typer':b)+'</button>'}).join('')+'</div>';
  h+=''+(S.sent?'<p class="muted">Bestillingen er sendt. Endringer gjøres nå som endringsordre.</p>':'')+'<div class="live" id="live" aria-live="polite"></div><div class="list" id="list"></div>';
  h+='<div class="afoot"><span id="tot">'+totals()+'</span><button class="btn primary" type="button" id="next"'+(chosen().length?'':' disabled')+'>Sjekk mot ordren</button></div>';
  $('body').innerHTML=h;
@@ -65,7 +65,7 @@ function renderList(){if(!$('list'))return;
   return '<div class="prow'+(on?' sel':'')+'"><div class="pn"><b>'+p.m+' '+p.mod+'</b><span>'+p.navn+' · '+p.lev+'</span></div>'+
   '<div class="pp">'+(S.loading?'<span class="sk"></span><span class="sk" style="width:64px"></span>':'<span>Netto <b>'+fmt(p.net)+'</b></span><span>Veil. '+fmt(p.veil)+'</span>')+'</div>'+
   '<div class="pl">'+(S.loading?'<span class="sk" style="width:90px"></span>':'<span class="pill '+l[1]+'">'+l[0]+'</span>')+'</div>'+
-  '<div class="pb"><button type="button" class="btn'+(on?' dark':'')+'" data-id="'+p.id+'" aria-pressed="'+on+'"'+(S.sent?' disabled':'')+'>'+(on?'Valgt':'Velg')+'</button></div></div>'}).join(''):'<p class="muted" style="padding:12px 0">Ingen treff. Prøv et annet søk.</p>';
+  '<div class="pb"><button type="button" class="btn'+(on?' valgt':'')+'" data-id="'+p.id+'" aria-pressed="'+on+'"'+(S.sent?' disabled':'')+'>'+(on?'Valgt':'Velg')+'</button></div></div>'}).join(''):'<p class="muted" style="padding:12px 0">Ingen treff. Prøv et annet søk.</p>';
  $('list').querySelectorAll('[data-id]').forEach(function(b){b.onclick=function(){var p=byId(b.dataset.id);
   if(S.sel[p.kat]===p.id){delete S.sel[p.kat];log('Fjernet '+p.m+' '+p.mod+' fra ordren.')}
   else{var old=S.sel[p.kat];S.sel[p.kat]=p.id;delete S.keep[p.id];log((old?'Byttet '+p.kat.toLowerCase()+' til ':'La til ')+'<b>'+p.m+' '+p.mod+'</b> på ordren. Netto '+fmt(p.net)+'.')}

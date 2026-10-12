@@ -105,8 +105,8 @@ import { SIDE, STEG, SELGER } from "../content/kundeportal";
   .visning.js .bryter, .visning.js .sms-knapp { visibility: visible; }
 
   /* Bryter Telefon · PC */
-  .bryter { display: flex; padding: 4px; gap: 2px; border-radius: 999px; background: var(--surface-highlight); border: 1px solid var(--line); width: fit-content; box-sizing: border-box; }
-  .valg { min-height: 44px; min-width: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
+  .bryter { display: flex; padding: 4px; gap: 2px; border-radius: var(--radius-pille); background: var(--surface-highlight); border: 1px solid var(--line); width: fit-content; box-sizing: border-box; }
+  .valg { min-height: 44px; min-width: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
   .valg[aria-checked="true"] { background: var(--surface); font-weight: 600; box-shadow: 0 0 0 1px var(--line); }
 
   /* Stegene: liste ved siden av telefonen, piller over PC-skjermen */
@@ -118,12 +118,12 @@ import { SIDE, STEG, SELGER } from "../content/kundeportal";
   .visning[data-enhet="telefon"] .fane:hover { background: var(--surface-soft); }
   .visning[data-enhet="telefon"] .fane[aria-selected="true"] { background: var(--surface-highlight); box-shadow: inset 3px 0 0 var(--accent); }
   .visning[data-enhet="telefon"] .fane:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
-  .visning[data-enhet="telefon"] .nr { width: 28px; height: 28px; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box; margin-top: 1px; }
+  .visning[data-enhet="telefon"] .nr { width: 28px; height: 28px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box; margin-top: 1px; }
   .visning[data-enhet="telefon"] .fane[aria-selected="true"] .nr { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .visning[data-enhet="telefon"] .tekst { display: flex; flex-direction: column; gap: 2px; }
   .visning[data-enhet="telefon"] .tekst b { font-size: 1.05rem; }
   .beskr { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
-  .visning[data-enhet="pc"] .fane { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 0.95rem; }
+  .visning[data-enhet="pc"] .fane { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); font-size: 0.95rem; }
   .visning[data-enhet="pc"] .fane:hover { border-color: var(--ink); }
   .visning[data-enhet="pc"] .fane[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .visning[data-enhet="pc"] .nr { margin-right: 8px; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -139,7 +139,7 @@ import { SIDE, STEG, SELGER } from "../content/kundeportal";
   .cap { display: flex; flex-direction: column; gap: 6px; }
   .cap b { font-size: 1.05rem; }
   .cap p { color: var(--muted); }
-  .sms-knapp { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
+  .sms-knapp { min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
   .sms-knapp:hover { border-color: var(--ink); }
 
   /* På samme ordre */

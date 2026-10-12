@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,48 +8,49 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Daglig leder · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 32px;display:grid;gap:16px}
 .filt{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
 .kpi .card{display:grid;gap:4px;align-content:start;padding:18px 20px}
-.kpi span{font-size:14px;line-height:1.4;color:var(--muted)}
-.kpi b{font:400 2.25rem/1.1 var(--serif);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
-.kpi em{font-style:normal;font-size:13px;line-height:1.4;color:var(--muted)}
+.kpi span{font-size:14px;line-height:1.4;color:var(--tekst-dempet)}
+.kpi b{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.kpi em{font-style:normal;font-size:13px;line-height:1.4;color:var(--tekst-dempet)}
 .lay{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
 .lay>.card,.wrap>.card{display:grid;gap:12px;min-width:0}
-.card h2{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
-.note{font-size:14px;line-height:1.5;color:var(--muted);margin:0}
-.key{display:flex;gap:16px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.card h2{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.note{font-size:14px;line-height:1.5;color:var(--tekst-dempet);margin:0}
+.key{display:flex;gap:16px;font-size:13px;color:var(--tekst-dempet);flex-wrap:wrap}
 .key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 .chart{position:relative}
-.bars{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;align-items:end;height:220px;border-bottom:1px solid var(--line);padding:0 4px;position:relative}
+.bars{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;align-items:end;height:220px;border-bottom:1px solid var(--linje);padding:0 4px;position:relative}
 .bars .col{height:100%;display:flex;align-items:flex-end;cursor:default}
-.bars .b{width:100%;background:var(--accent);border-radius:4px 4px 0 0;transition:opacity var(--dur) var(--ease)}
-.bars .b.cap{background:var(--dusty)}
+.bars .b{width:100%;background:var(--aksent);border-radius:4px 4px 0 0;transition:opacity var(--dur) var(--ease)}
+.bars .b.cap{background:var(--aksent-svak)}
 .bars.dim .b{opacity:.45}
 .bars.dim .col.hl .b{opacity:1}
-.capl{position:absolute;left:0;right:0;border-top:1px dashed var(--sand);font-size:12px;line-height:1.3;color:var(--muted);text-align:right;padding-top:2px;pointer-events:none;z-index:1}
-.weeks{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;padding:6px 4px 0;font-size:12px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
-.tip{position:absolute;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-field);padding:8px 10px;font-size:13px;line-height:1.45;white-space:nowrap;display:none;z-index:2}
+.capl{position:absolute;left:0;right:0;border-top:1px dashed var(--ramme);font-size:12px;line-height:1.3;color:var(--tekst-dempet);text-align:right;padding-top:2px;pointer-events:none;z-index:1}
+.weeks{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;padding:6px 4px 0;font-size:12px;color:var(--tekst-dempet);text-align:center;font-variant-numeric:tabular-nums}
+.tip{position:absolute;pointer-events:none;background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-lite);padding:8px 10px;font-size:13px;line-height:1.45;white-space:nowrap;display:none;z-index:2}
 .tip b{font-weight:600}
 .tbl{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}
-th{font:600 13px var(--sans);color:var(--muted);padding-block:8px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--linje)}
+th{font:600 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);padding-block:8px}
 tbody tr{transition:background var(--dur) var(--ease)}
-tbody tr:hover{background:var(--soft)}
+tbody tr:hover{background:var(--flate-senket)}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .risk{display:grid;gap:8px}
 .risk .tile{font-size:15px;line-height:1.5}
 .risk b{font-weight:600}
-.risk span{color:var(--muted);font-size:13px}
+.risk span{color:var(--tekst-dempet);font-size:13px}
 @media (max-width:900px){.lay{grid-template-columns:1fr}}
 @media (max-width:640px){.wrap{padding-inline:16px}.bars,.weeks{gap:4px;padding-inline:0}}
 </style>
@@ -68,7 +69,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <section class="card">
       <h2>Ordrereserve per leveringsuke</h2>
       <p class="note">Salgsverdi eks. mva for ordre som er bestilt eller klar til bestilling, fordelt på bekreftet leveringsuke.</p>
-      <div class="key"><span><i style="background:var(--accent)"></i>Ordrereserve</span><span><i style="background:var(--dusty)"></i>Over montasjekapasitet</span></div>
+      <div class="key"><span><i style="background:var(--aksent)"></i>Ordrereserve</span><span><i style="background:var(--aksent-svak)"></i>Over montasjekapasitet</span></div>
       <div class="chart" id="chart"><div class="bars" id="bars" role="img" aria-label="Søylediagram over ordrereserve per uke"></div><div class="weeks" id="weeks" aria-hidden="true"></div><div class="tip" id="tip"></div></div>
     </section>
     <section class="card">

@@ -7,7 +7,7 @@
    - iPad liggende (.ipad-ramme) 2400 × 1740: 5.00 · 6.84 · 90.00 · 86.32, radius 1.2 % / 1.6 %, skjermen er 2360 × 1640 (iPad Air 11″, 1,44:1)
    - MacBook (.mac-ramme)        2400 × 1565: 12.63 · 14.19 · 74.75 · 71.63, radius 1 % / 1.4 %, skjermen er 2408 × 1506
    Rammene brukes aldri mindre enn 200 px høye. Det finnes ingen stående iPad-ramme, så stående iPad-bilder brukes ikke. */
-:root{--skjermbunn:#F2E9DB}
+
 
 .pc-ramme,.mac-ramme{max-width:900px}
 .ipad-ramme{max-width:1000px}
@@ -19,25 +19,25 @@
    (stang og fot er med i rammebildet og tegnes ikke lenger) */
 .pc-ramme{width:min(900px,100%);aspect-ratio:2160/1664}
 .pc-ramme::after{background-image:url(/assets/rammer/studio-display.webp)}
-.pc-ramme>.skjermkant{position:absolute;left:2.59%;top:3.37%;width:94.81%;height:69.23%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--skjermbunn)}
+.pc-ramme>.skjermkant{position:absolute;left:2.59%;top:3.37%;width:94.81%;height:69.23%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--flate-side)}
 .pc-ramme>.skjermkant>.skjerm{width:100%;height:100%}
 .pc-ramme>.stang,.pc-ramme>.fot{display:none}
 
 /* iPhone 18: skjermen er første barn, <span class="hjem"> (gammel hjemindikator) tegnes ikke, rammen har island og kanter */
 .tlf{width:min(360px,100%);aspect-ratio:1174/2400;justify-self:center}
 .tlf::after{background-image:url(/assets/rammer/iphone-18.webp)}
-.tlf>.skjerm{position:absolute;left:5.37%;top:2.5%;width:89.27%;height:95%;border-radius:14%/6.1%;overflow:hidden;background:var(--skjermbunn)}
+.tlf>.skjerm{position:absolute;left:5.37%;top:2.5%;width:89.27%;height:95%;border-radius:14%/6.1%;overflow:hidden;background:var(--flate-side)}
 .tlf>.hjem{display:none}
 
 /* iPad liggende */
 .ipad-ramme{width:min(1000px,100%);aspect-ratio:2400/1740}
 .ipad-ramme::after{background-image:url(/assets/rammer/ipad-liggende.webp)}
-.ipad-ramme>.skjerm{position:absolute;left:5%;top:6.84%;width:90%;height:86.32%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--skjermbunn)}
+.ipad-ramme>.skjerm{position:absolute;left:5%;top:6.84%;width:90%;height:86.32%;border-radius:1.2%/1.6%;overflow:hidden;background:var(--flate-side)}
 
 /* MacBook */
 .mac-ramme{width:min(900px,100%);aspect-ratio:2400/1565}
 .mac-ramme::after{background-image:url(/assets/rammer/macbook.webp)}
-.mac-ramme>.skjerm{position:absolute;left:12.63%;top:14.19%;width:74.75%;height:71.63%;border-radius:1%/1.4%;overflow:hidden;background:var(--skjermbunn)}
+.mac-ramme>.skjerm{position:absolute;left:12.63%;top:14.19%;width:74.75%;height:71.63%;border-radius:1%/1.4%;overflow:hidden;background:var(--flate-side)}
 
 /* Skjermen er et bilde (assets/bilder.js legger <img class="sk"> i .skjerm). Kundens reise legger SMS-varselet oppå (.notif). */
 .skjerm{position:relative;display:block}
@@ -45,12 +45,12 @@
 .skjerm>img.sk,.skjerm>picture>img.sk{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
 
 /* ‹ › og teller under rammen, og enhetsvelgeren (PC · iPad · Telefon) over */
-.sk-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sk-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:14px;color:var(--tekst-dempet);font-variant-numeric:tabular-nums}
 .sk-nav .btn{min-width:44px;padding:0 14px}
 .sk-nav .btn:disabled{opacity:.4;cursor:default}
 .enhet{min-width:0}
 .enhet[hidden]{display:none}
 
 /* Romkort og flater på forsiden: ferdig sammensatte bilder av enhet + skjerm på gjennomsiktig bunn (lages av scripts/skjermbilder-vis.mjs), vist hele */
-.bilde.enhet-bilde{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;padding:14px 12px;background:var(--soft)}
+.bilde.enhet-bilde{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;padding:14px 12px;background:var(--flate-senket)}
 .bilde.enhet-bilde>img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:0;border-radius:0}

@@ -1,0 +1,123 @@
+---
+/**
+ * Plantegning (tilpasset de delte Hengsel-variablene) i 1:50 med 1,5 px strek uansett størrelse (vector-effect: non-scaling-stroke).
+ * Mål i mm og streken i --tekst; hengselpunktet i --aksent.
+ *
+ * rom="entre" kan få `mangler` (stiplede vegger, uten inventar, «404» i stedet for romnavnet) til 404-sider,
+ * og `merke` (liten tekst under romnavnet, f.eks. «Hengsel»).
+ */
+interface Props {
+  rom: "hus" | "entre" | "verksted" | "tomt";
+  mangler?: boolean;
+  merke?: string;
+}
+const { rom, mangler = false, merke } = Astro.props;
+const tom = rom === "entre" && mangler;
+---
+<figure class:list={["plan", { tom }]}>
+  {rom === "hus" && (
+    <>
+      <div class="hode" aria-hidden="true"><span>Plantegning · 1:50</span><span>10 400 × 6 800 mm</span></div>
+      <svg viewBox="0 0 600 440" role="img" aria-label="Plantegning av huset, 10 400 × 6 800 mm">
+        <rect class="tomt" x="12" y="12" width="576" height="416" rx="2" />
+        <path class="maal" d="M40 26 H560 M40 21 V31 M560 21 V31 M574 40 V380 M569 40 H579 M569 380 H579" />
+        <text class="maaltekst" x="300" y="22" text-anchor="middle">10 400</text>
+        <text class="maaltekst" x="586" y="214" text-anchor="middle" transform="rotate(90 586 210)">6 800</text>
+        <path class="inventar" d="M46 46 H294 V70 H70 V214 H46 Z M340 80 H470 V104 H364 V160 H340 Z M60 272 H170 M70 254 H108 V268 H70 Z M122 254 H160 V268 H122 Z M380 295 H412 M380 320 H412 M380 345 H412 M526 284 H536" />
+        <g class="inventar">
+          <rect x="130" y="118" width="110" height="46" rx="2" />
+          <circle cx="190" cy="58" r="6" /><circle cx="208" cy="58" r="6" />
+          <rect x="96" y="50" width="30" height="16" rx="6" />
+          <rect x="392" y="130" width="64" height="40" rx="3" />
+          <rect x="60" y="250" width="110" height="100" rx="3" />
+          <rect x="380" y="270" width="32" height="100" rx="1" />
+          <rect x="284" y="350" width="60" height="20" rx="1" />
+          <rect x="520" y="280" width="22" height="34" rx="4" />
+        </g>
+        <g class="romnavn">
+          <text x="130" y="190">KJØKKEN</text><text x="440" y="220">STUE</text><text x="184" y="318">SOVEROM</text><text x="286" y="300">VERKSTED</text><text x="440" y="296">ENTRÉ</text>
+        </g>
+        <path class="vegg" d="M40 40 H560 V380 H500 M460 380 H40 Z M300 40 V120 M300 170 V260 H420 M40 220 H180 M230 220 H420 V300 M420 345 V380 M270 260 V380 M460 380 V340" />
+        <path class="slag" d="M460 340 A40 40 0 0 1 500 380" />
+        <circle class="hengsel" cx="460" cy="380" r="3.5" />
+      </svg>
+    </>
+  )}
+  {rom === "entre" && (
+    <>
+      <div class="hode" aria-hidden="true"><span>Entré · 1:50</span><span>2 800 × 2 400 mm</span></div>
+      <svg viewBox="396 248 200 166" role="img"
+           aria-label={tom ? "Plantegning av et rom som ikke finnes" : "Plantegning av entréen, 2 800 × 2 400 mm, med døra på et hengsel"}>
+        <path class="tomt" d="M420 260 H560" />
+        <path class="maal" d="M420 396 H560 M420 392 V400 M560 392 V400 M576 260 V380 M572 260 H580 M572 380 H580" />
+        <text class="maaltekst liten" x="490" y="407" text-anchor="middle">2 800</text>
+        <text class="maaltekst liten" x="586" y="321" text-anchor="middle" transform="rotate(90 586 320)">2 400</text>
+        {!tom && (
+          <>
+            <rect class="inventar" x="520" y="280" width="22" height="34" rx="4" />
+            <path class="inventar" d="M526 284 H536" />
+          </>
+        )}
+        <text class:list={["romnavn", "liten", { aksent: tom }]} x="440" y="296">{tom ? "404" : "ENTRÉ"}</text>
+        {(merke || tom) && <text class="merke" x="440" y="304">{tom ? "Finnes ikke" : merke}</text>}
+        <path class:list={["vegg", { stiplet: tom }]} d="M560 232 V380 H500 M460 380 H396 M420 232 V300 M420 345 V380 M460 380 V340" />
+        <path class="slag" d="M460 340 A40 40 0 0 1 500 380" />
+        <circle class="hengsel" cx="460" cy="380" r="1.8" />
+      </svg>
+    </>
+  )}
+  {rom === "verksted" && (
+    <>
+      <div class="hode" aria-hidden="true"><span>Verksted · 1:50</span><span>3 000 × 2 400 mm</span></div>
+      <svg viewBox="246 248 200 166" role="img" aria-label="Plantegning av verkstedet, 3 000 × 2 400 mm">
+        <path class="maal" d="M270 396 H420 M270 392 V400 M420 392 V400 M434 260 V380 M430 260 H438 M430 380 H438" />
+        <text class="maaltekst liten" x="345" y="407" text-anchor="middle">3 000</text>
+        <text class="maaltekst liten" x="442" y="321" text-anchor="middle" transform="rotate(90 442 320)">2 400</text>
+        <g class="inventar">
+          <rect x="380" y="270" width="32" height="100" rx="1" />
+          <path d="M380 295 H412 M380 320 H412 M380 345 H412" />
+          <rect x="284" y="350" width="60" height="20" rx="1" />
+        </g>
+        <text class="romnavn liten" x="286" y="300">VERKSTED</text>
+        <path class="vegg" d="M300 232 V260 H420 M420 232 V300 M420 345 V380 M270 260 V380 M246 380 H446" />
+      </svg>
+    </>
+  )}
+  {rom === "tomt" && (
+    <>
+      <div class="hode" aria-hidden="true"><span>Plantegning · 1:50</span><span>0 × 0 mm</span></div>
+      <svg viewBox="0 0 200 140" role="img" aria-label="Et tomt rom som ikke finnes i tegningen">
+        <rect class="tomt tykk" x="30" y="24" width="140" height="92" />
+        <path class="maal" d="M30 12 H170 M30 8 V16 M170 8 V16" />
+        <text class="romnavn midt" x="100" y="74" text-anchor="middle">404</text>
+        <circle class="hengsel" cx="30" cy="116" r="2" />
+      </svg>
+    </>
+  )}
+</figure>
+
+<style>
+  .plan { margin: 0; color: var(--tekst); width: 100%; }
+  .hode {
+    display: flex; justify-content: space-between; gap: 12px; font-size: 12px;
+    color: var(--tekst-dempet); font-variant-numeric: tabular-nums;
+  }
+  svg { width: 100%; height: auto; display: block; margin-top: 6px; overflow: hidden; }
+  svg :global(*) { vector-effect: non-scaling-stroke; }
+  .tomt { fill: none; stroke: var(--ramme); stroke-width: 1px; stroke-dasharray: 6 5; }
+  path.tomt { stroke-dasharray: 4 4; }
+  .tomt.tykk { stroke-width: 1.5px; stroke-dasharray: 6 5; }
+  .maal { fill: none; stroke: var(--tekst-dempet); stroke-width: 0.8px; }
+  .maaltekst { fill: var(--tekst-dempet); font: 500 10px var(--skrift-familie-hengsel-tekst); }
+  .inventar, .inventar :global(*) { fill: none; stroke: var(--tekst); stroke-width: 1.5px; opacity: 0.6; }
+  .inventar :global(*) { opacity: 1; }
+  .romnavn, .romnavn :global(text) { fill: var(--tekst); font: 500 10px var(--skrift-familie-hengsel-tekst); letter-spacing: 0.12em; }
+  .romnavn.midt { font-size: 7px; }
+  .liten, .maaltekst.liten { font-size: 4.2px; }
+  .romnavn.aksent { fill: var(--aksent); }
+  .merke { fill: var(--tekst-dempet); font: 400 4.2px var(--skrift-familie-hengsel-tekst); }
+  .vegg { fill: none; stroke: var(--tekst); stroke-width: 1.5px; }
+  .vegg.stiplet { stroke-dasharray: 6 5; }
+  .slag { fill: none; stroke: var(--tekst); stroke-width: 0.8px; stroke-dasharray: 3 3; }
+  .hengsel { fill: var(--aksent); }
+</style>

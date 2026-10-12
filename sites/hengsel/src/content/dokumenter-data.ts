@@ -1,2 +1,2 @@
-// Dokumentene ligger i den felles datafila (packages/design/src/dokumenter/data.js), som også Visningsrommet (sites/vis) leser.
-export * from "@sngroup/design/dokumenter/data";
+// Dokumentene ligger i den felles datafila (packages/hengsel-dokumenter/src/data.js), som også Visningsrommet (sites/vis) leser.
+export * from "@sngroup/hengsel-dokumenter/data";

@@ -26,7 +26,6 @@ import { APPTEST } from "../apptest-lenker";
       <div class="bruker"><div class="ink">{CRM_BRUKER[0]}</div><div>{CRM_BRUKER[1]}</div></div>
       <div class="hengsel-crm">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="/logo/crm-aksent-mork.svg" />
           <img src="/logo/crm-aksent-lys.svg" alt="CRM" width="270" height="108" loading="lazy" decoding="async" />
         </picture>
         <span>v. {APPTEST.versjon}</span>
@@ -160,9 +159,9 @@ import { APPTEST } from "../apptest-lenker";
   .pc .side { width: 248px; } .ipad .side { width: 220px; }
   .logo { display: flex; flex-direction: column; gap: 8px; padding: 6px 12px 22px; }
   .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
-  .dinlogo .boks { height: 40px; padding: 0 18px; border: 1.5px dashed var(--beige-1); border-radius: 6px; display: flex; align-items: center; font-size: 15px; font-weight: 600; letter-spacing: .02em; color: var(--ink); box-sizing: border-box; }
+  .dinlogo .boks { height: 40px; padding: 0 18px; border: 1.5px dashed var(--beige-1); border-radius: var(--radius-felt); display: flex; align-items: center; font-size: 15px; font-weight: 600; letter-spacing: .02em; color: var(--ink); box-sizing: border-box; }
   .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
-  .mi { display: flex; justify-content: space-between; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; font-size: 15px; }
+  .mi { display: flex; justify-content: space-between; align-items: center; min-height: 40px; padding: 0 14px; border-radius: var(--radius-kort-lite); font-size: 15px; }
   .mi.aktiv { font-weight: 600; background: var(--surface-highlight-strong); }
   .mi .n { color: var(--muted); font-size: 13px; font-weight: 400; }
   .hengsel-crm { padding: 0 12px 4px; display: flex; align-items: center; gap: 8px; }
@@ -175,7 +174,7 @@ import { APPTEST } from "../apptest-lenker";
   .telefon .hoved { padding: 0 16px 100px; gap: 14px; }
   .tomrom { height: 54px; flex: none; }
   .topp { display: flex; align-items: center; justify-content: space-between; padding: 0 0 12px; }
-  .kb { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
+  .kb { width: 36px; height: 36px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
 
   .hode { display: flex; flex-direction: column; gap: 4px; }
   .h { font-family: var(--f-display); font-weight: 400; font-size: 46px; line-height: 1.08; letter-spacing: -.015em; }
@@ -183,46 +182,46 @@ import { APPTEST } from "../apptest-lenker";
   .grid2 { display: grid; gap: 16px; align-items: start; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
   .ordre .grid2 { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
   .telefon .grid2 { grid-template-columns: minmax(0, 1fr); }
-  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; min-width: 0; box-sizing: border-box; }
+  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 18px 20px; min-width: 0; box-sizing: border-box; }
   .ktit { font-weight: 600; font-size: 16px; display: block; }
 
   /* Min dag */
   .liste { display: flex; flex-direction: column; gap: 4px; }
   .kh { display: flex; align-items: baseline; gap: 10px; padding-bottom: 8px; }
   .kh b { font-weight: 600; font-size: 16px; }
-  .rad { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 10px; background: transparent; border: 0; color: inherit; text-align: left; font-size: 16px; width: 100%; box-sizing: border-box; }
+  .rad { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: var(--radius-kort-lite); background: transparent; border: 0; color: inherit; text-align: left; font-size: 16px; width: 100%; box-sizing: border-box; }
   .rad.hast { cursor: pointer; background: var(--surface-highlight); box-shadow: inset 3px 0 0 var(--bad), 0 0 0 2px var(--accent); }
   .rad:hover { background: var(--surface-soft); }
-  .ring { width: 20px; height: 20px; border-radius: 999px; border: 1.5px solid var(--beige-1); flex: none; box-sizing: border-box; }
+  .ring { width: 20px; height: 20px; border-radius: var(--radius-pille); border: 1.5px solid var(--beige-1); flex: none; box-sizing: border-box; }
   .tekst { display: flex; flex-direction: column; min-width: 0; flex: 1; }
   .tekst .t { font-size: 15px; }
   .tekst .s { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .avvik { display: flex; flex-direction: column; gap: 14px; padding: 20px 22px; }
   .avvik-topp { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
   .felter { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .felt { background: var(--surface-soft); border-radius: 10px; padding: 10px 14px; }
+  .felt { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 10px 14px; }
   .fv { font-size: 16px; }
   .knapperad { display: flex; gap: 8px; align-items: center; }
   .knapperad.vis { flex-wrap: wrap; }
-  .knapp { min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font: 500 15px var(--f-body); cursor: pointer; }
+  .knapp { min-height: 44px; padding: 0 20px; border-radius: var(--radius-pille); border: 0; background: var(--accent); color: var(--accent-ink); font: 500 15px var(--f-body); cursor: pointer; }
   .knapp.omriss { border: 1px solid var(--ink); background: transparent; color: var(--ink); }
   .knapp.ingen { background: transparent; color: var(--ink); }
   .knapp.ring-fokus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
   .knapp.ring-fokus-kort { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
   .tall { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-  .tk { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+  .tk { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 16px 20px; }
   .tv { font-family: var(--f-display); font-size: 34px; line-height: 1.1; font-variant-numeric: tabular-nums; }
 
   /* Piller (designsystemets Pill): prikk og tekst, beige for info */
-  .pil { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 10px; border-radius: 999px; font: 500 12px/1 var(--f-body); white-space: nowrap; flex: none; background: var(--surface-highlight-strong); color: var(--ink); }
-  .pil::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+  .pil { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 10px; border-radius: var(--radius-pille); font: 500 12px/1 var(--f-body); white-space: nowrap; flex: none; background: var(--surface-highlight-strong); color: var(--ink); }
+  .pil::before { content: ""; width: 6px; height: 6px; border-radius: var(--radius-pille); background: currentColor; }
   .pil.info { background: var(--accent-soft); color: var(--info-tekst); }
   .pil.bad { background: var(--bad-soft); color: var(--bad); }
   .pil.ok { background: var(--ok-soft); color: var(--ok); }
   .pil.warn { background: var(--warn-soft); color: var(--warn); }
 
   /* Banner */
-  .banner { border-radius: 10px; padding: 14px 18px; font-size: 15px; }
+  .banner { border-radius: var(--radius-kort-lite); padding: 14px 18px; font-size: 15px; }
   .banner.bad { background: var(--bad-soft); box-shadow: inset 3px 0 0 var(--bad); }
   .banner.bad b { color: var(--bad); font-weight: 600; }
   .banner.ok { background: var(--ok-soft); box-shadow: inset 3px 0 0 var(--ok); }
@@ -239,7 +238,7 @@ import { APPTEST } from "../apptest-lenker";
   .lt { color: var(--muted); width: 46px; flex: none; font-variant-numeric: tabular-nums; }
 
   /* Tilbud */
-  .cet { background: var(--surface); border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
+  .cet { background: var(--surface); border-radius: var(--radius-kort-stor); padding: 22px 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
   .telefon .cet { max-width: none; padding: 18px; gap: 12px; }
   .cet-topp { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .serif.stor { font-size: 28px; }
@@ -258,7 +257,7 @@ import { APPTEST } from "../apptest-lenker";
   .plrad.hd { font-size: 13px; color: var(--muted); padding: 0 0 10px; min-height: 0; }
   .pn { display: flex; flex-direction: column; }
   .pt { font-size: 15px; }
-  .celle { display: flex; flex-direction: column; gap: 2px; border-radius: 8px; padding: 8px 10px; min-width: 0; background: var(--surface-soft); box-shadow: inset 3px 0 0 var(--beige-1); }
+  .celle { display: flex; flex-direction: column; gap: 2px; border-radius: var(--radius-kort-lite); padding: 8px 10px; min-width: 0; background: var(--surface-soft); box-shadow: inset 3px 0 0 var(--beige-1); }
   .celle.ny { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
   .celle.warn { background: var(--warn-soft); box-shadow: inset 3px 0 0 var(--warn); }
   .celle.bad { background: var(--bad-soft); box-shadow: inset 3px 0 0 var(--bad); }

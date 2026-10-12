@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,11 +8,12 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Ordrens reise · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <link rel="stylesheet" href="/assets/enhet.css">
 <style>
@@ -24,7 +25,7 @@
 .pane{display:grid;gap:14px;align-content:start;min-width:0}
 .pane-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pane-h h2{margin:0}
-.pane-h span{font-size:14px;color:var(--muted)}
+.pane-h span{font-size:14px;color:var(--tekst-dempet)}
 
 /* Selgeren ser: skjermbildet fra CRM_v4 for scenen (PC, iPad eller kundens telefon). Ordreboksen under er skjult, men
    driver fortsatt scenemanuset (radene som «kommer inn»). */
@@ -32,78 +33,78 @@
 .pane .tlf{margin:0 auto}
 .order[hidden]{display:none}
 /* Ordreboksen */
-.order{border:1px solid var(--line);border-radius:var(--r-field);overflow:hidden}
-.order-h{background:var(--soft);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.order-h b{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em}
-.order-h small{color:var(--muted);font-size:14px}
+.order{border:1px solid var(--linje);border-radius:var(--radius-kort-lite);overflow:hidden}
+.order-h{background:var(--flate-senket);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.order-h b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
+.order-h small{color:var(--tekst-dempet);font-size:14px}
 .rows{display:grid}
-.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);transition:background .4s}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:10px 16px;border-top:1px solid var(--linje);transition:background .4s}
 .row.hide{display:none}
 .row.enter{animation:rowIn .5s ease both}
 @keyframes rowIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .row .who{font-weight:600;font-size:15px}
-.row .what{grid-column:1;color:var(--muted);font-size:14px}
+.row .what{grid-column:1;color:var(--tekst-dempet);font-size:14px}
 .row .ref{font:12px ui-monospace,Menlo,monospace;white-space:nowrap}
 .row .st{grid-row:1 / span 2;grid-column:2;transition:background .4s,color .4s}
-.pill.sent{background:var(--accent-soft);color:var(--accent-tekst)}
-.row.flag{background:var(--warn-soft)}
-.check{grid-column:1 / -1;font-size:12px;color:var(--ok-tekst);display:none}
+.pill.sent{background:var(--flate-valgt);color:var(--aksent-tekst)}
+.row.flag{background:var(--status-haster-bg)}
+.check{grid-column:1 / -1;font-size:12px;color:var(--status-ok-fg);display:none}
 .row.done .check{display:block}
-.row.flag .check{color:var(--warn)}
+.row.flag .check{color:var(--status-haster-fg)}
 
 /* Melding til selgeren: flis med 3 px venstrestrek (varsel eller ok) */
 .dok-lenke{margin:0;font-size:15px}.dok-lenke a{min-height:44px;display:inline-flex;align-items:center}
-.msg{gap:4px;padding:14px 16px;box-shadow:inset 3px 0 0 var(--warn);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.msg{gap:4px;padding:14px 16px;box-shadow:inset 3px 0 0 var(--status-haster-fg);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
 .msg.show{opacity:1;transform:none}
-.msg.note{box-shadow:inset 3px 0 0 var(--ok)}
-.msg .lbl{font:600 13px/1.4 var(--sans);color:var(--warn)}
-.msg.note .lbl{color:var(--ok-tekst)}
+.msg.note{box-shadow:inset 3px 0 0 var(--status-ok-fg)}
+.msg .lbl{font:600 13px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--status-haster-fg)}
+.msg.note .lbl{color:var(--status-ok-fg)}
 .msg b{font-weight:600;font-size:15px}
-.msg p{margin:0;font-size:14px;color:var(--muted)}
+.msg p{margin:0;font-size:14px;color:var(--tekst-dempet)}
 
 /* Bak kulissene */
 .flow{position:relative;min-height:380px;transition:min-height .3s;container-type:inline-size}
 .flow>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.flow>svg line{stroke:var(--line);stroke-width:1.5;transition:stroke .3s}
-.flow>svg line.on{stroke:var(--dusty)}
-.node{position:absolute;background:var(--card);border:1px solid var(--line);border-radius:var(--r-field);padding:8px 10px;display:grid;gap:1px;min-width:0;transition:border-color .4s,background .4s}
+.flow>svg line{stroke:var(--linje);stroke-width:1.5;transition:stroke .3s}
+.flow>svg line.on{stroke:var(--aksent-svak)}
+.node{position:absolute;background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-lite);padding:8px 10px;display:grid;gap:1px;min-width:0;transition:border-color .4s,background .4s}
 .node b{font-size:15px;font-weight:600;line-height:1.35}
-.node .chan{font:500 13px/1.4 var(--sans);color:var(--accent-tekst)}
-.node.crm{left:0;top:50%;transform:translateY(-50%);width:28%;padding:14px 12px;gap:2px;background:var(--soft);border-color:var(--sand)}
+.node .chan{font:500 13px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--aksent-tekst)}
+.node.crm{left:0;top:50%;transform:translateY(-50%);width:28%;padding:14px 12px;gap:2px;background:var(--flate-senket);border-color:var(--ramme)}
 .node.crm .hlogo{font-size:clamp(13px,calc(5.8cqw - 5px),22px)!important}
-.node.crm .nsub{font-size:13px;line-height:1.4;color:var(--muted);margin-top:4px}
+.node.crm .nsub{font-size:13px;line-height:1.4;color:var(--tekst-dempet);margin-top:4px}
 .node.sup{right:0;width:46%}
-.node.sup.ok{border-color:var(--ok)}
-.node.sup.warn{border-color:var(--warn);background:var(--warn-soft)}
-.packet{position:absolute;left:0;top:0;font:500 12px/1.4 var(--sans);padding:3px 9px;border-radius:var(--r-pill);background:var(--accent);color:var(--card);white-space:nowrap;pointer-events:none;will-change:transform;z-index:2}
-.packet.back{background:var(--ok)}
-.packet.back.w{background:var(--warn)}
+.node.sup.ok{border-color:var(--status-ok-fg)}
+.node.sup.warn{border-color:var(--status-haster-fg);background:var(--status-haster-bg)}
+.packet{position:absolute;left:0;top:0;font:500 12px/1.4 var(--skrift-familie-hengsel-tekst);padding:3px 9px;border-radius:var(--radius-pille);background:var(--aksent);color:var(--flate-kort);white-space:nowrap;pointer-events:none;will-change:transform;z-index:2}
+.packet.back{background:var(--status-ok-fg)}
+.packet.back.w{background:var(--status-haster-fg)}
 .caption{font-size:15px;line-height:1.5;min-height:3.2em}
 
 /* Finalen legger seg over panelene */
 .finale{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;text-align:center;padding:32px 20px;opacity:0;pointer-events:none;transition:opacity .8s;z-index:5}
 .finale.show{opacity:1;pointer-events:auto}
-.finale h2{font:400 clamp(2rem,4vw,3rem)/1.1 var(--serif);letter-spacing:-.015em;margin:0;max-width:18ch;text-wrap:balance}
-.finale p{margin:0;color:var(--muted);max-width:44ch}
+.finale h2{font:400 clamp(2rem,4vw,3rem)/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;max-width:18ch;text-wrap:balance}
+.finale p{margin:0;color:var(--tekst-dempet);max-width:44ch}
 .nums{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
 .nums .tile{min-width:120px;padding:12px 18px}
-.nums span{font-size:13px;color:var(--muted)}
+.nums span{font-size:13px;color:var(--tekst-dempet)}
 
 /* Scenelinje og knapper */
 .bar{display:grid;gap:12px;padding:14px 16px}
 .timeline{position:relative;display:flex;gap:6px;overflow-x:auto;padding:4px 4px 6px;margin:-4px} /* plass til fokusringen (4 px), som ellers klippes av overflow */
-.tl{flex:1 0 108px;border:0;background:none;padding:8px 4px;min-height:44px;display:grid;gap:6px;justify-items:center;font:500 13px var(--sans);color:var(--muted);cursor:pointer;border-radius:var(--r-sm);text-align:center;white-space:nowrap}
-.tl:hover{color:var(--fg)}
-.tl i{display:block;width:100%;height:4px;border-radius:2px;background:var(--line);transition:background var(--dur) var(--ease)}
-.tl.cur{color:var(--fg)}
-.tl.cur i{background:var(--accent)}
-.tl.past i{background:var(--dusty)}
+.tl{flex:1 0 108px;border:0;background:none;padding:8px 4px;min-height:44px;display:grid;gap:6px;justify-items:center;font:500 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);cursor:pointer;border-radius:var(--radius-kort-lite);text-align:center;white-space:nowrap}
+.tl:hover{color:var(--tekst)}
+.tl i{display:block;width:100%;height:4px;border-radius:2px;background:var(--linje);transition:background var(--dur) var(--ease)}
+.tl.cur{color:var(--tekst)}
+.tl.cur i{background:var(--aksent)}
+.tl.past i{background:var(--aksent-svak)}
 .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 #play{min-width:132px}
 .btn.ghost{padding-inline:14px}
-.auto{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);min-height:44px;cursor:pointer;margin-left:4px}
+.auto{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--tekst-dempet);min-height:44px;cursor:pointer;margin-left:4px}
 #fs{margin-left:auto}
-.hint{font-size:13px;color:var(--muted)}
+.hint{font-size:13px;color:var(--tekst-dempet)}
 
 @media (max-width:640px){
   .app{padding-inline:16px}

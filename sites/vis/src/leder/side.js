@@ -11,7 +11,7 @@ var RISK=[['hamar','Ordre 24-0791 · Berg','Avvik i bekreftelsen, endringsfrist 
 var cur='alle';
 [['alle','Alle butikker']].concat(Object.keys(B).map(function(k){return[k,B[k]]})).forEach(function(x){var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=x[1];b.dataset.k=x[0];b.onclick=function(){set(x[0])};$('filt').appendChild(b)});
 function keys(){return cur==='alle'?Object.keys(B):[cur]}
-function set(k){cur=k;[].forEach.call($('filt').children,function(b){var on=b.dataset.k===k;b.classList.toggle('dark',on);b.setAttribute('aria-pressed',on)});
+function set(k){cur=k;[].forEach.call($('filt').children,function(b){var on=b.dataset.k===k;b.classList.toggle('valgt',on);b.setAttribute('aria-pressed',on)});
  var ks=keys(),res=W.map(function(_,i){return ks.reduce(function(s,b){return s+R[b][i]},0)*1e6}),cap=ks.reduce(function(s,b){return s+CAP[b]},0)*1e6;
  var sel=SEL.filter(function(s){return ks.indexOf(s[1])>-1});
  var tilbud=sel.reduce(function(s,x){return s+x[2]},0)*1e6,vunnet=sel.reduce(function(s,x){return s+x[3]},0)*1e6;
@@ -28,7 +28,7 @@ function chart(v,cap){var bars=$('bars'),tip=$('tip'),box=$('chart'),top=Math.ma
  bars.innerHTML=h;$('weeks').innerHTML=W.map(function(w){return '<span>'+w+'</span>'}).join('');
  [].forEach.call(bars.querySelectorAll('.col'),function(c){var i=+c.dataset.i;
   c.addEventListener('pointerenter',function(){bars.classList.add('dim');[].forEach.call(bars.querySelectorAll('.col'),function(o){o.classList.toggle('hl',o===c)});
-   tip.innerHTML='<b>Uke '+W[i]+'</b><br>'+fmt(v[i])+' kr'+(v[i]>cap?'<br><span style="color:var(--warn)">Over kapasitet ('+mill(cap)+')</span>':'');tip.style.display='block';
+   tip.innerHTML='<b>Uke '+W[i]+'</b><br>'+fmt(v[i])+' kr'+(v[i]>cap?'<br><span style="color:var(--status-haster-fg)">Over kapasitet ('+mill(cap)+')</span>':'');tip.style.display='block';
    var px=c.offsetLeft+c.offsetWidth/2;tip.style.left=Math.min(Math.max(px-70,0),box.clientWidth-160)+'px';tip.style.top='0px'});
   c.addEventListener('pointerleave',function(){tip.style.display='none';bars.classList.remove('dim');c.classList.remove('hl')})})}
 var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){set(cur)},150)});

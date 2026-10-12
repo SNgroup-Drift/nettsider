@@ -43,7 +43,6 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
               <div class="bruker"><span class="avatar">{P.kunde.init}</span><span class="navn"><span>{P.kunde.navn}</span><span class="dempet">{P.kunde.firma}</span></span></div>
               <div class="levert">
                 <picture>
-                  <source media="(prefers-color-scheme: dark)" srcset="/logo/levert-av-aksent-mork.svg" />
                   <img src="/logo/levert-av-aksent-lys.svg" alt={P.levertAv} width="671" height="108" loading="lazy" decoding="async" />
                 </picture>
               </div>
@@ -219,33 +218,33 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .pille.ok { background: var(--ok-soft); color: var(--ok); }
 
   .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
-  .dinlogo .boks { border: 1.5px dashed var(--beige-1); border-radius: 6px; display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
+  .dinlogo .boks { border: 1.5px dashed var(--beige-1); border-radius: var(--radius-felt); display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
   .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
   .pc .dinlogo .boks { height: 40px; padding: 0 18px; font-size: 15px; }
-  .avatar { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
+  .avatar { width: 36px; height: 36px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
   .avatar.stor { width: 40px; height: 40px; font-size: 14px; }
 
-  .knapp { min-height: 52px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 500; font-size: 17px; }
+  .knapp { min-height: 52px; border-radius: var(--radius-pille); background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 500; font-size: 17px; }
   .sum { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--ink); padding-top: 12px; }
   .rad { display: flex; justify-content: space-between; font-size: 16px; padding: 11px 0; border-top: 1px solid var(--line); gap: 12px; }
   .rad.mellom { align-items: center; }
   .rad.valg { align-items: center; justify-content: flex-start; }
-  .boks-v { width: 24px; height: 24px; border-radius: 6px; flex: none; display: grid; place-items: center; font-size: 14px; border: 1.5px solid var(--beige-1); box-sizing: border-box; color: var(--accent-ink); }
+  .boks-v { width: 24px; height: 24px; border-radius: var(--radius-felt); flex: none; display: grid; place-items: center; font-size: 14px; border: 1.5px solid var(--beige-1); box-sizing: border-box; color: var(--accent-ink); }
   .boks-v.pa { background: var(--accent); border-color: var(--accent); }
   .reise { display: flex; gap: 14px; align-items: flex-start; }
   .reise-t { padding-bottom: 6px; }
-  .punkt { width: 24px; height: 24px; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 13px; border: 1.5px solid var(--beige-1); box-sizing: border-box; margin-top: 2px; color: var(--bg); }
+  .punkt { width: 24px; height: 24px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; border: 1.5px solid var(--beige-1); box-sizing: border-box; margin-top: 2px; color: var(--bg); }
   .punkt.ferdig { background: var(--ok); border-color: var(--ok); }
   .punkt.na { background: var(--accent); border-color: var(--accent); }
   .sterk { font-weight: 600; }
-  .info { background: var(--surface-highlight); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
-  .spor { height: 8px; border-radius: 999px; background: var(--surface-highlight-strong); overflow: hidden; }
+  .info { background: var(--surface-highlight); border-radius: var(--radius-kort-lite); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+  .spor { height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); overflow: hidden; }
   .fyll { width: 66%; height: 100%; background: var(--accent); }
   .fremdrift { gap: 6px; }
-  .okboks { background: var(--ok-soft); border-radius: 10px; padding: 12px 16px; font-size: 15px; box-shadow: inset 3px 0 0 var(--ok); }
+  .okboks { background: var(--ok-soft); border-radius: var(--radius-kort-lite); padding: 12px 16px; font-size: 15px; box-shadow: inset 3px 0 0 var(--ok); }
   .okboks b { color: var(--ok); }
   .apne { font-size: 14px; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-  .bilde { height: 150px; border-radius: 10px; background: var(--surface-highlight-strong); display: grid; place-items: center; color: var(--muted); font-size: 14px; }
+  .bilde { height: 150px; border-radius: var(--radius-kort-lite); background: var(--surface-highlight-strong); display: grid; place-items: center; color: var(--muted); font-size: 14px; }
   .pc .bilde { height: 230px; }
   .bunn-blokk { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
   .auto-topp { margin-top: auto; }
@@ -260,17 +259,17 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .telefon .rutenett { display: flex; flex-direction: column; flex: 1; padding-top: 6px; }
   .pc .rutenett { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
   .telefon .hovedkort { display: flex; flex-direction: column; gap: 14px; flex: 1; min-height: 0; }
-  .pc .hovedkort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .pc .hovedkort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   .pc-hode { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
   .pc-tekst { display: flex; flex-direction: column; gap: 4px; }
   .ordre { font-size: 14px; color: var(--muted); }
   .pc-h1 { font-family: var(--f-display); font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; }
-  .skriv { min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--ink); display: inline-flex; align-items: center; font-size: 15px; font-weight: 500; flex: none; box-sizing: border-box; }
+  .skriv { min-height: 44px; padding: 0 20px; border-radius: var(--radius-pille); border: 1px solid var(--ink); display: inline-flex; align-items: center; font-size: 15px; font-weight: 500; flex: none; box-sizing: border-box; }
 
   /* Menyen på PC */
   .meny { width: 248px; flex: none; box-sizing: border-box; padding: 28px 14px 24px; display: flex; flex-direction: column; gap: 2px; border-right: 1px solid var(--line); background: var(--surface-soft); }
   .logo-rad { padding: 0 12px 24px; display: flex; }
-  .m { display: flex; justify-content: space-between; align-items: center; min-height: 42px; padding: 0 12px; border-radius: 10px; font-size: 15px; }
+  .m { display: flex; justify-content: space-between; align-items: center; min-height: 42px; padding: 0 12px; border-radius: var(--radius-kort-lite); font-size: 15px; }
   .m.aktiv { font-weight: 600; background: var(--surface-highlight-strong); }
   .m .n { font-size: 13px; color: var(--muted); }
   .bunn-meny { margin-top: auto; padding: 12px; display: flex; flex-direction: column; gap: 14px; }
@@ -281,19 +280,19 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
 
   /* Sidekort på PC */
   .side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
   .sum.plain { border-top: 0; padding-top: 0; }
   .valgt-rad { display: flex; justify-content: space-between; font-size: 15px; }
   .fliser { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .flis { background: var(--surface-soft); border-radius: 10px; padding: 10px 14px; }
+  .flis { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 10px 14px; }
   .selger { display: flex; align-items: center; gap: 12px; }
-  .melding { background: var(--surface-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
-  .felt { min-height: 44px; border-radius: 10px; border: 1px solid var(--line); padding: 0 14px; display: flex; align-items: center; color: var(--muted); font-size: 14px; box-sizing: border-box; }
+  .melding { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 12px 14px; font-size: 14px; }
+  .felt { min-height: 44px; border-radius: var(--radius-kort-lite); border: 1px solid var(--line); padding: 0 14px; display: flex; align-items: center; color: var(--muted); font-size: 14px; box-sizing: border-box; }
 
   /* SMS-varselet: glir inn øverst (telefon) eller nederst til høyre (PC). Uten glid ved redusert bevegelse. */
   .sms { position: absolute; z-index: 5; background: var(--surface); padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow), 0 0 0 1px var(--line); visibility: hidden; pointer-events: none; transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s 420ms; }
   .telefon .sms { left: 10px; right: 10px; top: 58px; border-radius: 20px; transform: translateY(-160%); }
-  .pc .sms { right: 24px; bottom: 20px; width: 380px; border-radius: 14px; transform: translateY(180%); }
+  .pc .sms { right: 24px; bottom: 20px; width: 380px; border-radius: var(--radius-kort-stor); transform: translateY(180%); }
   .portal .sms.inn { transform: translateY(0); visibility: visible; transition-delay: 0s; }
   .sms-topp { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
   .sms-fra { display: flex; align-items: center; gap: 8px; }
