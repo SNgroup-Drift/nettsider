@@ -1,0 +1,66 @@
+---
+/**
+ * Innholdet på 404-siden (tilpasset de delte Hengsel-variablene). Etiketten «404», tittelen, et tomt rom i plantegningsstrek og knappen til
+ * forsiden.  * oppsett="side" setter teksten til venstre og tegningen til høyre (hengsel.no). Tegningen kan byttes med slot «tegning».
+ */
+import Plantegningsstrek from "./Plantegningsstrek.astro";
+
+interface Props {
+  hjem?: string;
+  hjemTekst?: string;
+  tittel?: string;
+  ingress?: string;
+  oppsett?: "midt" | "side";
+  /** eksempel = vises inne i en annen side (/design): <div> og tittel uten <h1>, så siden ikke får to hovedområder */
+  som?: "side" | "eksempel";
+}
+const {
+  hjem = "/",
+  hjemTekst = "Til forsiden",
+  tittel = "Dette rommet finnes ikke.",
+  ingress,
+  oppsett = "midt",
+  som = "side",
+} = Astro.props;
+const Rot = som === "side" ? "main" : "div";
+const Tittel = som === "side" ? "h1" : "p";
+---
+<Rot id={som === "side" ? "innhold" : undefined} class:list={["ikke-funnet", oppsett, `som-${som}`]}>
+  <div class="h-innhold rutenett">
+    <div class="tekst">
+      <div class="etikett">404</div>
+      <Tittel class="tittel">{tittel}</Tittel>
+      {ingress && <p class="ingress">{ingress}</p>}
+      <p class="handling"><a href={hjem} class="knapp">{hjemTekst} <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="tegning">
+      {Astro.slots.has("tegning") ? <slot name="tegning" /> : <Plantegningsstrek rom="tomt" />}
+    </div>
+  </div>
+</Rot>
+
+<style>
+  .ikke-funnet { color: var(--tekst); flex: 1; }
+  .rutenett { padding-block: clamp(64px, 10vw, 120px); display: grid; }
+  .etikett { font-size: 12px; font-weight: var(--w-medium); letter-spacing: 0.12em; text-transform: uppercase; color: var(--tekst-dempet); }
+  .tittel { margin-top: 20px; }
+  .ingress { margin: 20px 0 0; color: var(--tekst-dempet); font-size: var(--t-lede); }
+  .handling { margin: 40px 0 0; }
+  .knapp {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 22px; border-radius: var(--radius-pille);
+    font-weight: var(--w-medium); text-decoration: none; transition: opacity 160ms;
+  }
+  .knapp:hover { opacity: 0.88; }
+  .knapp { background: var(--aksent); color: var(--paa-aksent); }
+  .knapp:hover { text-decoration: none; }
+  /* midt: tegningen over teksten, alt sentrert */
+  .midt .rutenett { justify-items: center; text-align: center; }
+  .midt .tegning { order: -1; width: min(280px, 100%); margin-bottom: 40px; }
+  /* side: tekst til venstre, tegning til høyre */
+  .side .rutenett { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .side .tegning { width: 100%; max-width: 520px; justify-self: end; }
+  @media (max-width: 860px) {
+    .side .rutenett { grid-template-columns: minmax(0, 1fr); }
+    .side .tegning { justify-self: start; }
+  }
+</style>

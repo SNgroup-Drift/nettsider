@@ -27,10 +27,10 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
             <Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet>
           </div>
           <div class="ipad">
-            <Enhet type="ipad" src="/img/app/ipad-idag-lys.webp" srcDark="/img/app/ipad-idag-mork.webp" w={1180} h={820} alt={HERO.altIpad} />
+            <Enhet type="ipad" src="/img/app/ipad-idag-lys.webp" w={1180} h={820} alt={HERO.altIpad} />
           </div>
           <div class="iphone">
-            <Enhet type="iphone" src="/img/app/idag-lys.webp" srcDark="/img/app/idag-mork.webp" w={402} h={874} alt={HERO.altIphone} />
+            <Enhet type="iphone" src="/img/app/idag-lys.webp" w={402} h={874} alt={HERO.altIphone} />
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
   .reise-lenke { font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; }
   .reise { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 16px; background-image: linear-gradient(var(--line), var(--line)); background-size: 100% 1px; background-position: 0 18px; background-repeat: no-repeat; }
   .reise li { display: flex; flex-direction: column; gap: 14px; }
-  .prikk { width: 36px; height: 36px; border-radius: 999px; flex: none; display: grid; place-items: center; background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; box-sizing: border-box; }
+  .prikk { width: 36px; height: 36px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; box-sizing: border-box; }
   .valgt .prikk { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .rt { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .rt b { font-weight: 600; font-size: 1rem; }
@@ -130,7 +130,7 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
 
   .narmere-inn { display: flex; flex-direction: column; gap: 32px; }
   .kort-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
-  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; color: var(--ink); text-decoration: none; min-height: 150px; box-sizing: border-box; }
+  .kort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; color: var(--ink); text-decoration: none; min-height: 150px; box-sizing: border-box; }
   .kort:hover { border-color: var(--ink); text-decoration: none; }
   .kt { font-family: var(--f-display); font-size: 1.6rem; line-height: 1.15; }
   .ks { color: var(--muted); font-size: 0.98rem; line-height: 1.55; flex: 1; }

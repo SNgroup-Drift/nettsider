@@ -1,0 +1,63 @@
+/* Hengsel – grunnstil for hengsel.no og admin.hengsel.no. Bruker bare variablene fra tokens.css (ingen fargeverdier her). Bare lys modus. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--flate-kort);
+  color: var(--tekst);
+  font-family: var(--skrift-familie-hengsel-tekst);
+  font-weight: var(--skrift-vekt-inter-normal);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img, svg { max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+:focus-visible { outline: 2px solid var(--aksent); outline-offset: 3px; }
+
+/* Overskrifter: Newsreader, aldri versaler */
+h1, h2, h3 {
+  font-family: var(--skrift-familie-hengsel-overskrift);
+  font-weight: var(--skrift-vekt-newsreader-normal);
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  text-transform: none;
+}
+
+.skip {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  padding: 10px 16px;
+  background: var(--tekst);
+  color: var(--tekst-invers);
+  border-radius: var(--radius-felt);
+  z-index: 10;
+}
+.skip:focus { top: 8px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

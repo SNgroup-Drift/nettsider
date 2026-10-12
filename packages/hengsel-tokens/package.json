@@ -1,0 +1,19 @@
+{
+  "name": "@sngroup/hengsel-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "K-192: den delte Hengsel-fila. tokens.css og fonts.css genereres fra hengsel.tokens.json i Hengsel-designsystemet (pinnet commit, se designsystem.pin.json). hengsel.no, vis., design. og admin. importerer herfra.",
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./fonts.css": "./fonts.css",
+    "./grunn.css": "./src/grunn.css",
+    "./tokens.json": "./ds/tokens/hengsel.tokens.json",
+    "./pin.json": "./designsystem.pin.json",
+    "./Hode.astro": "./src/Hode.astro",
+    "./ds/*": "./ds/*"
+  },
+  "peerDependencies": {
+    "astro": "^7.3.0"
+  }
+}

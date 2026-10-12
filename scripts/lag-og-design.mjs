@@ -10,7 +10,7 @@ import { startServer } from "./statisk-server.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const dist = join(rot, "sites", "design", "dist");
-const t = JSON.parse(await readFile(join(rot, "sites", "design", "public", "ds", "tokens", "hengsel.tokens.json"), "utf8"));
+const t = JSON.parse(await readFile(join(rot, "packages", "hengsel-tokens", "ds", "tokens", "hengsel.tokens.json"), "utf8"));
 const server = await startServer(dist);
 const base = `http://127.0.0.1:${server.address().port}`;
 const nettleser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});

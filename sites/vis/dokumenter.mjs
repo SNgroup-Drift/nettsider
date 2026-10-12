@@ -1,20 +1,17 @@
 /**
  * Dokumentene i Visningsrommet: lager HTML for /dokumenter/ og for arkene på forsiden av de felles dataene
- * (packages/design/src/dokumenter: data.js, lages.js, render.js). Brukes av bygg.mjs, som setter resultatet inn der markørene står:
+ * (packages/hengsel-dokumenter/src: data.js, lages.js, render.js). Brukes av bygg.mjs, som setter resultatet inn der markørene står:
  *   <!--dokumentvisning-->        hele visningen (velger, ark med bla-knapper, «Slik lages det»)
  *   <!--a4-stil-->                <style> med kolonnemaler og bildehøyder
  *   <!--a4-ark:id:side:tittel-->  ett lite A4-ark som lenke (forsiden)
  * Ingen egen tekst om dokumentene her: alt kommer fra datafilene, så et dokument endres bare ett sted.
  */
-import { DOKUMENTER, LAGES_STEG } from "../../packages/design/src/dokumenter/data.js";
-import { ETTERPA_TYPE, LAGES } from "../../packages/design/src/dokumenter/lages.js";
-import { a4DynamiskCss } from "../../packages/design/src/dokumenter/a4-stil.js";
-import { esc, renderA4Side } from "../../packages/design/src/dokumenter/render.js";
-import { readFileSync } from "node:fs";
+import { DOKUMENTER, LAGES_STEG } from "../../packages/hengsel-dokumenter/src/data.js";
+import { ETTERPA_TYPE, LAGES } from "../../packages/hengsel-dokumenter/src/lages.js";
+import { a4DynamiskCss } from "../../packages/hengsel-dokumenter/src/a4-stil.js";
+import { esc, renderA4Side } from "../../packages/hengsel-dokumenter/src/render.js";
 
-/** Skjermer med mørk utgave (sites/vis/src/skjermbilder/_kart.json, lages av scripts/fiktive-skjermer.mjs) */
-const MORK = new Set(JSON.parse(readFileSync(new URL("./src/skjermbilder/_kart.json", import.meta.url), "utf8")).skjermer.filter((x) => x.tema === "mork").map((x) => x.navn));
-/** <picture> med 1× og 2×, og mørk utgave når systemet er mørkt og skjermen følger temaet */
+/** <picture> med 1× og 2× (bare lys utgave) */
 const skjermbilde = (navn, alt) =>
   `<picture><img class="sk" src="/skjermbilder/${navn}.webp" srcset="/skjermbilder/${navn}@1x.webp 1x, /skjermbilder/${navn}.webp 2x" alt="${alt}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></picture>`;
 

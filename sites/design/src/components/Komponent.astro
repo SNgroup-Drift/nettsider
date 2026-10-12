@@ -8,9 +8,9 @@ const { id, navn, kode, tekst, bruk, ikke } = Astro.props;
     <h2>{navn}</h2>
     <p>{tekst} <span class="svak">I koden: <code>{kode}</code></span></p>
   </header>
-  <div class="tema-par">
-    <div class="tema-lys"><span class="tema-navn">Lys</span><slot /></div>
-    <div class="tema-mork"><span class="tema-navn">Mørk</span><slot /></div>
+  <div class="prove-par">
+    <div class="prove-lys"><span class="prove-navn">Lys</span><slot /></div>
+    <div class="prove-mork"><span class="prove-navn">Mørk</span><slot /></div>
   </div>
   <div class="bruk">
     <div><b>Brukes til</b>{bruk}</div>

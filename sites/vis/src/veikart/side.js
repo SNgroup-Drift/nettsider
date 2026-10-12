@@ -79,7 +79,7 @@ $('filt').innerHTML=[['alle','Alle']].concat(['ok','del','opp','plan'].map(funct
 [].forEach.call($('filt').children,function(b){b.onclick=function(){setF(b.dataset.k)}});
 $('q').addEventListener('input',function(){q=this.value.trim().toLowerCase();render()});
 function setF(k){cur=k;
- [].forEach.call($('filt').children,function(b){var on=b.dataset.k===k;b.classList.toggle('dark',on);b.setAttribute('aria-pressed',on)});
+ [].forEach.call($('filt').children,function(b){var on=b.dataset.k===k;b.classList.toggle('valgt',on);b.setAttribute('aria-pressed',on)});
  [].forEach.call($('kpi').children,function(b){var on=b.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
  render()}
 function match(x){if(cur!=='alle'&&x.st!==cur)return false;if(!q)return true;

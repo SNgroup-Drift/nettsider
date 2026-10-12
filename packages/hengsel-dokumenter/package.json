@@ -1,0 +1,31 @@
+{
+  "name": "@sngroup/hengsel-dokumenter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "K-192: A4-dokumentene (data, markup, stil, visning) som hengsel.no og vis. viser. Flyttet fra packages/design, som er SN Groups palett. Fargene kommer fra @sngroup/hengsel-tokens.",
+  "exports": {
+    "./data": {
+      "types": "./src/data.d.ts",
+      "default": "./src/data.js"
+    },
+    "./a4-stil": {
+      "types": "./src/a4-stil.d.ts",
+      "default": "./src/a4-stil.js"
+    },
+    "./render": {
+      "types": "./src/render.d.ts",
+      "default": "./src/render.js"
+    },
+    "./dokumentvisning": "./src/dokumentvisning.js",
+    "./a4.css": "./src/a4.css",
+    "./dokumentvisning.css": "./src/dokumentvisning.css",
+    "./lages": {
+      "types": "./src/lages.d.ts",
+      "default": "./src/lages.js"
+    }
+  },
+  "dependencies": {
+    "@sngroup/hengsel-tokens": "*"
+  }
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,64 +8,62 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Visningsrommet – for suppliers</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 body{min-height:100vh;display:flex;flex-direction:column}
 .inner{max-width:1180px;width:100%;margin:0 auto;padding-inline:24px}
 .toppfelt{display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;min-height:64px;padding-block:16px}
-.hjem{display:flex;align-items:center;gap:14px;color:var(--fg);text-decoration:none;min-height:44px}
-.hjem .sep{width:1px;height:22px;background:var(--line);flex:none}
-.hjem b{font:500 15px/1 var(--sans)}
-.lang{display:flex;align-items:center;gap:4px;font:500 15px var(--sans)}
-.lang a,.lang [aria-current]{padding:0 10px;min-height:44px;display:inline-flex;align-items:center;border-radius:var(--r-sm)}
-.lang a{color:var(--muted);text-decoration:none;transition:color var(--dur) var(--ease)}
-.lang a:hover{color:var(--fg)}
-.lang [aria-current]{color:var(--fg);font-weight:600}
-.lang .skille{color:var(--sand)}
+.hjem{display:flex;align-items:center;gap:14px;color:var(--tekst);text-decoration:none;min-height:44px}
+.hjem .sep{width:1px;height:22px;background:var(--linje);flex:none}
+.hjem b{font:500 15px/1 var(--skrift-familie-hengsel-tekst)}
+.lang{display:flex;align-items:center;gap:4px;font:500 15px var(--skrift-familie-hengsel-tekst)}
+.lang a,.lang [aria-current]{padding:0 10px;min-height:44px;display:inline-flex;align-items:center;border-radius:var(--radius-kort-lite)}
+.lang a{color:var(--tekst-dempet);text-decoration:none;transition:color var(--dur) var(--ease)}
+.lang a:hover{color:var(--tekst)}
+.lang [aria-current]{color:var(--tekst);font-weight:600}
+.lang .skille{color:var(--ramme)}
 .sn{height:26px;width:auto;display:block;opacity:.9}
-.sn.mork{display:none}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sn.lys{display:none}:root:not([data-theme="light"]) .sn.mork{display:block}}
-:root[data-theme="dark"] .sn.lys{display:none}:root[data-theme="dark"] .sn.mork{display:block}
 main{flex:1;padding-block:24px 64px}
 .merk{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap}
-h1{font:400 clamp(2.5rem,5.6vw,4.6rem)/1.02 var(--serif);letter-spacing:-.015em;margin:16px 0;text-wrap:balance}
-.ingress{font-size:1.18rem;line-height:1.5;color:var(--muted);max-width:60ch;margin:0;text-wrap:pretty}
-h2{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:48px 0 16px;text-wrap:balance}
+h1{font:400 clamp(2.5rem,5.6vw,4.6rem)/1.02 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:16px 0;text-wrap:balance}
+.ingress{font-size:1.18rem;line-height:1.5;color:var(--tekst-dempet);max-width:60ch;margin:0;text-wrap:pretty}
+h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:48px 0 16px;text-wrap:balance}
 h2.m8{margin-bottom:8px}
 .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .parts .tile{padding:16px 18px;gap:4px;align-content:start}
-.parts b{font:600 15px/1.4 var(--sans)}
-.parts p,.key p,.rom p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;text-wrap:pretty}
+.parts b{font:600 15px/1.4 var(--skrift-familie-hengsel-tekst)}
+.parts p,.key p,.rom p{margin:0;color:var(--tekst-dempet);font-size:15px;line-height:1.5;text-wrap:pretty}
 .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .key{display:grid;gap:8px;align-content:start}
-.key .stat{color:var(--accent-tekst);line-height:1}
-.ktittel{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em;text-wrap:balance}
-.note{margin:0 0 16px;color:var(--muted);font-size:15px;max-width:62ch}
+.key .stat{color:var(--aksent-tekst);line-height:1}
+.ktittel{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;text-wrap:balance}
+.note{margin:0 0 16px;color:var(--tekst-dempet);font-size:15px;max-width:62ch}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .rom{display:flex;flex-direction:column;gap:10px;color:inherit;text-decoration:none;min-height:200px;transition:border-color var(--dur) var(--ease)}
-.rom:hover{border-color:var(--sand);text-decoration:none}
-.rom:focus-visible{border-radius:var(--r)}
+.rom:hover{border-color:var(--ramme);text-decoration:none}
+.rom:focus-visible{border-radius:var(--radius-kort-stor)}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
-.go{margin-top:auto;font:500 15px/1.4 var(--sans);color:var(--accent-tekst)}
-footer{border-top:1px solid var(--line)}
+.go{margin-top:auto;font:500 15px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--aksent-tekst)}
+footer{border-top:1px solid var(--linje)}
 footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:20px}
-footer p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+footer p{margin:0;font-size:14px;line-height:1.5;color:var(--tekst-dempet)}
 .baand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 32px}
-.avsender{display:flex;align-items:center;gap:14px;color:var(--fg);text-decoration:none!important;min-height:44px;font:500 15px/1.4 var(--sans)}
+.avsender{display:flex;align-items:center;gap:14px;color:var(--tekst);text-decoration:none!important;min-height:44px;font:500 15px/1.4 var(--skrift-familie-hengsel-tekst)}
 .avsender svg{flex:none;display:block}
 .strek{fill:none;stroke:currentColor;stroke-width:2.4}
-.bue{fill:none;stroke:var(--accent);stroke-width:1.8}
+.bue{fill:none;stroke:var(--aksent);stroke-width:1.8}
 .baand ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;font-size:15px}
 .baand li{display:flex;align-items:center}
-.baand .skille{color:var(--muted);padding:0 10px}
-.baand .her{color:var(--fg);padding:10px 0}
-.baand li a{color:var(--muted);padding:10px 0;display:inline-block;text-decoration:none}
-.baand li a:hover{color:var(--fg)}
+.baand .skille{color:var(--tekst-dempet);padding:0 10px}
+.baand .her{color:var(--tekst);padding:10px 0}
+.baand li a{color:var(--tekst-dempet);padding:10px 0;display:inline-block;text-decoration:none}
+.baand li a:hover{color:var(--tekst)}
 @media (min-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:760px){.lang{order:3;width:100%;margin-left:-10px}}
 @media (max-width:640px){.inner{padding-inline:16px}.hjem .hlogo{font-size:22px!important}.sn{height:22px}}
@@ -75,7 +73,7 @@ footer p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
 <header class="inner toppfelt">
   <a class="hjem" href="/" hreflang="nb" aria-label="Visningsrommet – Norwegian front page"><!--logo-hengsel 28--><span class="sep" aria-hidden="true"></span><b>Visningsrommet</b></a>
   <nav class="lang" aria-label="Language"><a href="/" hreflang="nb" lang="nb">Norsk</a><span class="skille" aria-hidden="true">·</span><a href="/sv/" hreflang="sv" lang="sv">Svenska</a><span class="skille" aria-hidden="true">·</span><span aria-current="page">English</span></nav>
-  <span><img class="sn lys" src="/img/sn-logo.svg" alt="SN Group" width="42" height="26"><img class="sn mork" src="/img/sn-logo-mork.svg" alt="SN Group" width="42" height="26"></span>
+  <span><img class="sn" src="/img/sn-logo.svg" alt="SN Group" width="42" height="26"></span>
 </header>
 
 <main class="inner">

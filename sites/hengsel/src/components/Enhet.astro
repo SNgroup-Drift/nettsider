@@ -2,13 +2,13 @@
 /**
  * Enhetsramme (Enhet.dc.html): Studio Display (type="display"), iPad (type="ipad") og iPhone (type="iphone") med iOS-statuslinje.
  *
- * Innholdet er enten et bilde (src, og srcDark for mørk modus: <picture> med prefers-color-scheme) eller HTML i sporet (slot),
+ * Innholdet er enten et bilde (src) eller HTML i sporet (slot),
  * tegnet i naturlig størrelse (nw × nh: display 1440 × 810, iPad 1180 × 820, iPhone 402 × 874) og skalert til skjermen av scripts/skala.ts.
  * Bredden på rammen er 100 % av plassen; sett maks bredde på omslaget. Ingen style-attributter (CSP style-src 'self').
  *
- *  - Studio Display bruker bezelen public/img/ramme-studio-display.webp; iPad og iPhone er tegnet i CSS (#1B1713).
+ *  - Studio Display bruker bezelen public/img/ramme-studio-display.webp; iPad og iPhone er tegnet i CSS (--alltid-mork).
  *  - Statuslinjen: iPhone «9:41» med Dynamic Island, signal, Wi-Fi og batteri; iPad «9:41 man. 12. okt.», Wi-Fi og batteri.
- *    Svart i lys modus og hvit i mørk; bilder uten mørk variant (src uten srcDark) har alltid svart. statusFarge overstyrer.
+ *    Svart som standard (bare lys modus). statusFarge overstyrer.
  *  - «Din logo» ligger over I dag-skjermbildene (idag-*, ipad-idag-*), som i designet.
  *  - Bilder: bredde og høyde er satt (ingen CLS); lazy under bretten, `forst` for det øverste.
  */
@@ -17,7 +17,6 @@ import Skjermbilde from "./Skjermbilde.astro";
 interface Props {
   type: "display" | "ipad" | "iphone";
   src?: string;
-  srcDark?: string;
   /** Naturlig størrelse på bildet (px), for width/height */
   w?: number;
   h?: number;
@@ -39,12 +38,10 @@ interface Props {
   hd?: boolean;
 }
 const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] } as const;
-const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false } = Astro.props;
+const { type, src, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false } = Astro.props;
 const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
 const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
-// Følger bildet temaet? Slot: ja. Bilde: bare med mørk variant.
-const folgerTema = src ? !!srcDark : true;
-const sb = statusFarge === "hvit" ? "sb-hvit" : statusFarge === "svart" ? "sb-svart" : folgerTema ? "sb-auto" : "sb-svart";
+const sb = statusFarge === "hvit" ? "sb-hvit" : "sb-svart";
 const visLogo = !!src && !utenLogo && !utenStatus && /\/(ipad-)?idag-/.test(src) && type !== "display";
 const inset = type === "ipad" && !src ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
 const lasting = forst ? "eager" : "lazy";
@@ -53,7 +50,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "display" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
       </div>
       <img class="bezel" src="/img/ramme-studio-display.webp" alt="" width="2160" height="1664" loading={lasting} decoding="async" aria-hidden="true" />
     </div>
@@ -61,8 +58,8 @@ const lasting = forst ? "eager" : "lazy";
   {type === "ipad" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
-        {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span></span>}
+        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {visLogo && <span class="dinlogo"><span class="boks">Din logo</span></span>}
         <svg class="status" viewBox="0 0 1180 24" aria-hidden="true">
           <text x="22" y="17" class="klokke">9:41</text><text x="68" y="17" class="klokke dato">man. 12. okt.</text>
           <g transform="translate(1100 6)"><use href="#sb-wifi" /></g><g transform="translate(1122 5.5)"><use href="#sb-batteri" /></g>
@@ -73,11 +70,11 @@ const lasting = forst ? "eager" : "lazy";
   {type === "iphone" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
-        {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span></span>}
+        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {visLogo && <span class="dinlogo"><span class="boks">Din logo</span></span>}
         {!utenStatus && <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
           <text x="68" y="35" text-anchor="middle" class="klokke">9:41</text>
-          <rect x="138.5" y="11" width="125" height="37" rx="18.5" fill="#000" />
+          <rect x="138.5" y="11" width="125" height="37" rx="18.5" class="oy" />
           <g transform="translate(298 25)"><use href="#sb-signal" /></g><g transform="translate(323 25)"><use href="#sb-wifi" /></g><g transform="translate(346 24.5)"><use href="#sb-batteri" /></g>
         </svg>}
       </div>
@@ -109,11 +106,11 @@ const lasting = forst ? "eager" : "lazy";
   .display .ramme { aspect-ratio: 2160 / 1664; }
   .display .skjerm { left: 2.59%; top: 3.37%; width: 94.81%; height: 69.23%; }
   /* iPad */
-  .ipad .ramme { aspect-ratio: 1212 / 852; box-sizing: border-box; background: #1b1713; border-radius: 3.2% / 4.4%; padding: 1.32%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .ipad .ramme { aspect-ratio: 1212 / 852; box-sizing: border-box; background: var(--alltid-mork); border-radius: 3.2% / 4.4%; padding: 1.32%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
   .ipad .skjerm { position: relative; width: 100%; height: 100%; border-radius: 1.9% / 2.7%; }
   .ipad .skala { translate: 0 calc(var(--inset, 0) * 1px); }
   /* iPhone */
-  .iphone .ramme { aspect-ratio: 426 / 898; box-sizing: border-box; background: #1b1713; border-radius: 15.5% / 7.3%; padding: 2.8%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .iphone .ramme { aspect-ratio: 426 / 898; box-sizing: border-box; background: var(--alltid-mork); border-radius: 15.5% / 7.3%; padding: 2.8%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
   .iphone .skjerm { position: relative; width: 100%; height: 100%; border-radius: 13.7% / 6.3%; }
 
   /* Statuslinjen ligger øverst på skjermen og skaleres med den */
@@ -121,16 +118,12 @@ const lasting = forst ? "eager" : "lazy";
   .iphone .klokke { font-size: 17px; letter-spacing: -0.01em; }
   .ipad .klokke { font-size: 14px; }
   .ipad .dato { font-weight: 600; }
-  .sb-svart .status { color: #000; }
-  .sb-hvit .status { color: #fff; }
-  .sb-auto .status { color: #000; }
-  @media (prefers-color-scheme: dark) { .sb-auto .status { color: #fff; } }
+  .sb-svart .status { color: var(--alltid-mork); }
+  .sb-hvit .status { color: var(--tekst-invers); }
+  .oy { fill: var(--alltid-mork); }
 
   .dinlogo { position: absolute; z-index: 15; display: flex; flex-direction: column; gap: 3px; align-items: flex-start; pointer-events: none; transform-origin: 0 0; font-family: var(--f-body); }
   .iphone .dinlogo { right: 4%; top: 6.4%; align-items: flex-end; transform-origin: 100% 0; transform: scale(var(--k, 1)); }
   .ipad .dinlogo { left: 6.3%; top: 3.4%; transform: scale(var(--k, 1)); }
-  .dinlogo .boks { height: 30px; padding: 0 14px; border: 1.5px dashed #c3b5a7; border-radius: 6px; display: flex; align-items: center; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: #31261d; box-sizing: border-box; }
-  @media (prefers-color-scheme: dark) {
-    .dinlogo[data-lys-mork="tema"] .boks { border-color: #6b5d50; color: #f1e9de; }
-  }
+  .dinlogo .boks { height: 30px; padding: 0 14px; border: 1.5px dashed var(--beige-1); border-radius: var(--radius-felt); display: flex; align-items: center; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--tekst); box-sizing: border-box; }
 </style>

@@ -4,6 +4,7 @@ import Lenker from "../../components/Lenker.astro";
 import Kontoer from "../../components/Kontoer.astro";
 import Frister from "../../components/Frister.astro";
 import { kunder, MODULER } from "../../lib/data";
+import { norskDato } from "../../lib/dato";
 
 export function getStaticPaths() {
   return kunder.map((k) => ({ params: { id: k.id }, props: { k } }));
@@ -29,7 +30,7 @@ const fyll = (v: string | null | undefined) => v ?? null;
       <div><dt>Kontaktperson</dt><dd>{k.kontaktperson.navn}, {k.kontaktperson.rolle}<br />
         {k.kontaktperson.epost ?? <span class="fyllinn">fyll inn</span>} · {k.kontaktperson.telefon ?? <span class="fyllinn">fyll inn telefon</span>}</dd></div>
       <div><dt>Adresser og domener</dt><dd>{k.domener.join(", ")}</dd></div>
-      <div><dt>Lisens</dt><dd>{k.lisens.plan ?? <span class="fyllinn">fyll inn</span>} · fra {k.lisens.fra ?? "fyll inn"} · pris {k.lisens.pris ?? "fyll inn"}{k.lisens.merknad && <span class="merknad">{k.lisens.merknad}</span>}</dd></div>
+      <div><dt>Lisens</dt><dd>{k.lisens.plan ?? <span class="fyllinn">fyll inn</span>} · fra {k.lisens.fra ? norskDato(k.lisens.fra) : "fyll inn"} · pris {k.lisens.pris ?? "fyll inn"}{k.lisens.merknad && <span class="merknad">{k.lisens.merknad}</span>}</dd></div>
     </dl>
   </section>
 

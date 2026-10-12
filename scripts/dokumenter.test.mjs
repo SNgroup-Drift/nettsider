@@ -1,11 +1,11 @@
-// Dokumentdata (packages/design/src/dokumenter): felles for hengsel.no og Visningsrommet. node --test scripts/dokumenter.test.mjs
+// Dokumentdata (packages/hengsel-dokumenter/src): felles for hengsel.no og Visningsrommet. node --test scripts/dokumenter.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { DOKUMENTER, LAGES_STEG } from "../packages/design/src/dokumenter/data.js";
-import { LAGES } from "../packages/design/src/dokumenter/lages.js";
-import { renderA4Side } from "../packages/design/src/dokumenter/render.js";
+import { DOKUMENTER, LAGES_STEG } from "../packages/hengsel-dokumenter/src/data.js";
+import { LAGES } from "../packages/hengsel-dokumenter/src/lages.js";
+import { renderA4Side } from "../packages/hengsel-dokumenter/src/render.js";
 
 const rot = join(import.meta.dirname, "..");
 

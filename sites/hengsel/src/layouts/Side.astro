@@ -1,12 +1,10 @@
 ---
 /**
- * Ramme for hengsel.no 2.0: familiens BaseLayout, den faste menyen (Meny.astro) og bunnen (Bunn.astro).
- * Fasit: docs/design/hengsel (Meny.dc.html, Bunn.dc.html); favicon og manifest fra merkepakkens favicon/head.html (brand/). Lys og mørk følger systemet (prefers-color-scheme).
- * Skriftene er Newsreader og Inter fra @sngroup/design/fonts.css. Alle sider bruker denne rammen, også /personvern, /apptest og 404.
+ * Ramme for hengsel.no 2.0: Hode.astro, den faste menyen (Meny.astro) og bunnen (Bunn.astro).
+ * Fasit: docs/design/hengsel (Meny.dc.html, Bunn.dc.html); favicon og manifest fra merkepakkens favicon/head.html (brand/). Bare lys modus.
+ * Ramme, tokens og skrifter kommer fra @sngroup/hengsel-tokens (Hode.astro). Alle sider bruker denne rammen, også /personvern, /apptest og 404.
  */
-import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
-import "@sngroup/design/fonts.css";
-import "../styles/tokens.css";
+import Hode from "@sngroup/hengsel-tokens/Hode.astro";
 import "../styles/hengsel.css";
 import Meny from "../components/Meny.astro";
 import Bunn from "../components/Bunn.astro";
@@ -26,13 +24,12 @@ interface Props {
 }
 const { title, description, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
 ---
-<BaseLayout
+<Hode
   title={title}
   description={description}
   noindex={noindex}
   robots={robots}
   delingsbilde={delingsbilde}
-  temafarge={["#FBF9F6", "#1F1914"]}
   ikon={{ href: "/favicon.svg", type: "image/svg+xml" }}
   ikon32="/favicon-32.png"
   appleIkon="/favicon-180.png"
@@ -43,7 +40,7 @@ const { title, description, noindex, robots, aktiv = "", utenMeny = false, delin
     <slot />
     <Bunn />
   </div>
-</BaseLayout>
+</Hode>
 
 <style>
   .side { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); }

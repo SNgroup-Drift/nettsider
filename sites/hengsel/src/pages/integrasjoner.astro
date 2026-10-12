@@ -87,23 +87,23 @@ const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
   .linjer line.valgt { stroke: var(--accent); stroke-width: 2; }
   .node {
     position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4px;
-    padding: 12px 14px; min-height: 56px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    padding: 12px 14px; min-height: 56px; border-radius: var(--radius-kort-stor); border: 1px solid var(--line); background: var(--surface); color: var(--ink);
     font: inherit; cursor: pointer; box-sizing: border-box; min-width: 0;
   }
   .node:hover { border-color: var(--ink); }
   .node.midten { border-color: var(--ink); background: var(--ink); color: var(--bg); }
   .node[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-  .node:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: 14px; }
+  .node:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: var(--radius-kort-stor); }
   .node[aria-checked="true"]:focus-visible { box-shadow: 0 0 0 2px var(--accent), 0 0 0 4px var(--bg), 0 0 0 6px var(--accent); }
   .nt { font: 600 0.95rem/1.2 var(--f-body); overflow-wrap: anywhere; hyphens: auto; max-width: 100%; }
   .ns { font-size: 0.78rem; line-height: 1.35; color: var(--muted); }
   .midten .nt { font: 400 1.6rem/1.2 var(--f-display); }
   .midten .ns { color: var(--bg); opacity: 0.82; }
 
-  .panel-inn { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .panel-inn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
   .pt { font: 400 2rem/1.1 var(--f-display); }
   .inn-ut { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
-  .inn-ut > div { background: var(--surface-soft); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+  .inn-ut > div { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
   .etikett { font-size: 0.82rem; color: var(--muted); }
   .inn-ut span:last-child { font-size: 0.98rem; }
   .hvor { font-size: 0.9rem; color: var(--muted); }

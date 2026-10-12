@@ -46,9 +46,9 @@ Alle skjermbilder vises i Apples Product Bezels (`src/assets/rammer/*.webp`, gje
 
 ## Dokumentene (K-161, 11.10)
 
-`/dokumenter/` viser de samme ni dokumentene som hengsel.no/dokumenter, hele (forside, alle sider, vilkår, signatur, vedlegg), med bla-knapper, tastatur (← →), sveip på mobil, sidetall og lysboks. Data, A4-markup, CSS og skript ligger i `packages/design/src/dokumenter/` og deles med hengsel.no; `sites/vis/dokumenter.mjs` og `bygg.mjs` lager HTML ved bygging (markørene `<!--dokumentvisning-->`, `<!--a4-stil-->`, `<!--a4-ark:id:side:Tittel-->`). Se `docs/dokumentvisning.md`.
+`/dokumenter/` viser de samme ni dokumentene som hengsel.no/dokumenter, hele (forside, alle sider, vilkår, signatur, vedlegg), med bla-knapper, tastatur (← →), sveip på mobil, sidetall og lysboks. Data, A4-markup, CSS og skript ligger i `packages/hengsel-dokumenter/src/` og deles med hengsel.no; `sites/vis/dokumenter.mjs` og `bygg.mjs` lager HTML ved bygging (markørene `<!--dokumentvisning-->`, `<!--a4-stil-->`, `<!--a4-ark:id:side:Tittel-->`). Se `docs/dokumentvisning.md`.
 
-- **Slik lages det** (`packages/design/src/dokumenter/lages.js`): 3–5 steg per dokument med skjermbilde fra CRM-designfilene i Studio Display-ramme (aldri kjørende demo), knappen som trykkes og hva som skjer etterpå (PDF, e-post/SMS, signering, lagring), og lenker til rommene.
+- **Slik lages det** (`packages/hengsel-dokumenter/src/lages.js`): 3–5 steg per dokument med skjermbilde fra CRM-designfilene i Studio Display-ramme (aldri kjørende demo), knappen som trykkes og hva som skjer etterpå (PDF, e-post/SMS, signering, lagring), og lenker til rommene.
 - Nøytrale demonavn (Butikknavn, Kari Nordmann, Leverandør A), merket «Eksempel». «Din logo» øverst og Hengsel-logoen (`hengsel-lys.svg`, 3 mm) i bunnlinjen til høyre; aldri to Hengsel-logoer. Papiret er alltid lyst; sidene rundt følger lys/mørk modus.
 - Forsiden viser første side av fem dokumenter som ekte A4-ark (samme gjengiver), ikke bilder. `dok-*.webp` er fjernet.
 - Lenker til dokumentene: Ordrens reise scene 2 og 3 → `#kjopsavtale`, Montørappen → `#montering`, Kundens Min side → `#fdv`.

@@ -20,7 +20,6 @@ const ENHET_TYPE = { pc: "display", ipad: "ipad", telefon: "iphone" } as const;
       <div class="h-innhold stabel">
         <div class="hode">
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-crm-aksent-mork.svg" />
             <img class="crm-logo" src="/logo/hengsel-crm-aksent-lys.svg" alt={T.eyebrow} width="527" height="108" fetchpriority="high" />
           </picture>
           <h1>{T.h1}</h1>
@@ -99,8 +98,8 @@ const ENHET_TYPE = { pc: "display", ipad: "ipad", telefon: "iphone" } as const;
   .crm-logo { display: block; height: 34px; width: auto; align-self: flex-start; }
   .kontroller { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
   .steg { display: flex; flex-wrap: wrap; gap: 8px; }
-  .enhet-valg { display: flex; padding: 4px; gap: 2px; border-radius: 999px; background: var(--surface-highlight); border: 1px solid var(--line); }
-  .enhet-valg button { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
+  .enhet-valg { display: flex; padding: 4px; gap: 2px; border-radius: var(--radius-pille); background: var(--surface-highlight); border: 1px solid var(--line); }
+  .enhet-valg button { min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
   .enhet-valg button[aria-checked="true"] { background: var(--surface); font-weight: 600; box-shadow: 0 0 0 1px var(--line); }
   @media (scripting: none) { .kontroller, .bunnlinje .neste { display: none; } }
 

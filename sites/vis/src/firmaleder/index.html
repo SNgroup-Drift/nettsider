@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb" data-theme="light">
+<html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,11 +8,12 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Firmaleder i Hengsel · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <link rel="stylesheet" href="/assets/enhet.css">
 <style>
@@ -30,14 +31,14 @@
 .panel h3 .hlogo{text-transform:none;letter-spacing:-.01em;padding-top:0}
 .panel>.btn{justify-self:start}
 .guide{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.guide li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;cursor:pointer;border-radius:var(--r-sm)}
-.guide li:hover{color:var(--accent-tekst)}
-.guide li span{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--sand);display:grid;place-items:center;font:600 12px/1 var(--sans);color:var(--muted);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
-.guide li.d{color:var(--muted)}
-.guide li.d span{background:var(--ok);border-color:var(--ok);color:var(--card);font-size:0}
+.guide li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;cursor:pointer;border-radius:var(--radius-kort-lite)}
+.guide li:hover{color:var(--aksent-tekst)}
+.guide li span{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ramme);display:grid;place-items:center;font:600 12px/1 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.guide li.d{color:var(--tekst-dempet)}
+.guide li.d span{background:var(--status-ok-fg);border-color:var(--status-ok-fg);color:var(--flate-kort);font-size:0}
 .guide li.d span::before{content:"✓";font-size:13px}
 .log{display:grid;gap:8px;max-height:380px;overflow:auto}
-.log div{font-size:15px;line-height:1.5;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.log div{font-size:15px;line-height:1.5;padding-bottom:8px;border-bottom:1px solid var(--linje)}
 .log div:last-child{border-bottom:0;padding-bottom:0}
 .log b{font-weight:600}
 @media (max-width:980px){.stage{grid-template-columns:minmax(0,1fr)}.side{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}}

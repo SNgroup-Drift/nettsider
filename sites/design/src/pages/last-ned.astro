@@ -1,11 +1,11 @@
 ---
 /** Last ned: tokens (css, ts, json), skriftene og logopakken. Alt kommer fra designsystemet, pinnet til en commit (designsystem.pin.json). */
 import Side from "../layouts/Side.astro";
-import pin from "../../designsystem.pin.json";
+import pin from "@sngroup/hengsel-tokens/pin.json";
 import { designsystem } from "../lib/tokens";
 const FILER = [
   ["tokens/hengsel.tokens.json", "hengsel.tokens.json", "Eneste kilde: farger i lys og mørk, status, skrift, størrelser, radius, avstand, skygge og kundetema."],
-  ["tokens/tokens.css", "tokens.css", "Web: CSS-variabler for alle roller. Lys er standard; mørk følger systemet, eller data-theme=\"dark\" på <html>."],
+  ["tokens/tokens.css", "tokens.css", "Web: CSS-variabler for alle roller, for appene og CRM-et (lys og mørk). Nettsidene bruker den delte fila i stedet, med bare lys."],
   ["tokens/tokens.ts", "tokens.ts", "CRM og Expo-montørappen: roller, status og kundetema som TypeScript."],
   ["tokens/fonts.css", "fonts.css", "@font-face for Inter og Newsreader (woff2, selvhostet)."],
   ["tokens/fonts-fri-liste.css", "fonts-fri-liste.css", "@font-face for kundetemaets frie skriftliste. Last bare de kunden har valgt."],
@@ -58,11 +58,11 @@ const FILER = [
         <table>
           <thead><tr><th>Flate</th><th>Henter</th></tr></thead>
           <tbody>
-            <tr><td>CRM og kundeportal (web)</td><td><code>tokens.css</code> og <code>fonts.css</code>; <code>tokens.ts</code> for farger i kode. Mørk er <code>html.dark</code>. Kundeportalen har <code>data-alltid-lys</code> og er aldri mørk.</td></tr>
+            <tr><td>CRM og kundeportal (web)</td><td><code>tokens.css</code> og <code>fonts.css</code>; <code>tokens.ts</code> for farger i kode. Mørk utgave styres av CRM-et selv. Kundeportalen er aldri mørk.</td></tr>
             <tr><td>E-post og PDF</td><td><code>tokens.ts</code> (ingen CSS-variabler i e-post). Alltid lys utgave. Merke: <code>sendt-med</code> (PNG 2×) i e-post og <code>hengsel</code> ensfarget i PDF.</td></tr>
             <tr><td>Montørappen (Expo)</td><td><code>tokens.ts</code> (<code>roller</code>, <code>status</code>). Skriftene lastes av appen selv.</td></tr>
             <tr><td>Hengsel Ute (iOS)</td><td>Egen Swift-fil i designsystemet (<code>HengselTokens.swift</code>). Flatene bruker tokens; knapper, lister og kontroller følger iOS.</td></tr>
-            <tr><td>hengsel.no, vis og denne siden</td><td><code>tokens.css</code>. <code>data-theme="light"</code> eller <code>"dark"</code> på <code>&lt;html&gt;</code> låser utgaven.</td></tr>
+            <tr><td>hengsel.no, vis og denne siden</td><td>den delte fila <code>@sngroup/hengsel-tokens/tokens.css</code>, generert fra den pinnede <code>hengsel.tokens.json</code>. Bare lys modus.</td></tr>
           </tbody>
         </table>
       </div>

@@ -75,16 +75,16 @@ function lines(c){var r=[['Fronter: '+F[c.f][0],F[c.f][1]],['Benkeplate: '+BP[c.
  return r.map(function(x){return '<div class="ln"><span>'+x[0]+'</span><span class="p">'+(x[1]?'+'+fmt(x[1])+' kr':'Inkludert')+'</span></div>'}).join('')+'<div class="ln"><b>Sum tilvalg</b><b class="p">'+fmt(price(c))+' kr</b></div>'}
 /* ---------- kjøper ---------- */
 function elev(c){
- var fc={H:'var(--card)',E:'var(--sand)',G:'var(--ok)'}[c.f],bc={L:'var(--line)',K:'var(--fg)',S:'var(--muted)'}[c.b];
+ var fc={H:'var(--flate-kort)',E:'var(--ramme)',G:'var(--status-ok-fg)'}[c.f],bc={L:'var(--linje)',K:'var(--tekst)',S:'var(--tekst-dempet)'}[c.b];
  var s='<svg viewBox="0 0 300 150" role="img" aria-label="Skisse av kjøkkenet med valgte fronter og benkeplate">';
- s+='<rect x="0" y="0" width="300" height="150" rx="8" fill="var(--soft)"/>';
- for(var i=0;i<4;i++)s+='<rect x="'+(14+i*50)+'" y="14" width="46" height="44" rx="2" fill="'+fc+'" stroke="var(--fg)" stroke-opacity=".45"/>';
- if(c.l)s+='<rect x="14" y="60" width="196" height="4" rx="2" fill="var(--warn-soft)" stroke="var(--warn)" stroke-opacity=".5"/>';
- s+='<rect x="10" y="86" width="204" height="7" rx="1" fill="'+bc+'" stroke="var(--fg)" stroke-opacity=".45"/>';
- for(i=0;i<4;i++){var x=14+i*50;if(c.s&&i===1){for(var j=0;j<3;j++)s+='<rect x="'+x+'" y="'+(95+j*13)+'" width="46" height="12" rx="2" fill="'+fc+'" stroke="var(--fg)" stroke-opacity=".45"/>'}else s+='<rect x="'+x+'" y="95" width="46" height="38" rx="2" fill="'+fc+'" stroke="var(--fg)" stroke-opacity=".45"/>'}
- s+='<rect x="168" y="89" width="38" height="3" rx="1" fill="var(--fg)" opacity="'+(c.i?.9:.35)+'"/>';
- if(c.k)s+='<rect x="226" y="14" width="60" height="119" rx="2" fill="'+fc+'" stroke="var(--fg)" stroke-opacity=".45"/><rect x="226" y="62" width="60" height="1" fill="var(--fg)" opacity=".45"/>';
- else s+='<rect x="230" y="30" width="54" height="103" rx="6" fill="var(--line)" stroke="var(--fg)" stroke-opacity=".3"/><text x="257" y="86" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="Inter,Arial,sans-serif">Kjøl</text>';
+ s+='<rect x="0" y="0" width="300" height="150" rx="8" fill="var(--flate-senket)"/>';
+ for(var i=0;i<4;i++)s+='<rect x="'+(14+i*50)+'" y="14" width="46" height="44" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>';
+ if(c.l)s+='<rect x="14" y="60" width="196" height="4" rx="2" fill="var(--status-haster-bg)" stroke="var(--status-haster-fg)" stroke-opacity=".5"/>';
+ s+='<rect x="10" y="86" width="204" height="7" rx="1" fill="'+bc+'" stroke="var(--tekst)" stroke-opacity=".45"/>';
+ for(i=0;i<4;i++){var x=14+i*50;if(c.s&&i===1){for(var j=0;j<3;j++)s+='<rect x="'+x+'" y="'+(95+j*13)+'" width="46" height="12" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>'}else s+='<rect x="'+x+'" y="95" width="46" height="38" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>'}
+ s+='<rect x="168" y="89" width="38" height="3" rx="1" fill="var(--tekst)" opacity="'+(c.i?.9:.35)+'"/>';
+ if(c.k)s+='<rect x="226" y="14" width="60" height="119" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/><rect x="226" y="62" width="60" height="1" fill="var(--tekst)" opacity=".45"/>';
+ else s+='<rect x="230" y="30" width="54" height="103" rx="6" fill="var(--linje)" stroke="var(--tekst)" stroke-opacity=".3"/><text x="257" y="86" text-anchor="middle" font-size="10" fill="var(--tekst-dempet)" font-family="Inter,Arial,sans-serif">Kjøl</text>';
  return s+'</svg>'}
 function opt(group,key,label,pr,on,chk,dis){return '<button type="button" class="opt'+(chk?' chk':'')+'" role="'+(chk?'checkbox':'radio')+'" aria-checked="'+on+'" data-g="'+group+'" data-k="'+key+'"'+(dis?' disabled':'')+'><span class="mk"></span><span>'+label+'</span><span class="pr">'+(pr?'+'+fmt(pr)+' kr':'Inkludert')+'</span></button>'}
 function vKjop(){

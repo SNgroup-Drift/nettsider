@@ -5,15 +5,11 @@
    Skjermbilder.velger(tabs) bytter mellom [data-enhet]-rammer (PC · iPad · Telefon), og Skjermbilder.guide(…)
    kobler «Prøv dette»-stegene til bilder og til loggen «Samtidig i Hengsel». Ingen inline-skript (CSP). */
 window.Skjermbilder=(function(){
-  /*MORK*/var MORK=["crm-bestilling","crm-etterkalkyle","crm-ipad-belastninger","crm-ipad-innstillinger","crm-ipad-kontrollmal","crm-ipad-leder","crm-ipad-min-dag","crm-mal-skisser","crm-meny-apen","crm-min-dag","crm-moduler","crm-montasje","crm-ordre-kontrollmal","crm-resultater","crm-saker","crm-salgstavla","crm-tilbud","crm-tilbud-kunde","crm-tlf-innstillinger","crm-tlf-kontrollmal","crm-tlf-kundekort","crm-tlf-leder","crm-tlf-min-dag","crm-tlf-ordre","d1-lag-pdf-og-send","d10-sendt-til-kunden","d2b-signert","d3-send-ordrebekreftelse","d4-lag-tilvalgsliste","d5-lag-monteringsrapport","d6-lag-punktrapport","d7-lag-leveringspakke-fdv","d8-skriv-ut-plan","d9-lag-faktura","foresporsler","mottak","ruten","ute-avvik","ute-ferdig","ute-i-dag","ute-ipad-bildeverktoy","ute-jobb-under","ute-ks","ute-ks-kamera","ute-laser","ute-punkter","ute-punktkort","ute-typeskilt"];/*MORK-slutt*/
-  /* Lys eller mørk utgave (K-177): mørk når siden følger systemet i mørk modus (eller data-theme="dark"), og skjermen følger temaet (MORK:
-     CRM og Hengsel Ute). Kundeportal, PDF og e-post er alltid lyse. 1× og 2× som srcset. Lages av scripts/fiktive-skjermer.mjs. */
-  var mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
-  function mork(){var t=document.documentElement.getAttribute('data-theme');return t==='dark'||(t!=='light'&&!!mq&&mq.matches)}
+  /* Bare lys utgave. 1× og 2× som srcset. Lages av scripts/fiktive-skjermer.mjs. */
   var SKJERMMAL=/*SKJERMMAL*/{}/*SKJERMMAL-slutt*/;
   function sett(img,navn){
     var m=SKJERMMAL[navn];if(m){img.width=m[0];img.height=m[1]}
-    var b='/skjermbilder/'+navn+(mork()&&MORK.indexOf(navn)>-1?'-mork':'');
+    var b='/skjermbilder/'+navn;
     img.srcset=b+'@1x.webp 1x, '+b+'.webp 2x';img.src=b+'.webp';
   }
   function lag(frame){
@@ -36,7 +32,6 @@ window.Skjermbilder=(function(){
       skjerm.scrollTop=0;
       if(typeof v.endret==='function')v.endret(n);
     }
-    if(mq&&mq.addEventListener)mq.addEventListener('change',function(){vis(i)});
     vis(0);return v;
   }
   function alle(root){var m={};[].forEach.call((root||document).querySelectorAll('[data-bilder]'),function(f,k){m[f.id||('f'+k)]=lag(f)});return m}

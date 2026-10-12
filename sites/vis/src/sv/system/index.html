@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="sv" data-theme="light">
+<html lang="sv">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -8,11 +8,12 @@
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
-<meta name="theme-color" content="#FBF9F6">
+<meta name="theme-color" content="%TEMAFARGE%">
 <title>Systemkartan · Visningsrommet</title>
-<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hengsel-tokens.css">
+<link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 32px;display:grid;gap:16px}
@@ -20,36 +21,36 @@
 .lay{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
 .map{position:relative;padding:24px;min-height:560px;min-width:0}
 .map>svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.map>svg path{fill:none;stroke:var(--line);stroke-width:1.5;transition:stroke var(--dur) var(--ease)}
-.map>svg path.hot{stroke:var(--accent)}
+.map>svg path{fill:none;stroke:var(--linje);stroke-width:1.5;transition:stroke var(--dur) var(--ease)}
+.map>svg path.hot{stroke:var(--aksent)}
 .cols{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1fr);column-gap:40px;row-gap:16px;align-items:center;min-height:510px}
 .col{display:grid;gap:10px;align-content:center;min-width:0}
 .col h3{margin:0 0 2px}
-.n{position:relative;z-index:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r-field);padding:10px 12px;text-align:left;cursor:pointer;display:grid;gap:3px;font:400 14px/1.4 var(--sans);color:var(--fg);min-height:44px;transition:border-color var(--dur) var(--ease)}
-.n:hover{border-color:var(--sand)}
-.n.on,.n.on:hover{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
-.n:focus-visible{border-radius:var(--r-field);box-shadow:var(--focus)}
+.n{position:relative;z-index:1;background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-lite);padding:10px 12px;text-align:left;cursor:pointer;display:grid;gap:3px;font:400 14px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--tekst);min-height:44px;transition:border-color var(--dur) var(--ease)}
+.n:hover{border-color:var(--ramme)}
+.n.on,.n.on:hover{border-color:var(--aksent);box-shadow:0 0 0 2px var(--flate-valgt)}
+.n:focus-visible{border-radius:var(--radius-kort-lite);box-shadow:var(--focus)}
 .n b{font-weight:600;font-size:15px}
-.n>span{font-size:12px;color:var(--muted)}
+.n>span{font-size:12px;color:var(--tekst-dempet)}
 .n .pill{justify-self:start;margin-top:2px;font-size:12px}
-.core .n{background:var(--soft);border-color:var(--sand);padding:16px}
-.core .n.on{border-color:var(--accent)}
-.core .n b{font:400 1.45rem/1.2 var(--serif);letter-spacing:-.015em}
+.core .n{background:var(--flate-senket);border-color:var(--ramme);padding:16px}
+.core .n.on{border-color:var(--aksent)}
+.core .n b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
 .core .n .hlogo{font-size:28px;color:var(--merke-ord);padding:.3em 0 4px;justify-self:start}
 .det{display:grid;gap:12px;position:sticky;top:12px;min-width:0}
 .det .pill{justify-self:start}
-.det h2{font:400 1.75rem/1.15 var(--serif);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.det h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .det h4{margin:4px 0 0}
 .det ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:15px;line-height:1.5}
-.det p{margin:0;font-size:15px;line-height:1.5;color:var(--muted)}
+.det p{margin:0;font-size:15px;line-height:1.5;color:var(--tekst-dempet)}
 @media (max-width:900px){.lay{grid-template-columns:1fr}.map{min-height:0}.cols{grid-template-columns:minmax(0,1fr);min-height:0}.map>svg{display:none}.det{position:static}}
 @media (max-width:640px){.wrap{padding-inline:16px}.map{padding:16px}}
 .topbar .mid{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.lang{display:flex;align-items:center;font:500 15px var(--sans);color:var(--sand)}
-.lang a{color:var(--muted);text-decoration:none;padding:0 8px;min-height:44px;display:inline-flex;align-items:center}
-.lang a:hover{color:var(--fg)}
-.lang a[aria-current]{color:var(--fg);font-weight:600}
-.lang a:focus-visible{border-radius:var(--r-sm)}
+.lang{display:flex;align-items:center;font:500 15px var(--skrift-familie-hengsel-tekst);color:var(--ramme)}
+.lang a{color:var(--tekst-dempet);text-decoration:none;padding:0 8px;min-height:44px;display:inline-flex;align-items:center}
+.lang a:hover{color:var(--tekst)}
+.lang a[aria-current]{color:var(--tekst);font-weight:600}
+.lang a:focus-visible{border-radius:var(--radius-kort-lite)}
 @media (max-width:640px){.topbar .mid{order:3;width:100%;justify-content:space-between}}
 </style>
 </head>

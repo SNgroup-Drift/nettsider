@@ -1,4 +1,4 @@
-import type { Avsnitt } from "@sngroup/design/types";
+import type { Avsnitt } from "./typer";
 
 /**
  * Personvern for hengsel.no. Dagens tekst fra hengsel.no (docs/kilde/hengsel.no/personvern.raw.html) ordrett,
@@ -12,7 +12,7 @@ export const personvern = {
   etikett: "hengsel.no",
   tittel: "Personvern",
   ingress: "Slik behandler vi opplysningene dine når du besøker hengsel.no eller tar kontakt med oss.",
-  oppdatert: "Sist oppdatert 9. oktober 2026",
+  oppdatert: "Sist oppdatert 09.10.2026",
   behandlingsansvarlig: "ES-HOLDING AS",
   kontakt: "drift@sngroup.no",
   avsnitt: [

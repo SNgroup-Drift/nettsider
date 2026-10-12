@@ -3,6 +3,7 @@
  * Dagene regnes på norske kalenderdøgn. Samme kode kjører ved bygging (grunnverdi uten JavaScript) og i nettleseren (src/scripts/admin.ts),
  * så fargene er riktige også når siden er bygget for en stund siden.
  */
+import { norskDato } from "./dato";
 export type FristNiva = "rod" | "gul" | "gronn" | "ukjent";
 
 const iso = /^\d{4}-\d{2}-\d{2}$/;
@@ -36,6 +37,5 @@ export function tekstFor(dager: number | null): string {
 
 export function datoNorsk(dato: string | null | undefined): string {
   if (!dato || !iso.test(dato)) return "fyll inn";
-  const [y, m, d] = dato.split("-");
-  return `${d}.${m}.${y}`;
+  return norskDato(dato);
 }

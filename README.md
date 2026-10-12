@@ -10,6 +10,8 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | design.hengsel.no | `sites/design` | Designfasiten for Hengsel (K-182): merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer. Astro, generert fra Hengsel-designsystemets tokens (pinnet commit), åpen men noindex, egen Worker `design` (se `docs/hosting.md`) |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
+**Hengsel-sidene** (hengsel.no, vis., design., admin.) har én delt token-fil og bare lys modus; reglene står i [docs/design/hengsel-regler.md](docs/design/hengsel-regler.md).
+
 Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md).
 
 ## Oppsett
@@ -23,9 +25,11 @@ packages/design/        Felles designpakke
   src/components/         BaseLayout, SiteHeader, SiteFooter, Section, Card, ContactBlock,
                           CompanyRow, PrivacyPage, ComingSoon
                           Familiegrep: Toppfelt, Plantegningsstrek, Familiebaand, IkkeFunnet
+packages/hengsel-tokens/  Den delte Hengsel-fila (K-192): tokens.css og fonts.css genereres fra hengsel.tokens.json (ds/, pinnet commit, designsystem.pin.json);
+                          src/Hode.astro og grunn.css er rammen for hengsel.no og admin. Se docs/design/hengsel-regler.md
+packages/hengsel-dokumenter/  A4-dokumentene (data, markup, stil, visning) som hengsel.no og vis. deler
 sites/<navn>/           Ett Astro-prosjekt per nettsted
   src/content/            Tekst og selskapsopplysninger (TODO der tekst mangler)
-  src/styles/tokens.css   Nettstedets farger som familiens semantiske variabler (hengsel.no), og skriften på én linje
   src/pages/              Sidene
   public/_headers         Sikkerhetshoder (Cloudflare Workers, statiske filer)
   public/_redirects       Stibaserte omdirigeringer (www → apex gjøres i Cloudflare, se docs/hosting.md)
@@ -37,9 +41,10 @@ scripts/
   skjermbilder-apptest.mjs  Skjermbilder og sjekker av hengsel.no/apptest mot wrangler dev (passordet)
   apptest-versjon.mjs     Oppdaterer versjon, APK, dato og «Hva er nytt» på /apptest fra EAS og byggnotatene (kjøres av .github/workflows/apptest-versjon.yml; testet av apptest-versjon.test.mjs)
   skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene)
-  hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til sites/design/public/ds (K-182)
+  hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til packages/hengsel-tokens/ds og genererer den delte token-fila (K-182, K-192)
+  lag-hengsel-tokens.mjs  Genererer packages/hengsel-tokens/tokens.css og fonts.css fra hengsel.tokens.json (--sjekk)
+  hengsel-regler.mjs      Skanner Hengsel-sidene for fargeverdier og mørk modus; hengsel-regler.test.mjs er testen (K-192)
   design-fasit.test.mjs   npm test: design.hengsel.no og tokens er like (pin, tokens.css/ts, roller, status, skrift, logoer, komponenter, ingen ekte navn eller gammel logo)
-  tokens-avvik.mjs        Verdier i repoet mot designsystemet (mørk bakgrunn, merkevarefargene); --sjekk brukes av tokens-avvik.test.mjs
   csp-hasher.mjs          Legger hashen for inline-CSS inn i CSP-en i dist/_headers
   statisk-server.mjs      Liten server som løser stier og 404 som Cloudflare Workers
 ```
@@ -54,7 +59,7 @@ npm run build          # bygger alle nettstedene til sites/*/dist
 npm test               # sjekker interne lenker (etter build)
 npm run skjermbilder   # skjermbilder til docs/skjermbilder + nettlesersjekker (krever Chromium)
 npm run dev:sngroup    # utviklingsserver (også dev:hengsel, dev:byggem og dev:design)
-npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til sites/design (pinnet)
+npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til packages/hengsel-tokens (pinnet)
 npm run design:skjermbilder   # skjermbilder og axe for design.hengsel.no (krever Chromium)
 ```
 

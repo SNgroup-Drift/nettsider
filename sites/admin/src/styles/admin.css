@@ -1,41 +1,29 @@
-/* admin.hengsel.no (K-184): Hengsel-profilen (profil.css) + oppsettet for verktøysiden. Bare semantiske tokens. */
+/* admin.hengsel.no (K-184, K-192): oppsettet for verktøysiden. Bare variablene fra @sngroup/hengsel-tokens (tokens.css), bare lys modus. */
 html:root {
-  --gul: #5c4300;
-  --gul-myk: #f6e7b8;
-  --rod: var(--feil);
-  --rod-myk: var(--feil-myk);
+  --gutter: clamp(16px, 4vw, 40px);
+  --t-h1: clamp(2rem, 3.6vw, 3rem);
+  --t-h2: 1.75rem;
 }
-@media (prefers-color-scheme: dark) {
-  html:root:not([data-theme="light"]) { --gul: #ecc86a; --gul-myk: #3a2f12; }
-}
-html:root[data-theme="dark"] { --gul: #ecc86a; --gul-myk: #3a2f12; }
 
-body { background: var(--bakgrunn); color: var(--tekst); font-size: 16px; }
-.skip { position: absolute; left: -999px; top: 8px; background: var(--aksent); color: var(--pa-aksent); padding: 8px 14px; border-radius: var(--radius-liten); z-index: 10; }
+body { background: var(--flate-side); color: var(--tekst); font-size: 16px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--aksent); color: var(--paa-aksent); padding: 8px 14px; border-radius: var(--radius-kort-lite); z-index: 10; }
 .skip:focus { left: 8px; }
-code { font-size: 0.9em; background: var(--flate-myk); padding: 1px 6px; border-radius: 4px; }
-a { color: var(--aksent); text-underline-offset: 3px; }
+code { font-size: 0.9em; background: var(--flate-senket); padding: 1px 6px; border-radius: 4px; }
+a { color: var(--aksent-tekst); text-underline-offset: 3px; }
 [hidden] { display: none !important; }
 
 /* Topplinje */
 .topp {
   position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;
-  padding: 12px var(--gutter); background: var(--bakgrunn); border-bottom: 1px solid var(--linje);
+  padding: 12px var(--gutter); background: var(--flate-side); border-bottom: 1px solid var(--linje);
 }
-.merke { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tekst); font-family: var(--font-overskrift); font-size: 1.25rem; }
-.merke .mork { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .merke .lys { display: none; }
-  :root:not([data-theme="light"]) .merke .mork { display: inline; }
-}
-:root[data-theme="dark"] .merke .lys { display: none; }
-:root[data-theme="dark"] .merke .mork { display: inline; }
+.merke { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tekst); font-family: var(--skrift-familie-hengsel-overskrift); font-size: 1.25rem; }
 
 .sok { flex: 1 1 280px; max-width: 560px; }
 .sok label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .sok input {
-  width: 100%; min-height: 44px; padding: 8px 14px; border-radius: var(--radius-felt); border: 1px solid var(--linje);
-  background: var(--kort); color: var(--tekst); font: inherit;
+  width: 100%; min-height: 44px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--linje);
+  background: var(--flate-kort); color: var(--tekst); font: inherit;
 }
 .sok input::placeholder { color: var(--tekst-dempet); opacity: 1; }
 .sok input:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
@@ -51,10 +39,10 @@ a { color: var(--aksent); text-underline-offset: 3px; }
 .meny .etikett:first-child { margin-top: 0; }
 .meny ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 6px; }
 @media (min-width: 960px) { .meny ul { flex-direction: column; flex-wrap: nowrap; gap: 2px; } }
-.meny a { display: block; padding: 8px 12px; min-height: 44px; border-radius: var(--radius-liten); text-decoration: none; color: var(--tekst); line-height: 1.5; }
+.meny a { display: block; padding: 8px 12px; min-height: 44px; border-radius: var(--radius-kort-lite); text-decoration: none; color: var(--tekst); line-height: 1.5; }
 @media (min-width: 960px) { .meny a { min-height: 36px; padding: 5px 10px; } }
-.meny a:hover { background: var(--flate); }
-.meny a[aria-current="page"] { background: var(--flate); font-weight: 600; }
+.meny a:hover { background: var(--flate-valgt); }
+.meny a[aria-current="page"] { background: var(--flate-valgt); font-weight: 600; }
 .meny .under a { padding-left: 24px; color: var(--tekst-dempet); }
 @media (max-width: 959px) { .meny .under a { padding-left: 12px; border: 1px solid var(--linje); } }
 .eksempel { color: var(--tekst-dempet); font-size: 0.85em; }
@@ -67,29 +55,29 @@ main { padding: 28px var(--gutter) 96px; min-width: 0; }
 .modul { margin-top: 56px; scroll-margin-top: 90px; }
 .modul h2 { font-size: var(--t-h2); font-weight: 400; margin-bottom: 14px; }
 .gruppe { margin-top: 28px; }
-.gruppe h3 { font-size: 1.15rem; font-family: var(--font-tekst); font-weight: 600; letter-spacing: 0; margin-bottom: 8px; }
+.gruppe h3 { font-size: 1.15rem; font-family: var(--skrift-familie-hengsel-tekst); font-weight: 600; letter-spacing: 0; margin-bottom: 8px; }
 .ingress { max-width: 72ch; color: var(--tekst-dempet); margin: 0 0 16px; }
 .merknad { display: block; color: var(--tekst-dempet); font-size: 0.9rem; margin-top: 2px; }
-.banner { background: var(--gul-myk); color: var(--gul); border-radius: var(--radius-felt); padding: 10px 14px; max-width: 72ch; margin: 0 0 14px; }
+.banner { background: var(--status-haster-bg); color: var(--status-haster-fg); border-radius: 10px; padding: 10px 14px; max-width: 72ch; margin: 0 0 14px; }
 
 /* Lenker */
 .lenkeliste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
-.lenkeliste li { background: var(--kort); border: 1px solid var(--linje); border-radius: var(--radius); padding: 12px 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; }
+.lenkeliste li { background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); padding: 12px 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; }
 .lenke { font-weight: 600; font-size: 1.02rem; overflow-wrap: anywhere; }
 .lenke.tom { color: var(--tekst); }
 .adresse { flex-basis: 100%; font-size: 0.85rem; color: var(--tekst-dempet); overflow-wrap: anywhere; }
 .lenkeliste .merknad { flex-basis: 100%; }
 
 /* Merker */
-.merke { font-family: var(--font-tekst); }
-span.merke, p.merke { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 2px 9px; border-radius: var(--radius-pille); background: var(--aksent-myk); color: var(--info-tekst); }
-.merke.kommer { background: var(--gul-myk); color: var(--gul); }
+.merke { font-family: var(--skrift-familie-hengsel-tekst); }
+span.merke, p.merke { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 2px 9px; border-radius: var(--radius-pille); background: var(--status-info-bg); color: var(--status-info-fg); }
+.merke.kommer { background: var(--status-haster-bg); color: var(--status-haster-fg); }
 .fyllinn { display: inline-block; font-size: 0.8rem; font-style: italic; padding: 0 8px; border-radius: var(--radius-pille); border: 1px dashed var(--linje); color: var(--tekst-dempet); }
 
 /* Kontoer */
 .kontoer { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
-.konto, .kort { background: var(--kort); border: 1px solid var(--linje); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
-.konto h3 { font-family: var(--font-tekst); font-size: 1.05rem; font-weight: 600; margin: 0 0 8px; letter-spacing: 0; }
+.konto, .kort { background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); padding: 14px 16px; min-width: 0; }
+.konto h3 { font-family: var(--skrift-familie-hengsel-tekst); font-size: 1.05rem; font-weight: 600; margin: 0 0 8px; letter-spacing: 0; }
 .konto dl, .kundekort-felt { margin: 0; display: grid; gap: 4px; }
 .konto dl > div, .kundekort-felt > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 8px; align-items: baseline; }
 dt { color: var(--tekst-dempet); font-size: 0.88rem; }
@@ -98,30 +86,30 @@ dd { margin: 0; overflow-wrap: anywhere; }
 
 /* Frister */
 .frister { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.frist { display: grid; grid-template-columns: 12.5rem minmax(0, 1fr); gap: 4px 16px; align-items: baseline; background: var(--kort); border: 1px solid var(--linje); border-left-width: 5px; border-radius: var(--radius); padding: 10px 14px; }
-.frist[data-niva="rod"] { border-left-color: var(--rod); }
-.frist[data-niva="gul"] { border-left-color: var(--gul); }
-.frist[data-niva="gronn"] { border-left-color: var(--ok); }
+.frist { display: grid; grid-template-columns: 12.5rem minmax(0, 1fr); gap: 4px 16px; align-items: baseline; background: var(--flate-kort); border: 1px solid var(--linje); border-left-width: 5px; border-radius: var(--radius-kort-stor); padding: 10px 14px; }
+.frist[data-niva="rod"] { border-left-color: var(--status-feil-fg); }
+.frist[data-niva="gul"] { border-left-color: var(--status-haster-fg); }
+.frist[data-niva="gronn"] { border-left-color: var(--status-ok-fg); }
 .frist[data-niva="ukjent"] { border-left-color: var(--linje); }
 .frist-navn { font-weight: 600; overflow-wrap: anywhere; }
 .frist-meta, .frist .merknad { grid-column: 2; color: var(--tekst-dempet); font-size: 0.9rem; }
 .frist .merknad { margin: 0; }
 @media (max-width: 640px) { .frist { grid-template-columns: minmax(0, 1fr); } .frist-meta, .frist .merknad { grid-column: 1; } }
-.status { display: inline-flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; font-size: 0.85rem; padding: 2px 10px; border-radius: var(--radius-pille); background: var(--flate-myk); color: var(--tekst-dempet); width: fit-content; }
+.status { display: inline-flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; font-size: 0.85rem; padding: 2px 10px; border-radius: var(--radius-pille); background: var(--status-noytral-bg); color: var(--status-noytral-fg); width: fit-content; }
 .status-navn { font-weight: 700; }
-.status.rod { background: var(--rod-myk); color: var(--rod); }
-.status.gul { background: var(--gul-myk); color: var(--gul); }
-.status.gronn { background: var(--ok-myk); color: var(--ok); }
+.status.rod { background: var(--status-feil-bg); color: var(--status-feil-fg); }
+.status.gul { background: var(--status-haster-bg); color: var(--status-haster-fg); }
+.status.gronn { background: var(--status-ok-bg); color: var(--status-ok-fg); }
 
 /* Kunder */
 .kundekort { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
 .kundekort .kort h2 { font-size: 1.45rem; margin-bottom: 6px; }
 .kundekort .kort .merknad { margin-top: 4px; }
-.eksempel-merke { background: var(--gul-myk) !important; color: var(--gul) !important; }
+.eksempel-merke { background: var(--status-haster-bg) !important; color: var(--status-haster-fg) !important; }
 .moduler { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); }
-.moduler li { background: var(--kort); border: 1px solid var(--linje); border-radius: var(--radius-liten); padding: 8px 12px; }
+.moduler li { background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-lite); padding: 8px 12px; }
 .moduler .av { color: var(--tekst-dempet); }
-.moduler .av .merke { background: var(--flate-myk); color: var(--tekst-dempet); }
+.moduler .av .merke { background: var(--status-noytral-bg); color: var(--status-noytral-fg); }
 .enkel { margin: 0; padding-left: 1.2em; }
 .enkel li { margin: 4px 0; }
 

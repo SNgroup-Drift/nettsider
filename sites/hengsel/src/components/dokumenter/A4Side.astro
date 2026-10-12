@@ -1,15 +1,15 @@
 ---
 /**
  * Én A4-side (fasit: A4Side.dc.html), stående eller liggende. Markeringen lages av den felles gjengiveren
- * (packages/design/src/dokumenter/render.js), som Visningsrommet også bruker, så sidene er like begge steder.
+ * (packages/hengsel-dokumenter/src/render.js), som Visningsrommet også bruker, så sidene er like begge steder.
  *
  * Siden skalerer med bredden den får (CSS container-enheter, se a4.css): sett bredden på omslaget eller i --a4-maks. Ingen skript.
  * Kolonnemaler og bildehøyder blir klasser; reglene lages av a4DynamiskCss() (Dokumentvisning legger dem i én <style>).
  * Merket øverst er «Din logo | Butikknavn Hamar», og Hengsel-logoen står i bunnlinjen til høyre. Papiret er alltid lyst.
  */
-import "@sngroup/design/dokumenter/a4.css";
-import type { DokSide } from "@sngroup/design/dokumenter/data";
-import { renderA4Side } from "@sngroup/design/dokumenter/render";
+import "@sngroup/hengsel-dokumenter/a4.css";
+import type { DokSide } from "@sngroup/hengsel-dokumenter/data";
+import { renderA4Side } from "@sngroup/hengsel-dokumenter/render";
 
 interface Props {
   side: DokSide;

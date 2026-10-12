@@ -59,7 +59,7 @@ Kilde: [docs/multi-tenant-kartlegging.md](https://github.com/SNgroup-Drift/innla
 
 Prod har Point in Time Recovery. Demo-databasen prøves hver søndag kl. 04 (pg_dump til en midlertidig Postgres, restore og radtelling).
 
-1. Prod: Supabase › Database › Backups › Point in Time. Velg tidspunkt (UTC) like før feilen. Gjenopprettingspunkt før K-173-utrullingen: 2026-10-12 06:00:41 UTC.
+1. Prod: Supabase › Database › Backups › Point in Time. Velg tidspunkt (UTC) like før feilen. Gjenopprettingspunkt før K-173-utrullingen: 12.10.2026 06:00:41 UTC.
 2. Vurder å gjenopprette til et **nytt** prosjekt og hente ut det som mangler, i stedet for å overskrive prod.
 3. Kontroller etterpå med `scripts/gjenoppretting/verifiser-restore.sh` (struktur og regler) og tell rader i nøkkeltabellene.
 4. Ukentlig prøve: Actions › Gjenoppretting (ukentlig). Rød prøve betyr at demo-sikkerhetskopien ikke lar seg gjenopprette; se oppsummeringen i jobben.

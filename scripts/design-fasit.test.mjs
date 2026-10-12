@@ -1,7 +1,7 @@
 /**
  * K-182: design.hengsel.no genereres fra Hengsel-designsystemets tokens, og siden og tokens er like.
  * Krever `npm run build` først (leser sites/design/dist). Sjekker:
- *  - pinnet commit: hver fil i public/ds har sha256 som i designsystem.pin.json, og ingen filer mangler eller er lagt til
+ *  - pinnet commit: hver fil i packages/hengsel-tokens/ds har sha256 som i designsystem.pin.json (den ene pinnen for alle Hengsel-sidene), og ingen filer mangler eller er lagt til
  *  - tokens.css (generert i designsystemet) har samme verdier som hengsel.tokens.json i lys og mørk, og tokens.ts samme roller
  *  - den bygde siden viser hver rolle, hver statustone og hver skriftstørrelse fra JSON med riktig verdi, alle 32 logoene, alle komponentene og alle nedlastingene
  *  - alle kontrastpar på siden er godkjent
@@ -17,11 +17,12 @@ import { FORBUDT } from "./lib/design.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const side = join(rot, "sites", "design");
-const ds = join(side, "public", "ds");
+const pakke = join(rot, "packages", "hengsel-tokens");
+const ds = join(pakke, "ds");
 const dist = join(side, "dist");
 const les = (...s) => readFileSync(join(...s), "utf8");
 const json = JSON.parse(les(ds, "tokens", "hengsel.tokens.json"));
-const pin = JSON.parse(les(side, "designsystem.pin.json"));
+const pin = JSON.parse(les(pakke, "designsystem.pin.json"));
 const uten$ = (o) => Object.entries(o).filter(([k]) => !k.startsWith("$"));
 const alle = (dir, pre = "") => readdirSync(dir).flatMap((e) => (statSync(join(dir, e)).isDirectory() ? alle(join(dir, e), `${pre}${e}/`) : [`${pre}${e}`]));
 const bygd = () => {
@@ -31,7 +32,7 @@ const html = (navn) => { bygd(); return les(dist, `${navn}.html`); };
 const tekst = (h) => h.replace(/<style[\s\S]*?<\/style>/g, "").replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\s+/g, " ");
 const hex = (v) => v.toUpperCase();
 
-test("pinnet commit: filene i public/ds er uendret", () => {
+test("pinnet commit: filene i packages/hengsel-tokens/ds er uendret", () => {
   assert.match(pin.commit, /^[0-9a-f]{40}$/);
   const filer = alle(ds);
   assert.deepEqual(filer.sort(), Object.keys(pin.filer).sort(), "filsettet avviker fra pin-fila (kjør scripts/hent-designsystem.mjs)");
@@ -87,7 +88,7 @@ test("/farger viser hver rolle, statustone og palettfarge med verdiene fra JSON"
   }
   for (const [navn, farge] of uten$(json.palett)) assert.ok(t.includes(navn) && t.includes(hex(farge)), `palettfarge ${navn}`);
   // CSS-klassene har verdiene fra JSON
-  for (const [navn, v] of uten$(json.farge)) assert.ok(h.includes(`.f-${navn}-lys{background:${v.lys}}`) && h.includes(`.f-${navn}-mork{background:${v.mork ?? v.lys}}`), `CSS for ${navn}`);
+  for (const [navn, v] of uten$(json.farge)) assert.ok(h.includes(`.f-${navn}-lys{background:var(--${navn})}`) && h.includes(`.f-${navn}-mork{background:var(--mork-${navn})}`), `CSS for ${navn}`);
   assert.ok(!/✗/.test(t), "et kontrastpar er under kravet (✗)");
   assert.ok(t.includes("minst 3:1 mot mørk flate") && t.includes("ikke til liten brødtekst i mørk modus"), "regelen for kundens aksent mangler");
   for (const [navn] of uten$(json.status)) assert.ok(uten$(json.status).length === 7 && navn, "sju statustoner");
@@ -116,7 +117,7 @@ test("/komponenter har alle komponentene i lys og mørk med brukes til og ikke t
   for (const id of ["knapper", "piller", "kort", "varsel", "faner", "tabell", "skjema", "tom-tilstand", "sheet-dialog"]) {
     const m = new RegExp(`data-komponent="${id}"[\\s\\S]*?</section>`).exec(h);
     assert.ok(m, `komponent ${id} mangler`);
-    assert.ok(m[0].includes("tema-lys") && m[0].includes("tema-mork") && m[0].includes("Brukes til") && m[0].includes("Brukes ikke til"), `${id}: lys, mørk og bruk mangler`);
+    assert.ok(m[0].includes("prove-lys") && m[0].includes("prove-mork") && m[0].includes("Brukes til") && m[0].includes("Brukes ikke til"), `${id}: lys, mørk og bruk mangler`);
   }
 });
 

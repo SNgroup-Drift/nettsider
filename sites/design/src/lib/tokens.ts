@@ -1,10 +1,10 @@
 /**
- * Leser Hengsel-designsystemets tokens (public/ds/tokens/hengsel.tokens.json, pinnet commit, se designsystem.pin.json) og gjør dem om til det siden viser:
+ * Leser Hengsel-designsystemets tokens (packages/hengsel-tokens/ds/tokens/hengsel.tokens.json, pinnet commit, se designsystem.pin.json) og gjør dem om til det siden viser:
  * roller, statustoner, kontrast, CSS-klasser for fargeflater og to temaflater (lys og mørk) som kan stå side om side uansett utgaven på siden.
  * Ingenting her er skrevet for hånd: endres JSON-en, endres siden. scripts/design-fasit.test.mjs sjekker at siden og tokens samsvarer.
  */
-import json from "../../public/ds/tokens/hengsel.tokens.json";
-import pin from "../../designsystem.pin.json";
+import json from "@sngroup/hengsel-tokens/tokens.json";
+import pin from "@sngroup/hengsel-tokens/pin.json";
 
 export type Modus = "lys" | "mork";
 export const MODI: Modus[] = ["lys", "mork"];
@@ -34,8 +34,9 @@ export function lesFarge(tekst: string): Rgba {
 const over = (f: Rgba, bunn: Rgba): Rgba => ({ r: f.r * f.a + bunn.r * (1 - f.a), g: f.g * f.a + bunn.g * (1 - f.a), b: f.b * f.a + bunn.b * (1 - f.a), a: 1 });
 const lin = (c: number) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
 const lum = (c: Rgba) => 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
-export function kontrast(forgrunn: string, bakgrunn: string, under = "#000000"): number {
-  const bak = over(lesFarge(bakgrunn), lesFarge(under));
+const SVART: Rgba = { r: 0, g: 0, b: 0, a: 1 };
+export function kontrast(forgrunn: string, bakgrunn: string, under?: string): number {
+  const bak = over(lesFarge(bakgrunn), under ? lesFarge(under) : SVART);
   const fg = over(lesFarge(forgrunn), bak);
   const [a, b] = [lum(fg), lum(bak)];
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
@@ -101,30 +102,31 @@ export function kundeAksentSjekk(aksent: string, paaAksent: string) {
   return { motLys, tekstPaaAksent, motMork: kontrast(aksent, mork), lysOk: motLys >= 4.5 || tekstPaaAksent >= 4.5, morkOk: kontrast(aksent, mork) >= 3 };
 }
 
-// ── CSS: klasser for fargeflater og to temaflater. Ingen style="" i HTML (CSP style-src 'self'), så alt ligger i ett <style> som hashes ved bygging. ──
+// ── CSS: klasser for fargeflater og prøveflater (lys og mørk side om side). Ingen style="" i HTML (CSP style-src 'self'), så alt ligger i ett <style> som hashes ved bygging. ──
 const id = (s: string) => s.replace(/[^a-z0-9]+/gi, "-");
 export const fargeKlasse = (navn: string, modus?: Modus) => `f-${id(navn)}${modus ? `-${modus}` : ""}`;
 export const toneKlasse = (navn: string, modus: Modus) => `t-${id(navn)}-${modus}`;
 export function lagFasitCss(): string {
   const ut: string[] = [];
-  for (const p of palett) ut.push(`.${fargeKlasse(p.navn)}{background:${p.hex}}`);
-  for (const r of roller) for (const m of MODI) ut.push(`.${fargeKlasse(r.navn, m)}{background:${r[m]}}`);
-  for (const s of status) for (const m of MODI) ut.push(`.${toneKlasse(s.navn, m)}{background:${s[m].bg};color:${s[m].fg};border-color:${s[m].kant}}.${toneKlasse(s.navn, m)} i{background:${s[m].fg}}`);
-  for (const s of status) ut.push(`.s-${id(s.navn)}{background:var(--status-${s.navn}-bg);color:var(--status-${s.navn}-fg);border-color:var(--status-${s.navn}-kant)}.s-${id(s.navn)} i{background:var(--status-${s.navn}-fg)}`);
-  // Temaflater: alle roller og statustoner for én utgave, så lys og mørk kan vises ved siden av hverandre
-  for (const m of MODI) {
-    const vars = [
-      ...roller.map((r) => `--${r.navn}:${r[m]}`),
-      ...status.flatMap((s) => [`--status-${s.navn}-fg:${s[m].fg}`, `--status-${s.navn}-bg:${s[m].bg}`, `--status-${s.navn}-kant:${s[m].kant}`]),
-      `--skygge-overlegg:${m === "lys" ? "0 1px 2px rgb(49 38 29 / 0.06), 0 8px 24px rgb(49 38 29 / 0.10)" : "0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4)"}`,
-      `color-scheme:${m === "lys" ? "light" : "dark"}`,
-    ];
-    ut.push(`.tema-${m}{${vars.join(";")}}`);
+  // Ingen fargeverdier her: alle klasser peker på variablene i den delte fila (@sngroup/hengsel-tokens/tokens.css). --mork-* er fargeprøver for appene og CRM-et.
+  for (const p of palett) ut.push(`.${fargeKlasse(p.navn)}{background:var(--${p.navn})}`);
+  for (const r of roller) ut.push(`.${fargeKlasse(r.navn, "lys")}{background:var(--${r.navn})}.${fargeKlasse(r.navn, "mork")}{background:var(--mork-${r.navn})}`);
+  for (const s of status) {
+    ut.push(`.${toneKlasse(s.navn, "lys")}{background:var(--status-${s.navn}-bg);color:var(--status-${s.navn}-fg);border-color:var(--status-${s.navn}-kant)}.${toneKlasse(s.navn, "lys")} i{background:var(--status-${s.navn}-fg)}`);
+    ut.push(`.${toneKlasse(s.navn, "mork")}{background:var(--mork-status-${s.navn}-bg);color:var(--mork-status-${s.navn}-fg);border-color:var(--mork-status-${s.navn}-kant)}.${toneKlasse(s.navn, "mork")} i{background:var(--mork-status-${s.navn}-fg)}`);
+    ut.push(`.s-${id(s.navn)}{background:var(--status-${s.navn}-bg);color:var(--status-${s.navn}-fg);border-color:var(--status-${s.navn}-kant)}.s-${id(s.navn)} i{background:var(--status-${s.navn}-fg)}`);
   }
+  // Prøveflater: den lyse er siden selv; den mørke setter rollene til --mork-*-verdiene, så de mørke tokenene vises ved siden av de lyse. Siden har ikke mørk modus.
+  const morkVars = [
+    ...roller.map((r) => `--${r.navn}:var(--mork-${r.navn})`),
+    ...status.flatMap((s) => ["fg", "bg", "kant"].map((d) => `--status-${s.navn}-${d}:var(--mork-status-${s.navn}-${d})`)),
+    "--skygge-overlegg:var(--mork-skygge-overlegg)",
+  ];
+  ut.push(`.prove-mork{${morkVars.join(";")}}`);
   for (const t of kundeEksempler) {
     const navn = t.id;
-    ut.push(`.f-kunde-${id(navn)}{background:${t.aksent}}`);
-    ut.push(`.kunde-${id(navn)}{--kunde-aksent:${t.aksent};--kunde-paa-aksent:${t.paaAksent};--kunde-tekst:'${t.skrift.tekst}',system-ui,sans-serif;--kunde-overskrift:'${t.skrift.overskrift}',Georgia,serif}`);
+    ut.push(`.f-kunde-${id(navn)}{background:var(--kunde-${navn}-aksent)}`);
+    ut.push(`.kunde-${id(navn)}{--kunde-aksent:var(--kunde-${navn}-aksent);--kunde-paa-aksent:var(--kunde-${navn}-paa-aksent);--kunde-tekst:'${t.skrift.tekst}',system-ui,sans-serif;--kunde-overskrift:'${t.skrift.overskrift}',Georgia,serif}`);
   }
   // Skrift: størrelsene i skalaen (PC-bredde) og familiene i kundetemaets frie liste
   for (const [navn, [px, lh]] of Object.entries(json.skrift.storrelse).filter(([k]) => !k.startsWith("$")) as [string, [number, number]][]) ut.push(`.skala-${id(navn)}{font-size:${px}px;line-height:${lh}px}`);

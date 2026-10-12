@@ -22,7 +22,6 @@ const n = STEG.length;
         <div class="ute-venstre">
           <div class="ute-hode">
             <picture>
-              <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-ute-aksent-mork.svg" />
               <img class="ute-logo" src="/logo/hengsel-ute-aksent-lys.svg" alt={HERO.logoAlt} width="490" height="108" fetchpriority="high" />
             </picture>
             <h1>{HERO.tittel}</h1>
@@ -41,7 +40,7 @@ const n = STEG.length;
           <div class="telefon" data-ute-paneler>
             {STEG.map((s, i) => (
               <div role="tabpanel" id={`ute-panel-${s.nokkel}`} aria-labelledby={`ute-fane-${s.nokkel}`} hidden={i !== 0} data-panel>
-                <Enhet type="iphone" src={`/img/app/${s.nokkel}-lys.webp`} srcDark={`/img/app/${s.nokkel}-mork.webp`} w={402} h={874} alt={s.alt} forst={i === 0} symboler={i === 0} />
+                <Enhet type="iphone" src={`/img/app/${s.nokkel}-lys.webp`} w={402} h={874} alt={s.alt} forst={i === 0} symboler={i === 0} />
               </div>
             ))}
           </div>
@@ -72,7 +71,7 @@ const n = STEG.length;
     <section class="sek">
       <div class="h-innhold nett">
         <div class="nett-bilde">
-          <Enhet type="iphone" src={UTEN_NETT.lys} srcDark={UTEN_NETT.mork} w={402} h={874} alt={UTEN_NETT.alt} symboler={false} />
+          <Enhet type="iphone" src={UTEN_NETT.lys} w={402} h={874} alt={UTEN_NETT.alt} symboler={false} />
         </div>
         <div class="nett-tekst">
           <span class="eyebrow">{UTEN_NETT.eyebrow}</span>
@@ -132,7 +131,7 @@ const n = STEG.length;
   .steg-knapp:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 0; }
   .steg-knapp[aria-selected="true"]:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--accent); }
   .nr {
-    width: 28px; height: 28px; border-radius: 999px; flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; margin-top: 1px;
+    width: 28px; height: 28px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; margin-top: 1px;
     background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box;
   }
   .steg-knapp[aria-selected="true"] .nr { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -143,7 +142,7 @@ const n = STEG.length;
   .ute-hoyre { display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0; }
   .telefon { width: 100%; max-width: 400px; }
   .bla { display: flex; gap: 8px; align-items: center; }
-  .rund { width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 18px; line-height: 1; cursor: pointer; padding: 0; }
+  .rund { width: 44px; height: 44px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 18px; line-height: 1; cursor: pointer; padding: 0; }
   .rund:hover:not(:disabled) { border-color: var(--ink); }
   .rund:disabled { opacity: 0.45; cursor: not-allowed; }
   .teller { font-size: 0.92rem; color: var(--muted); min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
