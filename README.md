@@ -7,6 +7,7 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | sngroup.no | `sites/sngroup` | Forsiden med plantegningen, virksomhetene, Hengsel, kontakt, `/personvern` (montørappen Hengsel) og `/design` |
 | hengsel.no | `sites/hengsel` | hengsel.no 2.0 (K-160): forside, /crm, /ute, /kundeportal, /slik-virker-det, /dokumenter, /integrasjoner, /priser-og-demo (skjema til /api/demo), personvern, /apptest og 404 |
 | byggem.no | `sites/byggem` | Forside, prosjekter, kontakt, personvern og 404 (K-87 del 5) |
+| design.hengsel.no | `sites/design` | Designfasiten for Hengsel (K-182): merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer. Astro, generert fra Hengsel-designsystemets tokens (pinnet commit), åpen men noindex, egen Worker `design` (se `docs/hosting.md`) |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
 Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md).
@@ -36,6 +37,9 @@ scripts/
   skjermbilder-apptest.mjs  Skjermbilder og sjekker av hengsel.no/apptest mot wrangler dev (passordet)
   apptest-versjon.mjs     Oppdaterer versjon, APK, dato og «Hva er nytt» på /apptest fra EAS og byggnotatene (kjøres av .github/workflows/apptest-versjon.yml; testet av apptest-versjon.test.mjs)
   skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene)
+  hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til sites/design/public/ds (K-182)
+  design-fasit.test.mjs   npm test: design.hengsel.no og tokens er like (pin, tokens.css/ts, roller, status, skrift, logoer, komponenter, ingen ekte navn eller gammel logo)
+  tokens-avvik.mjs        Verdier i repoet mot designsystemet (mørk bakgrunn, merkevarefargene); --sjekk brukes av tokens-avvik.test.mjs
   csp-hasher.mjs          Legger hashen for inline-CSS inn i CSP-en i dist/_headers
   statisk-server.mjs      Liten server som løser stier og 404 som Cloudflare Workers
 ```
@@ -49,7 +53,9 @@ npm install
 npm run build          # bygger alle nettstedene til sites/*/dist
 npm test               # sjekker interne lenker (etter build)
 npm run skjermbilder   # skjermbilder til docs/skjermbilder + nettlesersjekker (krever Chromium)
-npm run dev:sngroup    # utviklingsserver (også dev:hengsel og dev:byggem)
+npm run dev:sngroup    # utviklingsserver (også dev:hengsel, dev:byggem og dev:design)
+npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til sites/design (pinnet)
+npm run design:skjermbilder   # skjermbilder og axe for design.hengsel.no (krever Chromium)
 ```
 
 ## Legge til et nytt nettsted

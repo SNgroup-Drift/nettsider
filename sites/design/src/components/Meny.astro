@@ -1,0 +1,20 @@
+---
+/** Fast meny: Hengsel-merket (v3, aksent) til forsiden, sidene i fasiten og bryteren Auto / Lys / Mørk. Bryteren trenger skript; uten skript følger siden systemet. */
+import Logo from "./Logo.astro";
+import { MENY, type MenyNokkel } from "../content/nav";
+interface Props { aktiv?: MenyNokkel | ""; }
+const { aktiv = "" } = Astro.props;
+---
+<header class="meny">
+  <div class="wrap rad">
+    <a class="logo" href="/" aria-label="Hengsel designfasit, til forsiden"><Logo form="hengsel" hoyde={28} /></a>
+    <nav aria-label="Hovedmeny">
+      {MENY.map(([k, t, h]) => <a href={h} aria-current={k === aktiv ? "page" : undefined}>{t}</a>)}
+    </nav>
+    <div class="bryter" role="group" aria-label="Utgave">
+      <button type="button" data-valg="auto" aria-pressed="true">Auto</button>
+      <button type="button" data-valg="light" aria-pressed="false">Lys</button>
+      <button type="button" data-valg="dark" aria-pressed="false">Mørk</button>
+    </div>
+  </div>
+</header>

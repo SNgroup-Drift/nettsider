@@ -1,0 +1,14 @@
+// Cloudflare Worker for design.hengsel.no (K-182): statiske filer fra ./dist, ingen skript. Bygg med `npm run build -w sites/design` først. Se docs/hosting.md.
+// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/design/wrangler.jsonc`.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "design",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Ukjente sider får dist/404.html med status 404
+    "not_found_handling": "404-page",
+    // /merke serverer merke.html; /merke.html sendes til /merke
+    "html_handling": "auto-trailing-slash"
+  }
+}

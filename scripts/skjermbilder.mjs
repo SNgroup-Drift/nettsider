@@ -146,6 +146,7 @@ for (const side of [{ sti: "/apptest", fil: "apptest" }, { sti: "/apptest/passor
 // 2. 360 px uten vannrett rulling, og ingen konsollfeil, på alle sider
 for (const [navn, { base }] of Object.entries(servere)) {
   if (navn === "vis") continue; // Visningsrommet har egne sjekker på 390 og 1280 px: scripts/skjermbilder-vis.mjs
+  if (navn === "design") continue; // design.hengsel.no (K-182) har egne sjekker, med axe: scripts/skjermbilder-design.mjs
   const sider = navn === "sngroup" ? ["/", "/personvern", "/design", "/404"] : navn === "byggem" ? ["/", "/prosjekter", "/kontakt", "/personvern", "/404"] : navn === "hengsel" ? [...HENGSEL_SIDER.map((x) => x.sti), "/personvern", "/404", "/apptest", "/apptest/passord"] : ["/", "/personvern", "/404"];
   for (const sti of sider) {
     for (const modus of ["light", "dark"]) {

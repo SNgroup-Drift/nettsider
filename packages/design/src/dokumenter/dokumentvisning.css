@@ -51,7 +51,7 @@
 .dv-zoom:focus-visible { box-shadow: inset 0 0 0 3px var(--accent); }
 
 /* Lysboks: <dialog> over hele skjermen, alltid mørk */
-dialog.lys { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #1b1713; color: #f1e9de; }
+dialog.lys { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #1f1914; color: #f1e9de; }
 dialog.lys[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); }
 html:has(dialog.lys[open]) { overflow: hidden; }
 .lys-topp { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px clamp(12px, 3vw, 24px); }
@@ -63,7 +63,7 @@ html:has(dialog.lys[open]) { overflow: hidden; }
 .lys-rund.stor { width: 48px; height: 48px; font-size: 22px; }
 .lys-rund:hover:not(:disabled) { border-color: #f1e9de; }
 .lys-rund:disabled { opacity: 0.4; cursor: not-allowed; }
-dialog.lys :focus-visible { outline: none; box-shadow: 0 0 0 2px #1b1713, 0 0 0 4px #9ca9bd; }
+dialog.lys :focus-visible { outline: none; box-shadow: 0 0 0 2px #1f1914, 0 0 0 4px #9ca9bd; }
 .lys-scene { min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: clamp(8px, 2vw, 24px); padding: 0 clamp(8px, 2vw, 24px) 20px; }
 .lys-side { display: flex; overflow: auto; max-height: 100%; min-width: 0; }
 .lys-side > .a4 { flex: none; margin: auto; width: min(calc(100vw - 150px), calc((100dvh - 110px) * 794 / 1123)); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55); }

@@ -104,7 +104,7 @@ Samme navn som i dag. Lys:
 Mørk (både `prefers-color-scheme: dark` og `:root[data-theme="dark"]`):
 
 ```css
---bg:#1B1713; --card:#26201A; --soft:#2F2820; --fg:#F1E9DE; --muted:#C3B7A8; --line:#3B3229; --sand:#9A8E80;
+--bg:#1F1914; --card:#26201A; --soft:#2F2820; --fg:#F1E9DE; --muted:#C3B7A8; --line:#3B3229; --sand:#9A8E80;
 --accent:#9CA9BD; --accent-soft:#25303F; --dusty:#6E7C92;
 --ok:#8CC39B; --ok-soft:#1F2E23; --warn:#E2B468; --warn-soft:#33281A;
 ```
@@ -189,4 +189,4 @@ Hengsel CRM-logoen skal nå også inn i det simulerte innholdet: CRM-noden i Ord
 
 ## 9. Tilgjengelighet
 
-Kontrast minst 4,5:1 (muted `#5E564C` på Beige 3 = 6,4:1; mørk `#C3B7A8` på `#1B1713` = 9,8:1). Alle klikkflater minst 40 px (knapper 44). Synlig fokusring `--focus`. `prefers-reduced-motion` slår av animasjoner. Ingen inline-skript (CSP `script-src 'self'`).
+Kontrast minst 4,5:1 (muted `#5E564C` på Beige 3 = 6,4:1; mørk `#C3B7A8` på `#1F1914` = 8,8:1). Alle klikkflater minst 40 px (knapper 44). Synlig fokusring `--focus`. `prefers-reduced-motion` slår av animasjoner. Ingen inline-skript (CSP `script-src 'self'`).

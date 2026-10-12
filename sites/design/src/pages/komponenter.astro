@@ -1,0 +1,104 @@
+---
+/**
+ * Komponentene slik de er i CRM, kundeportal og Hengsel Ute i dag (docs/design/v4/crm/komponenter.md i innlandet-crm-sync): knapper, piller, kort uten fargekant, varsel, faner, tabell,
+ * skjema, tom tilstand og Sheet/Dialog. Hver vises i lys og mørk med verdiene fra tokens (de to temaflatene) og med «brukes til / brukes ikke til».
+ * Innholdet i demoene er oppdiktet.
+ */
+import Side from "../layouts/Side.astro";
+import Komponent from "../components/Komponent.astro";
+import { status } from "../lib/tokens";
+const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", venter: "Venter på svar", sannsynlig: "Sannsynlig", ok: "Godkjent", haster: "Haster", feil: "Feilet" };
+---
+<Side title="Komponenter – Hengsel designfasit" description="Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand og Sheet/Dialog i lys og mørk, med hva de brukes til og ikke til." aktiv="komponenter">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Komponenter · slik de er i dag</span>
+      <h1>Et lite sett med deler</h1>
+      <p class="lede">Designet er bygget av få deler som gjenbrukes i CRM, kundeportal og Hengsel Ute. Gjenbruk den som finnes i stedet for å lage en ny variant, og si fra hvis noe mangler. Ingen fargekant til venstre på kort. Statusfargene er de samme i hele appen. Detaljpanelet til høyre er fullskjerm på telefon, og dialog er et ark nedenfra på telefon. Innholdet i eksemplene er oppdiktet.</p>
+    </div>
+
+    <Komponent id="knapper" navn="Knapper" kode="Button" tekst="Primær, sekundær, tekst og fare. Pilleform, minst 40 px høy." bruk="Primær til den ene hovedhandlingen i visningen («Send», «Lagre»). Sekundær til alternativer («Forhåndsvis»). Tekst til lavt prioriterte handlinger. Fare til å slette eller avbryte noe som ikke kan angres." ikke="Flere primærknapper i samme visning. Fare til vanlige handlinger. Blå tekst på beige uten --aksent-tekst.">
+      <div class="flate-kort">
+        <div class="rad-flex"><span class="knapp primaer">Send tilbud</span><span class="knapp sekundaer">Forhåndsvis</span><span class="knapp tekst">Avbryt</span><span class="knapp fare">Slett</span></div>
+        <div class="rad-flex"><button type="button" class="knapp primaer av" disabled>Deaktivert</button><button type="button" class="knapp sekundaer av" disabled>Deaktivert</button></div>
+      </div>
+    </Komponent>
+
+    <Komponent id="piller" navn="Piller (status)" kode="Badge" tekst="Statuspillen har prikk og ord. Fargen følger tonen, og samme sett brukes i hele appen." bruk="Status på en sak, et tilbud eller en ordre («Sendt», «Venter på svar», «Haster»). Tellere i faner." ikke="Pynt uten betydning. Status med bare farge, uten ord. Egne farger utenfor de sju tonene.">
+      <div class="flate-kort tonerad">
+        {status.map((s) => <span class={`pille s-${s.navn}`}><i></i>{etikett[s.navn] ?? s.navn}</span>)}
+      </div>
+    </Komponent>
+
+    <Komponent id="kort" navn="Kort" kode="Card" tekst="Flaten for innhold: kortfarge, 1 px linje, radius 12. Ingen fargekant til venstre og ingen skygge." bruk="Å gruppere ett emne: en kunde, et tilbud, en ordre. Rader i lister bruker samme flate." ikke="Fargekant til venstre for å vise status (bruk pille). Skygge på sideinnhold: bare overlegg har skygge. Kort inni kort.">
+      <div class="flate-kort">
+        <div class="rad-flex"><h3>Kjøkken Lys blå</h3><span class="pille s-info"><i></i>Sendt</span></div>
+        <p class="dempet">T-7031 · 266 300 kr · gjelder til 20.10</p>
+        <div class="rad-flex"><span class="knapp sekundaer">Åpne</span></div>
+      </div>
+    </Komponent>
+
+    <Komponent id="varsel" navn="Varsel" kode="toast, bånd" tekst="Varsler er blå med lys tekst (mørk tekst på lys blå i mørk utgave). Feil er rød med lys tekst i begge utgaver." bruk="Kvittering («Lagret», «Sendt») og feil som brukeren må rette. Kort tekst med det som skjedde." ikke="Brune eller gule varselflater. Varsel som ikke kan lukkes eller som dekker handlingen brukeren holder på med.">
+      <div class="flate-kort">
+        <div class="varsel blaa">Tilbudet er sendt til Kari Nordmann.</div>
+        <div class="varsel rod">Kunne ikke sende. Sjekk e-postadressen.</div>
+      </div>
+    </Komponent>
+
+    <Komponent id="faner" navn="Faner" kode="Tabs" tekst="Aktiv fane er Warm Black med strek under, ikke blå. Tellere står i fanen der det trengs." bruk="Å bytte mellom visninger av samme kort eller liste («Oversikt», «Artikler 12», «Samtaler»)." ikke="Navigasjon mellom sider (bruk menyen). Blå aktiv fane. Mer enn ca. fem faner uten at de rulles.">
+      <div class="flate-kort">
+        <div class="faner" role="presentation">
+          <span class="fane valgt">Oversikt</span><span class="fane">Artikler <span class="teller">12</span></span><span class="fane">Samtaler</span><span class="fane">Filer</span>
+        </div>
+        <p class="dempet">Innholdet i valgt fane vises her.</p>
+      </div>
+    </Komponent>
+
+    <Komponent id="tabell" navn="Tabell" kode="Table" tekst="Skillelinjer i linjefarge og sebrarader i senket flate. På telefon blir radene til kort." bruk="Lister med flere kolonner som skal sammenlignes: tilbud, ordre, artikler." ikke="Layout. Én kolonne med lang tekst (bruk kort). Tall uten tabelltall og høyrejustering der de summeres.">
+      <div class="flate-kort">
+        <table class="mini-tabell">
+          <thead><tr><th>Tilbud</th><th>Kunde</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>T-7031</td><td>Kari Nordmann</td><td><span class="pille s-info"><i></i>Sendt</span></td></tr>
+            <tr><td>T-7032</td><td>Per Nordmann</td><td><span class="pille s-ok"><i></i>Godkjent</span></td></tr>
+            <tr><td>T-7033</td><td>Lise Nordmann</td><td><span class="pille s-haster"><i></i>Haster</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </Komponent>
+
+    <Komponent id="skjema" navn="Skjema" kode="Input, Select, Switch" tekst="Felt i senket flate med kant (radius 6), ledetekst over feltet og hjelpetekst under i svak tekst. Bryteren er blå når den er på." bruk="Å registrere og endre data: felt, valg, dato, bryter (også «Skjul innpris»)." ikke="Plassholder i stedet for ledetekst. Rød kant uten feilmelding i tekst. Hjelpetekst under 12 px.">
+      <div class="flate-kort">
+        <div class="felt"><label>Notat</label><div class="inn">Ønsker matt front.</div><span class="hjelp">Vises bare for interne brukere.</span></div>
+        <div class="felt"><label>Telefon</label><div class="inn plassholder">900 00 000</div></div>
+        <div class="bryter-ui"><span class="spor" role="img" aria-label="På"></span><span>Skjul innpris</span></div>
+      </div>
+    </Komponent>
+
+    <Komponent id="tom-tilstand" navn="Tom tilstand" kode="tom-komponent" tekst="Kort tekst og én handling. Ingen illustrasjon som forklarer det teksten allerede sier." bruk="Lister og visninger uten innhold ennå («Ingen samtaler ennå»)." ikke="Feilmeldinger (bruk varsel). Lang forklaring. Flere handlinger.">
+      <div class="flate-kort tom">
+        <h3>Ingen samtaler ennå</h3>
+        <p>Når du logger en samtale med kunden, vises den her.</p>
+        <span class="knapp primaer">Logg samtale</span>
+      </div>
+    </Komponent>
+
+    <Komponent id="sheet-dialog" navn="Sheet og dialog" kode="Sheet (høyre), Dialog" tekst="Sheet er detaljpanelet til høyre og er fullskjerm på telefon. Dialog er et ark nedenfra på telefon. Begge ligger over et overlegg, og bare overlegg har skygge." bruk="Sheet til å se og endre detaljer uten å forlate listen. Dialog til én kort oppgave eller bekreftelse («Logg samtale»)." ikke="Dialog i dialog. Lange skjema i dialog (bruk side eller sheet). Overlegg uten måte å lukke på.">
+      <div class="overlegg">
+        <div class="sheet-demo">
+          <div class="bak"></div>
+          <div class="sheet">
+            <h3>Kari Nordmann</h3>
+            <p class="dempet">Tilbud T-7031 · 266 300 kr</p>
+            <div class="rad-flex"><span class="knapp primaer">Vunnet</span><span class="knapp sekundaer">Lukk</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="dialog">
+        <h3>Logg samtale</h3>
+        <p class="dempet">Kari Nordmann · 8 min</p>
+        <div class="rad-flex"><span class="knapp sekundaer">Avbryt</span><span class="knapp primaer">Lagre</span></div>
+      </div>
+    </Komponent>
+  </div>
+</Side>

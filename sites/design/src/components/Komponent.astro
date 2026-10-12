@@ -1,0 +1,19 @@
+---
+/** En komponent vist i lys og mørk ved siden av hverandre, med «brukes til» og «brukes ikke til». Demoen i slot tegnes to ganger (én per utgave). */
+interface Props { id: string; navn: string; kode: string; tekst: string; bruk: string; ikke: string; }
+const { id, navn, kode, tekst, bruk, ikke } = Astro.props;
+---
+<section class="sek" id={id} data-komponent={id}>
+  <header>
+    <h2>{navn}</h2>
+    <p>{tekst} <span class="svak">I koden: <code>{kode}</code></span></p>
+  </header>
+  <div class="tema-par">
+    <div class="tema-lys"><span class="tema-navn">Lys</span><slot /></div>
+    <div class="tema-mork"><span class="tema-navn">Mørk</span><slot /></div>
+  </div>
+  <div class="bruk">
+    <div><b>Brukes til</b>{bruk}</div>
+    <div><b>Brukes ikke til</b>{ikke}</div>
+  </div>
+</section>

@@ -110,7 +110,7 @@ input, button { font: inherit; color: inherit; }
   --w-medium: 500;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --surface-app: #1b1713; --warn: #e2b468; --warn-soft: #33281a; }
+  :root { --surface-app: #1f1914; --warn: #e2b468; --warn-soft: #33281a; }
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }

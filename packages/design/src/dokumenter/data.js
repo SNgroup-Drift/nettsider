@@ -1,6 +1,6 @@
 /**
  * Dokumentene på hengsel.no/dokumenter og i Visningsrommet (sites/vis/dokumenter): ÉN datafil, to lesere. Endre et dokument her, ikke i sidene.
- * Ren data, ingen Astro- eller DOM-avhengighet. Typer ligger i data.d.ts. Fasit: docs/design/hengsel-no-2.0/dokumenter-data.js.
+ * Ren data, ingen Astro- eller DOM-avhengighet. Typer ligger i data.d.ts. Fasit: docs/arkiv/hengsel-no-2.0/dokumenter-data.js (arkivert i K-182; gjeldende fasit: docs/design/hengsel).
  *
  * Form: et dokument har sider; en side har enten en forside (forside), en todelt oppbygning (todelt) eller en liste blokker.
  * Blokkene er en union på `type` (se Blokk i data.d.ts). Hjelpefunksjonene under er rene funksjoner som bare lager vanlige objekter.

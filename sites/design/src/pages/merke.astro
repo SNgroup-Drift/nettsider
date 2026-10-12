@@ -1,0 +1,163 @@
+---
+/** Merket v3: alle former og utgaver, luft og minste størrelse, app-ikoner, plasseringer og kundens logo. Filene er designsystemets ferdige SVG-er. */
+import Side from "../layouts/Side.astro";
+import Logo, { fil, type Form } from "../components/Logo.astro";
+import { fargeKlasse } from "../lib/tokens";
+import { logoMaal } from "../lib/logo";
+const m = (f: Form, modus: "lys" | "mork", u: "aksent" | "ensfarget", h: number) => logoMaal(fil(f, modus, u), h);
+
+const FORMER: { form: Form; navn: string; bruk: string; hoyde: number }[] = [
+  { form: "symbol", navn: "Symbol", bruk: "Alene der navnet står ved siden av uansett: app-ikon, favicon, profilbilde.", hoyde: 44 },
+  { form: "hengsel", navn: "Hengsel", bruk: "hengsel.no, vis og design (toppfelt og bunn), PDF, sngroup.no.", hoyde: 32 },
+  { form: "hengsel-ute", navn: "Hengsel Ute", bruk: "hengsel.no/ute og butikkene for appen.", hoyde: 32 },
+  { form: "hengsel-crm", navn: "Hengsel CRM", bruk: "hengsel.no/crm.", hoyde: 32 },
+  { form: "ute", navn: "Ute", bruk: "Bare inne i Hengsel Ute (innlogging, Meg).", hoyde: 32 },
+  { form: "crm", navn: "CRM", bruk: "Bare inne i CRM (sidemeny, innlogging).", hoyde: 32 },
+  { form: "levert-av", navn: "Levert av", bruk: "Bunntekst i kundeportalen.", hoyde: 32 },
+  { form: "sendt-med", navn: "Sendt med", bruk: "Bunn i e-post til kunden.", hoyde: 32 },
+];
+const PLASSERINGER = [
+  ["hengsel.no, toppfelt og bunn", "–", "hengsel, aksent, 30 px (34 px fra 1180 px)"],
+  ["hengsel.no /ute og /crm", "–", "hengsel-ute / hengsel-crm, aksent, 34 px i heroen"],
+  ["vis.hengsel.no", "–", "hengsel, aksent, 28 px i toppfeltet"],
+  ["CRM, sidemeny PC og iPad", "øverst til venstre, maks 200 × 40 px", "crm, aksent, 16 px nederst til venstre under brukeren, med «v. {versjon}» 11 px"],
+  ["CRM, telefon", "toppfelt, maks 140 × 28 px", "crm, aksent, 16 px nederst i menyen ≡"],
+  ["CRM, innlogging", "midtstilt, maks 200 × 64 px", "crm, aksent, 16 px nederst midtstilt"],
+  ["Hengsel Ute, innlogging og låseskjerm", "midtstilt, maks 200 × 64 px", "ute, aksent, 18 px nederst midtstilt"],
+  ["Hengsel Ute, Meg og Profil", "–", "ute, aksent, 16 px nederst, med «Versjon x (bygg)» 12 px"],
+  ["Kundeportal", "toppfelt, maks 180 × 36 px", "levert-av, aksent, 14 px, bunntekst høyre"],
+  ["PDF-maler", "øverst, maks 50 × 12 mm", "hengsel, ensfarget lys, 3 mm, bunnlinje høyre"],
+  ["E-post", "øverst midtstilt, maks 160 × 48 px", "sendt-med, ensfarget lys, 12 px nederst midtstilt (PNG 2×)"],
+  ["sngroup.no, familiebånd", "–", "hengsel, aksent, 24 px"],
+];
+const APPIKON = [
+  ["crm", "CRM, lys", "/merke/app-ikon/crm.svg"],
+  ["crm-mork", "CRM, mørk", "/merke/app-ikon/crm-mork.svg"],
+  ["ute", "Hengsel Ute, lys", "/merke/app-ikon/ute.svg"],
+  ["ute-mork", "Hengsel Ute, mørk", "/merke/app-ikon/ute-mork.svg"],
+  ["ute-tonet", "Hengsel Ute, tonet", "/merke/app-ikon/ute-variant-tonet.svg"],
+  ["ute-klar", "Hengsel Ute, klar", "/merke/app-ikon/ute-variant-klar.svg"],
+] as const;
+---
+<Side title="Merket – Hengsel designfasit" description="Hengsel-merket v3: symbolet og alle formene, i aksent og ensfarget, på lys og mørk flate, med luft, minste størrelse, app-ikoner og plasseringer." aktiv="merke">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Merket · v3</span>
+      <h1>Leddet som danner en H</h1>
+      <p class="lede">To hengselblader og en stift. Symbolet er Hengsel og står alene der navnet står ved siden av. Navnet står i Inter 500, produktnavnet i Inter 400. Alle filer er ferdige SVG-er med konturert tekst: ikke tegn dem om, og ikke legg til farger eller effekter.</p>
+    </div>
+
+    <section class="sek" id="former">
+      <header>
+        <h2>Alle former og utgaver</h2>
+        <p>Åtte former, to utgaver (aksent og ensfarget), lys og mørk: 32 filer. <b>Aksent</b> er standard: stiften er Deep Blue på lys flate og Dusty Blue på mørk flate. <b>Ensfarget</b> er helt Warm Black (trykk og PDF) eller helt Off White (blå flater og foto).</p>
+      </header>
+      <div class="merkerad hode-rad svak" aria-hidden="true">
+        <span></span><span>Aksent, lys flate</span><span>Aksent, mørk flate</span><span>Ensfarget, lys flate</span><span>Ensfarget, mørk flate</span>
+      </div>
+      {FORMER.map((f) => (
+        <div class="merkerad">
+          <div class="navn"><div>{f.navn}</div><div class="svak">{f.bruk}</div></div>
+          <div class={`flis ${fargeKlasse("flate-side", "lys")}`}><img src={fil(f.form, "lys", "aksent")} alt={`${f.navn}, aksent, for lys flate`} {...m(f.form, "lys", "aksent", f.hoyde)} loading="lazy" /></div>
+          <div class={`flis ${fargeKlasse("flate-side", "mork")}`}><img src={fil(f.form, "mork", "aksent")} alt={`${f.navn}, aksent, for mørk flate`} {...m(f.form, "mork", "aksent", f.hoyde)} loading="lazy" /></div>
+          <div class={`flis ${fargeKlasse("flate-side", "lys")}`}><img src={fil(f.form, "lys", "ensfarget")} alt={`${f.navn}, ensfarget, for lys flate`} {...m(f.form, "lys", "ensfarget", f.hoyde)} loading="lazy" /></div>
+          <div class={`flis ${fargeKlasse("flate-side", "mork")}`}><img src={fil(f.form, "mork", "ensfarget")} alt={`${f.navn}, ensfarget, for mørk flate`} {...m(f.form, "mork", "ensfarget", f.hoyde)} loading="lazy" /></div>
+        </div>
+      ))}
+      <p class="svak">Filnavn: <code>{"{form}-{aksent-}{lys|mork}.svg"}</code>, for eksempel <code>hengsel-aksent-lys.svg</code> og <code>hengsel-mork.svg</code>. Symbolet heter <code>hengsel-symbol</code>. Alle ligger i <a href="/last-ned">logopakken</a>.</p>
+    </section>
+
+    <section class="sek" id="luft">
+      <header>
+        <h2>Luft og minste størrelse</h2>
+        <p>Fri sone er minst halve symbolhøyden rundt merket. Minste høyde er 16 px for symbolet og 14 px for logoer med tekst. Under det blir bladene og stiften uleselige.</p>
+      </header>
+      <div class="tema-par">
+        <div class="kort">
+          <h3>Fri sone</h3>
+          <div class="fri-sone fs-44"><Logo form="hengsel" hoyde={44} /></div>
+          <p class="svak">Her 44 px høyt merke og 22 px luft hele veien rundt.</p>
+        </div>
+        <div class="kort">
+          <h3>Minste størrelse</h3>
+          <div class="rad-flex">
+            <Logo form="symbol" hoyde={16} alt="Symbol, 16 px" />
+            <Logo form="hengsel" hoyde={14} alt="Hengsel, 14 px" />
+            <Logo form="crm" hoyde={14} alt="CRM, 14 px" />
+            <Logo form="levert-av" hoyde={14} alt="Levert av, 14 px" />
+          </div>
+          <p class="svak">Symbol 16 px. Logo med tekst 14 px.</p>
+        </div>
+        <div class="kort">
+          <h3>Ikke</h3>
+          <ul class="regler">
+            <li>Ikke strekk, roter eller legg til skygge, glød eller kontur.</li>
+            <li>Ikke bytt farger: bare Warm Black, Off White, Deep Blue og Dusty Blue.</li>
+            <li>Ikke bruk symbolet som bokstav i tekst.</li>
+            <li>Skriv «Hengsel» med stor H i tekst, aldri «HENGSEL».</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sek" id="app-ikoner">
+      <header>
+        <h2>App-ikoner</h2>
+        <p>Avrundede ikoner til nettsider og dokumentasjon. Ferdige lag for Icon Composer, Expo og Android følger med merkepakken i repoet (<code>brand/hengsel-merke/app-ikon</code>). Under ikonet på telefonen står bare «Ute».</p>
+      </header>
+      <div class="skjerm-rutenett smal">
+        {APPIKON.map(([id, navn, src]) => (
+          <figure class="enhet"><img class="ikon" src={src} alt={`App-ikon: ${navn}`} width="120" height="120" loading="lazy" /><figcaption>{navn}</figcaption></figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="sek" id="kunde">
+      <header>
+        <h2>Kundens logo øverst, Hengsel nederst</h2>
+        <p>Inne i løsningene er butikken avsender. Butikkens logo står øverst og er alltid størst, aldri mindre enn Hengsel. Hengsel står lite på fast plass og flytter seg aldri, uansett hvordan kundens logo ser ut. Uten kundelogo står butikkens navn i Inter 600 i samme felt. «Hengsel» står ikke i knapper og tekster, og i SMS og e-post er butikken avsender.</p>
+      </header>
+      <div class="tema-par">
+        <div class="tema-lys">
+          <span class="tema-navn">CRM, sidemeny · lys</span>
+          <div class="flate-kort mock-meny">
+            <span class="logo-boks">Din logo</span>
+            <span class="mock-punkt">Min dag</span><span class="mock-punkt">Samtaler</span><span class="mock-punkt valgt">Tilbud</span><span class="mock-punkt">Ordre</span>
+            <div class="mock-bunn"><span>Bent K. · Selger</span><span class="rad-flex"><Logo form="crm" modus="lys" hoyde={16} alt="CRM" /><span class="svak">v. 1.0.0</span></span></div>
+          </div>
+        </div>
+        <div class="tema-mork">
+          <span class="tema-navn">CRM, sidemeny · mørk</span>
+          <div class="flate-kort mock-meny">
+            <span class="logo-boks">Din logo</span>
+            <span class="mock-punkt">Min dag</span><span class="mock-punkt">Samtaler</span><span class="mock-punkt valgt">Tilbud</span><span class="mock-punkt">Ordre</span>
+            <div class="mock-bunn"><span>Bent K. · Selger</span><span class="rad-flex"><Logo form="crm" modus="mork" hoyde={16} alt="CRM" /><span class="svak">v. 1.0.0</span></span></div>
+          </div>
+        </div>
+        <div class="tema-lys">
+          <span class="tema-navn">Kundeportal · alltid lys</span>
+          <div class="flate-kort mock-meny">
+            <span class="logo-boks">Din logo</span>
+            <p>Tilbudet ditt er klart.</p>
+            <div class="mock-bunn hoyre"><Logo form="levert-av" modus="lys" hoyde={14} alt="Levert av Hengsel" /></div>
+          </div>
+        </div>
+        <div class="tema-lys">
+          <span class="tema-navn">E-post til kunden · alltid lys</span>
+          <div class="flate-kort mock-meny midt">
+            <span class="logo-boks">Din logo</span>
+            <p>Hei Kari, her er tilbudet.</p>
+            <div class="mock-bunn midt"><Logo form="sendt-med" modus="lys" utgave="ensfarget" hoyde={14} alt="Sendt med Hengsel" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="tabell" tabindex="0" role="region" aria-label="Plasseringer">
+        <table>
+          <thead><tr><th>Flate</th><th>Kundens logo</th><th>Hengsel</th></tr></thead>
+          <tbody>{PLASSERINGER.map(([a, b, c]) => <tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="svak">«Opplasting av kundens logo»: lys og mørk utgave, SVG eller PNG med gjennomsiktig bakgrunn, minst 400 px bred. Mangler den mørke utgaven, brukes den lyse på en Off White-flis med 8 px luft.</p>
+    </section>
+  </div>
+</Side>

@@ -1,0 +1,29 @@
+---
+/**
+ * Hengsel-merket v3 som ferdige SVG-filer fra designsystemet (public/ds/assets/logo). Filnavn: {form}-{aksent-}{lys|mork}.svg (symbol heter hengsel-symbol).
+ * Regelen er den samme som `brandFil.mjs` i designsystemet (komponenten Brand). Ikke tegn om filene.
+ */
+import { logoMaal } from "../lib/logo";
+export type Form = "symbol" | "hengsel" | "hengsel-ute" | "hengsel-crm" | "ute" | "crm" | "levert-av" | "sendt-med";
+export const fil = (form: Form, modus: "lys" | "mork", utgave: "aksent" | "ensfarget" = "aksent") =>
+  `/ds/assets/logo/${form === "symbol" ? "hengsel-symbol" : form}-${utgave === "aksent" ? "aksent-" : ""}${modus}.svg`;
+interface Props {
+  form?: Form;
+  utgave?: "aksent" | "ensfarget";
+  /** Høyde i px. Minst 16 (symbol) og 14 (logo med tekst). */
+  hoyde?: number;
+  alt?: string;
+  /** Én fast utgave (lys eller mørk flate). Uten: følger utgaven på siden. */
+  modus?: "lys" | "mork";
+}
+const { form = "hengsel", utgave = "aksent", hoyde = 28, alt = "Hengsel", modus } = Astro.props;
+const mal = (src: string) => logoMaal(src, hoyde);
+---
+{modus ? (
+  <img src={fil(form, modus, utgave)} alt={alt} {...mal(fil(form, modus, utgave))} />
+) : (
+  <>
+    <img class="for-lys" src={fil(form, "lys", utgave)} alt={alt} {...mal(fil(form, "lys", utgave))} />
+    <img class="for-mork" src={fil(form, "mork", utgave)} alt={alt} {...mal(fil(form, "mork", utgave))} />
+  </>
+)}
