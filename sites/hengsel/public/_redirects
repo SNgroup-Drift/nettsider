@@ -15,7 +15,7 @@
 /demo               /priser-og-demo#demo 301
 /om                 /                    301
 
-# App-lenker (K-170): uten appen åpnes lenken i nettleseren. Én side svarer for alle id-er (200 = omskriving, ikke omdirigering,
-# så adressen står uendret og iOS kan åpne appen fra den). /.well-known/* røres ikke.
-/app/jobb/*         /app/apne            200
-/app/foresporsel/*  /app/apne            200
+# App-lenker (K-170, K-200): uten appen åpnes lenken i nettleseren. Én side svarer for alle id-er (200 = omskriving, ikke omdirigering,
+# så adressen står uendret og iOS kan åpne appen fra den). Siden sender PC videre til CRM-et (src/content/crm-lenke.mjs). /.well-known/* røres ikke.
+/app/jobb/*         /app/lenke           200
+/app/foresporsel/*  /app/lenke           200
