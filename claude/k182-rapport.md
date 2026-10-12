@@ -15,7 +15,7 @@ Del 1 (stoppet 12.10, ingen bygging) spurte hva siden skulle være. Svar fra Eir
 | 4 | Komponenter | `/komponenter`: knapper, piller, kort uten fargekant, varsel, faner, tabell, skjema (felt og bryter), tom tilstand og Sheet/Dialog. Hver i lys og mørk side om side med «Brukes til» og «Brukes ikke til» |
 | 5 | Skjermer | `/skjermer`: CRM Min dag, Tilbud, Ordre (kontrollmål) og Samtaler (Logg samtale), kundeportal (telefon og PC), Hengsel Ute (I dag, Jobben, KS) og hengsel.no, lys og mørk der designet har det. Laget med `scripts/fiktive-skjermer.mjs` (nytt: `SKJERMER_UT` skriver til `sites/design/public/skjermer` uten å røre vis og sngroup.no; ny skjerm `crm-samtaler`) og `scripts/skjermer-hengsel-no.mjs` |
 | 6 | Last ned | `/last-ned`: `hengsel.tokens.json`, `tokens.css`, `tokens.ts`, `fonts.css`, `fonts-fri-liste.css` (med sha256), skriftfilene med lisens og `hengsel-logopakke.zip` (32 SVG + lisensfilene, laget ved bygging) |
-| 7 | Generert fra tokens | Siden leser `public/ds/tokens/hengsel.tokens.json` direkte (roller, status, palett, skala, kundetema, skrift). `scripts/hent-designsystem.mjs` henter filene fra en **pinnet commit** (`sites/design/designsystem.pin.json`: `4749410947bde111cf88698650b86b945baab842`, designsystem 1.1.0, med sha256 per fil). Testen `scripts/design-fasit.test.mjs` feiler hvis pin og filer er ulike, hvis `tokens.css`/`tokens.ts` ikke samsvarer med JSON, eller hvis den bygde siden ikke viser verdiene i JSON (bekreftet ved å endre én hex og én tekst: testene feilet) |
+| 7 | Generert fra tokens | Siden leser `public/ds/tokens/hengsel.tokens.json` direkte (roller, status, palett, skala, kundetema, skrift). `scripts/hent-designsystem.mjs` henter filene fra en **pinnet commit** (`sites/design/designsystem.pin.json`: `3099a27b20fedb136506d0f69d85bbc9d108321c`, designsystem 1.1.0, med sha256 per fil). Testen `scripts/design-fasit.test.mjs` feiler hvis pin og filer er ulike, hvis `tokens.css`/`tokens.ts` ikke samsvarer med JSON, eller hvis den bygde siden ikke viser verdiene i JSON (bekreftet ved å endre én hex og én tekst: testene feilet) |
 | 8 | Tokens i repoet | Se «Endringer for å samsvare med designsystemet» under |
 | 9 | Arkiv | `docs/design/hengsel-no-2.0/` → `docs/arkiv/hengsel-no-2.0/` (git mv, ingenting slettet) med `docs/arkiv/LES-MEG.md`. De andre `.dc.html`-ene i `docs/design/hengsel` er gjeldende fasit (merke v3, apptest, Logo-bruk, Ute-ikon) og ligger fast |
 | 10 | Grep | Se «Grep» under |
@@ -24,9 +24,17 @@ Del 1 (stoppet 12.10, ingen bygging) spurte hva siden skulle være. Svar fra Eir
 
 Merket v3 gjennomgående: topp (Meny) og bunn (Bunn) bruker `hengsel-aksent-lys/-mork.svg`, favicon er `brand/hengsel-merke/favicon` (svg, 32, 180, 192), og:image (`og.png`, 1200 × 630) er tegnet fra designsystemets skrifter og logo. Ingen gammel H-logo, ingen «by Hengsel».
 
+## Ny pinning (K-190, 12.10)
+
+- Pinnet commit er byttet fra `47494109` til **`3099a27b20fedb136506d0f69d85bbc9d108321c`** (hodet på `demo` i innlandet-crm-sync etter «demo: flett claude/k190-ds-eksempel»; sjekket at commiten er i `origin/demo`). Designsystemversjonen er fortsatt 1.1.0. Filene er hentet på nytt med `scripts/hent-designsystem.mjs`; bare `hengsel.tokens.json` og `tokens.ts` endret seg (kundeeksemplene), og `designsystem.pin.json` har nye sha256.
+- Sjekk av forbudte navn: `grep -rliE "sigdal|innlandet|lausanne|reckless" sites/design/dist` gir **0 treff**, og tokens-filene i kilden (`git show 3099a27b:…`) har 0 treff. Sidene viser nå eksemplene «Eksempel Interiør AS» (aksent `#B0523A`: 4,8:1 mot Off White, 3,4:1 mot mørk flate) og «Eksempel Kjøkken AS» direkte fra JSON; den midlertidige erstatningen av Sigdal-eksempelet i `src/lib/tokens.ts` er fjernet.
+- Repo-navnet `innlandet-crm-sync` er tatt bort fra de publiserte sidene (Bunn, forside, Last ned: «designsystemets kilderepo»). Det står fortsatt i `designsystem.pin.json`, i `docs/` og i denne rapporten, men ikke i `dist`.
+- `design-fasit.test.mjs`: unntakslisten er fjernet, og testen forbyr nå Sigdal, Innlandet, Lausanne og Reckless (uavhengig av store og små bokstaver) i all tekst, alt/tittel/aria, css, js og svg i `dist`, og sjekker de tre nedlastingene særskilt.
+- Grønt etter ny pinning: `npm run build` (alle seks nettsteder), `npm test` (76 tester) og lenkesjekken (design: 89 adresser og 74 bilder svarer 200, 777 forespørsler, 0 feil), og `node scripts/skjermbilder-design.mjs`: 8 sider × 390/1440 px × lys/mørk, **0 kontrastbrudd og 0 øvrige axe-brudd**. Nye skjermbilder av alle sider, også **Farger** og **Last ned** i 390 og 1440, lys og mørk, ligger i `claude/k182-skjermbilder/`.
+
 ## Kilde for fasiten: K-186 runde 2
 
-`git log origin/demo` i innlandet-crm-sync har «demo: flett claude/k186-runde2» (`47494109`), så det ble ikke ventet i bakgrunnen, og grenen `claude/k186-runde2` er ikke brukt. Tokens er fra den commiten (Inter og Newsreader, kundetema, mørk `#1F1914`, iOS-farger, «sannsynlig»).
+`git log origin/demo` i innlandet-crm-sync har «demo: flett claude/k186-runde2» (`47494109`), så det ble ikke ventet i bakgrunnen (siden er pinnet på nytt, se «Ny pinning» under), og grenen `claude/k186-runde2` er ikke brukt. Tokens er fra den commiten (Inter og Newsreader, kundetema, mørk `#1F1914`, iOS-farger, «sannsynlig»).
 
 **Skjermbildene** kommer fra to kilder, fordi designfilene på `origin/demo` (`47494109`) ennå har det gamle H-merket nederst i CRM-menyen:
 - `crm-samtaler` er laget fra `claude/hengsel-merke-v3` i innlandet-crm-sync (`68caa905`, merkebytte v3), med `scripts/fiktive-skjermer.mjs` og mørk `#1F1914`.
@@ -99,7 +107,7 @@ Søkt i `sites/hengsel`, `sites/design`, `sites/admin` og `packages/design` (ute
 
 Testen `design-fasit.test.mjs` sjekker det samme på hele `sites/design/dist` (tekst, alt, tittel, aria, css, js, svg): ingen FORBUDT-treff (K-151-listen: merkenavn, leverandører, ekte kunder), ingen «by Hengsel», «engsel», H-merke, Lausanne eller Reckless.
 
-**Unntak du bør vite om:** `tokens/hengsel.tokens.json` og `tokens.ts` (nedlastingene, uendret fra designsystemet) har kundetemaeksempelet «Studio Sigdal Innlandet» med Sigdal-skriftene («TWK Lausanne», «Reckless Standard M»). Siden åpen og uten Access publiserer de dermed navnet på en ekte kunde (og skrifttypenavn, ikke skriftfilene). På selve sidene er eksempelet erstattet av «Eksempel Interiør AS» med samme aksent og Hengsel-skriftene. Anbefaling: fjern eksempelet fra `kundetema.eksempler` i designsystemet (K-186) og pin på nytt; da forsvinner unntaket i testen. Si fra hvis nedlastingene heller skal renses her.
+**Ingen unntak lenger (K-190):** kundeeksempelet «Studio Sigdal Innlandet» er byttet i designsystemet til «Eksempel Interiør AS» (Inter og Newsreader, aksent `#B0523A`), og etter ny pinning finnes «Sigdal», «Innlandet», «Lausanne» og «Reckless» verken på sidene eller i nedlastingene (`hengsel.tokens.json`, `tokens.ts`, `tokens.css`) eller andre steder i `sites/design/dist`. Testen har ikke lenger noen unntaksliste.
 
 ## Tester og sjekker (alle grønne)
 

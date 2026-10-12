@@ -4,7 +4,7 @@
   "dato": "2026-10-12",
 
   "palett": {
-    "$merknad": "De åtte merkevarefargene (Sigdal/Hengsel-profilen) pluss lys aksent for mørk flate. Brukes som råfarger; komponentene bruker rollene under.",
+    "$merknad": "De åtte merkevarefargene (Hengsel-profilen) pluss lys aksent for mørk flate. Brukes som råfarger; komponentene bruker rollene under.",
     "warm-black": "#31261D",
     "off-white": "#FBF9F6",
     "beige-4": "#F8F2EC",
@@ -54,7 +54,7 @@
   },
 
   "skrift": {
-    "$merknad": "Hengsel har ETT skriftsett: Inter (tekst, tall, knapper, felt) og Newsreader (overskrifter og store tall). Begge er OFL og følger med Hengsel til alle kunder (assets/fonts/). Hengsel Ute på iPhone bruker systemskriften SF Pro til tekst og kontroller (Dynamic Type) og Newsreader bare til store titler. TWK Lausanne og Reckless Standard M er Sigdal-skrifter og hører til Sigdal-butikkenes kundetema (se `kundetema`), ikke til Hengsel. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift. Logoene er tegnet i Inter og konturert.",
+    "$merknad": "Hengsel har ETT skriftsett: Inter (tekst, tall, knapper, felt) og Newsreader (overskrifter og store tall). Begge er OFL og følger med Hengsel til alle kunder (assets/fonts/). Hengsel Ute på iPhone bruker systemskriften SF Pro til tekst og kontroller (Dynamic Type) og Newsreader bare til store titler. Kundens egne skrifter hører til kundetemaet (se `kundetema`), ikke til Hengsel. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift. Logoene er tegnet i Inter og konturert.",
     "familie": {
       "hengsel": {
         "tekst": "'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif",
@@ -119,12 +119,12 @@
       { "navn": "Lora", "rolle": "overskrift", "vekter": [400, 500] }
     ],
     "eksempler": {
-      "studio-sigdal-innlandet": {
-        "navn": "Studio Sigdal Innlandet",
-        "logo": "sigdal",
-        "aksent": "#5074A9",
+      "eksempel-interior-as": {
+        "navn": "Eksempel Interiør AS",
+        "logo": "eksempel",
+        "aksent": "#B0523A",
         "paaAksent": "#FBF9F6",
-        "skrift": { "tekst": "TWK Lausanne", "overskrift": "Reckless Standard M", "kilde": "egen fil med lisens bekreftet av kunden" }
+        "skrift": { "tekst": "Inter", "overskrift": "Newsreader", "kilde": "fri liste" }
       },
       "eksempel-kjokken-as": {
         "navn": "Eksempel Kjøkken AS",

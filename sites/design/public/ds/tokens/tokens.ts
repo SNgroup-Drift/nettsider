@@ -363,7 +363,7 @@ export const ios = {
 
 /**
  * Kundetema: logo, aksent og skrift som butikken kan velge, bare på tilbud/kontrakt (PDF), e-post til kunde og kundeportal.
- * Alle disse flatene er alltid lyse. Lausanne og Reckless er Sigdals egne skrifter og står bare i Sigdals eget tema.
+ * Alle disse flatene er alltid lyse. Kundens egne skrifter står bare i kundens eget tema.
  */
 export const kundetema = {
   "gjelder": [
@@ -436,15 +436,15 @@ export const kundetema = {
     }
   ],
   "eksempler": {
-    "studio-sigdal-innlandet": {
-      "navn": "Studio Sigdal Innlandet",
-      "logo": "sigdal",
-      "aksent": "#5074A9",
+    "eksempel-interior-as": {
+      "navn": "Eksempel Interiør AS",
+      "logo": "eksempel",
+      "aksent": "#B0523A",
       "paaAksent": "#FBF9F6",
       "skrift": {
-        "tekst": "TWK Lausanne",
-        "overskrift": "Reckless Standard M",
-        "kilde": "egen fil med lisens bekreftet av kunden"
+        "tekst": "Inter",
+        "overskrift": "Newsreader",
+        "kilde": "fri liste"
       }
     },
     "eksempel-kjokken-as": {

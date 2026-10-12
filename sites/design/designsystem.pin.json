@@ -1,7 +1,7 @@
 {
   "repo": "SNgroup-Drift/innlandet-crm-sync",
   "sti": "_ds/hengsel-designsystem",
-  "commit": "4749410947bde111cf88698650b86b945baab842",
+  "commit": "3099a27b20fedb136506d0f69d85bbc9d108321c",
   "versjon": "1.1.0",
   "filer": {
     "assets/fonts/LICENSE-Inter.txt": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
@@ -58,8 +58,8 @@
     "assets/logo/ute-mork.svg": "b5ad722ce46a846017902aee2ffee3066dd278212bb0ba962f38330936baa14c",
     "tokens/fonts-fri-liste.css": "f5ad14c53364da6884ac675ebf1909201ff44aa3c6408092669c6ae215cbcd6d",
     "tokens/fonts.css": "70ecdb78ef67a67a19c8924a63291fd58ac95626727a8b2743a1354c1355db12",
-    "tokens/hengsel.tokens.json": "f657a920bcf811d539a21ade4e89cc0fe97204b95b27863f1f64f2a5707be853",
+    "tokens/hengsel.tokens.json": "c02288858366152fa6be64b49231e27183068fa4f74ef358bb1844df6785d494",
     "tokens/tokens.css": "325267e187402401841b6ac47ac873ebcdd7e89394116690a9a43720e60594ed",
-    "tokens/tokens.ts": "0d3ef0973e7681101f957697b8989fe870e3e8a18dda688fc7947e1bf8752028"
+    "tokens/tokens.ts": "b818db47f065ed47d15e9178d3273e2170ad269f6950e09957734671882a403c"
   }
 }

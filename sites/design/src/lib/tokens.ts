@@ -89,15 +89,10 @@ export const fmtKontrast = (n: number) => `${(Math.floor(n * 10) / 10).toFixed(1
 
 // ── Kundetema ────────────────────────────────────────────────────────────────────────────────────────────────────────
 export const kundetema = json.kundetema;
-/**
- * Eksemplene på kundetema som vises. Eksempelet med en ekte kundes navn og skrifter (kilde «egen fil med lisens bekreftet av kunden») vises ikke her:
- * design.hengsel.no er åpen og skal ikke ha ekte navn (K-151). Aksentverdiene beholdes i et fiktivt eksempel med Hengsel-skriftene.
- */
-export const kundeEksempler = Object.entries(json.kundetema.eksempler).map(([nokkel, t]) =>
-  t.skrift.kilde === "fri liste"
-    ? { id: nokkel, navn: t.navn, aksent: t.aksent, paaAksent: t.paaAksent, skrift: { tekst: t.skrift.tekst, overskrift: t.skrift.overskrift } }
-    : { id: "eksempel-interior-as", navn: "Eksempel Interiør AS", aksent: t.aksent, paaAksent: t.paaAksent, skrift: { tekst: "Inter", overskrift: "Newsreader" } },
-);
+/** Eksemplene på kundetema fra designsystemet (K-190: bare fiktive kunder, skrift fra den frie listen). */
+export const kundeEksempler = Object.entries(json.kundetema.eksempler).map(([nokkel, t]) => ({
+  id: nokkel, navn: t.navn, aksent: t.aksent, paaAksent: t.paaAksent, skrift: { tekst: t.skrift.tekst, overskrift: t.skrift.overskrift },
+}));
 export function kundeAksentSjekk(aksent: string, paaAksent: string) {
   const offWhite = json.palett["off-white"];
   const mork = rolle("flate-side", "mork");
