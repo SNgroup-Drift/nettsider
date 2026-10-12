@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"HengselDesignSystem_5a9d09","components":[{"name":"Button","sourcePath":"components/actions/Button.jsx"},{"name":"IconButton","sourcePath":"components/actions/IconButton.jsx"},{"name":"Brand","sourcePath":"components/brand/Brand.jsx"},{"name":"CustomerLogo","sourcePath":"components/brand/Brand.jsx"},{"name":"Icon","sourcePath":"components/brand/Icon.jsx"},{"name":"PhoneFrame","sourcePath":"components/devices/PhoneFrame.jsx"},{"name":"TabletFrame","sourcePath":"components/devices/TabletFrame.jsx"},{"name":"Field","sourcePath":"components/forms/Field.jsx"},{"name":"Stepper","sourcePath":"components/forms/Stepper.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"ListRow","sourcePath":"components/layout/ListRow.jsx"},{"name":"Stat","sourcePath":"components/layout/Stat.jsx"},{"name":"PageHeader","sourcePath":"components/navigation/PageHeader.jsx"},{"name":"SegmentedTabs","sourcePath":"components/navigation/SegmentedTabs.jsx"},{"name":"Sidebar","sourcePath":"components/navigation/Sidebar.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"},{"name":"Alert","sourcePath":"components/status/Alert.jsx"},{"name":"Pill","sourcePath":"components/status/Pill.jsx"}],"sourceHashes":{"components/actions/Button.jsx":"05b8c145bc7d","components/actions/IconButton.jsx":"e31415486f1b","components/brand/Brand.jsx":"0763588e536a","components/brand/Icon.jsx":"6f3332fe63a8","components/devices/PhoneFrame.jsx":"e7628a19f632","components/devices/TabletFrame.jsx":"a93c38a1834b","components/forms/Field.jsx":"bb3bf6a7edca","components/forms/Stepper.jsx":"7e9e41e9cff0","components/forms/Switch.jsx":"2578854e39c4","components/layout/Card.jsx":"730ba0ce8028","components/layout/ListRow.jsx":"a49351669481","components/layout/Stat.jsx":"379f820072f1","components/navigation/PageHeader.jsx":"6aff516ccdf3","components/navigation/SegmentedTabs.jsx":"d69e86501aeb","components/navigation/Sidebar.jsx":"3c10531dc651","components/navigation/Topbar.jsx":"a89848b8909a","components/status/Alert.jsx":"1f919e9e2125","components/status/Pill.jsx":"0252f1035460","ui_kits/_shared/signature-pad.jsx":"eb7d00bbb82f","ui_kits/crm/app.jsx":"a07613265869","ui_kits/crm/data.jsx":"8c59570cf0d5","ui_kits/crm/min-dag.jsx":"02e15b7b7080","ui_kits/crm/ordre.jsx":"57daf04ccd03","ui_kits/crm/shell.jsx":"a943677d5d8c","ui_kits/kundeportal/app.jsx":"446271b097c8","ui_kits/kundeportal/portal.jsx":"62356e9386bd","ui_kits/montorapp/app.jsx":"9a9e839dd7b1","ui_kits/montorapp/data.jsx":"6dce05c2571e","ui_kits/montorapp/i-dag.jsx":"6c8163762838","ui_kits/montorapp/jobb.jsx":"a68c91feded0","ui_kits/montorapp/skjema.jsx":"b54bad250b06","ui_kits/nettside/app.jsx":"730f0bb9428a","ui_kits/nettside/sections.jsx":"cacf4cf68263"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"HengselDesignSystem_5a9d09","components":[{"name":"Button","sourcePath":"components/actions/Button.jsx"},{"name":"IconButton","sourcePath":"components/actions/IconButton.jsx"},{"name":"Brand","sourcePath":"components/brand/Brand.jsx"},{"name":"CustomerLogo","sourcePath":"components/brand/Brand.jsx"},{"name":"Icon","sourcePath":"components/brand/Icon.jsx"},{"name":"PhoneFrame","sourcePath":"components/devices/PhoneFrame.jsx"},{"name":"TabletFrame","sourcePath":"components/devices/TabletFrame.jsx"},{"name":"Field","sourcePath":"components/forms/Field.jsx"},{"name":"Stepper","sourcePath":"components/forms/Stepper.jsx"},{"name":"Switch","sourcePath":"components/forms/Switch.jsx"},{"name":"Card","sourcePath":"components/layout/Card.jsx"},{"name":"ListRow","sourcePath":"components/layout/ListRow.jsx"},{"name":"Stat","sourcePath":"components/layout/Stat.jsx"},{"name":"PageHeader","sourcePath":"components/navigation/PageHeader.jsx"},{"name":"SegmentedTabs","sourcePath":"components/navigation/SegmentedTabs.jsx"},{"name":"Sidebar","sourcePath":"components/navigation/Sidebar.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"},{"name":"Alert","sourcePath":"components/status/Alert.jsx"},{"name":"Pill","sourcePath":"components/status/Pill.jsx"}],"sourceHashes":{"components/actions/Button.jsx":"05b8c145bc7d","components/actions/IconButton.jsx":"e31415486f1b","components/brand/Brand.jsx":"d936a8efaf93","components/brand/Icon.jsx":"6f3332fe63a8","components/devices/PhoneFrame.jsx":"e7628a19f632","components/devices/TabletFrame.jsx":"a93c38a1834b","components/forms/Field.jsx":"bb3bf6a7edca","components/forms/Stepper.jsx":"7e9e41e9cff0","components/forms/Switch.jsx":"2578854e39c4","components/layout/Card.jsx":"730ba0ce8028","components/layout/ListRow.jsx":"a49351669481","components/layout/Stat.jsx":"379f820072f1","components/navigation/PageHeader.jsx":"6aff516ccdf3","components/navigation/SegmentedTabs.jsx":"d69e86501aeb","components/navigation/Sidebar.jsx":"3c10531dc651","components/navigation/Topbar.jsx":"a89848b8909a","components/status/Alert.jsx":"1f919e9e2125","components/status/Pill.jsx":"0252f1035460","ui_kits/_shared/signature-pad.jsx":"eb7d00bbb82f","ui_kits/crm/app.jsx":"a07613265869","ui_kits/crm/data.jsx":"8c59570cf0d5","ui_kits/crm/min-dag.jsx":"02e15b7b7080","ui_kits/crm/ordre.jsx":"57daf04ccd03","ui_kits/crm/shell.jsx":"a943677d5d8c","ui_kits/kundeportal/app.jsx":"446271b097c8","ui_kits/kundeportal/portal.jsx":"62356e9386bd","ui_kits/montorapp/app.jsx":"9a9e839dd7b1","ui_kits/montorapp/data.jsx":"6dce05c2571e","ui_kits/montorapp/i-dag.jsx":"6c8163762838","ui_kits/montorapp/jobb.jsx":"a68c91feded0","ui_kits/montorapp/skjema.jsx":"b54bad250b06","ui_kits/nettside/app.jsx":"730f0bb9428a","ui_kits/nettside/sections.jsx":"cacf4cf68263"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -12,76 +12,214 @@ const __ds_scope = {};
 try { (() => {
 const h = React.createElement;
 
-/** H-merket etter assets/logo/hengsel-merke-*.svg. small = tykkere strek og grep for små størrelser (hengsel-merke-liten). */
-function Mark({
-  small
-}) {
-  const d = small ? {
-    a: 2.5,
-    w: 25.5,
-    h: 67,
-    x2: 36,
-    sw: 5,
-    gy: 29,
-    gh: 14,
-    r: 7
-  } : {
-    a: 1.5,
-    w: 26.5,
-    h: 69,
-    x2: 36,
-    sw: 3,
-    gy: 31,
-    gh: 10,
-    r: 5
-  };
+/** H-merket etter assets/logo/hengsel-merke-*.svg: vater · overskap, benkeplate, komfyr og underskap · høyskap. */
+function Mark() {
   return h('svg', {
-    viewBox: '0 0 64 72',
+    viewBox: '0 0 74 72',
     'aria-hidden': true,
     className: 'h-brand-mark'
   }, h('rect', {
-    x: d.a,
-    y: d.a,
-    width: d.w,
-    height: d.h,
-    fill: 'var(--mark-door)',
-    stroke: 'var(--mark-line)',
-    strokeWidth: d.sw
+    x: 0,
+    y: 0,
+    width: 10,
+    height: 72,
+    rx: 1,
+    fill: "var(--mark-level)"
   }), h('rect', {
-    x: d.x2,
-    y: d.a,
-    width: d.w,
-    height: d.h,
-    fill: 'var(--mark-door)',
-    stroke: 'var(--mark-line)',
-    strokeWidth: d.sw
+    x: 0,
+    y: 0,
+    width: 10,
+    height: 4.2,
+    rx: 1,
+    fill: "var(--mark-cab)"
   }), h('rect', {
-    x: 17,
-    y: d.gy,
-    width: 13,
-    height: d.gh,
-    rx: d.r,
-    fill: 'var(--mark-grip)'
+    x: 0,
+    y: 2.8,
+    width: 10,
+    height: 1.4,
+    fill: "var(--mark-cab)"
   }), h('rect', {
-    x: 34,
-    y: d.gy,
-    width: 13,
-    height: d.gh,
-    rx: d.r,
-    fill: 'var(--mark-grip)'
+    x: 0,
+    y: 67.8,
+    width: 10,
+    height: 4.2,
+    rx: 1,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 0,
+    y: 67.8,
+    width: 10,
+    height: 1.4,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 1.8,
+    y: 6.7,
+    width: 6.4,
+    height: 4.6,
+    rx: 2.3,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 2.5,
+    y: 7.1,
+    width: 0.6,
+    height: 3.8,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 6.9,
+    y: 7.1,
+    width: 0.6,
+    height: 3.8,
+    fill: "var(--mark-grip)"
+  }), h('ellipse', {
+    cx: 5,
+    cy: 9,
+    rx: 1.4,
+    ry: 1,
+    fill: "var(--mark-level)"
+  }), h('rect', {
+    x: 2.6,
+    y: 28,
+    width: 4.8,
+    height: 16,
+    rx: 2.4,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 3,
+    y: 33.5,
+    width: 4,
+    height: 0.6,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 3,
+    y: 38.5,
+    width: 4,
+    height: 0.6,
+    fill: "var(--mark-grip)"
+  }), h('ellipse', {
+    cx: 5,
+    cy: 36,
+    rx: 1,
+    ry: 1.5,
+    fill: "var(--mark-level)"
+  }), h('rect', {
+    x: 3.5,
+    y: 51,
+    width: 3,
+    height: 13.5,
+    rx: 1.5,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 35.1,
+    y: 0,
+    width: 14,
+    height: 27.6,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 12.5,
+    y: 0,
+    width: 22,
+    height: 23.8,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 12.5,
+    y: 25.3,
+    width: 22,
+    height: 2.3,
+    fill: "var(--mark-level)"
+  }), h('rect', {
+    x: 12.5,
+    y: 39,
+    width: 39.1,
+    height: 6,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 35.1,
+    y: 46.5,
+    width: 14,
+    height: 25.5,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 37.8,
+    y: 49.4,
+    width: 2.5,
+    height: 6.1,
+    rx: 1.25,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 12.5,
+    y: 46.5,
+    width: 22,
+    height: 25.5,
+    fill: "var(--mark-cab)"
+  }), h('circle', {
+    cx: 18,
+    cy: 49.6,
+    r: 1.5,
+    fill: "var(--mark-grip)"
+  }), h('circle', {
+    cx: 23.5,
+    cy: 49.6,
+    r: 1.5,
+    fill: "var(--mark-grip)"
+  }), h('circle', {
+    cx: 28.9,
+    cy: 49.6,
+    r: 1.5,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 15,
+    y: 52.6,
+    width: 17,
+    height: 2.3,
+    rx: 1.15,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 15.4,
+    y: 56.6,
+    width: 16.2,
+    height: 13,
+    rx: 0.4,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 51,
+    y: 0,
+    width: 0.6,
+    height: 39,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 51,
+    y: 45,
+    width: 0.6,
+    height: 27,
+    fill: "var(--mark-grip)"
+  }), h('rect', {
+    x: 51.6,
+    y: 0,
+    width: 22,
+    height: 72,
+    fill: "var(--mark-cab)"
+  }), h('rect', {
+    x: 54.3,
+    y: 36.5,
+    width: 2.5,
+    height: 6.1,
+    rx: 1.25,
+    fill: "var(--mark-grip)"
   }));
 }
 
-/** Hengsel-logoen: H-merket + «engsel» i Lausanne 350 + hake over «CRM». Size = px på «engsel». */
+/** Hengsel-logoen: H-merket + «engsel» i Inter 400, produktnavn («CRM» eller «UTE») under med hake over. Size = px på «engsel». */
 function Brand({
   size = 20,
-  crm = true,
+  product = 'CRM',
+  crm,
   markOnly,
   wordmark = true,
   href,
   style
 }) {
   const only = markOnly || wordmark === false;
+  const prod = crm === false ? null : product;
   const Tag = href ? 'a' : 'span';
   if (only) return h(Tag, {
     className: 'h-brand only',
@@ -92,36 +230,33 @@ function Brand({
     },
     role: 'img',
     'aria-label': 'Hengsel'
-  }, h(Mark, {
-    small: size < 40
-  }));
+  }, h(Mark));
   return h(Tag, {
-    className: 'h-brand',
+    className: 'h-brand' + (prod ? ' has-product' : ''),
     href,
     style: {
       fontSize: size,
       ...style
     },
-    'aria-label': crm ? 'Hengsel CRM' : 'Hengsel'
-  }, h(Mark, {
-    small: size <= 28
-  }), h('span', {
+    'aria-label': prod ? 'Hengsel ' + prod : 'Hengsel'
+  }, h(Mark), h('span', {
     className: 'h-brand-word',
     'aria-hidden': true
-  }, 'engsel'), crm && h('span', {
-    className: 'h-brand-crm',
+  }, 'engsel'), prod && h('svg', {
+    viewBox: '0 0 30 26',
+    className: 'h-brand-check',
     'aria-hidden': true
-  }, h('svg', {
-    viewBox: '0 0 33 26.3',
-    className: 'h-brand-check'
   }, h('path', {
-    d: 'M3.15 14.15l9 9l18 -20',
+    d: 'M3 14l8 8l16 -18',
     fill: 'none',
-    stroke: 'var(--mark-grip)',
-    strokeWidth: 6.3,
+    stroke: 'var(--mark-check)',
+    strokeWidth: 4.6,
     strokeLinecap: 'round',
     strokeLinejoin: 'round'
-  })), 'CRM'));
+  })), prod && h('span', {
+    className: 'h-brand-product',
+    'aria-hidden': true
+  }, prod));
 }
 
 /** Kundens logo (lys og mørk versjon), vist i original farge og proporsjon. Uten fil vises navnet som plassholder. */

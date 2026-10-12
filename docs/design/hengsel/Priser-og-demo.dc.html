@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Priser og demo – Hengsel</title>
+  <link rel="icon" href="hengsel-merke/favicon/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    html { scroll-padding-top: 80px; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="pris" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
+
+  <section data-screen-label="Priser · inngår" style="padding:clamp(40px,6vw,72px) 0 clamp(48px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:40px">
+      <div style="display:flex; flex-direction:column; gap:16px; max-width:780px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Priser og demo</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Hele løsningen, fra første dag.</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:62ch; text-wrap:pretty">Pris etter antall butikker og brukere. Be om tilbud.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:clamp(24px,4vw,48px); align-items:start">
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Dette inngår</span>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column">
+            <sc-for list="{{ inngar }}" as="x" hint-placeholder-count="7">
+              <li style="display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--line)"><span style="color:var(--accent); flex:none">✓</span><span style="display:flex; flex-direction:column"><b style="font-weight:600">{{ x.t }}</b><span style="color:var(--muted); font-size:.95rem">{{ x.s }}</span></span></li>
+            </sc-for>
+          </ul>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px"><span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Oppstart</span><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" dot="{{ false }}" hint-size="70px,22px">Eksempel</x-import></div>
+          <p style="margin:0 0 8px; color:var(--muted)">Vi går gjennom stegene sammen med dere.</p>
+          <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px">
+            <sc-for list="{{ oppstart }}" as="o" hint-placeholder-count="4">
+              <li style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; gap:16px"><span style="width:32px; height:32px; border-radius:999px; background:var(--surface-highlight); flex:none; display:grid; place-items:center; font-weight:600; font-size:14px">{{ o.n }}</span><span style="display:flex; flex-direction:column; gap:2px"><b style="font-weight:600">{{ o.t }}</b><span style="color:var(--muted); font-size:.95rem">{{ o.s }}</span></span></li>
+            </sc-for>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" data-screen-label="Priser · demoskjema" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0; scroll-margin-top:72px">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:clamp(24px,4vw,48px); align-items:start">
+      <div style="display:flex; flex-direction:column; gap:20px">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Be om demo</h2>
+        <p style="margin:0; color:var(--muted); font-size:1.05rem">Vi viser Hengsel med en ordre fra start til slutt, og svarer på det dere lurer på.</p>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:10px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Ring eller skriv</span>
+          <a href="tel:+4745410001" style="font-family:Newsreader, Georgia, serif; font-size:2rem; line-height:1.1; color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">+47 454 10 001</a>
+          <a href="mailto:hei@hengsel.no" style="color:var(--accent); font-size:1.05rem">hei@hengsel.no</a>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,32px); display:flex; flex-direction:column; gap:16px">
+        <sc-if value="{{ ikkeSendt }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:14px">
+            <sc-for list="{{ felt }}" as="f" hint-placeholder-count="4">
+              <label style="display:flex; flex-direction:column; gap:6px; font-size:.9rem; font-weight:500">
+                <span>{{ f.l }}</span>
+                <input type="{{ f.type }}" value="{{ f.v }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" autocomplete="{{ f.ac }}" style="min-height:44px; padding:0 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:400 1rem Inter, sans-serif; box-sizing:border-box; width:100%" style-focus="outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)">
+              </label>
+            </sc-for>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <span style="font-size:.9rem; font-weight:500">Antall avdelinger</span>
+            <div style="display:flex; flex-wrap:wrap; gap:8px">
+              <sc-for list="{{ avd }}" as="a" hint-placeholder-count="3">
+                <button type="button" onClick="{{ a.go }}" aria-pressed="{{ a.sel }}" style="{{ a.style }}">{{ a.t }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <label style="display:flex; flex-direction:column; gap:6px; font-size:.9rem; font-weight:500">
+            <span>Hva vil dere se?</span>
+            <textarea value="{{ melding }}" onChange="{{ settMelding }}" rows="4" placeholder="For eksempel montasjeplan og kundeportal" style="padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:400 1rem/1.5 Inter, sans-serif; resize:vertical" style-focus="outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)"></textarea>
+          </label>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px">
+            <button type="button" onClick="{{ send }}" style="min-height:48px; padding:0 26px; border-radius:999px; border:0; background:var(--accent); color:var(--accent-ink); font:500 1rem Inter, sans-serif; cursor:pointer" style-hover="opacity:.88">Send forespørsel</button>
+            <span style="font-size:.88rem; color:var(--muted)">Du kan også ringe +47 454 10 001.</span>
+          </div>
+          <sc-if value="{{ feil }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--bad-soft); border-radius:10px; padding:12px 16px; box-shadow:inset 3px 0 0 var(--bad); font-size:.95rem"><b style="font-weight:600; color:var(--bad)">Mangler noe.</b> Fyll inn navn og e-post eller telefon.</div>
+          </sc-if>
+        </sc-if>
+        <sc-if value="{{ sendt }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:12px; padding:12px 0">
+            <span style="font-family:Newsreader, Georgia, serif; font-size:2rem; line-height:1.1">Takk, {{ fornavn }}.</span>
+            <p style="margin:0; color:var(--muted)">Vi har fått forespørselen og tar kontakt for å avtale tid.</p>
+            <button type="button" onClick="{{ nullstill }}" style="align-self:flex-start; min-height:44px; padding:0 20px; border-radius:999px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:500 .95rem Inter, sans-serif; cursor:pointer">Ny forespørsel</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, f: { navn: '', butikk: '', epost: '', tlf: '' }, avd: 1, melding: '', sendt: false, feil: false };
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  renderVals() {
+    const f = this.state.f;
+    const set = k => e => this.setState({ f: { ...this.state.f, [k]: e.target.value }, feil: false });
+    const AVD = ['1', '2–3', '4 eller flere'];
+    return {
+      dark: this.state.dark,
+      inngar: [
+        { t: 'CRM på PC, iPad og telefon', s: 'Min dag, kundekort, tilbud, ordre, bestilling, montasje, saker og resultater.' },
+        { t: 'Hengsel Ute', s: 'Montørappen for iPhone, iPad og Android, også for utkjører og lager.' },
+        { t: 'Kundeportal', s: 'Tilbud, aksept, tilvalg, levering og FDV.' },
+        { t: 'Dokumenter', s: 'Tilbud, kjøpsavtale, arbeidsordre, KS-rapport og ferdigmelding med butikkens logo.' },
+        { t: 'Koblinger', s: 'CET, PowerOffice Go, Penneo, Tradeplace, lasermåler via Bluetooth, SMS og e-post.' },
+        { t: 'Drift og sikkerhet', s: 'Data lagres i EU. Logg på alle endringer. Daglig sikkerhetskopi.' },
+        { t: 'Oppdateringer og hjelp', s: 'Nye versjoner, og hjelp på telefon og e-post.' },
+      ],
+      oppstart: [
+        { n: '1', t: 'Demo', s: 'Vi viser løsningen med en ordre fra start til slutt.' },
+        { n: '2', t: 'Oppsett', s: 'Butikker, brukere, roller, logo, prislister og maler for dokumentene.' },
+        { n: '3', t: 'Opplæring', s: 'Selgere, kontor og montører, hver med sin del av løsningen.' },
+        { n: '4', t: 'I drift', s: 'Vi følger opp de første ukene og justerer oppsettet med dere.' },
+      ],
+      ikkeSendt: !this.state.sendt, sendt: this.state.sendt, feil: this.state.feil,
+      felt: [
+        { l: 'Navn', k: 'navn', type: 'text', ph: 'Kari Nordmann', ac: 'name' },
+        { l: 'Butikk', k: 'butikk', type: 'text', ph: 'Butikknavn', ac: 'organization' },
+        { l: 'E-post', k: 'epost', type: 'email', ph: 'kari@butikknavn.no', ac: 'email' },
+        { l: 'Telefon', k: 'tlf', type: 'tel', ph: '900 00 000', ac: 'tel' },
+      ].map(x => ({ ...x, v: f[x.k], on: set(x.k) })),
+      avd: AVD.map((t, i) => ({ t, sel: i === this.state.avd ? 'true' : 'false', go: () => this.setState({ avd: i }),
+        style: { minHeight: 44, padding: '0 18px', borderRadius: 999, border: '1px solid ' + (i === this.state.avd ? 'var(--ink)' : 'var(--line)'), background: i === this.state.avd ? 'var(--ink)' : 'var(--bg)', color: i === this.state.avd ? 'var(--bg)' : 'var(--ink)', font: '400 .95rem Inter, sans-serif', cursor: 'pointer' } })),
+      melding: this.state.melding,
+      settMelding: e => this.setState({ melding: e.target.value }),
+      fornavn: (f.navn || '').trim().split(' ')[0] || 'for forespørselen',
+      send: () => {
+        if (!f.navn.trim() || !(f.epost.trim() || f.tlf.trim())) { this.setState({ feil: true }); return; }
+        this.setState({ sendt: true });
+      },
+      nullstill: () => this.setState({ sendt: false, f: { navn: '', butikk: '', epost: '', tlf: '' }, melding: '' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

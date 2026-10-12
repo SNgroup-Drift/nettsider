@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hengsel Ute – app-ikon</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <style>
+    html, body { margin: 0; background: #FBF9F6; color: #31261D; font-family: "Inter", Arial, sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #5074A9; } a:hover { color: #31261D; }
+  </style>
+</helmet>
+<div style="background:#FBF9F6; color:#31261D">
+  <section data-screen-label="Ute-ikon · bevegelse" style="max-width:1240px; margin:0 auto; padding:56px clamp(16px,4vw,40px) 40px; display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:12px; max-width:720px">
+      <span style="font-size:.8rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:#5E564C">App-ikon · Hengsel Ute · iOS 26</span>
+      <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.4rem,5.5vw,4rem); line-height:1.02; letter-spacing:-.015em">Hengselet, åpnet litt.</h1>
+      <p style="margin:0; color:#5E564C; text-wrap:pretty">To blader og en stift i tre lag. Høyre blad står litt åpent, og stiften ligger fremst. Forhåndsvisningen viser omtrent hvordan iOS flytter lagene og lyset når telefonen vippes. Beveg musen over ikonene.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:16px">
+      <sc-for list="{{ scener }}" as="s" hint-placeholder-count="2">
+        <div style="{{ s.flate }}" onPointerMove="{{ s.flytt }}" onPointerLeave="{{ slipp }}">
+          <div style="{{ tilt }}">
+            <img src="{{ s.bg }}" alt="" style="{{ l0 }}"><img src="{{ s.v }}" alt="" style="{{ l1 }}"><img src="{{ s.h }}" alt="" style="{{ l2 }}"><img src="{{ s.p }}" alt="Hengsel Ute" style="{{ l3 }}">
+            <div style="{{ glans }}"></div><div style="{{ kant }}"></div>
+          </div>
+          <span style="{{ s.navnStil }}">{{ s.navn }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute-ikon · varianter" style="background:#F2E9DB; padding:48px 0">
+    <div style="max-width:1240px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:20px">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">Lys, mørk, klar og tonet</h2>
+        <button type="button" onClick="{{ byttGra }}" style="{{ graKnapp }}">{{ graTekst }}</button>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap:12px">
+        <sc-for list="{{ varianter }}" as="v" hint-placeholder-count="4">
+          <div style="{{ v.flate }}"><img src="{{ v.src }}" alt="{{ v.navn }}" style="{{ v.img }}"><span style="{{ v.tekst }}">{{ v.navn }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute-ikon · størrelser" style="max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:20px">
+    <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">Størrelser, ved siden av logoen</h2>
+    <div style="background:#F2E9DB; border-radius:20px; padding:28px; display:flex; flex-wrap:wrap; align-items:flex-end; gap:28px">
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center"><img src="hengsel-merke/app-ikon/ute/visning/ute-lys.svg" alt="" style="width:240px; height:240px"><span style="font-size:.8rem; color:#5E564C">1024 (vist 240)</span></div>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center"><img src="hengsel-merke/app-ikon/ute/visning/ute-lys.svg" alt="" style="width:180px; height:180px"><span style="font-size:.8rem; color:#5E564C">180</span></div>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center"><img src="hengsel-merke/app-ikon/ute/visning/ute-lys.svg" alt="" style="width:120px; height:120px"><span style="font-size:.8rem; color:#5E564C">120</span></div>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center"><img src="hengsel-merke/app-ikon/ute/visning/ute-lys.svg" alt="" style="width:60px; height:60px"><span style="font-size:.8rem; color:#5E564C">60</span></div>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center"><img src="hengsel-merke/app-ikon/ute/visning/ute-lys.svg" alt="" style="width:29px; height:29px"><span style="font-size:.8rem; color:#5E564C">29</span></div>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-left:auto; padding:20px 24px; background:#FBF9F6; border-radius:16px">
+        <img src="hengsel.no/logo/l1/ute-aksent-lys.svg" alt="Ute" style="height:44px; width:auto">
+        <img src="hengsel.no/logo/l1/hengsel-ute-aksent-lys.svg" alt="Hengsel Ute" style="height:32px; width:auto">
+        <span style="font-size:.8rem; color:#5E564C">Logoen inne i appen og på hengsel.no</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute-ikon · hjemskjerm" style="background:#F2E9DB; padding:48px 0">
+    <div style="max-width:1240px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:20px">
+      <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">På hjemskjermen</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:16px">
+        <sc-for list="{{ hjem }}" as="h" hint-placeholder-count="2">
+          <div style="{{ h.skjerm }}">
+            <sc-for list="{{ h.apper }}" as="a" hint-placeholder-count="12">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0">
+                <sc-if value="{{ a.vaar }}" hint-placeholder-val="{{ false }}"><img src="{{ h.ikon }}" alt="" style="width:62px; height:62px; display:block"></sc-if>
+                <sc-if value="{{ a.annen }}" hint-placeholder-val="{{ true }}"><span style="{{ a.flis }}"></span></sc-if>
+                <span style="{{ h.navn }}">{{ a.navn }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size:.85rem; color:#5E564C">De andre appene er nøytrale plassholdere i de samme fargene.</span>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute-ikon · Android" style="max-width:1240px; margin:0 auto; padding:48px clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:20px">
+    <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">Android</h2>
+    <div style="background:#F2E9DB; border-radius:20px; padding:28px; display:flex; flex-wrap:wrap; gap:28px; align-items:flex-end">
+      <sc-for list="{{ android }}" as="a" hint-placeholder-count="4">
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:center">
+          <div style="{{ a.maske }}"><sc-if value="{{ a.medBg }}" hint-placeholder-val="{{ true }}"><img src="hengsel-merke/app-ikon/ute/android/bakgrunn-432.svg" alt="" style="position:absolute; inset:-25%; width:150%; height:150%"></sc-if><img src="{{ a.fg }}" alt="" style="{{ a.fgStil }}"></div>
+          <span style="font-size:.8rem; color:#5E564C">{{ a.navn }}</span>
+        </div>
+      </sc-for>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center; margin-left:auto"><img src="hengsel-merke/app-ikon/ute/android/play-512.png" alt="Play-ikon" style="width:160px; height:160px; border-radius:20%"><span style="font-size:.8rem; color:#5E564C">Play 512 × 512</span></div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute-ikon · valg" style="background:#F2E9DB; padding:48px 0 72px">
+    <div style="max-width:1240px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:32px">
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">Valg</h2>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+          <li style="display:flex; gap:10px"><span style="color:#5E564C">→</span><span>Høyre blad er 14 % smalere og har en kjøligere toning. Det gir følelsen av ca. 18° åpning uten perspektivtegning.</span></li>
+          <li style="display:flex; gap:10px"><span style="color:#5E564C">→</span><span>Fasen er to flate farger: en kant i Beige 3 og en flate i Off White. Den ses ned til 60 px.</span></li>
+          <li style="display:flex; gap:10px"><span style="color:#5E564C">→</span><span>Stiften er Off White på blått i lys modus, og Dusty Blue i mørk modus.</span></li>
+          <li style="display:flex; gap:10px"><span style="color:#5E564C">→</span><span>Symbolet fyller ca. 64 % av ikonet, slik at H-en kjennes igjen ved 29 px.</span></li>
+          <li style="display:flex; gap:10px"><span style="color:#5E564C">→</span><span>Lagene til Icon Composer er flate. Skygge, glans og bevegelse lager iOS.</span></li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.1">Filer</h2>
+        <span style="color:#5E564C">Alt ligger i <code>hengsel-merke/app-ikon/ute/</code>, med innstillingene i <code>LES-MEG.md</code>.</span>
+        <ul style="margin:0; padding:0 0 0 18px; display:flex; flex-direction:column; gap:6px; color:#5E564C; font-size:.95rem">
+          <li><code>icon-composer/lag/</code>: tre SVG-lag + mørk stift</li>
+          <li><code>icon-composer/Hengsel Ute.icon</code></li>
+          <li><code>expo/</code>: 1024 lys, mørk og tonet</li>
+          <li><code>android/</code>: forgrunn, bakgrunn, monokrom, ic_launcher.xml og Play 512</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { px: 0, py: 0, gra: false };
+  componentDidMount() {
+    this.t0 = performance.now();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const tick = () => { if (!this.hover) { const t = (performance.now() - this.t0) / 1000; this.setState({ px: Math.sin(t * .8) * .7, py: Math.cos(t * .55) * .45 }); } this.raf = requestAnimationFrame(tick); };
+    this.raf = requestAnimationFrame(tick);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  renderVals() {
+    const { px, py, gra } = this.state;
+    const V = 'hengsel-merke/app-ikon/ute/visning/';
+    const lag = d => ({ position: 'absolute', inset: 0, width: '100%', height: '100%', transform: `translate(${px * d}px, ${py * d}px)`, pointerEvents: 'none' });
+    const flytt = e => { const r = e.currentTarget.getBoundingClientRect(); this.hover = true; this.setState({ px: ((e.clientX - r.left) / r.width - .5) * 2, py: ((e.clientY - r.top) / r.height - .5) * 2 }); };
+    const scene = (navn, m, bg, ink) => ({ navn, bg: V + `lag-${m}/bakgrunn.svg`, v: V + `lag-${m}/venstre.svg`, h: V + `lag-${m}/hoyre.svg`, p: V + `lag-${m}/stift.svg`, flytt,
+      flate: { background: bg, borderRadius: 28, padding: '48px 24px 28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18, touchAction: 'none' },
+      navnStil: { fontSize: 14, color: ink } });
+    const filt = gra ? 'grayscale(1)' : 'none';
+    const apper = vaar => ['Kalender', 'Kart', 'Notater', 'Kamera', 'Bilder', 'Hengsel Ute', 'Vær', 'Filer', 'Klokke', 'Mail', 'Innstillinger', 'Meldinger'].map((navn, i) => ({ navn, vaar: navn === 'Hengsel Ute', annen: navn !== 'Hengsel Ute',
+      flis: { width: 62, height: 62, borderRadius: '22.37%', display: 'block', background: vaar ? ['#FBF9F6', '#E4D4C4', '#C3B5A7', '#9CA9BD', '#F2E9DB', '', '#9CA9BD', '#FBF9F6', '#E4D4C4', '#C3B5A7', '#F2E9DB', '#9CA9BD'][i] : ['#3B3229', '#2F2820', '#4A4038', '#26201A', '#3B3229', '', '#2F2820', '#4A4038', '#26201A', '#3B3229', '#2F2820', '#4A4038'][i] } }));
+    return {
+      slipp: () => { this.hover = false; },
+      tilt: { position: 'relative', width: 'min(100%, 260px)', aspectRatio: '1', borderRadius: '22.37%', overflow: 'hidden', transform: `perspective(900px) rotateX(${-py * 9}deg) rotateY(${px * 9}deg)`, boxShadow: `${-px * 10}px ${30 - py * 10}px 60px -18px rgba(20,24,36,.55)` },
+      l0: lag(0), l1: lag(5), l2: lag(9), l3: lag(15),
+      glans: { position: 'absolute', inset: 0, pointerEvents: 'none', background: `radial-gradient(circle at ${50 + px * 38}% ${28 + py * 30}%, rgba(255,255,255,.4), rgba(255,255,255,0) 46%)`, mixBlendMode: 'screen' },
+      kant: { position: 'absolute', inset: 0, borderRadius: '22.37%', pointerEvents: 'none', boxShadow: `inset ${-px * 3}px ${2 - py * 3}px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.2)` },
+      scener: [scene('Lys', 'lys', 'linear-gradient(160deg, #E4D4C4, #C3B5A7)', '#31261D'), scene('Mørk', 'mork', 'linear-gradient(160deg, #31261D, #1B1713)', '#F1E9DE')],
+      varianter: [['Lys', 'lys', '#E4D4C4', '#31261D'], ['Mørk', 'mork', '#1B1713', '#F1E9DE'], ['Klar', 'klar', 'linear-gradient(160deg, #9CA9BD, #31261D)', '#FBF9F6'], ['Tonet', 'tonet', '#1B1713', '#F1E9DE']].map(([navn, m, bg, ink]) => ({ navn, src: V + `ute-${m}.svg`,
+        flate: { background: bg, borderRadius: 20, padding: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 },
+        img: { width: '70%', height: 'auto', filter: filt + ' drop-shadow(0 16px 26px rgba(0,0,0,.3))' }, tekst: { fontSize: 14, color: ink } })),
+      byttGra: () => this.setState(s => ({ gra: !s.gra })), graTekst: gra ? 'Vis i farger' : 'Vis i gråtoner',
+      graKnapp: { minHeight: 40, padding: '0 16px', borderRadius: 999, border: '1px solid #31261D', background: gra ? '#31261D' : 'transparent', color: gra ? '#FBF9F6' : '#31261D', font: '500 14px Inter, sans-serif', cursor: 'pointer' },
+      hjem: [
+        { ikon: V + 'ute-lys.svg', apper: apper(true), skjerm: { background: 'linear-gradient(170deg, #E4D4C4, #9CA9BD)', borderRadius: 36, padding: '36px 22px', display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0,1fr))', gap: '22px 10px' }, navn: { fontSize: 11, color: '#31261D', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' } },
+        { ikon: V + 'ute-mork.svg', apper: apper(false), skjerm: { background: 'linear-gradient(170deg, #31261D, #1B1713)', borderRadius: 36, padding: '36px 22px', display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0,1fr))', gap: '22px 10px' }, navn: { fontSize: 11, color: '#F1E9DE', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' } },
+      ],
+      android: [['Sirkel', '50%', 'forgrunn'], ['Avrundet', '28%', 'forgrunn'], ['Firkant', '12%', 'forgrunn'], ['Tema (monokrom)', '50%', 'monokrom']].map(([navn, r, fg]) => ({ navn, fg: `hengsel-merke/app-ikon/ute/android/${fg}-432.svg`, medBg: fg !== 'monokrom',
+        maske: { position: 'relative', width: 96, height: 96, borderRadius: r, overflow: 'hidden', background: fg === 'monokrom' ? '#31261D' : '#5074A9' },
+        fgStil: { position: 'absolute', inset: '-25%', width: '150%', height: '150%', filter: fg === 'monokrom' ? 'brightness(0) invert(89%) sepia(12%) saturate(300%) hue-rotate(350deg)' : 'none' } })),
+    };
+  }
+}
+</script>
+</body>
+</html>

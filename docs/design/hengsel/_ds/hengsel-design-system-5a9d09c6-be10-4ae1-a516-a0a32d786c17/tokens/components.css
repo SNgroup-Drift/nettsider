@@ -57,12 +57,13 @@ select.input { appearance:none; padding-right:40px; background-image:linear-grad
 .h-alert-text { flex:1; line-height:1.5; font-size:.97rem; }
 .h-alert-text b { font-weight:var(--w-strong); }
 
-.h-brand { display:inline-flex; align-items:baseline; font:350 20px/1 var(--f-body); color:var(--mark-word); letter-spacing:-.01em; text-decoration:none; white-space:nowrap; }
-.h-brand-mark { height:.713em; width:auto; flex:none; align-self:baseline; margin-right:.04em; }
+.h-brand { position:relative; display:inline-flex; align-items:baseline; font:350 20px/1 var(--f-body); color:var(--mark-word); letter-spacing:-.015em; text-decoration:none; white-space:nowrap; }
+.h-brand.has-product { padding-bottom:max(.45em,12px); margin-right:max(.36em,10px); }
+.h-brand-mark { height:.75em; width:auto; flex:none; align-self:baseline; margin-right:.08em; }
 .h-brand.only .h-brand-mark { height:1em; margin:0; }
-.h-brand-word { font-weight:350; }
-.h-brand-crm { position:relative; margin-left:.93em; font-size:.267em; font-weight:650; letter-spacing:.06em; text-transform:uppercase; color:var(--mark-crm); }
-.h-brand-check { position:absolute; left:0; bottom:calc(100% + .27em); width:1.22em; height:auto; overflow:visible; }
+.h-brand-word { font-weight:400; }
+.h-brand-product { position:absolute; right:0; bottom:0; font-size:max(.21em,7px); line-height:1; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--mark-crm); }
+.h-brand-check { position:absolute; right:max(-.35em,-10px); bottom:max(.3em,8px); width:max(.28em,9px); height:auto; overflow:visible; }
 .h-clogo { display:inline-flex; }
 .h-clogo img { display:block; }
 .h-clogo-d { display:none !important; }

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Test Hengsel – testversjon av montørappen</title>
+  <link rel="icon" href="hengsel-merke/favicon/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--surface-soft); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+    details > summary { list-style: none; } details > summary::-webkit-details-marker { display: none; }
+  </style>
+</helmet>
+<div ref="{{ root }}" style="background:var(--surface-soft); color:var(--ink); min-height:100vh">
+
+  <header style="border-bottom:1px solid var(--line); background:var(--surface-soft)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px">
+      <a href="Forside.dc.html" aria-label="Hengsel – til forsiden" style="display:flex">
+        <sc-if value="{{ lys }}" hint-placeholder-val="{{ true }}"><img src="hengsel.no/logo/l1/hengsel-aksent-lys.svg" alt="Hengsel" style="height:30px; width:auto; display:block"></sc-if>
+        <sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}"><img src="hengsel.no/logo/l1/hengsel-aksent-mork.svg" alt="Hengsel" style="height:30px; width:auto; display:block"></sc-if>
+      </a>
+      <a href="#meld-feil" style="font-size:.95rem; min-height:44px; display:flex; align-items:center">Meld feil</a>
+    </div>
+  </header>
+
+  <section data-screen-label="Apptest · hero" style="padding:clamp(36px,6vw,80px) 0 clamp(40px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:clamp(36px,6vw,80px); align-items:center">
+      <div style="display:flex; flex-direction:column; gap:20px; min-width:0">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Testversjon {{ versjon }} · sist oppdatert {{ dato }}</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.75rem,6vw,4.6rem); line-height:1; letter-spacing:-.015em">Test Hengsel</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:44ch; text-wrap:pretty">Appen montørene bruker på jobben. Installer testversjonen, logg inn med demobrukerne og si fra om alt som ikke virker.</p>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:84px; padding:14px 0 10px; margin-top:8px; background:var(--surface-highlight); border-radius:20px">
+          <img src="hengsel-merke/app-ikon/visning/ute.svg" alt="" aria-hidden="true" style="width:60px; height:60px; border-radius:14px; display:block; box-shadow:0 1px 2px rgba(49,38,29,.18)">
+          <span style="font-size:12px; line-height:1; color:var(--ink)">Hengsel</span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:14px; min-width:0">
+        <div style="position:relative; width:100%; max-width:{{ heroMax }}">
+          <sc-for list="{{ slides }}" as="s" hint-placeholder-count="1">
+            <div aria-hidden="{{ s.skjult }}" style="{{ s.wrap }}">
+              <dc-import name="Enhet" type="iphone" src="{{ s.lys }}" src-dark="{{ s.mork }}" dark="{{ dark }}" alt="{{ s.alt }}" hint-size="100%,640px"></dc-import>
+            </div>
+          </sc-for>
+        </div>
+        <div role="tablist" aria-label="Skjermbilder" style="display:flex; gap:2px; align-items:center">
+          <sc-for list="{{ slides }}" as="s" hint-placeholder-count="4">
+            <button type="button" role="tab" aria-selected="{{ s.sel }}" aria-label="{{ s.navn }}" onClick="{{ s.go }}" style="width:28px; height:28px; border:0; background:transparent; padding:0; display:grid; place-items:center; cursor:pointer"><span style="{{ s.dot }}"></span></button>
+          </sc-for>
+        </div>
+        <span aria-live="polite" style="font-size:.9rem; color:var(--muted); margin-top:-6px">{{ slideNavn }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="installer" data-screen-label="Apptest · installer" style="background:var(--surface-highlight); padding:clamp(48px,6vw,88px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:28px">
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Installer</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">{{ installTittel }}</h2>
+      </div>
+
+      <sc-if value="{{ erPc }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; align-items:stretch">
+          <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; text-align:center">
+            <div style="background:#FBF9F6; border-radius:10px; padding:12px; line-height:0">
+              <svg width="168" height="168" viewBox="0 0 29 29" role="img" aria-label="QR-kode til hengsel.no/apptest" shape-rendering="crispEdges"><path d="{{ qr }}" fill="#31261D"></path></svg>
+            </div>
+            <span style="font-size:.98rem; max-width:22ch">Skann med telefonen for å åpne siden der</span>
+          </div>
+          <sc-for list="{{ alleVeier }}" as="v" hint-placeholder-count="3">
+            <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:18px">
+              <div style="display:flex; flex-direction:column; gap:2px">
+                <b style="font-weight:600; font-size:1.1rem">{{ v.t }}</b>
+                <span style="color:var(--muted); font-size:.95rem">{{ v.via }}</span>
+              </div>
+              <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px; flex:1">
+                <sc-for list="{{ v.steg }}" as="st" hint-placeholder-count="3">
+                  <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:26px; height:26px; flex:none; border-radius:999px; border:1px solid var(--line); background:var(--surface-soft); display:grid; place-items:center; font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; margin-top:1px">{{ st.nr }}</span><span style="font-size:.98rem; line-height:1.5">{{ st.t }}</span></li>
+                </sc-for>
+              </ol>
+              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" block="{{ true }}" dc-props="{{ blokkProps }}" href="{{ v.href }}" hint-size="100%,44px">{{ v.knapp }}</x-import>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ erTlf }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:560px">
+          <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:20px">
+            <div style="display:flex; flex-direction:column; gap:2px">
+              <b style="font-weight:600; font-size:1.15rem">{{ hoved.t }}</b>
+              <span style="color:var(--muted); font-size:.95rem">{{ hoved.via }}</span>
+            </div>
+            <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px">
+              <sc-for list="{{ hoved.steg }}" as="st" hint-placeholder-count="3">
+                <li style="display:flex; gap:14px; align-items:flex-start"><span style="width:28px; height:28px; flex:none; border-radius:999px; border:1px solid var(--line); background:var(--surface-soft); display:grid; place-items:center; font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; margin-top:1px">{{ st.nr }}</span><span style="line-height:1.5">{{ st.t }}</span></li>
+              </sc-for>
+            </ol>
+            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" size="lg" block="{{ true }}" dc-props="{{ blokkProps }}" href="{{ hoved.href }}" hint-size="100%,56px">{{ hoved.knapp }}</x-import>
+          </div>
+          <button type="button" onClick="{{ toggleAndre }}" aria-expanded="{{ andreApen }}" style="align-self:flex-start; min-height:44px; padding:0; border:0; background:transparent; color:var(--accent); font:inherit; font-size:1rem; text-decoration:underline; text-underline-offset:3px; cursor:pointer">{{ andreTekst }}</button>
+          <sc-if value="{{ visAndre }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <sc-for list="{{ andre }}" as="v" hint-placeholder-count="2">
+                <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:16px">
+                  <div style="display:flex; flex-direction:column; gap:2px">
+                    <b style="font-weight:600; font-size:1.05rem">{{ v.t }}</b>
+                    <span style="color:var(--muted); font-size:.95rem">{{ v.via }}</span>
+                  </div>
+                  <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px">
+                    <sc-for list="{{ v.steg }}" as="st" hint-placeholder-count="3">
+                      <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:26px; height:26px; flex:none; border-radius:999px; border:1px solid var(--line); background:var(--surface-soft); display:grid; place-items:center; font-size:13px; font-weight:600; margin-top:1px">{{ st.nr }}</span><span style="font-size:.98rem; line-height:1.5">{{ st.t }}</span></li>
+                    </sc-for>
+                  </ol>
+                  <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" block="{{ true }}" dc-props="{{ blokkProps }}" href="{{ v.href }}" hint-size="100%,44px">{{ v.knapp }}</x-import>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section data-screen-label="Apptest · hva du kan teste" style="padding:clamp(48px,6vw,88px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:24px">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px 32px">
+        <div style="display:flex; flex-direction:column; gap:10px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Hva du kan teste</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">Velg rollen din.</h2>
+        </div>
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" variant="chips" label="Roller" items="{{ rolleFaner }}" value="{{ rolleId }}" on-change="{{ velgRolle }}" hint-size="420px,44px"></x-import>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:clamp(20px,3vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:clamp(24px,5vw,64px); align-items:center">
+        <div style="display:flex; flex-direction:column; gap:22px; min-width:0">
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <h3 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.6rem,2.6vw,2.1rem); line-height:1.12">{{ rolle.t }}</h3>
+            <span style="color:var(--muted)">{{ rolle.s }}</span>
+          </div>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px">
+            <sc-for list="{{ rolle.punkter }}" as="p" hint-placeholder-count="4">
+              <li style="display:flex; gap:12px; align-items:flex-start"><span aria-hidden="true" style="color:var(--muted)">→</span><span>{{ p }}</span></li>
+            </sc-for>
+          </ul>
+          <div style="background:var(--surface-soft); border-radius:10px; padding:16px 18px; display:flex; flex-direction:column; gap:12px">
+            <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Demobruker</span>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+              <div style="display:flex; flex-direction:column; min-width:0">
+                <span style="font-size:.85rem; color:var(--muted)">Brukernavn</span>
+                <span style="font-weight:500; overflow-wrap:anywhere">{{ rolle.bruker }}</span>
+              </div>
+              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" size="sm" on-click="{{ kopierBruker }}" hint-size="96px,44px">{{ kopierBrukerTekst }}</x-import>
+            </div>
+            <div style="height:1px; background:var(--line)"></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+              <div style="display:flex; flex-direction:column; min-width:0">
+                <span style="font-size:.85rem; color:var(--muted)">Passord</span>
+                <span data-demopassord="{{ rolle.id }}" style="font-weight:500; font-variant-numeric:tabular-nums; letter-spacing:.04em">••••••••</span>
+              </div>
+              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" size="sm" on-click="{{ kopierPassord }}" hint-size="96px,44px">{{ kopierPassordTekst }}</x-import>
+            </div>
+          </div>
+          <a href="#demobrukere.pdf" style="align-self:flex-start; min-height:44px; display:flex; align-items:center">Alle demobrukere (PDF)</a>
+        </div>
+        <div style="width:100%; max-width:260px; justify-self:center">
+          <sc-if value="{{ rolle.harBilde }}" hint-placeholder-val="{{ true }}">
+            <dc-import name="Enhet" type="iphone" src="{{ rolle.lys }}" src-dark="{{ rolle.mork }}" dark="{{ dark }}" alt="{{ rolle.alt }}" hint-size="100%,560px"></dc-import>
+          </sc-if>
+          <sc-if value="{{ rolle.utenBilde }}" hint-placeholder-val="{{ false }}">
+            <dc-import name="Enhet" type="iphone" dark="{{ dark }}" hint-size="100%,560px"><div style="width:402px; height:874px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:var(--surface-app); color:var(--muted); font-family:Inter, Arial, sans-serif; text-align:center; padding:40px; box-sizing:border-box"><span style="font-size:15px; letter-spacing:.06em; text-transform:uppercase">Skjermbilde</span><span style="font-size:26px; color:var(--ink)">{{ rolle.plass }}</span></div></dc-import>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Apptest · sjekkliste og nytt" style="background:var(--surface-highlight); padding:clamp(48px,6vw,88px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:clamp(40px,5vw,56px); align-items:start">
+
+      <div style="display:flex; flex-direction:column; gap:20px; min-width:0">
+        <div style="display:flex; flex-direction:column; gap:10px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Sjekkliste for {{ versjon }}</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">Dette vil vi at du prøver.</h2>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden">
+          <div style="padding:18px 22px; display:flex; flex-direction:column; gap:10px; border-bottom:1px solid var(--line)">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px">
+              <b style="font-weight:600; font-variant-numeric:tabular-nums">{{ fremdrift }}</b>
+              <span style="font-size:.88rem; color:var(--muted)">Huskes bare på denne telefonen</span>
+            </div>
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="{{ antallPunkter }}" aria-valuenow="{{ antallKryss }}" aria-label="Fremdrift" style="height:6px; border-radius:999px; background:var(--surface-highlight-strong); overflow:hidden">
+              <div style="height:100%; width:{{ fremdriftPst }}; background:var(--ink); border-radius:999px; transition:width 160ms cubic-bezier(.2,.7,.2,1)"></div>
+            </div>
+          </div>
+          <ul style="margin:0; padding:0; list-style:none">
+            <sc-for list="{{ sjekk }}" as="c" hint-placeholder-count="8">
+              <li style="border-bottom:1px solid var(--line)">
+                <label style="min-height:52px; padding:10px 22px; display:flex; align-items:center; gap:14px; cursor:pointer" style-hover="background:var(--surface-soft)">
+                  <input type="checkbox" checked="{{ c.on }}" onChange="{{ c.toggle }}" style="position:absolute; opacity:0; width:1px; height:1px">
+                  <span aria-hidden="true" style="{{ c.box }}">{{ c.hake }}</span>
+                  <span style="{{ c.tekst }}">{{ c.t }}</span>
+                </label>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px; min-width:0">
+        <div style="display:flex; flex-direction:column; gap:10px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Hva er nytt</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">De siste byggene.</h2>
+        </div>
+        <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column">
+          <sc-for list="{{ bygg }}" as="b" hint-placeholder-count="3">
+            <li style="display:grid; grid-template-columns:20px 1fr; gap:14px">
+              <div aria-hidden="true" style="display:flex; flex-direction:column; align-items:center">
+                <span style="{{ b.prikk }}"></span>
+                <span style="{{ b.strek }}"></span>
+              </div>
+              <details open="{{ b.open }}" style="padding-bottom:18px; min-width:0">
+                <summary style="cursor:pointer; min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:-12px">
+                  <span style="display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline"><b style="font-weight:600; font-variant-numeric:tabular-nums">{{ b.v }}</b><span style="color:var(--muted); font-size:.95rem">{{ b.d }}</span></span>
+                  <span aria-hidden="true" style="color:var(--muted); font-size:1.1rem">⌄</span>
+                </summary>
+                <ul style="margin:4px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px">
+                  <sc-for list="{{ b.linjer }}" as="l" hint-placeholder-count="2">
+                    <li style="color:var(--muted); font-size:.98rem; line-height:1.5">{{ l }}</li>
+                  </sc-for>
+                </ul>
+              </details>
+            </li>
+          </sc-for>
+        </ol>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:14px">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+            <b style="font-weight:600; font-size:1.05rem">Kjente feil</b>
+            <sc-if value="{{ harFeil }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="warn" hint-size="60px,26px">{{ antallFeil }}</x-import></sc-if>
+          </div>
+          <sc-if value="{{ harFeil }}" hint-placeholder-val="{{ true }}">
+            <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+              <sc-for list="{{ feil }}" as="f" hint-placeholder-count="2">
+                <li style="display:flex; flex-direction:column; gap:2px; padding:12px 14px; background:var(--surface-soft); border-radius:10px"><span>{{ f.t }}</span><span style="font-size:.9rem; color:var(--muted)">{{ f.s }}</span></li>
+              </sc-for>
+            </ul>
+          </sc-if>
+          <sc-if value="{{ ingenFeil }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="ok" style="align-self:flex-start" hint-size="220px,26px">Ingen kjente feil akkurat nå</x-import>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="meld-feil" data-screen-label="Apptest · meld feil" style="padding:clamp(48px,6vw,88px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:24px">
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Meld feil</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">Si fra om alt som ikke virker.</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:12px">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; gap:16px; align-items:flex-start">
+          <span style="width:44px; height:44px; flex:none; border-radius:10px; background:var(--surface-soft); display:grid; place-items:center"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Icon" name="user-round" size="{{ 22 }}" hint-size="22px,22px"></x-import></span>
+          <div style="display:flex; flex-direction:column; gap:2px; padding-top:10px"><b style="font-weight:600">Meg › Send feilrapport</b><span style="color:var(--muted); font-size:.95rem">i appen</span></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; gap:16px; align-items:flex-start">
+          <span style="width:44px; height:44px; flex:none; border-radius:10px; background:var(--surface-soft); display:grid; place-items:center"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Icon" name="camera" size="{{ 22 }}" hint-size="22px,22px"></x-import></span>
+          <div style="display:flex; flex-direction:column; gap:2px; padding-top:10px"><b style="font-weight:600">Ta skjermbilde og send på e-post</b><a href="mailto:hei@hengsel.no?subject=Feil%20i%20testversjonen" style="font-size:.95rem">hei@hengsel.no</a></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; gap:16px; align-items:flex-start">
+          <span style="width:44px; height:44px; flex:none; border-radius:10px; background:var(--surface-soft); display:grid; place-items:center"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Icon" name="smartphone" size="{{ 22 }}" hint-size="22px,22px"></x-import></span>
+          <div style="display:flex; flex-direction:column; gap:6px; padding-top:10px; align-items:flex-start"><b style="font-weight:600">TestFlight: rist telefonen</b><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" dot="{{ false }}" hint-size="90px,24px">Bare iPhone</x-import></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Apptest · spørsmål og svar" style="background:var(--surface-highlight); padding:clamp(48px,6vw,88px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:24px clamp(32px,6vw,80px); align-items:start">
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Spørsmål og svar</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.9rem); line-height:1.08; letter-spacing:-.015em">Står du fast?</h2>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; grid-column:span 1">
+        <sc-for list="{{ faq }}" as="q" hint-placeholder-count="5">
+          <details style="border-bottom:1px solid var(--line)">
+            <summary style="min-height:56px; padding:12px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; cursor:pointer; box-sizing:border-box">
+              <span style="font-weight:500">{{ q.q }}</span>
+              <span aria-hidden="true" style="color:var(--muted); font-size:1.3rem; line-height:1">+</span>
+            </summary>
+            <p style="margin:0; padding:0 22px 18px; color:var(--muted); max-width:58ch">{{ q.a }}</p>
+          </details>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;},&quot;enhet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;iphone&quot;,&quot;android&quot;,&quot;apk&quot;,&quot;pc&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'iphone'|'android'|'apk'|'pc'&quot;},&quot;kjenteFeil&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;tom&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'full'|'tom'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, w: 1440, i: 0, rolle: 'montor', andre: false, kryss: null, kopiert: '', enhet: 'iphone', redusert: false };
+  root = React.createRef();
+  VERSJON = '0.9.3 (48)';
+  componentDidMount() {
+    this.applyTheme();
+    const el = this.root.current;
+    const m = () => { const w = el && el.clientWidth; if (w && w !== this.state.w) this.setState({ w }); };
+    this.ro = new ResizeObserver(m); if (el) this.ro.observe(el); m();
+    const mq = matchMedia('(prefers-reduced-motion: reduce)');
+    this.setState({ redusert: mq.matches, enhet: this.finnEnhet() });
+    this.startVeksling(mq.matches);
+    try { const s = JSON.parse(localStorage.getItem(this.noekkel()) || 'null'); if (Array.isArray(s)) this.setState({ kryss: s }); } catch (e) {}
+  }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); if (p.enhet !== this.props.enhet) this.setState({ enhet: this.finnEnhet() }); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); clearInterval(this.iv); clearTimeout(this.kt); }
+  noekkel() { return 'hengsel-apptest-sjekk-' + this.VERSJON; }
+  startVeksling(red) { clearInterval(this.iv); if (!red) this.iv = setInterval(() => this.setState(s => ({ i: (s.i + 1) % 4 })), 4000); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  finnEnhet() {
+    const q = new URLSearchParams(location.search).get('enhet');
+    const p = q || this.props.enhet || 'auto';
+    if (p !== 'auto') return p;
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return 'iphone';
+    if (/Android/.test(ua)) return 'android';
+    return 'pc';
+  }
+  qr() {
+    const N = 29, on = new Set();
+    const finder = (x0, y0) => { for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) { const r = Math.max(Math.abs(x - 3), Math.abs(y - 3)); if (r !== 2) on.add((x0 + x) + ',' + (y0 + y)); } };
+    const q = 2, n = N - 4;
+    finder(q, q); finder(q + n - 7, q); finder(q, q + n - 7);
+    let seed = 7;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const inF = (x < 8 && y < 8) || (x >= n - 8 && y < 8) || (x < 8 && y >= n - 8);
+      if (!inF && rnd() > .52) on.add((q + x) + ',' + (q + y));
+    }
+    return [...on].map(k => { const [x, y] = k.split(','); return `M${x} ${y}h1v1h-1z`; }).join('');
+  }
+  kopier(tekst, hvem) {
+    try { navigator.clipboard && navigator.clipboard.writeText(tekst); } catch (e) {}
+    clearTimeout(this.kt); this.setState({ kopiert: hvem }); this.kt = setTimeout(() => this.setState({ kopiert: '' }), 2000);
+  }
+  renderVals() {
+    const { dark, w, i } = this.state;
+    const smal = w < 760;
+    let enhet = this.state.enhet;
+    if (enhet === 'pc' && smal && !new URLSearchParams(location.search).get('enhet') && (this.props.enhet || 'auto') === 'auto') enhet = 'iphone';
+    const erPc = enhet === 'pc';
+
+    const SL = [
+      ['idag', 'I dag', 'Hengsel: I dag med neste jobb, adresse og knappen Jeg er på vei'],
+      ['jobben', 'Jobben', 'Hengsel: jobben med tegning, mål og bilder'],
+      ['ks', 'KS', 'Hengsel: KS-sjekkliste punkt for punkt'],
+      ['ferdig', 'Ferdig montert', 'Hengsel: meld ferdig montert med kundens signatur'],
+    ];
+    const slides = SL.map(([k, navn, alt], n) => ({
+      navn, alt: n === i ? alt : '', lys: `hengsel.no/ios/${k}-lys.png`, mork: `hengsel.no/ios/${k}-mork.png`,
+      sel: n === i ? 'true' : 'false', skjult: n === i ? undefined : 'true',
+      go: () => { this.setState({ i: n }); this.startVeksling(this.state.redusert); },
+      wrap: { position: n === 0 ? 'relative' : 'absolute', inset: n === 0 ? undefined : 0, opacity: n === i ? 1 : 0, transition: this.state.redusert ? 'none' : 'opacity 700ms cubic-bezier(.2,.7,.2,1)', pointerEvents: n === i ? 'auto' : 'none' },
+      dot: { width: 8, height: 8, borderRadius: 999, background: n === i ? 'var(--ink)' : 'var(--surface-highlight-strong)', transition: 'background 160ms' },
+    }));
+
+    const V = {
+      iphone: { id: 'iphone', t: 'iPhone og iPad', via: 'TestFlight', knapp: 'Åpne i TestFlight', href: '#testflight',
+        steg: ['Installer TestFlight fra App Store.', 'Trykk «Åpne i TestFlight» og så «Installer».', 'Åpne Hengsel og logg inn med demobrukeren.'] },
+      android: { id: 'android', t: 'Android', via: 'Google Play', knapp: 'Bli tester i Google Play', href: '#play',
+        steg: ['Trykk knappen og godta invitasjonen.', 'Installer Hengsel fra Google Play.', 'Åpne Hengsel og logg inn med demobrukeren.'] },
+      apk: { id: 'apk', t: 'Android uten Google Play', via: 'APK-fil', knapp: 'Last ned APK', href: '#apk',
+        steg: ['Last ned APK-fila.', 'Åpne fila og tillat installering fra denne kilden.', 'Installer, åpne Hengsel og logg inn.'] },
+    };
+    const medNr = v => ({ ...v, steg: v.steg.map((t, n) => ({ t, nr: String(n + 1) })) });
+    const hovedId = V[enhet] ? enhet : 'iphone';
+    const andre = ['iphone', 'android', 'apk'].filter(k => k !== hovedId).map(k => medNr(V[k]));
+
+    const R = [
+      { id: 'montor', label: 'Montør', t: 'Montør', s: 'I dag, Plan, Saker og Meg.', bilde: 'avvik', alt: 'Hengsel: meld avvik med bilde',
+        punkter: ['Hent dagens jobber med «Klar uten nett».', 'Trykk «På vei» og åpne jobben.', 'Kryss av KS punkt for punkt, med bilde.', 'Meld avvik og ferdig montert med signatur.'], bruker: 'montor@demo.hengsel.no' },
+      { id: 'firmaleder', label: 'Firmaleder', t: 'Firmaleder', s: 'Alt montøren har, og fanen Nye.', plass: 'Forespørsler',
+        punkter: ['Svar på en forespørsel med «Ta jobben» eller «Avslå».', 'Sett en montør på jobben.', 'Se varselet når en montering er flyttet.'], bruker: 'firmaleder@demo.hengsel.no' },
+      { id: 'utkjorer', label: 'Utkjører', t: 'Utkjører', s: 'I dag (ruten), Lager og Meg.', plass: 'Rute for dagen',
+        punkter: ['Logg inn med engangskode på e-post.', 'Åpne ruten og trykk «Start navigasjon».', 'Meld mottatt med «Skann kolli».', 'Lever med bilder og signatur.'], bruker: 'utkjorer@demo.hengsel.no' },
+      { id: 'lager', label: 'Ansatt eller lager', t: 'Ansatt eller lager', s: 'I dag, Uke og Kontrollmål. Lager har også Mottak og Ut.', plass: 'Mottak',
+        punkter: ['Registrer et kontrollmål.', 'Ta imot kolli under Mottak.', 'Lever ut under Ut, også delvis.', 'Signer for mottakeren.'], bruker: 'lager@demo.hengsel.no' },
+    ];
+    const r = R.find(x => x.id === this.state.rolle) || R[0];
+
+    const S = ['Logg inn med Face ID', 'Hent jobbene med «Klar uten nett»', 'Trykk «På vei» på neste jobb', 'Kryss av KS punkt for punkt', 'Ta bilde og merk på det', 'Meld avvik uten nett', 'Ferdig montert med signatur', 'Send feilrapport fra Meg'];
+    const kryss = this.state.kryss || [0, 1, 2, 3];
+    const lagre = k => { this.setState({ kryss: k }); try { localStorage.setItem(this.noekkel(), JSON.stringify(k)); } catch (e) {} };
+
+    const B = [
+      { v: this.VERSJON, d: '11. oktober 2026', linjer: ['Utkjøreren logger inn med engangskode på e-post.', 'Lager kan levere ut deler av en ordre.'] },
+      { v: '0.9.2 (45)', d: '4. oktober 2026', linjer: ['Firmalederen svarer på forespørsler under Nye.', 'Varsel når en montering er flyttet.'] },
+      { v: '0.9.1 (41)', d: '27. september 2026', linjer: ['«Klar uten nett» henter dagens jobber.', 'Pillen øverst viser hva som venter på nett.', 'Kontrollmål for ansatte.'] },
+    ];
+    const tomFeil = (new URLSearchParams(location.search).get('feil') || this.props.kjenteFeil) === 'tom';
+    const F = tomFeil ? [] : [
+      { t: 'Skanneren finner ikke alltid strekkoden i svakt lys.', s: 'Utkjører og lager · retting kommer i neste bygg' },
+      { t: 'På iPad kan tastaturet dekke feltet «Hvorfor?» i avviket.', s: 'Montør · iPad' },
+    ];
+
+    return {
+      root: this.root, dark, lys: !dark,
+      blokkProps: { style: { boxSizing: 'border-box' } },
+      versjon: this.VERSJON, dato: '11. oktober 2026',
+      heroMax: smal ? '250px' : '320px',
+      slides, slideNavn: SL[i][1],
+      erPc, erTlf: !erPc,
+      installTittel: erPc ? 'Åpne siden på telefonen.' : 'Installer på telefonen din.',
+      qr: this.qr(),
+      alleVeier: ['iphone', 'android', 'apk'].map(k => medNr(V[k])),
+      hoved: medNr(V[hovedId]), andre,
+      visAndre: this.state.andre, andreApen: this.state.andre ? 'true' : 'false',
+      andreTekst: this.state.andre ? 'Skjul andre telefoner' : 'Andre telefoner',
+      toggleAndre: () => this.setState(s => ({ andre: !s.andre })),
+      rolleFaner: R.map(x => ({ id: x.id, label: x.label })), rolleId: r.id,
+      velgRolle: id => this.setState({ rolle: id }),
+      rolle: { ...r, harBilde: !!r.bilde, utenBilde: !r.bilde, lys: r.bilde ? `hengsel.no/ios/${r.bilde}-lys.png` : '', mork: r.bilde ? `hengsel.no/ios/${r.bilde}-mork.png` : '' },
+      kopierBruker: () => this.kopier(r.bruker, 'bruker'),
+      kopierPassord: () => { const el = document.querySelector('[data-demopassord="' + r.id + '"]'); this.kopier(el ? el.textContent : '', 'passord'); },
+      kopierBrukerTekst: this.state.kopiert === 'bruker' ? 'Kopiert' : 'Kopier',
+      kopierPassordTekst: this.state.kopiert === 'passord' ? 'Kopiert' : 'Kopier',
+      antallPunkter: S.length, antallKryss: kryss.length,
+      fremdrift: `${kryss.length} av ${S.length}`, fremdriftPst: (kryss.length / S.length * 100) + '%',
+      sjekk: S.map((t, n) => {
+        const on = kryss.includes(n);
+        return { t, on,
+          hake: on ? '✓' : '',
+          toggle: () => lagre(on ? kryss.filter(x => x !== n) : [...kryss, n].sort((a, b) => a - b)),
+          box: { width: 24, height: 24, flex: 'none', borderRadius: 7, boxSizing: 'border-box', border: '1.5px solid ' + (on ? 'var(--ink)' : 'var(--soft)'), background: on ? 'var(--ink)' : 'transparent', color: 'var(--bg)', display: 'grid', placeItems: 'center', fontSize: 14, fontWeight: 600, lineHeight: 1, transition: 'background 160ms' },
+          tekst: { color: on ? 'var(--muted)' : 'var(--ink)', textDecoration: on ? 'line-through' : 'none', textDecorationColor: 'var(--soft)' } };
+      }),
+      bygg: B.map((b, n) => ({ ...b, open: n === 0,
+        prikk: { width: 12, height: 12, borderRadius: 999, boxSizing: 'border-box', marginTop: 4, flex: 'none', background: n === 0 ? 'var(--ink)' : 'var(--surface)', border: '2px solid ' + (n === 0 ? 'var(--ink)' : 'var(--beige-1, #C3B5A7)') },
+        strek: { width: 1, flex: 1, background: n === B.length - 1 ? 'transparent' : 'var(--line)', marginTop: 4 } })),
+      feil: F, harFeil: F.length > 0, ingenFeil: F.length === 0, antallFeil: F.length === 1 ? '1 feil' : F.length + ' feil',
+      faq: [
+        { q: 'Appen sier at den har utløpt', a: 'Testversjoner i TestFlight varer i 90 dager. Åpne TestFlight og installer den nyeste versjonen.' },
+        { q: 'Android sier ukjent kilde', a: 'Det gjelder APK-fila. Trykk Innstillinger i meldingen, slå på «Tillat fra denne kilden» og gå tilbake.' },
+        { q: 'Jeg kommer ikke inn', a: 'Sjekk at du bruker demobrukeren for rollen din, og kopier passordet fra denne siden. Virker det fortsatt ikke, skriv til hei@hengsel.no.' },
+        { q: 'Hvordan logger jeg ut?', a: 'Gå til Meg og trykk «Logg ut» nederst.' },
+        { q: 'Hvordan får jeg tilbake ekte data?', a: 'Logg ut av demobrukeren og logg inn med din egen bruker.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
