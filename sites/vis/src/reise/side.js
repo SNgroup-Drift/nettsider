@@ -32,7 +32,7 @@
    card:{kind:'note',lbl:'Tilbudet er klart',t:'54 linjer fra CET',p:'Ingen import og ingen skriving. Selgeren har bare tegnet.'},
    script:function(){
     at(300,function(){cap('Kunden er opprettet i CRM. Navn og prosjektnummer 10087 går til CET, så ingen skriver det to ganger.');pk('cet','out','Kunde 10087',1500)});
-    at(2600,function(){cap('Selgeren lagrer tegningen. CET sender ordrefilen og to PDF-er automatisk.');pk('cet','in','Nobia-XML',1500)});
+    at(2600,function(){cap('Selgeren lagrer tegningen. CET sender ordrefilen og to PDF-er automatisk.');pk('cet','in','Hovedleverandør-XML',1500)});
     at(3300,function(){pk('cet','in','Tegninger · PDF',1500)});
     at(4000,function(){pk('cet','in','Elementliste · PDF',1500)});
     ['u','o','f','s','d'].forEach(function(r,i){at(4300+i*500,function(){show(r);st(r,'ok','Lest')})});

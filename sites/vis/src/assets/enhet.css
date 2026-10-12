@@ -41,7 +41,8 @@
 
 /* Skjermen er et bilde (assets/bilder.js legger <img class="sk"> i .skjerm). Kundens reise legger SMS-varselet oppå (.notif). */
 .skjerm{position:relative;display:block}
-.skjerm>img.sk{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.skjerm>picture{display:block;width:100%;height:100%}
+.skjerm>img.sk,.skjerm>picture>img.sk{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
 
 /* ‹ › og teller under rammen, og enhetsvelgeren (PC · iPad · Telefon) over */
 .sk-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}

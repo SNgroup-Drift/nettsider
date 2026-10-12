@@ -39,9 +39,12 @@ var G={
  kunden:{t:'Kunden',n:'Min side',p:'Tilvalg, signering, levering, montering og reklamasjon. Uten app.',lede:'Det kunden ser og gjør i Min side, på mobil og PC.'},
  leverandoren:{t:'Leverandøren',n:'Koblingene',p:'Ordrebekreftelse på e-post, hvitevarer via Tradeplace, CET.',lede:'Hvordan ordrebekreftelser og bestillinger kommer inn, kobles til ordren og besvares.'}
 };
+/* mål på bildene (bygg.mjs fyller inn width og height fra filene) */
+var IMGMAL=/*IMGMAL*/{}/*IMGMAL-slutt*/;
+function imgmal(b){var m=IMGMAL[b.replace(/^\/img\//,'').replace(/\.webp$/,'')];return m?' width="'+m[0]+'" height="'+m[1]+'"':''}
 window.ROM={R:R,C:C,G:G,
  /* kort for ett rom (brukes på /rom/ og gruppesidene) */
- card:function(c){return '<a class="card rom" href="'+c.u+'"><div class="bilde enhet-bilde"><img src="'+c.b+'" alt="" loading="lazy"></div><span class="pill info nodot">'+c.type+'</span><span class="ktittel">'+c.t+'</span><p>'+c.p+'</p><span class="go">'+c.go+' ›</span></a>'},
+ card:function(c){return '<a class="card rom" href="'+c.u+'"><div class="bilde enhet-bilde"><img src="'+c.b+'"'+imgmal(c.b)+' alt="" loading="lazy"></div><span class="pill info nodot">'+c.type+'</span><span class="ktittel">'+c.t+'</span><p>'+c.p+'</p><span class="go">'+c.go+' ›</span></a>'},
  /* valgt rolle: ?rolle= først, så lagret valg */
  rolle:function(){var cur='alle';try{var q=new URLSearchParams(location.search).get('rolle');var ok=function(k){return R.some(function(x){return x[0]===k})};
    if(q==='sigdal')q='nobia';if(q&&ok(q))cur=q;else{var s=localStorage.getItem('vis-rolle');if(s&&ok(s))cur=s}}catch(e){}return cur},

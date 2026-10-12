@@ -1,4 +1,3 @@
-import "./motion";
 /**
  * Skriptet på /apptest. Siden virker uten det: uten skript står første bilde stille, alle tre installeringsveiene vises,
  * avkrysningene huskes ikke og «Kopier»-knappene er skjult. Ingen nettverk, ingen sporing, ingen style-attributter (CSP).

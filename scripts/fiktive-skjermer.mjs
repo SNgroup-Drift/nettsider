@@ -1,239 +1,234 @@
 #!/usr/bin/env node
 /**
- * K-177: fiktive skjermer med det nye merket til alle nettsidene.
+ * K-177: fiktive demo-skjermer fra designfasiten, med det nye Hengsel-merket, som webp i lys og mørk, 1× og 2×.
  *
- * Gjengir skjermer fra designfasiten (Playwright, bare Chromium) til webp. Ingen ekte skjermbilder fra CRM eller apper.
- *  - CRM sju skjermer (eksport/), 10 Tilbud, 15 Kundeportalen, 18 Kontrollmål, 04 Leder, 30 Telefon og iPad, 32 Mål og skisser:
- *    fra innlandet-crm-sync, gren claude/hengsel-merke-v3, docs/design/v4/crm/ (CRM_DESIGN).
- *  - Hengsel Ute (iOS): docs/design/hengsel/hengsel.no/ios/ med «Din logo» på «I dag», uten statuslinje og Dynamic Island
- *    (rammene på nettsidene tegner dem én gang).
+ * Kilde: innlandet-crm-sync, gren claude/hengsel-merke-v3, docs/design/v4/{crm,hengsel} (*.dc.html). Ingenting er tatt fra kjørende CRM eller apper.
+ * Skjermene gjengis med Playwright (bare Chromium) fra designfilene, ikke fra bilder av dem. Navn på leverandører og merker byttes til
+ * nøytrale navn før bildet tas (lib/design.mjs, ERSTATT), og kontrolleres mot FORBUDT. Versjonen nederst i CRM-menyen leses fra
+ * sites/hengsel/src/apptest-lenker.ts, så den er den samme overalt.
  *
- * Alle navn og tall er oppdiktede. Teksten går gjennom ERSTATT før skjermbildet tas, og versjonen nederst i CRM-menyen leses fra
- * sites/hengsel/src/apptest-lenker.ts (ikke «v. 1.4.0» fra designet).
+ * Filnavn (i sites/vis/src/skjermbilder):
+ *   <navn>.webp            lys, 2×          <navn>@1x.webp         lys, 1×
+ *   <navn>-mork.webp       mørk, 2×         <navn>-mork@1x.webp    mørk, 1×       (bare der skjermen følger temaet)
+ *   PC-skjermer er 1440 × 900 i designet. Studio Display-rammen er 16:9, så <navn>.webp er vinduet skalert til 90 % og midtstilt på 16:9
+ *   (hele menyen med merket nederst er med). mb-<navn>.webp er hele 16:10 (MacBook-rammen).
  *
- * Bruk (fra rota):
- *   NPM_DIR=/sti/med/node_modules-mappe CRM_DESIGN=/sti/til/docs/design/v4/crm node scripts/fiktive-skjermer.mjs [--tekst] [mål]
- *   NPM_DIR må inneholde node_modules med react@18.3.1, react-dom@18.3.1 og @babel/standalone@7.29.0 (designfilene henter dem fra unpkg).
- *   --tekst: skriv bare ut all tekst i rammene (for revisjon av navn), ingen bilder.
- *   [mål]: bare disse utfilene (navn uten .webp), f.eks. crm-min-dag.
- * Resultat: sites/vis/src/skjermbilder/<navn>.webp (2× for PC og iPad, 3× for telefon) og claude/k177-skjermer/<navn>@1x.webp (1×).
+ * Kjør: NPM_DIR=/sti/til/mappe-med-react-og-babel DESIGN=/sti/til/docs/design/v4 node scripts/fiktive-skjermer.mjs [navn …]
+ *   NPM_DIR: mappe med node_modules for react@18.3.1, react-dom@18.3.1 og @babel/standalone@7.29.0 (designfilene henter dem fra unpkg).
  */
-import http from "node:http";
-import fs from "node:fs";
-import path from "node:path";
 import sharp from "sharp";
-import { chromium } from "playwright";
+import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { FORBUDT, finnRammer, forbered, startDesign, taInnhold } from "./lib/design.mjs";
 
-const rot = path.resolve(import.meta.dirname, "..");
-const NPM = path.join(process.env.NPM_DIR ?? "", "node_modules");
-const CRM = process.env.CRM_DESIGN ?? path.resolve(rot, "..", "innlandet-crm-sync", "docs", "design", "v4", "crm");
-const IOS = path.join(rot, "docs", "design", "hengsel", "hengsel.no", "ios");
-const UT = path.join(rot, "sites", "vis", "src", "skjermbilder");
-const UT1X = path.join(rot, "claude", "k177-skjermer");
-const tekstModus = process.argv.includes("--tekst");
-const bare = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+const rot = resolve(import.meta.dirname, "..");
+const DESIGN = process.env.DESIGN ?? "/home/user/innlandet-crm-sync/docs/design/v4";
+const UT = join(rot, "sites", "vis", "src", "skjermbilder");
+const versjon = (await readFile(join(rot, "sites", "hengsel", "src", "apptest-lenker.ts"), "utf8")).match(/versjon: "([^"]+)"/)[1];
 
-const VERSJON = /versjon:\s*"([^"]+)"/.exec(fs.readFileSync(path.join(rot, "sites/hengsel/src/apptest-lenker.ts"), "utf8"))[1];
-
-/** Tekst som byttes i rammene før skjermbildet tas. [mønster, erstatning]. Alt er oppdiktet. */
-const ERSTATT = [
-  [/v\. \d+\.\d+\.\d+/g, `v. ${VERSJON}`],
-  [/(?<!Hoved)Leverandør ([A-Z])\b/g, "Hovedleverandør $1"],
-];
-import { ERSTATT_NAVN } from "./lib/fiktive-navn.mjs";
-ERSTATT.push(...ERSTATT_NAVN);
-
-const MIME = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".png": "image/png", ".webp": "image/webp", ".otf": "font/otf", ".woff2": "font/woff2", ".svg": "image/svg+xml" };
-const serve = (dir) => new Promise((ok) => {
-  const s = http.createServer((q, res) => {
-    const p = path.join(dir, decodeURIComponent(q.url.split("?")[0]));
-    fs.readFile(p, (e, d) => { if (e) { res.writeHead(404); res.end(); } else { res.writeHead(200, { "content-type": MIME[path.extname(p)] ?? "application/octet-stream" }); res.end(d); } });
-  });
-  s.listen(0, "127.0.0.1", () => ok(s));
+const E = "crm/eksport/CRM sju skjermer.dc.html";
+// type: pc (CRM-vindu 1440 × 900), pc169 (1440 × 810, allerede 16:9), ipad (1180 × 820), tlf (390 × 844), side (portal på PC, hel side)
+// mork: "kart" = fargene byttes etter 07 Lys og mørk, "<eksportnavn>" = designet har egen mørk ramme, uten = alltid lys (portal, PDF, e-post)
+const pc = (navn, fil, skjerm, nr = 0, o = {}) => ({ navn, fil, skjerm, nr, type: "pc", mork: "kart", ...o });
+const ipad = (navn, fil, skjerm, nr = 0, o = {}) => ({ navn, fil, skjerm, nr, type: "ipad", mork: "kart", ...o });
+const tlf = (navn, fil, skjerm, nr = 0, o = {}) => ({ navn, fil, skjerm, nr, type: "tlf", mork: "kart", ...o });
+const portal = (navn, skjerm) => ({ navn, fil: "crm/15 Kundeportalen.dc.html", skjerm, nr: 0, type: "tlf", mork: false, klokke: true });
+const ute = (navn, skjerm, o = {}) => ({ navn, fil: "hengsel/36 Hengsel montor v2.dc.html", skjerm, nr: 0, type: "tlf", mork: "kart", ute: true, ...o });
+/** hengsel.no: rollebildene på /apptest (public/img/apptest/<navn>-lys|mork[@1x].webp) og iPad-bildet på /ute */
+const HENGSEL = join(rot, "sites", "hengsel", "public", "img");
+const rolle = (navn, fil, skjerm, o = {}) => ({ navn, fil, skjerm, nr: 0, type: "tlf", mork: "kart", klokke: true, ute: true, ut: { dir: join(HENGSEL, "apptest"), tema: true }, ...o });
+const doc = (id, label, mork) => ({
+  navn: id, fil: "crm/65 Dokumenter slik lages det.dc.html", skjerm: `eksport:${id}-lys`, nr: 0, type: "pc169", mork: mork ? `eksport:${id}-mork` : false,
 });
-const LOKALT = {
-  "react@18.3.1/umd/react.production.min.js": "react/umd/react.production.min.js",
-  "react-dom@18.3.1/umd/react-dom.production.min.js": "react-dom/umd/react-dom.production.min.js",
-  "@babel/standalone@7.29.0/babel.min.js": "@babel/standalone/babel.min.js",
-};
 
-// ── Hva som lages ────────────────────────────────────────────────────────────────────────────────────────────────
-// [utnavn, designfil, skjermkode (starten av data-screen-label, eller eksport:<navn>), nr. ramme i skjermen, skala, klipp-høyde]
-const PC = 2, TLF = 3;
-const APPTEST = path.join(rot, "sites", "hengsel", "public", "img", "apptest");
-const CRM_JOBBER = [
-  ["crm-min-dag", "eksport/CRM sju skjermer.dc.html", "eksport:crm-min-dag", 0, PC],
-  ["crm-bestilling", "eksport/CRM sju skjermer.dc.html", "eksport:crm-bestilling", 0, PC],
-  ["crm-etterkalkyle", "eksport/CRM sju skjermer.dc.html", "eksport:crm-etterkalkyle", 0, PC],
-  ["crm-montasje", "eksport/CRM sju skjermer.dc.html", "eksport:crm-montasje", 0, PC],
-  ["crm-saker", "eksport/CRM sju skjermer.dc.html", "eksport:crm-saker", 0, PC],
-  ["crm-salgstavla", "eksport/CRM sju skjermer.dc.html", "eksport:crm-salgstavla", 0, PC],
-  ["crm-resultater", "eksport/CRM sju skjermer.dc.html", "eksport:crm-resultater", 0, PC],
-  ["crm-tilbud", "10 Tilbud.dc.html", "T14 ", 0, PC],
-  ["crm-mal-skisser", "10 Tilbud.dc.html", "T04.1 ", 0, PC],
-  ["crm-ordre-kontrollmal", "18 Kontrollmal befaring belastninger.dc.html", "H3.1 ", 0, PC],
-  ["crm-moduler", "04 Innstillinger Leder.dc.html", "I18L ", 1, PC],
-  ["crm-tilbud-kunde", "15 Kundeportalen.dc.html", "KP1 ", 0, PC, 900],
-  ["kundeportal-pc", "15 Kundeportalen.dc.html", "KP3 ", 0, PC],
-  ["crm-ipad-leder", "30 Telefon og iPad.dc.html", "A05 ", 0, PC],
-  ["crm-ipad-belastninger", "18 Kontrollmal befaring belastninger.dc.html", "H3.12 ", 0, PC],
-  ["crm-ipad-kontrollmal", "18 Kontrollmal befaring belastninger.dc.html", "H3.5 ", 0, PC],
-  ["crm-ipad-innstillinger", "30 Telefon og iPad.dc.html", "A08.5 ", 0, PC],
-  ["crm-tlf-min-dag", "30 Telefon og iPad.dc.html", "A10.1 ", 0, TLF],
-  ["crm-tlf-kundekort", "30 Telefon og iPad.dc.html", "A01 ", 0, TLF],
-  ["crm-tlf-ordre", "30 Telefon og iPad.dc.html", "A03 ", 0, TLF],
-  ["kundeportal-k03", "15 Kundeportalen.dc.html", "K03 ", 0, TLF],
-  ["portal-tilbud", "15 Kundeportalen.dc.html", "K04 ", 0, TLF],
-  ["kundeportal-k06", "15 Kundeportalen.dc.html", "K06 ", 0, TLF],
-  ["kundeportal-k08", "15 Kundeportalen.dc.html", "K08 ", 0, TLF],
-  ["portal-levering", "15 Kundeportalen.dc.html", "K10 ", 0, TLF],
-  ["portal-montering", "15 Kundeportalen.dc.html", "K12 ", 0, TLF],
-  ["portal-fdv", "15 Kundeportalen.dc.html", "K14 ", 0, TLF],
-  ["ute-laser", "32 Mal og skisser.dc.html", "P14 ", 0, TLF],
-  // «Slik lages det» (D1–D12) fra 65 Dokumenter slik lages det, lys. 1440 × 810 (16:9) som Studio Display-rammen på Visningsrommet
-  ["dok-d1", "65 Dokumenter slik lages det.dc.html", "D1 ", 0, PC],
-  ["dok-d2a", "65 Dokumenter slik lages det.dc.html", "D2a ", 0, PC],
-  ["dok-d2b", "65 Dokumenter slik lages det.dc.html", "D2b ", 0, PC],
-  ["dok-d3", "65 Dokumenter slik lages det.dc.html", "D3 ", 0, PC],
-  ["dok-d4", "65 Dokumenter slik lages det.dc.html", "D4 ", 0, PC],
-  ["dok-d5", "65 Dokumenter slik lages det.dc.html", "D5 ", 0, PC],
-  ["dok-d6", "65 Dokumenter slik lages det.dc.html", "D6 ", 0, PC],
-  ["dok-d7", "65 Dokumenter slik lages det.dc.html", "D7 ", 0, PC],
-  ["dok-d8", "65 Dokumenter slik lages det.dc.html", "D8 ", 0, PC],
-  ["dok-d9", "65 Dokumenter slik lages det.dc.html", "D9 ", 0, PC],
-  ["dok-d10", "65 Dokumenter slik lages det.dc.html", "D10 ", 0, PC],
-  ["dok-d11", "65 Dokumenter slik lages det.dc.html", "D11 ", 0, PC],
-  // /apptest på hengsel.no: telefonrammen på siden tegner statuslinje og Dynamic Island, så skjermene er uten (2×)
-  ["foresporsler-lys", "18 Kontrollmal befaring belastninger.dc.html", "H3.13 ", 0, 2, 0, APPTEST],
-  ["ruten-lys", "31 Utkjorer-app.dc.html", "U02.2 ", 0, 2, 0, APPTEST],
-  ["mottak-lys", "31 Utkjorer-app.dc.html", "U04.2 ", 0, 2, 0, APPTEST],
+/** Skjermene sngroup.no viser i Hengsel-delen (sites/sngroup/public/skjermbilder) */
+export const SNGROUP = ["crm-tilbud", "ute-i-dag", "ute-jobb-under", "ute-ks", "portal-tilbud"];
+
+export const SKJERMER = [
+  // CRM på PC (CRM sju skjermer, 10 Tilbud, 18, 50, 32)
+  pc("crm-min-dag", E, "eksport:crm-min-dag"),
+  pc("crm-bestilling", E, "eksport:crm-bestilling"),
+  pc("crm-etterkalkyle", E, "eksport:crm-etterkalkyle"),
+  pc("crm-montasje", E, "eksport:crm-montasje"),
+  pc("crm-saker", E, "eksport:crm-saker"),
+  pc("crm-salgstavla", E, "eksport:crm-salgstavla"),
+  pc("crm-resultater", E, "eksport:crm-resultater"),
+  pc("crm-tilbud", "crm/10 Tilbud.dc.html", "T01.1 Tilbudslista", 0, { mb: false }),
+  pc("crm-tilbud-kunde", "crm/10 Tilbud.dc.html", "T08.1 Tilbud og kunde", 0, { mb: true }),
+  pc("crm-ordre-kontrollmal", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.1 Ordre › Kontrollmål", 0, { mb: true }),
+  pc("crm-moduler", "crm/50 Moduler og punktrapport.dc.html", "I31 Moduler (superadmin)", 0, { mb: true }),
+  pc("crm-mal-skisser", "hengsel/32 Mal og skisser.dc.html", "C01 Ordre › Mål og skisser", 0, { mb: true }),
+  // CRM på iPad (1180 × 820) og telefon
+  ipad("crm-ipad-min-dag", E, "eksport:crm-min-dag-800"),
+  ipad("crm-ipad-leder", "crm/17 Besluttet 07.10.dc.html", "B4.4 Leder på iPad og telefon"),
+  ipad("crm-ipad-kontrollmal", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.5 Utfylling på iPad og telefon"),
+  ipad("crm-ipad-belastninger", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.12 Belastninger på iPad"),
+  ipad("crm-ipad-innstillinger", "crm/17 Besluttet 07.10.dc.html", "B5.3 Innstillinger på iPad og telefon"),
+  tlf("crm-tlf-min-dag", "crm/16 Inngaende faktura.dc.html", "OP4 Min dag på telefon", 0, { klokke: true }),
+  tlf("crm-tlf-ordre", "crm/16 Inngaende faktura.dc.html", "EK3 Etterkalkyle på telefon", 0, { klokke: true }),
+  tlf("crm-tlf-kundekort", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.9 Befaring på iPad og telefon", 1, { klokke: true }),
+  tlf("crm-tlf-leder", "crm/17 Besluttet 07.10.dc.html", "B4.4 Leder på iPad og telefon", 1, { klokke: true }),
+  tlf("crm-tlf-kontrollmal", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.5 Utfylling på iPad og telefon", 1, { klokke: true }),
+  tlf("crm-tlf-innstillinger", "crm/17 Besluttet 07.10.dc.html", "B5.3 Innstillinger på iPad og telefon", 1, { klokke: true }),
+  tlf("crm-meny-apen", "crm/30 Telefon og iPad.dc.html", "A10.1 Menyen åpen, lys", 0, { klokke: true, mork: "A10.2 Menyen åpen, mørk" }),
+  // Kundeportalen (alltid lys, 07 Lys og mørk)
+  portal("kundeportal-k03", "K03 Mine kjøp"),
+  portal("portal-tilbud", "K04 Tilbudet"),
+  portal("kundeportal-k06", "K06 Oppgraderinger"),
+  portal("kundeportal-k08", "K08 Kjøpsavtalen"),
+  portal("portal-levering", "K10 Bekreft leveringsdag"),
+  portal("portal-montering", "K12 Bekreft montering"),
+  portal("portal-fdv", "K14 Ditt nye kjøkken"),
+  { navn: "kundeportal-pc", fil: "crm/15 Kundeportalen.dc.html", skjerm: "KP1 Mitt kjøkken", nr: 0, type: "side", mork: false },
+  // Hengsel Ute (iPhone og iPad)
+  ute("ute-i-dag", "MV1.3 Meld ferdig montert", { mork: "MV1 M I dag · mørk" }),
+  ute("ute-jobb-under", "MV4.1 Jobb · Under", { mork: "MV4.1 M Jobb · mørk" }),
+  ute("ute-ks", "MV16.1 KS · kamera avbrutt"),
+  ute("ute-ks-kamera", "MV16 KS · OK åpner kameraet"),
+  ute("ute-avvik", "MV17 Meld avvik · arket"),
+  ute("ute-punkter", "MV14 Punktliste · kunde"),
+  ute("ute-punktkort", "MV15 Løse et punkt"),
+  ute("ute-ferdig", "MV5.3 Oppsummering"),
+  ute("ute-typeskilt", "MV19.8 Hvitevarer · lagret"),
+  ute("ute-laser", "MV13.1 Laser · søker og funnet"),
+  { navn: "ute-ipad-bildeverktoy", fil: "hengsel/36 Hengsel montor v2.dc.html", skjerm: "MV18 Bildeverktøy på iPad 1180", nr: 0, type: "ipad", mork: "kart", ute: true },
+  // hengsel.no /apptest (rollene uten skjermbilde i designet) og /ute (iPad)
+  rolle("foresporsler", "crm/18 Kontrollmal befaring belastninger.dc.html", "H3.13 Firmaleder i Hengsel: Godta eller Bestrid", { }),
+  rolle("ruten", "hengsel/31 Utkjorer-app.dc.html", "U02.2 Rute for dagen"),
+  rolle("mottak", "hengsel/36 Hengsel montor v2.dc.html", "LG1 Mottak"),
+  { navn: "ipad-bildeverktoy-laser", fil: "hengsel/36 Hengsel montor v2.dc.html", skjerm: "MV18 Bildeverktøy på iPad 1180", nr: 0, type: "ipad", mork: false, ute: true, ut: { dir: join(HENGSEL, "app"), tema: false }, bare2x: true },
+  // «Slik lages det» (65 Dokumenter slik lages det, D1–D12; Studio Display 16:9)
+  doc("d1-lag-pdf-og-send", "D1", true),
+  doc("d2a-signer-med-bankid", "D2a", false),
+  doc("d2b-signert", "D2b", true),
+  doc("d3-send-ordrebekreftelse", "D3", true),
+  doc("d4-lag-tilvalgsliste", "D4", true),
+  doc("d5-lag-monteringsrapport", "D5", true),
+  doc("d6-lag-punktrapport", "D6", true),
+  doc("d7-lag-leveringspakke-fdv", "D7", true),
+  doc("d8-skriv-ut-plan", "D8", true),
+  doc("d9-lag-faktura", "D9", true),
+  doc("d10-sendt-til-kunden", "D10", true),
+  doc("d11-min-side-nytt", "D11", false),
+  doc("d12-e-postvarsel", "D12", false),
 ];
-// Hengsel Ute (iOS): [utnavn, iOS-fil, «Din logo» på toppen, bredde, høyde, skala]
-const IOS_JOBBER = [
-  ["ute-i-dag", "ios/idag-lys", true, 402, 874, TLF],
-  ["ute-jobb-under", "ios/jobben-lys", false, 402, 874, TLF],
-  ["ute-ks", "ios/ks-lys", false, 402, 874, TLF],
-  ["ute-ks-kamera", "ios/bilde-mal", false, 402, 874, TLF],
-  ["ute-avvik", "ios/avvik-lys", false, 402, 874, TLF],
-  ["ute-punkter", "ios/punkter-lys", false, 402, 874, TLF],
-  ["ute-ferdig", "ios/ferdig-lys", false, 402, 874, TLF],
-  ["ute-ipad-bildeverktoy", "img/ute-ipad-bildeverktoy", false, 1180, 820, PC],
-];
-// MacBook-varianter (16:10) lages av PC-bildene
-const MB = { "mb-crm-tilbud-kunde": "crm-tilbud-kunde", "mb-crm-ordre-kontrollmal": "crm-ordre-kontrollmal" };
 
-async function nettleser() {
-  const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
-  return b;
-}
-async function apne(b, server, fil, skala) {
-  const page = await b.newPage({ viewport: { width: 1600, height: 1400 }, deviceScaleFactor: skala });
-  await page.route("https://unpkg.com/**", (r) => {
-    const f = LOKALT[r.request().url().replace("https://unpkg.com/", "")];
-    return f ? r.fulfill({ path: path.join(NPM, f), contentType: "text/javascript" }) : r.abort();
-  });
-  await page.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.fulfill({ status: 200, contentType: "text/css", body: "" }));
-  page.on("pageerror", (e) => console.warn("  feil på siden:", e.message));
-  await page.goto(`http://127.0.0.1:${server.address().port}/${fil.split("/").map(encodeURIComponent).join("/")}`, { waitUntil: "networkidle" });
-  await page.evaluate(() => document.fonts.ready);
-  await page.waitForTimeout(1500);
-  await page.evaluate((erstatt) => {
-    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    for (let n = w.nextNode(); n; n = w.nextNode()) {
-      let t = n.nodeValue;
-      for (const [re, til] of erstatt) t = t.replace(new RegExp(re.source, re.flags), til);
-      if (t !== n.nodeValue) n.nodeValue = t;
+/** Utkast: «Din logo» der det gamle merket (app-ikon + «Hengsel UTE») sto i app-toppen, og ingen egen statuslinje/island (rammen har dem). */
+async function uteRydd(page, n) {
+  await page.evaluate((n) => {
+    const rot = document.querySelector(`[data-r="${n}"]`);
+    for (const img of rot.querySelectorAll('img[src*="hengsel-app-ikon"]')) {
+      const boks = img.parentElement;
+      boks.innerHTML = "";
+      const s = document.createElement("span");
+      s.textContent = "Din logo";
+      s.style.cssText = "border:1.5px dashed currentColor;border-radius:6px;padding:4px 12px;font:600 14px/1.2 Inter,system-ui,sans-serif;opacity:.72;white-space:nowrap";
+      boks.appendChild(s);
     }
-  }, ERSTATT.map(([re, til]) => [{ source: re.source, flags: re.flags }, til]).map(([r, t]) => [r, t]));
-  return page;
+    // statuslinjen (klokke, island, batteri) tegnes av telefonrammen: den første raden i skjermen gjøres usynlig
+    const rad = rot.querySelector(":scope > div:first-child");
+    if (rad && /\d{1,2}:\d{2}/.test(rad.textContent) && rad.getBoundingClientRect().height <= 60) for (const e of rad.querySelectorAll("*")) e.style.visibility = "hidden";
+  }, n);
 }
 
-/** Merker rammen: eksport:<navn> eller skjermen med denne koden og n-te ramme med fast bredde */
-async function merk(page, kode, n) {
-  return page.evaluate(([kode, n]) => {
-    document.querySelectorAll("[data-valgt]").forEach((e) => e.removeAttribute("data-valgt"));
-    if (kode.startsWith("eksport:")) {
-      const e = document.querySelector(`[data-eksport="${kode.slice(8)}"] > div`) ?? document.querySelector(`[data-eksport="${kode.slice(8)}"]`);
-      e.setAttribute("data-valgt", "1");
-      return true;
-    }
-    const s = [...document.querySelectorAll("[data-screen-label]")].find((e) => e.getAttribute("data-screen-label").startsWith(kode));
-    if (!s) return false;
-    const px = (v) => (/^\d+px$/.test(v) ? parseInt(v) : null);
-    const ok = [...s.querySelectorAll("div")].filter((d) => [1440, 1180, 820, 800, 390, 360].includes(px(d.style.width)));
-    const ytre = ok.filter((d) => !ok.some((o) => o !== d && o.contains(d)));
-    const e = ytre[n];
-    if (!e) return false;
-    e.setAttribute("data-valgt", "1");
-    // Merkelappene i designet («Klikk 3») hører ikke hjemme i skjermbildet
-    [...e.querySelectorAll("span, div")].filter((x) => /^Klikk\s*\.?\d/.test((x.textContent ?? "").trim()) && x.children.length === 0).forEach((x) => (x.style.visibility = "hidden"));
-    if (px(e.style.width) !== 1440) {
-      // Telefon og nettbrett: designet tegner egen ramme og statuslinje. Rammen på nettsiden tegner begge, så de tas bort her.
-      e.style.border = "0"; e.style.borderRadius = "0"; e.style.boxShadow = "none";
-      const klokke = [...e.querySelectorAll("span, div")].find((x) => /^0?9:41/.test((x.firstChild?.nodeValue ?? "").trim()));
-      const rad = klokke?.parentElement;
-      if (rad && e.contains(rad) && rad !== e) rad.style.visibility = "hidden";
-    }
-    return true;
-  }, [kode, n]);
+async function lagre(png, sti, { bredde, hoyde, pad } = {}) {
+  let p = sharp(png);
+  if (bredde || hoyde) p = p.resize({ width: bredde, height: hoyde, fit: "fill", kernel: "lanczos3" });
+  await p.webp({ quality: 84, effort: 5 }).toFile(sti);
 }
 
-async function tilWebp(buf, ut, kvalitet = 84) {
-  fs.mkdirSync(path.dirname(ut), { recursive: true });
-  await sharp(buf).webp({ quality: kvalitet, effort: 5 }).toFile(ut);
+/** PC-vinduet (16:10) skalert til 90 % og midtstilt på en 16:9-flate i samme farge som skjermen, så hele vinduet vises i Studio Display-rammen. */
+async function pc169(png, mork) {
+  const m = await sharp(png).metadata();
+  const h = Math.round((m.width * 9) / 16);
+  const vinduH = h;
+  const vinduW = Math.round((m.width * h) / m.height);
+  const vindu = await sharp(png).resize(vinduW, vinduH, { kernel: "lanczos3" }).png().toBuffer();
+  const flate = mork ? { r: 31, g: 25, b: 20 } : { r: 242, g: 233, b: 219 };
+  return sharp({ create: { width: m.width, height: h, channels: 4, background: flate } })
+    .composite([{ input: vindu, left: Math.round((m.width - vinduW) / 2), top: 0 }])
+    .png()
+    .toBuffer();
 }
-const ut1x = (navn, buf, w) => sharp(buf).resize({ width: w }).webp({ quality: 82, effort: 5 }).toFile((fs.mkdirSync(UT1X, { recursive: true }), path.join(UT1X, `${navn}@1x.webp`)));
 
-const server = await serve(CRM);
-const b = await nettleser();
-const ønsket = (navn) => !bare.length || bare.includes(navn);
-
-// CRM-ark: grupper per fil og skala
-const perFil = new Map();
-for (const j of CRM_JOBBER) if (ønsket(j[0]) || tekstModus) (perFil.get(j[1] + "@" + j[4]) ?? perFil.set(j[1] + "@" + j[4], []).get(j[1] + "@" + j[4])).push(j);
-const tekster = [];
-for (const [nokkel, jobber] of perFil) {
-  const [fil, skala] = [nokkel.split("@")[0], +nokkel.split("@")[1]];
-  const page = await apne(b, server, fil, skala);
-  for (const [navn, , kode, n, , klipp, mappe = UT] of jobber) {
-    if (!(await merk(page, kode, n))) { console.warn(`  ✗ ${navn}: fant ikke ${kode} #${n} i ${fil}`); continue; }
-    const loc = page.locator("[data-valgt]");
-    if (tekstModus) { tekster.push(`## ${navn}\n` + (await loc.innerText()).replace(/\n+/g, " · ")); continue; }
-    let buf;
-    if (klipp) {
-      const bb = await loc.boundingBox();
-      buf = await page.screenshot({ clip: { x: bb.x, y: bb.y, width: bb.width, height: klipp }, fullPage: true });
-    } else buf = await loc.screenshot();
-    await tilWebp(buf, path.join(mappe, `${navn}.webp`));
-    const m = await sharp(buf).metadata();
-    await ut1x(navn, buf, Math.round(m.width / skala));
-    console.log(`✓ ${navn}.webp ${m.width}×${m.height} (${fil}, ${kode.trim()})`);
-    if (MB[navn.replace("crm-", "mb-crm-")] !== undefined || Object.values(MB).includes(navn)) {
-      const mb = Object.entries(MB).find(([, v]) => v === navn)[0];
-      await tilWebp(await sharp(buf).resize({ width: 2880, height: 1800, fit: "cover", position: "top" }).png().toBuffer(), path.join(UT, `${mb}.webp`));
+export async function lagAlle(valgte = []) {
+  await mkdir(UT, { recursive: true });
+  const design = await startDesign({ designRot: DESIGN });
+  const liste = SKJERMER.filter((s) => !valgte.length || valgte.includes(s.navn));
+  const perFil = new Map();
+  for (const s of liste) perFil.set(s.fil, [...(perFil.get(s.fil) ?? []), s]);
+  const utfall = [];
+  const feil = [];
+  const tekster = {};
+  for (const [fil, spec] of perFil) {
+    for (const skala of [2, 1]) {
+      const { page, feil: sidefeil } = await design.apne(fil, skala);
+      if (sidefeil.length) console.warn(`  ${fil}: ${sidefeil[0]}`);
+      const rammer = await finnRammer(page);
+      for (const s of spec) {
+        const r = rammer.filter((x) => x.skjerm === s.skjerm)[s.nr];
+        if (!r) {
+          feil.push(`${s.navn}: fant ikke ${s.skjerm} nr ${s.nr} i ${fil}`);
+          continue;
+        }
+        const varianter = s.mork ? ["lys", "mork"] : ["lys"];
+        for (const v of varianter) {
+          let nr = r.n;
+          if (v === "mork" && s.mork !== "kart") {
+            const mr = rammer.filter((x) => x.skjerm === (s.mork.startsWith("eksport:") ? s.mork : s.mork))[0];
+            if (!mr) {
+              feil.push(`${s.navn}: fant ikke mørk ramme ${s.mork}`);
+              continue;
+            }
+            nr = mr.n;
+          }
+          const tekst = await forbered(page, nr, { versjon, skjulKlokke: !!s.klokke, mork: v === "mork" && s.mork === "kart" });
+          if (s.ute) await uteRydd(page, nr);
+          tekster[`${s.navn}/${v}`] = tekst;
+          if (FORBUDT.test(tekst)) feil.push(`${s.navn} (${v}): forbudt ord igjen: ${tekst.match(FORBUDT)[0]}`);
+          const png = await taInnhold(page, nr, { innvendig: s.type === "tlf" || s.type === "ipad" });
+          const mork = v === "mork";
+          if (s.bare2x && skala === 1) continue;
+          const sti = (navn) => (s.ut ? join(s.ut.dir, `${navn}${s.ut.tema ? (mork ? "-mork" : "-lys") : ""}${skala === 1 ? "@1x" : ""}.webp`) : join(UT, `${navn}${mork ? "-mork" : ""}${skala === 1 ? "@1x" : ""}.webp`));
+          const m = await sharp(png).metadata();
+          if (s.type === "pc") {
+            await lagre(await pc169(png, mork), sti(s.navn));
+            if (s.mb !== false) await lagre(png, sti(`mb-${s.navn}`));
+          } else {
+            await lagre(png, sti(s.navn));
+          }
+          utfall.push({ navn: s.navn, tema: v, skala, b: m.width, h: m.height, fil, skjerm: s.skjerm });
+        }
+      }
+      await page.close();
     }
   }
-  await page.close();
+  await design.lukk();
+  if (process.env.TEKST) await writeFile(process.env.TEKST, JSON.stringify(tekster, null, 1));
+  // delkjøring: behold oppføringene for skjermer som ikke ble tatt på nytt
+  let kart = { versjon, skjermer: utfall };
+  if (valgte.length) {
+    const gammel = JSON.parse(await readFile(join(UT, "_kart.json"), "utf8").catch(() => '{"skjermer":[]}'));
+    kart = { versjon, skjermer: [...gammel.skjermer.filter((x) => !valgte.includes(x.navn)), ...utfall] };
+  }
+  await writeFile(join(UT, "_kart.json"), JSON.stringify(kart, null, 1));
+  // vis/assets/bilder.js får listen over skjermer med mørk utgave
+  const mork = [...new Set(kart.skjermer.filter((x) => x.tema === "mork").map((x) => x.navn))].sort();
+  const bilderJs = join(rot, "sites", "vis", "src", "assets", "bilder.js");
+  const js = await readFile(bilderJs, "utf8");
+  await writeFile(bilderJs, js.replace(/\/\*MORK\*\/var MORK=\[[^\]]*\];\/\*MORK-slutt\*\//, `/*MORK*/var MORK=${JSON.stringify(mork)};/*MORK-slutt*/`));
+  // sngroup.no: familieseksjonen (Hengsel) bruker de samme skjermene som Visningsrommet
+  const sn = join(rot, "sites", "sngroup", "public", "skjermbilder");
+  await mkdir(sn, { recursive: true });
+  for (const f of await readdir(UT)) {
+    const b = f.replace(/(@1x)?\.webp$/, "").replace(/-mork$/, "");
+    if (SNGROUP.includes(b) && f.endsWith(".webp")) await copyFile(join(UT, f), join(sn, f));
+  }
+  console.log(`${utfall.length} bilder`);
+  if (feil.length) {
+    console.error(feil.join("\n"));
+    process.exitCode = 1;
+  }
 }
 
-// iOS-skjermene: bildet fra designet + «Din logo», uten statuslinje og Dynamic Island
-{
-  const s = await serve(path.join(rot, "docs", "design", "hengsel"));
-  for (const [navn, fil, logo, w, h, skala] of IOS_JOBBER) {
-    if (!ønsket(navn) || tekstModus) continue;
-    const page = await b.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: skala });
-    const html = `<!doctype html><meta charset="utf-8"><body style="margin:0;width:${w}px;height:${h}px;position:relative;overflow:hidden;background:#F2E9DB;font-family:Inter,system-ui,sans-serif">
-      <img src="/hengsel.no/${fil}.png" style="display:block;width:${w}px;height:${h}px">
-      ${logo ? `<span style="position:absolute;right:16px;top:56px;height:30px;padding:0 14px;border:1.5px dashed #C3B5A7;border-radius:6px;display:flex;align-items:center;font-size:13px;font-weight:600;letter-spacing:.02em;color:#31261D;box-sizing:border-box">Din logo</span>` : ""}`;
-    await page.setContent(html.replace('src="/hengsel.no', `src="http://127.0.0.1:${s.address().port}/hengsel.no`), { waitUntil: "networkidle" });
-    const buf = await page.screenshot();
-    await tilWebp(buf, path.join(UT, `${navn}.webp`));
-    await ut1x(navn, buf, w);
-    console.log(`✓ ${navn}.webp ${w * skala}×${h * skala} (${fil})`);
-    await page.close();
-  }
-  s.close();
-}
-if (tekstModus) fs.writeFileSync(path.join(UT1X, "tekst.md"), tekster.join("\n\n"));
-await b.close();
-server.close();
+if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) await lagAlle(process.argv.slice(2));

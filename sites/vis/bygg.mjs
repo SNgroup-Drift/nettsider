@@ -14,6 +14,7 @@ import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promi
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { a4Ark, a4Stil, dokumentvisningHtml } from "./dokumenter.mjs";
+import sharp from "sharp";
 
 const her = import.meta.dirname;
 const src = join(her, "src");
@@ -108,4 +109,40 @@ async function settInnLogo(dir) {
   }
 }
 await settInnLogo(dist);
+
+// Mål på bildene (width og height, så ingenting hopper): img/*.webp (romkort, flater, hero) og skjermbilder/<navn>.webp (2×).
+// Settes inn i HTML (<img src="/img/…"> uten mål), i rom.js (kortene lages av skript) og i bilder.js (skjermene byttes av skript).
+async function maal(mappe, filtrer) {
+  const kart = {};
+  for (const f of await readdir(join(dist, mappe))) {
+    if (!f.endsWith(".webp") || !filtrer(f)) continue;
+    const m = await sharp(join(dist, mappe, f)).metadata();
+    kart[f.replace(/\.webp$/, "")] = [m.width, m.height];
+  }
+  return kart;
+}
+const imgMal = await maal("img", () => true);
+const skjermMal = await maal("skjermbilder", (f) => !/(@1x|-mork)\.webp$/.test(f));
+async function fyll(fil, markor, kart) {
+  const sti = join(dist, fil);
+  const tekst = await readFile(sti, "utf8");
+  await writeFile(sti, tekst.replace(new RegExp(`/\\*${markor}\\*/\\{\\}/\\*${markor}-slutt\\*/`), `/*${markor}*/${JSON.stringify(kart)}/*${markor}-slutt*/`));
+}
+await fyll("assets/rom.js", "IMGMAL", imgMal);
+await fyll("assets/bilder.js", "SKJERMMAL", skjermMal);
+async function malIHtml(dir) {
+  for (const e of await readdir(dir, { withFileTypes: true })) {
+    const sti = join(dir, e.name);
+    if (e.isDirectory()) await malIHtml(sti);
+    else if (e.name.endsWith(".html")) {
+      const tekst = await readFile(sti, "utf8");
+      const ny = tekst.replace(/<img ([^>]*?)src="\/img\/([\w-]+)\.webp"([^>]*?)>/g, (m, a, navn, b) => {
+        if (/\bwidth=/.test(m) || !imgMal[navn]) return m;
+        return `<img ${a}src="/img/${navn}.webp" width="${imgMal[navn][0]}" height="${imgMal[navn][1]}"${b}>`;
+      });
+      if (ny !== tekst) await writeFile(sti, ny);
+    }
+  }
+}
+await malIHtml(dist);
 console.log(`vis: src/ kopiert til dist/, ${antall} skriftfiler i dist/fonts/, ${bilder.length} bilder i dist/img/, Hengsel-logoen på ${sider} sider`);

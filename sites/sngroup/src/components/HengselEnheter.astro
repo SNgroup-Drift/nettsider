@@ -6,21 +6,21 @@
 import Enhet from "./Enhet.astro";
 
 const faner = [
-  { id: "dag", label: "I dag", bilde: "ute-i-dag.webp", alt: "Montørappen Hengsel Ute: dagens jobber" },
-  { id: "jobb", label: "Jobb", bilde: "ute-jobb-under.webp", alt: "Montørappen Hengsel Ute: en jobb under arbeid" },
-  { id: "ks", label: "KS", bilde: "ute-ks.webp", alt: "Montørappen Hengsel Ute: kvalitetssjekk" },
-  { id: "kunde", label: "Kundeportal", bilde: "portal-tilbud.webp", alt: "Kundeportalen: tilbudet" },
+  { id: "dag", label: "I dag", bilde: "ute-i-dag", mork: true, alt: "Montørappen Hengsel Ute: dagens jobber" },
+  { id: "jobb", label: "Jobb", bilde: "ute-jobb-under", mork: true, alt: "Montørappen Hengsel Ute: en jobb under arbeid" },
+  { id: "ks", label: "KS", bilde: "ute-ks", mork: true, alt: "Montørappen Hengsel Ute: kvalitetssjekk" },
+  { id: "kunde", label: "Kundeportal", bilde: "portal-tilbud", alt: "Kundeportalen: tilbudet" },
 ];
 ---
 <div class="gruppe" data-enheter>
   <div class="rad">
     <div class="skjerm">
-      <Enhet type="studio-display" bilde="crm-min-dag.webp" alt="Hengsel CRM: Min dag med oppgaver og avtaler" />
+      <Enhet type="studio-display" bilde="crm-tilbud" mork alt="Hengsel CRM: tilbudssiden" />
     </div>
     <div class="telefon">
       {faner.map((f, i) => (
         <div id={`hp-${f.id}`} role="tabpanel" aria-labelledby={`hf-${f.id}`} data-panel={f.id} hidden={i !== 0}>
-          <Enhet type="iphone-18" bilde={f.bilde} alt={f.alt} loading={i === 0 ? "eager" : "lazy"} />
+          <Enhet type="iphone-18" bilde={f.bilde} mork={f.mork} alt={f.alt} loading={i === 0 ? "eager" : "lazy"} />
         </div>
       ))}
     </div>

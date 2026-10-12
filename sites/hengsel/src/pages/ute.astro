@@ -5,8 +5,8 @@
  * Alle steg ligger i samme ramme (like store), så stegbytte gir ingen layoutskift.
  */
 import Side from "../layouts/Side.astro";
-import Motion from "../components/Motion.astro";
 import Enhet from "../components/Enhet.astro";
+import UteMotion from "../components/UteMotion.astro";
 import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, IPAD, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
 
 const n = STEG.length;
@@ -93,7 +93,7 @@ const n = STEG.length;
     <section class="sek flate bli-tester">
       <div class="h-innhold tester">
         <div class="tester-tekst">
-          <Motion class="tester-motion" />
+          <UteMotion class="tester-motion" />
           <div class="tester-ord">
             <h2>{BLI_TESTER.tittel}</h2>
             <p class="dempet">{BLI_TESTER.tekst}</p>

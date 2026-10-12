@@ -1,0 +1,21 @@
+---
+/**
+ * Hengsel Ute-motion (brand/hengsel-merke/motion, 3 s sømløs loop, ingen lyd): autoplay, muted, loop og playsinline.
+ * Videoen lazy-lastes: kildene settes inn av scripts/motion.ts når den nærmer seg skjermen. Ved prefers-reduced-motion og uten skript
+ * vises bare plakaten. Størrelsen settes av omslaget (klassen .motion); width og height er 1080 × 1080 (ingen CLS).
+ */
+interface Props { class?: string }
+const { class: klasse } = Astro.props;
+---
+<div class:list={["motion", klasse]} data-motion>
+  <video muted loop playsinline autoplay preload="none" width="1080" height="1080" poster="/media/ute-motion-1080x1080-plakat.webp" aria-label="Hengsel Ute-ikonet: hengselet åpner seg" data-webm="/media/ute-motion-1080x1080.webm" data-mp4="/media/ute-motion-1080x1080.mp4"></video>
+</div>
+
+<script>
+  import "../scripts/motion";
+</script>
+
+<style>
+  .motion { width: 100%; aspect-ratio: 1; border-radius: var(--r-lg); overflow: hidden; background: var(--surface-highlight); }
+  .motion video { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style>

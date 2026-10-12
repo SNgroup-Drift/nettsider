@@ -1,4 +1,3 @@
-import "./motion";
 /**
  * /ute: steg-fanene. Én tablist [data-ute] (knapper role="tab", aria-controls → panelet), paneler [data-panel],
  * og Forrige/Neste ([data-forrige], [data-neste]) med teller [data-teller].

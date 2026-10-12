@@ -114,6 +114,26 @@ for (const navn of nettsteder) {
       if (r.status !== 200) mangler.push(`skjermbilde ${b} (${b}.webp eller ${b}-${del}.webp) → ${r.status}`);
     }
   }
+  // K-177: alle bilder og videoer sidene peker på (src, srcset, poster, data-webm/-mp4, og navnene i data-bilder i Visningsrommet, med @1x og mørk utgave) svarer 200
+  const medier = new Set();
+  const bilderJs = await (await fetch(new URL("/assets/bilder.js", base))).text().catch(() => "");
+  const morkListe = new Set(JSON.parse((bilderJs.match(/var MORK=(\[[^\]]*\])/) ?? [, "[]"])[1]));
+  for (const side of sider) {
+    const html = await (await fetch(new URL(side, base))).text();
+    for (const m of html.matchAll(/\b(?:src|poster|data-webm|data-mp4)="(\/[^"]+\.(?:webp|png|jpg|svg|mp4|webm))"/g)) medier.add(m[1]);
+    for (const m of html.matchAll(/\bsrcset="([^"]+)"/g)) for (const d of m[1].split(",")) { const u = d.trim().split(/\s+/)[0]; if (u.startsWith("/")) medier.add(u); }
+    for (const m of html.matchAll(/data-bilder="([^"]+)"/g))
+      for (const n of m[1].split(",").map((s) => s.trim()).filter((s) => /^[\w-]+$/.test(s)))
+        for (const s of ["", "@1x"]) {
+          medier.add(`/skjermbilder/${n}${s}.webp`);
+          if (morkListe.has(n)) medier.add(`/skjermbilder/${n}-mork${s}.webp`);
+        }
+  }
+  for (const u of medier) {
+    const r = await fetch(new URL(u, base));
+    sjekket++;
+    if (r.status !== 200) mangler.push(`${u} → ${r.status}`);
+  }
   let antallBilder = 0;
   try {
     for (const f of (await readdir(join(dist, "img"), { recursive: true, withFileTypes: true })).filter((e) => e.isFile() && !e.name.startsWith(".")).map((e) => join(e.parentPath, e.name).slice(join(dist, "img").length + 1))) {
@@ -152,7 +172,7 @@ for (const navn of nettsteder) {
     console.error(`✗ ${navn}: ${mangler.length} feil`);
     for (const m of mangler) console.error(`    ${m}`);
   } else {
-    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, og ukjente sider får 404.html`);
+    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, ${medier.size} bilder og videoer fra sidene svarer 200, og ukjente sider får 404.html`);
   }
 }
 

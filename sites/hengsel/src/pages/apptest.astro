@@ -13,8 +13,7 @@
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
 import ApptestHode from "../components/ApptestHode.astro";
-import ApptestIkon from "../components/ApptestIkon.astro";
-import Motion from "../components/Motion.astro";
+import UteMotion from "../components/UteMotion.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
 import { BYGG, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
 import { lagQr } from "../apptest-qr";
@@ -46,11 +45,10 @@ const SLIDES = [
   { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel: meld ferdig montert" },
 ];
 
-// Skjermene er fiktive demo-skjermer fra designet (K-177). iOS-skjermene (lys og mørk) ligger i /img/app; de tre andre er fra CRM-designet (bare lys).
-const IOS = new Set(["idag", "jobben", "ks", "ferdig"]);
-const bildeSrc = (b: string, tema: "lys" | "mork") => (IOS.has(b) ? `/img/app/${b}-${tema}.webp` : `/img/apptest/${b}-lys.webp`);
-const mork = (b: string) => (IOS.has(b) ? bildeSrc(b, "mork") : undefined);
-const maal = (b: string) => (IOS.has(b) ? { w: 402, h: 874 } : { w: 780, h: 1688 });
+// Skjermene er de fiktive demo-skjermene fra designet: iOS-skjermene (img/app, 402 × 874) og rollene uten iOS-skjerm (img/apptest, 2× og 1×, lages av scripts/fiktive-skjermer.mjs)
+const APP = new Set(["idag", "jobben", "ks", "avvik", "ferdig"]);
+const bildeSrc = (b: string, tema: "lys" | "mork") => (APP.has(b) ? `/img/app/${b}-${tema}.webp` : `/img/apptest/${b}-${tema}.webp`);
+const maal = (b: string) => (APP.has(b) ? { w: 402, h: 874 } : { w: 780, h: 1688 });
 const harFeil = KJENTE_FEIL.length > 0;
 ---
 <Side
@@ -68,13 +66,13 @@ const harFeil = KJENTE_FEIL.length > 0;
           <span class="eyebrow">Testversjon {versjon} · sist oppdatert {dato(oppdatert)}</span>
           <h1>Test Hengsel</h1>
           <p class="lede">Appen montørene bruker på jobben. Installer testversjonen, logg inn med demobrukerne og si fra om alt som ikke virker.</p>
-          <div class="ikon"><ApptestIkon /><Motion class="bli-motion" /></div>
+          <div class="ikon"><UteMotion class="ikon-motion" /></div>
         </div>
         <div class="hero-bilder">
           <div class="slides">
             {SLIDES.map((s, i) => (
               <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
-                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} srcDark={mork(s.bilde)} w={maal(s.bilde).w} h={maal(s.bilde).h} alt={s.alt} forst={i === 0} symboler={i === 0} />
+                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} srcDark={bildeSrc(s.bilde, "mork")} w={maal(s.bilde).w} h={maal(s.bilde).h} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
               </div>
             ))}
           </div>
@@ -159,7 +157,7 @@ const harFeil = KJENTE_FEIL.length > 0;
               <a class="pdf" href="/apptest/Logg_inn_i_demoen.pdf" download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
-              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} srcDark={mork(r.bilde)} w={maal(r.bilde).w} h={maal(r.bilde).h} alt={r.alt} symboler={false} />
+              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} srcDark={bildeSrc(r.bilde, "mork")} w={maal(r.bilde).w} h={maal(r.bilde).h} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
             </div>
           </div>
         ))}
@@ -309,8 +307,8 @@ const harFeil = KJENTE_FEIL.length > 0;
   .hero-tekst { display: flex; flex-direction: column; gap: 20px; min-width: 0; align-items: flex-start; }
   .hero h1 { font-size: clamp(2.75rem, 6vw, 4.6rem); line-height: 1; }
   .hero .lede { font-size: 1.18rem; max-width: 44ch; }
-  .ikon { margin-top: 8px; display: flex; align-items: center; gap: 20px; }
-  .ikon :global(.bli-motion) { width: 120px; flex: none; }
+  .ikon { margin-top: 8px; }
+  .ikon :global(.ikon-motion) { width: 160px; }
   .hero-bilder { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
   .slides { position: relative; width: 100%; max-width: 320px; }
   .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 700ms var(--ease); }

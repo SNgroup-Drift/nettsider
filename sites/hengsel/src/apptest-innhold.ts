@@ -100,7 +100,7 @@ export interface Rolle {
   punkter: string[];
   /** Demobrukerens adresse i appen (som i listen fra K-114). Passordet står aldri her: Workeren setter det inn. */
   bruker: string;
-  /** Skjermbildet i telefonrammen: public/img/apptest/<bilde>-lys.webp og -mork.webp */
+  /** Skjermbildet i telefonrammen: public/img/app/<bilde>-lys.webp (iOS-skjermene) eller public/img/apptest/<bilde>-lys.webp (rollene uten iOS-skjerm), og -mork.webp */
   bilde: string;
   alt: string;
   /** Merknad under demobrukeren */
@@ -120,8 +120,8 @@ export const ROLLER: Rolle[] = [
       "Meld avvik og ferdig montert med signatur.",
     ],
     bruker: "montor1@demo.invalid",
-    bilde: "ferdig",
-    alt: "Hengsel: meld ferdig montert, med KS, bilder og åpne avvik",
+    bilde: "avvik",
+    alt: "Hengsel: meld avvik med bilde og beskrivelse",
   },
   {
     id: "firmaleder",
@@ -135,7 +135,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "firmaleder1@demo.invalid",
     bilde: "foresporsler",
-    alt: "Hengsel: en belastning fra montasjefirma med knappene Godta og Bestrid",
+    alt: "Hengsel: firmaleder godtar eller bestrider en belastning fra montasjefirmaet",
   },
   {
     id: "utkjorer",
@@ -165,7 +165,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "selger1@demo.invalid",
     bilde: "mottak",
-    alt: "Hengsel: meld mottatt, med 12 av 19 kolli skannet",
+    alt: "Hengsel: mottak på lager med tre leveranser og knappen Skann kolli",
     merknad: "Demoen har ingen egen lagerbruker. selger1 viser ansattmodus.",
   },
 ];

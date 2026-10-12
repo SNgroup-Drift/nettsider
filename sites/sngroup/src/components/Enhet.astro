@@ -8,8 +8,10 @@ export type EnhetType = "studio-display" | "macbook" | "iphone-18" | "ipad-ligge
 
 interface Props {
   type: EnhetType;
-  /** Filnavn i public/skjermbilder, f.eks. «ute-i-dag.webp» */
+  /** Navn på skjermbildet i public/skjermbilder uten filtype, f.eks. «ute-i-dag» (<navn>.webp = 2×, <navn>@1x.webp = 1×, <navn>-mork… = mørk utgave) */
   bilde: string;
+  /** Skjermen har mørk utgave (CRM og Hengsel Ute følger temaet; kundeportalen er alltid lys) */
+  mork?: boolean;
   alt: string;
   loading?: "lazy" | "eager";
 }
@@ -21,11 +23,20 @@ const MAL = {
   "ipad-liggende": { ramme: "ipad-liggende", b: 2400, h: 1740 },
 } as const;
 
-const { type, bilde, alt, loading = "lazy" } = Astro.props;
+const { type, bilde, alt, mork = false, loading = "lazy" } = Astro.props;
+const sett = (n: string) => `/skjermbilder/${n}@1x.webp 1x, /skjermbilder/${n}.webp 2x`;
 const m = MAL[type];
+// Skjermbildets egne mål (2×): width og height, så ingenting hopper
+const BILDE = { "studio-display": [2880, 1620], macbook: [2880, 1800], "iphone-18": [780, 1688], "ipad-liggende": [2360, 1640] } as const;
+const [bb, bh] = BILDE[type];
 ---
 <div class={`enhet enhet-${type}`}>
-  <div class="hull"><img class="bilde" src={`/skjermbilder/${bilde}`} alt={alt} loading={loading} decoding="async" /></div>
+  <div class="hull">
+    <picture>
+      {mork && <source media="(prefers-color-scheme: dark)" srcset={sett(`${bilde}-mork`)} />}
+      <img class="bilde" src={`/skjermbilder/${bilde}.webp`} srcset={sett(bilde)} width={bb} height={bh} alt={alt} loading={loading} decoding="async" />
+    </picture>
+  </div>
   <img class="ramme" src={`/enheter/${m.ramme}.png`} alt="" width={m.b} height={m.h} aria-hidden="true" />
 </div>
 
@@ -46,6 +57,7 @@ const m = MAL[type];
     border-radius: var(--r);
     background: var(--flate);
   }
+  .hull picture { display: block; width: 100%; height: 100%; }
   .bilde { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
   .ramme { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 </style>
