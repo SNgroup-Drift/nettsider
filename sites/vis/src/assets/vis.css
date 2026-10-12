@@ -1,6 +1,6 @@
 /* Visningsrommet – felles stil i Hengsel-profilen. Newsreader (titler), Inter (tekst).
    Fasit: Claude Design-prosjektet «vis.hengsel.no» (Visningsrommet.dc.html, VisForside, VisReise, VisKundereise). */
-:root{
+:root{color-scheme:light;
   --bg:#F2E9DB;--card:#FBF9F6;--soft:#F8F2EC;--fg:#31261D;--muted:#5E564C;--line:#E4D4C4;--sand:#C3B5A7;
   --accent:#5074A9;--accent-soft:#E3EAF4;--dusty:#9CA9BD;
   --ok:#3F7A52;--ok-soft:#E4EEE6;--warn:#8A5D14;--warn-soft:#F5EAD3;
