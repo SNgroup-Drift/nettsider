@@ -1,0 +1,13 @@
+{
+  "frister": [
+    {
+      "id": "eks-lisens",
+      "navn": "Lisensfornyelse (eksempel)",
+      "type": "abonnement",
+      "tjeneste": "Hengsel",
+      "dato": "2026-11-15",
+      "pris": null,
+      "merknad": "Fiktiv dato"
+    }
+  ]
+}

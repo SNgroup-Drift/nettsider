@@ -1,0 +1,24 @@
+{
+  "kontoer": [
+    {
+      "tjeneste": "PowerOffice Go (klient)",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Eksempel"
+    },
+    {
+      "tjeneste": "CET",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Eksempel"
+    }
+  ]
+}

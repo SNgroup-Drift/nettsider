@@ -1,0 +1,28 @@
+---
+import { FRIST_TYPER, type Frist } from "../lib/data";
+import { dagerIgjen, niva, tekstFor, datoNorsk } from "../lib/frist";
+interface Props { frister: (Frist & { horer?: string })[]; visHorer?: boolean }
+const { frister, visHorer = false } = Astro.props;
+const na = new Date();
+// Sortert: nærmeste dato først, ukjente sist
+const rader = [...frister].sort((a, b) => (a.dato ?? "9999") .localeCompare(b.dato ?? "9999") || a.navn.localeCompare(b.navn, "nb"));
+const NAVN = { rod: "Haster", gul: "Snart", gronn: "God tid", ukjent: "Ukjent" } as const;
+---
+<ul class="frister" data-seksjon>
+  {rader.map((f) => {
+    const d = dagerIgjen(f.dato, na);
+    const n = niva(d);
+    return (
+      <li class="frist" data-sok={`${f.navn} ${f.tjeneste} ${FRIST_TYPER[f.type]} ${f.merknad ?? ""} ${f.horer ?? ""}`.toLowerCase()} data-dato={f.dato ?? ""} data-niva={n}>
+        <span class={`status ${n}`}><span class="status-navn">{NAVN[n]}</span> <span class="status-tekst">{tekstFor(d)}</span></span>
+        <span class="frist-navn">{f.navn}</span>
+        <span class="frist-meta">
+          {FRIST_TYPER[f.type]} · {f.tjeneste}{visHorer && f.horer ? ` · ${f.horer}` : ""}
+          · {f.dato ? datoNorsk(f.dato) : <span class="fyllinn">fyll inn</span>}
+          {f.type === "abonnement" && <> · pris {f.pris ?? <span class="fyllinn">fyll inn</span>}</>}
+        </span>
+        {f.merknad && <span class="merknad">{f.merknad}</span>}
+      </li>
+    );
+  })}
+</ul>

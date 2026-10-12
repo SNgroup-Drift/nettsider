@@ -1,0 +1,24 @@
+---
+import type { Konto } from "../lib/data";
+interface Props { kontoer: Konto[]; sokPrefiks?: string }
+const { kontoer, sokPrefiks = "" } = Astro.props;
+const felt = (v: string | null) => v;
+---
+<ul class="kontoer" data-seksjon>
+  {kontoer.map((k) => (
+    <li class="konto" data-sok={`${sokPrefiks} ${Object.values(k).filter(Boolean).join(" ")}`.toLowerCase()}>
+      <h3>{k.tjeneste}</h3>
+      <dl>
+        <div><dt>Innlogging</dt><dd>{felt(k.innlogging) ?? <span class="fyllinn">fyll inn</span>}</dd></div>
+        <div><dt>Eier-selskap</dt><dd>{felt(k.eier) ?? <span class="fyllinn">fyll inn</span>}</dd></div>
+        <div><dt>2FA</dt><dd>{felt(k.tofa) ?? <span class="fyllinn">fyll inn</span>}</dd></div>
+        <div><dt>1Password-hvelv</dt><dd>{felt(k.hvelv) ?? <span class="fyllinn">fyll inn</span>}</dd></div>
+        <div><dt>Elementnavn</dt><dd>{felt(k.element) ?? <span class="fyllinn">fyll inn</span>}</dd></div>
+        <div><dt>1Password</dt><dd>{k.onepassword
+          ? <a href={k.onepassword} target="_blank" rel="noopener noreferrer">Åpne i 1Password</a>
+          : <span class="fyllinn">fyll inn</span>}</dd></div>
+      </dl>
+      {k.merknad && <p class="merknad">{k.merknad}</p>}
+    </li>
+  ))}
+</ul>

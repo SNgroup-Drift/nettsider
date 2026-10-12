@@ -1,0 +1,204 @@
+{
+  "grupper": [
+    {
+      "id": "nettsteder",
+      "tittel": "Nettsteder",
+      "lenker": [
+        {
+          "navn": "hengsel.no",
+          "url": "https://hengsel.no",
+          "merknad": "Produktsiden for Hengsel"
+        },
+        {
+          "navn": "vis.hengsel.no",
+          "url": "https://vis.hengsel.no",
+          "merknad": "Visningsrommet"
+        },
+        {
+          "navn": "sngroup.no",
+          "url": "https://sngroup.no"
+        },
+        {
+          "navn": "byggem.no",
+          "url": "https://byggem.no"
+        },
+        {
+          "navn": "design.hengsel.no",
+          "url": "https://design.hengsel.no",
+          "merknad": "Designsystemet (sites/design, K-182)"
+        },
+        {
+          "navn": "demo.hengsel.no",
+          "url": "https://demo.hengsel.no",
+          "merknad": "Demo av Hengsel",
+          "status": "kommer",
+          "sak": "K-180/K-181"
+        }
+      ]
+    },
+    {
+      "id": "crm-apper",
+      "tittel": "CRM og apper",
+      "lenker": [
+        {
+          "navn": "app.hengsel.no",
+          "url": "https://app.hengsel.no",
+          "merknad": "Felles innlogging for alle kunder, etter flyttingen fra crm.studiosigdal-innlandet.no",
+          "status": "kommer",
+          "sak": "K-183"
+        },
+        {
+          "navn": "Montørappen (Expo)",
+          "url": "https://expo.dev/",
+          "merknad": "Bygg og oppdateringer ligger hos Expo/EAS (egen lenke under Drift)"
+        },
+        {
+          "navn": "Hengsel Ute (iOS)",
+          "url": null,
+          "merknad": "App Store-/TestFlight-lenken til Hengsel Ute (no.hengsel.montor)"
+        }
+      ]
+    },
+    {
+      "id": "drift",
+      "tittel": "Drift",
+      "lenker": [
+        {
+          "navn": "GitHub SNgroup-Drift",
+          "url": "https://github.com/SNgroup-Drift"
+        },
+        {
+          "navn": "innlandet-crm-sync (repo)",
+          "url": "https://github.com/SNgroup-Drift/innlandet-crm-sync",
+          "merknad": "CRM-et, montørappen og Supabase-funksjonene"
+        },
+        {
+          "navn": "sngroup-nettsider (repo)",
+          "url": "https://github.com/SNgroup-Drift/sngroup-nettsider",
+          "merknad": "Nettsidene, inkludert denne siden"
+        },
+        {
+          "navn": "GitHub Actions (CRM)",
+          "url": "https://github.com/SNgroup-Drift/innlandet-crm-sync/actions",
+          "merknad": "Flett til demo, Prod-utrulling, Oppetid"
+        },
+        {
+          "navn": "GitHub Actions (nettsider)",
+          "url": "https://github.com/SNgroup-Drift/sngroup-nettsider/actions"
+        },
+        {
+          "navn": "Supabase prod",
+          "url": "https://supabase.com/dashboard/project/jzqglcldsqkxvwsaovth",
+          "merknad": "Ekte kundedata. Prosjekt jzqglcldsqkxvwsaovth"
+        },
+        {
+          "navn": "Supabase demo",
+          "url": "https://supabase.com/dashboard/project/cqztkoigidtjtslxdlmo",
+          "merknad": "Fiktive data. Prosjekt cqztkoigidtjtslxdlmo"
+        },
+        {
+          "navn": "Cloudflare (Workers & Pages)",
+          "url": "https://dash.cloudflare.com/",
+          "merknad": "Workers: hengsel, sngroup, byggem, admin. Pages: sigdal-crm-prod"
+        },
+        {
+          "navn": "Sentry",
+          "url": "https://sentry.io/"
+        },
+        {
+          "navn": "Expo / EAS",
+          "url": "https://expo.dev/",
+          "merknad": "Bygg, innsending og EAS Update"
+        },
+        {
+          "navn": "App Store Connect og TestFlight",
+          "url": "https://appstoreconnect.apple.com/"
+        },
+        {
+          "navn": "Google Play Console",
+          "url": "https://play.google.com/console"
+        },
+        {
+          "navn": "Apple Developer",
+          "url": "https://developer.apple.com/account",
+          "merknad": "Konto: ES-Holding"
+        }
+      ]
+    },
+    {
+      "id": "microsoft",
+      "tittel": "Microsoft",
+      "lenker": [
+        {
+          "navn": "Microsoft 365 admin",
+          "url": "https://admin.microsoft.com"
+        },
+        {
+          "navn": "Exchange admin",
+          "url": "https://admin.exchange.microsoft.com"
+        },
+        {
+          "navn": "Entra admin",
+          "url": "https://entra.microsoft.com",
+          "merknad": "App-registreringene, bl.a. «Sigdal CRM e-post»"
+        },
+        {
+          "navn": "Outlook for drift@sngroup.no",
+          "url": "https://outlook.office.com/mail/",
+          "merknad": "Logg inn som drift@sngroup.no"
+        }
+      ]
+    },
+    {
+      "id": "forretning",
+      "tittel": "Forretning",
+      "lenker": [
+        {
+          "navn": "PowerOffice Go",
+          "url": "https://go.poweroffice.net"
+        },
+        {
+          "navn": "Penneo",
+          "url": "https://app.penneo.com"
+        },
+        {
+          "navn": "Tradeplace",
+          "url": null
+        },
+        {
+          "navn": "Vipps",
+          "url": "https://portal.vipps.no"
+        },
+        {
+          "navn": "KAOnline",
+          "url": "https://kaonline.dk",
+          "merknad": "Én innlogging per selger; appen bestiller aldri hos KA"
+        },
+        {
+          "navn": "Peliqan",
+          "url": "https://app.peliqan.io"
+        },
+        {
+          "navn": "Anthropic Console",
+          "url": "https://console.anthropic.com"
+        },
+        {
+          "navn": "Domeneregistrar",
+          "url": null,
+          "merknad": "Hvor hengsel.no, sngroup.no og byggem.no er registrert"
+        }
+      ]
+    },
+    {
+      "id": "claude",
+      "tittel": "Claude",
+      "lenker": [
+        {
+          "navn": "Sigdal beslutninger",
+          "url": "https://claude.ai/artifact/VbjHUSP9HP63CsL142RG4u",
+          "merknad": "Beslutningslogg for Sigdal"
+        }
+      ]
+    }
+  ]
+}
