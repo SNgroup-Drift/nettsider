@@ -7,7 +7,7 @@ var R=[
  ['selger','Selger og butikk','Slik ser hverdagen ut i CRM: fra tegning og tilbud til ferdig kjøkken, og hva kunden opplever.'],
  ['montor','Montør og montasjefirma','Slik får dere jobbene, svarer på forespørsler og melder ferdig i Hengsel.'],
  ['leverandor','Leverandør','Hva vi ønsker fra dere, hvordan det kommer inn hos oss, og hva dere får tilbake.'],
- ['nobia','Fabrikken og Nobia','Hvordan butikkene jobber med fabrikkordrene, og hva som må til for at alt går av seg selv.']
+ ['nobia','Fabrikken og leverandøren','Hvordan butikkene jobber med fabrikkordrene, og hva som må til for at alt går av seg selv.']
 ];
 // b: ferdig sammensatt bilde av enhetsramme + skjermbilde (src/img/rom-*.webp). Rom med skjermbilde fra designfilene: scripts/rammer-vis.mjs.
 // Rom uten: rommet selv i Studio Display (scripts/skjermbilder-vis.mjs). Dokumentene er A4-ark uten ramme.
@@ -30,7 +30,7 @@ var C=[
  {u:'/leder/',g:'presenter',b:'/img/rom-leder.webp',t:'Daglig leder',type:'Oversikt',p:'Ordrereserve per uke, tilbud ute, treffprosent, margin og det som står i fare, per butikk og selger.',r:['selger','nobia'],go:'Åpne oversikten'},
  {u:'/dokumenter/',g:'dokumenter',b:'/img/rom-dokumenter.webp',t:'Dokumentene',type:'Dokumenter',p:'Tilbud, kjøpsavtale, monteringsrapport og FDV-pakke som A4-sider, slik kunden får dem.',r:['selger','leverandor','nobia'],go:'Se dokumentene'},
  {u:'/veikart/',g:'presenter',b:'/img/rom-veikart.webp',t:'Veikart og status',type:'Oversikt',p:'Hva som er i drift i dag, hva som kommer kvartal for kvartal, og hva vi venter på fra andre.',r:['selger','leverandor','nobia'],go:'Se veikartet'},
- {u:'/sv/',g:'presenter',b:'/img/rom-sv.webp',t:'For Nobia (svenska / English)',type:'Presentasjon',p:'Kort innføring i løsningen på svensk og engelsk, med systemkartet oversatt.',r:['nobia'],go:'Öppna / Open'},
+ {u:'/sv/',g:'presenter',b:'/img/rom-sv.webp',t:'For leverandøren (svenska / English)',type:'Presentasjon',p:'Kort innføring i løsningen på svensk og engelsk, med systemkartet oversatt.',r:['nobia'],go:'Öppna / Open'},
  {u:'/system/',g:'forsta',b:'/img/rom-system.webp',t:'Systemkartet',type:'Oversikt',p:'Hele løsningen på ett kart: hva som går inn og ut av CRM, og hvor langt hver kobling har kommet.',r:['selger','leverandor','nobia'],go:'Åpne kartet'}
 ];
 var G={
