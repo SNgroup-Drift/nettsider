@@ -1,7 +1,7 @@
 /* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 1.1.0, commit 3099a27b). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
- * Bare lys modus: ingen prefers-color-scheme, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
+ * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
  * Fargene endres i designsystemet (innlandet-crm-sync), og deretter pinnes ny commit med: npm run design:hent */
 
 :root {

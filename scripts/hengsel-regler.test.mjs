@@ -43,11 +43,17 @@ test("a) filer med fargeverdier som ikke er pinnede logoer eller merkepakken v3 
 test("a) bygde sider: hver fargeverdi i CSS/HTML/JS finnes i den delte fila", () => {
   const delt = les(pakke, "tokens.css");
   const tillatt = new Set([...delt.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((m) => m[0].toLowerCase()));
+  // Bygget CSS er minifisert: rgba(r, g, b, a) skrives som #rrggbbaa, og #rrggbb kan bli #rgb
+  for (const m of delt.matchAll(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/g)) tillatt.add("#" + [m[1], m[2], m[3], Math.round(m[4] * 255)].map((n) => Number(n).toString(16).padStart(2, "0")).join(""));
+  for (const m of delt.matchAll(/rgb\((\d+)\s+(\d+)\s+(\d+)\s*\/\s*([\d.]+)\)/g)) tillatt.add("#" + [m[1], m[2], m[3], Math.round(m[4] * 255)].map((n) => Number(n).toString(16).padStart(2, "0")).join(""));
+  for (const h of [...tillatt]) if (/^#(.)\1(.)\2(.)\3$/.test(h)) tillatt.add(`#${h[1]}${h[3]}${h[5]}`);
   for (const s of SIDER) {
     const dist = join(rot, "sites", s, "dist");
     if (!existsSync(dist)) continue; // bygget finnes ikke lokalt
     for (const f of alle(dist).filter((x) => /\.(css|html|js)$/.test(x) && !/\/ds\//.test(x))) {
-      const t = readFileSync(f, "utf8");
+      let t = readFileSync(f, "utf8");
+      // Tekst på siden (design. viser verdiene fra JSON som tekst, inkl. «aldri #FFFFFF») er innhold, ikke styling: sjekk bare tagger, attributter og <style>
+      if (f.endsWith(".html")) t = t.replace(/<script[\s\S]*?<\/script>/g, "").replace(/(<\/style>|>)[^<]*(?=<)/g, "$1");
       for (const m of t.matchAll(/(?<![\w&#/-])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![\w-])/g)) {
         // Verdier fra pinnet JSON vises som tekst (design.) eller er theme-color; de må uansett finnes i den delte fila
         assert.ok(tillatt.has(m[0].toLowerCase()), `${relative(rot, f)}: ${m[0]} finnes ikke i den delte token-fila`);
