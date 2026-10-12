@@ -10,7 +10,7 @@ import { gzipSync } from "node:zlib";
 
 const typer = {
   ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml",
-  ".woff2": "font/woff2", ".txt": "text/plain", ".ico": "image/x-icon", ".png": "image/png",
+  ".woff2": "font/woff2", ".txt": "text/plain", ".ico": "image/x-icon", ".png": "image/png", ".webp": "image/webp", ".jpg": "image/jpeg", ".mp4": "video/mp4", ".webm": "video/webm", ".json": "application/json", ".webmanifest": "application/manifest+json", ".pdf": "application/pdf",
 };
 
 export async function finnFil(dist, sti) {

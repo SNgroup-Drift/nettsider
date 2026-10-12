@@ -35,9 +35,11 @@ interface Props {
   utenStatus?: boolean;
   /** Tegn statuslinjens symboldefinisjoner (id-ene sb-*). Sett false på alle rammer unntatt den første når flere ligger på samme side. */
   symboler?: boolean;
+  /** Bildet finnes i 2× (src) og 1× (samme navn med @1x før .webp): srcset med 1x og 2x */
+  hd?: boolean;
 }
 const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] } as const;
-const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false } = Astro.props;
+const { type, src, srcDark, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false } = Astro.props;
 const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
 const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
 // Følger bildet temaet? Slot: ja. Bilde: bare med mørk variant.
@@ -51,7 +53,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "display" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
       </div>
       <img class="bezel" src="/img/ramme-studio-display.webp" alt="" width="2160" height="1664" loading={lasting} decoding="async" aria-hidden="true" />
     </div>
@@ -59,7 +61,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "ipad" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
         {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span></span>}
         <svg class="status" viewBox="0 0 1180 24" aria-hidden="true">
           <text x="22" y="17" class="klokke">9:41</text><text x="68" y="17" class="klokke dato">man. 12. okt.</text>
@@ -71,7 +73,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "iphone" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} /> : <div class="skala"><slot /></div>}
+        {src ? <Skjermbilde src={src} srcDark={srcDark} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
         {visLogo && <span class="dinlogo" data-lys-mork={folgerTema ? "tema" : "lys"}><span class="boks">Din logo</span></span>}
         {!utenStatus && <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
           <text x="68" y="35" text-anchor="middle" class="klokke">9:41</text>

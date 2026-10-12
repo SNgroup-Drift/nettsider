@@ -6,6 +6,7 @@
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
+import UteMotion from "../components/UteMotion.astro";
 import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, IPAD, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
 
 const n = STEG.length;
@@ -92,7 +93,7 @@ const n = STEG.length;
     <section class="sek flate bli-tester">
       <div class="h-innhold tester">
         <div class="tester-tekst">
-          <img src="/logo/ute.svg" alt="" aria-hidden="true" width="64" height="64" loading="lazy" />
+          <UteMotion class="tester-motion" />
           <div class="tester-ord">
             <h2>{BLI_TESTER.tittel}</h2>
             <p class="dempet">{BLI_TESTER.tekst}</p>
@@ -165,7 +166,7 @@ const n = STEG.length;
   .bli-tester { padding-block: clamp(48px, 6vw, 80px); }
   .tester { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 48px; }
   .tester-tekst { display: flex; gap: 20px; align-items: center; max-width: 640px; }
-  .tester-tekst img { width: 64px; height: 64px; border-radius: 15px; flex: none; }
+  .tester-tekst :global(.tester-motion) { width: 120px; flex: none; }
   .tester-ord { display: flex; flex-direction: column; gap: 6px; }
   .tester-ord h2 { font-size: clamp(1.75rem, 3vw, 2.4rem); line-height: 1.1; }
   .tester-knapper { display: flex; flex-wrap: wrap; gap: 12px; }

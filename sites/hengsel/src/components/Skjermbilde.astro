@@ -1,11 +1,13 @@
 ---
 /** Bildet inne i en enhetsramme: <picture> med mørk variant, bredde og høyde (ingen CLS), lazy med mindre det er øverst. */
-interface Props { src: string; srcDark?: string; w: number; h: number; alt: string; forst?: boolean; topp?: boolean }
-const { src, srcDark, w, h, alt, forst = false, topp = false } = Astro.props;
+interface Props { src: string; srcDark?: string; w: number; h: number; alt: string; forst?: boolean; topp?: boolean; hd?: boolean }
+const { src, srcDark, w, h, alt, forst = false, topp = false, hd = false } = Astro.props;
+// hd: src er 2×, og @1x-utgaven ligger ved siden av
+const sett = (s: string) => (hd ? `${s.replace(/\.webp$/, "@1x.webp")} 1x, ${s} 2x` : s);
 ---
 <picture>
-  {srcDark && <source media="(prefers-color-scheme: dark)" srcset={srcDark} />}
-  <img class:list={["innhold", { topp }]} src={src} alt={alt} width={w} height={h} loading={forst ? "eager" : "lazy"} fetchpriority={forst ? "high" : undefined} decoding="async" />
+  {srcDark && <source media="(prefers-color-scheme: dark)" srcset={sett(srcDark)} />}
+  <img class:list={["innhold", { topp }]} src={src} srcset={hd ? sett(src) : undefined} alt={alt} width={w} height={h} loading={forst ? "eager" : "lazy"} fetchpriority={forst ? "high" : undefined} decoding="async" />
 </picture>
 <style>
   img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }

@@ -10,11 +10,18 @@ import { DOKUMENTER, LAGES_STEG } from "../../packages/design/src/dokumenter/dat
 import { ETTERPA_TYPE, LAGES } from "../../packages/design/src/dokumenter/lages.js";
 import { a4DynamiskCss } from "../../packages/design/src/dokumenter/a4-stil.js";
 import { esc, renderA4Side } from "../../packages/design/src/dokumenter/render.js";
+import { readFileSync } from "node:fs";
+
+/** Skjermer med mørk utgave (sites/vis/src/skjermbilder/_kart.json, lages av scripts/fiktive-skjermer.mjs) */
+const MORK = new Set(JSON.parse(readFileSync(new URL("./src/skjermbilder/_kart.json", import.meta.url), "utf8")).skjermer.filter((x) => x.tema === "mork").map((x) => x.navn));
+/** <picture> med 1× og 2×, og mørk utgave når systemet er mørkt og skjermen følger temaet */
+const skjermbilde = (navn, alt) =>
+  `<picture>${MORK.has(navn) ? `<source media="(prefers-color-scheme: dark)" srcset="/skjermbilder/${navn}-mork@1x.webp 1x, /skjermbilder/${navn}-mork.webp 2x">` : ""}<img class="sk" src="/skjermbilder/${navn}.webp" srcset="/skjermbilder/${navn}@1x.webp 1x, /skjermbilder/${navn}.webp 2x" alt="${alt}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></picture>`;
 
 /** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
 const LOGO_STI = "/assets/logo/hengsel-lys.svg";
 
-const BILDE = { bredde: 2560, hoyde: 1440 };
+const BILDE = { bredde: 2880, hoyde: 1620 };
 
 export const a4Stil = () => `<style>${a4DynamiskCss(DOKUMENTER)}</style>`;
 
@@ -32,7 +39,7 @@ function lagesHtml(dok) {
     <p>${esc(s.s)}</p>
     ${s.knapp ? `<p class="lages-knapp"><span class="knapp-merke">Knappen</span> <span class="knapp-chip">${esc(s.knapp)}</span></p>` : ""}
   </div>
-  <div class="pc-ramme"><div class="skjermkant"><div class="skjerm"><img class="sk" src="/skjermbilder/${esc(s.bilde)}.webp" alt="${esc(s.alt)}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></div></div><span class="stang" aria-hidden="true"></span><span class="fot" aria-hidden="true"></span></div>
+  <div class="pc-ramme"><div class="skjermkant"><div class="skjerm">${skjermbilde(s.bilde, esc(s.alt))}</div></div><span class="stang" aria-hidden="true"></span><span class="fot" aria-hidden="true"></span></div>
 </li>`,
     )
     .join("\n");

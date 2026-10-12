@@ -1,0 +1,1940 @@
+{
+ "versjon": "1.7.0",
+ "skjermer": [
+  {
+   "navn": "crm-min-dag",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag"
+  },
+  {
+   "navn": "crm-min-dag",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag"
+  },
+  {
+   "navn": "crm-bestilling",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-bestilling"
+  },
+  {
+   "navn": "crm-bestilling",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-bestilling"
+  },
+  {
+   "navn": "crm-etterkalkyle",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-etterkalkyle"
+  },
+  {
+   "navn": "crm-etterkalkyle",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-etterkalkyle"
+  },
+  {
+   "navn": "crm-montasje",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-montasje"
+  },
+  {
+   "navn": "crm-montasje",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-montasje"
+  },
+  {
+   "navn": "crm-saker",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-saker"
+  },
+  {
+   "navn": "crm-saker",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-saker"
+  },
+  {
+   "navn": "crm-salgstavla",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-salgstavla"
+  },
+  {
+   "navn": "crm-salgstavla",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-salgstavla"
+  },
+  {
+   "navn": "crm-resultater",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-resultater"
+  },
+  {
+   "navn": "crm-resultater",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-resultater"
+  },
+  {
+   "navn": "crm-ipad-min-dag",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag-800"
+  },
+  {
+   "navn": "crm-ipad-min-dag",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag-800"
+  },
+  {
+   "navn": "crm-min-dag",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag"
+  },
+  {
+   "navn": "crm-min-dag",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag"
+  },
+  {
+   "navn": "crm-bestilling",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-bestilling"
+  },
+  {
+   "navn": "crm-bestilling",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-bestilling"
+  },
+  {
+   "navn": "crm-etterkalkyle",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-etterkalkyle"
+  },
+  {
+   "navn": "crm-etterkalkyle",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-etterkalkyle"
+  },
+  {
+   "navn": "crm-montasje",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-montasje"
+  },
+  {
+   "navn": "crm-montasje",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-montasje"
+  },
+  {
+   "navn": "crm-saker",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-saker"
+  },
+  {
+   "navn": "crm-saker",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-saker"
+  },
+  {
+   "navn": "crm-salgstavla",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-salgstavla"
+  },
+  {
+   "navn": "crm-salgstavla",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-salgstavla"
+  },
+  {
+   "navn": "crm-resultater",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-resultater"
+  },
+  {
+   "navn": "crm-resultater",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-resultater"
+  },
+  {
+   "navn": "crm-ipad-min-dag",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag-800"
+  },
+  {
+   "navn": "crm-ipad-min-dag",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/eksport/CRM sju skjermer.dc.html",
+   "skjerm": "eksport:crm-min-dag-800"
+  },
+  {
+   "navn": "crm-tilbud",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T01.1 Tilbudslista"
+  },
+  {
+   "navn": "crm-tilbud",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T01.1 Tilbudslista"
+  },
+  {
+   "navn": "crm-tilbud-kunde",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T08.1 Tilbud og kunde"
+  },
+  {
+   "navn": "crm-tilbud-kunde",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T08.1 Tilbud og kunde"
+  },
+  {
+   "navn": "crm-tilbud",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T01.1 Tilbudslista"
+  },
+  {
+   "navn": "crm-tilbud",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T01.1 Tilbudslista"
+  },
+  {
+   "navn": "crm-tilbud-kunde",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T08.1 Tilbud og kunde"
+  },
+  {
+   "navn": "crm-tilbud-kunde",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/10 Tilbud.dc.html",
+   "skjerm": "T08.1 Tilbud og kunde"
+  },
+  {
+   "navn": "crm-ordre-kontrollmal",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.1 Ordre › Kontrollmål"
+  },
+  {
+   "navn": "crm-ordre-kontrollmal",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.1 Ordre › Kontrollmål"
+  },
+  {
+   "navn": "crm-ipad-kontrollmal",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-kontrollmal",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-belastninger",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.12 Belastninger på iPad"
+  },
+  {
+   "navn": "crm-ipad-belastninger",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.12 Belastninger på iPad"
+  },
+  {
+   "navn": "crm-tlf-kundekort",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.9 Befaring på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kundekort",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.9 Befaring på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kontrollmal",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kontrollmal",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "foresporsler",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.13 Firmaleder i Hengsel: Godta eller Bestrid"
+  },
+  {
+   "navn": "foresporsler",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.13 Firmaleder i Hengsel: Godta eller Bestrid"
+  },
+  {
+   "navn": "crm-ordre-kontrollmal",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.1 Ordre › Kontrollmål"
+  },
+  {
+   "navn": "crm-ordre-kontrollmal",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.1 Ordre › Kontrollmål"
+  },
+  {
+   "navn": "crm-ipad-kontrollmal",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-kontrollmal",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-belastninger",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.12 Belastninger på iPad"
+  },
+  {
+   "navn": "crm-ipad-belastninger",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.12 Belastninger på iPad"
+  },
+  {
+   "navn": "crm-tlf-kundekort",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.9 Befaring på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kundekort",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.9 Befaring på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kontrollmal",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-kontrollmal",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.5 Utfylling på iPad og telefon"
+  },
+  {
+   "navn": "foresporsler",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.13 Firmaleder i Hengsel: Godta eller Bestrid"
+  },
+  {
+   "navn": "foresporsler",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/18 Kontrollmal befaring belastninger.dc.html",
+   "skjerm": "H3.13 Firmaleder i Hengsel: Godta eller Bestrid"
+  },
+  {
+   "navn": "crm-moduler",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2884,
+   "h": 1804,
+   "fil": "crm/50 Moduler og punktrapport.dc.html",
+   "skjerm": "I31 Moduler (superadmin)"
+  },
+  {
+   "navn": "crm-moduler",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2884,
+   "h": 1804,
+   "fil": "crm/50 Moduler og punktrapport.dc.html",
+   "skjerm": "I31 Moduler (superadmin)"
+  },
+  {
+   "navn": "crm-moduler",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1442,
+   "h": 902,
+   "fil": "crm/50 Moduler og punktrapport.dc.html",
+   "skjerm": "I31 Moduler (superadmin)"
+  },
+  {
+   "navn": "crm-moduler",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1442,
+   "h": 902,
+   "fil": "crm/50 Moduler og punktrapport.dc.html",
+   "skjerm": "I31 Moduler (superadmin)"
+  },
+  {
+   "navn": "crm-mal-skisser",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "hengsel/32 Mal og skisser.dc.html",
+   "skjerm": "C01 Ordre › Mål og skisser"
+  },
+  {
+   "navn": "crm-mal-skisser",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1800,
+   "fil": "hengsel/32 Mal og skisser.dc.html",
+   "skjerm": "C01 Ordre › Mål og skisser"
+  },
+  {
+   "navn": "crm-mal-skisser",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "hengsel/32 Mal og skisser.dc.html",
+   "skjerm": "C01 Ordre › Mål og skisser"
+  },
+  {
+   "navn": "crm-mal-skisser",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 900,
+   "fil": "hengsel/32 Mal og skisser.dc.html",
+   "skjerm": "C01 Ordre › Mål og skisser"
+  },
+  {
+   "navn": "crm-ipad-leder",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-leder",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-innstillinger",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-innstillinger",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2360,
+   "h": 1640,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-leder",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-leder",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-innstillinger",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-innstillinger",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-leder",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-leder",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-innstillinger",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-ipad-innstillinger",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1180,
+   "h": 820,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-leder",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-leder",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B4.4 Leder på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-innstillinger",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-innstillinger",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/17 Besluttet 07.10.dc.html",
+   "skjerm": "B5.3 Innstillinger på iPad og telefon"
+  },
+  {
+   "navn": "crm-tlf-min-dag",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "OP4 Min dag på telefon"
+  },
+  {
+   "navn": "crm-tlf-min-dag",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "OP4 Min dag på telefon"
+  },
+  {
+   "navn": "crm-tlf-ordre",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "EK3 Etterkalkyle på telefon"
+  },
+  {
+   "navn": "crm-tlf-ordre",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "EK3 Etterkalkyle på telefon"
+  },
+  {
+   "navn": "crm-tlf-min-dag",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "OP4 Min dag på telefon"
+  },
+  {
+   "navn": "crm-tlf-min-dag",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "OP4 Min dag på telefon"
+  },
+  {
+   "navn": "crm-tlf-ordre",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "EK3 Etterkalkyle på telefon"
+  },
+  {
+   "navn": "crm-tlf-ordre",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/16 Inngaende faktura.dc.html",
+   "skjerm": "EK3 Etterkalkyle på telefon"
+  },
+  {
+   "navn": "crm-meny-apen",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/30 Telefon og iPad.dc.html",
+   "skjerm": "A10.1 Menyen åpen, lys"
+  },
+  {
+   "navn": "crm-meny-apen",
+   "tema": "mork",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/30 Telefon og iPad.dc.html",
+   "skjerm": "A10.1 Menyen åpen, lys"
+  },
+  {
+   "navn": "crm-meny-apen",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/30 Telefon og iPad.dc.html",
+   "skjerm": "A10.1 Menyen åpen, lys"
+  },
+  {
+   "navn": "crm-meny-apen",
+   "tema": "mork",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/30 Telefon og iPad.dc.html",
+   "skjerm": "A10.1 Menyen åpen, lys"
+  },
+  {
+   "navn": "kundeportal-k03",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K03 Mine kjøp"
+  },
+  {
+   "navn": "portal-tilbud",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K04 Tilbudet"
+  },
+  {
+   "navn": "kundeportal-k06",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K06 Oppgraderinger"
+  },
+  {
+   "navn": "kundeportal-k08",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K08 Kjøpsavtalen"
+  },
+  {
+   "navn": "portal-levering",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K10 Bekreft leveringsdag"
+  },
+  {
+   "navn": "portal-montering",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K12 Bekreft montering"
+  },
+  {
+   "navn": "portal-fdv",
+   "tema": "lys",
+   "skala": 2,
+   "b": 780,
+   "h": 1688,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K14 Ditt nye kjøkken"
+  },
+  {
+   "navn": "kundeportal-pc",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2884,
+   "h": 4190,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "KP1 Mitt kjøkken"
+  },
+  {
+   "navn": "kundeportal-k03",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K03 Mine kjøp"
+  },
+  {
+   "navn": "portal-tilbud",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K04 Tilbudet"
+  },
+  {
+   "navn": "kundeportal-k06",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K06 Oppgraderinger"
+  },
+  {
+   "navn": "kundeportal-k08",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K08 Kjøpsavtalen"
+  },
+  {
+   "navn": "portal-levering",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K10 Bekreft leveringsdag"
+  },
+  {
+   "navn": "portal-montering",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K12 Bekreft montering"
+  },
+  {
+   "navn": "portal-fdv",
+   "tema": "lys",
+   "skala": 1,
+   "b": 390,
+   "h": 844,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "K14 Ditt nye kjøkken"
+  },
+  {
+   "navn": "kundeportal-pc",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1442,
+   "h": 2095,
+   "fil": "crm/15 Kundeportalen.dc.html",
+   "skjerm": "KP1 Mitt kjøkken"
+  },
+  {
+   "navn": "ute-i-dag",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV1.3 Meld ferdig montert"
+  },
+  {
+   "navn": "ute-i-dag",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV1.3 Meld ferdig montert"
+  },
+  {
+   "navn": "ute-jobb-under",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV4.1 Jobb · Under"
+  },
+  {
+   "navn": "ute-jobb-under",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV4.1 Jobb · Under"
+  },
+  {
+   "navn": "ute-ks",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16.1 KS · kamera avbrutt"
+  },
+  {
+   "navn": "ute-ks",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16.1 KS · kamera avbrutt"
+  },
+  {
+   "navn": "ute-ks-kamera",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16 KS · OK åpner kameraet"
+  },
+  {
+   "navn": "ute-ks-kamera",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16 KS · OK åpner kameraet"
+  },
+  {
+   "navn": "ute-avvik",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV17 Meld avvik · arket"
+  },
+  {
+   "navn": "ute-avvik",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV17 Meld avvik · arket"
+  },
+  {
+   "navn": "ute-punkter",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV14 Punktliste · kunde"
+  },
+  {
+   "navn": "ute-punkter",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV14 Punktliste · kunde"
+  },
+  {
+   "navn": "ute-punktkort",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV15 Løse et punkt"
+  },
+  {
+   "navn": "ute-punktkort",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV15 Løse et punkt"
+  },
+  {
+   "navn": "ute-ferdig",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV5.3 Oppsummering"
+  },
+  {
+   "navn": "ute-ferdig",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV5.3 Oppsummering"
+  },
+  {
+   "navn": "ute-typeskilt",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV19.8 Hvitevarer · lagret"
+  },
+  {
+   "navn": "ute-typeskilt",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV19.8 Hvitevarer · lagret"
+  },
+  {
+   "navn": "ute-laser",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV13.1 Laser · søker og funnet"
+  },
+  {
+   "navn": "ute-laser",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV13.1 Laser · søker og funnet"
+  },
+  {
+   "navn": "ute-ipad-bildeverktoy",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2356,
+   "h": 1636,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV18 Bildeverktøy på iPad 1180"
+  },
+  {
+   "navn": "ute-ipad-bildeverktoy",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2356,
+   "h": 1636,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV18 Bildeverktøy på iPad 1180"
+  },
+  {
+   "navn": "mottak",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "LG1 Mottak"
+  },
+  {
+   "navn": "mottak",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "LG1 Mottak"
+  },
+  {
+   "navn": "ipad-bildeverktoy-laser",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2356,
+   "h": 1636,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV18 Bildeverktøy på iPad 1180"
+  },
+  {
+   "navn": "ute-i-dag",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV1.3 Meld ferdig montert"
+  },
+  {
+   "navn": "ute-i-dag",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV1.3 Meld ferdig montert"
+  },
+  {
+   "navn": "ute-jobb-under",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV4.1 Jobb · Under"
+  },
+  {
+   "navn": "ute-jobb-under",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV4.1 Jobb · Under"
+  },
+  {
+   "navn": "ute-ks",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16.1 KS · kamera avbrutt"
+  },
+  {
+   "navn": "ute-ks",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16.1 KS · kamera avbrutt"
+  },
+  {
+   "navn": "ute-ks-kamera",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16 KS · OK åpner kameraet"
+  },
+  {
+   "navn": "ute-ks-kamera",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV16 KS · OK åpner kameraet"
+  },
+  {
+   "navn": "ute-avvik",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV17 Meld avvik · arket"
+  },
+  {
+   "navn": "ute-avvik",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV17 Meld avvik · arket"
+  },
+  {
+   "navn": "ute-punkter",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV14 Punktliste · kunde"
+  },
+  {
+   "navn": "ute-punkter",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV14 Punktliste · kunde"
+  },
+  {
+   "navn": "ute-punktkort",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV15 Løse et punkt"
+  },
+  {
+   "navn": "ute-punktkort",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV15 Løse et punkt"
+  },
+  {
+   "navn": "ute-ferdig",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV5.3 Oppsummering"
+  },
+  {
+   "navn": "ute-ferdig",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV5.3 Oppsummering"
+  },
+  {
+   "navn": "ute-typeskilt",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV19.8 Hvitevarer · lagret"
+  },
+  {
+   "navn": "ute-typeskilt",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV19.8 Hvitevarer · lagret"
+  },
+  {
+   "navn": "ute-laser",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV13.1 Laser · søker og funnet"
+  },
+  {
+   "navn": "ute-laser",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV13.1 Laser · søker og funnet"
+  },
+  {
+   "navn": "ute-ipad-bildeverktoy",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1178,
+   "h": 818,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV18 Bildeverktøy på iPad 1180"
+  },
+  {
+   "navn": "ute-ipad-bildeverktoy",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1178,
+   "h": 818,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "MV18 Bildeverktøy på iPad 1180"
+  },
+  {
+   "navn": "mottak",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "LG1 Mottak"
+  },
+  {
+   "navn": "mottak",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/36 Hengsel montor v2.dc.html",
+   "skjerm": "LG1 Mottak"
+  },
+  {
+   "navn": "ruten",
+   "tema": "lys",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/31 Utkjorer-app.dc.html",
+   "skjerm": "U02.2 Rute for dagen"
+  },
+  {
+   "navn": "ruten",
+   "tema": "mork",
+   "skala": 2,
+   "b": 776,
+   "h": 1684,
+   "fil": "hengsel/31 Utkjorer-app.dc.html",
+   "skjerm": "U02.2 Rute for dagen"
+  },
+  {
+   "navn": "ruten",
+   "tema": "lys",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/31 Utkjorer-app.dc.html",
+   "skjerm": "U02.2 Rute for dagen"
+  },
+  {
+   "navn": "ruten",
+   "tema": "mork",
+   "skala": 1,
+   "b": 388,
+   "h": 842,
+   "fil": "hengsel/31 Utkjorer-app.dc.html",
+   "skjerm": "U02.2 Rute for dagen"
+  },
+  {
+   "navn": "d1-lag-pdf-og-send",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d1-lag-pdf-og-send-lys"
+  },
+  {
+   "navn": "d1-lag-pdf-og-send",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d1-lag-pdf-og-send-lys"
+  },
+  {
+   "navn": "d2a-signer-med-bankid",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2a-signer-med-bankid-lys"
+  },
+  {
+   "navn": "d2b-signert",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2b-signert-lys"
+  },
+  {
+   "navn": "d2b-signert",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2b-signert-lys"
+  },
+  {
+   "navn": "d3-send-ordrebekreftelse",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d3-send-ordrebekreftelse-lys"
+  },
+  {
+   "navn": "d3-send-ordrebekreftelse",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d3-send-ordrebekreftelse-lys"
+  },
+  {
+   "navn": "d4-lag-tilvalgsliste",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d4-lag-tilvalgsliste-lys"
+  },
+  {
+   "navn": "d4-lag-tilvalgsliste",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d4-lag-tilvalgsliste-lys"
+  },
+  {
+   "navn": "d5-lag-monteringsrapport",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d5-lag-monteringsrapport-lys"
+  },
+  {
+   "navn": "d5-lag-monteringsrapport",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d5-lag-monteringsrapport-lys"
+  },
+  {
+   "navn": "d6-lag-punktrapport",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d6-lag-punktrapport-lys"
+  },
+  {
+   "navn": "d6-lag-punktrapport",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d6-lag-punktrapport-lys"
+  },
+  {
+   "navn": "d7-lag-leveringspakke-fdv",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d7-lag-leveringspakke-fdv-lys"
+  },
+  {
+   "navn": "d7-lag-leveringspakke-fdv",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d7-lag-leveringspakke-fdv-lys"
+  },
+  {
+   "navn": "d8-skriv-ut-plan",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d8-skriv-ut-plan-lys"
+  },
+  {
+   "navn": "d8-skriv-ut-plan",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d8-skriv-ut-plan-lys"
+  },
+  {
+   "navn": "d9-lag-faktura",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d9-lag-faktura-lys"
+  },
+  {
+   "navn": "d9-lag-faktura",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d9-lag-faktura-lys"
+  },
+  {
+   "navn": "d10-sendt-til-kunden",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d10-sendt-til-kunden-lys"
+  },
+  {
+   "navn": "d10-sendt-til-kunden",
+   "tema": "mork",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d10-sendt-til-kunden-lys"
+  },
+  {
+   "navn": "d11-min-side-nytt",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d11-min-side-nytt-lys"
+  },
+  {
+   "navn": "d12-e-postvarsel",
+   "tema": "lys",
+   "skala": 2,
+   "b": 2880,
+   "h": 1620,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d12-e-postvarsel-lys"
+  },
+  {
+   "navn": "d1-lag-pdf-og-send",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d1-lag-pdf-og-send-lys"
+  },
+  {
+   "navn": "d1-lag-pdf-og-send",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d1-lag-pdf-og-send-lys"
+  },
+  {
+   "navn": "d2a-signer-med-bankid",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2a-signer-med-bankid-lys"
+  },
+  {
+   "navn": "d2b-signert",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2b-signert-lys"
+  },
+  {
+   "navn": "d2b-signert",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d2b-signert-lys"
+  },
+  {
+   "navn": "d3-send-ordrebekreftelse",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d3-send-ordrebekreftelse-lys"
+  },
+  {
+   "navn": "d3-send-ordrebekreftelse",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d3-send-ordrebekreftelse-lys"
+  },
+  {
+   "navn": "d4-lag-tilvalgsliste",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d4-lag-tilvalgsliste-lys"
+  },
+  {
+   "navn": "d4-lag-tilvalgsliste",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d4-lag-tilvalgsliste-lys"
+  },
+  {
+   "navn": "d5-lag-monteringsrapport",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d5-lag-monteringsrapport-lys"
+  },
+  {
+   "navn": "d5-lag-monteringsrapport",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d5-lag-monteringsrapport-lys"
+  },
+  {
+   "navn": "d6-lag-punktrapport",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d6-lag-punktrapport-lys"
+  },
+  {
+   "navn": "d6-lag-punktrapport",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d6-lag-punktrapport-lys"
+  },
+  {
+   "navn": "d7-lag-leveringspakke-fdv",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d7-lag-leveringspakke-fdv-lys"
+  },
+  {
+   "navn": "d7-lag-leveringspakke-fdv",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d7-lag-leveringspakke-fdv-lys"
+  },
+  {
+   "navn": "d8-skriv-ut-plan",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d8-skriv-ut-plan-lys"
+  },
+  {
+   "navn": "d8-skriv-ut-plan",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d8-skriv-ut-plan-lys"
+  },
+  {
+   "navn": "d9-lag-faktura",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d9-lag-faktura-lys"
+  },
+  {
+   "navn": "d9-lag-faktura",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d9-lag-faktura-lys"
+  },
+  {
+   "navn": "d10-sendt-til-kunden",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d10-sendt-til-kunden-lys"
+  },
+  {
+   "navn": "d10-sendt-til-kunden",
+   "tema": "mork",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d10-sendt-til-kunden-lys"
+  },
+  {
+   "navn": "d11-min-side-nytt",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d11-min-side-nytt-lys"
+  },
+  {
+   "navn": "d12-e-postvarsel",
+   "tema": "lys",
+   "skala": 1,
+   "b": 1440,
+   "h": 810,
+   "fil": "crm/65 Dokumenter slik lages det.dc.html",
+   "skjerm": "eksport:d12-e-postvarsel-lys"
+  }
+ ]
+}

@@ -20,6 +20,7 @@ import { mkdir, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startServer } from "./statisk-server.mjs";
 import { enhet, tilWebp } from "./lib/rammer.mjs";
+import { ERSTATT } from "./lib/design.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const dist = join(rot, "sites", "vis", "dist");
@@ -97,6 +98,12 @@ const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "h
     await page.goto(`${base}/${r}/`, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
+    // romkortet er et bilde, og skal ikke vise leverandørnavn (K-177): samme nøytrale navn som i skjermene fra designet (lib/design.mjs)
+    await page.evaluate((regler) => {
+      const re = regler.map(([k, f, t]) => [new RegExp(k, f), t]);
+      const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      while (tw.nextNode()) { let s = tw.currentNode.nodeValue; for (const [r, t] of re) s = s.replace(r, t); tw.currentNode.nodeValue = s; }
+    }, ERSTATT.map(([re, til]) => [re.source, re.flags, til]));
     const png = await page.screenshot({ fullPage: false });
     await tilWebp(await enhet("pc", png), join(img, `rom-${r}.webp`), { bredde: 960 });
     await page.close();
