@@ -16,7 +16,7 @@ import { readFileSync } from "node:fs";
 const MORK = new Set(JSON.parse(readFileSync(new URL("./src/skjermbilder/_kart.json", import.meta.url), "utf8")).skjermer.filter((x) => x.tema === "mork").map((x) => x.navn));
 /** <picture> med 1× og 2×, og mørk utgave når systemet er mørkt og skjermen følger temaet */
 const skjermbilde = (navn, alt) =>
-  `<picture>${MORK.has(navn) ? `<source media="(prefers-color-scheme: dark)" srcset="/skjermbilder/${navn}-mork@1x.webp 1x, /skjermbilder/${navn}-mork.webp 2x">` : ""}<img class="sk" src="/skjermbilder/${navn}.webp" srcset="/skjermbilder/${navn}@1x.webp 1x, /skjermbilder/${navn}.webp 2x" alt="${alt}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></picture>`;
+  `<picture><img class="sk" src="/skjermbilder/${navn}.webp" srcset="/skjermbilder/${navn}@1x.webp 1x, /skjermbilder/${navn}.webp 2x" alt="${alt}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></picture>`;
 
 /** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
 const LOGO_STI = "/assets/logo/hengsel-lys.svg";
