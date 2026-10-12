@@ -1,0 +1,25 @@
+{
+  "grupper": [
+    {
+      "id": "adresser",
+      "tittel": "Adresser",
+      "lenker": [
+        {
+          "navn": "CRM (eksempel)",
+          "url": "https://app.eksempel-kjokken.example",
+          "merknad": "Fiktiv adresse"
+        },
+        {
+          "navn": "Kundeportal (eksempel)",
+          "url": "https://minside.eksempel-kjokken.example",
+          "merknad": "Fiktiv adresse"
+        },
+        {
+          "navn": "PowerOffice-konto",
+          "url": null,
+          "merknad": "Fyll inn når kunden er opprettet"
+        }
+      ]
+    }
+  ]
+}

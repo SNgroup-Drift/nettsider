@@ -1,0 +1,184 @@
+{
+  "kontoer": [
+    {
+      "tjeneste": "Microsoft 365",
+      "innlogging": "es@sngroup.no",
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Eirik personlig innlogging. drift@sngroup.no er systemkonto/eier og varselmottaker"
+    },
+    {
+      "tjeneste": "GitHub (SNgroup-Drift)",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Supabase",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Cloudflare",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Lovable",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Sies opp etter 20.10.2026"
+    },
+    {
+      "tjeneste": "Sentry",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Peliqan",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Anthropic",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Domeneregistrar",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Apple Developer",
+      "innlogging": null,
+      "eier": "ES-Holding AS",
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Utgiver av Hengsel Ute (no.hengsel.montor)"
+    },
+    {
+      "tjeneste": "Google Play Console",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Expo / EAS",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "EXPO_TOKEN ligger som hemmelighet i GitHub (bare navnet her)"
+    },
+    {
+      "tjeneste": "PowerOffice Go",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Vipps",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Penneo",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "DealBuilder",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Unifon",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Mobit",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    }
+  ]
+}

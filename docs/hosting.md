@@ -353,3 +353,11 @@ samme commit som `main`). Skriftene skal komme fra `/fonts/`, ikke fra Google (D
   og status 200 på alt (enkeltside-modus).
 - Sjekk etter publisering, innlogget: `https://vis.sngroup.no/finnes-ikke` skal vise «Fant ikke siden».
 - `robots.txt` stenger for søkemotorer, men det er Access som faktisk holder nettstedet privat.
+
+## admin.hengsel.no (K-184)
+
+Egen Worker `admin` (`sites/admin`), statiske filer bak Cloudflare Access. Til forskjell fra de andre nettstedene går **alle** forespørsler
+gjennom `worker/index.js`, som avviser alt uten gyldig `Cf-Access-Jwt-Assertion` (signatur, utsteder, Access-app, utløp og e-postadresse).
+Variablene `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD` settes i dashbordet (ikke hemmeligheter, men heller ikke i repoet; `keep_vars` hindrer at
+utrulling overskriver dem). Mangler de, svarer Workeren 503. Build command `npm run build -w sites/admin`, Deploy command og
+Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Access-app og policy: se `claude/k184-rapport.md`.

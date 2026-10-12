@@ -1,0 +1,40 @@
+---
+import Side from "../layouts/Side.astro";
+import Lenker from "../components/Lenker.astro";
+import Kontoer from "../components/Kontoer.astro";
+import Frister from "../components/Frister.astro";
+import { plattform, plattformLenkegrupper, alleFrister, kunder } from "../lib/data";
+const { Content } = plattform.rutiner;
+const frister = alleFrister();
+const ekte = kunder.filter((k) => !k.eksempel);
+---
+<Side title="Hengsel Admin" description="Lenker, kontoer, frister og rutiner for Hengsel og SN Group" aktiv="plattform">
+  <header class="sidehode">
+    <p class="etikett">Plattform · Hengsel / SN Group</p>
+    <h1>Plattform</h1>
+    <p class="ingress">Alt Eirik trenger for å drive Hengsel-stakken, på ett sted. Siden viser bare navn på kontoer og lenker til 1Password, aldri passord, nøkler eller koder.{" "}
+      {ekte.length} {ekte.length === 1 ? "kunde" : "kunder"} i drift: {ekte.map((k, i) => <>{i > 0 && ", "}<a href={`/kunder/${k.id}`}>{k.navn}</a></>)}.</p>
+  </header>
+
+  <section class="modul" id="lenker" data-seksjon aria-labelledby="h-lenker">
+    <h2 id="h-lenker">Lenker</h2>
+    <Lenker grupper={plattformLenkegrupper()} />
+  </section>
+
+  <section class="modul" id="kontoer" data-seksjon aria-labelledby="h-kontoer">
+    <h2 id="h-kontoer">Kontoer</h2>
+    <p class="ingress">es@sngroup.no er Eiriks personlige innlogging. drift@sngroup.no er systemkonto/eier og varselmottaker. eirik@studiosigdal-innlandet.no er butikkdrift. Bare tjenestenavn og hvor i 1Password du finner innloggingen.</p>
+    <Kontoer kontoer={plattform.kontoer} />
+  </section>
+
+  <section class="modul" id="frister" data-seksjon aria-labelledby="h-frister">
+    <h2 id="h-frister">Frister</h2>
+    <p class="ingress">Hemmeligheter med utløp, domener, SSL og abonnementer, også kundenes. <span class="status rod">Haster</span> under 7 dager, <span class="status gul">Snart</span> under 30 dager, <span class="status gronn">God tid</span> ellers.</p>
+    <Frister frister={frister} visHorer />
+  </section>
+
+  <section class="modul" id="rutiner" data-seksjon aria-labelledby="h-rutiner">
+    <h2 id="h-rutiner">Rutiner</h2>
+    <div class="rutiner"><Content /></div>
+  </section>
+</Side>

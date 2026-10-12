@@ -1,0 +1,24 @@
+---
+import Side from "../../layouts/Side.astro";
+import { kunder, MODULER } from "../../lib/data";
+---
+<Side title="Kunder" description="Alle kunder (tenants) i Hengsel" aktiv="kunder" sokplassholder="Søk i kunder">
+  <header class="sidehode">
+    <p class="etikett">Kunder</p>
+    <h1>Kunder</h1>
+    <p class="ingress">Hver kunde er en mappe under <code>src/data/kunder/&lt;kunde-id&gt;</code>. Ny kunde = ny mappe, ingen kodeendring.</p>
+  </header>
+  <section data-seksjon>
+    <ul class="kundekort">
+      {kunder.map((k) => (
+        <li class="kort" data-sok={`${k.navn} ${k.id} ${k.selskaper.map((s) => s.navn).join(" ")} ${k.domener.join(" ")}`.toLowerCase()}>
+          <h2><a href={`/kunder/${k.id}`}>{k.navn}</a></h2>
+          {k.eksempel && <p class="merke eksempel-merke">Eksempel (fiktiv kunde)</p>}
+          <p class="merknad">{k.selskaper.map((s) => s.butikk).join(", ")} · {k.moduler && MODULER.filter((m) => k.moduler[m.nokkel]).length} av {MODULER.length} moduler på</p>
+          <p class="merknad">{k.status.tekst}</p>
+          <p class="adresse">Nøkkel: {k.tenant.nokkel}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Side>

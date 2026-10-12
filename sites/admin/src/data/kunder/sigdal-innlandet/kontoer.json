@@ -1,0 +1,74 @@
+{
+  "kontoer": [
+    {
+      "tjeneste": "Microsoft 365 (Sigdal-tenanten)",
+      "innlogging": "eirik@studiosigdal-innlandet.no",
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": "Butikkdrift. Delegat-tilgang via Outlook"
+    },
+    {
+      "tjeneste": "CET",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Tradeplace",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "PowerOffice Go (klienter)",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Penneo",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "KAOnline",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    },
+    {
+      "tjeneste": "Nobia",
+      "innlogging": null,
+      "eier": null,
+      "tofa": null,
+      "hvelv": null,
+      "element": null,
+      "onepassword": null,
+      "merknad": null
+    }
+  ]
+}

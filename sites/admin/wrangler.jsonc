@@ -1,0 +1,21 @@
+// Cloudflare Worker «admin» (admin.hengsel.no, K-184): statiske filer fra ./dist bak Cloudflare Access.
+// ALLE forespørsler går gjennom worker/index.js først (run_worker_first), og Workeren avviser alt som ikke har en gyldig
+// Cf-Access-Jwt-Assertion for riktig Access-app og riktig e-postadresse. Uten Access virker ikke siden.
+// Variablene ACCESS_TEAM_DOMAIN (f.eks. «<team>.cloudflareaccess.com») og ACCESS_AUD (Application Audience-taggen til Access-appen)
+// er ikke hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her; keep_vars sørger for at
+// utrulling ikke overskriver dem. Mangler en av dem, svarer Workeren 503 og viser ingenting.
+// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/admin/wrangler.jsonc`. Se rapporten claude/k184-rapport.md.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "admin",
+  "main": "./worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "keep_vars": true,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

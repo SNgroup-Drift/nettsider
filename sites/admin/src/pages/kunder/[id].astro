@@ -1,0 +1,67 @@
+---
+import Side from "../../layouts/Side.astro";
+import Lenker from "../../components/Lenker.astro";
+import Kontoer from "../../components/Kontoer.astro";
+import Frister from "../../components/Frister.astro";
+import { kunder, MODULER } from "../../lib/data";
+
+export function getStaticPaths() {
+  return kunder.map((k) => ({ params: { id: k.id }, props: { k } }));
+}
+const { k } = Astro.props;
+const fyll = (v: string | null | undefined) => v ?? null;
+---
+<Side title={`${k.navn} · Kunde`} description={`Lenker, kontoer og frister for ${k.navn}`} aktiv={k.id} sokplassholder={`Søk hos ${k.navn}`}>
+  <header class="sidehode">
+    <p class="etikett">Kunde</p>
+    <h1>{k.navn}</h1>
+    {k.eksempel && <p class="banner">Eksempelkunde (fiktiv). Finnes ikke i noen database. Viser bare strukturen.</p>}
+    <p class="ingress">{k.status.tekst}</p>
+  </header>
+
+  <section class="modul" id="kunde" aria-labelledby="h-kunde">
+    <h2 id="h-kunde">Kundekort</h2>
+    <dl class="kort kundekort-felt">
+      <div><dt>Tenant-nøkkel</dt><dd><code>{k.tenant.nokkel}</code>{k.tenant.merknad && <span class="merknad">{k.tenant.merknad}</span>}</dd></div>
+      <div><dt>Selskaper</dt><dd>
+        <ul class="enkel">{k.selskaper.map((s) => <li>{s.navn} ({s.butikk}) · org.nr. {fyll(s.orgnr) ?? <span class="fyllinn">fyll inn</span>}</li>)}</ul>
+      </dd></div>
+      <div><dt>Kontaktperson</dt><dd>{k.kontaktperson.navn}, {k.kontaktperson.rolle}<br />
+        {k.kontaktperson.epost ?? <span class="fyllinn">fyll inn</span>} · {k.kontaktperson.telefon ?? <span class="fyllinn">fyll inn telefon</span>}</dd></div>
+      <div><dt>Adresser og domener</dt><dd>{k.domener.join(", ")}</dd></div>
+      <div><dt>Lisens</dt><dd>{k.lisens.plan ?? <span class="fyllinn">fyll inn</span>} · fra {k.lisens.fra ?? "fyll inn"} · pris {k.lisens.pris ?? "fyll inn"}{k.lisens.merknad && <span class="merknad">{k.lisens.merknad}</span>}</dd></div>
+    </dl>
+  </section>
+
+  <section class="modul" id="moduler" aria-labelledby="h-moduler">
+    <h2 id="h-moduler">Moduler</h2>
+    <ul class="moduler">
+      {MODULER.map((m) => (
+        <li class={k.moduler[m.nokkel] ? "pa" : "av"}><span class="merke">{k.moduler[m.nokkel] ? "På" : "Av"}</span> {m.navn}</li>
+      ))}
+    </ul>
+    {k.moduler_merknad && <p class="merknad">{k.moduler_merknad}</p>}
+  </section>
+
+  <section class="modul" id="integrasjoner" aria-labelledby="h-integrasjoner">
+    <h2 id="h-integrasjoner">Leverandørintegrasjoner</h2>
+    <ul class="enkel">
+      {k.integrasjoner.map((i) => <li><strong>{i.navn}</strong>: {i.bruk}. Konto: {i.konto ?? <span class="fyllinn">fyll inn</span>}</li>)}
+    </ul>
+  </section>
+
+  <section class="modul" id="lenker" data-seksjon aria-labelledby="h-lenker">
+    <h2 id="h-lenker">Lenker</h2>
+    <Lenker grupper={k.lenker} sokPrefiks={k.navn} />
+  </section>
+
+  <section class="modul" id="kontoer" data-seksjon aria-labelledby="h-kontoer">
+    <h2 id="h-kontoer">Kontoer</h2>
+    <Kontoer kontoer={k.kontoer} sokPrefiks={k.navn} />
+  </section>
+
+  <section class="modul" id="frister" data-seksjon aria-labelledby="h-frister">
+    <h2 id="h-frister">Frister</h2>
+    <Frister frister={k.frister} />
+  </section>
+</Side>

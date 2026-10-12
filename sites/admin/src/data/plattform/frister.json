@@ -1,0 +1,247 @@
+{
+  "frister": [
+    {
+      "id": "lovable-oppsigelse",
+      "navn": "Si opp Lovable",
+      "type": "abonnement",
+      "tjeneste": "Lovable",
+      "dato": "2026-10-20",
+      "pris": null,
+      "merknad": "Sies opp etter 20.10.2026 (lenke til lovable.dev-kontoen under Kontoer)"
+    },
+    {
+      "id": "entra-epost-hemmelighet",
+      "navn": "Klienthemmelighet «Sigdal CRM e-post» (MS_EPOST_CLIENT_SECRET)",
+      "type": "hemmelighet",
+      "tjeneste": "Microsoft Entra",
+      "dato": null,
+      "pris": null,
+      "merknad": "Fornyes i Entra, deretter nytt navn/verdi i Supabase prod og demo. Se claude/graph-ny-app-rapport.md i CRM-repoet"
+    },
+    {
+      "id": "entra-access-hemmelighet",
+      "navn": "Klienthemmelighet i Entra-appen «Cloudflare Access» (innlogging til admin.hengsel.no)",
+      "type": "hemmelighet",
+      "tjeneste": "Microsoft Entra",
+      "dato": null,
+      "pris": null,
+      "merknad": "Opprettes ved oppsettet av Access (claude/k184-rapport.md). Fyll inn utløpsdatoen da. Utløper den, kommer ingen inn på admin.hengsel.no"
+    },
+    {
+      "id": "apple-distribusjonssertifikat",
+      "navn": "Apple distribusjonssertifikat (iOS)",
+      "type": "sertifikat",
+      "tjeneste": "Apple Developer",
+      "dato": null,
+      "pris": null,
+      "merknad": "Utløper årlig. EAS fornyer ofte selv, men sjekk"
+    },
+    {
+      "id": "apns-nokkel",
+      "navn": "APNs-nøkkel (.p8) for push til Hengsel Ute",
+      "type": "sertifikat",
+      "tjeneste": "Apple Developer",
+      "dato": null,
+      "pris": null,
+      "merknad": "Utløper ikke, men kan tilbakekalles. Sjekk at den er aktiv (hengsel-ios/docs/push-kontrakt.md)"
+    },
+    {
+      "id": "apple-medlemskap",
+      "navn": "Apple Developer Program, årsavgift",
+      "type": "abonnement",
+      "tjeneste": "Apple Developer",
+      "dato": null,
+      "pris": null,
+      "merknad": "ES-Holding AS"
+    },
+    {
+      "id": "expo-token",
+      "navn": "EXPO_TOKEN (GitHub Actions)",
+      "type": "hemmelighet",
+      "tjeneste": "Expo",
+      "dato": null,
+      "pris": null,
+      "merknad": "Brukes av Apptest-versjon"
+    },
+    {
+      "id": "crm-lesetoken",
+      "navn": "CRM_LESETOKEN (GitHub, lesetilgang til innlandet-crm-sync)",
+      "type": "hemmelighet",
+      "tjeneste": "GitHub",
+      "dato": null,
+      "pris": null,
+      "merknad": "Brukes av Apptest-versjon i sngroup-nettsider"
+    },
+    {
+      "id": "cloudflare-token-nettsider",
+      "navn": "Cloudflare API-token for nettsidene (Workers Builds)",
+      "type": "hemmelighet",
+      "tjeneste": "Cloudflare",
+      "dato": null,
+      "pris": null,
+      "merknad": "Eget token for nettsidene, ikke CRM-demoen"
+    },
+    {
+      "id": "cloudflare-token-crm",
+      "navn": "CLOUDFLARE_API_TOKEN (Prod-utrulling, miljøet production)",
+      "type": "hemmelighet",
+      "tjeneste": "Cloudflare",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "supabase-token",
+      "navn": "SUPABASE_ACCESS_TOKEN (Demo-utrulling)",
+      "type": "hemmelighet",
+      "tjeneste": "Supabase",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "anthropic-nokkel",
+      "navn": "Anthropic API-nøkler",
+      "type": "hemmelighet",
+      "tjeneste": "Anthropic",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "domene-hengsel",
+      "navn": "hengsel.no",
+      "type": "domene",
+      "tjeneste": "Domeneregistrar",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "domene-sngroup",
+      "navn": "sngroup.no",
+      "type": "domene",
+      "tjeneste": "Domeneregistrar",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "domene-byggem",
+      "navn": "byggem.no",
+      "type": "domene",
+      "tjeneste": "Domeneregistrar",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "ssl-cloudflare",
+      "navn": "SSL-sertifikater hos Cloudflare",
+      "type": "ssl",
+      "tjeneste": "Cloudflare",
+      "dato": null,
+      "pris": null,
+      "merknad": "Universal SSL fornyes automatisk. Domenesjekk-workflowen i CRM-repoet kontrollerer crm. og minside."
+    },
+    {
+      "id": "abo-m365",
+      "navn": "Microsoft 365",
+      "type": "abonnement",
+      "tjeneste": "Microsoft",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-supabase",
+      "navn": "Supabase (prod og demo)",
+      "type": "abonnement",
+      "tjeneste": "Supabase",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-cloudflare",
+      "navn": "Cloudflare",
+      "type": "abonnement",
+      "tjeneste": "Cloudflare",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-github",
+      "navn": "GitHub",
+      "type": "abonnement",
+      "tjeneste": "GitHub",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-sentry",
+      "navn": "Sentry",
+      "type": "abonnement",
+      "tjeneste": "Sentry",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-expo",
+      "navn": "Expo / EAS",
+      "type": "abonnement",
+      "tjeneste": "Expo",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-peliqan",
+      "navn": "Peliqan",
+      "type": "abonnement",
+      "tjeneste": "Peliqan",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-anthropic",
+      "navn": "Anthropic",
+      "type": "abonnement",
+      "tjeneste": "Anthropic",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-poweroffice",
+      "navn": "PowerOffice Go",
+      "type": "abonnement",
+      "tjeneste": "PowerOffice",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-vipps",
+      "navn": "Vipps",
+      "type": "abonnement",
+      "tjeneste": "Vipps",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    },
+    {
+      "id": "abo-penneo",
+      "navn": "Penneo",
+      "type": "abonnement",
+      "tjeneste": "Penneo",
+      "dato": null,
+      "pris": null,
+      "merknad": null
+    }
+  ]
+}
