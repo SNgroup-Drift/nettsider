@@ -4,7 +4,7 @@
  *   node scripts/tokens-avvik.mjs            skriver tabellen over avvik (til rapporten), exit 0
  *   node scripts/tokens-avvik.mjs --sjekk    exit 1 ved avvik i det som SKAL være likt (brukes av tokens-avvik.test.mjs)
  *
- * Det som skal være likt (ren variabelbytting, rettet i K-182): mørk sidebakgrunn (flate-side mørk) i packages/design, sngroup.no, hengsel.no og Visningsrommet,
+ * Det som skal være likt (ren variabelbytting, rettet i K-182): mørk sidebakgrunn (flate-side mørk) i packages/design, sngroup.no, hengsel.no, admin.hengsel.no og Visningsrommet,
  * og de åtte merkevarefargene i hengsel.no. Resten av forskjellene mellom hengsel.no og designsystemet er følgesaker (egne verdier som krever mer enn et variabelbytte),
  * og listes bare.
  */
@@ -31,6 +31,9 @@ export function sjekk() {
   forvent("sites/hengsel Side.astro temafarge (mørk)", /temafarge=\{\["#[0-9a-f]{6}",\s*"(#[0-9a-f]{6})"\]\}/i.exec(les("sites", "hengsel", "src", "layouts", "Side.astro"))[1]);
   forvent("sites/hengsel hengsel.css --surface-app (mørk)", /--surface-app:\s*(#[0-9a-f]{6})/gi.exec(les("sites", "hengsel", "src", "styles", "hengsel.css").split("prefers-color-scheme: dark")[1])[1]);
   forvent("sites/vis vis.css --bg (mørk)", [...les("sites", "vis", "src", "assets", "vis.css").matchAll(/--bg:\s*(#[0-9a-f]{6})/gi)].pop()[1]);
+  const ad = cssVars(les("sites", "admin", "src", "styles", "profil.css"));
+  for (const [n, v] of ad.filter(([n]) => n === "--bakgrunn").slice(1)) forvent("sites/admin profil.css mørk --bakgrunn", v);
+  forvent("sites/admin Side.astro temafarge (mørk)", /temafarge=\{\["#[0-9a-f]{6}",\s*"(#[0-9a-f]{6})"\]\}/i.exec(les("sites", "admin", "src", "layouts", "Side.astro"))[1]);
   // De åtte merkevarefargene på hengsel.no
   for (const [navn, hex] of Object.entries(ds.palett).filter(([k]) => !k.startsWith("$") && k !== "aksent-mork")) {
     const v = hv.find(([n]) => n === `--${navn}`);
@@ -50,7 +53,7 @@ export function sjekk() {
       }
     }
   };
-  for (const d of ["packages/design/src", "sites/sngroup/src", "sites/hengsel/src", "sites/byggem/src", "sites/design/src", "sites/vis/src/assets"]) gaa(join(rot, d));
+  for (const d of ["packages/design/src", "sites/sngroup/src", "sites/hengsel/src", "sites/admin/src", "sites/byggem/src", "sites/design/src", "sites/vis/src/assets"]) gaa(join(rot, d));
   return feil;
 }
 

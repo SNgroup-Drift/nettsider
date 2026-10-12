@@ -1,0 +1,22 @@
+{
+  "frister": [
+    {
+      "id": "domene-studiosigdal",
+      "navn": "studiosigdal-innlandet.no",
+      "type": "domene",
+      "tjeneste": "Domeneregistrar",
+      "dato": null,
+      "pris": null,
+      "merknad": "Pluss butikkdomenene studiosigdal-<butikk>.no (post@). Fyll inn hvilke"
+    },
+    {
+      "id": "kampanje-ka",
+      "navn": "KA Interiør regulerer prislistene",
+      "type": "abonnement",
+      "tjeneste": "KA Interiør",
+      "dato": "2027-01-01",
+      "pris": null,
+      "merknad": "Ny forhandlerprisliste fra 01.01.2027 (docs/leverandorer/ka-interior.md)"
+    }
+  ]
+}

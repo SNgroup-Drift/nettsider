@@ -1,0 +1,23 @@
+---
+import type { LenkeGruppe, Lenke } from "../lib/data";
+interface Props { grupper: (LenkeGruppe & { lenker: (Lenke & { kunde?: string })[] })[]; sokPrefiks?: string }
+const { grupper, sokPrefiks = "" } = Astro.props;
+---
+{grupper.map((g) => (
+  <section class="gruppe" data-seksjon aria-labelledby={`g-${g.id}`}>
+    <h3 id={`g-${g.id}`}>{g.tittel}</h3>
+    <ul class="lenkeliste">
+      {g.lenker.map((l) => (
+        <li data-sok={`${sokPrefiks} ${g.tittel} ${l.navn} ${l.url ?? ""} ${l.merknad ?? ""} ${l.kunde ?? ""}`.toLowerCase()}>
+          {l.url
+            ? <a class="lenke" href={l.url} target="_blank" rel="noopener noreferrer">{l.navn}</a>
+            : <span class="lenke tom">{l.navn} <span class="fyllinn">fyll inn</span></span>}
+          {l.status === "kommer" && <span class="merke kommer">kommer{l.sak ? ` · ${l.sak}` : ""}</span>}
+          {l.kunde && <span class="merke kunde">{l.kunde}</span>}
+          {l.url && l.url.replace(/^https:\/\//, "").replace(/\/$/, "") !== l.navn && <span class="adresse">{l.url.replace(/^https:\/\//, "")}</span>}
+          {l.merknad && <span class="merknad">{l.merknad}</span>}
+        </li>
+      ))}
+    </ul>
+  </section>
+))}

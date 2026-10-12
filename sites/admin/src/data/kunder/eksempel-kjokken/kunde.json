@@ -1,0 +1,57 @@
+{
+  "id": "eksempel-kjokken",
+  "navn": "Eksempel Kjøkken AS",
+  "eksempel": true,
+  "tenant": {
+    "nokkel": "eksempel-kjokken",
+    "merknad": "FIKTIV kunde. Finnes ikke i noen database. Viser bare strukturen."
+  },
+  "selskaper": [
+    {
+      "navn": "Eksempel Kjøkken AS",
+      "orgnr": null,
+      "butikk": "Eksempelbyen"
+    }
+  ],
+  "kontaktperson": {
+    "navn": "Kari Eksempel",
+    "rolle": "Daglig leder (fiktiv)",
+    "epost": "kari@eksempel-kjokken.example",
+    "telefon": null
+  },
+  "domener": [
+    "eksempel-kjokken.example",
+    "app.eksempel-kjokken.example"
+  ],
+  "moduler": {
+    "butikk": true,
+    "avtale_levering": true,
+    "montasje": false,
+    "prosjekt": false,
+    "etter_levering": false,
+    "okonomi": true,
+    "varsler": true
+  },
+  "integrasjoner": [
+    {
+      "navn": "CET",
+      "bruk": "Tegning (eksempel)",
+      "konto": null
+    },
+    {
+      "navn": "PowerOffice Go",
+      "bruk": "Regnskap (eksempel)",
+      "konto": null
+    }
+  ],
+  "lisens": {
+    "plan": "Eksempel",
+    "fra": "2026-11-01",
+    "pris": null,
+    "merknad": "Fiktivt"
+  },
+  "status": {
+    "niva": "fyll inn",
+    "tekst": "Eksempel: onboarding ikke startet"
+  }
+}

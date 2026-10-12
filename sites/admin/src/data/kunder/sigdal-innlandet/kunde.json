@@ -1,0 +1,90 @@
+{
+  "id": "sigdal-innlandet",
+  "navn": "Studio Sigdal Innlandet",
+  "eksempel": false,
+  "tenant": {
+    "nokkel": "sigdal-innlandet",
+    "merknad": "Slug. Kjede-tabellen (kjeder.kode) finnes ikke i CRM-databasen ennå (K-135 er bare en kartlegging). Bytt til kjeder.kode når den er laget; ved kjede-oppsettet er Sigdal Innlandet standardkjeden."
+  },
+  "selskaper": [
+    {
+      "navn": "Hamar Innredning AS",
+      "orgnr": null,
+      "butikk": "Hamar"
+    },
+    {
+      "navn": "Gjøvik Innredning AS",
+      "orgnr": null,
+      "butikk": "Gjøvik"
+    },
+    {
+      "navn": "Lillehammer Innredning AS",
+      "orgnr": null,
+      "butikk": "Lillehammer"
+    }
+  ],
+  "kontaktperson": {
+    "navn": "Eirik",
+    "rolle": "Eier, butikkdrift",
+    "epost": "eirik@studiosigdal-innlandet.no",
+    "telefon": null
+  },
+  "domener": [
+    "studiosigdal-innlandet.no",
+    "crm.studiosigdal-innlandet.no",
+    "demo.studiosigdal-innlandet.no",
+    "minside.studiosigdal-innlandet.no"
+  ],
+  "moduler": {
+    "butikk": true,
+    "avtale_levering": true,
+    "montasje": true,
+    "prosjekt": true,
+    "etter_levering": true,
+    "okonomi": true,
+    "varsler": true
+  },
+  "moduler_merknad": "Antatt på: ingen rad i butikk_moduler betyr på (src/lib/salgsmoduler.ts i CRM-repoet). Bekreft i CRM › Innstillinger › Moduler.",
+  "integrasjoner": [
+    {
+      "navn": "CET",
+      "bruk": "Tegning og artikler",
+      "konto": null
+    },
+    {
+      "navn": "Tradeplace",
+      "bruk": "Bestilling av hvitevarer",
+      "konto": null
+    },
+    {
+      "navn": "PowerOffice Go",
+      "bruk": "Regnskap og fakturaer (klientnøkkel per selskap)",
+      "konto": null
+    },
+    {
+      "navn": "Penneo",
+      "bruk": "E-signering av kjøpsavtalen",
+      "konto": null
+    },
+    {
+      "navn": "KAOnline",
+      "bruk": "Garderober fra KA Interiør (bestilles av selger, ikke av appen)",
+      "konto": null
+    },
+    {
+      "navn": "Microsoft 365 (Graph)",
+      "bruk": "E-post og kalender, appen «Sigdal CRM e-post»",
+      "konto": null
+    }
+  ],
+  "lisens": {
+    "plan": null,
+    "fra": null,
+    "pris": null,
+    "merknad": "Fyll inn når lisens- og prismodellen er bestemt"
+  },
+  "status": {
+    "niva": "ok",
+    "tekst": "I drift (prod). Kunde nr. 1."
+  }
+}

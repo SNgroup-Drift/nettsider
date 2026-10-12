@@ -19,7 +19,7 @@ Del 1 (stoppet 12.10, ingen bygging) spurte hva siden skulle være. Svar fra Eir
 | 8 | Tokens i repoet | Se «Endringer for å samsvare med designsystemet» under |
 | 9 | Arkiv | `docs/design/hengsel-no-2.0/` → `docs/arkiv/hengsel-no-2.0/` (git mv, ingenting slettet) med `docs/arkiv/LES-MEG.md`. De andre `.dc.html`-ene i `docs/design/hengsel` er gjeldende fasit (merke v3, apptest, Logo-bruk, Ute-ikon) og ligger fast |
 | 10 | Grep | Se «Grep» under |
-| 11 | Docs | `docs/hosting.md` (kolonne for `design`, egen seksjon, domenet), `README.md` (tabell, kommandoer, skript). Admin: se «Ikke gjort» |
+| 11 | Docs | `docs/hosting.md` (kolonne for `design`, egen seksjon, domenet), `README.md` (tabell, kommandoer, skript). Admin: lenken til design.hengsel.no fantes allerede (K-184) |
 | 12 | Cloudflare | Stegene (a)–(e) under |
 
 Merket v3 gjennomgående: topp (Meny) og bunn (Bunn) bruker `hengsel-aksent-lys/-mork.svg`, favicon er `brand/hengsel-merke/favicon` (svg, 32, 180, 192), og:image (`og.png`, 1200 × 630) er tegnet fra designsystemets skrifter og logo. Ingen gammel H-logo, ingen «by Hengsel».
@@ -47,9 +47,10 @@ Skal skjermene lages på nytt fra `origin/demo` etter at merkebyttet v3 er flett
 | `sites/hengsel/src/styles/tokens.css` `--bakgrunn` og `--pa-aksent` mørk (4 steder) | `#1b1713` | `#1f1914` |
 | `sites/hengsel/src/styles/hengsel.css` `--surface-app` mørk | `#1b1713` | `#1f1914` |
 | `sites/hengsel/src/layouts/Side.astro` `temafarge` mørk | `#1B1713` | `#1F1914` |
+| `sites/admin/src/styles/profil.css` `--bakgrunn` og `--pa-aksent` mørk (4 steder) og `sites/admin/src/layouts/Side.astro` `temafarge` (kom med K-184 da main ble flettet inn) | `#1b1713` / `#1B1713` | `#1f1914` / `#1F1914` |
 | `sites/vis/src/assets/vis.css` `--bg` mørk (2 steder) og README | `#1B1713` | `#1F1914` |
 | `brand/hengsel-merke/README.md` og `favicon/head.html` (theme-color) | `#1B1713` | `#1F1914` |
-| `sites/hengsel/src/styles/tokens.css` `--merke-*` (11 linjer, rester av det gamle inline-H-merket, ubrukt) | fantes | fjernet |
+| `sites/hengsel/src/styles/tokens.css` og `sites/admin/src/styles/profil.css` `--merke-*` (11 linjer i hver, rester av det gamle inline-H-merket, ubrukt) | fantes | fjernet |
 
 **Test:** `scripts/tokens-avvik.test.mjs` (og `node scripts/tokens-avvik.mjs --sjekk`) feiler hvis mørk sidebakgrunn i packages/design, sngroup.no, hengsel.no eller vis avviker fra `flate-side` mørk i designsystemet, hvis de åtte merkevarefargene på hengsel.no avviker, eller hvis `#1b1713`/`#1e1916` dukker opp igjen i kode som tegner flater (enhetsrammer er unntatt). Bekreftet ved å sette `--natt` tilbake: testen feilet.
 
@@ -86,14 +87,14 @@ I tillegg, ikke gjort:
 
 ## Grep (punkt 10)
 
-Søkt i `sites/hengsel`, `sites/design` og `packages/design` (utenom `public/ds`, som er designsystemets filer og er sjekket mot pin, og utenom `docs/arkiv`). `sites/admin` finnes ikke i dette repoet.
+Søkt i `sites/hengsel`, `sites/design`, `sites/admin` og `packages/design` (utenom `public/ds`, som er designsystemets filer og er sjekket mot pin, og utenom `docs/arkiv`). `sites/admin` (K-184) kom med da main ble flettet inn: 0 treff på «by Hengsel», «engsel», Lausanne og Reckless; `--merke-*` fjernet som i hengsel; mørk bakgrunn er byttet (tabellen over).
 
 | Mønster | Treff utenom arkivet | Rettet |
 |---|---|---|
 | «by Hengsel» | 0 | – |
 | «engsel» som eget ord (lest som det gamle H-merket med «engsel»; treff på «Hengsel» er ikke tatt med) | 0 | – |
 | Lausanne, Reckless (i kode, filer og filnavn) | 0 | – |
-| Gammel H-logo: «H-merke», `hengsel-merke-liten`, `v2-h-merke`, «Gjennom linsa», `--merke-*` | 11 linjer `--merke-dor/-linje/-grep/-ord/-crm` i `sites/hengsel/src/styles/tokens.css` (ubrukte, rester av inline-merket) | Fjernet. Alle logofiler i `sites/hengsel/public/logo` er byte-for-byte like designsystemets (v3); `ute.svg` er `brand/hengsel-merke/app-ikon/visning/ute.svg` |
+| Gammel H-logo: «H-merke», `hengsel-merke-liten`, `v2-h-merke`, «Gjennom linsa», `--merke-*` | 11 linjer `--merke-dor/-linje/-grep/-ord/-crm` i `sites/hengsel/src/styles/tokens.css` og i `sites/admin/src/styles/profil.css` (ubrukte, rester av inline-merket) | Fjernet. Alle logofiler i `sites/hengsel/public/logo` er byte-for-byte like designsystemets (v3); `ute.svg` er `brand/hengsel-merke/app-ikon/visning/ute.svg` |
 | Gammel mørk bakgrunn `#1B1713` / `#1E1916` | 15 treff i kode | Byttet (tabellen over); igjen: enhetsrammer og app-ikon-SVG (følgesak) |
 
 Testen `design-fasit.test.mjs` sjekker det samme på hele `sites/design/dist` (tekst, alt, tittel, aria, css, js, svg): ingen FORBUDT-treff (K-151-listen: merkenavn, leverandører, ekte kunder), ingen «by Hengsel», «engsel», H-merke, Lausanne eller Reckless.
@@ -102,8 +103,8 @@ Testen `design-fasit.test.mjs` sjekker det samme på hele `sites/design/dist` (t
 
 ## Tester og sjekker (alle grønne)
 
-- `npm run build`: alle fem nettstedene bygger. `npx wrangler deploy --dry-run -c sites/design/wrangler.jsonc`: leser 129 filer, ingen bindinger.
-- `npm test`: 59 tester (hvorav 12 nye: `design-fasit.test.mjs` og `tokens-avvik.test.mjs`) + lenkesjekken: **design: 89 interne adresser og 74 bilder/videoer svarer 200, ukjente sider får 404.html**; hengsel, sngroup, byggem og vis uendret grønne (751 forespørsler, 0 feil).
+- `npm run build`: alle seks nettstedene bygger. `npx wrangler deploy --dry-run -c sites/design/wrangler.jsonc`: leser 129 filer, ingen bindinger.
+- `npm test` (etter flett med main/K-184): 76 tester (hvorav 12 nye: `design-fasit.test.mjs` og `tokens-avvik.test.mjs`) + lenkesjekken: **design: 89 interne adresser og 74 bilder/videoer svarer 200, ukjente sider får 404.html**; hengsel, sngroup, byggem, vis og admin grønne (777 forespørsler, 0 feil).
 - `node scripts/skjermbilder-design.mjs` (Chromium og axe-core 4.14): 8 sider × 390/1440 px × lys/mørk = 32 kombinasjoner, hver med **0 kontrastbrudd** og **0 øvrige axe-brudd** (WCAG 2.x A/AA og beste praksis), ingen konsollfeil eller CSP-brudd, ingen eksterne forespørsler, ingen `style=`-attributter eller inline-skript, alle bilder har width/height, ingen vannrett rulling (også ved 360 px).
 - `npm run skjermbilder` (den gamle sjekken av alle nettsteder): 0 feil. Skriptet hopper nå over `design` (har egne sjekker), og skjermbildene det skriver (`docs/skjermbilder`, `claude/k160-`, `k172-`) er ikke tatt med i PR-en.
 - Det er ikke kjørt Lighthouse, skjermleser, tastaturnavigasjon utover fokusringer, eller Safari/iOS. Bryteren Auto/Lys/Mørk trenger skript; uten skript følger siden systemet.
@@ -115,7 +116,7 @@ Testen `design-fasit.test.mjs` sjekker det samme på hele `sites/design/dist` (t
 
 ## Ikke gjort (og hvorfor)
 
-- **admin (lenker):** det finnes ingen `sites/admin` i dette repoet. Legg «design.hengsel.no» inn i lenkelista i admin i det repoet admin bor i.
+- **admin (lenker):** `sites/admin/src/data/plattform/lenker.json` har allerede «design.hengsel.no» (lagt inn i K-184, «Designsystemet (sites/design, K-182)»). Ingen endring nødvendig.
 - **DNS, Cloudflare, Access, Workers Builds-kobling:** ikke rørt (stegene under er dine).
 - **`public/ds/tokens/HengselTokens.swift` og designsystemets `index.html`** er ikke kopiert (Swift hører til appen; `index.html` er erstattet av denne siden).
 - **sngroup.no/design** (SN Groups egen designside) er uendret utenom mørk bakgrunn.

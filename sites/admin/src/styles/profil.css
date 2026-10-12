@@ -1,0 +1,120 @@
+/*
+  KOPI av sites/hengsel/src/styles/tokens.css (Hengsel-merket v3) for admin.hengsel.no (K-184). Når Hengsel-profilen flyttes til
+  packages/design (K-182), bytt denne filen mot importen derfra.
+
+  hengsel.no – Hengsel-fargene som familiens semantiske variabler.
+  Fasit: docs/design/hengsel/_ds/…/tokens/colors.css (Hengsel designsystem v1.0) og <helmet> i
+  «56 Hengsel forside.dc.html» (10.10.2026): sideflaten er Beige 4, kort er Off White, bånd er Beige 3.
+  Lastes etter @sngroup/design/tokens.css og overstyrer den (html:root har høyere spesifisitet enn :root).
+
+  Avvik fra designsystemet, for minst 4,5:1 kontrast på tekst (WCAG AA):
+  - Info-piller og -bannere er Beige 3 med Warm Black-tekst (Eirik 11.10), ikke lyseblå. Deep Blue er bare hovedknapper, lenker og fokusring.
+  - --tekst-svak (dempet hjelpetekst) er #6E6355, ikke #8A7F72 (3,7:1 mot Off White).
+  - Tekst i ok-piller er #376C49 (designsystemet: 4,3:1).
+*/
+html:root {
+  /* Skrift: Newsreader (overskrifter) og Inter (tekst), selvhostet fra @fontsource (@sngroup/design/fonts.css). */
+  --font-overskrift: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-tekst: "Inter Variable", "Helvetica Neue", Arial, sans-serif;
+
+  /* Merkevarefarger (bare disse åtte) */
+  --warm-black: #31261d;
+  --off-white: #fbf9f6;
+  --beige-4: #f8f2ec;
+  --beige-3: #f2e9db;
+  --beige-2: #e4d4c4;
+  --beige-1: #c3b5a7;
+  --deep-blue: #5074a9;
+  --dusty-blue: #9ca9bd;
+
+  /* Familiens semantiske navn */
+  --bakgrunn: var(--off-white);     /* sideflaten (fil 60: Off White; kort og bånd er Beige 3) */
+  --flate: var(--beige-3);          /* seksjonsbånd */
+  --kort: var(--off-white);         /* kort, ruter og felt */
+  --flate-myk: #efe5d6;             /* --surface-soft i fil 56 (Beige 4 er sideflaten) */
+  --flate-sterk: var(--beige-2);
+  --beige-3-ute: #f2e9dc;           /* telefonflatene i Hengsel Ute (Enhet.dc.html) */
+  --off-white-ute: #fbf9f5;         /* laser og avvik (Enhet.dc.html) */
+  --linje: var(--beige-2);
+  --linje-svak: var(--beige-2);
+  --ikon: var(--beige-1);
+  --tekst: var(--warm-black);
+  --tekst-dempet: #5e564c;          /* 6,9:1 mot Off White, 6,0:1 mot Beige 3 */
+  --tekst-svak: #6e6355;            /* 5,6:1 mot Off White, 4,9:1 mot Beige 3 */
+  --aksent: var(--deep-blue);       /* 4,5:1 mot Off White */
+  --pa-aksent: var(--off-white);
+  --aksent-myk: var(--beige-3);     /* beige i stedet for lyseblå (Eirik 11.10): piller, merker, valgte felt, info-bannere */
+  --info-tekst: var(--warm-black);
+  --ok: #376c49;   --ok-myk: #e4eee6;
+  --feil: #8e3522; --feil-myk: #f4e1db;
+  --skygge: 0 1px 2px rgb(49 38 29 / 0.06), 0 12px 40px -12px rgb(49 38 29 / 0.22); /* bare enhetsrammene */
+  --ramme: #1b1713;                 /* telefon- og iPad-rammen */
+  --lysboks: #1b1713;
+
+
+  /* Mål */
+  /* 1180 px innhold + luft på sidene (designet bruker content-box, familiens .wrap border-box) */
+  --bredde: calc(1180px + 2 * var(--gutter));
+  --gutter: clamp(16px, 4vw, 40px);
+  --radius: 14px;
+  --radius-liten: 8px;
+  --radius-felt: 10px;
+  --radius-stor: 20px;
+  --radius-pille: 999px;
+  --seksjon: clamp(64px, 9vw, 120px);
+  --t-hero: clamp(2.5rem, 5.6vw, 4.6rem);
+  --t-h1: clamp(2rem, 3.6vw, 3rem);
+  --t-h2: 1.75rem;
+  --t-h3: 1.45rem;   /* minste serif-størrelse */
+  --t-lede: 1.18rem;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 160ms;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:root:not([data-theme="light"]) {
+    --bakgrunn: #1f1914;
+    --flate: #2f2820;
+    --kort: #26201a;
+    --flate-myk: #2f2820;
+    --flate-sterk: #3b3229;
+    --linje: #3b3229;
+    --linje-svak: #3b3229;
+    --ikon: #6e6052;
+    --tekst: #f1e9de;
+    --tekst-dempet: #c3b7a8;
+    --tekst-svak: #9a8e80;          /* 4,5:1 mot #2F2820 */
+    --aksent: var(--dusty-blue);
+    --pa-aksent: #1f1914;
+    --aksent-myk: #3b3229;
+    --info-tekst: #f1e9de;
+    --ok: #8cc39b;   --ok-myk: #1f2e23;
+    --feil: #e69a87; --feil-myk: #36211c;
+    --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+html:root[data-theme="dark"] {
+  --bakgrunn: #1f1914;
+  --flate: #2f2820;
+  --kort: #26201a;
+  --flate-myk: #2f2820;
+  --flate-sterk: #3b3229;
+  --linje: #3b3229;
+  --linje-svak: #3b3229;
+  --ikon: #6e6052;
+  --tekst: #f1e9de;
+  --tekst-dempet: #c3b7a8;
+  --tekst-svak: #9a8e80;
+  --aksent: var(--dusty-blue);
+  --pa-aksent: #1f1914;
+  --aksent-myk: #3b3229;
+  --info-tekst: #f1e9de;
+  --ok: #8cc39b;   --ok-myk: #1f2e23;
+  --feil: #e69a87; --feil-myk: #36211c;
+  --skygge: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}

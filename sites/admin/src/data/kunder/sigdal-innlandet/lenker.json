@@ -1,0 +1,53 @@
+{
+  "grupper": [
+    {
+      "id": "crm-apper",
+      "tittel": "CRM og apper",
+      "plattformgruppe": "crm-apper",
+      "lenker": [
+        {
+          "navn": "crm.studiosigdal-innlandet.no (prod)",
+          "url": "https://crm.studiosigdal-innlandet.no",
+          "merknad": "Ekte data. Skal videresende til app.hengsel.no minst 12 måneder etter flyttingen"
+        },
+        {
+          "navn": "demo.studiosigdal-innlandet.no",
+          "url": "https://demo.studiosigdal-innlandet.no",
+          "merknad": "Demo med fiktive data; e-post og SMS går aldri ut"
+        },
+        {
+          "navn": "minside.studiosigdal-innlandet.no",
+          "url": "https://minside.studiosigdal-innlandet.no",
+          "merknad": "Kundeportalen (Min side)"
+        }
+      ]
+    },
+    {
+      "id": "leverandorer",
+      "tittel": "Leverandører",
+      "lenker": [
+        {
+          "navn": "PowerOffice Go",
+          "url": "https://go.poweroffice.net",
+          "merknad": "Sigdals klienter (en per selskap)"
+        },
+        {
+          "navn": "Penneo",
+          "url": "https://app.penneo.com"
+        },
+        {
+          "navn": "KAOnline",
+          "url": "https://kaonline.dk"
+        },
+        {
+          "navn": "CET",
+          "url": null
+        },
+        {
+          "navn": "Tradeplace",
+          "url": null
+        }
+      ]
+    }
+  ]
+}
