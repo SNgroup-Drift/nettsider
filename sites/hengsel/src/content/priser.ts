@@ -1,4 +1,4 @@
-// /priser-og-demo: tekst og data. Fasit: docs/design/hengsel-no-2.0/Priser-og-demo.dc.html og LES-MEG.md, ordrett.
+// /priser-og-demo: tekst og data. Fasit: docs/design/hengsel/Priser-og-demo.dc.html og LES-MEG.md, ordrett.
 // Ingen priser noe sted (Eirik): «Pris etter antall butikker og brukere. Be om tilbud.»
 import { TEL, EPOST } from "./forside";
 

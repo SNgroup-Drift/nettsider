@@ -3,7 +3,7 @@
 Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visningsrommet – frittstående.html` og README §1–§9.
 
 ## Funn 10.10.2026 (se README øverst) – rettet i PR-en 10.10
-- [x] Logoen rendres som tomme bokser («▯▯engsel») på alle vis-sider – byttet til SVG fra logopakken (`src/assets/logo/`).
+- [x] Logoen rendres som tomme bokser på alle vis-sider – byttet til SVG fra merkepakken (`src/assets/logo/`).
 - [x] «Studio Sigdal» / «Sigdal CRM» fjernet fra Firmaleder, Hvitevarer, Min side, Prøv som leverandør, Kundens reise, /sv/ og Opplæring.
 - [x] Forsiden er v2 (hero med illustrasjon, Start her, tidslinje, Alle rommene, avslutning).
 - [x] Leverandørløsningen: lysbildet ikke høyere enn innholdet.
@@ -12,9 +12,9 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [x] Alle skjermbilder i Apples rammer (README «Apple-rammer»): ingen bilde uten ramme (unntak: A4-arkene i Dokumentene), ingen bilde utenfor skjermhullet, ingen dobbel statuslinje på iPhone, rammer minst 200 px høye.
 
 ## Logo
-- [ ] Hengsel-logoen er SVG fra logopakken (`src/assets/logo/hengsel-crm-logo-lys.svg` / `-mork.svg` som `<img>`, byttes med CSS) (merke + «engsel» + hake over «CRM», konturert tekst). Aldri strukket, rotert eller i andre farger.
-- [ ] Størrelser (logopakken 10.10): toppfelt 40 px · topplinje i rom 28 px · i tekst («Samtidig i …») 24 px · CRM-noden i Ordrens reise 34 px · navet i Systemkartet 42 px · bunn («Levert med») 30 px.
-- [ ] Mørk modus bruker `hengsel-logo-mork`-fargene (ytterlinje og ord i Off White, grep og hake i Deep Blue).
+- [ ] Hengsel-merket er SVG fra merkepakken (`src/assets/logo/*-aksent-lys.svg` / `-mork.svg` som `<img>`, byttes med CSS; konturert tekst). Aldri strukket, rotert eller i andre farger.
+- [ ] Størrelser (merkepakken 12.10): toppfelt og topplinje i rom 28 px (`hengsel-aksent`) · i tekst («Samtidig i …») 24 px (`crm-aksent`) · CRM-noden i Ordrens reise 34 px og navet i Systemkartet 42 px (`hengsel-crm-aksent`) · bunn 14 px (`levert-av-aksent`).
+- [ ] Mørk modus bruker `-aksent-mork`-utgavene (symbol og ord i Off White, stift i Dusty Blue).
 - [ ] SN-logoen 26 px høy, 90 % opasitet, bytter til `logo-mork.svg` i mørk modus.
 - [ ] «Sigdal CRM» er borte fra simulert innhold; butikken heter «Kjøkkenstudio Hamar» (bestilling@kjokkenstudio-hamar.no); «Sigdal» står bare som fabrikk/leverandør.
 
@@ -44,7 +44,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [ ] Rollevelger `.btn`, valgt `.btn.dark`. Filtrerer kortene, lagrer i localStorage og `?rolle=`.
 - [ ] Romkort: enhetsbilde 4:3 → type-pille `.pill.info.nodot` → tittel 1,45 rem → én setning → lenketekst med « ›» nederst. Like høye. 4 / 2 / 1 i bredden (1440 / 1180 iPad / 390).
 - [ ] Hover på kort: kantfarge `--sand`, ingen løft.
-- [ ] Bunn: «Alle data i Visningsrommet er oppdiktet.» + «Levert med [Hengsel 30 px]» + familiebåndet (`gjeldende="hengsel.no"`).
+- [ ] Bunn: «Alle data i Visningsrommet er oppdiktet.» + «Levert av» + Hengsel (`levert-av-aksent`, 14 px) + familiebåndet (`gjeldende="hengsel.no"`).
 
 ## Rommaler
 - [ ] Simulering: panelene stables på 390 px; scenelinjen ruller horisontalt (`flex:1 0 108px`); Spill av / Pause / Fortsett / Spill av igjen; «Spill videre» er `.switch`; piltaster og mellomrom virker.

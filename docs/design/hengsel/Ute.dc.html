@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hengsel Ute – montørappen for iPhone og iPad</title>
+  <link rel="icon" href="hengsel-merke/favicon/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div ref="{{ root }}" style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="ute" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
+
+  <section data-screen-label="Ute · stegliste" style="padding:clamp(40px,6vw,72px) 0 clamp(48px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:clamp(32px,6vw,80px); align-items:start">
+      <div style="display:flex; flex-direction:column; gap:28px; min-width:0">
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <sc-if value="{{ lys }}" hint-placeholder-val="{{ true }}"><img src="hengsel.no/logo/l1/hengsel-ute-aksent-lys.svg" alt="Hengsel Ute" style="height:34px; width:auto; align-self:flex-start"></sc-if><sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}"><img src="hengsel.no/logo/l1/hengsel-ute-aksent-mork.svg" alt="Hengsel Ute" style="height:34px; width:auto; align-self:flex-start"></sc-if>
+          <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5vw,4.2rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Montøren slipper papir.</h1>
+          <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:52ch; text-wrap:pretty">Montørappen for iPhone og iPad. Jobben, tegningene, målene og KS-sjekklista ligger i lomma.</p>
+        </div>
+        <ol role="tablist" aria-label="Steg i appen" style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; border-top:1px solid var(--line)">
+          <sc-for list="{{ steg }}" as="s" hint-placeholder-count="6">
+            <li style="border-bottom:1px solid var(--line)">
+              <button type="button" role="tab" aria-selected="{{ s.sel }}" onClick="{{ s.go }}" style="{{ s.style }}" style-hover="background:var(--surface-soft)">
+                <span style="{{ s.nrStyle }}">{{ s.nr }}</span>
+                <span style="display:flex; flex-direction:column; gap:2px; text-align:left"><b style="font-weight:600; font-size:1.05rem">{{ s.t }}</b><span style="color:var(--muted); font-size:.95rem; line-height:1.5">{{ s.s }}</span></span>
+              </button>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:16px; min-width:0">
+        <div style="width:100%; max-width:400px">
+          <dc-import name="Enhet" type="iphone" src="{{ bilde.lys }}" src-dark="{{ bilde.mork }}" dark="{{ dark }}" alt="{{ bilde.alt }}" hint-size="100%,840px"></dc-import>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <button type="button" onClick="{{ forrige }}" disabled="{{ forsteSteg }}" aria-label="Forrige steg" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer">‹</button>
+          <span style="font-size:.92rem; color:var(--muted); min-width:64px; text-align:center; font-variant-numeric:tabular-nums">{{ teller }}</span>
+          <button type="button" onClick="{{ neste }}" disabled="{{ sisteSteg }}" aria-label="Neste steg" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute · iPad" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:32px">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:16px 48px; align-items:end">
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">På iPad</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Bildeverktøyet.</h2>
+        </div>
+        <p style="margin:0; color:var(--muted); font-size:1.05rem">Punkter, mål, piler og tekst rett på bildet, med Apple Pencil eller finger. Laseren kobles til, og målene går rett inn i bildet. Punktlista til høyre har samme nummer som i CRM og kundeportalen.</p>
+      </div>
+      <div style="width:100%; max-width:1040px; margin:0 auto">
+        <dc-import name="Enhet" type="ipad" src="hengsel.no/img/ute-ipad-bildeverktoy.png" dark="{{ dark }}" alt="Hengsel Ute på iPad: bildeverktøyet med punkter på bildet og punktliste til høyre" hint-size="100%,720px"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute · uten dekning" style="padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:clamp(32px,6vw,80px); align-items:center">
+      <div style="width:100%; max-width:340px; justify-self:center">
+        <dc-import name="Enhet" type="iphone" src="hengsel.no/ios/uten-nett-lys.png" src-dark="hengsel.no/ios/uten-nett-mork.png" dark="{{ dark }}" alt="Hengsel Ute uten nett: I dag med varsel om at bilder og kryss sendes når nettet er tilbake" hint-size="100%,720px"></dc-import>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Virker uten dekning</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Kjelleren, hytta og nybygget uten nett.</h2>
+        <p style="margin:0; color:var(--muted); font-size:1.05rem">Alt montøren sender inn, legges først i en kø på telefonen og vises med en gang som om det var sendt. Når nettet kommer tilbake, sendes køen av seg selv.</p>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:12px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Fra appen</span>
+          <span style="font-size:1.05rem"><b style="font-weight:600">Venter på nett</b></span>
+          <span style="color:var(--muted)">«Alt er lagret på telefonen og sendes av seg selv når nettet er tilbake. Ingenting går tapt.»</span>
+        </div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+          <li style="display:flex; gap:12px"><span style="color:var(--accent)">→</span><span>Bilder, avvik, KS, ferdigmelding, restpunkt og kundens signatur.</span></li>
+          <li style="display:flex; gap:12px"><span style="color:var(--accent)">→</span><span>«Klar uten nett» henter dagens jobber før du kjører.</span></li>
+          <li style="display:flex; gap:12px"><span style="color:var(--accent)">→</span><span>Pillen øverst viser hva som venter: «3 venter på nett».</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Ute · bli tester" style="background:var(--surface-highlight); padding:clamp(48px,6vw,80px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:24px 48px">
+      <div style="display:flex; gap:20px; align-items:center; max-width:640px">
+        <img src="hengsel-merke/app-ikon/visning/ute.svg" alt="" aria-hidden="true" style="width:64px; height:64px; border-radius:15px; flex:none">
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(1.75rem,3vw,2.4rem); line-height:1.1">Bli tester</h2>
+          <p style="margin:0; color:var(--muted)">Hengsel Ute er i test på iPhone, iPad og Android. Testsiden har lenkene og forteller hvordan du melder feil.</p>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px">
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="https://hengsel.no/apptest" hint-size="130px,44px">Bli tester</x-import>
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="https://hengsel.no/apptest" hint-size="120px,44px">App Store</x-import>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: false, i: 0 };
+  root = React.createRef();
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  renderVals() {
+    const S = [
+      ['idag', 'I dag', 'Neste jobb, På vei, og det du må vite før du starter.', 'Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei'],
+      ['jobben', 'Jobben', 'Tegning, mål, bilder og restpunkter samlet før, under og etter.', 'Hengsel Ute: jobben med Noe mangler, Før og Under'],
+      ['ks', 'KS', 'Punkt for punkt. OK med bilde åpner kameraet.', 'Hengsel Ute: KS-sjekkliste punkt for punkt'],
+      ['avvik', 'Avvik', 'Bilde med pil, og om det trengs ny vare.', 'Hengsel Ute: meld avvik med bilde'],
+      ['punkter', 'Punkter', 'Ett nummersystem, samme nummer i CRM og portal.', 'Hengsel Ute: punktlista på kunden med nummer og status'],
+      ['ferdig', 'Ferdig', 'Ferdig montert, eller det som gjenstår med dato.', 'Hengsel Ute: meld ferdig montert'],
+    ];
+    const i = this.state.i;
+    return {
+      root: this.root, dark: this.state.dark, lys: !this.state.dark,
+      uteLogo: this.state.dark ? 'hengsel.no/logo/l1/hengsel-ute-aksent-mork.svg' : 'hengsel.no/logo/l1/hengsel-ute-aksent-lys.svg',
+      steg: S.map(([k, t, s], n) => ({ t, s, nr: String(n + 1), sel: n === i ? 'true' : 'false', go: () => this.setState({ i: n }),
+        style: { width: '100%', display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 12px', border: 0, background: n === i ? 'var(--surface-highlight)' : 'transparent', boxShadow: n === i ? 'inset 3px 0 0 var(--accent)' : 'none', color: 'var(--ink)', font: 'inherit', cursor: 'pointer', borderRadius: 0 },
+        nrStyle: { width: 28, height: 28, borderRadius: 999, flex: 'none', display: 'grid', placeItems: 'center', fontSize: 13, fontWeight: 600, background: n === i ? 'var(--accent)' : 'var(--surface)', color: n === i ? 'var(--accent-ink)' : 'var(--muted)', border: '1px solid ' + (n === i ? 'var(--accent)' : 'var(--line)'), boxSizing: 'border-box', marginTop: 1 } })),
+      bilde: { lys: `hengsel.no/ios/${S[i][0]}-lys.png`, mork: `hengsel.no/ios/${S[i][0]}-mork.png`, alt: S[i][3] },
+      teller: `${i + 1} av ${S.length}`,
+      forsteSteg: i === 0, sisteSteg: i === S.length - 1,
+      forrige: () => this.setState(s => ({ i: Math.max(0, s.i - 1) })),
+      neste: () => this.setState(s => ({ i: Math.min(S.length - 1, s.i + 1) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

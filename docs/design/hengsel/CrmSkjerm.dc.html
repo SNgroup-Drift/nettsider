@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+</helmet>
+<div style="{{ shell }}">
+  <sc-if value="{{ side }}" hint-placeholder-val="{{ true }}">
+    <aside style="{{ sideStyle }}">
+      <div style="display:flex; flex-direction:column; gap:8px; padding:6px 12px 22px">
+        <span data-din-logo="true" style="display:flex; flex-direction:column; gap:3px; align-items:flex-start"><span style="height:40px; padding:0 18px; border:1.5px dashed var(--beige-1, #C3B5A7); border-radius:6px; display:flex; align-items:center; font-size:15px; font-weight:600; letter-spacing:.02em; color:var(--ink); box-sizing:border-box">Din logo</span></span>
+      </div>
+      <sc-for list="{{ meny }}" as="m" hint-placeholder-count="9">
+        <div style="{{ m.style }}"><span>{{ m.label }}</span><span style="color:var(--muted); font-size:13px">{{ m.n }}</span></div>
+      </sc-for>
+      <div style="margin-top:auto; padding:12px; font-size:14px; line-height:1.5; color:var(--muted)"><div style="color:var(--ink)">Kristine B.</div><div>Selger · Butikknavn</div><div style="display:flex; align-items:center; gap:8px; margin-top:14px"><img src="{{ hengselCrm }}" alt="Hengsel CRM" style="height:16px; width:auto; display:block"><span style="font-size:11px; color:var(--muted)">v. 4.2</span></div></div>
+    </aside>
+  </sc-if>
+  <div style="{{ mainStyle }}">
+    <sc-if value="{{ phone }}" hint-placeholder-val="{{ false }}">
+      <div style="height:54px; flex:none"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:0 0 12px">
+        <span data-din-logo="true" style="display:flex; flex-direction:column; gap:3px; align-items:flex-start"><span style="height:34px; padding:0 15px; border:1.5px dashed var(--beige-1, #C3B5A7); border-radius:6px; display:flex; align-items:center; font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--ink); box-sizing:border-box">Din logo</span></span>
+        <span style="width:36px; height:36px; border-radius:999px; background:var(--surface-highlight-strong); display:grid; place-items:center; font-size:13px; font-weight:600">KB</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMinDag }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:4px">
+        <span style="font-size:14px; color:var(--muted)">{{ minDagMeta }}</span>
+        <h3 style="{{ h1 }}">God morgen, Kristine.</h3>
+      </div>
+      <div style="{{ grid2 }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:4px; min-width:0">
+          <div style="display:flex; align-items:baseline; gap:10px; padding-bottom:8px"><b style="font-weight:600; font-size:16px">I dag</b><span style="color:var(--muted); font-size:14px">6 igjen</span></div>
+          <sc-for list="{{ rader }}" as="r" hint-placeholder-count="6">
+            <div onClick="{{ r.click }}" style="{{ r.style }}" style-hover="background:var(--surface-soft)">
+              <span style="width:20px; height:20px; border-radius:999px; border:1.5px solid var(--beige-1); flex:none"></span>
+              <div style="display:flex; flex-direction:column; min-width:0; flex:1"><span style="font-size:15px">{{ r.t }}</span><span style="font-size:13px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ r.s }}</span></div>
+              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ r.tone }}" dc-props="{{ r.pillProps }}" hint-size="70px,24px">{{ r.pill }}</x-import>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:14px; min-width:0">
+            <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start"><span style="font-family:Newsreader, Georgia, serif; font-size:26px; line-height:1.15">Kontroller OB – avvik på benkeplate</span><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="bad" hint-size="60px,24px">Avvik</x-import></div>
+            <span style="font-size:14px; color:var(--muted)">Ordre O-2417 · Kari Nordmann · OB mottatt i dag 06.12</span>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+              <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">I ordren</div><div style="font-size:16px">Benkeplate 30 mm</div></div>
+              <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">I OB</div><div style="font-size:16px">Benkeplate 20 mm</div></div>
+              <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">Leverandør</div><div style="font-size:16px">Leverandør A</div></div>
+              <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">Levering</div><div style="font-size:16px">uke 46</div></div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center"><button type="button" onClick="{{ goAvvik }}" style="min-height:44px; padding:0 20px; border-radius:999px; border:0; background:var(--accent); color:var(--accent-ink); font:500 15px Inter, sans-serif; cursor:pointer">Åpne ordren</button><span style="font-size:14px; color:var(--muted)">eller trykk på raden</span></div>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 20px"><div style="font-family:Newsreader, Georgia, serif; font-size:34px; line-height:1.1; font-variant-numeric:tabular-nums">{{ s.v }}</div><div style="font-size:13px; color:var(--muted)">{{ s.l }}</div></div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{ isAvvik }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:4px">
+        <span style="font-size:14px; color:var(--muted)">Kunder › Kari Nordmann › Ordre O-2417</span>
+        <h3 style="{{ h1 }}">Kjøkken – Kari Nordmann</h3>
+        <span style="font-size:14px; color:var(--muted)">Ordre O-2417 · montering uke 47 · Montasjefirma A</span>
+      </div>
+      <div style="background:var(--bad-soft); color:var(--ink); border-radius:10px; padding:14px 18px; box-shadow:inset 3px 0 0 var(--bad); font-size:15px"><b style="font-weight:600; color:var(--bad)">Avvik i ordrebekreftelsen.</b> Benkeplate 20 mm i OB, 30 mm i ordren · Leverandør A</div>
+      <div style="{{ grid2 }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:2px; min-width:0">
+          <b style="font-weight:600; font-size:16px; padding-bottom:10px">Ordrebekreftelse fra Leverandør A</b>
+          <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr auto; gap:8px; font-size:13px; color:var(--muted); padding:6px 0; border-bottom:1px solid var(--line)"><span>Linje</span><span>Ordre</span><span>OB</span><span>Status</span></div>
+          <sc-for list="{{ obLinjer }}" as="o" hint-placeholder-count="4">
+            <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr auto; gap:8px; font-size:14px; padding:10px 0; border-bottom:1px solid var(--line); align-items:center"><span>{{ o.l }}</span><span>{{ o.a }}</span><span>{{ o.b }}</span><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ o.tone }}" hint-size="50px,24px">{{ o.s }}</x-import></div>
+          </sc-for>
+          <div style="display:flex; gap:8px; padding-top:14px; flex-wrap:wrap">
+            <button type="button" onClick="{{ neste }}" style="min-height:44px; padding:0 20px; border-radius:999px; border:0; background:var(--accent); color:var(--accent-ink); font:500 15px Inter, sans-serif; cursor:pointer; box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent)">Be om ny OB</button>
+            <button type="button" style="min-height:44px; padding:0 20px; border-radius:999px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:500 15px Inter, sans-serif">Godta OB</button>
+          </div>
+        </div>
+        <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; min-width:0">
+            <b style="font-weight:600; font-size:16px">Siste på ordren</b>
+            <sc-for list="{{ logg }}" as="g" hint-placeholder-count="4">
+              <div style="display:flex; gap:12px; font-size:14px"><span style="color:var(--muted); width:46px; flex:none; font-variant-numeric:tabular-nums">{{ g.t }}</span><span>{{ g.x }}</span></div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isCet }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:4px">
+        <span style="font-size:14px; color:var(--muted)">Kunder › Kari Nordmann › Tilbud</span>
+        <h3 style="{{ h1 }}">Kjøkken – Kari Nordmann</h3>
+        <span style="font-size:14px; color:var(--muted)">HA-T-2231 · versjon 3 · 257 700 kr · gjelder til 15. oktober</span>
+      </div>
+      <div style="background:var(--surface); border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px; max-width:720px">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px"><span style="font-family:Newsreader, Georgia, serif; font-size:28px">Hent fra CET</span><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="info" dc-props="{{ infoProps }}" hint-size="80px,24px">Ny tegning</x-import></div>
+        <span style="font-size:14px; color:var(--muted)">Tegning 5971 · R09 · lagret i CET i dag 08.14</span>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px">
+          <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">Skap</div><div style="font-size:16px">23</div></div>
+          <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">Artikler</div><div style="font-size:16px">41</div></div>
+          <div style="background:var(--surface-soft); border-radius:10px; padding:10px 14px"><div style="font-size:13px; color:var(--muted)">Tegninger</div><div style="font-size:16px">3 ark</div></div>
+        </div>
+        <b style="font-weight:600; font-size:15px">Endret fra versjon 3</b>
+        <sc-for list="{{ diff }}" as="d" hint-placeholder-count="3">
+          <div style="display:flex; gap:12px; font-size:14px; padding:8px 0; border-bottom:1px solid var(--line)"><span style="width:16px; color:var(--accent); font-weight:600">{{ d.s }}</span><span style="flex:1">{{ d.x }}</span><span style="color:var(--muted); font-variant-numeric:tabular-nums">{{ d.k }}</span></div>
+        </sc-for>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding-top:4px"><span style="font-size:15px">Ny pris inkl. mva</span><span style="font-family:Newsreader, Georgia, serif; font-size:30px; font-variant-numeric:tabular-nums">263 900 kr</span></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          <button type="button" onClick="{{ neste }}" style="min-height:44px; padding:0 20px; border-radius:999px; border:0; background:var(--accent); color:var(--accent-ink); font:500 15px Inter, sans-serif; cursor:pointer; box-shadow:0 0 0 2px var(--surface), 0 0 0 4px var(--accent)">Importer som versjon 4</button>
+          <button type="button" style="min-height:44px; padding:0 20px; border-radius:999px; border:0; background:transparent; color:var(--ink); font:500 15px Inter, sans-serif">Avbryt</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:4px">
+        <span style="font-size:14px; color:var(--muted)">Uke 47 · 16.–20. november · 6 monteringer · 1 uten montør</span>
+        <h3 style="{{ h1 }}">Montasjeplan</h3>
+      </div>
+      <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; min-width:0">
+          <div style="display:grid; grid-template-columns:180px repeat(5, minmax(0,1fr)); gap:8px; font-size:13px; color:var(--muted); padding-bottom:10px; border-bottom:1px solid var(--line)"><span>Firma og montør</span><span>Man 16.</span><span>Tir 17.</span><span>Ons 18.</span><span>Tor 19.</span><span>Fre 20.</span></div>
+          <sc-for list="{{ plan }}" as="p" hint-placeholder-count="4">
+            <div style="display:grid; grid-template-columns:180px repeat(5, minmax(0,1fr)); gap:8px; padding:12px 0; border-bottom:1px solid var(--line); align-items:center; min-height:56px">
+              <div style="display:flex; flex-direction:column"><span style="font-size:15px">{{ p.navn }}</span><span style="font-size:13px; color:var(--muted)">{{ p.firma }}</span></div>
+              <sc-for list="{{ p.celler }}" as="c" hint-placeholder-count="2">
+                <div style="{{ c.style }}"><span style="font-size:14px">{{ c.t }}</span><span style="font-size:12px; color:var(--muted)">{{ c.s }}</span></div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ phone }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:6px 16px">
+          <sc-for list="{{ planListe }}" as="p" hint-placeholder-count="4">
+            <div style="{{ p.style }}"><div style="display:flex; flex-direction:column; min-width:0"><span style="font-size:15px">{{ p.t }}</span><span style="font-size:13px; color:var(--muted)">{{ p.s }}</span></div><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ p.tone }}" dc-props="{{ p.pillProps }}" hint-size="70px,24px">{{ p.pill }}</x-import></div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="background:var(--ok-soft); border-radius:10px; padding:14px 18px; box-shadow:inset 3px 0 0 var(--ok); font-size:15px"><b style="font-weight:600; color:var(--ok)">Ny OB bekreftet.</b> Benkeplate 30 mm leveres uke 46 · Kari Nordmann er satt opp tirsdag og onsdag.</div>
+    </sc-if>
+
+    <sc-if value="{{ phone }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute; left:0; right:0; bottom:0; height:84px; background:var(--surface); border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr); padding:10px 8px 0; box-sizing:border-box">
+        <sc-for list="{{ faner }}" as="f" hint-placeholder-count="4">
+          <span style="{{ f.style }}">{{ f.l }}</span>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:810},&quot;skjerm&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;minDag&quot;,&quot;avvik&quot;,&quot;cet&quot;,&quot;plan&quot;],&quot;default&quot;:&quot;minDag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;enhet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pc&quot;,&quot;ipad&quot;,&quot;telefon&quot;],&quot;default&quot;:&quot;pc&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onNeste&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.props.skjerm || 'minDag';
+    const e = this.props.enhet || 'pc';
+    const dark = !!this.props.dark;
+    const phone = e === 'telefon';
+    const W = { pc: 1440, ipad: 1180, telefon: 402 }[e], H = { pc: 810, ipad: 796, telefon: 874 }[e];
+    const neste = () => this.props.onNeste && this.props.onNeste();
+    const aktivMeny = { minDag: 'Min dag', avvik: 'Ordre', cet: 'Tilbud', plan: 'Montasje' }[s];
+    const meny = [['Min dag', 7], ['Samtaler', 3], ['Salgstavle', ''], ['Kunder', ''], ['Tilbud', ''], ['Ordre', ''], ['Saker', 1], ['Montasje', ''], ['Resultater', '']];
+    const rows = [
+      ['Kari skrev i kundeportalen', 'Tilbud v3 · «Kan oppvaskmaskinen flyttes nærmere vasken?» · 07.42', 'Melding', 'info', false],
+      ['Kontroller OB – avvik på benkeplate', 'Ordre O-2417 · Leverandør A · 20 mm i stedet for 30 mm', 'Avvik', 'bad', true],
+      ['Ring Kari – tilbudet åpnet 3 ganger', 'Tilbud HA-T-2231 v3 · 257 700 kr · 6 dager i fasen', 'Oppfølging', 'warn', false],
+      ['Møte kl. 14.00 · befaring hos Ola', 'Eksempelveien 4 · kjøkken', 'Møte', 'neutral', false],
+      ['Bekreft endringsfrist', 'Ordre O-2417 · fredag 16. oktober', 'Frist', 'warn', false],
+      ['Sak R-2026-0163 venter på svar', 'Kari Nordmann · servicenummer mangler · 3 dager', 'Sak', 'neutral', false],
+    ];
+    const plan = [
+      ['Montør En', 'Montasjefirma A', [null, ['Kari Nordmann · Kjøkken', 'Ny · bekreftet', 'ny'], ['Kari Nordmann · Kjøkken', 'Dag 2', 'ny'], ['Ola Nordmann · Bad', 'Bekreftet'], null]],
+      ['Montør To', 'Montasjefirma A', [['Per Nordmann · Kjøkken', 'Bekreftet'], ['Per Nordmann · Kjøkken', 'Dag 2'], null, ['Lise Nordmann · Garderobe', 'Venter svar', 'warn'], null]],
+      ['Montør Tre', 'Montasjefirma B', [['Butikknavn · Utstilling', 'Bekreftet'], null, ['Nina Nordmann · Kjøkken', 'Bekreftet'], ['Nina Nordmann · Kjøkken', 'Dag 2'], null]],
+      ['Uten montør', 'Venter på firma', [null, null, null, null, ['Tor Nordmann · Kjøkken', 'Mangler montør', 'bad']]],
+    ];
+    const cell = c => {
+      if (!c) return { t: '', s: '', style: { minHeight: 44 } };
+      const tone = c[2];
+      const bar = tone === 'ny' ? 'var(--accent)' : tone === 'warn' ? 'var(--warn)' : tone === 'bad' ? 'var(--bad)' : 'var(--beige-1)';
+      const bg = tone === 'ny' ? 'var(--accent-soft)' : tone === 'warn' ? 'var(--warn-soft)' : tone === 'bad' ? 'var(--bad-soft)' : 'var(--surface-soft)';
+      return { t: c[0], s: c[1], style: { display: 'flex', flexDirection: 'column', gap: 2, background: bg, borderRadius: 8, padding: '8px 10px', boxShadow: `inset 3px 0 0 ${bar}`, minWidth: 0 } };
+    };
+    return {
+      hengselCrm: 'hengsel.no/logo/l1/crm-aksent-' + (dark ? 'mork' : 'lys') + '.svg',
+      shell: { width: W, height: H, display: 'flex', background: 'var(--surface-app)', color: 'var(--ink)', fontFamily: 'Inter, Arial, sans-serif', overflow: 'hidden', position: 'relative', boxSizing: 'border-box' },
+      side: !phone, phone, notPhone: !phone,
+      sideStyle: { width: e === 'ipad' ? 220 : 248, flex: 'none', padding: '24px 12px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 2, borderRight: '1px solid var(--line)', background: 'var(--surface-soft)' },
+      mainStyle: { flex: 1, minWidth: 0, padding: phone ? '0 16px 100px' : (e === 'ipad' ? '28px 28px' : '32px 40px'), display: 'flex', flexDirection: 'column', gap: phone ? 14 : 20, boxSizing: 'border-box', overflow: 'hidden' },
+      h1: { margin: 0, fontFamily: 'Newsreader, Georgia, serif', fontWeight: 400, fontSize: phone ? 32 : 46, lineHeight: 1.08, letterSpacing: '-.015em' },
+      grid2: { display: 'grid', gridTemplateColumns: phone ? 'minmax(0,1fr)' : (s === 'avvik' ? 'minmax(0,1.5fr) minmax(0,1fr)' : 'minmax(0,1.25fr) minmax(0,1fr)'), gap: 16, alignItems: 'start' },
+      dark, lys: !dark,
+      meny: meny.map(([l, n]) => ({ label: l, n, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: 40, padding: '0 14px', borderRadius: 10, fontSize: 15, fontWeight: l === aktivMeny ? 600 : 400, background: l === aktivMeny ? 'var(--surface-highlight-strong)' : 'transparent' } })),
+      isMinDag: s === 'minDag', isAvvik: s === 'avvik', isCet: s === 'cet', isPlan: s === 'plan',
+      minDagMeta: phone ? 'mandag 12. oktober · 6 ting venter' : 'mandag 12. oktober · uke 42 · Butikknavn · 6 ting venter på deg',
+      rader: rows.slice(0, phone ? 5 : 6).map(([t, sub, pill, tone, hot]) => ({ t, s: sub, pill, tone, pillProps: { style: tone === 'info' && !dark ? { color: '#43649A' } : undefined }, click: hot ? neste : undefined,
+        style: { display: 'flex', alignItems: 'center', gap: 14, padding: '10px 12px', borderRadius: 10, cursor: hot ? 'pointer' : 'default', background: hot ? 'var(--surface-highlight)' : 'transparent', boxShadow: hot ? 'inset 3px 0 0 var(--bad), 0 0 0 2px var(--accent)' : 'none' } })),
+      goAvvik: neste,
+      stats: [{ v: '1,31 mill', l: 'av 1,40 mill i oktober · 94 %' }, { v: '35 %', l: 'dekningsgrad · mål 34 %' }, { v: '42 %', l: 'tilbud til ordre' }, { v: '14', l: 'åpne tilbud · 2,1 mill' }],
+      obLinjer: [
+        { l: 'Benkeplate', a: '30 mm', b: '20 mm', s: 'Avvik', tone: 'bad' },
+        { l: 'Skap', a: '23 stk', b: '23 stk', s: 'OK', tone: 'ok' },
+        { l: 'Hvitevarer', a: '4 stk', b: '4 stk', s: 'OK', tone: 'ok' },
+        { l: 'Levering', a: 'uke 46', b: 'uke 46', s: 'OK', tone: 'ok' },
+      ],
+      logg: [{ t: '06.12', x: 'OB mottatt fra Leverandør A' }, { t: '06.12', x: 'Hengsel fant 1 avvik mot ordren' }, { t: 'fre.', x: 'Bestilling sendt · 41 linjer' }, { t: 'tor.', x: 'Kari signerte kjøpsavtalen' }],
+      diff: [{ s: '+', x: 'Benkeplate 30 mm (var 20 mm)', k: '+ 6 200 kr' }, { s: '~', x: 'Overskap 60 cm flyttet til venstre vegg', k: '0 kr' }, { s: '–', x: 'Sokkel 2 400 mm erstattet av 2 × 1 200 mm', k: '0 kr' }],
+      plan: plan.map(([navn, firma, c]) => ({ navn, firma, celler: c.map(cell) })),
+      planListe: [
+        { t: 'Kari Nordmann · Kjøkken', s: 'Tir 17. og ons 18. · Montør En', pill: 'Ny', tone: 'info' },
+        { t: 'Per Nordmann · Kjøkken', s: 'Man 16. og tir 17. · Montør To', pill: 'Bekreftet', tone: 'ok' },
+        { t: 'Lise Nordmann · Garderobe', s: 'Tor 19. · Montør To', pill: 'Venter svar', tone: 'warn' },
+        { t: 'Tor Nordmann · Kjøkken', s: 'Fre 20. · uten montør', pill: 'Mangler', tone: 'bad' },
+      ].map((p, i) => ({ ...p, pillProps: { style: p.tone === 'info' && !dark ? { color: '#43649A' } : undefined }, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 0', borderBottom: i < 3 ? '1px solid var(--line)' : 'none' } })),
+      faner: ['Min dag', 'Kunder', 'Ordre', 'Mer'].map(l => ({ l, style: { textAlign: 'center', fontSize: 12, fontWeight: (l === 'Min dag' && s === 'minDag') || (l === 'Ordre' && s !== 'minDag') ? 600 : 400, color: (l === 'Min dag' && s === 'minDag') || (l === 'Ordre' && s !== 'minDag') ? 'var(--accent)' : 'var(--muted)' } })),
+      neste,
+      infoProps: { style: dark ? undefined : { color: '#43649A' } },
+    };
+  }
+}
+</script>
+</body>
+</html>

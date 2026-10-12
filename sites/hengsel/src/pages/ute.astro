@@ -1,12 +1,11 @@
 ---
 /**
- * /ute: montørappen. Fasit: docs/design/hengsel-no-2.0/Ute.dc.html, tekstene ordrett fra LES-MEG.md.
+ * /ute: montørappen. Fasit: docs/design/hengsel/Ute.dc.html, tekstene ordrett fra LES-MEG.md.
  * Seks steg (faner med ARIA, piltaster og Forrige/Neste, scripts/ute.ts). Uten skript står første steg åpent.
  * Alle steg ligger i samme ramme (like store), så stegbytte gir ingen layoutskift.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
-import logoMork from "../assets/hengsel-ute-logo-mork.svg";
 import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, IPAD, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
 
 const n = STEG.length;
@@ -22,8 +21,8 @@ const n = STEG.length;
         <div class="ute-venstre">
           <div class="ute-hode">
             <picture>
-              <source media="(prefers-color-scheme: dark)" srcset={logoMork.src} />
-              <img class="ute-logo" src="/logo/hengsel-ute-logo-lys.svg" alt={HERO.logoAlt} width="122" height="34" fetchpriority="high" />
+              <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-ute-aksent-mork.svg" />
+              <img class="ute-logo" src="/logo/hengsel-ute-aksent-lys.svg" alt={HERO.logoAlt} width="490" height="108" fetchpriority="high" />
             </picture>
             <h1>{HERO.tittel}</h1>
             <p class="lede">{HERO.ingress}</p>
@@ -93,7 +92,7 @@ const n = STEG.length;
     <section class="sek flate bli-tester">
       <div class="h-innhold tester">
         <div class="tester-tekst">
-          <img src="/logo/hengsel-app-ikon-lys.svg" alt="" aria-hidden="true" width="64" height="64" loading="lazy" />
+          <img src="/logo/ute.svg" alt="" aria-hidden="true" width="64" height="64" loading="lazy" />
           <div class="tester-ord">
             <h2>{BLI_TESTER.tittel}</h2>
             <p class="dempet">{BLI_TESTER.tekst}</p>

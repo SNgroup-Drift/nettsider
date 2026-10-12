@@ -2,8 +2,8 @@
  * Gjengiver A4-sidene til HTML-tekst (ren JS, ingen Astro eller DOM). Brukes av hengsel.no (A4Side.astro, set:html) og av
  * Visningsrommet (sites/vis/bygg.mjs), så markeringen finnes ett sted. Klassene er kontrakten mot a4.css.
  *
- * Alle tekster escapes. Merket øverst er «Din logo | Butikknavn Hamar», og «by Hengsel» står i bunnlinjen (aldri to Hengsel-logoer).
- * Papiret er alltid lyst. Forsidebildet hentes fra `bildeSti` (standard /img/dok-forside.webp, 1200 × 768).
+ * Alle tekster escapes. Merket øverst er «Din logo | Butikknavn Hamar», og Hengsel-logoen (hengsel-lys.svg, 3 mm) står i bunnlinjen til høyre (aldri to Hengsel-logoer).
+ * Papiret er alltid lyst. Forsidebildet hentes fra `bildeSti` (standard /img/dok-forside.webp, 1200 × 768) og logoen fra `logoSti` (standard /logo/hengsel-lys.svg).
  */
 import { hhKlasse, malKlasse } from "./a4-stil.js";
 
@@ -70,9 +70,9 @@ function blokk(b) {
 /**
  * Én A4-side som HTML.
  * @param {import("./data").DokSide} side
- * @param {{ fot: string, nr: number, total: number, ligg?: boolean, forst?: boolean, klasse?: string, bildeSti?: string }} o
+ * @param {{ fot: string, nr: number, total: number, ligg?: boolean, forst?: boolean, klasse?: string, bildeSti?: string, logoSti?: string }} o
  */
-export function renderA4Side(side, { fot, nr, total, ligg = false, forst = false, klasse = "", bildeSti = "/img/dok-forside.webp" }) {
+export function renderA4Side(side, { fot, nr, total, ligg = false, forst = false, klasse = "", bildeSti = "/img/dok-forside.webp", logoSti = "/logo/hengsel-lys.svg" }) {
   const fs = side.forside;
   const td = side.todelt;
   let inn = "";
@@ -100,6 +100,6 @@ export function renderA4Side(side, { fot, nr, total, ligg = false, forst = false
     inn += (side.blokker ?? []).map(blokk).join("");
     inn += `</div>`;
   }
-  inn += `<div class="a4-fot">${span(fot)}<span><span>by Hengsel</span><span class="a4-tab">Side ${nr} av ${total}</span></span></div>`;
+  inn += `<div class="a4-fot">${span(fot)}<span><img class="a4-hengsel" src="${esc(logoSti)}" alt="Hengsel" width="374" height="108"><span class="a4-tab">Side ${nr} av ${total}</span></span></div>`;
   return `<div class="a4${ligg ? " ligg" : ""}${klasse ? " " + esc(klasse) : ""}" role="group" aria-label="Side ${nr} av ${total}" data-a4><div class="a4-ark">${inn}</div></div>`;
 }

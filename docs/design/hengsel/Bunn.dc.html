@@ -9,53 +9,48 @@
 <x-dc>
 <helmet>
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
 </helmet>
-<div style="background:var(--bg); color:var(--ink)">
-  <div style="border-top:1px solid var(--line)">
-    <div style="max-width:1180px; margin:0 auto; padding:28px clamp(16px,4vw,40px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 32px">
-      <a href="https://sngroup.no" style="display:flex; align-items:center; gap:12px; color:var(--ink); text-decoration:none; font-size:.95rem">
-        <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" style="flex:none; display:block">
-          <rect width="32" height="32" rx="7" fill="var(--ink)"></rect>
-          <path d="M8 8h16v16H8z" fill="none" stroke="var(--bg)" stroke-width="2.5"></path>
-          <path d="M16 8v8h8" fill="none" stroke="var(--bg)" stroke-width="1.5"></path>
-          <circle cx="8" cy="24" r="2" fill="var(--dusty-blue)"></circle>
-        </svg>
-        <span>En del av SN Group</span>
-      </a>
-      <nav aria-label="Søstersider" style="display:flex; flex-wrap:wrap; gap:6px 10px; font-size:.95rem; color:var(--muted)">
-        <a href="https://sngroup.no" style="color:var(--muted)" style-hover="color:var(--ink)">sngroup.no</a>
-        <span aria-hidden="true">·</span>
-        <span aria-current="page" style="color:var(--ink)">hengsel.no</span>
-        <span aria-hidden="true">·</span>
-        <a href="https://byggem.no" style="color:var(--muted)" style-hover="color:var(--ink)">byggem.no</a>
-      </nav>
+<footer style="background:var(--bg); color:var(--ink); border-top:1px solid var(--line); font-family:Inter, Arial, sans-serif">
+  <div style="max-width:1180px; margin:0 auto; padding:48px clamp(16px,4vw,40px) 32px; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:32px">
+    <div style="display:flex; flex-direction:column; gap:12px">
+      <sc-if value="{{ lys }}" hint-placeholder-val="{{ true }}"><img src="hengsel.no/logo/l1/hengsel-aksent-lys.svg" alt="Hengsel" style="height:30px; width:auto; align-self:flex-start"></sc-if><sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}"><img src="hengsel.no/logo/l1/hengsel-aksent-mork.svg" alt="Hengsel" style="height:30px; width:auto; align-self:flex-start"></sc-if>
+      <p style="margin:0; color:var(--muted); font-size:.95rem; line-height:1.55; max-width:30ch">CRM, montørapp og kundeportal for kjøkken- og interiørbutikker.</p>
+    </div>
+    <nav aria-label="Produkt" style="display:flex; flex-direction:column; gap:8px; font-size:.95rem">
+      <span style="font-size:.82rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Produkt</span>
+      <a href="CRM.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">CRM</a>
+      <a href="Ute.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Hengsel Ute</a>
+      <a href="Kundeportal.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Kundeportal</a>
+      <a href="Dokumenter.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Dokumenter</a>
+    </nav>
+    <nav aria-label="Mer" style="display:flex; flex-direction:column; gap:8px; font-size:.95rem">
+      <span style="font-size:.82rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Mer</span>
+      <a href="Slik-virker-det.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Slik virker det</a>
+      <a href="Integrasjoner.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Integrasjoner og sikkerhet</a>
+      <a href="Priser-og-demo.dc.html" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Priser og demo</a>
+      <a href="https://vis.hengsel.no" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">Logg inn</a>
+    </nav>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:.95rem">
+      <span style="font-size:.82rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Kontakt</span>
+      <a href="tel:+4745410001" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">+47 454 10 001</a>
+      <a href="mailto:hei@hengsel.no" style="color:var(--ink); text-decoration:none" style-hover="color:var(--accent)">hei@hengsel.no</a>
+      <span style="color:var(--muted)">Enromvegen 173, 7026 Trondheim</span>
     </div>
   </div>
-  <footer style="border-top:1px solid var(--line); font-size:.9rem; color:var(--muted)">
-    <div style="max-width:1180px; margin:0 auto; padding:32px clamp(16px,4vw,40px) 40px; display:flex; flex-wrap:wrap; gap:12px 28px; justify-content:space-between">
-      <span>Hengsel · ES-HOLDING AS · org.nr. 927 363 585 · <a href="{{ epostHref }}" style="color:inherit">{{ epost }}</a></span>
-      <sc-if value="{{ demo }}" hint-placeholder-val="{{ true }}">
-        <span>Skjermbildene viser demodata. Navn og tall er ikke ekte.</span>
-      </sc-if>
-      <span style="display:flex; gap:8px"><a href="{{ personvern }}" style="color:inherit">Personvern</a><span aria-hidden="true">·</span><a href="{{ topp }}" style="color:inherit">{{ toppTekst }}</a></span>
+  <div style="border-top:1px solid var(--line)">
+    <div style="max-width:1180px; margin:0 auto; padding:20px clamp(16px,4vw,40px) 28px; display:flex; flex-wrap:wrap; gap:8px 28px; justify-content:space-between; font-size:.88rem; color:var(--muted)">
+      <span>Hengsel · ES-HOLDING AS · org.nr. 927 363 585</span>
+      <span>Skjermbildene viser demodata. Navn og tall er ikke ekte.</span>
+      <a href="https://hengsel.no/personvern" style="color:inherit">Personvern</a>
     </div>
-  </footer>
-</div>
+  </div>
+</footer>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:200},&quot;hjem&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;demo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;personvern&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Personvern.dc.html&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:320},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   renderVals() {
-    const h = this.props.hjem ?? '';
-    return {
-      demo: this.props.demo ?? true,
-      epost: this.props.epost ?? 'drift@sngroup.no',
-      epostHref: 'mailto:' + (this.props.epost ?? 'drift@sngroup.no'),
-      personvern: this.props.personvern ?? 'Personvern.dc.html',
-      topp: h ? h : '#hjem',
-      toppTekst: h ? 'Til forsiden' : 'Til toppen',
-    };
+    return { dark: !!this.props.dark, lys: !this.props.dark, logoSrc: this.props.dark ? 'hengsel.no/logo/l1/hengsel-aksent-mork.svg' : 'hengsel.no/logo/l1/hengsel-aksent-lys.svg' };
   }
 }
 </script>

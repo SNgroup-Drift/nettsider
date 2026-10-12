@@ -8,9 +8,10 @@
 <body>
 <x-dc>
 <helmet>
-  <title>Hengsel – for kjøkken- og interiørbutikker</title>
-  <meta name="description" content="Hengsel samler salg, tilbud, bestilling, montasje, montørapp og kundeportal for kjøkken- og interiørbutikker i ett system.">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400&amp;family=Inter:wght@400;500;600&amp;display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker</title>
+  <link rel="icon" href="hengsel-merke/favicon/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
@@ -18,690 +19,164 @@
   <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
   <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
   <style>
-    :root { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", "Helvetica Neue", Arial, sans-serif; --w-body: 400; --w-strong: 600; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { margin: 0; background: var(--bg); color: var(--ink); }
-    a { color: var(--accent); }
-    a:hover { color: var(--accent); }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
   </style>
 </helmet>
-<div ref="{{ root }}" data-theme="{{ theme }}" id="hjem" style="background:var(--bg); color:var(--ink); min-height:100vh">
-  <dc-import name="Sidehode" hjem="" style="position:sticky; top:0; z-index:40" hint-size="100%,65px"></dc-import>
+<div ref="{{ root }}" style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
 
-  <main>
-    <!-- Hero -->
-    <section data-screen-label="Hero" style="padding-block:clamp(40px,7vw,88px) clamp(56px,8vw,100px)">
-      <div style="{{ heroGrid }}">
-        <div style="display:grid; gap:22px; min-width:0">
-          <span class="eyebrow">For kjøkken- og interiørbutikker</span>
-          <h1 style="font-size:var(--t-hero); line-height:1.02">Fra første henvendelse til ferdig montert kjøkken.</h1>
-          <p class="lede" style="font-size:1.22rem">Hengsel er butikkens system for salg, tilbud, bestilling, montasje og kundeportal, med egen app for montørene. Alt havner på samme ordre og samme kundekort, så ingen må spørre hverandre om hvor ting står.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:12px">
-            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="#kontakt" hint-size="200px,44px">Book en gjennomgang</x-import>
-            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="#losningen" hint-size="180px,44px">Se skjermbildene</x-import>
-          </div>
-          <div style="display:flex; flex-wrap:wrap; gap:8px 20px; font-size:.92rem; color:var(--muted); padding-top:6px">
-            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="3">
-              <span style="display:inline-flex; align-items:center; gap:8px"><span aria-hidden="true" style="width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none"></span>{{ f }}</span>
-            </sc-for>
-          </div>
-        </div>
-        <div style="min-width:0; display:grid; gap:14px">
-          <div style="display:flex"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" items="{{ devTabs }}" value="{{ devVal }}" on-change="{{ setDev }}" label="Vis på enhet" hint-size="300px,44px"></x-import></div>
-          <div style="aspect-ratio:4/3; display:grid; place-items:center; min-width:0">
-            <dc-import name="Enhet" bilde="{{ hero.bilde }}" type="{{ hero.type }}" alt="{{ hero.alt }}" ratio="{{ hero.ratio }}" on-zoom="{{ zoom }}" style="width:100%; min-width:0" hint-size="100%,400px"></dc-import>
-          </div>
+  <section data-screen-label="Forside · hero" style="padding:clamp(40px,6vw,80px) 0 clamp(48px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:clamp(32px,5vw,56px)">
+      <div style="display:flex; flex-direction:column; gap:20px; max-width:820px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">CRM · montørapp · kundeportal</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Fra første tegning til ferdig kjøkken.</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:62ch; text-wrap:pretty">Hengsel er løsningen for kjøkken- og interiørbutikker. Salg, tilbud, bestilling, montasje og kundeportal ligger på samme ordre og samme kundekort.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px; padding-top:4px">
+          <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="Priser-og-demo.dc.html#demo" hint-size="130px,44px">Be om demo</x-import>
+          <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="Slik-virker-det.dc.html" hint-size="180px,44px">Slik virker det</x-import>
         </div>
       </div>
-    </section>
-
-    <!-- Hvorfor -->
-    <section id="hvorfor" data-screen-label="Hvorfor" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Hvorfor</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Et kjøkken går gjennom mange hender. Informasjonen skal ikke falle mellom dem.</h2>
-          <p class="lede">Selgeren, bestilleren, montasjelederen, montøren og kunden trenger det samme kjøkkenet beskrevet likt. Når det ligger i e-post, regneark, lapper og hver sin app, blir det feil som koster tid og margin.</p>
+      <div style="position:relative; width:100%; padding-bottom:6%">
+        <div style="width:80%; margin-left:auto; margin-right:4%">
+          <dc-import name="Enhet" type="display" dark="{{ dark }}" hint-size="100%,560px">
+            <dc-import name="CrmSkjerm" skjerm="minDag" enhet="pc" dark="{{ dark }}" hint-size="1440px,810px"></dc-import>
+          </dc-import>
         </div>
-        <div style="display:flex; margin-bottom:28px"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" items="{{ whyTabs }}" value="{{ why }}" on-change="{{ setWhy }}" label="Sammenlign" style="background:var(--surface)" hint-size="360px,44px"></x-import></div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:16px">
-          <sc-for list="{{ whyCards }}" as="c" hint-placeholder-count="4">
-            <article class="card" style="display:grid; gap:10px; align-content:start; padding:26px 26px 28px; min-width:0">
-              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ c.tone }}" hint-size="80px,24px">{{ c.tag }}</x-import>
-              <h3 style="font-size:var(--t-h3); line-height:1.2">{{ c.title }}</h3>
-              <p style="color:var(--muted)">{{ c.text }}</p>
-            </article>
-          </sc-for>
+        <div style="position:absolute; left:0; bottom:0; width:36%">
+          <dc-import name="Enhet" type="ipad" src="hengsel.no/ios/ipad-idag-lys.png" src-dark="hengsel.no/ios/ipad-idag-mork.png" dark="{{ dark }}" alt="Hengsel Ute på iPad: I dag med jobben til Kari Nordmann" hint-size="100%,300px"></dc-import>
+        </div>
+        <div style="position:absolute; right:0; bottom:0; width:17%">
+          <dc-import name="Enhet" type="iphone" src="hengsel.no/ios/idag-lys.png" src-dark="hengsel.no/ios/idag-mork.png" dark="{{ dark }}" alt="Hengsel Ute på iPhone: I dag med neste jobb" hint-size="100%,380px"></dc-import>
         </div>
       </div>
-    </section>
-
-    <!-- Tre flater -->
-    <section id="produktene" data-screen-label="Løsningen" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Løsningen</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Tre flater, én database.</h2>
-          <p class="lede">Det montøren registrerer, står rett på ordren. Det kunden velger i portalen, står rett på tilbudet. Ingen dobbel føring.</p>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:16px">
-          <sc-for list="{{ trio }}" as="t" hint-placeholder-count="3">
-            <article class="card" style="padding:28px; display:grid; gap:12px; align-content:start; min-width:0">
-              <span style="font-size:.9rem; color:var(--soft)">{{ t.who }}</span>
-              <h3 style="font-size:var(--t-h3); line-height:1.2">{{ t.title }}</h3>
-              <ul style="margin:0; padding-left:1.1em; color:var(--muted)">
-                <sc-for list="{{ t.items }}" as="li" hint-placeholder-count="4"><li>{{ li }}</li></sc-for>
-              </ul>
-              <p style="font-size:.9rem; color:var(--soft)">{{ t.where }}</p>
-            </article>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-
-    <!-- Se løsningen -->
-    <section id="losningen" data-screen-label="Se løsningen" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Se løsningen</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Skjermene, én for én.</h2>
-          <p class="lede">Velg et område og en skjerm. Klikk på bildet for å se det i full størrelse. Alle navn og tall er demodata.</p>
-        </div>
-        <div style="margin-bottom:32px"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" variant="chips" items="{{ areas }}" value="{{ area }}" on-change="{{ setArea }}" label="Områder" hint-size="100%,36px"></x-import></div>
-        <div style="{{ tourGrid }}">
-          <div role="tablist" aria-label="Skjermer" style="display:grid; gap:8px; align-content:start; min-width:0">
-            <sc-for list="{{ tourList }}" as="it" hint-placeholder-count="6">
-              <button type="button" role="tab" aria-selected="{{ it.sel }}" onClick="{{ it.pick }}" style="{{ it.style }}" style-hover="background:var(--surface)">
-                <span style="font-weight:600; font-size:1.05rem; color:var(--ink)">{{ it.t }}</span>
-                <sc-if value="{{ it.selected }}" hint-placeholder-val="{{ false }}">
-                  <span style="font-size:.92rem; color:var(--muted); line-height:1.5">{{ it.s }}</span>
-                </sc-if>
-              </button>
-            </sc-for>
-          </div>
-          <div style="{{ tourView }}">
-            <dc-import name="Enhet" bilde="{{ tour.bilde }}" alt="{{ tour.alt }}" ratio="0.8" on-zoom="{{ zoom }}" style="width:100%; min-width:0" hint-size="100%,460px"></dc-import>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:18px">
-              <sc-for list="{{ tour.points }}" as="p" hint-placeholder-count="3">
-                <div style="display:grid; gap:4px; align-content:start; border-top:1px solid var(--line); padding-top:12px; min-width:0">
-                  <b style="font-weight:600; font-size:.98rem">{{ p.b }}</b>
-                  <span style="color:var(--muted); font-size:.94rem; line-height:1.5">{{ p.s }}</span>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Montørappen -->
-    <section id="hengsel" data-screen-label="Montørappen" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="{{ hengselGrid }}">
-        <div style="display:grid; gap:18px; min-width:0">
-          <span class="eyebrow">Montørappen</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Hengsel: det montøren trenger, og ingenting mer.</h2>
-          <p class="lede">Montøren ser neste jobb, hva som mangler og hvor nøkkelen ligger. Det som registreres på jobben, står med en gang på ordren hos kontoret.</p>
-          <x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" variant="chips" items="{{ phTabs }}" value="{{ phVal }}" on-change="{{ setPh }}" label="Skjermer i Hengsel" hint-size="100%,72px"></x-import>
-          <p style="color:var(--muted); min-height:3.2em">{{ ph.text }}</p>
-        </div>
-        <div style="min-width:0">
-          <dc-import name="Enhet" bilde="{{ ph.bilde }}" alt="Hengsel: skjermbilde" ratio="1" on-zoom="{{ zoom }}" style="width:100%; min-width:0" hint-size="100%,560px"></dc-import>
-        </div>
-      </div>
-    </section>
-
-    <!-- Roller -->
-    <section id="roller" data-screen-label="Roller" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Roller</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Hver rolle ser det den bruker hver dag.</h2>
-          <p class="lede">Menyen er kort og bestemt av rollen. Det en rolle ikke bruker daglig, ligger under «Mer». Leder og admin slår moduler av og på per rolle.</p>
-        </div>
-        <div style="margin-bottom:24px"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.SegmentedTabs" variant="chips" items="{{ roleTabs }}" value="{{ roleVal }}" on-change="{{ setRole }}" label="Velg rolle" hint-size="100%,36px"></x-import></div>
-        <div style="{{ roleCard }}">
-          <div style="display:grid; gap:14px; align-content:start; min-width:0">
-            <span class="eyebrow">{{ role.eyebrow }}</span>
-            <h3 style="font-size:var(--t-h2); line-height:1.15">{{ role.name }}</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:6px">
-              <sc-for list="{{ role.menu }}" as="m" hint-placeholder-count="5">
-                <span style="font-size:.86rem; padding:5px 11px; border-radius:8px; background:var(--surface-highlight); color:var(--ink)">{{ m }}</span>
-              </sc-for>
-            </div>
-          </div>
-          <ul style="display:grid; gap:14px; margin:0; padding:0; list-style:none; min-width:0">
-            <sc-for list="{{ role.gains }}" as="g" hint-placeholder-count="3">
-              <li style="display:grid; grid-template-columns:22px 1fr; gap:10px; color:var(--muted)">
-                <svg viewBox="0 0 18 18" width="18" height="18" aria-hidden="true" style="margin-top:4px"><circle cx="9" cy="9" r="9" fill="var(--accent-soft)"></circle><path d="M5.5 9.3l2.2 2.2L12.5 6.6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                <span><b style="color:var(--ink); font-weight:600">{{ g.b }}</b><br>{{ g.s }}</span>
-              </li>
-            </sc-for>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Også i løsningen -->
-    <section id="mer" data-screen-label="Også i løsningen" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Også i løsningen</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Mer enn salg og montasje.</h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden">
-          <sc-for list="{{ more }}" as="m" hint-placeholder-count="11">
-            <div style="background:var(--surface); padding:22px 22px 24px; display:grid; gap:6px; align-content:start; min-width:0">
-              <b style="font-weight:600">{{ m.b }}</b>
-              <span style="color:var(--muted); font-size:.95rem; line-height:1.5">{{ m.s }}</span>
-            </div>
-          </sc-for>
-          <div style="background:var(--surface)"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Integrasjoner -->
-    <section id="integrasjoner" data-screen-label="Integrasjoner" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Integrasjoner</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Kobler seg på det dere allerede bruker.</h2>
-          <p class="lede">Tegningene, regnskapet, e-posten og kalenderen henger sammen med ordren. Det som kommer inn ett sted, trenger ingen å taste på nytt.</p>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:16px">
-          <sc-for list="{{ integ }}" as="i" hint-placeholder-count="5">
-            <article class="card" style="padding:24px; display:grid; gap:8px; align-content:start; min-width:0">
-              <span class="eyebrow" style="color:var(--accent)">{{ i.kind }}</span>
-              <h3 style="font-size:var(--t-h3); line-height:1.2">{{ i.title }}</h3>
-              <p style="color:var(--muted); font-size:.98rem">{{ i.text }}</p>
-            </article>
-          </sc-for>
-        </div>
-        <div class="card" style="margin-top:24px; padding:clamp(20px,3vw,32px); display:grid; gap:10px">
-          <h3 style="font-size:var(--t-h3); line-height:1.2">Regnskap</h3>
-          <p style="color:var(--muted)">Koblingen til PowerOffice Go er bygget. Bruker dere et av de andre store programmene, avklarer vi koblingen sammen med dere.</p>
-          <ul style="list-style:none; margin:6px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:10px">
-            <sc-for list="{{ acct }}" as="a" hint-placeholder-count="5">
-              <li style="background:var(--surface-soft); border-radius:10px; padding:14px 16px; display:grid; gap:8px; min-width:0">
-                <b style="font-weight:600">{{ a.name }}</b>
-                <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ a.tone }}" hint-size="80px,24px">{{ a.st }}</x-import>
-              </li>
-            </sc-for>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Leverandørene -->
-    <section id="leverandorer" data-screen-label="Leverandørene" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Leverandørene</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Færre endringer etter sending. Avvik meldes med en gang.</h2>
-          <p class="lede">Det meste av det leverandørene sender og mottar, går gjennom de samme skjermene. Det gir bedre bestillinger og raskere svar på service.</p>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:16px">
-          <sc-for list="{{ supp }}" as="s" hint-placeholder-count="4">
-            <article class="card" style="padding:26px; display:grid; gap:8px; align-content:start; min-width:0">
-              <h3 style="font-size:var(--t-h3); line-height:1.2">{{ s.title }}</h3>
-              <p style="color:var(--muted)">{{ s.text }}</p>
-            </article>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-
-    <!-- Kundereisen -->
-    <section id="reisen" data-screen-label="Kundereisen" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; gap:28px">
-        <div style="display:grid; gap:14px; max-width:760px">
-          <span class="eyebrow">Kundereisen</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Én kunde, én reise. Hvert steg har én skjerm som eier det.</h2>
-          <p class="lede">Reisen vises som samme linje på kundekortet, tilbudet, ordren og i kundeportalen. Klikk deg gjennom stegene.</p>
-        </div>
-        <div style="{{ stepsScroll }}">
-          <div role="tablist" aria-label="Steg i kundereisen" style="{{ stepsRow }}">
-            <span aria-hidden="true" style="position:absolute; left:14px; top:13px; height:2px; width:calc(1000% / 11); background:var(--line)"></span>
-            <span aria-hidden="true" style="{{ stepFill }}"></span>
-            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="11">
-              <button type="button" role="tab" aria-selected="{{ s.sel }}" onClick="{{ s.pick }}" style="{{ s.btn }}">
-                <i style="{{ s.dot }}">{{ s.n }}</i>
-                <span>{{ s.label }}</span>
-              </button>
-            </sc-for>
-          </div>
-        </div>
-        <div style="{{ stepCard }}" aria-live="polite">
-          <div style="display:grid; gap:14px; align-content:start; min-width:0">
-            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="info" hint-size="200px,24px">{{ step.no }}</x-import>
-            <h3 style="font-size:var(--t-h2); line-height:1.15">{{ step.title }}</h3>
-            <p style="color:var(--muted)">{{ step.text }}</p>
-            <p style="font-size:.92rem; color:var(--muted)">Eies av <b style="color:var(--ink); font-weight:600">{{ step.owner }}</b></p>
-            <div style="display:flex; gap:8px">
-              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" on-click="{{ prevStep }}" style="width:44px; padding:0; font-size:1.2rem" hint-size="44px,44px">‹</x-import>
-              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" on-click="{{ nextStep }}" style="width:44px; padding:0; font-size:1.2rem" hint-size="44px,44px">›</x-import>
-            </div>
-          </div>
-          <div style="min-width:0">
-            <dc-import name="Enhet" bilde="{{ step.bilde }}" alt="{{ step.alt }}" ratio="0.8" on-zoom="{{ zoom }}" style="width:100%; min-width:0" hint-size="100%,420px"></dc-import>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Prinsippene -->
-    <section data-screen-label="Prinsippene" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Prinsippene</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Fire grep som går igjen på alle skjermene.</h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:clamp(18px,3vw,32px)">
-          <sc-for list="{{ principles }}" as="p" hint-placeholder-count="4">
-            <div style="display:grid; gap:10px; align-content:start; min-width:0">
-              <span style="font:400 2.6rem/1 var(--f-display); color:var(--accent); font-variant-numeric:tabular-nums">{{ p.n }}</span>
-              <h3 style="font-size:var(--t-h3); line-height:1.2">{{ p.title }}</h3>
-              <p style="color:var(--muted)">{{ p.text }}</p>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-
-    <!-- Kom i gang -->
-    <section id="kom-i-gang" data-screen-label="Kom i gang" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="{{ startGrid }}">
-        <div style="display:grid; gap:14px; align-content:start; max-width:760px">
-          <span class="eyebrow">Kom i gang</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Fem steg før systemet gjør jobben sin.</h2>
-          <p class="lede">Dette er den samme lista hver ny bruker ser på Min dag. Vi går gjennom stegene sammen med dere, med deres egne kunder og prislister.</p>
-        </div>
-        <div style="min-width:0">
-          <div style="display:flex; align-items:center; gap:12px; font-size:.95rem; color:var(--muted); margin-bottom:12px">
-            <span style="font-variant-numeric:tabular-nums">{{ progTxt }}</span>
-            <span style="flex:1; height:6px; border-radius:99px; background:var(--line); overflow:hidden"><i style="{{ progBar }}"></i></span>
-          </div>
-          <ul style="list-style:none; margin:0; padding:0; display:grid; gap:10px">
-            <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="5">
-              <li>
-                <button type="button" role="checkbox" aria-checked="{{ c.on }}" onClick="{{ c.toggle }}" style="width:100%; display:grid; grid-template-columns:26px 1fr auto; gap:12px; align-items:center; padding:14px 16px; border:1px solid var(--line); border-radius:10px; background:var(--surface); cursor:pointer; text-align:left; font:inherit; color:var(--ink); min-height:52px" style-hover="border-color:var(--soft)">
-                  <span style="{{ c.box }}">
-                    <sc-if value="{{ c.checked }}" hint-placeholder-val="{{ false }}">
-                      <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3L9.5 3.6" fill="none" stroke="var(--accent-ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </sc-if>
-                  </span>
-                  <span style="{{ c.text }}">{{ c.label }}</span>
-                  <small style="color:var(--soft); font-size:.84rem">{{ c.small }}</small>
-                </button>
-              </li>
-            </sc-for>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Spørsmål -->
-    <section id="sporsmal" data-screen-label="Spørsmål" style="padding-block:clamp(64px,9vw,120px)">
-      <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)">
-        <div style="display:grid; gap:14px; margin-bottom:clamp(32px,5vw,56px); max-width:760px">
-          <span class="eyebrow">Spørsmål</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Det folk lurer på.</h2>
-        </div>
-        <div style="border-top:1px solid var(--line); max-width:860px">
-          <sc-for list="{{ faq }}" as="q" hint-placeholder-count="11">
-            <div style="border-bottom:1px solid var(--line)">
-              <h3 style="margin:0; font-size:var(--t-h3); line-height:1.25">
-                <button type="button" aria-expanded="{{ q.exp }}" onClick="{{ q.toggle }}" style="all:unset; box-sizing:border-box; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; width:100%; padding:20px 0; font:inherit; color:var(--ink)">
-                  <span>{{ q.q }}</span>
-                  <span aria-hidden="true" style="font:400 1.5rem/1 var(--f-body); color:var(--muted); flex:none; width:24px; text-align:center">{{ q.sign }}</span>
-                </button>
-              </h3>
-              <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
-                <p style="color:var(--muted); padding:0 0 22px; max-width:62ch">{{ q.a }}</p>
-              </sc-if>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-
-    <!-- Kontakt -->
-    <section id="kontakt" data-screen-label="Kontakt" style="background:var(--surface-highlight); padding-block:clamp(64px,9vw,120px)">
-      <div style="{{ contactGrid }}">
-        <div style="display:grid; gap:18px; align-content:start; min-width:0">
-          <span class="eyebrow">Kontakt</span>
-          <h2 style="font-size:var(--t-h1); line-height:1.08">Se den med deres egne kjøkken.</h2>
-          <p class="lede">Vi viser løsningen på en ordre som ligner deres, fra lead til etterkalkyle. Det tar rundt en time, på Teams eller i butikken.</p>
-          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
-            <span>Eller send en e-post:</span>
-            <a href="mailto:drift@sngroup.no" style="font-weight:500; color:var(--ink)">drift@sngroup.no</a>
-            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" on-click="{{ copyMail }}" style="min-height:36px; padding:0 14px; font-size:.85rem" hint-size="80px,36px">{{ copyLabel }}</x-import>
-          </div>
-          <div class="card" style="display:grid; gap:2px; padding:14px 16px; font-size:.95rem; color:var(--muted)">
-            <b style="color:var(--ink); font-weight:600">Allerede kunde?</b>
-            <span>Support: <span style="color:var(--ink); font-weight:500">drift@sngroup.no</span></span>
-            <span>Eller trykk «Gi tilbakemelding» i appen.</span>
-          </div>
-          <dc-import name="Plantegning Entre" style="width:100%; max-width:440px; margin-top:8px" hint-size="100%,360px"></dc-import>
-        </div>
-        <form onSubmit="{{ submit }}" noValidate="{{ true }}" class="card" style="display:grid; gap:14px; padding:clamp(20px,3vw,32px); border-radius:20px; min-width:0">
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:14px">
-            <div class="field"><label for="fNavn">Navn</label><input class="input" id="fNavn" type="text" autoComplete="name" value="{{ form.navn }}" onChange="{{ on.navn }}"></div>
-            <div class="field"><label for="fFirma">Butikk eller firma</label><input class="input" id="fFirma" type="text" autoComplete="organization" value="{{ form.firma }}" onChange="{{ on.firma }}"></div>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:14px">
-            <div class="field"><label for="fEpost">E-post</label><input class="input" id="fEpost" type="email" autoComplete="email" value="{{ form.epost }}" onChange="{{ on.epost }}"></div>
-            <div class="field"><label for="fTlf">Telefon</label><input class="input" id="fTlf" type="tel" autoComplete="tel" value="{{ form.tlf }}" onChange="{{ on.tlf }}"></div>
-          </div>
-          <div class="field"><label for="fAnt">Antall selgere</label>
-            <select class="input" id="fAnt" value="{{ form.ant }}" onChange="{{ on.ant }}">
-              <option>1–3</option><option>4–10</option><option>11–25</option><option>Flere enn 25</option>
-            </select>
-          </div>
-          <fieldset style="border:0; padding:0; margin:0; display:grid; gap:8px">
-            <legend style="font:500 .9rem var(--f-body); padding:0; margin-bottom:8px">Mest interessert i</legend>
-            <div style="display:flex; flex-wrap:wrap; gap:8px">
-              <sc-for list="{{ interests }}" as="i" hint-placeholder-count="5">
-                <label style="display:inline-flex; align-items:center; gap:6px; font-size:.9rem; padding:6px 12px; min-height:36px; box-sizing:border-box; border:1px solid var(--line); border-radius:999px; cursor:pointer; background:var(--surface)">
-                  <input type="checkbox" checked="{{ i.on }}" onChange="{{ i.toggle }}" style="accent-color:var(--accent); margin:0">{{ i.label }}
-                </label>
-              </sc-for>
-            </div>
-          </fieldset>
-          <div class="field"><label for="fMeld">Noe vi bør vite?</label><textarea class="input" id="fMeld" placeholder="For eksempel hvilke systemer dere bruker i dag" value="{{ form.meld }}" onChange="{{ on.meld }}" style="min-height:110px"></textarea></div>
-          <button class="btn primary" type="submit" style="justify-self:start">Be om demo</button>
-          <p style="font-size:.88rem; color:var(--muted)">{{ formNote }}</p>
-          <p style="font-size:.88rem; color:var(--muted)">Les hvordan vi behandler henvendelsen i <a href="Personvern.dc.html">personvernerklæringen</a>.</p>
-          <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid; gap:4px; padding:16px; border-radius:10px; background:var(--accent-soft)"><b style="font-weight:600">E-posten er klar.</b><span>Hvis e-postprogrammet ikke åpnet seg, kopier adressen over og send oss en linje.</span></div>
-          </sc-if>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <dc-import name="Bunn" hjem="" demo="{{ true }}" hint-size="100%,180px"></dc-import>
-
-  <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
-    <div role="dialog" aria-label="Forstørret skjermbilde" onClick="{{ closeLb }}" style="position:fixed; inset:0; z-index:80; background:#1B1713; display:grid; place-items:center; padding:clamp(12px,3vw,40px); cursor:zoom-out">
-      <div role="img" aria-label="{{ lb.alt }}" style="{{ lbStyle }}"></div>
-      <button type="button" aria-label="Lukk" onClick="{{ closeLb }}" style="position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:50%; border:0; background:var(--off-white); color:var(--warm-black); font-size:1.4rem; cursor:pointer">×</button>
     </div>
-  </sc-if>
+  </section>
+
+  <section data-screen-label="Forside · tre løfter" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">01</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Ett sted for kunden.</h2>
+        <p style="margin:0; color:var(--muted)">Tilbud, ordre, bestilling, montering, saker og faktura på samme kundekort.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">02</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Montøren slipper papir.</h2>
+        <p style="margin:0; color:var(--muted)">Jobben, tegningene, målene og KS-sjekklista ligger i lomma.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:10px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--muted)">03</span>
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:1.75rem; line-height:1.15">Kunden følger med selv.</h2>
+        <p style="margin:0; color:var(--muted)">Kundeportal med tilvalg, leveringsdag, punkter og dokumenter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · ordrens reise" style="padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:40px">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px 40px">
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:640px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Ordrens reise</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Én ordre fra befaring til faktura.</h2>
+        </div>
+        <a href="Slik-virker-det.dc.html" style="color:var(--accent); text-decoration:none; font-weight:500">Se hele reisen i åtte scener →</a>
+      </div>
+      <ol style="{{ reiseListe }}">
+        <sc-for list="{{ reise }}" as="r" hint-placeholder-count="8">
+          <li style="{{ r.li }}">
+            <span style="{{ r.dot }}">{{ r.n }}</span>
+            <div style="display:flex; flex-direction:column; gap:4px; min-width:0">
+              <b style="font-weight:600; font-size:1rem">{{ r.t }}</b>
+              <span style="font-size:.92rem; color:var(--muted); line-height:1.5">{{ r.s }}</span>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · sidene" style="background:var(--surface-highlight); padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:32px">
+      <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Se nærmere på</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:16px">
+        <sc-for list="{{ kort }}" as="k" hint-placeholder-count="7">
+          <a href="{{ k.href }}" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:8px; color:var(--ink); text-decoration:none; min-height:150px; box-sizing:border-box" style-hover="border-color:var(--ink); color:var(--ink)">
+            <span style="font-family:Newsreader, Georgia, serif; font-size:1.6rem; line-height:1.15">{{ k.t }}</span>
+            <span style="color:var(--muted); font-size:.98rem; line-height:1.55; flex:1">{{ k.s }}</span>
+            <span style="color:var(--accent); font-weight:500; font-size:.95rem">{{ k.cta }} →</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Forside · demo" style="padding:clamp(56px,7vw,96px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:24px 48px">
+      <div style="display:flex; flex-direction:column; gap:12px; max-width:620px">
+        <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,3rem); line-height:1.08; letter-spacing:-.015em">Vil dere se Hengsel i bruk?</h2>
+        <p style="margin:0; color:var(--muted); font-size:1.18rem">Vi viser løsningen med en ordre fra start til slutt. Ring oss eller be om demo.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px">
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="primary" href="Priser-og-demo.dc.html#demo" hint-size="130px,44px">Be om demo</x-import>
+        <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Button" variant="secondary" href="tel:+4745410001" hint-size="170px,44px">+47 454 10 001</x-import>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;system&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;system&quot;,&quot;tsType&quot;:&quot;'system'|'lys'|'mørk'&quot;}}">
-const HERO = [
-  { bilde: 'min-dag', type: 'pc', alt: 'Min dag på PC: selgerens arbeidsliste med kalender og egne tall', ratio: 0.75 },
-  { bilde: 'ipad-min-dag', type: 'ipad', alt: 'Min dag på iPad i liggende format', ratio: 0.75 },
-  { bilde: 'telefon-a', type: 'phone', alt: 'Selgeren på telefon: Min dag', ratio: 0.72 },
-  { bilde: 'hengsel-i-dag-a', type: 'phone', alt: 'Montørappen Hengsel: dagens jobber', ratio: 0.72 },
-];
-const WHY = [
-  { before: ['Ordrebekreftelsen sjekkes for hånd', 'Avvik på benkeplate eller hvitevare oppdages først når montøren står i kjøkkenet.'], after: ['OB sammenlignes linje for linje', 'Ordrebekreftelsen kobles til ordren og sammenlignes med bestillingen. Avvik havner øverst med knappene Godta OB og Be om ny OB.'] },
-  { before: ['Montasjekalkylen lages på nytt', 'Linjene fra tegningen tastes inn igjen. Timer til montør og pris til kunde spriker.'], after: ['Kalkylen bygges fra tegningen', 'Linjene fra CET grupperes til kalkylerader med regler. Faktorenheter, reelle timer, pris til montør og pris til kunde står side om side, med dekningsgrad.'] },
-  { before: ['Kunden ringer for å høre hvor kjøkkenet er', 'Selgeren må lete i e-post og spørre bestilling og montasje før hen kan svare.'], after: ['Kunden ser reisen selv', 'Kundeportalen viser tilbudet, tilvalgene, tegningen og hvor ordren står. Meldinger går rett til selgeren og havner på kundekortet.'] },
-  { before: ['Hvitevaresaker mangler opplysninger', 'Serienummer og modell må hentes fra kunden i etterkant, og saken blir liggende.'], after: ['Typeskiltet leses ved montering', 'Montøren tar bilde av typeskiltet før varen bygges inn. Modell, produktnummer og serienummer ligger klart når kunden trenger service.'] },
-];
-const TRIO = [
-  { who: 'For butikken', title: 'Hengsel for butikken', items: ['Salg, tilbud og ordre', 'Bestilling til leverandør og OB-kontroll', 'Montasjeplan, kalkyle og etterkalkyle', 'Saker, prosjekter og resultater'], where: 'PC, iPad og telefon' },
-  { who: 'For montørene', title: 'Hengsel for montøren', items: ['Dagens jobber og hva som mangler', 'Varer, dokumenter og tegning', 'KS med hvitevarer og typeskilt', 'Restpunkter og Ferdig montert'], where: 'Telefon først, iPad på kontoret' },
-  { who: 'For kunden', title: 'Kundeportalen', items: ['Tilbudet med bilde og pris', 'Tilvalg med prisen som endrer seg', 'Signering og godkjenning', 'Reisen til kjøkkenet er montert'], where: 'Telefon og PC, uten app' },
-];
-const STEPS = [
-  ['Lead','Salgstavla','Henvendelsen blir et kort på salgstavla. Alle muligheter står i seks faser, med sum per fase og hvor lenge hver kunde har stått.','Selgeren','salgstavla'],
-  ['Møte og tegning','Kundekortet','Møter, notater og samtaler samles på kundekortet. Neste steg står øverst, og tidslinjen viser alt som har skjedd.','Selgeren','kundekortet'],
-  ['Tilbud','Tilbud og kundeportal','Tegningen hentes fra CET. Kunden ser prisgruppene med bilde i kundeportalen, og selgeren ser når tilbudet åpnes.','Selgeren','tilbudet'],
-  ['Signert','Kundeportalen','Kunden velger tilvalg, ser prisen endre seg og signerer. Tilbudet blir ordre av seg selv.','Kunden','signert'],
-  ['Bestilt','Bestilling','Det som skal sendes, det som venter på bekreftelse og det som har feil står i én liste. En ordre uten kontrollmål eller signert avtale kan ikke sendes.','Bestilling','bestilling'],
-  ['OB kontrollert','Ordren','Ordrebekreftelsen sammenlignes med bestillingen per varelinje. Avvik står øverst på ordren, sammen med det som mangler før montering.','Bestilling og selger','ordre-og-montasje'],
-  ['Levering','Ordre og montasje','Tittelen på ordren sier når det leveres og monteres. Endringsfristen og hva det koster å endre etter den står synlig.','Montasjeleder','ordre-og-montasje'],
-  ['Montering','Hengsel','Montøren ser jobben, varene og tegningen i Hengsel, tar bilde av typeskiltene og krysser av KS-punktene.','Montøren','hengsel-ks'],
-  ['Ferdig montert','Hengsel','Montøren melder ferdig montert, fører timer og lar kunden signere på skjermen. Mangler det KS-punkter, får lederen beskjed. Kontoret kan fakturere.','Montøren','hengsel-ferdig'],
-  ['Faktura','Ordren','Statusrekka går fra levert til fakturert per leverandør, og resultatene oppdateres mot budsjett.','Kontoret','resultater'],
-  ['Etterkalkyle','Montasje','Kalkulerte timer mot brukte timer per jobb, og restpunkter og reklamasjoner som venter.','Montasjeleder','etterkalkyle'],
-];
-const TOUR = {
-  'Salg': [
-    ['Min dag','Selgerens startside er én liste over det som må gjøres i dag, sortert etter når det må skje.','min-dag',[['Detaljpanelet','Valgt rad åpnes til høyre med kunde, telefon og svarfelt. «Ferdig – neste» går videre.'],['Egne tall','Salg mot mål, dekningsgrad og åpne tilbud, og neste befaring med bilde.'],['Prisvarsler','Endringer i prislister som treffer åpne tilbud, før kunden signerer.']]],
-    ['Samtaler','Kundeportalen, e-post, SMS og leverandørtråder i én innboks, med kunden og tilbudet ved siden av.','samtaler',[['Svar der kunden skrev','Svaret går i samme kanal og havner på kundekortet.'],['Filtre','Ubesvart, Mine, Butikken, Kunder og Entreprenører.'],['Ett sted','Ingen tråder blir liggende i noens private innboks.']]],
-    ['Salgstavla','Alle muligheter i seks faser, med sum per fase og hvor lenge hver kunde har stått.','salgstavla',[['Står stille','Kort som har stått for lenge blir gule og røde, med forslag til neste steg.'],['Mine, butikken eller alle','Samme tavle for selgeren og lederen.'],['Mot mål','Salg hittil i måneden mot målet øverst.']]],
-    ['Kundekortet','Alt om kunden på ett sted: reisen, neste steg, tilbud og ordre, samtalen og kundeportalen.','kundekortet',[['Sju faner','Oversikt, tilbud og ordre, montering og saker, produkter, fakturaer, filer og samtale.'],['Tidslinjen','Møter, notater og automatiske hendelser som ordrebekreftelser.'],['Handlinger','Ring, SMS, e-post, kart og nytt tilbud rett fra toppen.']]],
-    ['Produkter hos kunden','Hvitevarene registreres fra typeskiltet når montøren bygger dem inn. Garantien regnes fra levering.','produkter-hos-kunden',[['Produktkortet','Modell, produktnummer, serienummer, leverandør og servicekanal.'],['Meld feil','Starter en sak med garantistatus og feltene leverandøren trenger.'],['Historikk','Alt kunden har kjøpt, samlet på ett sted.']]],
-    ['Tilbudet','Tegningen hentes fra CET. Kunden ser prisgruppene og signerer i kundeportalen, og tilbudet blir ordre av seg selv.','tilbudet',[['Priseksempler','Samme tegning i fire prisgrupper, med bilde.'],['Prislistekortet','Prisvarsler, kampanjer og hvilken prisliste som gjelder.'],['Kunden så utstilling','Hva kunden så i butikken, og hva det koster.']]],
-  ],
-  'Leveranse': [
-    ['Ordre og montasje','Tittelen sier det viktigste: når det leveres og monteres. Avvik står øverst med handlingen.','ordre-og-montasje',[['Statusrekka','Kladd, sendt, OB mottatt, OB avvik, OB godkjent, delvis levert, levert, fakturert.'],['Avvik på varelinje','Godta OB og Be om ny OB rett under raden.'],['Endringsfrist','Fristen og hva det koster å endre etter den.']]],
-    ['Bestilling','Det som skal sendes, det som venter på bekreftelse, og det som har feil, i én liste.','bestilling',[['Låst når noe mangler','En ordre uten kontrollmål eller signert avtale kan ikke sendes.'],['Innboks for OB','Ordrebekreftelser kobles til riktig ordre og sammenlignes med bestillingen.'],['Leveres til','Kunden eller butikken, per ordre.']]],
-    ['Monteringskalkyle','Linjene fra tegningen grupperes til kalkylerader. Selgeren sjekker det som må bekreftes og godkjenner før montøren får jobben.','monteringskalkyle',[['Fire tall','Faktorenheter, reelle timer, pris til montør og pris til kunden, med dekningsgrad.'],['Regler og fritekst','Regler slår inn av seg selv. Fritekst og øy må kobles og bekreftes.'],['Sjekkliste','Godkjenn er låst til alle punktene er gått gjennom.']]],
-    ['Montasje','Montasjelederen ser uka per montør, hva som mangler montør, og hva som kommer for sent.','montasje',[['Planen per uke','Firma og montør i rader, monteringene som blokker.'],['Rest og reklamasjon','Restpunkter fra Hengsel og reklamasjoner som venter.'],['Etterkalkyle','Kalkulerte mot brukte timer per jobb.']]],
-    ['Saker','Reklamasjoner, avvik og restpunkter i én liste. En hvitevaresak sendes til leverandøren med feltene ferdig utfylt.','saker',[['Send til leverandør','Feltene i NELREG-rekkefølge med tegnteller og kopier-knapp.'],['Servicenummer','Nummeret fra leverandøren lagres på saken og flytter statusen.'],['Én liste','Reklamasjoner, avvik og restpunkter side om side.']]],
-  ],
-  'Prosjekt': [
-    ['Prosjektoppsett','Prismodell, indeks og entreprenørens påslag settes én gang for hele prosjektet.','prosjektoppsett',[['Brutto/brutto eller netto/brutto','Rabatt gjelder bare netto/brutto.'],['Standard','Front og prisgruppe som gjelder alle leilighetene.'],['Bare sluttprisen','Indeks og påslag ligger i linjeprisene kjøperen ser.']]],
-    ['Tilvalg mot standard','Standarden låses per leilighet. Hver ny tegning fra CET sammenlignes med den, linje for linje.','tilvalg-mot-standard',[['Minus og pluss','Det som går ut og det som kommer inn, med montering fra kalkylen.'],['Versjoner','Ny revisjon av tegningen blir ny versjon som kjøperen må godkjenne.'],['Aldri negativt','Laveste pris er 0 kr. Indeks gjelder bare nye varer.']]],
-    ['Kjøperen godkjenner','Kjøperen ser standarden som inkludert, tilvalgene og samleprisen. Godkjenningen er tilvalgskontrakten.','kjoper-godkjenner',[['Endret siden sist','Ny versjon viser hva som er endret, og må godkjennes på nytt.'],['Velg alternativ','Hvitevarepakker eller benkeplater som prisede valg.'],['Også for privatkunder','Samme mønster i vanlig salg.']]],
-  ],
-  'Ledelse': [
-    ['Leder','Daglig leder starter med det som krever svar: eskaleringer, godkjenninger og frister.','leder',[['Godkjenn i panelet','Rabatt over grensen godkjennes uten å åpne tilbudet.'],['Butikkene','Salg mot budsjett per butikk.'],['Ordrereserven','Uke for uke, så kapasiteten kan planlegges.']]],
-    ['Resultater','Ordre inngått, fakturert, dekningsgrad og tilbud til ordre, mot budsjett og i fjor.','resultater',[['Per selger','Salg, forfalte oppgaver og eldste sak.'],['Montørfirma','Monteringer, timer mot kalkyle og restpunkter.'],['Fristkalender','Endringsfrist per varegruppe.']]],
-    ['Moduler per rolle','Leder og admin bestemmer hva hver rolle ser. Det som er av, forsvinner fra menyen.','moduler',[['Én bryter per modul','Min dag er alltid på.'],['Unntak per bruker','Settes under Brukere.'],['Ta det i takt','Slå på moduler etter hvert som butikken er klar.']]],
-  ],
-  'Kunden': [
-    ['Kundeportalen','Kunden ser kjøkkenet sitt, velger tilvalg selv og signerer. Etter signering følger kunden reisen til montert kjøkken.','kundeportalen-pc',[['Tilvalg og prisgrupper','Kunden krysser av og ser prisen endre seg.'],['Tegning og dokumenter','Tegningen og bildene fra montasjen når de er godkjent.'],['Selgeren din','Melding rett til selgeren, uten app.']]],
-  ],
-  'Mobil': [
-    ['Selgeren på telefon','Min dag, kunder, ordre og samtaler i bunnmenyen. Resten ligger under «Mer».','telefon',[['Befaring','Sjekklista med ti punkter, mål og bilder, og Lagre som ferdig.'],['Samme handlinger','Godta modellen, ring og svar rett fra telefonen.'],['Samme farger','De samme kortene og statusene som på PC.']]],
-    ['iPad','Liggende med sidemeny og to kolonner, stående med ikonstripe og én kolonne.','ipad-min-dag',[['Samme komponenter','Kort, filtre og detaljpanel er de samme som på PC.'],['Til befaring','Ordren og kundekortet med kunden ved siden av.'],['Butikkgulvet','Vis tegning og pris mens kunden står der.']]],
-    ['Montøren på iPad','Dagen i to kolonner: neste jobb med navigering og ring, timeplanen og beskjeder fra kontoret.','hengsel-ipad',[['Neste jobb','Naviger, ring eller åpne jobben med ett trykk.'],['Dagen','Timeplanen med alle jobbene, side om side.'],['Beskjed fra kontoret','Nøkkel, port og leveranser står klart før montøren drar.']]],
-  ],
-};
-const PH = [
-  ['I dag','hengsel-i-dag','Montøren ser neste jobb og hva som mangler, og trykker «På vei» så kunden får beskjed. Tilleggsarbeid og restpunkter settes som nåler på tegningen. Meld avvik går rett til ordren og montasjelederen.'],
-  ['Jobben og KS','hengsel-jobb','Jobben har fire faner: info, varer, dokumenter og bilder. KS under montering følger malen for rommet punkt for punkt, med OK, avvik og bilde der det trengs.'],
-  ['Varer og dokumenter','hengsel-varer','Montøren ser hvilke leveranser som er bekreftet og levert, varene på ordren, monteringskalkylen som er godtatt, tegningene og FDV-dokumentasjonen.'],
-  ['Hvitevarer','hengsel-ks','Før varen bygges inn tar montøren bilde av typeskiltet. Appen leser modell, produktnummer og serienummer. Avvik fra bestilt modell går til selgeren som «Hvitevare må sjekkes». Ikke levert blir restordre.'],
-  ['Avvik','hengsel-avvik','Skadet ved montering eller levering, feil vare, mangler eller feil mål. Montøren velger hva som skjedde, tar bilde og sier om det trengs ny vare. Avviket havner rett på ordren.'],
-  ['Ferdig montert','hengsel-ferdig','Montøren melder ferdig montert eller delvis ferdig, fører timer og skriver en merknad til selgeren. Kunden signerer på skjermen. Mangler det KS-punkter, får lederen beskjed.'],
-  ['iPad','hengsel-ipad','På iPad får montøren dagen i to kolonner: neste jobb med navigering og ring, timeplanen for dagen og beskjeder fra kontoret.'],
-];
-const ROLES = [
-  ['Selger',['Min dag','Samtaler','Salgstavle','Kunder','Tilbud','Ordre','Saker'],[['Dagen i én liste','Det som haster øverst, med svarfelt og telefon i panelet.'],['Ser resten uten å spørre','Bestilling, OB og montering står på kundekortet.'],['Vet når kunden ser på tilbudet','Åpninger i portalen og prisvarsler før signering.']]],
-  ['Prosjektleder',['Alt selgeren har','Prosjekter','Leiligheter','Tilvalg'],[['Oppsett én gang','Prismodell, indeks og påslag for hele prosjektet.'],['Tilvalg mot standard','Linje for linje fra CET, med montering fra kalkylen.'],['Kjøperen godkjenner selv','Godkjenningen er tilvalgskontrakten.']]],
-  ['Daglig leder',['Leder','Resultater','Godkjenninger','Innstillinger'],[['Det som krever svar','Eskaleringer, godkjenninger og frister øverst.'],['Butikkene mot budsjett','Salg, dekningsgrad og ordrereserve uke for uke.'],['Bestemmer oppsettet','Moduler per rolle og unntak per bruker.']]],
-  ['Montasjeleder',['Montasje','Kontrollmål','Saker','Etterkalkyle'],[['Uka per montør','Hva som mangler montør og hva som kommer for sent.'],['Rest og reklamasjon','Restpunkter fra Hengsel havner rett hos deg.'],['Etterkalkyle','Kalkulerte mot brukte timer per jobb.']]],
-  ['Bestilling',['Bestilling','Ordrebekreftelser','Avvik'],[['Én liste','Det som skal sendes, venter og har feil.'],['Låst når noe mangler','Ingen sending uten kontrollmål og signert avtale.'],['OB mot bestilling','Avvik per varelinje med handling rett under.']]],
-  ['Montør',['Hengsel: I dag','Uke','Kommende','Ferdige'],[['Bare egne jobber','Telefon først, uten resten av systemet.'],['KS med typeskilt','Bilde av typeskiltet, ferdig utfylt.'],['Ferdig montert','Kunden og kontoret får beskjed med en gang.']]],
-  ['Kunde',['Kundeportalen'],[['Kjøkkenet mitt','Tilbud med bilde, tilvalg og pris.'],['Signer og godkjenn','Uten papir og uten app.'],['Følg reisen','Fra signert til montert, med bilder.']]],
-];
-const MORE = [
-  ['Befaring','Sjekkliste med ti punkter, mål og bilder på telefonen, lagret rett på kunden.'],
-  ['Kontrollmål','Bestillingen er låst til kontrollmålet er tatt og avtalen er signert.'],
-  ['Fristkalender','Endringsfrist per varegruppe, med varsel før fristen går ut.'],
-  ['Etterkalkyle','Kalkulerte mot brukte timer per jobb og per montørfirma.'],
-  ['Lager og restvarer','Varer på lager, innkjøp og restordre koblet til ordren.'],
-  ['Anbud og prosjekter','Leilighetsprosjekter med standard, tilvalg, indeks og entreprenørpåslag.'],
-  ['Vilkårsbibliotek','Samme vilkår i alle tilbud, oppdatert ett sted.'],
-  ['Signering','Kunden signerer tilbudet i kundeportalen, og den signerte PDF-en lagres på ordren.'],
-  ['FDV-dokumentasjon','Bruksanvisninger, garantier og bilder samles til én PDF kunden får ved overlevering.'],
-  ['Leser ordrebekreftelser','Ordrebekreftelser i PDF leses og kobles til riktig ordre.'],
-  ['Varsler til kunden','Kunden får beskjed på e-post om levering og montering uten at noen må ringe.'],
-];
-const INTEG = [
-  ['Tegning','Configura CET','Tegning og varelinjer leses inn i tilbud, monteringskalkyle og tilvalg. Ny revisjon blir ny versjon.'],
-  ['Regnskap','PowerOffice Go','Kunde, prosjekt og faktura opprettes fra ordren. Fakturastatus, omsetning og inngående fakturaer hentes tilbake. Koblingen er bygget og tas i bruk høsten 2026.'],
-  ['Kontor','Microsoft 365','Innlogging med jobbkontoen. E-post fra Outlook og møter fra kalenderen havner på riktig kunde.'],
-  ['Leverandører','Bestilling og OB på e-post','Bestillingen sendes til leverandøren, og ordrebekreftelsen i PDF leses og sammenlignes med bestillingen.'],
-  ['Kunden','Signering i kundeportalen','Kunden godkjenner og signerer tilbudet i kundeportalen, og den signerte PDF-en lagres på ordren.'],
-];
-const ACCT = [['PowerOffice Go','Bygget','info'],['Tripletex','Ta kontakt','neutral'],['Visma eAccounting','Ta kontakt','neutral'],['Fiken','Ta kontakt','neutral'],['24SevenOffice','Ta kontakt','neutral']];
-const SUPP = [
-  ['Bestillinger','Sendes først når kontrollmål og signert avtale finnes. Leveres til kunden eller butikken, per ordre.'],
-  ['Ordrebekreftelser','Kobles til riktig ordre og sammenlignes med bestillingen per varelinje. Statusrekka per leverandør går fra kladd til fakturert.'],
-  ['Tegningsdata','Tegning og linjer fra CET brukes i tilbud, monteringskalkyle og tilvalg. Ny revisjon blir ny versjon kunden godkjenner.'],
-  ['Hvitevarer og service','Typeskiltet registreres ved montering. Saker sendes med feltene servicekanalen krever, i NELREG-rekkefølge med kopier-knapp.'],
-];
-const PRINC = [
-  ['Én arbeidsliste','Det som må gjøres, står i én liste sortert etter når det må skje. Faner og tall blir filtre i lista.'],
-  ['Handling der du står','Valgt rad åpnes i et panel til høyre. Svar, ring, godkjenn eller send uten å bytte side.'],
-  ['Kort meny per rolle','Hver rolle ser det den bruker daglig. Resten ligger under «Mer», og moduler kan slås av.'],
-  ['Data én gang','Tegningsfila, ordrebekreftelsen og typeskiltet leses inn én gang og brukes videre i kalkyle, bestilling og garanti.'],
-];
-const CHECK = [['Legg inn første kunde','Salgstavla'],['Lag et tilbud','Fra CET'],['Koble kundeportalen','Kunden'],['Legg inn prisliste','Prisvarsler'],['Last opp plantegning','Prosjekt']];
-const FAQ = [
-  ['Hvem passer løsningen for?','Kjøkken- og interiørbutikker som selger, bestiller og monterer selv eller med montørfirma. Den er bygget for butikker med flere selgere, en eller flere avdelinger og prosjektsalg til entreprenører.'],
-  ['Hvilke tegneprogram fungerer den med?','Configura CET. Tegningen og linjene leses inn i tilbudet, monteringskalkylen og tilvalgene. En ny revisjon av tegningen blir en ny versjon som kunden eller kjøperen godkjenner. Andre tegneprogram tar vi en prat om.'],
-  ['Hvilke regnskapsprogram fungerer den med?','Koblingen til PowerOffice Go er bygget. Kunder, prosjekter og fakturaer opprettes fra ordren, og fakturastatus, omsetning og inngående fakturaer hentes tilbake. Bruker dere Tripletex, Visma eAccounting, Fiken eller 24SevenOffice, tar vi en prat om koblingen.'],
-  ['Hvem ser hva?','Hver bruker har en rolle, og tilgangen styres i databasen, ikke bare i menyen. Montørfirma ser bare egne jobber, og kunden ser bare sitt eget kjøkken i kundeportalen.'],
-  ['Hvor lagres dataene?','I EU. Databasen ligger i Stockholm, og vi inngår databehandleravtale med hver butikk. Dere eier dataene deres og kan få dem ut når dere vil.'],
-  ['Hvem hjelper oss med opplæring og support?','Vi står for oppstart og opplæring. Etter det skriver dere til drift@sngroup.no eller trykker «Gi tilbakemelding» i appen. Henvendelsen kommer rett til oss.'],
-  ['Kan vi ta med oss det vi har i dag?','Ja. Vi hjelper dere å flytte over kunder, åpne tilbud og ordrer fra dagens system, og legger inn prislistene før dere starter.'],
-  ['Trenger montørene en egen app?','Montørene bruker Hengsel på telefonen. Den viser bare egne jobber, KS og ferdigmelding. Montørfirma uten tilgang til CRM-et får det de trenger uten å se resten.'],
-  ['Må kunden laste ned noe?','Nei. Kundeportalen åpnes fra en lenke på telefon eller PC. Kunden ser tilbudet, velger tilvalg, signerer og følger reisen til kjøkkenet er montert.'],
-  ['Kan vi skru av det vi ikke bruker?','Ja. Leder og admin bestemmer hva hver rolle ser, med én bryter per modul og rolle. Det som er av, forsvinner fra menyen. Unntak kan settes per bruker.'],
-  ['Hvordan logger vi inn?','Med jobbkontoen i Microsoft 365. E-post fra Outlook og kalenderen kan kobles til, så møter og meldinger havner på riktig kunde.'],
-];
-const INTS = ['Salg og tilbud','Bestilling og OB','Montasje og Hengsel','Prosjektsalg','Kundeportal'];
-const ADDR = 'drift@sngroup.no';
-const WRAP = { maxWidth: 1180, margin: '0 auto', paddingInline: 'clamp(16px,4vw,40px)', display: 'grid', minWidth: 0 };
-
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
 class Component extends DCLogic {
-  state = {
-    w: 1440, sysDark: false, dev: 0, why: 'after', area: 'Salg', idx: 0, ph: 0, role: 0, step: 0,
-    checks: [false, false, false, false, false], faqOpen: { 0: true }, lb: null, copyLabel: 'Kopier', done: false,
-    formNote: 'Skjemaet åpner en ferdig utfylt e-post i e-postprogrammet ditt. Ingenting lagres på nettsiden.',
-    form: { navn: '', firma: '', epost: '', tlf: '', ant: '4–10', meld: '' }, ints: [],
-  };
+  state = { dark: false, w: 1440 };
   root = React.createRef();
   componentDidMount() {
+    this.applyTheme();
     const el = this.root.current;
     if (el) { const m = () => { const w = el.clientWidth; if (w && w !== this.state.w) this.setState({ w }); }; this.ro = new ResizeObserver(m); this.ro.observe(el); m(); }
-    this.mq = matchMedia('(prefers-color-scheme: dark)');
-    this.mqh = () => this.setState({ sysDark: this.mq.matches });
-    this.mq.addEventListener('change', this.mqh); this.mqh();
-    try { const s = localStorage.getItem('crm-tour'); if (s && TOUR[s]) this.setState({ area: s }); } catch (e) {}
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) this.timer = setInterval(() => this.setState(s => ({ dev: (s.dev + 1) % HERO.length })), 4200);
-    this.onKey = (e) => { if (e.key === 'Escape' && this.state.lb) this.setState({ lb: null }); };
-    addEventListener('keydown', this.onKey);
-    this.applyTheme();
   }
-  componentDidUpdate() { this.applyTheme(); }
-  componentWillUnmount() { this.ro && this.ro.disconnect(); clearInterval(this.timer); this.mq && this.mq.removeEventListener('change', this.mqh); removeEventListener('keydown', this.onKey); }
-  isDark() {
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  applyTheme() {
     const q = new URLSearchParams(location.search).get('tema');
-    const t = q === 'mork' || q === 'mørk' ? 'mørk' : q === 'lys' ? 'lys' : (this.props.tema ?? 'system');
-    return t === 'mørk' ? true : t === 'lys' ? false : this.state.sysDark;
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
   }
-  applyTheme() { document.documentElement.setAttribute('data-theme', this.isDark() ? 'dark' : 'light'); }
-  split(a, b, align) { const mob = this.state.w < 860; return { ...WRAP, gridTemplateColumns: mob ? 'minmax(0,1fr)' : `minmax(0,${a}fr) minmax(0,${b}fr)`, gap: 'clamp(28px,5vw,64px)', alignItems: align || 'start' }; }
   renderVals() {
-    const s = this.state, mob = s.w < 860;
-    const st = STEPS[s.step];
-    const tourItems = TOUR[s.area] || TOUR['Salg'];
-    const idx = Math.min(s.idx, tourItems.length - 1);
-    const it = tourItems[idx];
-    const r = ROLES[s.role];
-    const n = s.checks.filter(Boolean).length;
-    const setF = (k) => (e) => { const v = e.target.value; this.setState(p => ({ form: { ...p.form, [k]: v } })); };
+    const narrow = this.state.w < 820;
+    const R = [
+      ['Befaring', 'Mål og bilder hos kunden, rett inn på kundekortet.'],
+      ['Tilbud', 'Import fra CET, egen PDF og e-signering.'],
+      ['Aksept', 'Kunden aksepterer og velger tilvalg i portalen.'],
+      ['Bestilling', 'Bestilling til leverandør med ordrebekreftelse.'],
+      ['Levering', 'Kolli på lager, utkjøring med signatur.'],
+      ['Montering', 'Plan, KS-sjekkliste og laser i Hengsel Ute.'],
+      ['Punkter', 'Ett nummersystem fra montør til kontor til kunde.'],
+      ['Ferdig og faktura', 'Kundens signatur, faktura til PowerOffice.'],
+    ];
     return {
-      root: this.root,
-      theme: this.isDark() ? 'dark' : 'light',
-      heroGrid: { ...WRAP, gridTemplateColumns: s.w < 900 ? 'minmax(0,1fr)' : 'minmax(0,5fr) minmax(0,7fr)', gap: 'clamp(28px,4vw,56px)', alignItems: 'center' },
-      facts: ['Bygget i en kjøkkenbutikk med tre avdelinger', 'PC, iPad og telefon', 'Tegninger fra CET leses rett inn'],
-      devTabs: ['PC', 'iPad', 'Telefon', 'Montør'].map((l, i) => ({ id: String(i), label: l })),
-      devVal: String(s.dev),
-      setDev: (id) => { clearInterval(this.timer); this.setState({ dev: +id }); },
-      hero: HERO[s.dev],
-      zoom: (src, alt) => this.setState({ lb: { src, alt } }),
-      lbOpen: !!s.lb, lb: s.lb || { src: '', alt: '' },
-      lbStyle: { width: '100%', height: '92vh', backgroundImage: s.lb ? 'url("' + s.lb.src + '")' : 'none', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }, closeLb: () => this.setState({ lb: null }),
-
-      whyTabs: [{ id: 'before', label: 'Uten et felles system' }, { id: 'after', label: 'Med Hengsel' }],
-      why: s.why, setWhy: (id) => this.setState({ why: id }),
-      whyCards: WHY.map(c => { const a = s.why === 'after'; const [title, text] = a ? c.after : c.before; return { tag: a ? 'Med Hengsel' : 'I dag', tone: a ? 'ok' : 'bad', title, text }; }),
-
-      trio: TRIO,
-
-      areas: Object.keys(TOUR), area: s.area,
-      setArea: (k) => { this.setState({ area: k, idx: 0 }); try { localStorage.setItem('crm-tour', k); } catch (e) {} },
-      tourGrid: { ...WRAP, padding: 0, gridTemplateColumns: mob ? 'minmax(0,1fr)' : 'minmax(0,4fr) minmax(0,8fr)', gap: 'clamp(20px,3vw,40px)', alignItems: 'start' },
-      tourView: { display: 'grid', gap: 18, minWidth: 0, position: mob ? 'static' : 'sticky', top: 84, order: mob ? -1 : 0 },
-      tourList: tourItems.map((x, i) => ({
-        t: x[0], s: x[1], selected: i === idx, sel: i === idx ? 'true' : 'false',
-        pick: () => this.setState({ idx: i }),
-        style: { all: 'unset', boxSizing: 'border-box', cursor: 'pointer', display: 'grid', gap: 4, padding: '16px 18px', borderRadius: 10, border: '1px solid ' + (i === idx ? 'var(--line)' : 'transparent'), background: i === idx ? 'var(--surface)' : 'transparent', boxShadow: i === idx ? 'inset 3px 0 0 var(--accent)' : 'none' },
+      root: this.root, dark: this.state.dark,
+      reiseListe: narrow
+        ? { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }
+        : { listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: 'repeat(8, minmax(0,1fr))', gap: 16, backgroundImage: 'linear-gradient(var(--line), var(--line))', backgroundSize: '100% 1px', backgroundPosition: '0 18px', backgroundRepeat: 'no-repeat' },
+      reise: R.map(([t, s], i) => ({
+        n: String(i + 1), t, s,
+        li: narrow ? { display: 'flex', gap: 16, paddingBottom: 20, borderLeft: i < 7 ? '1px solid var(--line)' : '1px solid transparent', marginLeft: 18, paddingLeft: 0 } : { display: 'flex', flexDirection: 'column', gap: 14 },
+        dot: { width: 36, height: 36, borderRadius: 999, flex: 'none', display: 'grid', placeItems: 'center', background: i === 0 || i === 7 ? 'var(--accent)' : 'var(--surface)', color: i === 0 || i === 7 ? 'var(--accent-ink)' : 'var(--ink)', border: '1px solid ' + (i === 0 || i === 7 ? 'var(--accent)' : 'var(--line)'), fontSize: 14, fontWeight: 600, fontVariantNumeric: 'tabular-nums', marginLeft: narrow ? -18 : 0, boxSizing: 'border-box' },
       })),
-      tour: { bilde: it[2], alt: it[0] + ': skjermbilde', points: it[3].map(p => ({ b: p[0], s: p[1] })) },
-
-      hengselGrid: this.split(5, 6, 'center'),
-      phTabs: PH.map((p, i) => ({ id: String(i), label: p[0] })), phVal: String(s.ph),
-      setPh: (id) => this.setState({ ph: +id }),
-      ph: { bilde: PH[s.ph][1], text: PH[s.ph][2] },
-
-      roleTabs: ROLES.map((x, i) => ({ id: String(i), label: x[0] })), roleVal: String(s.role),
-      setRole: (id) => this.setState({ role: +id }),
-      roleCard: { display: 'grid', gridTemplateColumns: mob ? 'minmax(0,1fr)' : 'minmax(0,5fr) minmax(0,6fr)', gap: 'clamp(20px,4vw,48px)', background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 20, padding: 'clamp(22px,3vw,40px)', alignItems: 'start' },
-      role: { name: r[0], eyebrow: 'Menyen for ' + r[0].toLowerCase(), menu: r[1], gains: r[2].map(g => ({ b: g[0], s: g[1] })) },
-
-      more: MORE.map(m => ({ b: m[0], s: m[1] })),
-      integ: INTEG.map(i => ({ kind: i[0], title: i[1], text: i[2] })),
-      acct: ACCT.map(a => ({ name: a[0], st: a[1], tone: a[2] })),
-      supp: SUPP.map(x => ({ title: x[0], text: x[1] })),
-
-      stepsScroll: s.w < 1100 ? { overflowX: 'auto', overflowY: 'hidden', paddingBottom: 10 } : {},
-      stepsRow: { position: 'relative', paddingBottom: 14, display: 'grid', gridTemplateColumns: 'repeat(11,minmax(0,1fr))', minWidth: s.w < 1100 ? 924 : 0 },
-      stepFill: { position: 'absolute', left: 14, top: 13, height: 2, background: 'var(--accent)', width: `calc(${s.step} * 100% / 11)`, transition: 'width var(--dur) var(--ease)' },
-      steps: STEPS.map((x, i) => {
-        const sel = i === s.step, done = i < s.step;
-        return {
-          n: i + 1, label: x[0], sel: sel ? 'true' : 'false', pick: () => this.setState({ step: i }),
-          btn: { position: 'relative', border: 0, background: 'transparent', textAlign: 'left', padding: '0 6px 0 0', cursor: 'pointer', color: sel ? 'var(--ink)' : 'var(--muted)', font: '500 .86rem/1.25 var(--f-body)', display: 'grid', gap: 10, alignContent: 'start', minWidth: 74, minHeight: 44 },
-          dot: { width: 28, height: 28, boxSizing: 'border-box', borderRadius: '50%', display: 'grid', placeItems: 'center', fontStyle: 'normal', fontSize: '.72rem', fontVariantNumeric: 'tabular-nums', border: '2px solid ' + (sel || done ? 'var(--accent)' : 'var(--line)'), background: done ? 'var(--accent)' : 'var(--bg)', color: done ? 'var(--accent-ink)' : sel ? 'var(--accent)' : 'var(--soft)', boxShadow: sel ? '0 0 0 5px var(--accent-soft)' : 'none', transition: 'background var(--dur) var(--ease), border-color var(--dur) var(--ease)' },
-        };
-      }),
-      stepCard: { display: 'grid', gridTemplateColumns: mob ? 'minmax(0,1fr)' : 'minmax(0,4fr) minmax(0,7fr)', gap: 'clamp(24px,4vw,48px)', alignItems: 'center', background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 20, padding: 'clamp(20px,3vw,36px)' },
-      step: { no: 'Steg ' + (s.step + 1) + ' av ' + STEPS.length + ' · ' + st[1], title: st[0], text: st[2], owner: st[3], bilde: st[4], alt: st[1] + ': skjermbilde' },
-      prevStep: () => this.setState(p => ({ step: (p.step + STEPS.length - 1) % STEPS.length })),
-      nextStep: () => this.setState(p => ({ step: (p.step + 1) % STEPS.length })),
-
-      principles: PRINC.map((p, i) => ({ n: i + 1, title: p[0], text: p[1] })),
-
-      startGrid: this.split(5, 6, 'start'),
-      progTxt: n + ' av 5',
-      progBar: { display: 'block', height: '100%', width: n * 20 + '%', background: 'var(--accent)', transition: 'width var(--dur) var(--ease)' },
-      checklist: CHECK.map((c, i) => {
-        const on = s.checks[i];
-        return {
-          label: c[0], small: c[1], checked: on, on: on ? 'true' : 'false',
-          toggle: () => this.setState(p => { const a = p.checks.slice(); a[i] = !a[i]; return { checks: a }; }),
-          box: { width: 22, height: 22, boxSizing: 'border-box', borderRadius: '50%', border: '2px solid ' + (on ? 'var(--accent)' : 'var(--line)'), background: on ? 'var(--accent)' : 'transparent', display: 'grid', placeItems: 'center' },
-          text: { color: on ? 'var(--soft)' : 'var(--ink)', textDecoration: on ? 'line-through' : 'none' },
-        };
-      }),
-
-      faq: FAQ.map((q, i) => { const open = !!s.faqOpen[i]; return { q: q[0], a: q[1], open, exp: open ? 'true' : 'false', sign: open ? '–' : '+', toggle: () => this.setState(p => ({ faqOpen: { ...p.faqOpen, [i]: !p.faqOpen[i] } })) }; }),
-
-      contactGrid: this.split(5, 6, 'start'),
-      copyLabel: s.copyLabel,
-      copyMail: () => {
-        const ok = () => { this.setState({ copyLabel: 'Kopiert' }); setTimeout(() => this.setState({ copyLabel: 'Kopier' }), 1800); };
-        try { navigator.clipboard.writeText(ADDR).then(ok, () => this.setState({ copyLabel: 'Marker og kopier' })); } catch (e) { this.setState({ copyLabel: 'Marker og kopier' }); }
-      },
-      form: s.form,
-      on: { navn: setF('navn'), firma: setF('firma'), epost: setF('epost'), tlf: setF('tlf'), ant: setF('ant'), meld: setF('meld') },
-      interests: INTS.map(l => ({ label: l, on: s.ints.includes(l), toggle: () => this.setState(p => ({ ints: p.ints.includes(l) ? p.ints.filter(x => x !== l) : [...p.ints, l] })) })),
-      formNote: s.formNote, done: s.done,
-      submit: (e) => {
-        e.preventDefault();
-        const f = this.state.form;
-        if (!f.navn.trim() || !f.firma.trim()) { this.setState({ formNote: 'Fyll inn navn, firma og e-post.' }); return; }
-        if (!/^\S+@\S+\.\S+$/.test(f.epost)) { this.setState({ formNote: 'Skriv inn en gyldig e-postadresse.' }); return; }
-        const ints = this.state.ints.join(', ') || 'Ikke valgt';
-        const body = 'Navn: ' + f.navn + '\nFirma: ' + f.firma + '\nE-post: ' + f.epost + '\nTelefon: ' + f.tlf + '\nAntall selgere: ' + f.ant + '\nInteressert i: ' + ints + '\n\n' + f.meld;
-        location.href = 'mailto:' + ADDR + '?subject=' + encodeURIComponent('Demo av Hengsel – ' + f.firma) + '&body=' + encodeURIComponent(body);
-        this.setState({ formNote: 'Skjemaet åpner en ferdig utfylt e-post i e-postprogrammet ditt.', done: true });
-      },
+      kort: [
+        { t: 'CRM', s: 'Min dag, kundekort, tilbud, ordre, bestilling og montasjeplan. På PC, iPad og telefon.', cta: 'Prøv demoen', href: 'CRM.dc.html' },
+        { t: 'Hengsel Ute', s: 'Montørappen for iPhone og iPad. Jobben, KS, avvik og punkter, også uten dekning.', cta: 'Se appen', href: 'Ute.dc.html' },
+        { t: 'Kundeportal', s: 'Kunden aksepterer tilbudet, velger tilvalg og følger leveringen selv.', cta: 'Se kundens side', href: 'Kundeportal.dc.html' },
+        { t: 'Slik virker det', s: 'Ordrens reise i åtte scener, med det selgeren ser og det som skjer bak kulissene.', cta: 'Følg ordren', href: 'Slik-virker-det.dc.html' },
+        { t: 'Dokumenter', s: 'Tilbud, kjøpsavtale, arbeidsordre, KS-rapport og ferdigmelding, laget rett fra ordren.', cta: 'Bla i dokumentene', href: 'Dokumenter.dc.html' },
+        { t: 'Integrasjoner', s: 'CET, PowerOffice, Penneo, Tradeplace og lasermåler via Bluetooth. Data lagres i EU.', cta: 'Se systemkartet', href: 'Integrasjoner.dc.html' },
+        { t: 'Priser og demo', s: 'Hva som inngår, hvordan oppstarten går, og hvordan dere får en demo.', cta: 'Be om demo', href: 'Priser-og-demo.dc.html' },
+      ],
     };
   }
 }

@@ -155,3 +155,4 @@
 .a4-fot { position: absolute; left: calc(56 * var(--u)); right: calc(56 * var(--u)); bottom: calc(28 * var(--u)); border-top: calc(1 * var(--u)) solid #e4d4c4; padding-top: calc(10 * var(--u)); display: flex; justify-content: space-between; align-items: center; font-size: calc(11 * var(--u)); color: #5e564c; }
 .a4-fot > span:last-child { display: flex; align-items: center; gap: calc(12 * var(--u)); }
 .a4-fot .a4-tab { font-variant-numeric: tabular-nums; }
+.a4-fot .a4-hengsel { display: block; height: calc(11.4 * var(--u)); width: auto; }  /* 3 mm på A4 */

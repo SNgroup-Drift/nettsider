@@ -2,7 +2,7 @@
 /**
  * CRM-skjermene i demoen (CrmSkjerm.dc.html): Min dag, Ordre/avvik, Tilbud/import fra CET og Montasje, tegnet som ekte HTML i
  * naturlig størrelse (pc 1440 × 810, ipad 1180 × 796, telefon 402 × 874). Brukes i sporet til Enhet.astro, som skalerer den inn i rammen
- * (scripts/skala.ts). Tekst og data i content/crm.ts. «Din logo / by Hengsel» i sidemenyen (PC, iPad) og toppen (telefon).
+ * (scripts/skala.ts). Tekst og data i content/crm.ts. «Din logo» i sidemenyen (PC, iPad) og toppen (telefon); crm-aksent-logoen (16 px) nederst i sidemenyen.
  * Uten `interaktiv` er skjermen en ren illustrasjon (inert, role="img"); med `interaktiv` har den data-neste på raden og knappene
  * som går videre i demoen (scripts/crm.ts).
  */
@@ -16,13 +16,21 @@ const aktivMeny = CRM_AKTIV_MENY[skjerm];
 const stat = interaktiv ? {} : { inert: true, role: "img", "aria-label": CRM_ALT };
 const rader = MINDAG_RADER.slice(0, tlf ? 5 : 6);
 const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f === "Ordre" && skjerm !== "minDag");
+import { APPTEST } from "../apptest-lenker";
 ---
 <div class:list={["crm", enhet, skjerm]} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
   {!tlf && (
     <aside class="side">
-      <div class="logo"><span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span></div>
+      <div class="logo"><span class="dinlogo"><span class="boks">Din logo</span></span></div>
       {CRM_MENY.map(([l, n]) => <div class:list={["mi", { aktiv: l === aktivMeny }]}><span>{l}</span><span class="n">{n}</span></div>)}
       <div class="bruker"><div class="ink">{CRM_BRUKER[0]}</div><div>{CRM_BRUKER[1]}</div></div>
+      <div class="hengsel-crm">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="/logo/crm-aksent-mork.svg" />
+          <img src="/logo/crm-aksent-lys.svg" alt="CRM" width="270" height="108" loading="lazy" decoding="async" />
+        </picture>
+        <span>v. {APPTEST.versjon}</span>
+      </div>
     </aside>
   )}
   <div class="hoved">
@@ -30,7 +38,7 @@ const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f
       <>
         <div class="tomrom"></div>
         <div class="topp">
-          <span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>
+          <span class="dinlogo"><span class="boks">Din logo</span></span>
           <span class="kb">KB</span>
         </div>
       </>
@@ -153,12 +161,13 @@ const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f
   .logo { display: flex; flex-direction: column; gap: 8px; padding: 6px 12px 22px; }
   .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
   .dinlogo .boks { height: 40px; padding: 0 18px; border: 1.5px dashed var(--beige-1); border-radius: 6px; display: flex; align-items: center; font-size: 15px; font-weight: 600; letter-spacing: .02em; color: var(--ink); box-sizing: border-box; }
-  .dinlogo .av { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
   .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
-  .telefon .dinlogo .av { font-size: 11px; }
   .mi { display: flex; justify-content: space-between; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; font-size: 15px; }
   .mi.aktiv { font-weight: 600; background: var(--surface-highlight-strong); }
   .mi .n { color: var(--muted); font-size: 13px; font-weight: 400; }
+  .hengsel-crm { padding: 0 12px 4px; display: flex; align-items: center; gap: 8px; }
+  .hengsel-crm span { font-size: 11px; color: var(--muted); }
+  .hengsel-crm img { display: block; height: 16px; width: auto; }
   .bruker { margin-top: auto; padding: 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
 
   .hoved { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box; overflow: hidden; }

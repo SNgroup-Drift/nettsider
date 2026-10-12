@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slik virker det – ordrens reise i Hengsel</title>
+  <link rel="icon" href="hengsel-merke/favicon/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
+  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
+  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
+  <style>
+    :root, [data-theme] { --f-display: "Newsreader", Georgia, serif; --f-body: "Inter", Arial, sans-serif; --w-body: 400; --w-medium: 500; --w-strong: 600; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Inter", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); } a:hover { color: var(--ink); }
+  </style>
+</helmet>
+<div style="background:var(--bg); color:var(--ink); min-height:100vh">
+  <dc-import name="Meny" aktiv="slik" dark="{{ dark }}" hint-size="100%,65px"></dc-import>
+
+  <section data-screen-label="Slik virker det · scener" style="padding:clamp(40px,6vw,72px) 0 clamp(48px,6vw,88px)">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:32px">
+      <div style="display:flex; flex-direction:column; gap:16px; max-width:780px">
+        <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Ordrens reise</span>
+        <h1 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02; letter-spacing:-.015em; text-wrap:balance">Én ordre, åtte scener.</h1>
+        <p style="margin:0; font-size:1.18rem; color:var(--muted); max-width:62ch; text-wrap:pretty">Følg kjøkkenet til Kari Nordmann fra befaring til faktura. For hver scene ser du hva selgeren ser i Hengsel, og hva som skjer bak kulissene.</p>
+      </div>
+      <div role="tablist" aria-label="Scener" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(128px, 1fr)); gap:8px">
+        <sc-for list="{{ faner }}" as="f" hint-placeholder-count="8">
+          <button type="button" role="tab" aria-selected="{{ f.sel }}" onClick="{{ f.go }}" style="{{ f.style }}">
+            <span style="{{ f.nrStyle }}">{{ f.nr }}</span>
+            <span style="font-size:.92rem; line-height:1.3; text-align:left">{{ f.t }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="background:var(--surface-highlight); border-radius:20px; padding:clamp(20px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:clamp(20px,3vw,32px); align-items:start">
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">{{ scene.eyebrow }}</span>
+          <h2 style="margin:0; font-family:Newsreader, Georgia, serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.8rem); line-height:1.08; letter-spacing:-.015em">{{ scene.t }}</h2>
+          <p style="margin:0; color:var(--muted); font-size:1.05rem">{{ scene.s }}</p>
+          <div style="display:flex; gap:8px; padding-top:8px">
+            <button type="button" onClick="{{ forrige }}" disabled="{{ forste }}" aria-label="Forrige scene" style="width:44px; height:44px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer">‹</button>
+            <button type="button" onClick="{{ neste }}" disabled="{{ siste }}" style="min-height:44px; padding:0 20px; border-radius:999px; border:1px solid var(--ink); background:transparent; color:var(--ink); font:500 .95rem Inter, sans-serif; cursor:pointer">{{ nesteTekst }}</button>
+          </div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; display:flex; flex-direction:column; gap:6px">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; padding-bottom:6px"><span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Selgeren ser</span><sc-if value="{{ scene.eksempel }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" dot="{{ false }}" hint-size="70px,22px">Eksempel</x-import></sc-if></div>
+          <sc-for list="{{ scene.ser }}" as="r" hint-placeholder-count="2">
+            <div style="{{ r.style }}">
+              <span style="width:18px; height:18px; border-radius:999px; border:1.5px solid var(--beige-1); flex:none; margin-top:3px"></span>
+              <span style="display:flex; flex-direction:column; flex:1; min-width:0"><span style="font-size:.98rem">{{ r.t }}</span><span style="font-size:.85rem; color:var(--muted)">{{ r.s }}</span></span>
+              <x-import component-from-global-scope="HengselDesignSystem_5a9d09.Pill" tone="{{ r.tone }}" dc-props="{{ r.pillProps }}" hint-size="70px,24px">{{ r.pill }}</x-import>
+            </div>
+          </sc-for>
+          <span style="font-size:.85rem; color:var(--muted); padding-top:8px">{{ scene.hvor }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <span style="font-size:.82rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)">Bak kulissene</span>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:0">
+            <sc-for list="{{ scene.bak }}" as="b" hint-placeholder-count="3">
+              <li style="display:flex; gap:12px; padding:12px 0; border-top:1px solid var(--line)"><span style="color:var(--ink); flex:none">→</span><span>{{ b }}</span></li>
+            </sc-for>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Slik virker det · videre" style="background:var(--surface-highlight); padding:clamp(48px,6vw,80px) 0">
+    <div style="max-width:1180px; margin:0 auto; padding-inline:clamp(16px,4vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:16px">
+      <a href="CRM.dc.html" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:6px; color:var(--ink); text-decoration:none" style-hover="border-color:var(--ink); color:var(--ink)"><span style="font-family:Newsreader, Georgia, serif; font-size:1.6rem">Prøv CRM-demoen</span><span style="color:var(--muted)">Min dag, avvik, import fra CET og montasjeplan.</span></a>
+      <a href="Ute.dc.html" style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:6px; color:var(--ink); text-decoration:none" style-hover="border-color:var(--ink); color:var(--ink)"><span style="font-family:Newsreader, Georgia, serif; font-size:1.6rem">Se montørappen</span><span style="color:var(--muted)">I dag, jobben, KS, avvik, punkter og ferdig.</span></a>
+      <a href="Priser-og-demo.dc.html#demo" style="background:var(--accent); border:1px solid var(--accent); border-radius:14px; padding:22px 24px; display:flex; flex-direction:column; gap:6px; color:var(--accent-ink); text-decoration:none" style-hover="opacity:.88; color:var(--accent-ink)"><span style="font-family:Newsreader, Georgia, serif; font-size:1.6rem">Be om demo</span><span>Vi viser reisen med en ordre fra start til slutt.</span></a>
+    </div>
+  </section>
+
+  <dc-import name="Bunn" dark="{{ dark }}" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;lys&quot;,&quot;mørk&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'lys'|'mørk'&quot;}}">
+const SCENER = [
+  { t: 'Befaring', s: 'Selgeren eller montøren måler opp hos kunden med Hengsel Ute. Mål, bilder og skisser legges rett på kundekortet.',
+    ser: [['Befaring hos Kari Nordmann ferdig', '14 bilder · 6 mål · Oppdiktet allé 8', 'Ny', 'info'], ['Kontrollmål vegg A', '2 460 mm · målt med laser', 'Mål', 'neutral']], hvor: 'Min dag og kundekortet',
+    bak: ['Bildene sendes fra køen på telefonen, også etter en tur uten dekning.', 'Lasermålene lagres sammen med bildet de hører til.', 'Befaringen blir en aktivitet på kundekortet.'] },
+  { t: 'Tilbud', s: 'Tegningen hentes fra CET, og tilbudet lages med prisgrupper og monteringskalkyle.',
+    ser: [['Tilbud HA-T-2231 v3 sendt', '257 700 kr · gjelder til 15. oktober', 'Sendt', 'info'], ['Ring Kari – tilbudet åpnet 3 ganger', '6 dager i fasen', 'Oppfølging', 'warn']], hvor: 'Salgstavla og Min dag',
+    bak: ['Artikler og tegninger importeres fra CET.', 'Tilbudet blir en PDF med butikkens logo.', 'Kunden får tilbudet i kundeportalen og en SMS.'] },
+  { t: 'Aksept', s: 'Kunden aksepterer tilbudet i kundeportalen og signerer kjøpsavtalen med BankID.',
+    ser: [['Kari signerte kjøpsavtalen', 'BankID · i dag 09.24', 'Signert', 'ok'], ['Tilbud v3 ble ordre O-2417', '41 linjer · montering uke 47', 'Ordre', 'neutral']], hvor: 'Kundekortet og ordren',
+    bak: ['Kjøpsavtalen sendes til Penneo for signering.', 'Den signerte avtalen lagres på ordren.', 'Ordren opprettes med alle linjene fra tilbudet.'] },
+  { t: 'Tilvalg', s: 'Frem til endringsfristen velger kunden oppgraderinger i portalen. Selgeren ser valgene med en gang.',
+    ser: [['Kari valgte 2 tilvalg', 'Benkeplate 30 mm · LED under overskap · + 9 100 kr', 'Tilvalg', 'info'], ['Bekreft endringsfrist', 'Ordre O-2417 · fredag 16. oktober', 'Frist', 'warn']], hvor: 'Min dag og ordren',
+    bak: ['Tilvalgene legges som linjer på ordren.', 'Prisen og betalingsplanen oppdateres.', 'Etter fristen låses tilvalgene i portalen.'] },
+  { t: 'Bestilling', s: 'Ordren bestilles hos leverandørene. Ordrebekreftelsen kontrolleres mot ordren før den godtas.',
+    ser: [['Kontroller OB – avvik på benkeplate', 'Leverandør A · 20 mm i stedet for 30 mm', 'Avvik', 'bad'], ['Bestilling sendt', '41 linjer · 3 leverandører', 'Sendt', 'neutral']], hvor: 'Min dag og bestillingen',
+    bak: ['Bestillingen går til leverandøren, hvitevarer via Tradeplace.', 'Ordrebekreftelsen sammenlignes med ordren, linje for linje.', 'Avvik havner i Min dag hos selgeren.'] },
+  { t: 'Levering', s: 'Kolliene tas imot på lager og kjøres ut. Kunden får beskjed om leveringstid.',
+    ser: [['14 av 14 kolli mottatt', 'Lager · Leverandør A og B', 'Klar', 'ok'], ['Utkjøring tirsdag 17. november', '07.00–09.00 · Utkjører To', 'Plan', 'neutral']], hvor: 'Ordren og montasjeplanen',
+    bak: ['Kolli registreres på lager i appen.', 'Utkjøreren får ruten og kvitterer med kundens signatur.', 'Kunden får SMS med leveringstid.'] },
+  { t: 'Montering og punkter', s: 'Montøren har jobben i Hengsel Ute. Avvik og restpunkter får nummer og følges opp til de er løst.',
+    ser: [['Montør En er på vei', 'Kari Nordmann · dag 1 av 3', 'På vei', 'info'], ['Restpunkt 14-3', 'Sokkel mangler 40 mm mot vegg', 'Åpen', 'warn']], hvor: 'Min dag, ordren og saker',
+    bak: ['Montøren har plan, tegning og KS-sjekkliste i Hengsel Ute.', 'Avvik og restpunkter har samme nummer i CRM, app og portal.', 'Lasermåleren kobles til via Bluetooth og måler rett inn i bildet.'] },
+  { t: 'Ferdig og faktura', s: 'Kunden signerer ferdigmeldingen på montørens telefon. FDV legges i portalen, og fakturaen går til regnskapet.',
+    ser: [['Ferdig montert', 'Kari signerte 19. november · KS 12 av 12', 'Ferdig', 'ok'], ['Sluttfaktura overført', 'PowerOffice Go · 10 % av 266 800 kr', 'Faktura', 'neutral']], hvor: 'Ordren og økonomi',
+    bak: ['Kundens signatur lagres med KS-rapporten.', 'FDV og garantier legges i kundeportalen.', 'Fakturaen overføres til PowerOffice Go.'] },
+];
+class Component extends DCLogic {
+  state = { dark: false, i: 0 };
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate(p) { if (p.tema !== this.props.tema) this.applyTheme(); }
+  applyTheme() {
+    const q = new URLSearchParams(location.search).get('tema');
+    const t = this.props.tema || 'auto';
+    const d = q ? q === 'mork' : t === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : t === 'mørk';
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (d !== this.state.dark) this.setState({ dark: d });
+  }
+  renderVals() {
+    const i = this.state.i, sc = SCENER[i];
+    return {
+      dark: this.state.dark,
+      faner: SCENER.map((s, n) => ({ t: s.t, nr: String(n + 1), sel: n === i ? 'true' : 'false', go: () => this.setState({ i: n }),
+        style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, padding: '12px 14px', minHeight: 88, borderRadius: 14, border: '1px solid ' + (n === i ? 'var(--ink)' : 'var(--line)'), background: n === i ? 'var(--ink)' : 'var(--surface)', color: n === i ? 'var(--bg)' : 'var(--ink)', font: 'inherit', cursor: 'pointer', boxSizing: 'border-box' },
+        nrStyle: { fontSize: 13, fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: n === i ? 'var(--bg)' : 'var(--muted)', opacity: n === i ? .72 : 1 } })),
+      scene: { eksempel: i === 3 || i === 5, eyebrow: `Scene ${i + 1} av 8`, t: sc.t, s: sc.s, hvor: 'Vises i ' + sc.hvor + '.', bak: sc.bak,
+        ser: sc.ser.map(([t, s, pill, tone], n) => ({ t, s, pill, tone, pillProps: { style: tone === 'info' && !this.state.dark ? { color: '#43649A' } : undefined }, style: { display: 'flex', gap: 12, alignItems: 'flex-start', padding: '12px 10px', borderRadius: 10, background: n === 0 ? 'var(--surface-highlight)' : 'transparent', boxShadow: tone === 'bad' && n === 0 ? 'inset 3px 0 0 var(--bad)' : 'none' } })) },
+      forste: i === 0, siste: i === 7,
+      nesteTekst: i < 7 ? 'Neste: ' + SCENER[i + 1].t : 'Ferdig',
+      forrige: () => this.setState(s => ({ i: Math.max(0, s.i - 1) })),
+      neste: () => this.setState(s => ({ i: Math.min(7, s.i + 1) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

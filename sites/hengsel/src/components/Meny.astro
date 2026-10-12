@@ -11,8 +11,8 @@ const { aktiv = "" } = Astro.props;
   <div class="rad">
     <a class="logo" href="/" aria-label="Hengsel – til forsiden">
       <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-logo-mork.svg" />
-        <img src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="460" height="112" />
+        <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-aksent-mork.svg" />
+        <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="374" height="108" />
       </picture>
     </a>
     <nav class="lenker" aria-label="Hovedmeny">
@@ -41,7 +41,7 @@ const { aktiv = "" } = Astro.props;
   .meny { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
   .rad { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding-inline: var(--pad); box-sizing: border-box; height: var(--topp); display: flex; align-items: center; gap: 20px; }
   .logo { display: flex; align-items: center; flex: none; min-height: 44px; }
-  .logo img { display: block; height: 34px; width: auto; }
+  .logo img { display: block; height: 30px; width: auto; }
   .lenker { display: flex; gap: 18px; margin-left: auto; align-items: center; font-size: 0.93rem; }
   .lenker a { color: var(--muted); white-space: nowrap; }
   .lenker a:hover, .lenker a[aria-current="page"] { color: var(--ink); text-decoration: none; }
@@ -64,6 +64,7 @@ const { aktiv = "" } = Astro.props;
     .hoyre { margin-left: auto; }
     .burger { display: grid; }
   }
-  @media (max-width: 480px) { .demo { padding-inline: 16px; } .logo img { height: 30px; } }
+  @media (max-width: 480px) { .demo { padding-inline: 16px; } }
+  @media (min-width: 1181px) { .logo img { height: 34px; } }
   @media (min-width: 1181px) { .panel { display: none; } }
 </style>

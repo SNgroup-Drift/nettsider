@@ -7,139 +7,93 @@
 </head>
 <body>
 <x-dc>
-<helmet>
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/colors.css">
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/typography.css">
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/spacing.css">
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/base.css">
-  <link rel="stylesheet" href="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/tokens/components.css">
-  <script src="_ds/hengsel-design-system-5a9d09c6-be10-4ae1-a516-a0a32d786c17/_ds_bundle.js"></script>
-</helmet>
-<div ref="{{ outer }}" style="width:100%; display:flex; justify-content:center; min-width:0; container-type:inline-size">
-  <div style="{{ inner }}">
-    <sc-if value="{{ isPc }}" hint-placeholder-val="{{ false }}">
-      <div style="width:856px; display:flex; flex-direction:column; align-items:center">
-        <div style="width:100%; box-sizing:border-box; background:#0E0E10; border-radius:14px; padding:15px; box-shadow:0 0 0 1px #A2A3A7, 0 0 0 3px #C9CACD, 0 0 0 4px #A2A3A7, var(--shadow)">
-          <div style="aspect-ratio:16/10; overflow:hidden; border-radius:2px; background:#F2E9DB; display:flex">
-            <sc-if value="{{ a.has }}" hint-placeholder-val="{{ true }}">
-              <img src="{{ a.src }}" alt="{{ alt }}" onClick="{{ a.zoom }}" style="display:block; width:100%; height:100%; object-fit:contain; object-position:top left; cursor:zoom-in">
-            </sc-if>
-            <sc-if value="{{ a.missing }}" hint-placeholder-val="{{ false }}">
-              <div style="flex:1; display:grid; place-items:center; padding:32px; text-align:center; color:#8A7F72; font-size:1.1rem"><span>{{ a.label }}</span></div>
-            </sc-if>
-          </div>
-        </div>
-        <div style="width:19%; height:100px; background:#C9CACD; border-left:1px solid #A2A3A7; border-right:1px solid #A2A3A7; clip-path:polygon(3% 0, 97% 0, 100% 100%, 0 100%)"></div>
-        <div style="width:31%; height:12px; background:#B6B7BA; border-radius:0 0 8px 8px"></div>
+<div ref="{{ outer }}" style="width:100%; min-width:0">
+  <sc-if value="{{ isDisplay }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative; width:100%; aspect-ratio:2160/1664">
+      <div ref="{{ screenRef }}" style="position:absolute; left:2.59%; top:3.37%; width:94.81%; height:69.23%; overflow:hidden; background:var(--surface-app)">
+        <sc-if value="{{ hasSrc }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ src }}" alt="{{ alt }}" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top left">
+        </sc-if>
+        <sc-if value="{{ hasKids }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ scaler }}">{{ children }}</div>
+        </sc-if>
       </div>
-    </sc-if>
-    <sc-if value="{{ isUteIpad }}" hint-placeholder-val="{{ false }}">
-      <div style="width:1212px; height:852px; box-sizing:border-box; background:#1B1713; border-radius:36px; padding:16px; box-shadow:0 0 0 1px var(--line), var(--shadow)">
-        <div style="width:1180px; height:820px; border-radius:22px; overflow:hidden; background:#F2E9DC; color:#31261D; position:relative">
-          <div style="height:40px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; font-size:14px; font-weight:650"><span>09.41 · tor. 8. okt.</span><span style="width:24px; height:11px; border:1.5px solid #31261D; border-radius:3px"></span></div>
-          <img src="{{ a.src }}" alt="{{ alt }}" onClick="{{ a.zoom }}" style="display:block; width:1180px; height:780px; cursor:zoom-in">
+      <img src="hengsel.no/img/ramme-studio-display.webp" alt="" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none">
+    </div>
+  </sc-if>
+  <sc-if value="{{ isIpad }}" hint-placeholder-val="{{ false }}">
+    <div style="width:100%; aspect-ratio:1212/852; box-sizing:border-box; background:#1B1713; border-radius:3.2% / 4.4%; padding:1.32%; box-shadow:0 0 0 1px var(--line), var(--shadow)">
+      <div ref="{{ screenRef }}" style="position:relative; width:100%; height:100%; border-radius:1.9% / 2.7%; overflow:hidden; background:var(--surface-app)">
+        <sc-if value="{{ hasSrc }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ src }}" alt="{{ alt }}" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top left">
+        </sc-if>
+        <sc-if value="{{ hasKids }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ scaler }}">{{ children }}</div>
+        </sc-if>
+        <sc-if value="{{ visLogo }}" hint-placeholder-val="{{ false }}"><div style="{{ logoIpad }}"><span data-din-logo="true" style="display:flex; flex-direction:column; gap:3px; align-items:flex-start"><span style="height:30px; padding:0 14px; border:1.5px dashed {{ logoLine }}; border-radius:6px; display:flex; align-items:center; font-size:13px; font-weight:600; letter-spacing:.02em; color:{{ logoInk }}; box-sizing:border-box">Din logo</span></span></div></sc-if>
+        <div aria-hidden="true" style="{{ sbIpad }}">
+          <span style="position:absolute; left:22px; top:0; height:24px; display:flex; align-items:center; gap:8px; font-family:-apple-system, 'SF Pro Text', 'SF Pro', Inter, Arial, sans-serif; font-weight:600; font-size:14px">9:41<span>man. 12. okt.</span></span>
+          <span style="position:absolute; right:22px; top:0; height:24px; display:flex; align-items:center; gap:6px"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><path d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5L16 3.6C13.9 1.6 11.3.5 8.5.5S3.1 1.6 1 3.6l1.2 1.2C3.9 3.2 6.1 2.3 8.5 2.3z"></path><path d="M8.5 5.6c1.5 0 2.9.6 3.9 1.5l1.2-1.2C12.3 4.6 10.5 3.8 8.5 3.8S4.7 4.6 3.4 5.9l1.2 1.2c1-.9 2.4-1.5 3.9-1.5z"></path><path d="M8.5 8.6c.7 0 1.3.3 1.8.7l-1.8 2.2-1.8-2.2c.5-.4 1.1-.7 1.8-.7z"></path></svg><svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".4"></rect><rect x="2" y="2" width="20" height="9" rx="2.2" fill="currentColor"></rect><rect x="24.6" y="4.4" width="1.8" height="4.2" rx=".9" fill="currentColor" fill-opacity=".45"></rect></svg></span>
         </div>
       </div>
-    </sc-if>
-    <sc-if value="{{ isIpad }}" hint-placeholder-val="{{ false }}">
-      <x-import component-from-global-scope="HengselDesignSystem_5a9d09.TabletFrame" style="{{ frameStyle }}" hint-size="1180px,820px">
-        <sc-if value="{{ a.has }}" hint-placeholder-val="{{ true }}">
-          <img src="{{ a.src }}" alt="{{ alt }}" onClick="{{ a.zoom }}" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top; cursor:zoom-in">
+    </div>
+  </sc-if>
+  <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ true }}">
+    <div style="width:100%; aspect-ratio:426/898; box-sizing:border-box; background:#1B1713; border-radius:15.5% / 7.3%; padding:2.8%; box-shadow:0 0 0 1px var(--line), var(--shadow)">
+      <div ref="{{ screenRef }}" style="position:relative; width:100%; height:100%; border-radius:13.7% / 6.3%; overflow:hidden; background:var(--surface-app)">
+        <sc-if value="{{ hasSrc }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ src }}" alt="{{ alt }}" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top center">
         </sc-if>
-        <sc-if value="{{ a.missing }}" hint-placeholder-val="{{ false }}">
-          <div style="flex:1; display:grid; place-items:center; padding:48px; text-align:center; color:var(--soft); font-size:1.4rem"><span>{{ a.label }}</span></div>
+        <sc-if value="{{ hasKids }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ scaler }}">{{ children }}</div>
         </sc-if>
-      </x-import>
-    </sc-if>
-    <sc-if value="{{ isPhones }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex; gap:36px; align-items:flex-start; justify-content:center">
-        <sc-for list="{{ phones }}" as="p" hint-placeholder-count="1">
-          <div style="{{ p.wrap }}">
-            <sc-if value="{{ p.ute }}" hint-placeholder-val="{{ false }}">
-              <div style="width:414px; height:844px; box-sizing:border-box; background:#1B1713; border-radius:58px; padding:12px; box-shadow:0 0 0 1px var(--line), var(--shadow)">
-                <div style="{{ p.screen }}">
-                  <div style="height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 30px; font-size:15px; font-weight:650; color:#31261D"><span>09.41</span><span style="width:24px; height:11px; border:1.5px solid #31261D; border-radius:3px"></span></div>
-                  <img src="{{ p.src }}" alt="{{ alt }}" onClick="{{ p.zoom }}" style="display:block; width:390px; height:756px; cursor:zoom-in">
-                  <span style="position:absolute; left:50%; bottom:3px; width:134px; height:5px; margin-left:-67px; border-radius:3px; background:#31261D"></span>
-                </div>
-              </div>
-            </sc-if>
-            <sc-if value="{{ p.ds }}" hint-placeholder-val="{{ true }}">
-            <x-import component-from-global-scope="HengselDesignSystem_5a9d09.PhoneFrame" time="09.41" body-style="{{ p.body }}" style="{{ frameStyle }}" hint-size="390px,844px">
-              <sc-if value="{{ p.has }}" hint-placeholder-val="{{ true }}">
-                <img src="{{ p.src }}" alt="{{ alt }}" onClick="{{ p.zoom }}" style="{{ p.img }}">
-              </sc-if>
-              <sc-if value="{{ p.missing }}" hint-placeholder-val="{{ false }}">
-                <div style="flex:1; display:grid; place-items:center; padding:32px; text-align:center; color:var(--soft); font-size:1.05rem; line-height:1.5">
-                  <span>{{ p.label }}</span>
-                </div>
-              </sc-if>
-            </x-import>
-            </sc-if>
-          </div>
-        </sc-for>
+        <sc-if value="{{ visLogo }}" hint-placeholder-val="{{ false }}"><div style="{{ logoTlf }}"><span data-din-logo="true" style="display:flex; flex-direction:column; gap:3px; align-items:flex-start"><span style="height:30px; padding:0 14px; border:1.5px dashed {{ logoLine }}; border-radius:6px; display:flex; align-items:center; font-size:13px; font-weight:600; letter-spacing:.02em; color:{{ logoInk }}; box-sizing:border-box">Din logo</span></span></div></sc-if>
+        <div aria-hidden="true" style="{{ sbTlf }}">
+          <span style="position:absolute; left:0; top:0; width:136px; height:54px; display:flex; align-items:center; justify-content:center; padding-top:5px; box-sizing:border-box; font-family:-apple-system, 'SF Pro Text', 'SF Pro', Inter, Arial, sans-serif; font-weight:600; font-size:17px; letter-spacing:-.01em">9:41</span>
+          <span style="position:absolute; left:138.5px; top:11px; width:125px; height:37px; border-radius:20px; background:#000000"></span>
+          <span style="position:absolute; right:0; top:0; width:136px; height:54px; display:flex; align-items:center; justify-content:center; gap:6px; padding-top:5px; box-sizing:border-box"><svg width="19" height="12" viewBox="0 0 19 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"></rect><rect x="5.2" y="5.5" width="3.2" height="6.5" rx="1"></rect><rect x="10.4" y="3" width="3.2" height="9" rx="1"></rect><rect x="15.6" y="0" width="3.2" height="12" rx="1"></rect></svg><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><path d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5L16 3.6C13.9 1.6 11.3.5 8.5.5S3.1 1.6 1 3.6l1.2 1.2C3.9 3.2 6.1 2.3 8.5 2.3z"></path><path d="M8.5 5.6c1.5 0 2.9.6 3.9 1.5l1.2-1.2C12.3 4.6 10.5 3.8 8.5 3.8S4.7 4.6 3.4 5.9l1.2 1.2c1-.9 2.4-1.5 3.9-1.5z"></path><path d="M8.5 8.6c.7 0 1.3.3 1.8.7l-1.8 2.2-1.8-2.2c.5-.4 1.1-.7 1.8-.7z"></path></svg><svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".4"></rect><rect x="2" y="2" width="20" height="9" rx="2.2" fill="currentColor"></rect><rect x="24.6" y="4.4" width="1.8" height="4.2" rx=".9" fill="currentColor" fill-opacity=".45"></rect></svg></span>
+        </div>
       </div>
-    </sc-if>
-  </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:700,&quot;height&quot;:560},&quot;bilde&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;min-dag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;type&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pc&quot;,&quot;ipad&quot;,&quot;phone&quot;,&quot;pair&quot;],&quot;default&quot;:null,&quot;tsType&quot;:&quot;'pc'|'ipad'|'phone'|'pair'&quot;},&quot;alt&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;ratio&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0.75,&quot;tsType&quot;:&quot;number&quot;},&quot;onZoom&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(src:string, alt:string)=&gt;void&quot;}}">
-const PAIRS = new Set(['telefon','kjoper-godkjenner','hengsel-i-dag','hengsel-jobb','hengsel-varer','hengsel-ks','hengsel-ferdig']);
-const SINGLES = new Set(['hengsel-avvik','ute-i-dag','ute-jobb-under','ute-laser','ute-ks','ute-ks-kamera','ute-avvik','ute-punkter','ute-punktkort','ute-ferdig','ute-typeskilt']);
-const IPADS = new Set(['ipad-min-dag','ipad-ordre','hengsel-ipad','ute-ipad-bildeverktoy']);
-// Skjermbilder fra demo-appen (crm_v4/uploads), beskåret og med Hengsel-logoen
-const HAS = new Set(['tilbudet','ordre-og-montasje','monteringskalkyle','moduler','kundeportalen','etterkalkyle',
-  'hengsel-avvik','hengsel-ferdig-a','hengsel-ferdig-b','hengsel-i-dag-a','hengsel-i-dag-b','hengsel-ipad','hengsel-jobb-a','hengsel-jobb-b','hengsel-ks-a','hengsel-ks-b','hengsel-varer-a','hengsel-varer-b',
-  'ute-i-dag','ute-jobb-under','ute-laser','ute-ks','ute-ks-kamera','ute-avvik','ute-punkter','ute-punktkort','ute-ferdig','ute-typeskilt','ute-ipad-bildeverktoy',
-  'signert','kundeportalen-pc','bestilling','kundekortet','leder','min-dag','montasje','resultater','saker','salgstavla','samtaler',
-  'ipad-min-dag','kjoper-godkjenner-a','kjoper-godkjenner-b','produkter-hos-kunden','prosjektoppsett','telefon-a','telefon-b','tilvalg-mot-standard']);
-const DIMS = { pc: [856, 662], ipad: [1180, 820], phone: [390, 844], pair: [816, 920] };
-
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:900},&quot;type&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;display&quot;,&quot;ipad&quot;,&quot;iphone&quot;],&quot;default&quot;:&quot;iphone&quot;,&quot;tsType&quot;:&quot;'display'|'ipad'|'iphone'&quot;},&quot;src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;hengsel.no/ios/idag-lys.png&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;srcDark&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;statusFarge&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;hvit&quot;,&quot;svart&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'hvit'|'svart'&quot;},&quot;alt&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;w&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;h&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
-  state = { cw: 600 };
+  state = { sw: 0 };
   outer = React.createRef();
+  screenRef = React.createRef();
   componentDidMount() {
-    const el = this.outer.current;
-    if (!el) return;
-    const m = () => { const w = el.clientWidth; if (w && Math.abs(w - this.state.cw) > 1) this.setState({ cw: w }); };
-    this.ro = new ResizeObserver(m); this.ro.observe(el); m();
+    const m = () => { const el = this.screenRef.current; if (!el) return; const w = el.clientWidth; if (w && Math.abs(w - this.state.sw) > .5) this.setState({ sw: w }); };
+    this.ro = new ResizeObserver(m); if (this.outer.current) this.ro.observe(this.outer.current); m();
+    this.t = setTimeout(m, 50);
   }
-  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  componentDidUpdate() { const el = this.screenRef.current; if (el && Math.abs(el.clientWidth - this.state.sw) > .5) this.setState({ sw: el.clientWidth }); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); clearTimeout(this.t); }
   renderVals() {
-    const k = this.props.bilde || 'min-dag';
-    const t = this.props.type || (PAIRS.has(k) ? 'pair' : SINGLES.has(k) ? 'phone' : IPADS.has(k) ? 'ipad' : 'pc');
-    const uteKey = k.startsWith('ute-');
-    const uteIpad = uteKey && t === 'ipad';
-    const [W, H] = uteIpad ? [1212, 852] : (uteKey && t === 'phone') ? [414, 844] : DIMS[t];
-    const ratio = this.props.ratio ?? 0.75;
-    const cw = this.state.cw;
-    const z = Math.max(0.2, Math.min(1, cw / W, (cw * ratio) / H));
-    const alt = this.props.alt || '';
-    const mk = (key, i) => {
-      const src = 'img/' + key + '.webp', has = HAS.has(key);
-      const ute = key.startsWith('ute-');
-      const bg = ute ? (key === 'ute-laser' || key === 'ute-avvik' ? '#FBF9F5' : '#F2E9DC') : 'var(--surface-app)';
-      return {
-        key, src, has, missing: !has,
-        ute, ds: !ute,
-        screen: { width: 390, height: 820, borderRadius: 46, overflow: 'hidden', background: bg, position: 'relative' },
-        body: { padding: 0, gap: 0, overflow: 'hidden', background: bg },
-        img: ute
-          ? { display: 'block', width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'top center', cursor: 'zoom-in' }
-          : { display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', cursor: 'zoom-in' },
-        label: 'Skjermbilde mangler: ' + key + '.webp',
-        wrap: { marginTop: t === 'pair' && i === 1 ? 76 : 0 },
-        zoom: () => { if (has && this.props.onZoom) this.props.onZoom(src, alt); },
-      };
-    };
-    const keys = t === 'pair' ? [k + '-a', k + '-b'] : [k];
-    const phones = keys.map(mk);
+    const t = this.props.type || 'iphone';
+    const dark = !!this.props.dark;
+    const src = (dark && this.props.srcDark) || this.props.src || '';
+    const nat = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] }[t] || [402, 874];
+    const W = this.props.w || nat[0], H = this.props.h || nat[1];
+    const k = this.state.sw ? this.state.sw / W : 0.0001;
+    const kNat = this.state.sw ? this.state.sw / nat[0] : 0.0001;
+    const morkInnhold = src ? (dark && !!this.props.srcDark) : dark;
+    const sf = this.props.statusFarge || 'auto';
+    const farge = sf === 'hvit' ? '#FFFFFF' : sf === 'svart' ? '#000000' : (morkInnhold ? '#FFFFFF' : '#000000');
+    const inset = t === 'ipad' && !src ? 24 : 0;
+    const sbBase = { position: 'absolute', left: 0, top: 0, width: nat[0], transform: `scale(${kNat})`, transformOrigin: '0 0', color: farge, zIndex: 20, pointerEvents: 'none' };
     return {
-      outer: this.outer,
-      inner: { width: W, zoom: z, flex: 'none' },
-      isPc: t === 'pc', isUteIpad: uteIpad, isIpad: t === 'ipad' && !uteIpad, isPhones: t === 'pair' || t === 'phone',
-      a: phones[0], phones, alt,
-      frameStyle: { boxShadow: '0 0 0 1px var(--line), var(--shadow)' },
+      outer: this.outer, screenRef: this.screenRef,
+      isDisplay: t === 'display', isIpad: t === 'ipad', isPhone: t === 'iphone',
+      src, hasSrc: !!src, hasKids: !src, alt: this.props.alt || '',
+      children: this.props.children,
+      scaler: { position: 'absolute', left: 0, top: 0, width: W, height: H, transform: `translateY(${inset * kNat}px) scale(${k})`, transformOrigin: '0 0' },
+      visLogo: /\/(ipad-)?idag-/.test(src),
+      logoInk: morkInnhold ? '#F1E9DE' : '#31261D', logoMuted: morkInnhold ? '#C3B5A7' : '#5E564C', logoLine: morkInnhold ? '#6B5D50' : '#C3B5A7',
+      logoTlf: { position: 'absolute', right: 16 * kNat, top: 56 * kNat, transform: `scale(${kNat})`, transformOrigin: '100% 0', zIndex: 15, pointerEvents: 'none' },
+      logoIpad: { position: 'absolute', left: 74 * kNat, top: 28 * kNat, transform: `scale(${kNat})`, transformOrigin: '0 0', zIndex: 15, pointerEvents: 'none' },
+      sbTlf: { ...sbBase, height: 54 }, sbIpad: { ...sbBase, height: 24 },
     };
   }
 }

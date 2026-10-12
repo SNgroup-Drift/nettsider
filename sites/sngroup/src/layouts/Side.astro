@@ -10,7 +10,7 @@ import { selskap } from "../content/selskap";
 interface Props { title: string; description?: string; noindex?: boolean }
 const {
   title,
-  description = "SN Group – ES-HOLDING AS, Trondheim. Kjøkken og interiør, eiendom og egne digitale verktøy, blant annet montørappen Hengsel.",
+  description = "SN Group – ES-HOLDING AS, Trondheim. Kjøkken og interiør, eiendom og egne digitale verktøy, blant annet montørappen Hengsel Ute.",
   noindex,
 } = Astro.props;
 const hjem = Astro.url.pathname === "/" ? "" : "/";
@@ -29,7 +29,7 @@ const hjem = Astro.url.pathname === "/" ? "" : "/";
     <Logo slot="logo" />
   </Toppfelt>
   <slot />
-  <Familiebaand gjeldende="sngroup.no" />
+  <Familiebaand gjeldende="sngroup.no" hengselLogo={{ lys: "/logo/hengsel-aksent-lys.svg", mork: "/logo/hengsel-aksent-mork.svg" }} />
   <SiteFooter
     selskap={selskap.navn}
     orgnr={selskap.orgnr}

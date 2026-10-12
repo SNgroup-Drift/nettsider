@@ -31,10 +31,9 @@ Kilde: Eiriks «Hengsel Design System» i Claude Design (publisert), https://cla
 - Avstand: 4 px-skala 4 8 12 16 24 32 48 64 96. Innhold maks 1180 px. Seksjonsbånd veksler Off White og Beige 3.
 - Ikoner: linjeikoner 1,5 px (Lucide-stil), alltid med tekst. På nettsiden: inline SVG, ikke CDN.
 
-## Logo (besluttet 06.10.2026)
-- H-merket (to skapdører i Beige 1 med ytterlinje i Warm Black/Off White, to grep i Deep Blue med kutt i midten) + «engsel» i Lausanne 350 (−0,01 em) + Deep Blue hake over «CRM» (Lausanne 650, versaler, 0,06 em). «by» brukes ikke.
-- Filer: hengsel-logo-lys/-mork.svg, hengsel-merke-lys/-mork.svg, hengsel-merke-liten-lys/-mork.svg, app-ikoner. Ligger i Design-prosjektet (assets/logo/). Teksten i filene er <text> i TWK Lausanne og må gjøres om til konturer før bruk utenfor systemet.
-- Ikke: haken inne i merket, serif i ordet, merket skilt fra «engsel», andre farger, effekter, strekk.
+## Logo (merket byttet 12.10.2026, K-174)
+- Merket (fasit 12.10.2026): merkepakken ligger i `brand/` (`svg/`, `favicon/`, `pwa/`, `app-ikon/`), med regler og plasseringer i README-en der. All tekst i SVG-ene er konturert. Det gamle H-merket (v2) er byttet ut.
+- Regler: kunden først, Hengsel nederst og lite; aldri strekk, roter, skygge, glød, kontur eller andre farger. Se README-en i `brand/` (punkt 3–5) for hele settet.
 
 ## Tekst
 - Norsk bokmål. Nettsiden snakker til butikken med «dere» og om seg selv med «vi».

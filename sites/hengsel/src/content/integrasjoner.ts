@@ -1,4 +1,4 @@
-// /integrasjoner: tekstene ordrett fra docs/design/hengsel-no-2.0/LES-MEG.md («/integrasjoner · Integrasjoner.dc.html»).
+// /integrasjoner: tekstene ordrett fra docs/design/hengsel/LES-MEG.md («/integrasjoner · Integrasjoner.dc.html»).
 import { EPOST } from "./forside";
 
 export const HERO = {

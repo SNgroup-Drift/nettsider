@@ -37,9 +37,10 @@
   --topp: 64px;
 }
 
-html { scroll-padding-top: calc(var(--topp) + 8px); }
+/* Designet setter html og body til 17 px (rem = 17 px); alle rem-størrelser i designet er målt mot det (K-174) */
+html { font-size: 17px; scroll-padding-top: calc(var(--topp) + 8px); }
 [hidden] { display: none !important; }
-body { font-size: 1.0625rem; line-height: 1.6; font-weight: var(--w-body); }
+body { font-size: 1rem; line-height: 1.6; font-weight: var(--w-body); }
 h1, h2, h3 { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.015em; text-wrap: balance; margin: 0; }
 h1 { font-size: var(--t-hero); line-height: 1.02; }
 h2 { font-size: var(--t-h1); line-height: 1.08; }

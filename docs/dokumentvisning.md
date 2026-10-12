@@ -38,7 +38,7 @@ Lenker til et dokument: `/dokumenter/#tilbud`, `#kjopsavtale`, `#ob`, `#anbud`, 
 
 1. Rediger `data.js` (side, blokk eller tekst). Begge stedene følger med ved neste bygg.
 2. Legg til `LAGES.<id>` i `lages.js` (3–5 steg, skjermbilder fra `sites/vis/src/skjermbilder`). `scripts/dokumenter.test.mjs` feiler om et dokument mangler «Slik lages det», om et skjermbilde ikke finnes, eller om et merkenavn dukker opp.
-3. Bruk nøytrale demonavn (Butikknavn, Kari Nordmann, Leverandør A). «Din logo» øverst og «by Hengsel» i bunnlinjen, aldri to Hengsel-logoer.
+3. Bruk nøytrale demonavn (Butikknavn, Kari Nordmann, Leverandør A). «Din logo» øverst og Hengsel-logoen (`hengsel-lys.svg`, 3 mm) i bunnlinjen til høyre, aldri to Hengsel-logoer. Stien til logoen settes med `logoSti` i `renderA4Side` (standard `/logo/hengsel-lys.svg`).
 
 ## Tilgjengelighet og ytelse
 

@@ -1,4 +1,4 @@
-// hengsel.no 2.0 – forsiden. Fasit: docs/design/hengsel-no-2.0/Forside.dc.html, tekstene ordrett fra LES-MEG.md (/ (forside)).
+// hengsel.no 2.0 – forsiden. Fasit: docs/design/hengsel/Forside.dc.html, tekstene ordrett fra LES-MEG.md (/ (forside)).
 
 export const TEL = "+47 454 10 001";
 /** tel:-lenken: nummeret uten mellomrom */

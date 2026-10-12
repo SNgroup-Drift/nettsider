@@ -46,9 +46,9 @@ export const virksomheter: Virksomhet[] = [
   {
     id: "hengsel",
     navn: "Hengsel",
-    undertittel: "CRM by Hengsel og montørappen Hengsel",
+    undertittel: "Hengsel CRM og montørappen Hengsel Ute",
     tekst:
-      "Egne systemer for kundeoppfølging, bestilling og montering – og montørappen Hengsel. Bygd for måten en kjøkkenbutikk faktisk jobber på.",
+      "Egne systemer for kundeoppfølging, bestilling og montering – og montørappen Hengsel Ute. Bygd for måten en kjøkkenbutikk faktisk jobber på.",
     kort: "Egne systemer for salg, bestilling og montering. Døra i entréen henger på et hengsel – og det gjør montørappen også.",
     stikkord: ["Kundeoppfølging", "Bestilling", "Montering", "Hengsel"],
     lenker: [
