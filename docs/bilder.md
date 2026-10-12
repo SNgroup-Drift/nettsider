@@ -1,5 +1,7 @@
 # Skjermbilder og Apple-rammer på hengsel.no
 
+> K-177 (12.10): skjermbildene i `public/img/app/` (Hengsel Ute, iOS-designet) og `public/img/apptest/` (CRM-designet, bare lys) er fiktive demo-skjermer fra designfasiten. Statuslinje og Dynamic Island tegnes av rammen (`Enhet.astro`), ikke av bildet. De gamle `crm-*`, `ute-*`, `portal-tilbud` og `ramme-ipad/-iphone/-macbook` er fjernet. Se `claude/k177-rapport.md`.
+
 Struktur, tekst og rekkefølge følger fil 60 (`delt/pakke-v8/fasit/60 hengsel.no.dc.html`, W1 forside og W2 /apptest). Bildene i den fila (webp-forhåndsvisninger med
 navn fra før) er ikke brukt; alle bilder kommer fra pakkene.
 

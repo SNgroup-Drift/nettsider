@@ -14,7 +14,7 @@ import { esc, renderA4Side } from "../../packages/design/src/dokumenter/render.j
 /** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
 const LOGO_STI = "/assets/logo/hengsel-lys.svg";
 
-const BILDE = { bredde: 2560, hoyde: 1440 };
+const BILDE = { bredde: 2880, hoyde: 1620 };
 
 export const a4Stil = () => `<style>${a4DynamiskCss(DOKUMENTER)}</style>`;
 
