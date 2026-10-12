@@ -45,3 +45,16 @@ Rekkefølgen er laget for kort nedetid. Ikke start før (a) er bekreftet.
 - (e) Pages-prosjektet `sngroup-nettsider` → Settings → Builds → slå av automatiske bygg (Disable automatic deployments / Production branch builds). Slett prosjektet (Settings → Delete project) etter en uke, når `design.hengsel.no` har svart 200 hele uken.
 
 Merk: de tre trinnene (a)–(c) er foreløpige til spørsmålene over er besvart; Worker-navn, byggekommando og mappe følger repoet slik det blir bygget.
+
+## Tillegg fra Eirik: Hengsel-merket v3 (mottatt etter at rapporten var skrevet)
+
+Krav: `design.hengsel.no` skal ha merket v3 som hengsel.no etter K-174/K-177: nytt merke i toppen, favicon, og:image og fiktive skjermer. Bruk `brand/hengsel-merke/` og samme komponenter som `sites/hengsel`. Ingen gammel H-logo og ingen «by Hengsel» igjen.
+
+Dette endrer ikke spørsmålet over, men det gjør svaret viktigere:
+
+- Det peker mot at `design.hengsel.no` skal være et **bygd nettsted** (som `sites/hengsel`, med Meny, Bunn, favicon, og:image), ikke bare de rå `.dc.html`-filene fra `docs/design/hengsel/`. Rå `.dc.html` har ingen felles topp å bytte merke i, og de laster Google Fonts i prototypen, noe som strider mot den strenge CSP-en (selvhostet Newsreader og Inter, `'self'`).
+- Tilgjengelig i repoet: `brand/hengsel-merke/` (`svg`, `favicon`, `og`, `pwa`, `motion`, `app-ikon`, `butikk`), og i `sites/hengsel`: `Meny.astro`, `Bunn.astro`, `Enhet.astro`, `CrmSkjerm.astro`, `PortalSkjerm.astro`, `Skjermbilde.astro`, `public/favicon*`, `og.png`, `img/`. Fiktive skjermer lages med `scripts/fiktive-skjermer.mjs`.
+- Dette gir et nytt spørsmål (**4**): Hva skal selve siden *inneholde* på Astro-versjonen? Forslag: en «Designfasit»-side med merket (former, plasseringer, app-ikoner fra `Logo-bruk`/`Ute-ikon`), fargene og skriftene fra `tokens.css` med kontrast, og komponentene (knapper, piller, enhetsrammer med fiktive skjermer). Alternativt: en inngang som lenker til de statiske `.dc.html`-sidene (med Google Fonts byttet til selvhostet og merket v3). Si hvilken, så bygger jeg den.
+- Sjekk ved ferdigstilling: grep etter gammel H-logo og «by Hengsel» i `sites/design/` skal gi null treff, og skjermbilder før/etter legges i PR-en.
+
+Status er uendret: ingenting er bygget. Rapporten ligger på grenen `claude/k182-design-worker`; ingen PR.
