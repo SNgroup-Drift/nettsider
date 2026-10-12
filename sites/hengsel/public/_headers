@@ -19,3 +19,12 @@
   Cache-Control: public, max-age=604800
 /logo/*
   Cache-Control: public, max-age=604800
+
+# Universal links (K-170): fila har ingen filendelse og må svare 200 direkte som application/json, uten omdirigering
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+# «Åpne i Hengsel Ute»-siden (K-170) er ikke ment for søk
+/app/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
