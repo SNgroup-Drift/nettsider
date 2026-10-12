@@ -135,7 +135,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "firmaleder1@demo.invalid",
     bilde: "foresporsler",
-    alt: "Hengsel: forespørsler som venter på svar fra firmaleder",
+    alt: "Hengsel: en belastning fra montasjefirma med knappene Godta og Bestrid",
   },
   {
     id: "utkjorer",
@@ -150,7 +150,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "utkjorer@demo.invalid",
     bilde: "ruten",
-    alt: "Hengsel: rute for dagen med tre stopp og sju kolli",
+    alt: "Hengsel: rute for dagen med tre stopp og knappen Start navigasjon",
   },
   {
     id: "lager",
@@ -165,7 +165,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "selger1@demo.invalid",
     bilde: "mottak",
-    alt: "Hengsel: mottak på lager med en ordre der 3 av 6 kolli er mottatt",
+    alt: "Hengsel: meld mottatt, med 12 av 19 kolli skannet",
     merknad: "Demoen har ingen egen lagerbruker. selger1 viser ansattmodus.",
   },
 ];
