@@ -11,7 +11,9 @@ Gren `claude/k177-fiktive-skjermer`, laget fra `origin/main` (PR #49 / K-174 er 
 - 72 gamle filer som ikke lenger brukes er fjernet (liste under).
 - Kvalitet: `npm run build` OK, `npm test` 42/42 + lenkesjekk 603 forespørsler 0 feil, `scripts/skjermbilder.mjs` 0 feil, axe color-contrast 0 brudd på 160 visninger, Lighthouse mobil 98 / 99 / 98, CLS 0 på hengsel.no. Se «Kvalitet» for det som gjenstår i vis og sngroup (fantes fra før).
 
-PR: se linken i meldingen under. Eirik fletter.
+**Sammenslått med PR #51.** En annen økt hadde alt levert K-177 på samme gren. Denne versjonen er flettet inn i den (vanlig push, ingen `--force`), og der de to overlappet er min versjon brukt (mørk utgave, 1×/2× fra HTML-designet, D1–D12, A10). Fra PR #51 er beholdt: `scripts/k177-kontroll.mjs` og `scripts/lib/fiktive-navn.mjs` (samme filer som før), CLS-rettelsen i `vis.css` (footeren skjules til gruppesidene er bygget), deres alt-tekster for rutebildet og deres nøytraliseringsregler for navn (Steni, «Montasjefirma Innlandet», «Fjellmontasje AS», personnavn med Hansen/Berg/Dahl m.fl. → Nordmann; lagt inn i `scripts/lib/design.mjs`), og deres før/etter-skjermbilder og `maling.md` i `claude/k177-skjermbilder/` (min kjøring har overskrevet de 12 sidene jeg tok selv). Droppet til fordel for min versjon: `Motion.astro` (jeg har `UteMotion.astro`), alt-tekster som beskrev deres skjermvalg, og at `ute-punktkort`/`ute-typeskilt` ikke var med i Montørappen-rommet.
+
+PR: [#51](https://github.com/SNgroup-Drift/sngroup-nettsider/pull/51). Eirik fletter.
 
 ## Hva er gjort
 
@@ -134,13 +136,13 @@ Skjermbilder (webp, 390 og 1440 px, lys og mørk, hele siden opp til 5000 px) i 
 | `scripts/skjermbilder.mjs` (alle sidene, 390/1440, lys/mørk) | 0 feil |
 | `scripts/skjermbilder-vis.mjs` | 30 sider × 6 visninger, 0 feil |
 | `scripts/kvalitet-k177.mjs` (nytt): 160 visninger, ingen konsollfeil, ingen vannrett rulling, `width`/`height` på bilder, axe color-contrast | **axe: 0 brudd** |
-| Lighthouse mobil (Chromium, simulert throttling) | forsiden **98**, /ute **99**, /apptest **98** (ytelse); tilgjengelighet 100, beste praksis 100; SEO 100/100/69 (/apptest er noindex med vilje). LCP 2,1–2,4 s |
-| CLS hengsel.no | **0** på alle sidene (høyst 0,0001 på /kundeportal 1440, demoen som skiftes med skript) |
+| Lighthouse mobil (Chromium, simulert throttling), etter sammenslåingen | forsiden **99**, /ute **99**, /apptest **98** (ytelse); tilgjengelighet 100, beste praksis 100; SEO 100/100/69 (/apptest er noindex med vilje). LCP 2,1–2,4 s. CLS 0 |
+| CLS hengsel.no | **0** på alle 36 visningene, ingen problemer i hengsel.no |
 
-**Fantes fra før og er ikke løst her** (samme sider hadde det på origin/main, se `kvalitet-for`): CLS i vis (sider som bygger kort/innhold med skript, f.eks. /rom/, /butikken/, /opplaering/, /prosjekt/ på 390 px, 0,0–0,6) og 0,002–0,003 i sngroup.no (tekst som skifter når skriften lastes). Bilder uten `width`/`height` i vis (romkort, skjermer) og sngroup er rettet her, så de er ikke lenger en årsak. Antall visninger med problem: vis 60 → 20, sngroup 4 → 3, hengsel 0 → 0 (bortsett fra 0,0001 over).
+**Fantes fra før og er ikke løst her** (samme sider hadde det på origin/main, se `kvalitet-for`): CLS i vis (sider som bygger kort/innhold med skript, f.eks. /rom/, /butikken/, /opplaering/, /prosjekt/ på 390 px, 0,0–0,6) og 0,002–0,003 i sngroup.no (tekst som skifter når skriften lastes). Bilder uten `width`/`height` i vis (romkort, skjermer) og sngroup er rettet her, så de er ikke lenger en årsak. Antall visninger med problem (CLS, bilder uten mål): vis 60 → 12, sngroup 4 → 4 (0,002–0,003, tekst som skifter ved skriftlasting), hengsel 0 → 0. De 12 i vis er sider som bygges med skript (/leder/ 1440 0,28, /system/ 390 0,9 m.fl.) og er ikke løst her.
 
 ## Må avklares / åpent
-1. **«Nobia» står som tekst i vis** (rolle- og undersidetekster, `/sv/`, `/en/`, systemkart, veikart, `rom.js`). Tekster er ikke endret (utenfor oppgaven). Bildene viser ikke navnet. Si fra om det skal byttes til «Hovedleverandør».
+1. **«Nobia» i vis:** demodata er byttet til «Hovedleverandør» (unntak fra tekstregelen, 24 steder: «Nobia-XML», «hos Nobia», «Fabrikken / Nobia», systemkart, veikart, opplæring, kontroll, /sv/ og /en/ systemkart). Igjen står **målgruppen** («For Nobia», «Visningsrommet for/för Nobia», «Fabrikken og Nobia» som rolle i `rom.js`, eyebrow i /gevinst/ og /leverandor/) og rolle-nøkkelen `nobia` i lenker og lagring (`?rolle=nobia`), fordi det er avsender/mottaker og ikke demodata. Si fra om også de skal byttes.
 2. **Navn i designet**: personnavn er generiske oppdiktede navn (Kari Nordmann, Eva Berg, Siri Selger, Tuva Skinnrud, Pål Prøvesen …) fra designfilene. Jeg har ikke funnet navn jeg kan knytte til virkelige personer, men «ekte personnavn» kan ikke avgjøres av et skript; kontrollen mot ord står i `FORBUDT` i `scripts/lib/design.mjs` og kan utvides. Tekstene i alle 108 rammer ligger i en kjøring med `TEKST=fil.json` om du vil lese dem.
 3. **Mørk utgave for CRM og Ute er laget med designets fargepar, ikke tegnet av Design.** Noen skjermer (Ute-lister med bildeflater) kan se litt annerledes ut enn en ekte mørk tegning. Kundeportal, PDF og e-post er lyse i begge moduser, etter 07.
 4. **Valg av skjerm der navnet ikke finnes i designet**: iPad-bildene `crm-ipad-leder/kontrollmal/belastninger/innstillinger` og telefon `crm-tlf-*` er hentet fra 17 og 18 (Leder, Kontrollmål, Belastninger, Innstillinger, Befaring) og 16 (Min dag, Etterkalkyle). `crm-tlf-kundekort` viser Befaring på ordren (ingen kundekort-skjerm på telefon i v3-pakken). Alt-tekstene i vis er ikke endret; filnavnene kan stå noe misvisende.

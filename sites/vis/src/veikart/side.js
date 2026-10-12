@@ -3,8 +3,8 @@ var $=function(i){return document.getElementById(i)};
 var ST={ok:['ok','I drift'],del:['info','Delvis'],opp:['warn','Under oppsett'],plan:['','Planlagt']};
 var LANES=[['na','I drift nå','Brukes hver dag'],['q4','Q4 2026','okt. til des.'],['q1','Q1 2027','jan. til mars'],['q2','Q2 2027','april til juni'],['sen','Senere','Ikke tidfestet']];
 var L=[
- {id:'crm',l:'na',st:'ok',t:'Hengsel CRM',g:'Tilbud fra Nobia-XML, ordre, saker og Min dag på ett sted.',w:'',dep:[],
-  hva:'Tilbudet lages rett fra Nobia-XML uten tasting. Ordre, bestillinger og saker henger sammen, og selgeren ser bare det som avviker i Min dag.',neste:'Flyttes til Cloudflare i drift (prod) i Q4.'},
+ {id:'crm',l:'na',st:'ok',t:'Hengsel CRM',g:'Tilbud fra Hovedleverandør-XML, ordre, saker og Min dag på ett sted.',w:'',dep:[],
+  hva:'Tilbudet lages rett fra Hovedleverandør-XML uten tasting. Ordre, bestillinger og saker henger sammen, og selgeren ser bare det som avviker i Min dag.',neste:'Flyttes til Cloudflare i drift (prod) i Q4.'},
  {id:'m365',l:'na',st:'ok',t:'Microsoft 365: bestilling@ og varsel@',g:'Én fast inngang for leverandørene og felles varsler ut.',w:'',dep:[],
   hva:'Ordrebekreftelser, fraktvarsler og fakturaer kommer til bestilling@kjokkenstudio-hamar.no. Varsler går ut fra varsel@. Alle logger inn med jobbkontoen.',neste:'Flere leverandører over på bestilling@ med leverandørbrevet.'},
  {id:'min',l:'na',st:'ok',t:'Min side for kunder',g:'Kunden ser tilbud, kontrakt, leveringsuke og FDV selv.',w:'',dep:[],
@@ -41,7 +41,7 @@ var L=[
   hva:'Bestillingen går rett fra CRM, og OB og leveringsvarsel kommer tilbake automatisk.',neste:'Starter når tilgangen fra Q4 er på plass.'},
 
  {id:'cet',l:'q2',st:'plan',t:'Automatisk eksport fra CET',g:'Tilbudet oppdateres når selgeren lagrer tegningen.',w:'Mål: april 2027',dep:['Configura','Fabrikken'],
-  hva:'Selgeren slipper å eksportere Nobia-XML selv. Kunde og prosjektnummer følger med fra CRM.',neste:'Venter på svar fra Configura og fabrikken (S-55).'},
+  hva:'Selgeren slipper å eksportere Hovedleverandør-XML selv. Kunde og prosjektnummer følger med fra CRM.',neste:'Venter på svar fra Configura og fabrikken (S-55).'},
  {id:'xml',l:'q2',st:'plan',t:'OB som XML og EHF til alle butikker',g:'Sikker lesing av OB og faktura i alle tre butikker.',w:'Mål: juni 2027',dep:['Fabrikken'],
   hva:'OB kommer som XML i stedet for PDF, og alle butikkene får EHF-faktura. Hamar slipper skannet PDF.',neste:'Kravlista S-55 er sendt til fabrikken. Venter på svar.'},
  {id:'dxf',l:'q2',st:'plan',t:'Tegningen som arbeidsflate i Hengsel',g:'Montøren markerer avvik rett på tegningen.',w:'Mål: juni 2027',dep:['Fabrikken','Configura'],
@@ -51,14 +51,14 @@ var L=[
   hva:'Andre butikker kan få samme CRM og koblinger.',neste:'Ikke avklart. Tas opp når driften er stabil.'}
 ];
 var DEP=[
- ['Fabrikken / Nobia',[
+ ['Fabrikken / Hovedleverandør',[
    ['OB som XML','I dag kommer bekreftelsen som PDF. XML gjør lesingen sikker.',['xml','ob']],
    ['EHF til alle butikker','Lillehammer har EHF. Hamar får skannet PDF.',['xml','fk']],
    ['Feilmeldinger til fast adresse','Feilmeldinger ved ordresetting bør gå til bestilling@.',['ok']],
    ['DXF av tegningen','Trengs for tegningen som arbeidsflate i Hengsel.',['dxf']],
    ['Svar på kravlista S-55','Samler punktene over i én henvendelse.',['xml','cet']]]],
  ['Configura',[
-   ['Eksport ved lagring','CET lagrer Nobia-XML automatisk når tegningen lagres.',['cet']],
+   ['Eksport ved lagring','CET lagrer Hovedleverandør-XML automatisk når tegningen lagres.',['cet']],
    ['Kunde og prosjektnummer i fila','Så tilbudet treffer riktig kunde i CRM.',['cet']]]],
  ['Tradeplace',[
    ['Åpne tilgang for entiteten','Bestilt 06.10. Trengs før pris, lager og bestilling.',['tpa','tpb']],

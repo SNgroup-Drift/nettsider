@@ -165,7 +165,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "selger1@demo.invalid",
     bilde: "mottak",
-    alt: "Hengsel: meld mottatt, med 12 av 19 kolli skannet",
+    alt: "Hengsel: mottak på lager med tre leveranser og knappen Skann kolli",
     merknad: "Demoen har ingen egen lagerbruker. selger1 viser ansattmodus.",
   },
 ];
