@@ -1,7 +1,7 @@
 ---
 /**
  * Ramme for hengsel.no 2.0: familiens BaseLayout, den faste menyen (Meny.astro) og bunnen (Bunn.astro).
- * Fasit: docs/design/hengsel-no-2.0 (Meny.dc.html, Bunn.dc.html). Lys og mørk følger systemet (prefers-color-scheme).
+ * Fasit: docs/design/hengsel (Meny.dc.html, Bunn.dc.html); favicon og manifest fra merkepakkens favicon/head.html (brand/). Lys og mørk følger systemet (prefers-color-scheme).
  * Skriftene er Newsreader og Inter fra @sngroup/design/fonts.css. Alle sider bruker denne rammen, også /personvern, /apptest og 404.
  */
 import BaseLayout from "@sngroup/design/components/BaseLayout.astro";
@@ -33,9 +33,10 @@ const { title, description, noindex, robots, aktiv = "", utenMeny = false, delin
   robots={robots}
   delingsbilde={delingsbilde}
   temafarge={["#FBF9F6", "#1B1713"]}
-  ikon={{ href: "/logo/favicon.svg", type: "image/svg+xml" }}
-  ikon32="/logo/favicon-32.png"
-  appleIkon="/logo/apple-touch-icon-180.png"
+  ikon={{ href: "/favicon.svg", type: "image/svg+xml" }}
+  ikon32="/favicon-32.png"
+  appleIkon="/favicon-180.png"
+  manifest="/manifest.webmanifest"
 >
   <div class="side">
     {utenMeny ? <slot name="hode" /> : <Meny aktiv={aktiv} />}

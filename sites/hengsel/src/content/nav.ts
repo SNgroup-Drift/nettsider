@@ -1,4 +1,4 @@
-// Menyen og bunnen på hengsel.no 2.0. Fasit: docs/design/hengsel-no-2.0/Meny.dc.html og Bunn.dc.html. Tekst ordrett fra LES-MEG.md.
+// Menyen og bunnen på hengsel.no 2.0. Fasit: docs/design/hengsel/Meny.dc.html og Bunn.dc.html. Tekst ordrett fra LES-MEG.md.
 export const LOGG_INN = "https://vis.hengsel.no";
 export const APPTEST = "https://hengsel.no/apptest";
 

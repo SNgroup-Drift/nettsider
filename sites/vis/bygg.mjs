@@ -2,7 +2,7 @@
 /**
  * Bygger Visningsrommet: kopierer src/ til dist/, legger de selvhostede skriftene i dist/fonts/, skjermbildene
  * (fra sites/hengsel/public/img) og SN-logoen (fra sites/sngroup/public) i dist/img/, og setter inn Hengsel-logoen
- * (src/assets/logo) der det står <!--hengsel-logo N-->.
+ * (src/assets/logo) der det står <!--logo-hengsel N-->.
  *
  * Skriftene er de samme som i designpakken (packages/design/src/styles/fonts.css): Newsreader (vanlig og kursiv) og
  * Inter fra @fontsource-variable. dist/fonts/fonts.css får familienavnene «Newsreader» og «Inter», så stilene i sidene
@@ -75,12 +75,21 @@ await cp(join(sites, "hengsel", "public", "img", "dok-forside.webp"), join(img, 
 await cp(join(sites, "sngroup", "public", "logo.svg"), join(img, "sn-logo.svg"));
 await cp(join(sites, "sngroup", "public", "logo-mork.svg"), join(img, "sn-logo-mork.svg"));
 
-// Hengsel-logoen der det står <!--hengsel-logo 28--> (tallet er høyden i px). Logopakken 10.10 (src/assets/logo, LES-MEG.md):
-// SVG med konturert tekst, lys og mørk variant byttes med CSS (.hlogo i vis.css). Aldri strekk, farger eller effekter.
-function hengselLogo(size) {
+// Merket (merkepakken i brand/, fasit 12.10.2026) der det står <!--logo-hengsel 28--> (tallet er høyden i px). Skjemaet kan stå etter tallet:
+// <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent: lys utgave på lys flate og
+// mørk i mørk modus (byttes med CSS, .hlogo i vis.css). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
+const LOGOER = {
+  hengsel: { fil: "hengsel-aksent", alt: "Hengsel", b: 374 },
+  crm: { fil: "crm-aksent", alt: "CRM", b: 270 },
+  "hengsel-crm": { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 527 },
+  "levert-av": { fil: "levert-av-aksent", alt: "Levert av Hengsel", b: 671 },
+};
+function hengselLogo(size, skjema = "hengsel") {
+  const l = LOGOER[skjema];
+  if (!l) throw new Error(`Ukjent logoskjema «${skjema}» i <!--logo-hengsel ${size} ${skjema}-->`);
   return `<span class="hlogo" style="--h:${size}px">` +
-    `<img class="lys" src="/assets/logo/hengsel-crm-logo-lys.svg" alt="Hengsel CRM" width="460" height="128">` +
-    `<img class="mork" src="/assets/logo/hengsel-crm-logo-mork.svg" alt="Hengsel CRM" width="460" height="128"></span>`;
+    `<img class="lys" src="/assets/logo/${l.fil}-lys.svg" alt="${l.alt}" width="${l.b}" height="108">` +
+    `<img class="mork" src="/assets/logo/${l.fil}-mork.svg" alt="" width="${l.b}" height="108"></span>`;
 }
 let sider = 0;
 async function settInnLogo(dir) {
@@ -90,7 +99,7 @@ async function settInnLogo(dir) {
     else if (e.name.endsWith(".html")) {
       const tekst = await readFile(sti, "utf8");
       const ny = tekst
-        .replace(/<!--hengsel-logo (\d+)-->/g, (_, n) => hengselLogo(Number(n)))
+        .replace(/<!--logo-hengsel (\d+)(?: ([a-z-]+))?-->/g, (_, n, f) => hengselLogo(Number(n), f))
         .replace("<!--dokumentvisning-->", () => dokumentvisningHtml())
         .replace("<!--a4-stil-->", () => a4Stil())
         .replace(/<!--a4-ark:([a-z]+):(\d+):([^>]*?)-->/g, (_, id, side, tittel) => a4Ark(id, Number(side), tittel));

@@ -1,4 +1,4 @@
-// /slik-virker-det: «Ordrens reise». Fasit: docs/design/hengsel-no-2.0/Slik-virker-det.dc.html. Tekst ordrett fra LES-MEG.md.
+// /slik-virker-det: «Ordrens reise». Fasit: docs/design/hengsel/Slik-virker-det.dc.html. Tekst ordrett fra LES-MEG.md.
 export const SLIK = {
   tittel: "Slik virker det – ordrens reise i Hengsel",
   beskrivelse: "Én ordre, åtte scener. Følg kjøkkenet til Kari Nordmann fra befaring til faktura.",

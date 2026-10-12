@@ -76,9 +76,10 @@ a{color:var(--accent-tekst);text-underline-offset:3px}
 .switch[aria-checked="true"]::after{transform:translateX(18px)}
 .switch:focus-visible{border-radius:var(--r-pill)}
 
-/* Hengsel-logoen: logopakken 10.10 (assets/logo/LES-MEG.md), SVG med konturert tekst. bygg.mjs setter den inn der det står
-   <!--hengsel-logo N--> (N = høyden i px: toppfelt 40, topplinje i rom 28, «Levert med» 30, «Samtidig i …» 24, CRM-noden i
-   Ordrens reise 34, navet i Systemkartet 42). Lys variant på lys flate, mørk i mørk modus. Aldri strekk, farger eller effekter. */
+/* Hengsel-merket: merkepakken i brand/ (fasit 12.10.2026), SVG med konturert tekst. bygg.mjs setter det inn der det står
+   <!--logo-hengsel N--> (N = høyden i px: toppfelt og topplinje i rom 28, «Levert av» i bunnen 14, «Samtidig i …» 24 (crm),
+   CRM-noden i Ordrens reise 34 og navet i Systemkartet 42 (hengsel-crm)). Aksent-utgaven: lys på lys flate, mørk i mørk modus.
+   Aldri strekk, farger eller effekter. */
 .hlogo{display:inline-flex;align-items:center;height:var(--h,28px);flex:none;vertical-align:middle}
 .hlogo img{height:100%;width:auto;display:block}
 .hlogo .mork{display:none}

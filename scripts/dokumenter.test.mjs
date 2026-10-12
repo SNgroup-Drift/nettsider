@@ -38,16 +38,16 @@ test("nøytrale demonavn: ingen merkenavn i dokumentene eller i «Slik lages det
   for (const merke of ["Sigdal", "HTH", "Bosch", "Siemens", "Nobia", "Kjøkkenstudio"]) assert.ok(!alt.includes(merke), `«${merke}» står i dokumentdataene`);
 });
 
-test("hver side gjengis med «Din logo», «by Hengsel» og sidetall, og tekst escapes", () => {
+test("hver side gjengis med «Din logo», Hengsel-logoen i bunnlinjen og sidetall, og tekst escapes", () => {
   for (const d of DOKUMENTER) {
     d.sider.forEach((s, i) => {
       const html = renderA4Side(s, { fot: d.fot, nr: i + 1, total: d.sider.length, ligg: d.ligg });
       assert.match(html, /Din logo/);
       assert.match(html, new RegExp(`Side ${i + 1} av ${d.sider.length}`));
-      assert.match(html, /by Hengsel/);
-      assert.equal((html.match(/by Hengsel/g) ?? []).length, 1, `${d.id} side ${i + 1}: «by Hengsel» skal stå én gang`);
+      assert.ok(!/by Hengsel/.test(html), `${d.id} side ${i + 1}: «by Hengsel» er byttet ut med logoen`);
+      assert.equal((html.match(/<img class="a4-hengsel" src="\/logo\/hengsel-lys\.svg" alt="Hengsel"/g) ?? []).length, 1, `${d.id} side ${i + 1}: Hengsel-logoen skal stå én gang, i bunnlinjen`);
       assert.equal((html.match(/Din logo/g) ?? []).length, 1, `${d.id} side ${i + 1}: «Din logo» skal stå én gang`);
-      assert.ok(!/hengsel[^"]*\.(svg|webp|png)/i.test(html), `${d.id} side ${i + 1}: ingen Hengsel-logo som bilde (aldri to Hengsel-logoer)`);
+      assert.equal((html.match(/hengsel[^"]*\.(svg|webp|png)/gi) ?? []).length, 1, `${d.id} side ${i + 1}: bare én Hengsel-logo som bilde (aldri to Hengsel-logoer)`);
     });
   }
   const html = renderA4Side({ navn: "x", tittel: "<b>&", blokker: [] }, { fot: "<i>", nr: 1, total: 1 });

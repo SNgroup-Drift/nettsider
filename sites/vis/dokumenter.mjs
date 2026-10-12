@@ -11,6 +11,9 @@ import { ETTERPA_TYPE, LAGES } from "../../packages/design/src/dokumenter/lages.
 import { a4DynamiskCss } from "../../packages/design/src/dokumenter/a4-stil.js";
 import { esc, renderA4Side } from "../../packages/design/src/dokumenter/render.js";
 
+/** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
+const LOGO_STI = "/assets/logo/hengsel-lys.svg";
+
 const BILDE = { bredde: 2560, hoyde: 1440 };
 
 export const a4Stil = () => `<style>${a4DynamiskCss(DOKUMENTER)}</style>`;
@@ -52,7 +55,7 @@ ${steg}
 function panelHtml(dok, forst) {
   const total = dok.sider.length;
   const sider = dok.sider
-    .map((side, i) => `<div class="dv-side" data-side${i > 0 ? " hidden" : ""}>${renderA4Side(side, { fot: dok.fot, nr: i + 1, total, ligg: dok.ligg, forst: forst && i === 0 })}</div>`)
+    .map((side, i) => `<div class="dv-side" data-side${i > 0 ? " hidden" : ""}>${renderA4Side(side, { fot: dok.fot, nr: i + 1, total, ligg: dok.ligg, forst: forst && i === 0, logoSti: LOGO_STI })}</div>`)
     .join("");
   const innhold = dok.sider
     .map((s, i) => `<li><button type="button" data-gaa="${i}"${i === 0 ? ' aria-current="page"' : ""}><span class="nr">Side ${i + 1}</span><span>${esc(s.navn)}</span></button></li>`)
@@ -102,7 +105,7 @@ ${paneler}
 export function a4Ark(id, side, tittel) {
   const dok = DOKUMENTER.find((d) => d.id === id);
   if (!dok) throw new Error(`Ukjent dokument i a4-ark: ${id}`);
-  const html = renderA4Side(dok.sider[side], { fot: dok.fot, nr: side + 1, total: dok.sider.length, ligg: dok.ligg })
+  const html = renderA4Side(dok.sider[side], { fot: dok.fot, nr: side + 1, total: dok.sider.length, ligg: dok.ligg, logoSti: LOGO_STI })
     .replace(/ role="group" aria-label="[^"]*"/, ' aria-hidden="true"');
   return `<a class="ark-lenke" href="/dokumenter/#${esc(id)}" aria-label="${esc(tittel)}, åpne dokumentet"><span class="ark${dok.ligg ? " ligg" : ""}">${html}</span><span>${esc(tittel)}</span></a>`;
 }

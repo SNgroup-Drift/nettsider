@@ -1,4 +1,4 @@
-// /ute: tekstene ordrett fra docs/design/hengsel-no-2.0/LES-MEG.md («/ute · Ute.dc.html»).
+// /ute: tekstene ordrett fra docs/design/hengsel/LES-MEG.md («/ute · Ute.dc.html»).
 // Appbildene ligger i public/img/app (faste filnavn; byttes senere mot ekte skjermbilder).
 
 export const APPTEST_URL = "https://hengsel.no/apptest";

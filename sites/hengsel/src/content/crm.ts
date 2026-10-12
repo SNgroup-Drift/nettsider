@@ -1,4 +1,4 @@
-// CRM-skjermene i demoen (CrmSkjerm.astro) og teksten på /crm. Fasit: docs/design/hengsel-no-2.0 (CrmSkjerm.dc.html, CRM.dc.html), ordrett fra LES-MEG.md.
+// CRM-skjermene i demoen (CrmSkjerm.astro) og teksten på /crm. Fasit: docs/design/hengsel (CrmSkjerm.dc.html, CRM.dc.html), ordrett fra LES-MEG.md.
 // Alle navn og tall er oppdiktet demodata (Butikknavn, Kari Nordmann, Leverandør A).
 
 export type Skjerm = "minDag" | "ordre" | "tilbud" | "montasje";

@@ -6,7 +6,7 @@
  * Alle fem stegene ligger i markupen som egne «skjermer» ([data-steg]); bare steg 1 vises uten JS (de andre har hidden fra bygget).
  * scripts/kundeportal.ts bytter steg og lar SMS-en gli inn øverst (telefon) eller nederst til høyre (PC).
  * Tekst og data: src/content/kundeportal.ts (ordrett fra LES-MEG.md). Oppdiktet demoinnhold er merket «Eksempel» (.eks).
- * Lyseblå flater er beige (Eirik 11.10). «Din logo» med «by Hengsel» øverst; Hengsel-merket står bare nederst i menyen på PC.
+ * Lyseblå flater er beige (Eirik 11.10). «Din logo» øverst; «Levert av» Hengsel (levert-av-aksent, 14 px) står bare nederst i menyen på PC.
  * Ingen style-attributter (CSP): alt styres av klasser, og farger kommer fra tokens.
  */
 import { PORTAL as P, STEG } from "../content/kundeportal";
@@ -35,17 +35,16 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
       <div class="skjerm-steg" data-steg={k} hidden={k !== forste}>
         {pc && (
           <aside class="meny">
-            <span class="logo-rad"><span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span></span>
+            <span class="logo-rad"><span class="dinlogo"><span class="boks">Din logo</span></span></span>
             {P.meny.map((m) => (
               <div class:list={["m", { aktiv: m.l === aktivMeny(k) }]}><span>{m.l}</span><span class="n">{m.n}</span></div>
             ))}
             <div class="bunn-meny">
               <div class="bruker"><span class="avatar">{P.kunde.init}</span><span class="navn"><span>{P.kunde.navn}</span><span class="dempet">{P.kunde.firma}</span></span></div>
               <div class="levert">
-                <span class="dempet">{P.levertMed}</span>
                 <picture>
-                  <source media="(prefers-color-scheme: dark)" srcset="/logo/hengsel-logo-mork.svg" />
-                  <img src="/logo/hengsel-logo-lys.svg" alt="Hengsel" width="99" height="24" loading="lazy" decoding="async" />
+                  <source media="(prefers-color-scheme: dark)" srcset="/logo/levert-av-aksent-mork.svg" />
+                  <img src="/logo/levert-av-aksent-lys.svg" alt={P.levertAv} width="671" height="108" loading="lazy" decoding="async" />
                 </picture>
               </div>
             </div>
@@ -56,7 +55,7 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
             <>
               <div class="statusfelt"></div>
               <div class="topp">
-                <span class="dinlogo"><span class="boks">Din logo</span><span class="av">by Hengsel</span></span>
+                <span class="dinlogo"><span class="boks">Din logo</span></span>
                 <span class="avatar stor">{P.kunde.init}</span>
               </div>
             </>
@@ -221,11 +220,8 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
 
   .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
   .dinlogo .boks { border: 1.5px dashed var(--beige-1); border-radius: 6px; display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
-  .dinlogo .av { color: var(--muted); letter-spacing: 0.02em; }
   .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
-  .telefon .dinlogo .av { font-size: 11px; }
   .pc .dinlogo .boks { height: 40px; padding: 0 18px; font-size: 15px; }
-  .pc .dinlogo .av { font-size: 12px; }
   .avatar { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
   .avatar.stor { width: 40px; height: 40px; font-size: 14px; }
 
@@ -280,8 +276,8 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .bunn-meny { margin-top: auto; padding: 12px; display: flex; flex-direction: column; gap: 14px; }
   .bruker { display: flex; align-items: center; gap: 10px; }
   .navn { display: flex; flex-direction: column; font-size: 14px; line-height: 1.4; }
-  .levert { display: flex; flex-direction: column; gap: 4px; font-size: 12px; align-items: flex-start; }
-  .levert img { display: block; height: 24px; width: auto; }
+  .levert { display: flex; align-items: flex-start; }
+  .levert img { display: block; height: 14px; width: auto; }
 
   /* Sidekort på PC */
   .side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }

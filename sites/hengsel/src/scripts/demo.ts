@@ -4,7 +4,7 @@
  * - Navn og (e-post eller telefon) er påkrevd. Feil vises i varselet (role="alert", får fokus), feltene får aria-invalid.
  * - Ok: skjemaet byttes med «Takk, {fornavn}.» (får fokus) og «Ny forespørsel».
  * - Svarer ruten med noe annet enn ok (503, nettverksfeil, ukjent feil), vises mailto-reserven med utfylt emne og innhold.
- * Fasit: docs/design/hengsel-no-2.0/Priser-og-demo.dc.html (send, nullstill).
+ * Fasit: docs/design/hengsel/Priser-og-demo.dc.html (send, nullstill).
  */
 const skjema = document.querySelector<HTMLFormElement>("[data-demo]");
 if (skjema) {

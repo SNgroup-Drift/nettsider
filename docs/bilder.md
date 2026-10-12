@@ -39,7 +39,7 @@ Kundeportalen, Integrasjoner, priser og om, kontakt.
 - **iPad:** `ute-ipad-bildeverktoy` er 2360 × 1640 (1,44:1, v4) og fyller hullet i `ipad-liggende` uten beskjæring. Det finnes ingen bildetilpasning
   (`fit`, `contain`) i `Enhet.astro`.
 - **Ferdig montert:** teksten er «Klar for ferdigmelding» (som bildet i v7), ikke «Kundens signatur på skjermen» fra fil 60.
-- **Topplogo:** `Side.astro` bruker `hengsel-logo-lys.svg` som i fil 60 (var CRM-logo før). Sidebakgrunnen er Off White; kortene er Beige 3. Begge er avgjort å beholde.
+- **Topplogo:** `Meny.astro` bruker `hengsel-aksent-lys.svg` / `-mork.svg` fra merkepakken i `brand/` (fasit 12.10.2026, K-174). Sidebakgrunnen er Off White; kortene er Beige 3. Begge er avgjort å beholde.
 - **Appknapper:** `/apptest` er skjult (passordvegg, noindex, ikke lenket), så «App Store · TestFlight» og «Google Play» er deaktiverte knapper
   (`TODO_…` i `src/content/forside.ts`) til lenkene er avklart. «Bli tester» er `mailto:test@hengsel.no`.
 - **Ikke i fasit, men beholdt:** kontaktskjemaet med plantegning og bunnen. Avgjort å beholde, i likhet med deaktiverte appknapper og faner i «For kontoret».
