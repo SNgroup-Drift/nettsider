@@ -1,6 +1,6 @@
 ---
 /**
- * hengsel.no/apptest: slik tester du Hengsel (K-172, etter Claude Design «apptest v3», docs/design/hengsel/apptest-v3/).
+ * hengsel.no/apptest: slik tester du Hengsel Ute (K-172, etter Claude Design «apptest v3», docs/design/hengsel/apptest-v3/).
  * Fasit: Apptest.dc.html og Apptest-valg.md. Komponentene og tokenene er hengsel.no 2.0 (Side, Enhet, Bunn, tokens.css).
  *
  * Ligger bak passord: Workeren (worker/apptest.ts) slipper bare inn med gyldig informasjonskapsel (K-107) og setter demopassordet
@@ -26,11 +26,11 @@ const qr = lagQr();
 const VEIER = [
   {
     id: "iphone", tittel: "iPhone og iPad", via: "TestFlight", knapp: "Åpne i TestFlight", href: APPTEST.testflight,
-    steg: ["Installer TestFlight fra App Store.", "Trykk «Åpne i TestFlight» og så «Installer».", "Åpne Hengsel og logg inn med demobrukeren."],
+    steg: ["Installer TestFlight fra App Store.", "Trykk «Åpne i TestFlight» og så «Installer».", "Åpne Hengsel Ute og logg inn med demobrukeren."],
   },
   {
     id: "android", tittel: "Android", via: "Google Play", knapp: "Bli tester i Google Play", href: APPTEST.play,
-    steg: ["Trykk knappen og godta invitasjonen.", "Installer Hengsel fra Google Play.", "Åpne Hengsel og logg inn med demobrukeren."],
+    steg: ["Trykk knappen og godta invitasjonen.", "Installer Hengsel Ute fra Google Play.", "Åpne Hengsel Ute og logg inn med demobrukeren."],
   },
   {
     id: "apk", tittel: "Android uten Google Play", via: "APK-fil", knapp: "Last ned APK", href: APPTEST.apk,
@@ -39,10 +39,10 @@ const VEIER = [
 ];
 
 const SLIDES = [
-  { bilde: "idag", navn: "I dag", alt: "Hengsel: I dag med neste jobb, adresse og knappen Jeg er på vei" },
-  { bilde: "jobben", navn: "Jobben", alt: "Hengsel: jobben med KS, På vei og tegning" },
-  { bilde: "ks", navn: "KS", alt: "Hengsel: KS-sjekkliste punkt for punkt" },
-  { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel: meld ferdig montert" },
+  { bilde: "idag", navn: "I dag", alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei" },
+  { bilde: "jobben", navn: "Jobben", alt: "Hengsel Ute: jobben med KS, På vei og tegning" },
+  { bilde: "ks", navn: "KS", alt: "Hengsel Ute: KS-sjekkliste punkt for punkt" },
+  { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel Ute: meld ferdig montert" },
 ];
 
 // Skjermene er de fiktive demo-skjermene fra designet: iOS-skjermene (img/app, 402 × 874) og rollene uten iOS-skjerm (img/apptest, 2× og 1×, lages av scripts/fiktive-skjermer.mjs)
@@ -53,18 +53,18 @@ const harFeil = KJENTE_FEIL.length > 0;
 ---
 <Side
   delingsbilde="https://hengsel.no/og-apptest.png"
-  title="Test Hengsel – testversjon av montørappen"
-  description="Slik installerer og tester du testversjonen av Hengsel på iPhone, iPad eller Android."
+  title="Test Hengsel Ute – testversjon av montørappen"
+  description="Slik installerer og tester du testversjonen av Hengsel Ute på iPhone, iPad eller Android."
   robots="noindex,nofollow"
   utenMeny
 >
   <ApptestHode slot="hode" meldFeil />
   <main id="innhold" class="a-side">
-    <section class="hero" aria-label="Test Hengsel">
+    <section class="hero" aria-label="Test Hengsel Ute">
       <div class="h-innhold hero-rutenett">
         <div class="hero-tekst">
           <span class="eyebrow">Testversjon {versjon} · sist oppdatert {dato(oppdatert)}</span>
-          <h1>Test Hengsel</h1>
+          <h1>Test Hengsel Ute</h1>
           <p class="lede">Appen montørene bruker på jobben. Installer testversjonen, logg inn med demobrukerne og si fra om alt som ikke virker.</p>
           <div class="ikon"><UteMotion class="ikon-motion" /></div>
         </div>

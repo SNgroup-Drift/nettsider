@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["XZH4APZ727.no.hengsel.montor"],
+        "components": [
+          { "/": "/app/jobb/*", "comment": "Jobb-lenker: https://hengsel.no/app/jobb/<ordre-id>" },
+          { "/": "/app/foresporsel/*", "comment": "Forespørsel-lenker: https://hengsel.no/app/foresporsel/<id>" }
+        ]
+      }
+    ]
+  }
+}

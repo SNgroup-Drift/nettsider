@@ -121,7 +121,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "montor1@demo.invalid",
     bilde: "avvik",
-    alt: "Hengsel: meld avvik med bilde og beskrivelse",
+    alt: "Hengsel Ute: meld avvik med bilde og beskrivelse",
   },
   {
     id: "firmaleder",
@@ -135,7 +135,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "firmaleder1@demo.invalid",
     bilde: "foresporsler",
-    alt: "Hengsel: firmaleder godtar eller bestrider en belastning fra montasjefirmaet",
+    alt: "Hengsel Ute: firmaleder godtar eller bestrider en belastning fra montasjefirmaet",
   },
   {
     id: "utkjorer",
@@ -150,7 +150,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "utkjorer@demo.invalid",
     bilde: "ruten",
-    alt: "Hengsel: rute for dagen med tre stopp og knappen Start navigasjon",
+    alt: "Hengsel Ute: rute for dagen med tre stopp og knappen Start navigasjon",
   },
   {
     id: "lager",
@@ -165,7 +165,7 @@ export const ROLLER: Rolle[] = [
     ],
     bruker: "selger1@demo.invalid",
     bilde: "mottak",
-    alt: "Hengsel: mottak på lager med tre leveranser og knappen Skann kolli",
+    alt: "Hengsel Ute: mottak på lager med tre leveranser og knappen Skann kolli",
     merknad: "Demoen har ingen egen lagerbruker. selger1 viser ansattmodus.",
   },
 ];

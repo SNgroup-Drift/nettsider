@@ -47,9 +47,9 @@ export const personvern = {
       ],
     },
     {
-      overskrift: "Montørappen Hengsel",
+      overskrift: "Montørappen Hengsel Ute",
       tekst: [
-        'Personvernerklæringen for montørappen Hengsel ligger på <a href="https://sngroup.no/personvern">sngroup.no/personvern</a>.',
+        'Personvernerklæringen for montørappen Hengsel Ute ligger på <a href="https://sngroup.no/personvern">sngroup.no/personvern</a>.',
       ],
     },
     {
