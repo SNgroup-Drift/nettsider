@@ -1,0 +1,84 @@
+{
+  "fill": {
+    "automatic-gradient": "srgb:0.31373,0.45490,0.66275,1.00000"
+  },
+  "fill-specializations": [
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "srgb:0.10588,0.09020,0.07451,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "Stift",
+      "layers": [
+        {
+          "name": "stift",
+          "image-name": "3-stift.svg",
+          "glass": true,
+          "fill-specializations": [
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.61176,0.66275,0.74118,1.00000"
+              }
+            }
+          ]
+        }
+      ],
+      "specular": true,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.6
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      },
+      "blur-material": null
+    },
+    {
+      "name": "Høyre blad",
+      "layers": [
+        {
+          "name": "blad-hoyre",
+          "image-name": "2-blad-hoyre.svg",
+          "glass": true
+        }
+      ],
+      "specular": true,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.2
+      }
+    },
+    {
+      "name": "Venstre blad",
+      "layers": [
+        {
+          "name": "blad-venstre",
+          "image-name": "1-blad-venstre.svg",
+          "glass": true
+        }
+      ],
+      "specular": true,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.45
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.2
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}
