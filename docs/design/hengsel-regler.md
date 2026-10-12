@@ -16,7 +16,7 @@ Gjelder hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.he
 
 - **Bruk variablene.** `var(--flate-side)`, `var(--tekst)`, `var(--aksent)`, `var(--status-ok-fg)` osv. Navnene står i `packages/hengsel-tokens/tokens.css`. Gjennomsiktige varianter: `color-mix(in srgb, var(--tekst) 12%, transparent)`.
 - **Importer den delte fila.** Astro-sider bruker `@sngroup/hengsel-tokens/Hode.astro` som ramme (den importerer `tokens.css`, `fonts.css` og `grunn.css`). `sites/vis` kopierer fila til `dist/assets/` ved bygging (`bygg.mjs`).
-- **Mørke tokens** finnes som `--mork-*` (fargeprøver). De er bare til design.hengsel.no, som viser dem til appene og CRM-et. De gjør ingen side mørk.
+- **Mørke tokens** (`--mork-*`, fargeprøver) ligger i en egen fil, `packages/hengsel-tokens/tokens-mork-prover.css`, under klassen `.mork-prover` (aldri `:root`, ingen `@media`). Bare design.hengsel.no importerer den, til prøvene for appene og CRM-et. Den delte `tokens.css` har ingen mørke verdier, og `color-scheme: light` står på `:root`.
 - **Kundens aksent** (`--kunde-*`) er eksempler fra `kundetema` i JSON. Kundens egen farge kommer fra kundens data og gjelder kundeportal, tilbud/kontrakt (PDF) og e-post til kunde.
 - **Merkefiler.** Logoene i `packages/hengsel-tokens/ds/assets/logo/` og filene i `brand/hengsel-merke/` (favicon, appikoner) er ferdige SVG-filer med egne farger. De brukes som `<img>`/favicon, og testen godtar dem bare når de er byte-identiske med originalen (sha256).
 - **Lysboksen** i dokumentvisningen er mørk (`--alltid-mork`, samme rolle som bildeeditor og kamera). Det er en bildevisning, ikke mørk modus.
@@ -35,7 +35,8 @@ Aldri rediger `tokens.css`, `fonts.css` eller filene i `packages/hengsel-tokens/
 |---|---|
 | `scripts/hengsel-regler.test.mjs` a) | en fil under `sites/hengsel`, `sites/vis`, `sites/design`, `sites/admin`, `packages/hengsel-dokumenter` eller `packages/hengsel-tokens/src` har en fargeverdi (hex, rgb/hsl/…, navngitt farge, Tailwind-farge), eller en bygd side har en hex som ikke finnes i den delte fila |
 | `scripts/hengsel-regler.test.mjs` b) | `tokens.css` eller `fonts.css` avviker fra det som genereres fra pinnet `hengsel.tokens.json`, en pinnet fil er endret, eller det finnes mer enn én pin |
-| `scripts/hengsel-regler.test.mjs` c) | en Hengsel-side har `prefers-color-scheme`, `data-theme`, `.dark`, `color-scheme: dark` eller en mørk-bryter (kilde og bygd), eller `color-scheme: light` mangler |
+| `scripts/hengsel-regler.test.mjs` c) | en Hengsel-side har `prefers-color-scheme`, `data-theme`, `.dark`, `color-scheme: dark` eller en mørk-bryter (kilde og bygd), eller `color-scheme: light` mangler. Sjekker også de ferdige filene `tokens.css`, `tokens-mork-prover.css`, `fonts.css`, `grunn.css`, `Hode.astro` og alle `dist`-mapper (K-202) |
+| `scripts/mork-modus-nettleser.test.mjs` | maskinen står i mørk modus (Playwright `colorScheme: 'dark'`) og forsiden og to undersider av hengsel, vis, admin eller design har computed `color-scheme` annet enn light, eller body-bakgrunn annet enn `--flate-side` (kjør `npm run build` først; manglende dist er feil) |
 | `scripts/design-fasit.test.mjs` | design.hengsel.no og tokens ikke er like |
 
 Skann for hånd: `node scripts/hengsel-regler.mjs [mappe …]`.

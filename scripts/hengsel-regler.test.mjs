@@ -11,7 +11,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { OMRADER, finnBrudd, merkefilSha, rot, skann } from "./hengsel-regler.mjs";
-import { lagFontsCss, lagTokensCss } from "./lag-hengsel-tokens.mjs";
+import { lagFontsCss, lagMorkProverCss, lagTokensCss } from "./lag-hengsel-tokens.mjs";
 
 const pakke = join(rot, "packages", "hengsel-tokens");
 const les = (...s) => readFileSync(join(...s), "utf8");
@@ -41,7 +41,7 @@ test("a) filer med fargeverdier som ikke er pinnede logoer eller merkepakken v3 
 });
 
 test("a) bygde sider: hver fargeverdi i CSS/HTML/JS finnes i den delte fila", () => {
-  const delt = les(pakke, "tokens.css");
+  const delt = les(pakke, "tokens.css") + les(pakke, "tokens-mork-prover.css"); // K-202: de mørke fargeprøvene (bare design.) ligger i egen fil
   const tillatt = new Set([...delt.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((m) => m[0].toLowerCase()));
   // Bygget CSS er minifisert: rgba(r, g, b, a) skrives som #rrggbbaa, og #rrggbb kan bli #rgb
   for (const m of delt.matchAll(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/g)) tillatt.add("#" + [m[1], m[2], m[3], Math.round(m[4] * 255)].map((n) => Number(n).toString(16).padStart(2, "0")).join(""));
@@ -64,6 +64,7 @@ test("a) bygde sider: hver fargeverdi i CSS/HTML/JS finnes i den delte fila", ()
 
 test("b) den delte fila samsvarer med pinnet hengsel.tokens.json", () => {
   assert.equal(les(pakke, "tokens.css"), lagTokensCss(), "tokens.css avviker fra det som genereres: kjør node scripts/lag-hengsel-tokens.mjs");
+  assert.equal(les(pakke, "tokens-mork-prover.css"), lagMorkProverCss(), "tokens-mork-prover.css avviker fra det som genereres: kjør node scripts/lag-hengsel-tokens.mjs");
   assert.equal(les(pakke, "fonts.css"), lagFontsCss(), "fonts.css avviker: kjør node scripts/lag-hengsel-tokens.mjs");
 });
 
@@ -74,6 +75,21 @@ test("b) den delte fila har samme lyse verdier som designsystemets egen tokens.c
   const delt = les(pakke, "tokens.css");
   const mine = vars(delt.slice(delt.indexOf(":root {"), delt.indexOf("/* nettbrett */")));
   for (const [navn, verdi] of Object.entries(ds)) assert.equal(mine[navn], verdi, navn);
+});
+
+test("b) mørke verdier: tokens-mork-prover.css har nøyaktig de mørke verdiene i hengsel.tokens.json, og bare under .mork-prover", () => {
+  const json = JSON.parse(les(pakke, "ds", "tokens", "hengsel.tokens.json"));
+  const fil = les(pakke, "tokens-mork-prover.css");
+  const vars = Object.fromEntries([...fil.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+  const uten$ = (o) => Object.entries(o).filter(([k]) => !k.startsWith("$"));
+  for (const [n, r] of uten$(json.farge)) assert.equal(vars[`--mork-${n}`], r.mork ?? r.lys, `--mork-${n}`);
+  for (const [n, s] of uten$(json.status)) for (const d of ["fg", "bg", "kant"]) assert.equal(vars[`--mork-status-${n}-${d}`], (s.mork ?? s.lys)[d], `--mork-status-${n}-${d}`);
+  assert.ok(/^\.mork-prover \{/m.test(fil), "variablene skal ligge under .mork-prover");
+  assert.ok(!/:root|html|body|@media|data-theme/.test(fil.replace(/\/\*[\s\S]*?\*\//g, "")), "tokens-mork-prover.css skal ikke røre :root, html, body eller bruke @media");
+  // ... og er ikke importert av noen annen Hengsel-side enn design.
+  for (const f of alle(join(rot, "sites")).filter((x) => /\.(astro|html|css|mjs|js|ts)$/.test(x) && !/node_modules|\/dist\/|public\/ds\//.test(x))) {
+    if (/tokens-mork-prover/.test(readFileSync(f, "utf8"))) assert.ok(relative(rot, f).startsWith("sites/design/"), `${relative(rot, f)} importerer mørk-prøvefila, men bare design.hengsel.no skal gjøre det`);
+  }
 });
 
 test("b) pinnede filer er uendret, og det finnes bare én pin", () => {
@@ -93,6 +109,19 @@ test("c) ingen mørk modus eller mørk-bryter i kilden", () => {
   assert.deepEqual(brudd.map((b) => `${b.fil}:${b.linje} ${b.type} «${b.tekst}»`), []);
 });
 
+test("c) den ferdige delte token-fila (tokens.css, fonts.css, grunn.css, Hode.astro) har ingen mørk modus og er light på :root", () => {
+  for (const f of ["tokens.css", "fonts.css", join("src", "grunn.css"), join("src", "Hode.astro")]) {
+    assert.deepEqual(finnBrudd(les(pakke, f), { farger: false }).map((b) => `${b.type} «${b.tekst}»`), [], `packages/hengsel-tokens/${f} har mørk modus`);
+  }
+  const tokens = les(pakke, "tokens.css");
+  assert.ok(!/@media[^{]*color-scheme/.test(tokens) && !/\[data-theme/.test(tokens) && !/--mork-/.test(tokens), "tokens.css skal være bare lys, uten mørke prøver");
+  assert.match(tokens, /:root\s*\{[\s\S]*color-scheme:\s*light;/, "tokens.css mangler color-scheme: light på :root");
+});
+
+test("c) mørk-prøvefila har ingen prefers-color-scheme og setter ikke color-scheme", () => {
+  assert.deepEqual(finnBrudd(les(pakke, "tokens-mork-prover.css"), { farger: false }), []);
+});
+
 test("c) skanneren finner mørk modus (selvtest)", () => {
   for (const eksempel of ["@media (prefers-color-scheme: dark) { a { color: red } }", '<html data-theme="dark">', "a { color-scheme: dark; }", ":root.dark { }", 'matchMedia("(prefers-color-scheme: dark)")', '<button data-valg="dark">', "localStorage.setItem('theme', x)", '<source media="(prefers-color-scheme: dark)" srcset="a">', "dark:bg-black"]) {
     assert.ok(finnBrudd(eksempel, { farger: false }).length > 0, `skulle funnet mørk modus i: ${eksempel}`);
@@ -103,7 +132,7 @@ test("c) skanneren finner mørk modus (selvtest)", () => {
 test("c) bygde sider: color-scheme er light, og ingen mørk modus i bygd CSS/HTML/JS", () => {
   for (const s of SIDER) {
     const dist = join(rot, "sites", s, "dist");
-    if (!existsSync(dist)) continue;
+    assert.ok(existsSync(dist), `${s}: dist mangler, kjør npm run build først (K-202: bygde sider hoppes ikke over)`);
     let lys = false;
     for (const f of alle(dist).filter((x) => /\.(css|html|js)$/.test(x) && !/\/ds\//.test(x))) {
       const t = readFileSync(f, "utf8");
