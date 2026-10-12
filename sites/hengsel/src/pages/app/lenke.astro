@@ -1,0 +1,45 @@
+---
+/**
+ * App-lenkene (K-200): https://hengsel.no/app/jobb/<id> og /app/foresporsel/<id> når de åpnes i nettleseren.
+ * Har telefonen appen, åpner iOS den direkte (universal links, AASA) og denne siden vises ikke. På PC sendes man videre til jobben i CRM-et,
+ * på telefon uten appen vises «Åpne jobben i CRM-et» og «Hent Hengsel-appen». _redirects skriver stiene om til denne siden (200).
+ * CRM-adressen står i src/content/crm-lenke.mjs. Skriptet er en ekstern fil (CSP: script-src 'self'). noindex,nofollow.
+ */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Åpne jobben · Hengsel" description="Åpner jobben i CRM-et eller i Hengsel-appen." robots="noindex,nofollow" utenMeny>
+  <header slot="hode" class="hode"><a href="/" class="merke">Hengsel</a></header>
+  <main id="innhold" class="lenke" data-app-lenke data-tilstand="laster">
+    <h1>Åpne jobben</h1>
+    <p class="ingress melding" data-for="pc">Sender deg videre til jobben i CRM-et …</p>
+    <p class="ingress melding" data-for="telefon">Har du Hengsel-appen, trykker du på lenken igjen fra meldingen du fikk, så åpnes jobben i appen. Ellers kan du åpne jobben i CRM-et.</p>
+    <p class="ingress melding" data-for="laster uten-crm">Denne lenken åpnes i Hengsel-appen. Har du appen, trykker du på lenken igjen fra meldingen du fikk.</p>
+    <p class="ingress melding" data-for="ugyldig">Lenken er ikke gyldig. Be om en ny lenke fra den som sendte den.</p>
+    <p class="knapper">
+      <a class="btn primary" data-crm-lenke data-for="pc telefon" href="/app/apne">Åpne jobben i CRM-et</a>
+      <a class="btn" href="/apptest" data-for="laster telefon uten-crm ugyldig">Hent Hengsel-appen</a>
+    </p>
+    <noscript><p class="dempet">Slå på JavaScript for å bli sendt videre til CRM-et, eller åpne lenken i Hengsel-appen.</p></noscript>
+    <p class="dempet">Du må være innlogget for å se jobben.</p>
+  </main>
+  <script>
+    import "../../scripts/app-lenke";
+  </script>
+</Side>
+
+<style>
+  .hode { padding: 20px var(--gutter, 16px); }
+  .merke { font-family: var(--f-display); font-size: 1.25rem; color: var(--ink); text-decoration: none; }
+  .lenke { max-width: 34rem; margin: 0 auto; padding: 48px var(--gutter, 16px) 96px; }
+  .lenke h1 { font-size: var(--t-h2); margin: 0 0 16px; }
+  .lenke p { margin: 0 0 16px; }
+  .ingress { font-size: 1.125rem; }
+  .knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+  .dempet { color: var(--tekst-dempet); font-size: 0.9rem; }
+  /* Hver tilstand viser bare det som hører til den (data-for = tilstandene elementet vises i) */
+  .lenke[data-tilstand="laster"] [data-for]:not([data-for~="laster"]),
+  .lenke[data-tilstand="pc"] [data-for]:not([data-for~="pc"]),
+  .lenke[data-tilstand="telefon"] [data-for]:not([data-for~="telefon"]),
+  .lenke[data-tilstand="uten-crm"] [data-for]:not([data-for~="uten-crm"]),
+  .lenke[data-tilstand="ugyldig"] [data-for]:not([data-for~="ugyldig"]) { display: none; }
+</style>
