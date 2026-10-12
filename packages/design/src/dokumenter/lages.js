@@ -1,6 +1,6 @@
 /**
  * «Slik lages det» per dokument (Visningsrommet, /dokumenter/): 3–5 steg fra ordren i CRM til ferdig PDF og utsending.
- * Hører til dokumentene i data.js (samme id). Skjermbildene er fra CRM-designfilene (sites/vis/src/skjermbilder, aldri fra kjørende demo),
+ * Hører til dokumentene i data.js (samme id). Skjermbildene er fiktive skjermer fra designfilene (sites/vis/src/skjermbilder, lagd av scripts/fiktive-skjermer.mjs, aldri fra kjørende demo),
  * vist i Studio Display-ramme. Samme bilde kan brukes i flere steg når CRM-skjermen er den samme; teksten sier da hva en skal se på.
  *
  * steg:   t = tittel, s = hva som skjer, knapp = knappen som trykkes (null når steget bare er å se på noe), bilde = fil i skjermbilder/, alt = alt-tekst.
