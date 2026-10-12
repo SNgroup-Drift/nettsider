@@ -23,7 +23,7 @@ Skjermbilder (390 og 1440 px, lys og mørk): `claude/k174-skjermbilder/foer/` og
 - Produktnavn i eyebrow skrives ikke lenger med store bokstaver (`.eyebrow.navn`).
 
 **sites/sngroup**
-- Familiebåndet viser `hengsel-aksent-*` 24 px i stedet for teksten «hengsel.no» (nytt valg `hengselLogo` i `Familiebaand.astro`; byggem og vis bruker det ikke). Hengsel-seksjonen på forsiden bruker de nye logoene. Teksten «CRM by Hengsel og montørappen Hengsel» er «Hengsel CRM og montørappen Hengsel Ute».
+- Familiebåndet viser `hengsel-aksent-*` 24 px i stedet for teksten «hengsel.no» (nytt valg `hengselLogo` i `Familiebaand.astro`). Samme logo i familiebåndet på byggem.no (Eiriks avklaring); vis har sitt eget bånd uten logo. Hengsel-seksjonen på forsiden bruker de nye logoene. Teksten «CRM by Hengsel og montørappen Hengsel» er «Hengsel CRM og montørappen Hengsel Ute».
 
 **Tekst (punkt 5):** «Hengsel CRM» og «Hengsel Ute» første gang, deretter «CRM»/«Ute» i løpende tekst (rettet i Slik virker det). Ingen «HENGSEL» i tekst eller i gjengitt tekst.
 
@@ -53,11 +53,13 @@ Sammenlignet de åtte sidene og /apptest mot dagens sites/hengsel: alle 731 teks
 ## Det som gjenstår
 1. **Skjermbildene** (`hengsel.no/img/`, `ute-*`, `crm-*`, `portal-tilbud`, `dok-forside` m.fl.) og `sites/sngroup/public/skjermbilder/` viser «by Hengsel» eller det gamle ikonet og må tas på nytt når merket er byttet i appene (som `ENDRINGER-merkebytte-1210.md` sier). Ikke gjort her.
 2. **CRM på telefon** har ikke logo nederst (menyen ≡ er ikke åpen i skjermen).
-3. **byggem.no**: familiebåndet viser fortsatt teksten «hengsel.no» (README nevner bare sngroup.no). Avklar om byggem skal ha logoen også.
 4. **Visningsrommets innlogging** er Cloudflare Access (ingen egen innloggingsside i repoet), så den er ikke byttet.
 5. **sngroup.no `favicon.svg`** er SN Groups eget og har fortsatt c2pa-metadata; ikke Hengsel-fil, ikke rørt.
 6. Personvern-teksten på hengsel.no og sngroup.no («Montørappen Hengsel») er juridisk tekst og ikke endret til «Hengsel Ute».
 7. Favicon må sjekkes i ekte nettlesere og på iOS.
-8. Rot-skriftstørrelsen (17 px) bør godkjennes av Eirik, siden den endrer utseendet litt på alle hengsel.no-sider.
+
+## Oppfølging (Eirik)
+- 17 px rot-skriftstørrelse står.
+- byggem.no har nå `hengsel-aksent-*` 24 px i familiebåndet, som sngroup.no. Bygg og tester grønne (42/42, lenkesjekk 341 forespørsler, 0 feil), skjermbildeskriptet 0 feil, ingen vannrett rulling. Bilder: `claude/k174-skjermbilder/etter/byggem-*` (forside og familiebånd, 390 og 1440, lys og mørk).
 
 K-174 KLAR
