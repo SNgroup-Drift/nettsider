@@ -7,7 +7,7 @@
 import Side from "../layouts/Side.astro";
 import Komponent from "../components/Komponent.astro";
 import { status } from "../lib/tokens";
-const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", venter: "Venter på svar", sannsynlig: "Sannsynlig", ok: "Godkjent", haster: "Haster", feil: "Feilet" };
+const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "Venter på svar", sannsynlig: "Sannsynlig", ferdig: "Ferdig", advarsel: "Advarsel", feil: "Feilet" };
 ---
 <Side title="Komponenter – Hengsel designfasit" description="Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand og Sheet/Dialog i lys og mørk, med hva de brukes til og ikke til." aktiv="komponenter">
   <div class="wrap">
@@ -17,7 +17,7 @@ const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", ven
       <p class="lede">Designet er bygget av få deler som gjenbrukes i CRM, kundeportal og Hengsel Ute. Gjenbruk den som finnes i stedet for å lage en ny variant, og si fra hvis noe mangler. Ingen fargekant til venstre på kort. Statusfargene er de samme i hele appen. Detaljpanelet til høyre er fullskjerm på telefon, og dialog er et ark nedenfra på telefon. Innholdet i eksemplene er oppdiktet.</p>
     </div>
 
-    <Komponent id="knapper" navn="Knapper" kode="Button" tekst="Primær, sekundær, tekst og fare. Pilleform, minst 40 px høy." bruk="Primær til den ene hovedhandlingen i visningen («Send», «Lagre»). Sekundær til alternativer («Forhåndsvis»). Tekst til lavt prioriterte handlinger. Fare til å slette eller avbryte noe som ikke kan angres." ikke="Flere primærknapper i samme visning. Fare til vanlige handlinger. Blå tekst på beige uten --aksent-tekst.">
+    <Komponent id="knapper" navn="Knapper" kode="Button" tekst="Primær, sekundær, tekst og fare. Pilleform, minst 40 px høy." bruk="Primær til den ene hovedhandlingen i visningen («Send», «Lagre»). Sekundær til alternativer («Forhåndsvis»). Tekst til lavt prioriterte handlinger. Fare til å slette eller avbryte noe som ikke kan angres." ikke="Flere primærknapper i samme visning. Fare til vanlige handlinger. Furu som tekst uten --aksent-tekst.">
       <div class="flate-kort">
         <div class="rad-flex"><span class="knapp primaer">Send tilbud</span><span class="knapp sekundaer">Forhåndsvis</span><span class="knapp tekst">Avbryt</span><span class="knapp fare">Slett</span></div>
         <div class="rad-flex"><button type="button" class="knapp primaer av" disabled>Deaktivert</button><button type="button" class="knapp sekundaer av" disabled>Deaktivert</button></div>
@@ -32,7 +32,7 @@ const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", ven
 
     <Komponent id="kort" navn="Kort" kode="Card" tekst="Flaten for innhold: kortfarge, 1 px linje, radius 12. Ingen fargekant til venstre og ingen skygge." bruk="Å gruppere ett emne: en kunde, et tilbud, en ordre. Rader i lister bruker samme flate." ikke="Fargekant til venstre for å vise status (bruk pille). Skygge på sideinnhold: bare overlegg har skygge. Kort inni kort.">
       <div class="flate-kort">
-        <div class="rad-flex"><h3>Kjøkken Lys blå</h3><span class="pille s-info"><i></i>Sendt</span></div>
+        <div class="rad-flex"><h3>Kjøkken Lys blå</h3><span class="pille s-ny"><i></i>Sendt</span></div>
         <p class="dempet">T-7031 · 266 300 kr · gjelder til 20.10</p>
         <div class="rad-flex"><span class="knapp sekundaer">Åpne</span></div>
       </div>
@@ -45,7 +45,7 @@ const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", ven
       </div>
     </Komponent>
 
-    <Komponent id="faner" navn="Faner" kode="Tabs" tekst="Aktiv fane er Warm Black med strek under, ikke blå. Tellere står i fanen der det trengs." bruk="Å bytte mellom visninger av samme kort eller liste («Oversikt», «Artikler 12», «Samtaler»)." ikke="Navigasjon mellom sider (bruk menyen). Blå aktiv fane. Mer enn ca. fem faner uten at de rulles.">
+    <Komponent id="faner" navn="Faner" kode="Tabs" tekst="Aktiv fane er blekk med strek under, ikke furu. Tellere står i fanen der det trengs." bruk="Å bytte mellom visninger av samme kort eller liste («Oversikt», «Artikler 12», «Samtaler»)." ikke="Navigasjon mellom sider (bruk menyen). Furu som aktiv fane. Mer enn ca. fem faner uten at de rulles.">
       <div class="flate-kort">
         <div class="faner" role="presentation">
           <span class="fane valgt">Oversikt</span><span class="fane">Artikler <span class="teller">12</span></span><span class="fane">Samtaler</span><span class="fane">Filer</span>
@@ -59,9 +59,9 @@ const etikett: Record<string, string> = { noytral: "Nøytral", info: "Info", ven
         <table class="mini-tabell">
           <thead><tr><th>Tilbud</th><th>Kunde</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>T-7031</td><td>Kari Nordmann</td><td><span class="pille s-info"><i></i>Sendt</span></td></tr>
-            <tr><td>T-7032</td><td>Per Nordmann</td><td><span class="pille s-ok"><i></i>Godkjent</span></td></tr>
-            <tr><td>T-7033</td><td>Lise Nordmann</td><td><span class="pille s-haster"><i></i>Haster</span></td></tr>
+            <tr><td>T-7031</td><td>Kari Nordmann</td><td><span class="pille s-ny"><i></i>Sendt</span></td></tr>
+            <tr><td>T-7032</td><td>Per Nordmann</td><td><span class="pille s-ferdig"><i></i>Godkjent</span></td></tr>
+            <tr><td>T-7033</td><td>Lise Nordmann</td><td><span class="pille s-advarsel"><i></i>Haster</span></td></tr>
           </tbody>
         </table>
       </div>

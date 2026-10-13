@@ -42,7 +42,7 @@ export async function lagZip(filer) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const logoer = (await readdir(join(ds, "assets", "logo"))).filter((f) => f.endsWith(".svg")).sort();
+  const logoer = (await readdir(join(ds, "assets", "logo"))).filter((f) => /^(hengsel-symbol|hengsel-ute|hengsel-crm|hengsel|ute|crm|levert-av|sendt-med)(-aksent)?-(lys|mork)\.svg$/.test(f)).sort(); // K-212: de 32 Brand-filene; de nye merkefilene (merke-*, logo-*, ordmerke-*) ligger i /ds/assets/logo/
   if (logoer.length !== 32) throw new Error(`Forventet 32 logofiler i designsystemet, fant ${logoer.length}`);
   const les = (...s) => readFile(join(ds, ...s));
   const les_meg = `Hengsel-logopakken (merke v3). Designsystem fra ${JSON.parse(await readFile(join(rot, "packages", "hengsel-tokens", "designsystem.pin.json"), "utf8")).versjon}.

@@ -10,7 +10,7 @@ body {
   background: var(--flate-kort);
   color: var(--tekst);
   font-family: var(--skrift-familie-hengsel-tekst);
-  font-weight: var(--skrift-vekt-inter-normal);
+  font-weight: var(--skrift-vekt-normal);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -23,10 +23,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 :focus-visible { outline: 2px solid var(--aksent); outline-offset: 3px; }
 
-/* Overskrifter: Newsreader, aldri versaler */
+/* Overskrifter: Schibsted Grotesk (samme skrift som teksten), aldri versaler */
 h1, h2, h3 {
   font-family: var(--skrift-familie-hengsel-overskrift);
-  font-weight: var(--skrift-vekt-newsreader-normal);
+  font-weight: var(--skrift-vekt-fet);
   margin: 0;
   letter-spacing: -0.01em;
   text-wrap: balance;

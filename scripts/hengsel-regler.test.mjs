@@ -74,7 +74,8 @@ test("b) den delte fila har samme lyse verdier som designsystemets egen tokens.c
   const ds = vars(pin.slice(pin.indexOf(":root {"), pin.indexOf("/* nettbrett */")));
   const delt = les(pakke, "tokens.css");
   const mine = vars(delt.slice(delt.indexOf(":root {"), delt.indexOf("/* nettbrett */")));
-  for (const [navn, verdi] of Object.entries(ds)) assert.equal(mine[navn], verdi, navn);
+  // K-212: designsystemets tokens.css har også --*-hsl, --*-rgb og --skala-* (følgevariabler for CRM-et, tailwind/shadcn; trinnskalaen som rgb-tripler). Nettsidene bruker dem ikke og de er ikke med i den delte fila.
+  for (const [navn, verdi] of Object.entries(ds).filter(([n]) => !/-(hsl|rgb)$|^--skala-/.test(n))) assert.equal(mine[navn], verdi, navn);
 });
 
 test("b) mørke verdier: tokens-mork-prover.css har nøyaktig de mørke verdiene i hengsel.tokens.json, og bare under .mork-prover", () => {

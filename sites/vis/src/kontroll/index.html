@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Ordre- og fakturakontroll · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -32,8 +30,8 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 tbody tr{transition:background var(--dur) var(--ease)}
 tbody tr:hover td{background:var(--flate-senket)}
 tbody tr.scan td{background:var(--flate-valgt)}
-tbody tr.bad td{background:var(--status-haster-bg)}
-tr.bad td.diff{color:var(--status-haster-fg);font-weight:600}
+tbody tr.bad td{background:var(--status-advarsel-bg)}
+tr.bad td.diff{color:var(--status-advarsel-fg);font-weight:600}
 td.st{width:110px}
 .flags{display:grid;gap:10px}
 .flag{gap:8px;font-size:15px;padding:12px 14px;line-height:1.45}
@@ -45,7 +43,7 @@ td.st{width:110px}
 .flag .btn{min-height:40px;padding:0 14px;font-size:14px}
 .sum{display:grid;gap:8px}
 .sum div{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.sum b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sum b{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sum span{font-size:13px;color:var(--tekst-dempet)}
 .empty{color:var(--tekst-dempet);font-size:14px;margin:0}
 @media (max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}}
@@ -74,7 +72,7 @@ td.st{width:110px}
       <div class="sum" id="sum" hidden></div>
     </aside>
   </div>
-  <p class="foot">Demoen er ikke koblet til ekte data. Kunde, ordre og priser er oppdiktet. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Demoen er ikke koblet til ekte data. Kunde, ordre og priser er oppdiktet. Skrift: Schibsted Grotesk.</p>
 </div>
 <script src="/kontroll/side.js"></script>
 </body>

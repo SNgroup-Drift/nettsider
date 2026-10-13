@@ -7,7 +7,7 @@ const FILER = [
   ["tokens/hengsel.tokens.json", "hengsel.tokens.json", "Eneste kilde: farger i lys og mørk, status, skrift, størrelser, radius, avstand, skygge og kundetema."],
   ["tokens/tokens.css", "tokens.css", "Web: CSS-variabler for alle roller, for appene og CRM-et (lys og mørk). Nettsidene bruker den delte fila i stedet, med bare lys."],
   ["tokens/tokens.ts", "tokens.ts", "CRM og Expo-montørappen: roller, status og kundetema som TypeScript."],
-  ["tokens/fonts.css", "fonts.css", "@font-face for Inter og Newsreader (woff2, selvhostet)."],
+  ["tokens/fonts.css", "fonts.css", "@font-face for Schibsted Grotesk (variabel woff2, selvhostet)."],
   ["tokens/fonts-fri-liste.css", "fonts-fri-liste.css", "@font-face for kundetemaets frie skriftliste. Last bare de kunden har valgt."],
 ] as const;
 ---
@@ -45,11 +45,10 @@ const FILER = [
     <section class="sek" id="skrifter">
       <header>
         <h2>Skriftene</h2>
-        <p>Inter (400, 500, 600) og Newsreader (400, 500) som woff2, latin-delsett med æ, ø og å. SIL Open Font License; lisensteksten ligger ved siden av filene.</p>
+        <p>Schibsted Grotesk (variabel, vekt 400 til 800) som woff2, latin-delsett med æ, ø og å. SIL Open Font License; lisensteksten ligger ved siden av filen.</p>
       </header>
       <ul class="regler">
-        <li><a href="/ds/assets/fonts/inter-latin-400-normal.woff2">Inter 400</a> · <a href="/ds/assets/fonts/inter-latin-500-normal.woff2">500</a> · <a href="/ds/assets/fonts/inter-latin-600-normal.woff2">600</a> · <a href="/ds/assets/fonts/LICENSE-Inter.txt">lisens</a></li>
-        <li><a href="/ds/assets/fonts/newsreader-latin-400-normal.woff2">Newsreader 400</a> · <a href="/ds/assets/fonts/newsreader-latin-500-normal.woff2">500</a> · <a href="/ds/assets/fonts/LICENSE-Newsreader.txt">lisens</a></li>
+        <li><a href="/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2">Schibsted Grotesk (400–800)</a> · <a href="/ds/assets/fonts/LICENSE-Schibsted-Grotesk.txt">lisens</a></li>
       </ul>
     </section>
     <section class="sek" id="bruk">

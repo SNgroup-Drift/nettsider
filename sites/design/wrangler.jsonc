@@ -4,6 +4,8 @@
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "design",
   "compatibility_date": "2026-10-01",
+  // `wrangler preview` (brukes av Workers Builds for grener) krever en previews-blokk. Den kan være tom: assets og innstillinger står øverst.
+  "previews": {},
   "assets": {
     "directory": "./dist",
     // Ukjente sider får dist/404.html med status 404

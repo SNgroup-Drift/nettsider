@@ -10,7 +10,7 @@ img, svg { max-width: 100%; }
 a { color: var(--aksent-tekst); text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 2px solid var(--aksent); outline-offset: 3px; border-radius: 4px; }
-h1, h2, h3 { font-family: var(--skrift-familie-hengsel-overskrift); font-weight: 400; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
 h1 { font-size: var(--skrift-h1); line-height: var(--skrift-h1-lh); }
 h2 { font-size: var(--skrift-h2); line-height: var(--skrift-h2-lh); }
 h3 { font: 600 var(--skrift-tittel)/var(--skrift-tittel-lh) var(--skrift-familie-hengsel-tekst); letter-spacing: 0; }
@@ -73,7 +73,7 @@ td.tall { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sv.stor { width: 100%; height: 64px; margin: 0; border-radius: var(--radius-kort-lite); display: block; }
 .sv.lys-side { border-color: var(--kant); }
 .verdi { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
-.ok { color: var(--status-ok-fg); font-weight: 600; }
+.ok { color: var(--status-ferdig-fg); font-weight: 600; }
 .feil-tekst { color: var(--status-feil-fg); font-weight: 600; }
 .palett { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); }
 .palett > div { display: grid; gap: 4px; }
@@ -96,8 +96,7 @@ td.tall { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .prove { display: grid; gap: 4px; }
 .prove .stor { font-size: 2.25rem; line-height: 1.1; }
 .skala-prove { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40ch; }
-.inter { font-family: var(--skrift-familie-hengsel-tekst); }
-.newsreader { font-family: var(--skrift-familie-hengsel-overskrift); }
+.grotesk { font-family: var(--skrift-familie-hengsel-tekst); }
 .ios-tekst { font-family: var(--skrift-familie-ios-tekst); }
 
 /* Komponenter (slik de tegnes i CRM, kundeportal og Ute) */

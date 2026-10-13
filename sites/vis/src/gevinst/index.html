@@ -4,23 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Gevinstkalkulator · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <style>
 .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:16px}
-.flag{justify-self:start;display:inline-flex;align-items:center;gap:8px;margin-top:6px;background:var(--status-haster-bg);color:var(--status-haster-fg);box-shadow:inset 3px 0 0 var(--status-haster-fg);border-radius:var(--radius-kort-lite);padding:8px 14px;font:500 14px/1.4 var(--skrift-familie-hengsel-tekst)}
+.flag{justify-self:start;display:inline-flex;align-items:center;gap:8px;margin-top:6px;background:var(--status-advarsel-bg);color:var(--status-advarsel-fg);box-shadow:inset 3px 0 0 var(--status-advarsel-fg);border-radius:var(--radius-kort-lite);padding:8px 14px;font:500 14px/1.4 var(--skrift-familie-hengsel-tekst)}
 .lay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:16px;align-items:start}
 .box{display:grid;gap:14px;min-width:0;align-content:start}
-.box h2{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.box h2{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .box .note{font-size:14px;color:var(--tekst-dempet);margin:0}
 .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .f{display:grid;gap:6px}
@@ -45,7 +43,7 @@ input[type=range]{width:100%;margin:0;height:28px;accent-color:var(--aksent);cur
 .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .kpi>div{background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-stor);padding:16px 18px;display:grid;gap:4px;min-width:0;align-content:start}
 .kpi span{font-size:14px;color:var(--tekst-dempet)}
-.kpi b{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi b{font:var(--skrift-vekt-fet) 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .kpi em{font-style:normal;font-size:13px;color:var(--tekst-dempet)}
 .kpi .main{grid-column:1/-1}
 .kpi .main b{color:var(--aksent-tekst)}
@@ -67,7 +65,7 @@ input[type=range]{width:100%;margin:0;height:28px;accent-color:var(--aksent);cur
 .how b{font-weight:600}
 .how code{font:14px/1.5 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);font-variant-numeric:tabular-nums}
 .mini{display:none}
-@media (max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}.res{position:static}.mini{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:5;justify-content:space-between;align-items:center;gap:10px;background:var(--flate-kort);color:var(--tekst);border-top:1px solid var(--linje);padding:10px 16px calc(10px + env(safe-area-inset-bottom));font-size:14px;text-decoration:none}.mini b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);font-variant-numeric:tabular-nums;color:var(--aksent-tekst)}body{padding-bottom:64px}}
+@media (max-width:900px){.lay{grid-template-columns:minmax(0,1fr)}.res{position:static}.mini{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:5;justify-content:space-between;align-items:center;gap:10px;background:var(--flate-kort);color:var(--tekst);border-top:1px solid var(--linje);padding:10px 16px calc(10px + env(safe-area-inset-bottom));font-size:14px;text-decoration:none}.mini b{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);font-variant-numeric:tabular-nums;color:var(--aksent-tekst)}body{padding-bottom:64px}}
 @media (max-width:640px){.wrap{padding-inline:16px}}
 @media (max-width:420px){.kpi{gap:10px}.kpi>div{padding:14px}.kpi b{font-size:1.75rem}.kpi .main b{font-size:2.25rem}.felt input{width:64px}.bar .v{min-width:84px}}
 </style>
@@ -116,7 +114,7 @@ input[type=range]{width:100%;margin:0;height:28px;accent-color:var(--aksent);cur
     <ul class="how" id="how"></ul>
   </section>
 
-  <p class="foot">Demoen er ikke koblet til ekte data. Alle tall er eksempler. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Demoen er ikke koblet til ekte data. Alle tall er eksempler. Skrift: Schibsted Grotesk.</p>
 </div>
 <a class="mini" href="#res"><span>Spart per år</span><b id="mKr">0 kr</b></a>
 <script src="/gevinst/side.js"></script>

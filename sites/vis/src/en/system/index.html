@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>The system map · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -35,11 +33,11 @@
 .n .pill{justify-self:start;margin-top:2px;font-size:12px}
 .core .n{background:var(--flate-senket);border-color:var(--ramme);padding:16px}
 .core .n.on{border-color:var(--aksent)}
-.core .n b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
+.core .n b{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
 .core .n .hlogo{font-size:28px;color:var(--merke-ord);padding:.3em 0 4px;justify-self:start}
 .det{display:grid;gap:12px;position:sticky;top:12px;min-width:0}
 .det .pill{justify-self:start}
-.det h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.det h2{font:var(--skrift-vekt-fet) 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .det h4{margin:4px 0 0}
 .det ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:15px;line-height:1.5}
 .det p{margin:0;font-size:15px;line-height:1.5;color:var(--tekst-dempet)}
@@ -75,7 +73,7 @@
     </div>
     <aside class="det card" id="det" aria-live="polite"></aside>
   </div>
-  <p class="foot">The statuses are an overview, not an operations report. Fonts: Newsreader and Inter.</p>
+  <p class="foot">The statuses are an overview, not an operations report. Font: Schibsted Grotesk.</p>
 </div>
 <script src="/assets/felles.js"></script>
 <script src="/en/system/side.js"></script>

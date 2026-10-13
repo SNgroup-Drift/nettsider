@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Ordrens reise · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -35,7 +33,7 @@
 /* Ordreboksen */
 .order{border:1px solid var(--linje);border-radius:var(--radius-kort-lite);overflow:hidden}
 .order-h{background:var(--flate-senket);padding:12px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.order-h b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
+.order-h b{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
 .order-h small{color:var(--tekst-dempet);font-size:14px}
 .rows{display:grid}
 .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:10px 16px;border-top:1px solid var(--linje);transition:background .4s}
@@ -47,18 +45,18 @@
 .row .ref{font:12px ui-monospace,Menlo,monospace;white-space:nowrap}
 .row .st{grid-row:1 / span 2;grid-column:2;transition:background .4s,color .4s}
 .pill.sent{background:var(--flate-valgt);color:var(--aksent-tekst)}
-.row.flag{background:var(--status-haster-bg)}
-.check{grid-column:1 / -1;font-size:12px;color:var(--status-ok-fg);display:none}
+.row.flag{background:var(--status-advarsel-bg)}
+.check{grid-column:1 / -1;font-size:12px;color:var(--status-ferdig-fg);display:none}
 .row.done .check{display:block}
-.row.flag .check{color:var(--status-haster-fg)}
+.row.flag .check{color:var(--status-advarsel-fg)}
 
 /* Melding til selgeren: flis med 3 px venstrestrek (varsel eller ok) */
 .dok-lenke{margin:0;font-size:15px}.dok-lenke a{min-height:44px;display:inline-flex;align-items:center}
-.msg{gap:4px;padding:14px 16px;box-shadow:inset 3px 0 0 var(--status-haster-fg);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.msg{gap:4px;padding:14px 16px;box-shadow:inset 3px 0 0 var(--status-advarsel-fg);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
 .msg.show{opacity:1;transform:none}
-.msg.note{box-shadow:inset 3px 0 0 var(--status-ok-fg)}
-.msg .lbl{font:600 13px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--status-haster-fg)}
-.msg.note .lbl{color:var(--status-ok-fg)}
+.msg.note{box-shadow:inset 3px 0 0 var(--status-ferdig-fg)}
+.msg .lbl{font:600 13px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--status-advarsel-fg)}
+.msg.note .lbl{color:var(--status-ferdig-fg)}
 .msg b{font-weight:600;font-size:15px}
 .msg p{margin:0;font-size:14px;color:var(--tekst-dempet)}
 
@@ -74,17 +72,17 @@
 .node.crm .hlogo{font-size:clamp(13px,calc(5.8cqw - 5px),22px)!important}
 .node.crm .nsub{font-size:13px;line-height:1.4;color:var(--tekst-dempet);margin-top:4px}
 .node.sup{right:0;width:46%}
-.node.sup.ok{border-color:var(--status-ok-fg)}
-.node.sup.warn{border-color:var(--status-haster-fg);background:var(--status-haster-bg)}
+.node.sup.ok{border-color:var(--status-ferdig-fg)}
+.node.sup.warn{border-color:var(--status-advarsel-fg);background:var(--status-advarsel-bg)}
 .packet{position:absolute;left:0;top:0;font:500 12px/1.4 var(--skrift-familie-hengsel-tekst);padding:3px 9px;border-radius:var(--radius-pille);background:var(--aksent);color:var(--flate-kort);white-space:nowrap;pointer-events:none;will-change:transform;z-index:2}
-.packet.back{background:var(--status-ok-fg)}
-.packet.back.w{background:var(--status-haster-fg)}
+.packet.back{background:var(--status-ferdig-fg)}
+.packet.back.w{background:var(--status-advarsel-fg)}
 .caption{font-size:15px;line-height:1.5;min-height:3.2em}
 
 /* Finalen legger seg over panelene */
 .finale{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;text-align:center;padding:32px 20px;opacity:0;pointer-events:none;transition:opacity .8s;z-index:5}
 .finale.show{opacity:1;pointer-events:auto}
-.finale h2{font:400 clamp(2rem,4vw,3rem)/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;max-width:18ch;text-wrap:balance}
+.finale h2{font:var(--skrift-vekt-fet) clamp(2rem,4vw,3rem)/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;max-width:18ch;text-wrap:balance}
 .finale p{margin:0;color:var(--tekst-dempet);max-width:44ch}
 .nums{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
 .nums .tile{min-width:120px;padding:12px 18px}
@@ -173,7 +171,7 @@
       <button class="btn ghost" id="fs" type="button">Fullskjerm</button>
       <span class="hint">Piltaster: bla · Mellomrom: spill av/pause</span>
     </div>
-    <p class="foot">Viser målbildet med oppdiktede data. Skrifter: Newsreader og Inter.</p>
+    <p class="foot">Viser målbildet med oppdiktede data. Skrift: Schibsted Grotesk.</p>
   </footer>
 </div>
 

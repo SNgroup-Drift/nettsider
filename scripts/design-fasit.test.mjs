@@ -69,9 +69,9 @@ test("tokens.ts har samme roller og statustoner som JSON", () => {
   const ts = les(ds, "tokens", "tokens.ts");
   const ut = (navn) => JSON.parse(new RegExp(`export const ${navn} = (\\{[\\s\\S]*?\\n\\}) as const;`).exec(ts)[1]);
   const roller = ut("roller");
-  for (const [navn, v] of uten$(json.farge)) assert.deepEqual(roller[navn], { lys: v.lys, mork: v.mork ?? v.lys }, `tokens.ts ${navn}`);
+  for (const [navn, v] of uten$(json.farge)) assert.deepEqual({ lys: roller[navn].lys, mork: roller[navn].mork }, { lys: v.lys, mork: v.mork ?? v.lys }, `tokens.ts ${navn}`); // K-212: tokens.ts har også økt kontrast og P3
   const status = ut("status");
-  for (const [navn, v] of uten$(json.status)) assert.deepEqual(status[navn], { lys: v.lys, mork: v.mork ?? v.lys }, `tokens.ts status ${navn}`);
+  for (const [navn, v] of uten$(json.status)) assert.deepEqual({ lys: status[navn].lys, mork: status[navn].mork }, { lys: v.lys, mork: v.mork ?? v.lys }, `tokens.ts status ${navn}`);
 });
 
 test("/farger viser hver rolle, statustone og palettfarge med verdiene fra JSON", () => {
@@ -99,17 +99,19 @@ test("/skrift viser skalaen og skriftene fra JSON", () => {
   const t = tekst(h);
   for (const [navn, [px, lh]] of uten$(json.skrift.storrelse)) assert.ok(t.includes(`--skrift-${navn}`) && t.includes(`${px} / ${lh} px`), `skala ${navn}`);
   for (const f of json.kundetema.friListe) assert.ok(h.includes(`data-fri-skrift="${f.navn}"`), `fri skrift ${f.navn}`);
-  for (const k of ["SF Pro", "Inter", "Newsreader"]) assert.ok(t.includes(k));
-  assert.ok(existsSync(join(ds, "assets", "fonts", "inter-latin-400-normal.woff2")) && existsSync(join(ds, "assets", "fonts", "LICENSE-Inter.txt")));
+  // K-212: Hengsel-skriften er Schibsted Grotesk. Inter og Newsreader står bare igjen som kundetemaets frie skrifter (friListe).
+  for (const k of ["SF Pro", "Schibsted Grotesk"]) assert.ok(t.includes(k));
+  assert.ok(existsSync(join(ds, "assets", "fonts", "schibsted-grotesk-latin-wght-normal.woff2")) && existsSync(join(ds, "assets", "fonts", "LICENSE-Schibsted-Grotesk.txt")));
 });
 
 test("/merke viser alle 32 logoene, og filene finnes", () => {
   const h = html("merke");
-  const filer = readdirSync(join(ds, "assets", "logo")).filter((f) => f.endsWith(".svg"));
+  // K-212: designsystemet har også de nye merkefilene (merke-*, logo-*, ordmerke-*); siden viser de 32 Brand-filene
+  const filer = readdirSync(join(ds, "assets", "logo")).filter((f) => /^(hengsel-symbol|hengsel-ute|hengsel-crm|hengsel|ute|crm|levert-av|sendt-med)(-aksent)?-(lys|mork)\.svg$/.test(f));
   assert.equal(filer.length, 32);
   // 8 former × aksent/ensfarget × lys/mørk, som 4 fliser per form på siden
   for (const f of filer) assert.ok(h.includes(`/ds/assets/logo/${f}`), `${f} vises ikke på /merke`);
-  assert.ok(existsSync(join(side, "public", "merke", "app-ikon", "crm.svg")));
+  assert.ok(existsSync(join(side, "public", "merke", "app-ikon", "crm.png")));
 });
 
 test("/komponenter har alle komponentene i lys og mørk med brukes til og ikke til", () => {
@@ -160,10 +162,10 @@ test("noindex, streng CSP, favicon og og:image med merket v3", () => {
   for (const navn of ["index", "merke", "farger", "skrift", "komponenter", "skjermer", "last-ned", "404"]) {
     const h = html(navn);
     assert.match(h, /<meta name="robots" content="noindex, nofollow"/, `${navn}: noindex`);
-    assert.match(h, /<link rel="icon" href="\/favicon.svg"/, `${navn}: favicon`);
+    assert.match(h, /<link rel="icon" href="\/favicon-32.png"/, `${navn}: favicon`);
     assert.match(h, /<meta property="og:image" content="https:\/\/design\.hengsel\.no\/og\.png"/, `${navn}: og:image`);
     assert.ok(!/ style="/.test(h) && !/<script(?![^>]*\bsrc=)[^>]*>/.test(h), `${navn}: ingen style-attributter eller inline-skript`);
   }
-  for (const f of ["favicon.svg", "favicon-32.png", "favicon-180.png", "og.png"]) assert.ok(existsSync(join(dist, f)), f);
+  for (const f of ["favicon-32.png", "favicon-180.png", "og.png"]) assert.ok(existsSync(join(dist, f)), f);
   assert.ok(!existsSync(join(dist, "sitemap.txt")), "ingen sitemap");
 });

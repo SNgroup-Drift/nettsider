@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Montasjeplan · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -24,7 +22,7 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.6fr);gap:16px}
 .kpi>.card{display:grid;gap:4px;align-content:start;padding:16px 18px;min-width:0}
 .kpi span{font-size:14px;color:var(--tekst-dempet)}
-.kpi b{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.kpi b{font:var(--skrift-vekt-fet) 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .kpi em{font-style:normal;font-size:13px;color:var(--tekst-dempet)}
 .occ{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;margin-top:4px}
 .occ div{display:grid;gap:3px;justify-items:center;font-size:13px;color:var(--tekst-dempet);font-variant-numeric:tabular-nums}
@@ -41,7 +39,7 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .board{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;min-width:0}
 .grid{display:grid;grid-template-columns:minmax(180px,1fr) repeat(4,minmax(150px,1fr));gap:8px;min-width:812px}
 .hd{font:600 13px var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);padding:2px 4px;display:flex;justify-content:space-between;align-items:baseline}
-.hd b{font:400 1.45rem/1 var(--skrift-familie-hengsel-overskrift);color:var(--tekst);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.hd b{font:var(--skrift-vekt-fet) 1.45rem/1 var(--skrift-familie-hengsel-overskrift);color:var(--tekst);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .hd.w{justify-content:flex-start;gap:6px}
 .tl{grid-column:2/span 4;padding:8px 4px 0;font-size:14px}
 .tl>span{position:sticky;left:0;display:inline-flex;gap:8px;align-items:baseline;flex-wrap:wrap;max-width:100%}
@@ -60,16 +58,16 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .job:hover{border-color:var(--ramme)}
 .job:focus-visible{border-radius:var(--radius-kort-lite);box-shadow:inset 3px 0 0 var(--edge),var(--focus)}
 .job[aria-pressed="true"]{border-color:var(--aksent);box-shadow:inset 3px 0 0 var(--edge),0 0 0 2px var(--flate-valgt)}
-.job.feil{--edge:var(--status-haster-fg)}
+.job.feil{--edge:var(--status-advarsel-fg)}
 .job.adv{--edge:var(--aksent-svak)}
-.job.ok{--edge:var(--status-ok-fg)}
+.job.ok{--edge:var(--status-ferdig-fg)}
 .job.dragging{opacity:.4}
 .job .n{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
 .job .n b{font-weight:600;font-size:14px}
 .job .n span,.job .lv{color:var(--tekst-dempet);font-size:12px}
 .job .pill{justify-self:start;font-size:12px;padding:2px 8px}
 .iss{font-size:12px;line-height:1.35}
-.iss.f{color:var(--status-haster-fg);font-weight:500}
+.iss.f{color:var(--status-advarsel-fg);font-weight:500}
 .iss.a{color:var(--tekst-dempet)}
 .grip{position:absolute;top:2px;right:2px;width:30px;height:40px;border-radius:var(--radius-kort-lite);touch-action:none;cursor:grab;display:grid;place-items:center;color:var(--ramme);font:600 14px/1 var(--skrift-familie-hengsel-tekst);letter-spacing:-3px}
 .grip::before{content:"⋮⋮"}
@@ -84,16 +82,16 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .guide li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5}
 .guide li span{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ramme);display:grid;place-items:center;font:600 12px/1 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
 .guide li.d{color:var(--tekst-dempet)}
-.guide li.d span{background:var(--status-ok-fg);border-color:var(--status-ok-fg);color:var(--flate-kort);font-size:0}
+.guide li.d span{background:var(--status-ferdig-fg);border-color:var(--status-ferdig-fg);color:var(--flate-kort);font-size:0}
 .guide li.d span::after{content:"✓";font-size:12px}
 .side .btn.ghost{justify-self:start}
 .cf{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-.cf li{background:var(--flate-senket);border-radius:var(--radius-kort-lite);box-shadow:inset 3px 0 0 var(--status-haster-fg);padding:10px 12px 10px 14px;font-size:14px;line-height:1.4;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.cf li{background:var(--flate-senket);border-radius:var(--radius-kort-lite);box-shadow:inset 3px 0 0 var(--status-advarsel-fg);padding:10px 12px 10px 14px;font-size:14px;line-height:1.4;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
 .cf li.a{box-shadow:inset 3px 0 0 var(--aksent-svak)}
 .cf li b{font-weight:600}
 .cf li span{color:var(--tekst-dempet);font-size:13px;grid-column:1}
 .cf li .btn{grid-column:2;grid-row:1/span 2;min-height:40px;padding:0 14px;font-size:14px}
-.cf .none{box-shadow:inset 3px 0 0 var(--status-ok-fg);color:var(--status-ok-fg);display:block}
+.cf .none{box-shadow:inset 3px 0 0 var(--status-ferdig-fg);color:var(--status-ferdig-fg);display:block}
 .log{display:grid;gap:8px;max-height:340px;overflow:auto;font-size:15px}
 .log div{line-height:1.5;padding-bottom:8px;border-bottom:1px solid var(--linje)}
 .log b{font-weight:600}
@@ -137,7 +135,7 @@ body.sel .selbar{display:flex}
       <section class="card"><h3 class="eyebrow">Samtidig i <!--logo-hengsel 24 crm--></h3><div class="log" id="log" aria-live="polite"></div></section>
     </aside>
   </div>
-  <p class="foot">Demoen er ikke koblet til ekte data, og ingen forespørsler sendes. Kunder og ordre er oppdiktet. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Demoen er ikke koblet til ekte data, og ingen forespørsler sendes. Kunder og ordre er oppdiktet. Skrift: Schibsted Grotesk.</p>
 </div>
 <div class="selbar" id="selbar" role="status"><span id="seltxt"></span><button class="btn" type="button" id="selx">Avbryt</button></div>
 <script src="/montasjeplan/side.js"></script>

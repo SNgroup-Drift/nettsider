@@ -28,7 +28,7 @@ function chart(v,cap){var bars=$('bars'),tip=$('tip'),box=$('chart'),top=Math.ma
  bars.innerHTML=h;$('weeks').innerHTML=W.map(function(w){return '<span>'+w+'</span>'}).join('');
  [].forEach.call(bars.querySelectorAll('.col'),function(c){var i=+c.dataset.i;
   c.addEventListener('pointerenter',function(){bars.classList.add('dim');[].forEach.call(bars.querySelectorAll('.col'),function(o){o.classList.toggle('hl',o===c)});
-   tip.innerHTML='<b>Uke '+W[i]+'</b><br>'+fmt(v[i])+' kr'+(v[i]>cap?'<br><span style="color:var(--status-haster-fg)">Over kapasitet ('+mill(cap)+')</span>':'');tip.style.display='block';
+   tip.innerHTML='<b>Uke '+W[i]+'</b><br>'+fmt(v[i])+' kr'+(v[i]>cap?'<br><span style="color:var(--status-advarsel-fg)">Over kapasitet ('+mill(cap)+')</span>':'');tip.style.display='block';
    var px=c.offsetLeft+c.offsetWidth/2;tip.style.left=Math.min(Math.max(px-70,0),box.clientWidth-160)+'px';tip.style.top='0px'});
   c.addEventListener('pointerleave',function(){tip.style.display='none';bars.classList.remove('dim');c.classList.remove('hl')})})}
 var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){set(cur)},150)});

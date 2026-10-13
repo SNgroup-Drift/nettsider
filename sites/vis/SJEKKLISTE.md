@@ -19,10 +19,10 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [ ] «Sigdal CRM» er borte fra simulert innhold; butikken heter «Kjøkkenstudio Hamar» (bestilling@kjokkenstudio-hamar.no); «Sigdal» står bare som fabrikk/leverandør.
 
 ## Typografi
-- [ ] Newsreader aldri under 1,45 rem (23 px) og aldri versaler.
+- [ ] Overskrifter i Schibsted Grotesk 700, aldri versaler.
 - [ ] Sperring (0,06 em) og versaler bare på `.eyebrow`. Ingen `letter-spacing` på små bokstaver.
 - [ ] Brødtekst 17 px/1,6, UI 15 px, hjelpetekst 14 px, eyebrow og piller 13 px.
-- [ ] Underoverskrifter Inter 600, aldri på store titler.
+- [ ] Underoverskrifter Schibsted Grotesk 600, aldri på store titler.
 
 ## Farger og flater
 - [ ] Bare tokenverdiene fra README §1. Ingen ren hvit, ingen gradienter, ingen skygger (unntak: varselet i Kundens reise og dokumentarkene i Dokumentene).
@@ -35,7 +35,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [ ] Topplinje: «‹ Visningsrommet» 15 px/500 i `--accent` · strek 1 × 18 px · Hengsel-logo 28 px · statuspille `.pill.nodot` til høyre.
 - [ ] Sidehode: `.eyebrow` → h1 → ingress (`--muted`, maks 62 tegn). Gap 6 px.
 - [ ] Bredde 1180 px, marg 24 px (16 på mobil), 16 px mellom kort.
-- [ ] Bunntekst 14 px `--muted`: «Demoen er ikke koblet til ekte data. Skrifter: Newsreader og Inter.»
+- [ ] Bunntekst 14 px `--muted`: «Demoen er ikke koblet til ekte data. Skrift: Schibsted Grotesk.»
 
 ## Forsiden
 - [ ] Toppfelt: logo 40 px + strek + «Visningsrommet»; SN-logo høyre; ingen meny.
@@ -63,7 +63,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 
 ## Teknisk
 - [ ] Ingen inline-skript; CSP `script-src 'self'` passerer på alle sider.
-- [ ] Skrifter selvhostet (Newsreader, Inter). Ingen Google Fonts-lenke.
+- [ ] Skrift selvhostet (Schibsted Grotesk). Ingen Google Fonts-lenke.
 - [ ] `prefers-reduced-motion` slår av animasjoner.
 - [ ] Alle klikkflater minst 40 px (knapper 44, montørapp 56). Synlig fokusring `--focus`.
 - [ ] `npm test` (lenkesjekk inkl. lenker i `side.js`) og `npm run skjermbilder` grønt. Skjermbilder regenerert i `docs/skjermbilder`.

@@ -1,97 +1,104 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 1.1.0, commit 3099a27b). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.0.0, commit 256974ae). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
  * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
  * Fargene endres i designsystemet (innlandet-crm-sync), og deretter pinnes ny commit med: npm run design:hent */
 
 :root {
-  /* Palett: de åtte merkevarefargene og lys aksent */
-  --warm-black: #31261D;
-  --off-white: #FBF9F6;
-  --beige-4: #F8F2EC;
-  --beige-3: #F2E9DB;
-  --beige-2: #E4D4C4;
-  --beige-1: #C3B5A7;
-  --deep-blue: #5074A9;
-  --dusty-blue: #9CA9BD;
-  --aksent-mork: #8FA9D1;
+  /* Palett: blekk og furu (merkefargene) og produktfargene, som råfarger */
+  --blekk: #1D2430;
+  --blekk-mork: #E8EBF1;
+  --furu: #068472;
+  --aksent-mork: #54B9A5;
+  --produkt-crm: #5165D3;
+  --produkt-crm-mork: #859DFF;
+  --produkt-ute: #B54F00;
+  --produkt-ute-mork: #F77E35;
+  --produkt-levering: #1C8742;
+  --produkt-levering-mork: #5BBD74;
+  --produkt-admin: #70757C;
+  --produkt-admin-mork: #A6ABB2;
 
   /* Roller, lys utgave (nettsidene har bare denne) */
-  --flate-side: #F2E9DB;
-  --flate-kort: #FBF9F6;
-  --flate-senket: #F8F2EC;
-  --flate-valgt: #E4D4C4;
-  --linje: #E4D4C4;
-  --kant: rgba(49, 38, 29, 0.32);
-  --ramme: #C3B5A7;
-  --tekst: #31261D;
-  --tekst-dempet: rgba(49, 38, 29, 0.72);
-  --tekst-svak: #6F6458;
-  --tekst-invers: #FBF9F6;
-  --aksent: #5074A9;
-  --aksent-trykk: #405D88;
-  --aksent-tekst: #3D5E8E;
-  --aksent-svak: #9CA9BD;
-  --paa-aksent: #FBF9F6;
-  --overlegg: rgba(20, 16, 12, 0.48);
-  --varsel-flate: #5074A9;
-  --varsel-tekst: #FBF9F6;
-  --feil-flate: #B8432F;
-  --feil-tekst: #FBF9F6;
-  --alltid-mork: #14100C;
+  --flate-side: #F6F8FB;
+  --flate-kort: #FBFDFF;
+  --flate-senket: #EFF1F4;
+  --flate-valgt: #E0F4EE;
+  --linje: #D7DADE;
+  --kant: #7B8188;
+  --tekst: #1A1D22;
+  --tekst-dempet: #51565C;
+  --tekst-svak: #686E75;
+  --tekst-invers: #FBFDFF;
+  --aksent: #068472;
+  --aksent-trykk: #007665;
+  --aksent-tekst: #016d5e;
+  --aksent-svak: #E0F4EE;
+  --aksent-valgt: #BCE6DB;
+  --paa-aksent: #FFFFFF;
+  --varsel-flate: #FFE9BC;
+  --varsel-tekst: #6D5000;
+  --feil-flate: #FFEBE8;
+  --feil-tekst: #9E2D28;
+  --ramme: #CBCFD4;
+  --overlegg: rgba(11, 13, 17, 0.48);
+  --alltid-mork: #06080B;
 
   /* Statustoner, lys: fg = tekst og prikk, bg = flate, kant = ramme */
-  --status-noytral-fg: #5E564C;
-  --status-noytral-bg: #ECE4D8;
-  --status-noytral-kant: #D9CFC2;
-  --status-info-fg: #31261D;
-  --status-info-bg: #E4D4C4;
-  --status-info-kant: #C3B5A7;
-  --status-venter-fg: #5A4A7C;
-  --status-venter-bg: #E9E3F1;
-  --status-venter-kant: #CFC4E0;
-  --status-sannsynlig-fg: #2E6466;
-  --status-sannsynlig-bg: #DCEBEA;
-  --status-sannsynlig-kant: #B3D1CF;
-  --status-ok-fg: #3B6547;
-  --status-ok-bg: #E0EADB;
-  --status-ok-kant: #B9CFB0;
-  --status-haster-fg: #7A5212;
-  --status-haster-bg: #F5E6C8;
-  --status-haster-kant: #E4CFA0;
-  --status-feil-fg: #8E3522;
-  --status-feil-bg: #F4E2DB;
-  --status-feil-kant: #E4B8A8;
+  --status-ny-fg: #1A57AD;
+  --status-ny-bg: #E7F1FF;
+  --status-ny-kant: #A0C6FF;
+  --status-pagar-fg: #5C46A7;
+  --status-pagar-bg: #EFEEFF;
+  --status-pagar-kant: #C3BBFB;
+  --status-venter-fg: #555B64;
+  --status-venter-bg: #E9F1FB;
+  --status-venter-kant: #BDC5CF;
+  --status-sannsynlig-fg: #80378C;
+  --status-sannsynlig-bg: #FCE9FF;
+  --status-sannsynlig-kant: #E0B1E7;
+  --status-ferdig-fg: #1F6D02;
+  --status-ferdig-bg: #E3F7DE;
+  --status-ferdig-kant: #A5D39B;
+  --status-advarsel-fg: #6D5000;
+  --status-advarsel-bg: #FFE9BC;
+  --status-advarsel-kant: #E0C07F;
+  --status-feil-fg: #9E2D28;
+  --status-feil-bg: #FFEBE8;
+  --status-feil-kant: #F9AEA5;
 
   /* Skygger */
   --skygge-side: none;
-  --skygge-overlegg: 0 1px 2px rgb(49 38 29 / 0.06), 0 8px 24px rgb(49 38 29 / 0.10);
-  --skygge-dialog: 0 24px 64px rgb(49 38 29 / 0.18);
+  --skygge-overlegg: 0 1px 2px rgb(26 29 34 / 0.06), 0 8px 24px rgb(26 29 34 / 0.10);
+  --skygge-dialog: 0 24px 64px rgb(26 29 34 / 0.18);
 
-  /* Skrift: Inter (tekst) og Newsreader (overskrifter), selvhostet (fonts.css) */
-  --skrift-familie-hengsel-tekst: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-  --skrift-familie-hengsel-overskrift: 'Newsreader', Georgia, 'Times New Roman', serif;
+  /* Skrift: Schibsted Grotesk til alt (tekst og overskrifter), selvhostet (fonts.css) */
+  --skrift-familie-hengsel-tekst: 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --skrift-familie-hengsel-overskrift: 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --skrift-familie-ios-tekst: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-  --skrift-familie-ios-tittel: Newsreader;
-  --skrift-vekt-inter-normal: 400;
-  --skrift-vekt-inter-medium: 500;
-  --skrift-vekt-inter-sterk: 600;
-  --skrift-vekt-newsreader-normal: 400;
-  --skrift-vekt-newsreader-medium: 500;
-  --skrift-h1: 36px;
-  --skrift-h1-lh: 40px;
+  --skrift-vekt-normal: 400;
+  --skrift-vekt-medium: 500;
+  --skrift-vekt-sterk: 600;
+  --skrift-vekt-fet: 700;
+  --skrift-h1: 28px;
+  --skrift-h1-lh: 34px;
   --skrift-h2: 26px;
   --skrift-h2-lh: 30px;
   --skrift-tall: 34px;
   --skrift-tall-lh: 38px;
-  --skrift-tittel: 15px;
-  --skrift-tittel-lh: 20px;
+  --skrift-tittel: 16px;
+  --skrift-tittel-lh: 22px;
   --skrift-tekst: 14px;
   --skrift-tekst-lh: 20px;
-  --skrift-meta: 14px;
-  --skrift-meta-lh: 20px;
+  --skrift-meta: 13px;
+  --skrift-meta-lh: 18px;
   --skrift-minste: 12px;
   --skrift-minste-lh: 16px;
+  --skrift-h1-vekt: 700;
+  --skrift-h1-sporing: -0.8px;
+  --skrift-tittel-vekt: 700;
+  --skrift-tittel-sporing: 0;
+  --skrift-tabell: tabular-nums;
 
   /* Radius og avstand */
   --radius-kort-stor: 12px;
@@ -121,16 +128,16 @@
 /* nettbrett */
 @media (max-width: 1199.98px) {
   :root {
-    --skrift-h1: 34px;
-    --skrift-h1-lh: 38px;
+    --skrift-h1: 28px;
+    --skrift-h1-lh: 34px;
   }
 }
 
 /* telefon */
 @media (max-width: 767.98px) {
   :root {
-    --skrift-h1: 36px;
-    --skrift-h1-lh: 40px;
+    --skrift-h1: 26px;
+    --skrift-h1-lh: 32px;
     --skrift-h2: 22px;
     --skrift-h2-lh: 26px;
     --skrift-tall: 30px;

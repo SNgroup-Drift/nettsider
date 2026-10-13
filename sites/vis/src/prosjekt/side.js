@@ -75,11 +75,11 @@ function lines(c){var r=[['Fronter: '+F[c.f][0],F[c.f][1]],['Benkeplate: '+BP[c.
  return r.map(function(x){return '<div class="ln"><span>'+x[0]+'</span><span class="p">'+(x[1]?'+'+fmt(x[1])+' kr':'Inkludert')+'</span></div>'}).join('')+'<div class="ln"><b>Sum tilvalg</b><b class="p">'+fmt(price(c))+' kr</b></div>'}
 /* ---------- kjøper ---------- */
 function elev(c){
- var fc={H:'var(--flate-kort)',E:'var(--ramme)',G:'var(--status-ok-fg)'}[c.f],bc={L:'var(--linje)',K:'var(--tekst)',S:'var(--tekst-dempet)'}[c.b];
+ var fc={H:'var(--flate-kort)',E:'var(--ramme)',G:'var(--status-ferdig-fg)'}[c.f],bc={L:'var(--linje)',K:'var(--tekst)',S:'var(--tekst-dempet)'}[c.b];
  var s='<svg viewBox="0 0 300 150" role="img" aria-label="Skisse av kjøkkenet med valgte fronter og benkeplate">';
  s+='<rect x="0" y="0" width="300" height="150" rx="8" fill="var(--flate-senket)"/>';
  for(var i=0;i<4;i++)s+='<rect x="'+(14+i*50)+'" y="14" width="46" height="44" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>';
- if(c.l)s+='<rect x="14" y="60" width="196" height="4" rx="2" fill="var(--status-haster-bg)" stroke="var(--status-haster-fg)" stroke-opacity=".5"/>';
+ if(c.l)s+='<rect x="14" y="60" width="196" height="4" rx="2" fill="var(--status-advarsel-bg)" stroke="var(--status-advarsel-fg)" stroke-opacity=".5"/>';
  s+='<rect x="10" y="86" width="204" height="7" rx="1" fill="'+bc+'" stroke="var(--tekst)" stroke-opacity=".45"/>';
  for(i=0;i<4;i++){var x=14+i*50;if(c.s&&i===1){for(var j=0;j<3;j++)s+='<rect x="'+x+'" y="'+(95+j*13)+'" width="46" height="12" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>'}else s+='<rect x="'+x+'" y="95" width="46" height="38" rx="2" fill="'+fc+'" stroke="var(--tekst)" stroke-opacity=".45"/>'}
  s+='<rect x="168" y="89" width="38" height="3" rx="1" fill="var(--tekst)" opacity="'+(c.i?.9:.35)+'"/>';
