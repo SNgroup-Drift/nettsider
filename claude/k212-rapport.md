@@ -28,7 +28,7 @@ Ikke endret: Sigdal-sider, kundetemaet (`--kunde-*`, kundeportalens og PDF-ens f
 
 ## Kontroll
 - `npm run build`: alle sider bygger uten feil.
-- `npm test`: 102 tester, 101 grønne, 0 røde (`node --test` + `sjekk-lenker`).
+- `npm test`: 102 tester, 101 grønne, 0 røde, 1 hoppet over av testen selv (fristfarger i admin: «TypeScript-import ikke tilgjengelig», ikke relatert), og `sjekk-lenker` grønn.
 - Konsoll: ingen feil på forsidene; Schibsted Grotesk lastes (`document.fonts.check`), body-bakgrunn er `rgb(246, 248, 251)`, ingen vannrett rulling ved 390 px.
 - Skjermbilder (forsiden, 390 og 1280 px): `claude/k212-skjermbilder/` (`hengsel-no-*`, `design-hengsel-no-*`, `admin-*`).
 
