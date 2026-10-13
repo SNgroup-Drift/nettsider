@@ -70,7 +70,7 @@ Alle skjermbilder vises i Apples Product Bezels (`src/assets/rammer/*.webp`, gje
    - **Studio Display** (tynn mørk skjermkant, fot under): Prøv CRM, Min side PC, Firmaleder.
    - Daglig leder, Veikart, Systemkartet, Gevinst, Montasjeplan, Prosjektsalg, Hvitevarer og Prøv som leverandør er oversikter/skjemaer og står fortsatt rett på siden.
 
-Riktig allerede: skall og topplinje, piller, kort, Newsreader/Inter, bunntekst, nøkkeltall, Systemkartet, Veikart, Tegningen, Min side mobil/PC.
+Riktig allerede: skall og topplinje, piller, kort, Schibsted Grotesk, bunntekst, nøkkeltall, Systemkartet, Veikart, Tegningen, Min side mobil/PC.
 
 ---
 
@@ -109,7 +109,7 @@ Mørk (både `prefers-color-scheme: dark` og `:root[data-theme="dark"]`):
 --ok:#8CC39B; --ok-soft:#1F2E23; --warn:#E2B468; --warn-soft:#33281A;
 ```
 
-Skrifter selvhostes som i dag (Newsreader og Inter fra @fontsource). Ingen ren hvit, ingen gradienter, ingen skygger (eneste unntak: dokumentarkene i Dokumentene, `0 8px 24px rgba(49,38,29,.16)` på Beige 3, og varselet som glir inn i Kundens reise, `0 1px 2px rgba(49,38,29,.06), 0 12px 40px -12px rgba(49,38,29,.22)`).
+Skrift selvhostes (Schibsted Grotesk, pinnet woff2 fra designsystemet, K-212). Ingen ren hvit, ingen gradienter, ingen skygger (eneste unntak: dokumentarkene i Dokumentene, `0 8px 24px rgba(49,38,29,.16)` på Beige 3, og varselet som glir inn i Kundens reise, `0 1px 2px rgba(49,38,29,.06), 0 12px 40px -12px rgba(49,38,29,.22)`).
 
 ## 2. Typografi
 
@@ -158,7 +158,7 @@ Topplinje: `max-width:1180px; padding:14px 24px 0; display:flex; justify-content
 
 Sidehode: `.eyebrow`, h1 (romtittel), ingress `color:var(--muted);max-width:62ch`. Gap 6 px.
 
-Innholdsbredde 1180 px, sidemarg 24 px (16 px på mobil), 16 px mellom kort. Bunntekst 14 px i `--muted`: «Demoen er ikke koblet til ekte data. Skrifter: Newsreader og Inter.»
+Innholdsbredde 1180 px, sidemarg 24 px (16 px på mobil), 16 px mellom kort. Bunntekst 14 px i `--muted`: «Demoen er ikke koblet til ekte data. Skrift: Schibsted Grotesk.»
 
 ## 5. Forsiden (/)
 

@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Visningsrommet – for suppliers</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -31,9 +29,9 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .sn{height:26px;width:auto;display:block;opacity:.9}
 main{flex:1;padding-block:24px 64px}
 .merk{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap}
-h1{font:400 clamp(2.5rem,5.6vw,4.6rem)/1.02 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:16px 0;text-wrap:balance}
+h1{font:var(--skrift-vekt-fet) clamp(2.5rem,5.6vw,4.6rem)/1.02 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:16px 0;text-wrap:balance}
 .ingress{font-size:1.18rem;line-height:1.5;color:var(--tekst-dempet);max-width:60ch;margin:0;text-wrap:pretty}
-h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:48px 0 16px;text-wrap:balance}
+h2{font:var(--skrift-vekt-fet) 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:48px 0 16px;text-wrap:balance}
 h2.m8{margin-bottom:8px}
 .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .parts .tile{padding:16px 18px;gap:4px;align-content:start}
@@ -42,7 +40,7 @@ h2.m8{margin-bottom:8px}
 .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .key{display:grid;gap:8px;align-content:start}
 .key .stat{color:var(--aksent-tekst);line-height:1}
-.ktittel{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;text-wrap:balance}
+.ktittel{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;text-wrap:balance}
 .note{margin:0 0 16px;color:var(--tekst-dempet);font-size:15px;max-width:62ch}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .rom{display:flex;flex-direction:column;gap:10px;color:inherit;text-decoration:none;min-height:200px;transition:border-color var(--dur) var(--ease)}
@@ -114,7 +112,7 @@ footer p{margin:0;font-size:14px;line-height:1.5;color:var(--tekst-dempet)}
 
 <footer>
   <div class="inner">
-    <p>The demos are not connected to real data. All names and figures are made up. Fonts: Newsreader and Inter.</p>
+    <p>The demos are not connected to real data. All names and figures are made up. Font: Schibsted Grotesk.</p>
     <aside class="baand" aria-label="SN Group">
       <a href="https://sngroup.no" class="avsender">
         <svg width="32" height="32" viewBox="0 0 44 44" aria-hidden="true"><g transform="translate(5,5)"><rect class="strek" x="0" y="0" width="34" height="34"/><line class="strek" x1="17" y1="0" x2="17" y2="21"/><line class="strek" x1="0" y1="21" x2="34" y2="21"/><path class="bue" d="M17 21 A9 9 0 0 1 26 30"/></g></svg>

@@ -31,12 +31,10 @@ const PLASSERINGER = [
   ["sngroup.no, familiebånd", "–", "hengsel, aksent, 24 px"],
 ];
 const APPIKON = [
-  ["crm", "CRM, lys", "/merke/app-ikon/crm.svg"],
-  ["crm-mork", "CRM, mørk", "/merke/app-ikon/crm-mork.svg"],
-  ["ute", "Hengsel Ute, lys", "/merke/app-ikon/ute.svg"],
-  ["ute-mork", "Hengsel Ute, mørk", "/merke/app-ikon/ute-mork.svg"],
-  ["ute-tonet", "Hengsel Ute, tonet", "/merke/app-ikon/ute-variant-tonet.svg"],
-  ["ute-klar", "Hengsel Ute, klar", "/merke/app-ikon/ute-variant-klar.svg"],
+  ["crm", "CRM (web-app)", "/merke/app-ikon/crm.png"],
+  ["ute", "Hengsel Ute, lys", "/merke/app-ikon/ute.png"],
+  ["ute-mork", "Hengsel Ute, mørk", "/merke/app-ikon/ute-mork.png"],
+  ["ute-tonet", "Hengsel Ute, tonet", "/merke/app-ikon/ute-tonet.png"],
 ] as const;
 ---
 <Side title="Merket – Hengsel designfasit" description="Hengsel-merket v3: symbolet og alle formene, i aksent og ensfarget, på lys og mørk flate, med luft, minste størrelse, app-ikoner og plasseringer." aktiv="merke">
@@ -44,13 +42,13 @@ const APPIKON = [
     <div class="hode">
       <span class="merkelapp">Merket · v3</span>
       <h1>Leddet som danner en H</h1>
-      <p class="lede">To hengselblader og en stift. Symbolet er Hengsel og står alene der navnet står ved siden av. Navnet står i Inter 500, produktnavnet i Inter 400. Alle filer er ferdige SVG-er med konturert tekst: ikke tegn dem om, og ikke legg til farger eller effekter.</p>
+      <p class="lede">To hengselblader og en stift. Symbolet er Hengsel og står alene der navnet står ved siden av. Navnet står i Schibsted Grotesk Bold, produktnavnet i en lettere vekt. Det nye merket har smalere høyre blad (K-206). Alle filer er ferdige SVG-er med konturert tekst: ikke tegn dem om, og ikke legg til farger eller effekter.</p>
     </div>
 
     <section class="sek" id="former">
       <header>
         <h2>Alle former og utgaver</h2>
-        <p>Åtte former, to utgaver (aksent og ensfarget), lys og mørk: 32 filer. <b>Aksent</b> er standard: stiften er Deep Blue på lys flate og Dusty Blue på mørk flate. <b>Ensfarget</b> er helt Warm Black (trykk og PDF) eller helt Off White (blå flater og foto).</p>
+        <p>Åtte former, to utgaver (aksent og ensfarget), lys og mørk: 32 filer. <b>Aksent</b> er standard: bladene er blekk og stiften er furu på lys flate (lysere furu på mørk). <b>Ensfarget</b> er helt blekk (trykk og PDF) eller helt hvit (furuflater og foto). De nye merkefilene (merke-*, logo-*, ordmerke-*, med glass og tonet) ligger i <code>/ds/assets/logo/</code>.</p>
       </header>
       <div class="merkerad hode-rad svak" aria-hidden="true">
         <span></span><span>Aksent, lys flate</span><span>Aksent, mørk flate</span><span>Ensfarget, lys flate</span><span>Ensfarget, mørk flate</span>
@@ -92,7 +90,7 @@ const APPIKON = [
           <h3>Ikke</h3>
           <ul class="regler">
             <li>Ikke strekk, roter eller legg til skygge, glød eller kontur.</li>
-            <li>Ikke bytt farger: bare Warm Black, Off White, Deep Blue og Dusty Blue.</li>
+            <li>Ikke bytt farger: bare blekk, hvitt og furu (og produktfargene i stiften).</li>
             <li>Ikke bruk symbolet som bokstav i tekst.</li>
             <li>Skriv «Hengsel» med stor H i tekst, aldri «HENGSEL».</li>
           </ul>
@@ -103,7 +101,7 @@ const APPIKON = [
     <section class="sek" id="app-ikoner">
       <header>
         <h2>App-ikoner</h2>
-        <p>Avrundede ikoner til nettsider og dokumentasjon. Ferdige lag for Icon Composer, Expo og Android følger med merkepakken i repoet (<code>brand/hengsel-merke/app-ikon</code>). Under ikonet på telefonen står bare «Ute».</p>
+        <p>Ikonene er hentet fra Hengsel Ute (Expo) og CRM-et (K-206) og avrundes av siden. Ferdige lag for Icon Composer, Expo og Android ligger i appene. Under ikonet på telefonen står bare «Ute».</p>
       </header>
       <div class="skjerm-rutenett smal">
         {APPIKON.map(([id, navn, src]) => (
@@ -115,7 +113,7 @@ const APPIKON = [
     <section class="sek" id="kunde">
       <header>
         <h2>Kundens logo øverst, Hengsel nederst</h2>
-        <p>Inne i løsningene er butikken avsender. Butikkens logo står øverst og er alltid størst, aldri mindre enn Hengsel. Hengsel står lite på fast plass og flytter seg aldri, uansett hvordan kundens logo ser ut. Uten kundelogo står butikkens navn i Inter 600 i samme felt. «Hengsel» står ikke i knapper og tekster, og i SMS og e-post er butikken avsender.</p>
+        <p>Inne i løsningene er butikken avsender. Butikkens logo står øverst og er alltid størst, aldri mindre enn Hengsel. Hengsel står lite på fast plass og flytter seg aldri, uansett hvordan kundens logo ser ut. Uten kundelogo står butikkens navn i Schibsted Grotesk 600 i samme felt. «Hengsel» står ikke i knapper og tekster, og i SMS og e-post er butikken avsender.</p>
       </header>
       <div class="prove-par">
         <div class="prove-lys">
@@ -157,7 +155,7 @@ const APPIKON = [
           <tbody>{PLASSERINGER.map(([a, b, c]) => <tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>)}</tbody>
         </table>
       </div>
-      <p class="svak">«Opplasting av kundens logo»: lys og mørk utgave, SVG eller PNG med gjennomsiktig bakgrunn, minst 400 px bred. Mangler den mørke utgaven, brukes den lyse på en Off White-flis med 8 px luft.</p>
+      <p class="svak">«Opplasting av kundens logo»: lys og mørk utgave, SVG eller PNG med gjennomsiktig bakgrunn, minst 400 px bred. Mangler den mørke utgaven, brukes den lyse på en lys flis med 8 px luft.</p>
     </section>
   </div>
 </Side>

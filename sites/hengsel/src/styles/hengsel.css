@@ -20,21 +20,21 @@
   --accent-ink: var(--paa-aksent);
   --accent-soft: var(--flate-valgt);        /* info: piller, merker, valgte felt */
   --info-tekst: var(--tekst);
-  --ok: var(--status-ok-fg);
-  --ok-soft: var(--status-ok-bg);
+  --ok: var(--status-ferdig-fg);
+  --ok-soft: var(--status-ferdig-bg);
   --bad: var(--status-feil-fg);
   --bad-soft: var(--status-feil-bg);
-  --warn: var(--status-haster-fg);
-  --warn-soft: var(--status-haster-bg);
+  --warn: var(--status-advarsel-fg);
+  --warn-soft: var(--status-advarsel-bg);
   --shadow: var(--skygge-overlegg);
   --surface-app: var(--flate-side);         /* flaten inne i de fiktive appskjermene */
   --app-flate: var(--surface-app);
 
   --f-display: var(--skrift-familie-hengsel-overskrift);
   --f-body: var(--skrift-familie-hengsel-tekst);
-  --w-body: var(--skrift-vekt-inter-normal);
-  --w-medium: var(--skrift-vekt-inter-medium);
-  --w-strong: var(--skrift-vekt-inter-sterk);
+  --w-body: var(--skrift-vekt-normal);
+  --w-medium: var(--skrift-vekt-medium);
+  --w-strong: var(--skrift-vekt-sterk);
   --t-eyebrow: 0.82rem;
   --r-sm: var(--radius-kort-lite);
   --r-field: var(--radius-kort-lite);
@@ -59,7 +59,7 @@
 html { font-size: 17px; scroll-padding-top: calc(var(--topp) + 8px); }
 [hidden] { display: none !important; }
 body { background: var(--flate-side); font-size: 1rem; line-height: 1.6; font-weight: var(--w-body); }
-h1, h2, h3 { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.015em; text-wrap: balance; margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); letter-spacing: -0.015em; text-wrap: balance; margin: 0; }
 h1 { font-size: var(--t-hero); line-height: 1.02; }
 h2 { font-size: var(--t-h1); line-height: 1.08; }
 h3 { font-size: var(--t-h3); line-height: 1.2; }
@@ -73,7 +73,7 @@ input, button { font: inherit; color: inherit; }
 .eyebrow { font: 500 var(--t-eyebrow)/1.3 var(--f-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .lede { font-size: var(--t-lede); color: var(--muted); max-width: 62ch; margin: 0; }
 
-/* Knapper: pille, minst 44 px. Primær Deep Blue (hover 88 %), sekundær omriss i Warm Black (hover fylles) */
+/* Knapper: pille, minst 44 px. Primær furu (hover 88 %), sekundær omriss i blekk (hover fylles) */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 22px;
   border-radius: var(--r-pill); border: 1px solid var(--ink); background: transparent; color: var(--ink);
@@ -88,10 +88,10 @@ input, button { font: inherit; color: inherit; }
 .btn:disabled:hover { background: transparent; color: var(--ink); }
 .btn.primary:disabled:hover { background: var(--accent); color: var(--accent-ink); }
 
-/* Kort: Off White på Beige 3 og Beige 4, 1 px Beige 2-ramme, radius 14 */
+/* Kort: kortflaten på sideflaten og sideflaten, 1 px linjefargen-ramme, radius 14 */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 22px; }
 
-/* Pillefaner (sju steg, for kontoret): valgt fane er fylt Warm Black */
+/* Pillefaner (sju steg, for kontoret): valgt fane er fylt blekk */
 .tab {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--r-pill);
   border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: var(--w-body) 0.95rem var(--f-body);
@@ -100,7 +100,7 @@ input, button { font: inherit; color: inherit; }
 .tab:hover { border-color: var(--ink); }
 .tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .tab .nr { font-variant-numeric: tabular-nums; color: var(--muted); margin-right: 8px; } /* dempet tall (fil 56, oppdatert 10.10) */
-.tab[aria-selected="true"] .nr { color: var(--beige-1); }
+.tab[aria-selected="true"] .nr { color: var(--linje); }
 
 /* Skjema */
 .field { display: grid; gap: 6px; }
@@ -112,7 +112,7 @@ input, button { font: inherit; color: inherit; }
 .input::placeholder { color: var(--soft); }
 .input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
-/* Seksjoner: innhold 1180 px med luft på sidene. Båndene veksler mellom sideflaten (Beige 4) og Beige 3. */
+/* Seksjoner: innhold 1180 px med luft på sidene. Båndene veksler mellom sideflaten (sideflaten) og sideflaten. */
 .h-innhold { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding-inline: var(--pad); box-sizing: border-box; }
 .h-flate { background: var(--surface-highlight); }
 
@@ -125,12 +125,12 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
 .app-flate { --app-flate: var(--surface-app); }
 
-/* Seksjoner (designets mønster): luft over og under, båndene veksler mellom sideflaten og Beige 3 */
+/* Seksjoner (designets mønster): luft over og under, båndene veksler mellom sideflaten og sideflaten */
 .sek { padding-block: clamp(56px, 7vw, 96px); }
 .sek.flate { background: var(--surface-highlight); }
 .sek-hode { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
 
-/* Piller: beige i stedet for lyseblå (Eirik 11.10). «Eksempel» på oppdiktet demoinnhold. */
+/* Piller: furutonet i stedet for lyseblå (Eirik 11.10). «Eksempel» på oppdiktet demoinnhold. */
 .pille { display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--r-pill); background: var(--surface-highlight-strong); color: var(--ink); font: 500 0.78rem/1 var(--f-body); white-space: nowrap; }
 .pille.info { background: var(--accent-soft); color: var(--info-tekst); }
 .eks { display: inline-flex; align-items: center; min-height: 22px; padding: 0 9px; border-radius: var(--r-pill); background: var(--surface-highlight-strong); color: var(--ink); font: 500 0.74rem/1 var(--f-body); letter-spacing: 0.02em; white-space: nowrap; }

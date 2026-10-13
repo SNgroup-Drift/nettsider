@@ -3,10 +3,10 @@
 Gjelder hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.hengsel.no og nye Hengsel-sider. sngroup.no og byggem.no er ikke omfattet (de har SN Groups palett i `packages/design`).
 
 1. **Én kilde.** Alle farger, skrifter, avstander og radier kommer fra `hengsel.tokens.json` i innlandet-crm-sync (`_ds/hengsel-designsystem/`), hentet fra en pinnet commit.
-2. **Én delt fil.** Tokens genereres til én Hengsel-fil som alle Hengsel-sidene importerer (`packages/hengsel-tokens/tokens.css`, skriftene i `fonts.css`). Sidene bruker bare variablene, aldri hex, rgb eller hsl direkte.
+2. **Én delt fil.** Tokens genereres til én Hengsel-fil som alle Hengsel-sidene importerer (`packages/hengsel-tokens/tokens.css`, skriften i `fonts.css`, som bare har Schibsted Grotesk). Sidene bruker bare variablene, aldri hex, rgb eller hsl direkte.
 3. **Fasit.** design.hengsel.no viser det som gjelder. Avviker en annen Hengsel-side, er det den som er feil.
 4. **Bare lys modus.** Nettsidene har ikke mørk modus, og følger ikke maskinens mørke innstilling.
-5. **Merket v3, Newsreader og Inter.** Newsreader for overskrifter og Inter for tekst, selvhostet.
+5. **Furu-profilen og Schibsted Grotesk (K-212).** Palett «blekk med furu» (aksent lys `#068472`, sideflate `#F6F8FB`, kort `#FBFDFF`; verdiene står bare i `hengsel.tokens.json`) og nytt merke med smalere høyre blad. Schibsted Grotesk er den ene skriften, til tekst og overskrifter (overskrifter vekt 700), selvhostet som variabel woff2 med `font-display: swap`, aldri Google Fonts. Inter og Newsreader hører bare til kundetemaet (kundeportal, PDF og e-post) og lastes ikke på Hengsel-sidene.
 6. **Kundens aksent** gjelder bare det sluttkunden ser, og må være minst 4,5:1 mot lys bakgrunn.
 7. **Tester stopper avvik.** Farge utenfor den delte fila, en delt fil som avviker fra pinnen, eller mørk modus gir rødt bygg.
 8. **Farger endres bare i designsystemet** i innlandet-crm-sync, og deretter pinnes ny commit her. Ingen retter farger på én side alene.
@@ -18,7 +18,7 @@ Gjelder hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.he
 - **Importer den delte fila.** Astro-sider bruker `@sngroup/hengsel-tokens/Hode.astro` som ramme (den importerer `tokens.css`, `fonts.css` og `grunn.css`). `sites/vis` kopierer fila til `dist/assets/` ved bygging (`bygg.mjs`).
 - **Mørke tokens** (`--mork-*`, fargeprøver) ligger i en egen fil, `packages/hengsel-tokens/tokens-mork-prover.css`, under klassen `.mork-prover` (aldri `:root`, ingen `@media`). Bare design.hengsel.no importerer den, til prøvene for appene og CRM-et. Den delte `tokens.css` har ingen mørke verdier, og `color-scheme: light` står på `:root`.
 - **Kundens aksent** (`--kunde-*`) er eksempler fra `kundetema` i JSON. Kundens egen farge kommer fra kundens data og gjelder kundeportal, tilbud/kontrakt (PDF) og e-post til kunde.
-- **Merkefiler.** Logoene i `packages/hengsel-tokens/ds/assets/logo/` og filene i `brand/hengsel-merke/` (favicon, appikoner) er ferdige SVG-filer med egne farger. De brukes som `<img>`/favicon, og testen godtar dem bare når de er byte-identiske med originalen (sha256).
+- **Merkefiler.** Logoene i `packages/hengsel-tokens/ds/assets/logo/` og filene i `brand/hengsel-merke/` (favicon, appikoner) er ferdige SVG-filer med egne farger. Favicon, apple-touch-icon, app-ikonene i manifestet og delingsbildene (PNG) lages av `node scripts/lag-favicon.mjs` fra merkefilene i den pinnede mappa; `favicon.svg` finnes ikke lenger (den pinnede merkefila er gjennomsiktig og blir usynlig i mørke nettleserfaner). De brukes som `<img>`/favicon, og testen godtar dem bare når de er byte-identiske med originalen (sha256).
 - **Lysboksen** i dokumentvisningen er mørk (`--alltid-mork`, samme rolle som bildeeditor og kamera). Det er en bildevisning, ikke mørk modus.
 
 ## Ny farge eller ny verdi

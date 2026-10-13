@@ -6,7 +6,7 @@
  * Alle fem stegene ligger i markupen som egne «skjermer» ([data-steg]); bare steg 1 vises uten JS (de andre har hidden fra bygget).
  * scripts/kundeportal.ts bytter steg og lar SMS-en gli inn øverst (telefon) eller nederst til høyre (PC).
  * Tekst og data: src/content/kundeportal.ts (ordrett fra LES-MEG.md). Oppdiktet demoinnhold er merket «Eksempel» (.eks).
- * Lyseblå flater er beige (Eirik 11.10). «Din logo» øverst; «Levert av» Hengsel (levert-av-aksent, 14 px) står bare nederst i menyen på PC.
+ * Valgt og info er furutonet (Eirik 11.10). «Din logo» øverst; «Levert av» Hengsel (levert-av-aksent, 14 px) står bare nederst i menyen på PC.
  * Ingen style-attributter (CSP): alt styres av klasser, og farger kommer fra tokens.
  */
 import { PORTAL as P, STEG } from "../content/kundeportal";
@@ -192,7 +192,7 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
 </div>
 
 <style>
-  /* Naturlig størrelse: Enhet.astro skalerer. Fonten er Inter (--f-body), overskriftene Newsreader. */
+  /* Naturlig størrelse: Enhet.astro skalerer. Fonten er Schibsted Grotesk (--f-body og --f-display). */
   .portal { width: 100%; height: 100%; font-family: var(--f-body); color: var(--ink); line-height: 1.4; -webkit-font-smoothing: antialiased; text-align: left; }
   .skjerm-steg { position: relative; display: flex; width: 100%; height: 100%; background: var(--bg); overflow: hidden; box-sizing: border-box; }
   .skjerm-steg[hidden] { display: none; }
@@ -208,9 +208,9 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .kolonne.grow { flex: 1; }
   .min0 { min-width: 0; }
   b { font-weight: 600; }
-  .h2 { font-family: var(--f-display); font-size: 30px; line-height: 1.1; letter-spacing: -0.015em; }
+  .h2 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); font-size: 30px; line-height: 1.1; letter-spacing: -0.015em; }
   .pc .h2 { font-size: 32px; }
-  .s28 { font-family: var(--f-display); font-size: 28px; } .s30 { font-family: var(--f-display); font-size: 30px; } .s34 { font-family: var(--f-display); font-size: 34px; }
+  .s28 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); font-size: 28px; } .s30 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); font-size: 30px; } .s34 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); font-size: 34px; }
   .tittelrad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .piller { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
   .topp4 { padding-top: 4px; }
@@ -218,7 +218,7 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .pille.ok { background: var(--ok-soft); color: var(--ok); }
 
   .dinlogo { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
-  .dinlogo .boks { border: 1.5px dashed var(--beige-1); border-radius: var(--radius-felt); display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
+  .dinlogo .boks { border: 1.5px dashed var(--kant); border-radius: var(--radius-felt); display: flex; align-items: center; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); box-sizing: border-box; }
   .telefon .dinlogo .boks { height: 34px; padding: 0 15px; font-size: 14px; }
   .pc .dinlogo .boks { height: 40px; padding: 0 18px; font-size: 15px; }
   .avatar { width: 36px; height: 36px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; }
@@ -229,11 +229,11 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .rad { display: flex; justify-content: space-between; font-size: 16px; padding: 11px 0; border-top: 1px solid var(--line); gap: 12px; }
   .rad.mellom { align-items: center; }
   .rad.valg { align-items: center; justify-content: flex-start; }
-  .boks-v { width: 24px; height: 24px; border-radius: var(--radius-felt); flex: none; display: grid; place-items: center; font-size: 14px; border: 1.5px solid var(--beige-1); box-sizing: border-box; color: var(--accent-ink); }
+  .boks-v { width: 24px; height: 24px; border-radius: var(--radius-felt); flex: none; display: grid; place-items: center; font-size: 14px; border: 1.5px solid var(--kant); box-sizing: border-box; color: var(--accent-ink); }
   .boks-v.pa { background: var(--accent); border-color: var(--accent); }
   .reise { display: flex; gap: 14px; align-items: flex-start; }
   .reise-t { padding-bottom: 6px; }
-  .punkt { width: 24px; height: 24px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; border: 1.5px solid var(--beige-1); box-sizing: border-box; margin-top: 2px; color: var(--bg); }
+  .punkt { width: 24px; height: 24px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; border: 1.5px solid var(--kant); box-sizing: border-box; margin-top: 2px; color: var(--bg); }
   .punkt.ferdig { background: var(--ok); border-color: var(--ok); }
   .punkt.na { background: var(--accent); border-color: var(--accent); }
   .sterk { font-weight: 600; }
@@ -263,7 +263,7 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
   .pc-hode { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
   .pc-tekst { display: flex; flex-direction: column; gap: 4px; }
   .ordre { font-size: 14px; color: var(--muted); }
-  .pc-h1 { font-family: var(--f-display); font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; }
+  .pc-h1 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet); font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; }
   .skriv { min-height: 44px; padding: 0 20px; border-radius: var(--radius-pille); border: 1px solid var(--ink); display: inline-flex; align-items: center; font-size: 15px; font-weight: 500; flex: none; box-sizing: border-box; }
 
   /* Menyen på PC */

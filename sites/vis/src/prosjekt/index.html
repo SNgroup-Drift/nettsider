@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Prosjektsalg med tilvalg · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -26,10 +24,10 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .kpi>div{background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-stor);padding:16px 18px;display:grid;gap:4px;align-content:start;min-width:0}
 .kpi span{font-size:14px;color:var(--tekst-dempet)}
-.kpi b{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);white-space:nowrap;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.kpi b{font:var(--skrift-vekt-fet) 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);white-space:nowrap;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .kpi em{font-style:normal;font-size:13px;color:var(--tekst-dempet)}
 .box{display:grid;gap:12px;min-width:0;align-content:start}
-.box h2{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.box h2{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .box .note{font-size:14px;color:var(--tekst-dempet);margin:0}
 .bh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 /* Rutenett med leiligheter */
@@ -40,8 +38,8 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .u:hover{border-color:var(--ramme)}
 .u small{font:400 12px var(--skrift-familie-hengsel-tekst)}
 .u.velger{background:var(--flate-valgt);color:var(--aksent-tekst);border-color:var(--flate-valgt)}
-.u.levert{background:var(--status-ok-bg);color:var(--status-ok-fg);border-color:var(--status-ok-bg)}
-.u.passert{background:var(--status-haster-bg);color:var(--status-haster-fg);border-color:var(--status-haster-bg)}
+.u.levert{background:var(--status-ferdig-bg);color:var(--status-ferdig-fg);border-color:var(--status-ferdig-bg)}
+.u.passert{background:var(--status-advarsel-bg);color:var(--status-advarsel-fg);border-color:var(--status-advarsel-bg)}
 .u.last{background:var(--tekst);color:var(--tekst-invers);border-color:var(--tekst)}
 .u.sel{border-color:var(--aksent);box-shadow:0 0 0 2px var(--aksent)}
 .legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:13px;color:var(--tekst-dempet)}
@@ -59,10 +57,10 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .sb{height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:600 15px var(--skrift-familie-hengsel-tekst)}
 .sb span:last-child{letter-spacing:2px}
 .ph{padding:6px 20px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.ph .lg{font:400 1.45rem/1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
+.ph .lg{font:var(--skrift-vekt-fet) 1.45rem/1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em}
 .ph span{font-size:13px;color:var(--tekst-dempet)}
 .pb{overflow:auto;padding:4px 16px 16px;display:grid;gap:12px;align-content:start}
-.pb h2{font:400 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:4px 0 0}
+.pb h2{font:var(--skrift-vekt-fet) 1.75rem/1.15 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:4px 0 0}
 .c{padding:16px;display:grid;gap:8px;font-size:15px;line-height:1.5}
 .c b{font-weight:600}
 .c p{margin:0;color:var(--tekst-dempet)}
@@ -79,7 +77,7 @@ h3.eyebrow{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .opt:disabled{cursor:default;opacity:.7}
 .pfoot{border-top:1px solid var(--linje);background:var(--flate-side);padding:12px 16px 20px;display:grid;gap:8px}
 .tot{display:flex;justify-content:space-between;align-items:baseline;font-size:15px}
-.tot b{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.tot b{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .big{width:100%;min-height:52px}
 .explain{display:grid;gap:16px}
 /* Bestilling */
@@ -105,7 +103,7 @@ tr.sum td{font-weight:600;border-bottom:0}
 .guide li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5}
 .guide li span{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ramme);display:grid;place-items:center;font:600 12px/1 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
 .guide li.d{color:var(--tekst-dempet)}
-.guide li.d span{background:var(--status-ok-fg);border-color:var(--status-ok-fg);color:var(--flate-kort);font-size:0}
+.guide li.d span{background:var(--status-ferdig-fg);border-color:var(--status-ferdig-fg);color:var(--flate-kort);font-size:0}
 .guide li.d span::after{content:"✓";font-size:12px}
 .side .btn.ghost{justify-self:start}
 .log{display:grid;gap:8px;max-height:420px;overflow:auto;font-size:15px}
@@ -139,7 +137,7 @@ tr.sum td{font-weight:600;border-bottom:0}
       <section class="card"><h3 class="eyebrow">Samtidig i <!--logo-hengsel 24 crm--></h3><div class="log" id="log" aria-live="polite"></div></section>
     </aside>
   </div>
-  <p class="foot">Demoen er ikke koblet til ekte data. Prosjekt, utbygger, kjøpere og priser er oppdiktet, og ingenting sendes. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Demoen er ikke koblet til ekte data. Prosjekt, utbygger, kjøpere og priser er oppdiktet, og ingenting sendes. Skrift: Schibsted Grotesk.</p>
 </div>
 <script src="/prosjekt/side.js"></script>
 </body>

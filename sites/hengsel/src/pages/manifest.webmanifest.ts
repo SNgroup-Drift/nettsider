@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import tokens from "@sngroup/hengsel-tokens/tokens.json";
 
 export const GET: APIRoute = () => {
-  const farge = tokens.palett["off-white"];
+  const farge = tokens.farge["flate-side"].lys;
   const manifest = {
     name: "Hengsel",
     short_name: "Hengsel",

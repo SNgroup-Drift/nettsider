@@ -11,7 +11,7 @@ const fmt = (n: number) => fmtKontrast(n);
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Farger · {roller.length} roller, {status.length} statustoner</span>
-      <h1>Beige flater, varm svart tekst, blå aksent</h1>
+      <h1>Kjølige flater, blekk-tekst, furu som aksent</h1>
       <p class="lede">Merkevarefargene er råfarger. Komponentene bruker rollene (<code>--flate-side</code>, <code>--tekst</code>, <code>--aksent</code> …), så en mørk utgave bare bytter verdiene. Nettsidene er bare lyse; de mørke verdiene står her som fargeprøver til appene og CRM-et. Alt på denne siden er generert fra <code>hengsel.tokens.json</code>.</p>
     </div>
 
@@ -20,9 +20,9 @@ const fmt = (n: number) => fmtKontrast(n);
       <ul class="regler">
         <li>Mørk bakgrunn er <code>{roller.find((r) => r.navn === "flate-side")?.mork}</code>. Aldri rent hvitt, aldri rosa eller magenta, ingen gradienter.</li>
         <li>Bruk rollene, ikke råfargene, i komponenter.</li>
-        <li>Blått er en aksent: primærknapp, fremdrift, fokusring, lenker og ett element per visning. Aktiv fane og meny er Warm Black, ikke blå. Blå tekst på beige bruker alltid <code>--aksent-tekst</code>, aldri <code>--aksent</code>.</li>
-        <li>Beige i stedet for lyseblå der noe er valgt eller «info»: <code>--flate-valgt</code>.</li>
-        <li>Varsler er blå (<code>--varsel-flate</code>), feil er rød (<code>--feil-flate</code>). Kort har ikke fargekant til venstre.</li>
+        <li>Furu er en aksent: primærknapp, fremdrift, fokusring og ett element per visning. Aktiv fane og meny er blekk, ikke furu. Furu som tekst (lenker) bruker alltid <code>--aksent-tekst</code>, aldri <code>--aksent</code>.</li>
+        <li>Valgt og «i dag» er furutonet: <code>--flate-valgt</code>, <code>--aksent-svak</code> og <code>--aksent-valgt</code>.</li>
+        <li>Varsler er furu (<code>--varsel-flate</code>), feil er rød (<code>--feil-flate</code>). Kort har ikke fargekant til venstre.</li>
         <li>Nettsidene er bare lyse. Appene og CRM-et har også en mørk utgave som følger enheten. Kundeportalen og alt som skrives ut eller blir PDF er alltid lyst.</li>
         <li>Status vises alltid med prikk og ord, aldri bare med farge.</li>
         <li>Tekst har minst 4,5:1 mot flaten den står på, grafikk minst 3:1. Tabellene under er beregnet fra verdiene på siden.</li>
@@ -82,7 +82,7 @@ const fmt = (n: number) => fmtKontrast(n);
           </tbody>
         </table>
       </div>
-      <p class="svak">Fargen <code>--aksent</code> ({roller.find((r) => r.navn === "aksent")?.lys}) gir bare 4,0:1 mot <code>--flate-side</code> i lys utgave: den brukes til flater og grafikk, aldri til tekst direkte på beige. Lenker bruker <code>--aksent-tekst</code>.</p>
+      <p class="svak">Fargen <code>--aksent</code> ({roller.find((r) => r.navn === "aksent")?.lys}) gir bare 4,0:1 mot <code>--flate-side</code> i lys utgave: den brukes til flater og grafikk, aldri til tekst direkte på flaten. Lenker bruker <code>--aksent-tekst</code>.</p>
     </section>
 
     <section class="sek" id="status">
@@ -124,14 +124,14 @@ const fmt = (n: number) => fmtKontrast(n);
         <p>Kunden kan velge én aksent, men bare på det sluttkunden ser: tilbud og kontrakt (PDF), e-post til kunde og kundeportal. Disse flatene er alltid lyse. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-farger.</p>
       </header>
       <ul class="regler">
-        <li>Aksenten må ha <b>minst 4,5:1 mot Off White</b> (<code>{tokens.palett["off-white"]}</code>), eller teksten på aksenten (<code>paaAksent</code>) må ha minst 4,5:1 mot aksenten.</li>
+        <li>Aksenten må ha <b>minst 4,5:1 mot kortflaten</b> (<code>{roller.find((r) => r.navn === "flate-kort")?.lys}</code>), eller teksten på aksenten (<code>paaAksent</code>) må ha minst 4,5:1 mot aksenten.</li>
         <li>Den må i tillegg ha <b>minst 3:1 mot mørk flate</b> (<code>{roller.find((r) => r.navn === "flate-side")?.mork}</code>), siden den kan stå som grafikk i mørke visninger.</li>
         <li><b>Aksenten brukes ikke til liten brødtekst i mørk modus.</b> Den er en grafikkfarge der (knapper, streker, fremdrift), ikke en tekstfarge.</li>
-        <li>Bare én aksent. Statusfargene og Warm Black-teksten er Hengsels og kan ikke byttes. Aldri hvitt, rosa eller gradienter.</li>
+        <li>Bare én aksent. Statusfargene og blekk-teksten er Hengsels og kan ikke byttes. Aldri hvitt, rosa eller gradienter.</li>
       </ul>
       <div class="tabell" tabindex="0" role="region" aria-label="Kundens aksentfarge">
         <table>
-          <thead><tr><th>Eksempelkunde</th><th>Aksent</th><th>Mot Off White</th><th>Tekst på aksent</th><th>Mot mørk flate</th><th>Godkjent</th></tr></thead>
+          <thead><tr><th>Eksempelkunde</th><th>Aksent</th><th>Mot kortflaten</th><th>Tekst på aksent</th><th>Mot mørk flate</th><th>Godkjent</th></tr></thead>
           <tbody>
             {eksempler.map((e) => (
               <tr data-kunde={e.id}>

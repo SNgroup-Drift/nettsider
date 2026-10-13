@@ -1,47 +1,36 @@
 ---
-/** Skrift: Inter og Newsreader (selvhostet woff2, OFL), skalaen, SF Pro på iPhone og kundetemaets valg av skrift. Genereres fra hengsel.tokens.json. */
+/** Skrift: Schibsted Grotesk (selvhostet variabel woff2, OFL), skalaen, SF Pro på iPhone og kundetemaets valg av skrift. Genereres fra hengsel.tokens.json. */
 import Side from "../layouts/Side.astro";
 import { famKlasse, skalaKlasse, skriftStorrelser, tokens } from "../lib/tokens";
 const s = tokens.skrift;
 const frie = tokens.kundetema.friListe;
-const rolleSkala: Record<string, string> = { h1: "newsreader", h2: "newsreader", tall: "newsreader" };
 const bruk: Record<string, string> = { h1: "sidetittel", h2: "seksjonstittel", tall: "store tall", tittel: "korttittel, seksjonsnavn", tekst: "brødtekst", meta: "metatekst", minste: "minste tekst" };
 const vekter = (o: Record<string, number>, p: string) => Object.entries(o).filter(([k]) => k.startsWith(p)).map(([k, v]) => ({ k, v }));
 ---
-<Side title="Skrift – Hengsel designfasit" description="Inter og Newsreader, skalaen, SF Pro på iPhone og hvordan kunden kan velge skrift bare på det sluttkunden ser." aktiv="skrift">
+<Side title="Skrift – Hengsel designfasit" description="Schibsted Grotesk, skalaen, SF Pro på iPhone og hvordan kunden kan velge skrift bare på det sluttkunden ser." aktiv="skrift">
   <link slot="head" rel="stylesheet" href="/ds/tokens/fonts-fri-liste.css" />
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Skrift · ett skriftsett</span>
-      <h1>Inter til det du leser, Newsreader til titlene</h1>
-      <p class="lede">Hengsel har ett skriftsett. <b>Inter</b> er tekst, tall, knapper og felt. <b>Newsreader</b> er overskrifter og store tall. Begge er SIL Open Font License og følger med Hengsel til alle kunder: filene er selvhostet (woff2, latin-delsett med æ, ø og å) og lisensteksten ligger ved siden av. Logoene er tegnet i Inter og konturert, så de er uavhengige av skriftfilene.</p>
+      <h1>Schibsted Grotesk til alt</h1>
+      <p class="lede">Hengsel har ett skriftsett: <b>Schibsted Grotesk</b> til tekst, tall, knapper, felt og overskrifter. Den er SIL Open Font License og følger med Hengsel til alle kunder: filen er selvhostet (variabel woff2, latin-delsett med æ, ø og å, font-display: swap) og lisensteksten ligger ved siden av. Logoene er konturert og uavhengige av skriftfilene.</p>
     </div>
 
     <section class="sek" id="familier">
-      <header><h2>Familiene</h2></header>
+      <header><h2>Familien</h2></header>
       <div class="prove-par">
         <div class="kort">
-          <h3>Inter</h3>
-          <p class="dempet">Tekst, tall, knapper, felt. Vekt 400, 500 og 600.</p>
-          <div class="prove inter">
-            <span class="stor vekt-400">Aa Bb Æ Ø Å 0123456789</span>
+          <h3>Schibsted Grotesk</h3>
+          <p class="dempet">Tekst, tall, knapper, felt og overskrifter. Variabel, vekt 400 til 800. Overskrifter er 700.</p>
+          <div class="prove grotesk">
+            <span class="stor vekt-700">Aa Bb Æ Ø Å 0123456789</span>
             <span class="vekt-400">Regular 400: Kjøkkenet leveres uke 42.</span>
             <span class="vekt-500">Medium 500: Kjøkkenet leveres uke 42.</span>
             <span class="vekt-600">Semibold 600: Kjøkkenet leveres uke 42.</span>
+            <span class="vekt-700">Bold 700: Kjøkkenet leveres uke 42.</span>
           </div>
           <code>{s.familie.hengsel.tekst}</code>
-          <p class="svak">Tokens: {vekter(s.vekt, "inter").map((x) => `--skrift-vekt-${x.k} (${x.v})`).join(", ")}. Lisens: <a href="/ds/assets/fonts/LICENSE-Inter.txt">LICENSE-Inter.txt</a></p>
-        </div>
-        <div class="kort">
-          <h3>Newsreader</h3>
-          <p class="dempet">Overskrifter og store tall. Vekt 400 og 500. Aldri under 20 px: mindre tekst er Inter.</p>
-          <div class="prove newsreader">
-            <span class="stor vekt-400">Aa Bb Æ Ø Å 0123456789</span>
-            <span class="vekt-400" >Regular 400: Kjøkkenet leveres uke 42.</span>
-            <span class="vekt-500">Medium 500: Kjøkkenet leveres uke 42.</span>
-          </div>
-          <code>{s.familie.hengsel.overskrift}</code>
-          <p class="svak">Tokens: {vekter(s.vekt, "newsreader").map((x) => `--skrift-vekt-${x.k} (${x.v})`).join(", ")}. Lisens: <a href="/ds/assets/fonts/LICENSE-Newsreader.txt">LICENSE-Newsreader.txt</a></p>
+          <p class="svak">Tokens: {Object.entries(s.vekt).filter(([k]) => !k.startsWith("$")).map(([k, v]) => `--skrift-vekt-${k} (${v})`).join(", ")}. Lisens: <a href="/ds/assets/fonts/LICENSE-Schibsted-Grotesk.txt">LICENSE-Schibsted-Grotesk.txt</a></p>
         </div>
       </div>
     </section>
@@ -60,7 +49,7 @@ const vekter = (o: Record<string, number>, p: string) => Object.entries(o).filte
                 <td><code>--skrift-{t.navn}</code></td>
                 <td class="tall">{t.px} / {t.lh} px</td>
                 <td>{bruk[t.navn] ?? ""}</td>
-                <td><span class={`skala-prove ${skalaKlasse(t.navn)} ${rolleSkala[t.navn] ?? "inter"}`}>Kjøkken med øy</span></td>
+                <td><span class={`skala-prove ${skalaKlasse(t.navn)} grotesk`}>Kjøkken med øy</span></td>
               </tr>
             ))}
           </tbody>
@@ -71,7 +60,7 @@ const vekter = (o: Record<string, number>, p: string) => Object.entries(o).filte
     <section class="sek" id="iphone">
       <header>
         <h2>Hengsel Ute på iPhone</h2>
-        <p>Tekst og kontroller bruker systemskriften <b>SF Pro</b> med Dynamic Type. Newsreader brukes bare til store titler, ikke til brødtekst, knapper, lister eller tall i lister. Størrelsene følger Dynamic Type; skalaen over er utgangspunktet.</p>
+        <p>Tekst og kontroller bruker systemskriften <b>SF Pro</b> med Dynamic Type. Størrelsene følger Dynamic Type; skalaen over er utgangspunktet.</p>
       </header>
       <div class="prove-par">
         <div class="kort">
@@ -80,9 +69,8 @@ const vekter = (o: Record<string, number>, p: string) => Object.entries(o).filte
           <code>{s.familie.ios.tekst}</code>
         </div>
         <div class="kort">
-          <h3>Tittel: Newsreader</h3>
-          <p class="newsreader skala-h2">I dag</p>
-          <code>{s.familie.ios.tittel}</code>
+          <h3>Tittel</h3>
+          <p class="ios-tekst skala-h2">I dag</p>
         </div>
       </div>
     </section>
@@ -90,7 +78,7 @@ const vekter = (o: Record<string, number>, p: string) => Object.entries(o).filte
     <section class="sek" id="kundetema">
       <header>
         <h2>Kundetema: skrift</h2>
-        <p>Kunden kan velge skrift <b>bare på det sluttkunden ser</b>: tilbud og kontrakt (PDF), e-post til kunde og kundeportal. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift, og bryter aldri ut av Inter og Newsreader.</p>
+        <p>Kunden kan velge skrift <b>bare på det sluttkunden ser</b>: tilbud og kontrakt (PDF), e-post til kunde og kundeportal. CRM, montørapp, Hengsel Ute og admin har alltid Hengsel-skrift, og bryter aldri ut av Schibsted Grotesk.</p>
       </header>
       <ul class="regler">
         <li><b>Fri liste:</b> kunden velger fritt blant skriftene under. Alle er OFL, ligger i designsystemet og kan brukes i PDF, e-post og portal uten lisenskjøp.</li>

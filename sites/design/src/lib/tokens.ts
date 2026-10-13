@@ -95,7 +95,7 @@ export const kundeEksempler = Object.entries(json.kundetema.eksempler).map(([nok
   id: nokkel, navn: t.navn, aksent: t.aksent, paaAksent: t.paaAksent, skrift: { tekst: t.skrift.tekst, overskrift: t.skrift.overskrift },
 }));
 export function kundeAksentSjekk(aksent: string, paaAksent: string) {
-  const offWhite = json.palett["off-white"];
+  const offWhite = rolle("flate-kort", "lys"); // K-212: Off White er ikke lenger i paletten; kundens flate er kortflaten
   const mork = rolle("flate-side", "mork");
   const motLys = kontrast(aksent, offWhite);
   const tekstPaaAksent = kontrast(paaAksent, aksent);
@@ -131,7 +131,7 @@ export function lagFasitCss(): string {
   // Skrift: størrelsene i skalaen (PC-bredde) og familiene i kundetemaets frie liste
   for (const [navn, [px, lh]] of Object.entries(json.skrift.storrelse).filter(([k]) => !k.startsWith("$")) as [string, [number, number]][]) ut.push(`.skala-${id(navn)}{font-size:${px}px;line-height:${lh}px}`);
   for (const f of json.kundetema.friListe) ut.push(`.fam-${id(f.navn.toLowerCase())}{font-family:'${f.navn}',${f.rolle === "overskrift" ? "Georgia,serif" : "system-ui,sans-serif"}}`);
-  for (const v of [400, 500, 600]) ut.push(`.vekt-${v}{font-weight:${v}}`);
+  for (const v of [400, 500, 600, 700]) ut.push(`.vekt-${v}{font-weight:${v}}`);
   return ut.join("\n");
 }
 export const skalaKlasse = (navn: string) => `skala-${id(navn)}`;

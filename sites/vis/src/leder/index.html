@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Daglig leder · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -21,11 +19,11 @@
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
 .kpi .card{display:grid;gap:4px;align-content:start;padding:18px 20px}
 .kpi span{font-size:14px;line-height:1.4;color:var(--tekst-dempet)}
-.kpi b{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.kpi b{font:var(--skrift-vekt-fet) 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .kpi em{font-style:normal;font-size:13px;line-height:1.4;color:var(--tekst-dempet)}
 .lay{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
 .lay>.card,.wrap>.card{display:grid;gap:12px;min-width:0}
-.card h2{font:400 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.card h2{font:var(--skrift-vekt-fet) 1.45rem/1.2 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .note{font-size:14px;line-height:1.5;color:var(--tekst-dempet);margin:0}
 .key{display:flex;gap:16px;font-size:13px;color:var(--tekst-dempet);flex-wrap:wrap}
 .key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
@@ -81,7 +79,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <h2>Per selger</h2>
     <div class="tbl"><table><thead><tr><th>Selger</th><th>Butikk</th><th class="n">Tilbud ute</th><th class="n">Vunnet siste 90 d</th><th class="n">Treffprosent</th><th class="n">DB</th><th class="n">Åpne saker</th></tr></thead><tbody id="sel"></tbody></table></div>
   </section>
-  <p class="foot">Alle tall, navn og ordre er oppdiktet. Skrifter: Newsreader og Inter.</p>
+  <p class="foot">Alle tall, navn og ordre er oppdiktet. Skrift: Schibsted Grotesk.</p>
 </div>
 <script src="/leder/side.js"></script>
 </body>

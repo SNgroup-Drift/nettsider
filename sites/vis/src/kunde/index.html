@@ -4,14 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:image" content="https://vis.hengsel.no/og.png">
 <meta name="theme-color" content="%TEMAFARGE%">
 <title>Kundens reise · Visningsrommet</title>
-<link rel="preload" href="/assets/ds/assets/fonts/newsreader-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/ds/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/hengsel-tokens.css">
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
@@ -35,12 +33,12 @@
 .c b{font-weight:600}.c p{margin:0;font-size:14px;color:var(--tekst-dempet)}
 .c .row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;font-variant-numeric:tabular-nums}
 .big{width:100%;min-height:50px;font-size:16px;animation:ci .45s ease both}
-.tl{display:flex;gap:4px}.tl i{flex:1;height:5px;border-radius:3px;background:var(--linje)}.tl i.d{background:var(--status-ok-fg)}.tl i.c{background:var(--aksent)}
-.hero{border-radius:var(--radius-kort-stor);height:120px;background:var(--linje);display:grid;place-items:end start;padding:12px;font:400 1.45rem/1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;animation:ci .45s ease both}
+.tl{display:flex;gap:4px}.tl i{flex:1;height:5px;border-radius:3px;background:var(--linje)}.tl i.d{background:var(--status-ferdig-fg)}.tl i.c{background:var(--aksent)}
+.hero{border-radius:var(--radius-kort-stor);height:120px;background:var(--linje);display:grid;place-items:end start;padding:12px;font:var(--skrift-vekt-fet) 1.45rem/1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;animation:ci .45s ease both}
 
 /* Ved siden av telefonen */
 .side{display:grid;gap:14px;align-content:center}
-.side h2{font:400 clamp(1.75rem,3.4vw,2.4rem)/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.side h2{font:var(--skrift-vekt-fet) clamp(1.75rem,3.4vw,2.4rem)/1.1 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .side p{margin:0;color:var(--tekst-dempet);max-width:52ch;text-wrap:pretty}
 .bak{display:grid;gap:8px;padding:16px 18px}
 .bak h3{margin:0}
@@ -82,7 +80,7 @@
   <footer class="card bar">
     <nav class="steps" id="steps" aria-label="Steg"></nav>
     <div class="ctl"><button class="btn" id="pv" type="button">‹ Forrige</button><button class="btn primary" id="pl" type="button">Spill av</button><button class="btn" id="nx" type="button">Neste ›</button><span class="hint">Piltaster: bla</span></div>
-    <p class="foot">Demoen er ikke koblet til ekte data. Skjermbildene er fra designfilene. Skrifter: Newsreader og Inter.</p>
+    <p class="foot">Demoen er ikke koblet til ekte data. Skjermbildene er fra designfilene. Skrift: Schibsted Grotesk.</p>
   </footer>
 </div>
 <script src="/assets/bilder.js"></script>

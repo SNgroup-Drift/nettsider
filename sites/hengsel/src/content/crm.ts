@@ -50,7 +50,7 @@ export const TILBUD = {
 export const MONTASJE = {
   meta: "Uke 47 · 16.–20. november · 6 monteringer · 1 uten montør", tittel: "Montasjeplan", kolonne: "Firma og montør",
   dager: ["Man 16.", "Tir 17.", "Ons 18.", "Tor 19.", "Fre 20."],
-  /** navn, firma, fem dager: [tekst, status, tone] eller null. tone «ny» = fremhevet (beige) */
+  /** navn, firma, fem dager: [tekst, status, tone] eller null. tone «ny» = fremhevet (furutonet) */
   rader: [
     ["Montør En", "Montasjefirma A", [null, ["Kari Nordmann · Kjøkken", "Ny · bekreftet", "ny"], ["Kari Nordmann · Kjøkken", "Dag 2", "ny"], ["Ola Nordmann · Bad", "Bekreftet", ""], null]],
     ["Montør To", "Montasjefirma A", [["Per Nordmann · Kjøkken", "Bekreftet", ""], ["Per Nordmann · Kjøkken", "Dag 2", ""], null, ["Lise Nordmann · Garderobe", "Venter svar", "warn"], null]],

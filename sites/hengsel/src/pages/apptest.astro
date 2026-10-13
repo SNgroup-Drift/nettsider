@@ -283,7 +283,7 @@ const harFeil = KJENTE_FEIL.length > 0;
 </script>
 
 <style>
-  /* Flatene er --flate-senket, båndene --flate-side og kortene --flate-kort. Deep Blue bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er Warm Black. */
+  /* Flatene er --flate-senket, båndene --flate-side og kortene --flate-kort. furu bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er blekk. */
   .a-side { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); background: var(--a-flate); color: var(--ink); }
   :global(header.sidehode) { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); }
 
@@ -425,7 +425,7 @@ const harFeil = KJENTE_FEIL.length > 0;
   .tidslinje { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
   .tid { display: grid; grid-template-columns: 20px 1fr; gap: 14px; }
   .tid-spor { display: flex; flex-direction: column; align-items: center; }
-  .prikkt { width: 12px; height: 12px; border-radius: var(--radius-pille); box-sizing: border-box; margin-top: 4px; flex: none; background: var(--surface); border: 2px solid var(--beige-1); }
+  .prikkt { width: 12px; height: 12px; border-radius: var(--radius-pille); box-sizing: border-box; margin-top: 4px; flex: none; background: var(--surface); border: 2px solid var(--kant); }
   .tid.forst .prikkt { background: var(--ink); border-color: var(--ink); }
   .linje { width: 1px; flex: 1; background: var(--line); margin-top: 4px; }
   .tid.sist .linje { background: transparent; }

@@ -8,8 +8,7 @@ import "@sngroup/hengsel-tokens/tokens.css";
 import "@sngroup/hengsel-tokens/tokens-mork-prover.css"; // K-202: mørke fargeprøver, bare under .mork-prover (ikke :root)
 import "@sngroup/hengsel-tokens/fonts.css";
 import "../styles/design.css";
-import inter from "@sngroup/hengsel-tokens/ds/assets/fonts/inter-latin-400-normal.woff2?url";
-import newsreader from "@sngroup/hengsel-tokens/ds/assets/fonts/newsreader-latin-400-normal.woff2?url";
+import schibsted from "@sngroup/hengsel-tokens/ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2?url";
 import tokens from "@sngroup/hengsel-tokens/tokens.json";
 import Meny from "../components/Meny.astro";
 import Bunn from "../components/Bunn.astro";
@@ -42,11 +41,9 @@ const css = lagFasitCss();
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content={tokens.farge["flate-side"].lys} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon-180.png" />
-    <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={schibsted} as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <style is:inline set:html={css}></style>
   </head>

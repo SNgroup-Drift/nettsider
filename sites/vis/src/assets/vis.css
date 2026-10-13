@@ -1,4 +1,4 @@
-/* Visningsrommet – felles stil i Hengsel-profilen. Newsreader (titler), Inter (tekst).
+/* Visningsrommet – felles stil i Hengsel-profilen. Schibsted Grotesk til titler og tekst.
    Fasit: Claude Design-prosjektet «vis.hengsel.no» (Visningsrommet.dc.html, VisForside, VisReise, VisKundereise). */
 :root{
   /* Bare delte variabler fra tokens.css (hengsel-tokens.css lastes før denne fila). Lokalt: radius 20, fokusring og tider. */
@@ -11,12 +11,12 @@
 html,body{margin:0}
 body{background:var(--flate-side);color:var(--tekst);font:400 17px/1.6 var(--skrift-familie-hengsel-tekst);-webkit-font-smoothing:antialiased}
 a{color:var(--aksent-tekst);text-underline-offset:3px}
-.serif{font-family:var(--skrift-familie-hengsel-overskrift);font-weight:400}
+.serif{font-family:var(--skrift-familie-hengsel-overskrift);font-weight:var(--skrift-vekt-fet)}
 .muted{color:var(--tekst-dempet)}
 .num{font-variant-numeric:tabular-nums}
 .eyebrow{font:500 13px/1.3 var(--skrift-familie-hengsel-tekst);letter-spacing:.06em;text-transform:uppercase;color:var(--tekst-dempet)}
 .lede{color:var(--tekst-dempet);max-width:62ch;margin:0;text-wrap:pretty}
-.stat{font:400 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);font-variant-numeric:tabular-nums;letter-spacing:-.015em}
+.stat{font:var(--skrift-vekt-fet) 2.25rem/1.1 var(--skrift-familie-hengsel-overskrift);font-variant-numeric:tabular-nums;letter-spacing:-.015em}
 :focus-visible{outline:none;box-shadow:var(--focus);border-radius:var(--radius-kort-lite)}
 
 /* Knapper: 44 px, pilleformet, tekst 15 px */
@@ -38,15 +38,15 @@ a{color:var(--aksent-tekst);text-underline-offset:3px}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--radius-pille);font:500 13px/1.4 var(--skrift-familie-hengsel-tekst);background:var(--linje);color:var(--tekst);white-space:nowrap}
 .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
 .pill.nodot::before{display:none}
-.pill.info{background:var(--status-info-bg);color:var(--status-info-fg)}
-.pill.ok{background:var(--status-ok-bg);color:var(--status-ok-fg)}
-.pill.warn{background:var(--status-haster-bg);color:var(--status-haster-fg)}
+.pill.info{background:var(--status-ny-bg);color:var(--status-ny-fg)}
+.pill.ok{background:var(--status-ferdig-bg);color:var(--status-ferdig-fg)}
+.pill.warn{background:var(--status-advarsel-bg);color:var(--status-advarsel-fg)}
 
 /* Flater: kort på bakgrunnen, fliser inne i kort (aldri kort på kort) */
 .card{background:var(--flate-kort);border:1px solid var(--linje);border-radius:var(--radius-kort-stor);padding:20px 22px}
 .tile{background:var(--flate-senket);border-radius:var(--radius-kort-lite);padding:12px 16px;display:grid;gap:2px}
-.tile.warn{box-shadow:inset 3px 0 0 var(--status-haster-fg)}
-.tile.ok{box-shadow:inset 3px 0 0 var(--status-ok-fg)}
+.tile.warn{box-shadow:inset 3px 0 0 var(--status-advarsel-fg)}
+.tile.ok{box-shadow:inset 3px 0 0 var(--status-ferdig-fg)}
 
 /* Faner, bryter */
 .tabs{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:var(--radius-pille);background:var(--flate-side);border:1px solid var(--linje)}
@@ -80,7 +80,7 @@ a{color:var(--aksent-tekst);text-underline-offset:3px}
 .back{font:500 15px var(--skrift-familie-hengsel-tekst);color:var(--aksent-tekst);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .back:hover{text-decoration:underline}
 .sidehode{display:grid;gap:6px}
-.sidehode h1{font:400 clamp(2rem,3.6vw,3rem)/1.08 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
+.sidehode h1{font:var(--skrift-vekt-fet) clamp(2rem,3.6vw,3rem)/1.08 var(--skrift-familie-hengsel-overskrift);letter-spacing:-.015em;margin:0;text-wrap:balance}
 .sidehode .lede{margin:0}
 .foot{font-size:14px;line-height:1.5;color:var(--tekst-dempet);margin:0}
 @media (max-width:640px){.topbar{padding-inline:16px}}

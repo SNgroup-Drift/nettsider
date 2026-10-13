@@ -2,14 +2,13 @@
 /**
  * K-192: felles ramme for Hengsel-sidene som er bygd med Astro (hengsel.no og admin.hengsel.no): <head>, de delte tokens og skriftene (selvhostet).
  * Erstatter @sngroup/design/components/BaseLayout.astro, som er SN Groups ramme med SN Groups palett og mørk modus.
- * Bare lys modus: ingen tema-attributt på html, ingen mørk theme-color. Adressefeltets farge er Off White fra pinnet hengsel.tokens.json.
+ * Bare lys modus: ingen tema-attributt på html, ingen mørk theme-color. Adressefeltets farge er flate-side (lys) fra pinnet hengsel.tokens.json.
  * Ingen sporing, ingen informasjonskapsler, ingen eksterne ressurser.
  */
 import "../tokens.css";
 import "../fonts.css";
 import "./grunn.css";
-import inter from "../ds/assets/fonts/inter-latin-400-normal.woff2?url";
-import newsreader from "../ds/assets/fonts/newsreader-latin-400-normal.woff2?url";
+import schibsted from "../ds/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2?url";
 import tokens from "../ds/tokens/hengsel.tokens.json";
 
 interface Props {
@@ -26,10 +25,10 @@ interface Props {
   appleIkon?: string;
   ikon32?: string;
   manifest?: string;
-  /** Skriftfiler som skal forhåndslastes. Standard: Newsreader og Inter 400 */
+  /** Skriftfiler som skal forhåndslastes. Standard: Schibsted Grotesk (variabel) */
   forhandslast?: string[];
 }
-const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, ikon = { href: "/favicon.svg", type: "image/svg+xml" }, appleIkon, ikon32, manifest, forhandslast = [newsreader, inter] } = Astro.props;
+const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, ikon = { href: "/favicon-32.png", type: "image/png" }, appleIkon, ikon32, manifest, forhandslast = [schibsted] } = Astro.props;
 // Nettstedene bygger med build.format «file» og trailingSlash «never», så Astro.url.pathname er «/index.html» og «/personvern.html».
 const renSti = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
 const canonical = Astro.site ? new URL(renSti, Astro.site).href : undefined;
@@ -50,7 +49,7 @@ const canonical = Astro.site ? new URL(renSti, Astro.site).href : undefined;
     {canonical && <meta property="og:url" content={canonical} />}
     {delingsbilde && <meta property="og:image" content={delingsbilde} />}
     {delingsbilde && <meta name="twitter:card" content="summary_large_image" />}
-    <meta name="theme-color" content={tokens.palett["off-white"]} />
+    <meta name="theme-color" content={tokens.farge["flate-side"].lys} />
     <link rel="icon" href={ikon.href} type={ikon.type} />
     {ikon32 && <link rel="icon" href={ikon32} sizes="32x32" />}
     {appleIkon && <link rel="apple-touch-icon" href={appleIkon} />}

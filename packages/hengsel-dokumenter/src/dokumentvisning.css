@@ -24,7 +24,7 @@
 .dv-vis { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: start; }
 @media (min-width: 900px) { .dv-vis { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; } }
 .dv-ark-kol { display: flex; flex-direction: column; gap: 14px; align-items: center; min-width: 0; }
-.dv-ark { touch-action: pan-y; position: relative; width: 100%; max-width: 520px; box-shadow: 0 8px 24px color-mix(in srgb, var(--warm-black) 16%, transparent), 0 0 0 1px var(--line); }
+.dv-ark { touch-action: pan-y; position: relative; width: 100%; max-width: 520px; box-shadow: 0 8px 24px color-mix(in srgb, var(--tekst) 16%, transparent), 0 0 0 1px var(--line); }
 .dv-ark.ligg { max-width: 640px; }
 .dv-side[hidden] { display: none; }
 .dv-zoom { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; border-radius: 0; }
@@ -39,7 +39,7 @@
 
 .dv-info { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .dv-tittelrad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.dv-tittel { font: 400 2rem/1.1 var(--f-display); letter-spacing: -0.015em; margin: 0; }
+.dv-tittel { font: var(--skrift-vekt-fet) 2rem/1.1 var(--f-display); letter-spacing: -0.015em; margin: 0; }
 .dv-under { margin: 0; color: var(--muted); }
 .dv-innhold { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
 .dv-innhold li { border-bottom: 1px solid var(--line); }
@@ -51,19 +51,19 @@
 .dv-zoom:focus-visible { box-shadow: inset 0 0 0 3px var(--accent); }
 
 /* Lysboks: <dialog> over hele skjermen, alltid mørk */
-dialog.lys { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--alltid-mork); color: var(--off-white); }
+dialog.lys { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--alltid-mork); color: var(--flate-kort); }
 dialog.lys[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); }
 html:has(dialog.lys[open]) { overflow: hidden; }
 .lys-topp { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px clamp(12px, 3vw, 24px); }
 .lys-tittel { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .lys-tittel b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lys-eks { font-size: 0.78rem; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--off-white) 14%, transparent); color: var(--off-white); white-space: nowrap; }
+.lys-eks { font-size: 0.78rem; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--flate-kort) 14%, transparent); color: var(--flate-kort); white-space: nowrap; }
 .lys-teller { font-size: 0.92rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.lys-rund { width: 44px; height: 44px; flex: none; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--off-white) 20%, transparent); background: color-mix(in srgb, var(--off-white) 8%, transparent); color: var(--off-white); font-size: 20px; cursor: pointer; padding: 0; }
+.lys-rund { width: 44px; height: 44px; flex: none; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--flate-kort) 20%, transparent); background: color-mix(in srgb, var(--flate-kort) 8%, transparent); color: var(--flate-kort); font-size: 20px; cursor: pointer; padding: 0; }
 .lys-rund.stor { width: 48px; height: 48px; font-size: 22px; }
-.lys-rund:hover:not(:disabled) { border-color: var(--off-white); }
+.lys-rund:hover:not(:disabled) { border-color: var(--flate-kort); }
 .lys-rund:disabled { opacity: 0.4; cursor: not-allowed; }
-dialog.lys :focus-visible { outline: none; box-shadow: 0 0 0 2px var(--alltid-mork), 0 0 0 4px var(--dusty-blue); }
+dialog.lys :focus-visible { outline: none; box-shadow: 0 0 0 2px var(--alltid-mork), 0 0 0 4px var(--aksent-svak); }
 .lys-scene { min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: clamp(8px, 2vw, 24px); padding: 0 clamp(8px, 2vw, 24px) 20px; }
 .lys-side { display: flex; overflow: auto; max-height: 100%; min-width: 0; }
 .lys-side > .a4 { flex: none; margin: auto; width: min(calc(100vw - 150px), calc((100dvh - 110px) * 794 / 1123)); box-shadow: 0 8px 24px color-mix(in srgb, var(--alltid-mork) 55%, transparent); }

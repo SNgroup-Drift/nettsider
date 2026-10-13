@@ -83,7 +83,7 @@ const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
   /* Systemkartet: 3 × 3 med Hengsel i midten og linjer ut til hver kobling. Smal skjerm: liste med Hengsel øverst. */
   .kart { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 28px; aspect-ratio: 1 / 1; width: 100%; }
   .linjer { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .linjer line { stroke: var(--beige-1); stroke-width: 1; }
+  .linjer line { stroke: var(--linje); stroke-width: 1; }
   .linjer line.valgt { stroke: var(--accent); stroke-width: 2; }
   .node {
     position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4px;
@@ -97,11 +97,11 @@ const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
   .node[aria-checked="true"]:focus-visible { box-shadow: 0 0 0 2px var(--accent), 0 0 0 4px var(--bg), 0 0 0 6px var(--accent); }
   .nt { font: 600 0.95rem/1.2 var(--f-body); overflow-wrap: anywhere; hyphens: auto; max-width: 100%; }
   .ns { font-size: 0.78rem; line-height: 1.35; color: var(--muted); }
-  .midten .nt { font: 400 1.6rem/1.2 var(--f-display); }
+  .midten .nt { font: var(--skrift-vekt-fet) 1.6rem/1.2 var(--f-display); }
   .midten .ns { color: var(--bg); opacity: 0.82; }
 
   .panel-inn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
-  .pt { font: 400 2rem/1.1 var(--f-display); }
+  .pt { font: var(--skrift-vekt-fet) 2rem/1.1 var(--f-display); }
   .inn-ut { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
   .inn-ut > div { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
   .etikett { font-size: 0.82rem; color: var(--muted); }
@@ -119,7 +119,7 @@ const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
   .sikker .sek-hode { max-width: 680px; }
   .kort-rad { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
   .kort { padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; }
-  .kt { font: 400 1.6rem/1.2 var(--f-display); }
+  .kt { font: var(--skrift-vekt-fet) 1.6rem/1.2 var(--f-display); }
   .selskap { font-size: 0.95rem; }
   .selskap a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 </style>
