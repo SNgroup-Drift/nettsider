@@ -92,7 +92,7 @@ const fmt = (n: number) => fmtKontrast(n);
       </header>
       <div class="prove-par">
         {MODI.map((m) => (
-          <div class={`tema-${m}`}>
+          <div class={`prove-${m}`}>
             <span class="prove-navn">{m === "lys" ? "Lys" : "Mørk"}</span>
             <div class="flate-kort tonerad">
               {status.map((s) => <span class={`pille ${toneKlasse(s.navn, m)}`}><i></i>{s.navn}</span>)}
