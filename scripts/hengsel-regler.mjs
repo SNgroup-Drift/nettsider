@@ -22,10 +22,11 @@ const TEKST = /\.(css|astro|ts|tsx|js|mjs|html|json|svg|webmanifest)$/;
 const sha = (buf) => createHash("sha256").update(buf).digest("hex");
 const alle = (dir) => readdirSync(dir).flatMap((e) => { const s = join(dir, e); return statSync(s).isDirectory() ? alle(s) : [s]; });
 
-/** sha256 for merkefiler som er lov å ha fargeverdier: de pinnede logoene og merkepakken v3 (brand/hengsel-merke). De brukes som <img> og favicon og kan ikke bruke CSS-variabler. */
+/** sha256 for merkefiler som er lov å ha fargeverdier: SVG-ene i den pinnede designsystemmappa (logoer, favicon, delingsbilder, butikkmaler, app-ikon) og i merkepakke v2
+ *  (design/handoff/hengsel_merke_v2, også Sigdal-merket). De brukes som <img> og favicon og kan ikke bruke CSS-variabler; en kopi er lov bare når den er byte-identisk (K-231). */
 export function merkefilSha() {
   const s = new Set();
-  for (const mappe of ["packages/hengsel-tokens/ds/assets/logo", "brand/hengsel-merke"]) for (const f of alle(join(rot, mappe))) if (f.endsWith(".svg")) s.add(sha(readFileSync(f)));
+  for (const mappe of ["packages/hengsel-tokens/ds/assets", "design/handoff/hengsel_merke_v2"]) for (const f of alle(join(rot, mappe))) if (f.endsWith(".svg")) s.add(sha(readFileSync(f)));
   return s;
 }
 

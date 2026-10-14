@@ -111,23 +111,37 @@ test("/merke viser logoene fra palettpakke v2 (besluttede former og utgaver), og
   assert.equal(filer.length, 16);
   for (const f of filer) assert.ok(h.includes(`/ds/assets/logo/${f}`), `${f} vises ikke på /merke`);
   assert.ok(!readdirSync(join(ds, "assets", "logo")).some((f) => /^(logo|merke)-(crm|ute|admin|levering)-(hvit|blekk)\.svg$/.test(f)), "de monokrome produktlogoene er foreslått og skal ikke ligge i designsystemet");
-  assert.ok(!/levert-av|sendt-med|hengsel-ute-aksent|crm-aksent/.test(h), "gamle logonavn (levert-av, sendt-med, …) står på /merke");
+  assert.ok(!/levert-av-aksent|sendt-med-aksent|hengsel-ute-aksent|crm-aksent|hengsel-levering-aksent/.test(h), "gamle logonavn (blå merkepakke v3: levert-av-aksent, sendt-med-aksent, …) står på /merke");
+  // K-231: merkefamilien fra merkepakke v2, favicon med flis, de fire nye ikonene, butikkmaler og motion
+  for (const f of ["levert-av-hengsel-lys", "levert-av-hengsel-mork", "levert-av-hengsel-blekk", "levert-av-hengsel-hvit", "sendt-med-hengsel-lys", "sendt-med-hengsel-mork"]) {
+    assert.ok(h.includes(`/ds/assets/logo/${f}.svg`) && existsSync(join(dist, "ds", "assets", "logo", `${f}.svg`)), `${f}.svg vises ikke på /merke`);
+    for (const x of ["", "-2x", "-3x"]) assert.ok(existsSync(join(dist, "ds", "assets", "logo", "png", `${f}${x}.png`)), `${f}${x}.png mangler`);
+  }
+  for (const f of ["favicon-flis.svg", "favicon-flis-16.png", "favicon-flis-32.png", "favicon-flis-48.png", "favicon.ico"]) assert.ok(existsSync(join(dist, "ds", "assets", "favicon", f)), `favicon ${f} mangler i ds`);
+  assert.ok(h.includes("/ds/assets/favicon/favicon-flis-32.png") && /id="favicon"/.test(h), "favicon med flis skal vises");
+  const t = tekst(h);
+  for (const n of ["Montasjeplan", "Innboks", "Profil", "Hjelp"]) assert.ok(t.includes(n), `det nye ikonet ${n} vises ikke på /merke`);
+  for (const f of ["app-store-iphone-6-9", "app-store-iphone-6-5", "app-store-ipad-13", "google-play-telefon", "google-play-nettbrett-10"]) assert.ok(h.includes(`/ds/assets/butikk/forhandsvisning/${f}.png`) && existsSync(join(dist, "ds", "assets", "butikk", "forhandsvisning", `${f}.png`)), `butikkmal ${f}`);
+  for (const s of ["1080x1080", "1080x1920"]) for (const e of [".mp4", ".webm", "-plakat.png"]) assert.ok(h.includes(`/ds/assets/motion/ute-motion-${s}${e}`) && existsSync(join(dist, "ds", "assets", "motion", `ute-motion-${s}${e}`)), `motion ${s}${e}`);
+  // Kundemerket (Sigdal som eksempel): Warm Black på lys og Off White på mørk flate
+  for (const v of ["warm-black", "off-white"]) assert.ok(h.includes(`/merke/sigdal-crm-levert-av-hengsel-${v}-2x.png`) && existsSync(join(dist, "merke", `sigdal-crm-levert-av-hengsel-${v}-2x.png`)), `Sigdal-merket ${v}`);
   for (const f of ["ute", "ute-mork", "web"]) assert.ok(existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `app-ikon ${f}.png mangler`);
   for (const f of ["crm", "ute-tonet"]) assert.ok(!existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `gammelt app-ikon ${f}.png (brevann) skal ikke finnes`);
 });
 
-test("/komponenter viser alle 49 ikonene fra palettpakke v2 med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
+test("/komponenter viser alle 53 ikonene (49 fra palettpakke v2 og fire nye fra merkepakke v2) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
   const h = html("komponenter");
-  const ikoner = JSON.parse(les(ds, "assets", "ikoner", "ikoner.json")).ikoner;
-  assert.equal(ikoner.length, 49);
+  const ikoner = [...JSON.parse(les(ds, "assets", "ikoner", "ikoner.json")).ikoner, ...JSON.parse(les(ds, "assets", "ikoner", "ikoner-tillegg.json")).ikoner];
+  assert.equal(ikoner.length, 53);
+  assert.deepEqual(ikoner.slice(49).map((i) => i.fil), ["montasjeplan", "innboks", "profil", "hjelp"]);
   const t = tekst(h);
   for (const i of ikoner) {
     assert.ok(t.includes(i.navn), `ikonet ${i.navn} vises ikke`);
     assert.ok(h.includes(`<code>${i.sf}</code>`), `SF Symbol ${i.sf} vises ikke`);
     for (const m of ["16", "20", "24"]) assert.ok(existsSync(join(dist, "ds", "assets", "ikoner", m, `${i.fil}.svg`)), `${m}/${i.fil}.svg mangler i dist`);
   }
-  assert.ok(/foreslått/i.test(t.slice(t.indexOf("49 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
-  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 49 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
+  assert.ok(/foreslått/i.test(t.slice(t.indexOf("53 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
+  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 53 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
   assert.ok(!/stroke="#|stroke="rgb/.test(h), "ikonene skal bruke currentColor, ikke egne farger");
 });
 
@@ -149,20 +163,31 @@ test("/skjermer og /last-ned peker på filer som finnes", () => {
   assert.ok(l.includes("/last-ned/hengsel-logopakke.zip") && existsSync(join(dist, "last-ned", "hengsel-logopakke.zip")));
   const zip = readFileSync(join(dist, "last-ned", "hengsel-logopakke.zip"));
   assert.equal(zip.readUInt32LE(0), 0x04034b50);
-  assert.equal([...zip.toString("latin1").matchAll(/logo\/[\w-]+\.svg/g)].length / 2, readdirSync(join(ds, "assets", "logo")).length, "zip-fila skal ha alle logoene i designsystemet");
+  assert.equal([...zip.toString("latin1").matchAll(/logo\/[\w-]+\.svg/g)].length / 2, readdirSync(join(ds, "assets", "logo")).filter((f) => f.endsWith(".svg")).length, "zip-fila skal ha alle logoene i designsystemet");
+  assert.equal([...zip.toString("latin1").matchAll(/png\/[\w-]+\.png/g)].length / 2, 18, "zip-fila skal ha PNG-ene for levert av og sendt med");
+  assert.equal([...zip.toString("latin1").matchAll(/favicon\/favicon[\w.-]*/g)].length / 2, 5, "zip-fila skal ha favicon med flis (ico, svg, 16, 32, 48)");
+  for (const [f, antall] of [["hengsel-butikkmaler.zip", 14 + 1], ["hengsel-appikoner.zip", 75 + 1]]) {
+    assert.ok(l.includes(`/last-ned/${f}`) && existsSync(join(dist, "last-ned", f)), `${f} mangler`);
+    const z = readFileSync(join(dist, "last-ned", f));
+    assert.equal(z.readUInt16LE(z.length - 22 + 10), antall, `${f}: antall filer`);
+  }
+  for (const f of ["ute-motion-1080x1080.mp4", "ute-motion-1080x1920.webm", "og-hengsel-no.png", "og-kunde.svg"]) assert.ok(l.includes(f) && existsSync(join(dist, "ds", "assets", f.startsWith("ute") ? "motion" : "deling", f)), `${f} på /last-ned`);
   assert.ok(l.includes("/last-ned/hengsel-ikoner.zip") && existsSync(join(dist, "last-ned", "hengsel-ikoner.zip")), "ikonpakken mangler");
   const ikonZip = readFileSync(join(dist, "last-ned", "hengsel-ikoner.zip"));
-  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 147 + 4, "ikonpakken skal ha 49 ikoner i 3 størrelser, pluss LES-MEG, ikoner.json, sprite og tabell");
+  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 53 * 3 + 5, "ikonpakken skal ha 53 ikoner i 3 størrelser, pluss LES-MEG, ikoner.json, ikoner-tillegg.json, sprite og tabell");
 });
 
 test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlandet, Lausanne eller Reckless på sidene eller i nedlastingene", () => {
   bygd();
-  const GAMMELT = /by Hengsel|Sigdal|innlandet|\bengsel\b|H-merke|h-merke|hengsel-merke-liten|v2-h-merke|Lausanne|Reckless|Gjennom linsa/i;
+  const GAMMELT = /by Hengsel|innlandet|\bengsel\b|H-merke|h-merke|hengsel-merke-liten|v2-h-merke|Lausanne|Reckless|Gjennom linsa/i;
   const treff = [];
   for (const f of alle(dist).filter((f) => /\.(html|css|js|txt|svg|webmanifest)$/.test(f))) {
     const t = les(dist, f);
     const sjekk = f.endsWith(".html") ? tekst(t) + " " + [...t.matchAll(/(?:alt|title|aria-label)="([^"]*)"/g)].map((m) => m[1]).join(" ") : t;
-    if ((FORBUDT.test(sjekk) || GAMMELT.test(sjekk))) treff.push(`${f}: ${(sjekk.match(FORBUDT) ?? sjekk.match(GAMMELT))[0]}`);
+    // K-231: Sigdal står bare i kundemerke-eksempelet på /merke (og i de to merkefilene), ingen andre steder
+    const sigdalLov = f === "merke.html";
+    const ren = sigdalLov ? sjekk.replace(/Sigdal/gi, "") : sjekk;
+    if ((FORBUDT.test(ren) || GAMMELT.test(ren))) treff.push(`${f}: ${(ren.match(FORBUDT) ?? ren.match(GAMMELT))[0]}`);
   }
   assert.deepEqual(treff, []);
   // Ingen unntak: heller ikke nedlastingene (hengsel.tokens.json og tokens.ts, som er designsystemets filer) har ekte kundenavn eller Sigdal-skrifter (K-190)
@@ -182,10 +207,13 @@ test("noindex, streng CSP, favicon og og:image med merket v3", () => {
   for (const navn of ["index", "merke", "farger", "skrift", "komponenter", "skjermer", "last-ned", "404"]) {
     const h = html(navn);
     assert.match(h, /<meta name="robots" content="noindex, nofollow"/, `${navn}: noindex`);
-    assert.match(h, /<link rel="icon" href="\/favicon-32.png"/, `${navn}: favicon`);
+    assert.match(h, /<link rel="icon" href="\/favicon\.ico" sizes="any"\s*\/?>/, `${navn}: favicon.ico`);
+    assert.match(h, /<link rel="icon" href="\/favicon-flis\.svg" type="image\/svg\+xml"/, `${navn}: favicon med flis (SVG)`);
+    assert.ok(!/favicon-32\.png/.test(h), `${navn}: gammel favicon-32.png (avrundet flis fra runde 1)`);
     assert.match(h, /<meta property="og:image" content="https:\/\/design\.hengsel\.no\/og\.png"/, `${navn}: og:image`);
     assert.ok(!/ style="/.test(h) && !/<script(?![^>]*\bsrc=)[^>]*>/.test(h), `${navn}: ingen style-attributter eller inline-skript`);
   }
-  for (const f of ["favicon-32.png", "favicon-180.png", "og.png"]) assert.ok(existsSync(join(dist, f)), f);
+  for (const f of ["favicon.ico", "favicon-flis.svg", "favicon-flis-16.png", "favicon-flis-32.png", "favicon-flis-48.png", "favicon-180.png", "og.png"]) assert.ok(existsSync(join(dist, f)), f);
+  assert.ok(!existsSync(join(dist, "favicon-32.png")), "gammel favicon-32.png skal ikke finnes");
   assert.ok(!existsSync(join(dist, "sitemap.txt")), "ingen sitemap");
 });

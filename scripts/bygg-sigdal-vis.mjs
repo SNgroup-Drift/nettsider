@@ -6,7 +6,7 @@
  *
  * Hvorfor her og ikke en egen kopi av rommene: rommene (sites/vis/src) bygges av sites/vis/bygg.mjs som før, til en midlertidig mappe, og så
  * gjøres de om til Sigdal-utgaven av dette skriptet: Sigdal-temaet (/sigdal/tema.css, samme fil som resten av /sigdal) legges over de delte
- * Hengsel-variablene, Hengsel-logoen byttes mot Sigdal-logoen med «levert av Hengsel», stiene får /sigdal/vis som rot, skjermbildene hentes fra
+ * Hengsel-variablene, Hengsel-logoen byttes mot «Sigdal CRM · levert av Hengsel», stiene får /sigdal/vis som rot, skjermbildene hentes fra
  * plassholdermappa (/sigdal/img/vis/…) og tekstene følger profil.json. Ingen rom er kopiert for hånd, så en endring i et rom
  * kommer med i begge utgavene ved neste bygg. Hengsel-skriften, Hengsel-logoene og de grønne skjermbildene følger ikke med.
  * Sikkerhet: ligger under /sigdal/*, altså bak Cloudflare Access og Worker-sjekken (sites/hengsel/worker/sigdal.ts).
@@ -59,14 +59,18 @@ const VIS_TEKST = [
   ["Skrift: Schibsted Grotesk", "Skrift: Newsreader og Inter"],
   ['<span class="eyebrow">SN Group</span>', `<span class="eyebrow">${profil.produkt} · levert av Hengsel</span>`],
 ];
-// Sigdal-logoen (SVG eller PNG i Warm Black) når den finnes i public/sigdal/logo, ellers navnet som tekstmerke
-const logoFil = [`${profil.kunde}-logo.svg`, `${profil.kunde}-logo-warm-black.png`].find((f) => existsSync(join(rot, "sites/hengsel/public", profil.kunde, "logo", f)));
-const LOGO_INNHOLD = logoFil ? `<img class="kundelogo-bilde" src="${profil.sti}/logo/${logoFil}" alt="${profil.navn}" height="24">` : `<span class="kundelogo-navn">${profil.navn}</span>`;
-const LOGO_NAVN = `<span class="kundelogo kundelogo-vis">${LOGO_INNHOLD}<span class="kundelogo-levert">levert av Hengsel</span></span>`;
+// «Sigdal CRM · levert av Hengsel» som ett PNG-merke i Warm Black (merkepakke v2, K-231) når filen finnes i public/sigdal/logo, ellers navnet som tekstmerke med «levert av Hengsel» under
+// PNG (1x, 2x og 3x), ikke SVG: SVG-ene i merkepakke v2 mangler selve Sigdal-logoen
+const merkeGrunn = `${profil.sti}/logo/${profil.kunde}-crm-levert-av-hengsel-warm-black`;
+const harMerke = existsSync(join(rot, "sites/hengsel/public", profil.kunde, "logo", `${profil.kunde}-crm-levert-av-hengsel-warm-black.png`));
+const LOGO_INNHOLD = harMerke
+  ? `<img class="kundelogo-merke" src="${merkeGrunn}-2x.png" srcset="${merkeGrunn}.png 1x, ${merkeGrunn}-2x.png 2x, ${merkeGrunn}-3x.png 3x" alt="${profil.produkt} · levert av Hengsel" width="416" height="48">`
+  : `<span class="kundelogo-navn">${profil.navn}</span><span class="kundelogo-levert">levert av Hengsel</span>`;
+const LOGO_NAVN = `<span class="kundelogo kundelogo-vis">${LOGO_INNHOLD}</span>`;
 
 function html(t, fil) {
   let u = t;
-  u = u.replace(/<meta property="og:image"[^>]*>\n?/g, "");
+  u = u.replace(/<meta (?:property="og:image(?::width|:height)?"|name="twitter:card")[^>]*>\n?/g, "");
   u = u.replace(/<link rel="preload" href="\/assets\/ds\/[^>]*>\n?/g, "");
   u = u.replace(/<link rel="stylesheet" href="\/assets\/hengsel-fonts\.css">\n?/g, "");
   u = u.replace(/(<link rel="stylesheet" href="\/assets\/hengsel-tokens\.css">)/, `$1\n<link rel="stylesheet" href="${profil.sti}/tema.css">`);
@@ -75,7 +79,7 @@ function html(t, fil) {
   // Merket i toppfeltet: Sigdal med «levert av Hengsel»; Hengsel CRM → «Sigdal CRM»; «levert av» i bunnen → tekst
   u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/hengsel-(?:aksent-)?lys\.svg"[^>]*>(<\/span>)/g, `$1${LOGO_NAVN}$2`);
   u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/hengsel-crm-aksent-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kl-ord">${profil.produkt}</span>$2`);
-  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/hengsel-levering-aksent-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kundelogo-levert">levert av Hengsel</span>$2`);
+  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/levert-av-hengsel-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kundelogo-levert">levert av Hengsel</span>$2`);
   u = u.replace(/<img class="sn" src="\/img\/sn-logo\.svg"[^>]*>/g, ""); // SN Group-merket hører ikke til Sigdal-utgaven
   for (const [fra, til] of VIS_TEKST) u = u.split(fra).join(til);
   u = tilKunde(u, profil, { kunTekstOgLogo: true });
