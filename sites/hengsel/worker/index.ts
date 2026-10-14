@@ -1,19 +1,22 @@
 /**
- * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare tre stier går gjennom kode (assets.run_worker_first):
- * /api/demo (demoskjemaet, worker/demo.ts), /apptest og alt under (passordet, worker/apptest.ts) og /hjelp og alt under
- * (brukerveiledningen bak Cloudflare Access, worker/hjelp.ts, K-226). Resten er statiske filer.
+ * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare disse stiene går gjennom kode (assets.run_worker_first):
+ * /api/demo (demoskjemaet, worker/demo.ts), /apptest og alt under (passordet, worker/apptest.ts), /hjelp og alt under (brukerveiledningen,
+ * worker/hjelp.ts, K-226) og /sigdal og alt under (kundeutgaven for Sigdal, worker/sigdal.ts, K-223). /hjelp og /sigdal står bak Cloudflare Access
+ * og bruker samme sjekk (worker/access.ts). Resten er statiske filer.
  */
 import apptest from "./apptest";
 import { handterDemo, type DemoEnv } from "./demo";
 import { erHjelp, handterHjelp, type HjelpEnv } from "./hjelp";
+import { ER_SIGDAL, handterSigdal, type SigdalEnv } from "./sigdal";
 
-type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & HjelpEnv;
+type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & HjelpEnv & SigdalEnv;
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(req.url);
     if (erHjelp(pathname)) return handterHjelp(req, env);
     if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env));
+    if (ER_SIGDAL(pathname)) return handterSigdal(req, env);
     return apptest.fetch(req, env);
   },
 };

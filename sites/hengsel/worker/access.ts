@@ -100,15 +100,15 @@ export function avvis(status: number, tekst: string, ekstra: Record<string, stri
 
 /**
  * Vakten for en beskyttet sti. Gir et avvisningssvar, eller null når forespørselen har gyldig Access-token.
- * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 403 (sjekkes først, så svaret er likt om Access er koblet til eller ikke).
- * - Gyldig token, men ACCESS_TEAM_DOMAIN eller ACCESS_AUD mangler: 503, siden er låst.
+ * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 403.
+ * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 403 også med token (ikke åpent, og ikke noe sted å sjekke tokenet mot). Gjelder alle beskyttede stier (/hjelp og /sigdal).
  * - Annen metode enn GET og HEAD: 405.
  */
 export async function vakt(req: Request, env: AccessEnv, valg: { hent?: typeof fetch; na?: number } = {}): Promise<Response | null> {
   const token = req.headers.get("Cf-Access-Jwt-Assertion");
   if (!token) return avvis(403, "Ingen tilgang. Siden krever innlogging via Cloudflare Access.");
   const oppsett = accessOppsett(env);
-  if (!oppsett) return avvis(503, "Siden er låst. Cloudflare Access er ikke koblet til ennå.");
+  if (!oppsett) return avvis(403, "Ingen tilgang. Siden krever innlogging via Cloudflare Access.");
   const sjekk = await sjekkAccess(token, oppsett, valg);
   if (!sjekk.ok) return avvis(403, "Ingen tilgang. Siden krever innlogging via Cloudflare Access.");
   if (req.method !== "GET" && req.method !== "HEAD") return avvis(405, "Metoden er ikke tillatt.", { Allow: "GET, HEAD" });

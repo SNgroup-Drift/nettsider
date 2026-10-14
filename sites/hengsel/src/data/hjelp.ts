@@ -84,7 +84,6 @@ export const HJELP_ROLLER: Rolle[] = [
     valg: "Prosjektleder",
     kapittel: "Prosjektleder",
     ingress: "Prosjekter med mange boenheter, anbud og tilvalg. Har alt selgeren har, pluss «Mine prosjekter».",
-    merknad: "Full veiledning for tilvalg finnes i «Prosjektleder og tilvalg i Sigdal CRM». Den flyttes inn her når menyen er på plass.",
   },
   {
     id: "montasjeleder",

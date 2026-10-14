@@ -23,7 +23,7 @@ test("wrangler.jsonc sender /hjelp, /hjelp.html og /hjelp/* gjennom Workeren fø
 });
 
 test("ingen testmodus eller omgåelse av Access-sjekken i Worker-koden", () => {
-  for (const f of ["access.ts", "hjelp.ts", "index.ts"]) {
+  for (const f of ["access.ts", "hjelp.ts", "sigdal.ts", "index.ts"]) {
     const kode = les(`sites/hengsel/worker/${f}`).replace(/\/\*[\s\S]*?\*\/|^\s*\/\/.*$/gm, "");
     assert.doesNotMatch(kode, /\b(?:TEST|BYPASS|OMGA|SKIP_ACCESS|localhost|127\.0\.0\.1)\w*/i, f);
   }
@@ -69,11 +69,11 @@ test("uten Cf-Access-Jwt-Assertion gir /hjelp og alt under 403, med noindex og n
   }
 });
 
-test("403 også når Access ikke er koblet til ennå (header mangler), og 503 med gyldig-utseende token uten oppsett", async () => {
+test("403 også når Access ikke er koblet til ennå: både uten token og med gyldig-utseende token (variablene mangler)", async () => {
   for (const e of [env({ ACCESS_TEAM_DOMAIN: "" }), env({ ACCESS_AUD: "" }), env({ ACCESS_TEAM_DOMAIN: undefined, ACCESS_AUD: undefined })]) {
     assert.equal((await kjor(be("/hjelp"), e)).status, 403);
     const r = await kjor(be("/hjelp", await lagToken()), e);
-    assert.equal(r.status, 503);
+    assert.equal(r.status, 403);
     merkene(r);
     assert.doesNotMatch(await r.text(), /<h1>hjelp<\/h1>/);
   }

@@ -1,0 +1,22 @@
+---
+/**
+ * Kundens logo i menyen og bunnen (K-223): public/<kunde>/logo/<kunde>-logo.svg, ellers <kunde>-logo-warm-black.png (Sigdal: transparent PNG
+ * i Warm Black). Finnes ingen av dem, står kundens navn som tekstmerke i kundens overskriftsskrift.
+ * «levert av Hengsel» står under som tekst; Hengsel Levering-logoen er ikke brukt fordi den har Hengsel-farger. Stilen (.kundelogo-*) ligger i kundetemaet (tokens.css).
+ */
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import type { Kunde } from "../kunde";
+interface Props { kunde: Kunde; levertAv?: "under" | "ingen" }
+const { kunde, levertAv = "under" } = Astro.props;
+// SVG når den er levert, ellers PNG-en fra merkevareprofilen (transparent, Warm Black)
+const kandidater = [`${kunde.sti}/logo/${kunde.nokkel}-logo.svg`, `${kunde.sti}/logo/${kunde.nokkel}-logo-warm-black.png`];
+const logoFil = kandidater.find((f) => existsSync(join(process.cwd(), "public", f)));
+const harLogo = !!logoFil;
+---
+<span class="kundelogo">
+  {harLogo
+    ? <img class="kundelogo-bilde" src={logoFil} alt={kunde.navn} height="30" width="70" />
+    : <span class="kundelogo-navn">{kunde.navn}</span>}
+  {levertAv === "under" && <span class="kundelogo-levert">levert av Hengsel</span>}
+</span>

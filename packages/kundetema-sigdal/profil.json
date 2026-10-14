@@ -1,0 +1,115 @@
+{
+  "kunde": "sigdal",
+  "navn": "Sigdal",
+  "produkt": "Sigdal CRM",
+  "sti": "/sigdal",
+  "attributt": "data-kunde",
+  "vis": "/sigdal/vis/",
+  "sider": [
+    "/",
+    "/crm",
+    "/ute",
+    "/kundeportal",
+    "/slik-virker-det",
+    "/dokumenter",
+    "/integrasjoner",
+    "/apptest"
+  ],
+  "titler": {
+    "/": "Sigdal CRM · levert av Hengsel",
+    "/crm": "CRM – Min dag, ordre og montasjeplan · Sigdal CRM",
+    "/ute": "Hengsel Ute – montørappen for iPhone og iPad · Sigdal CRM",
+    "/kundeportal": "Kundeportalen · Sigdal CRM",
+    "/slik-virker-det": "Slik virker det – ordrens reise · Sigdal CRM",
+    "/dokumenter": "Dokumenter · Sigdal CRM",
+    "/integrasjoner": "Integrasjoner og sikkerhet · Sigdal CRM",
+    "/apptest": "Test Hengsel Ute – testversjon av montørappen · Sigdal CRM"
+  },
+  "tekst": [
+    [
+      "<span>Butikknavn</span>",
+      "<span>Studio Sigdal</span>"
+    ],
+    [
+      "Hengsel er løsningen for kjøkken- og interiørbutikker.",
+      "Sigdal CRM er løsningen for Sigdals kjøkken- og interiørbutikker på Hamar, Lillehammer og Gjøvik."
+    ],
+    [
+      "Hengsel CRM",
+      "Sigdal CRM"
+    ],
+    [
+      "Vil dere se Hengsel i bruk?",
+      "Vil dere se Sigdal CRM i bruk?"
+    ],
+    [
+      "Vi viser løsningen med en ordre fra start til slutt. Ring oss eller be om demo.",
+      "Vi viser løsningen med en ordre fra start til slutt. Ring oss eller send en e-post."
+    ],
+    [
+      "Be om demo",
+      "Ta kontakt"
+    ],
+    [
+      "Hengsel lager dokumentene av det som allerede står på ordren",
+      "Sigdal CRM lager dokumentene av det som allerede står på ordren"
+    ],
+    [
+      "Hengsel viser hva som er endret",
+      "Sigdal CRM viser hva som er endret"
+    ],
+    [
+      "Hengsel sammenligner ordrebekreftelsen",
+      "Sigdal CRM sammenligner ordrebekreftelsen"
+    ],
+    [
+      "Hengsel fant 1 avvik mot ordren",
+      "Sigdal CRM fant 1 avvik mot ordren"
+    ],
+    [
+      "Inn i Hengsel",
+      "Inn i Sigdal CRM"
+    ],
+    [
+      "Ut fra Hengsel",
+      "Ut fra Sigdal CRM"
+    ],
+    [
+      "Butikknavn",
+      "Sigdal Hamar"
+    ],
+    [
+      "Din logo",
+      "Sigdal"
+    ],
+    [
+      "Hengsel står lite i bunnlinjen.",
+      "«Levert av Hengsel» står lite i bunnlinjen."
+    ],
+    [
+      "hva selgeren ser i Hengsel",
+      "hva selgeren ser i Sigdal CRM"
+    ],
+    [
+      "ordrens reise i Hengsel",
+      "ordrens reise i Sigdal CRM"
+    ],
+    [
+      "Hengsel eies av ES-HOLDING AS",
+      "Sigdal CRM leveres av Hengsel, som eies av ES-HOLDING AS"
+    ],
+    [
+      "Kundeportalen – Hengsel",
+      "Kundeportalen – Sigdal CRM"
+    ],
+    [
+      "Hva som inngår, hvordan oppstarten går, og hvordan dere får en demo.",
+      "Hvordan oppstarten går, og hvordan dere kommer i gang med Sigdal CRM."
+    ],
+    [
+      "Priser og demo",
+      "Kom i gang"
+    ]
+  ],
+  "merknad": "Fargene står bare i tokens.css (variablene --sigdal-*). Denne fila gir testene og skriptene navn og sti. Sigdal-profilen har ingen rød, grønn eller rosa/magenta."
+}

@@ -2,22 +2,33 @@
 /** Bunnen (Bunn.dc.html): Hengsel-merket, to lenkegrupper, kontakt og selskapslinja. Tekst ordrett fra LES-MEG.md. */
 import { BUNN_MER, BUNN_PRODUKT } from "../content/nav";
 import { EPOST, TEL, TEL_HREF } from "../content/forside";
+import KundeLogo from "./KundeLogo.astro";
+import { kundeHref, type Kunde } from "../kunde";
+interface Props { /** Kundeutgave (K-223) */ kunde?: Kunde }
+const { kunde } = Astro.props;
+const produkt = kunde ? kunde.bunnProdukt.map(([t, h]) => [t, kundeHref(kunde, h)] as const) : BUNN_PRODUKT;
 ---
 <footer class="bunn">
   <div class="rutenett">
     <div class="merke">
-      <picture>
-        <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" loading="lazy" />
-      </picture>
-      <p>CRM, montørapp og kundeportal for kjøkken- og interiørbutikker.</p>
+      {kunde ? (
+        <KundeLogo kunde={kunde} />
+      ) : (
+        <picture>
+          <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" loading="lazy" />
+        </picture>
+      )}
+      <p>{kunde ? `${kunde.produkt}: CRM, montørapp og kundeportal for Sigdals butikker.` : "CRM, montørapp og kundeportal for kjøkken- og interiørbutikker."}</p>
     </div>
     <nav aria-label="Produkt">
       <span class="tittel">Produkt</span>
-      {BUNN_PRODUKT.map(([t, h]) => <a href={h}>{t}</a>)}
+      {produkt.map(([t, h]) => <a href={h}>{t}</a>)}
     </nav>
     <nav aria-label="Mer">
       <span class="tittel">Mer</span>
-      {BUNN_MER.map(([t, h]) => <a href={h}>{t}</a>)}
+      {kunde
+        ? <><a href={kundeHref(kunde, "/slik-virker-det")}>Slik virker det</a><a href={kundeHref(kunde, "/integrasjoner")}>Integrasjoner og sikkerhet</a><a href={kunde.vis}>Visningsrommet</a></>
+        : BUNN_MER.map(([t, h]) => <a href={h}>{t}</a>)}
     </nav>
     <div class="kontakt">
       <span class="tittel">Kontakt</span>
@@ -28,9 +39,9 @@ import { EPOST, TEL, TEL_HREF } from "../content/forside";
   </div>
   <div class="linje">
     <div class="linje-inn">
-      <span>Hengsel · ES-HOLDING AS · org.nr. 927 363 585</span>
+      <span>{kunde ? `${kunde.produkt} · levert av Hengsel · ES-HOLDING AS · org.nr. 927 363 585` : "Hengsel · ES-HOLDING AS · org.nr. 927 363 585"}</span>
       <span>Skjermbildene viser demodata. Navn og tall er ikke ekte.</span>
-      <a href="/personvern">Personvern</a>
+      <a href={kunde ? "https://hengsel.no/personvern" : "/personvern"}>Personvern</a>
     </div>
   </div>
 </footer>

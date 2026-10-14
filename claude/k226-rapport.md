@@ -49,7 +49,7 @@ Sjekken er laget som en egen, delt modul (`worker/access.ts`, funksjonen `vakt(r
 
 - **K-225 er ikke tilgjengelig her.** Datafila følger feltene i oppdraget (kapittel, rolle, tittel, menyvei, steg, skjermbilde). Er CRM-ets navn eller typer annerledes, endres bare `hjelp.ts`.
 - **Innholdet er kildeteksten, med tre små endringer:** «(K-222)» (internt saksnummer) er tatt ut av bunnteksten, linja «Skrift på siden: Schibsted Grotesk (Hengsel)» er fjernet (designnotat), og «Skjermbilde: Min dag» er blitt «Skjermbilde kommer».
-  Merknaden om «Prosjektleder og tilvalg i Sigdal CRM» står uendret; den nevner et kundenavn i en veiledning som andre kunder også får se, så Eirik bør vurdere den.
+  Merknaden om «Prosjektleder og tilvalg i Sigdal CRM» er fjernet fra hjelpeteksten (K-226, etter K-223-flettingen).
 - Bare lys modus (reglene for Hengsel-sidene). Kildeutkastet hadde mørk modus og Google Fonts; begge er tatt bort.
 - Ingen HawkScan-skanning er kjørt (ingen API-nøkkel i miljøet).
 

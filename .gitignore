@@ -9,3 +9,5 @@ dist/
 sites/vis/fasit/
 sites/design/public/last-ned/
 sites/design/public/ds/
+
+.harnesskit/
