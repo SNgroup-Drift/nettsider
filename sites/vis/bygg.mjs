@@ -85,6 +85,13 @@ function menyHtml(aktiv, under) {
   });
   return lenker.join("") + `<a class="crm" href="/crm/">Logg inn på CRM</a>`;
 }
+// «Prøv i demoen» (K-229): rommene som bare viser skjermer har en lenke til riktig sted i demo.hengsel.no. Stedene står i demo-lenker.json.
+const DEMO = JSON.parse(await readFile(join(her, "demo-lenker.json"), "utf8"));
+function demoLenke(rom) {
+  const sti = DEMO.rom[rom];
+  if (typeof sti !== "string" || !sti.startsWith("/")) throw new Error(`demo-lenker.json: ${rom} har ingen sti`);
+  return `<p class="demo-lenke"><a class="btn primary" href="${DEMO.adresse}${sti}" target="_blank" rel="noopener" data-demo="${rom}">${DEMO.tekst} ›</a></p>`;
+}
 // Bunnen (samme på alle sidene med toppfelt)
 const BUNN = (await readFile(join(her, "bunn.html"), "utf8")).trim();
 let sider = 0;
@@ -96,6 +103,7 @@ async function settInnLogo(dir) {
       const tekst = await readFile(sti, "utf8");
       const ny = tekst
         .replace("<!--bunn-->", () => BUNN)
+        .replace(/<!--prov-demo ([a-z]+)-->/, (_, rom) => demoLenke(rom))
         .replace(/<!--meny(?: ([a-z]+))?(?: (under))?-->/, (_, aktiv, under) => menyHtml(aktiv, under))
         .replaceAll("%TEMAFARGE%", palett.farge["flate-side"].lys)
         .replace(/<!--logo-hengsel (\d+)(?: ([a-z-]+))?-->/g, (_, n, f) => hengselLogo(Number(n), f))

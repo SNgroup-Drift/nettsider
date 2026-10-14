@@ -89,3 +89,6 @@ a{color:var(--aksent-tekst);text-underline-offset:3px}
 
 /* Siden bygges av gruppe.js: footeren skjules til innholdet står der, så den ikke hopper (CLS) når kortene settes inn */
 main:has(#out:empty)+footer{visibility:hidden}
+
+/* «Prøv i demoen» (K-229): lenke til demo.hengsel.no i rommene som bare viser skjermer */
+.demo-lenke{margin:14px 0 0}

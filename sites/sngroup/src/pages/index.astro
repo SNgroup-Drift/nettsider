@@ -4,7 +4,6 @@ import Section from "@sngroup/design/components/Section.astro";
 import CompanyRow from "@sngroup/design/components/CompanyRow.astro";
 import ContactBlock from "@sngroup/design/components/ContactBlock.astro";
 import Plantegning from "../components/Plantegning.astro";
-import HengselEnheter from "../components/HengselEnheter.astro";
 import { virksomheter } from "../content/virksomheter";
 import { selskap } from "../content/selskap";
 ---
@@ -59,26 +58,21 @@ import { selskap } from "../content/selskap";
     </Section>
 
     <section id="hengsel" class="hengsel">
-      <div class="wrap hg">
-        <div>
+      <div class="wrap">
+        <div class="hg-kort">
           <div class="label">App for montører</div>
           <h2 class="hg-logo">
             <img class="lys" src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
             <img class="mork" src="/logo/hengsel-aksent-mork.svg" alt="" width="422" height="100" />
           </h2>
           <p class="lede">
-            Montørappen for montører og montasjefirmaer som jobber for kjøkkenbutikkene i gruppen. Bla gjennom skjermene til høyre.
+            Montørappen for montører og montasjefirmaer som jobber for kjøkkenbutikkene i gruppen. Kun for inviterte brukere.
           </p>
-          <ul class="egenskaper">
-            <li>Dagens jobber, tegninger og varer</li>
-            <li>Kontrollmål, kvalitetssjekk, bilder og avvik</li>
-            <li>Ferdigmelding på telefon og iPad</li>
-            <li>Virker uten dekning, og sender når nettet er tilbake</li>
-            <li>Kun for inviterte brukere</li>
-          </ul>
-          <a href="/personvern" class="pill">Personvern for Hengsel <span aria-hidden="true">→</span></a>
+          <div class="hg-lenker">
+            <a href="https://hengsel.no" class="pill solid">Se hengsel.no <span aria-hidden="true">→</span></a>
+            <a href="/personvern" class="pill">Personvern for Hengsel <span aria-hidden="true">→</span></a>
+          </div>
         </div>
-        <HengselEnheter />
       </div>
     </section>
 
@@ -118,7 +112,8 @@ import { selskap } from "../content/selskap";
   .chip[aria-pressed="true"] i { background: var(--aksent); }
   .rader { border-top: 1px solid var(--linje-svak); }
   .hengsel { padding-block: var(--seksjon); }
-  .hg { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .hg-kort { max-width: 720px; border: 1px solid var(--linje); border-radius: var(--radius-kort-stor, 20px); background: var(--flate); padding: clamp(24px, 4vw, 40px); }
+  .hg-lenker { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 24px; }
   .hg-logo { margin: 16px 0 0; line-height: 0; }
   .hg-logo img { height: clamp(48px, 7vw, 88px); width: auto; display: block; }
   .hg-logo .mork { display: none; }
@@ -128,11 +123,8 @@ import { selskap } from "../content/selskap";
   }
   :global(html[data-theme="dark"]) .hg-logo .lys { display: none; }
   :global(html[data-theme="dark"]) .hg-logo .mork { display: block; }
-  .egenskaper { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
-  .egenskaper li { display: flex; gap: 12px; align-items: baseline; color: var(--tekst-dempet); }
-  .egenskaper li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--aksent); flex: none; transform: translateY(-2px); }
   .kontakt-tittel { font-size: clamp(48px, 7vw, 96px); line-height: 1; margin-top: 16px; }
   @media (max-width: 860px) {
-    .helt, .hg { grid-template-columns: 1fr; }
+    .helt { grid-template-columns: 1fr; }
   }
 </style>

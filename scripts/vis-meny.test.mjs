@@ -104,3 +104,19 @@ test("e) i nettleseren: gamle ankerlenker sendes til den nye siden, og ≡-menye
     await nettleser.close();
   }
 });
+
+// K-229: «Prøv i demoen» i rommene som bare viser skjermer (stedene står i sites/vis/demo-lenker.json)
+test("f) rommene som bare viser skjermer har «Prøv i demoen» til demo.hengsel.no; Sigdal-utgaven lenker ikke ut", () => {
+  const demo = JSON.parse(readFileSync(join(rot, "sites", "vis", "demo-lenker.json"), "utf8"));
+  const ROM = ["crm", "firmaleder", "montor", "minside", "tegning"];
+  assert.deepEqual(Object.keys(demo.rom).sort(), [...ROM].sort(), "demo-lenker.json skal ha nøyaktig disse rommene");
+  assert.match(demo.adresse, /^https:\/\/demo\.hengsel\.no$/);
+  for (const r of ROM) {
+    assert.ok(demo.rom[r].startsWith("/"), `${r}: stien i demoen`);
+    const h = side(UTGAVER[0], r);
+    assert.ok(h.includes(`<a class="btn primary" href="${demo.adresse}${demo.rom[r]}" target="_blank" rel="noopener" data-demo="${r}">${demo.tekst} ›</a>`), `vis: /${r}/ mangler «${demo.tekst}»`);
+    assert.ok(!/demo-lenke|demo\.hengsel\.no/.test(side(UTGAVER[1], r)), `Sigdal: /${r}/ skal ikke lenke til Hengsels demo`);
+    assert.ok(!h.includes("<!--prov-demo"), `${r}: plassholder ikke byttet ut`);
+  }
+  for (const g of ["reise", "kunde", "kontroll", "montasjeplan", "leder", "system"]) assert.ok(!/data-demo=/.test(side(UTGAVER[0], g)), `/${g}/ viser mer enn skjermer og har ikke demolenken`);
+});

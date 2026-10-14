@@ -13,8 +13,11 @@ const rot = resolve(import.meta.dirname, "..");
 const ut = join(rot, "claude", "k229-skjermbilder");
 await mkdir(ut, { recursive: true });
 const UTGAVER = [
-  { navn: "vis", dist: join(rot, "sites", "vis", "dist"), base: "", sider: [["forside", "/"], ["forsta", "/forsta/"], ["prov", "/prov/"], ["dokumenter", "/dokumenter/"], ["presenter", "/presenter/"]] },
-  { navn: "sigdal", dist: join(rot, "sites", "hengsel", "dist"), base: "/kunde/sigdal/vis", sider: [["forside", "/kunde/sigdal/vis/"], ["forsta", "/kunde/sigdal/vis/forsta/"], ["presenter", "/kunde/sigdal/vis/presenter/"]] },
+  { navn: "vis", dist: join(rot, "sites", "vis", "dist"), base: "", sider: [["forside", "/"], ["forsta", "/forsta/"], ["prov", "/prov/"], ["dokumenter", "/dokumenter/"], ["presenter", "/presenter/"], ["rom-crm", "/crm/"]] },
+  { navn: "sigdal", dist: join(rot, "sites", "hengsel", "dist"), base: "/kunde/sigdal/vis", sider: [["forside", "/kunde/sigdal/vis/"], ["forsta", "/kunde/sigdal/vis/forsta/"], ["presenter", "/kunde/sigdal/vis/presenter/"], ["rom-crm", "/kunde/sigdal/vis/crm/"]] },
+  // K-229: hengsel.no (forside og kundeområdet) og sngroup.no (Hengsel-kortet). Statisk server, uten Worker og Access.
+  { navn: "hengsel", dist: join(rot, "sites", "hengsel", "dist"), base: "", sider: [["forside", "/"], ["kunde", "/kunde"], ["kunde-hjelp", "/kunde/hjelp"]] },
+  { navn: "sngroup", dist: join(rot, "sites", "sngroup", "dist"), base: "", sider: [["forside", "/"]] },
 ];
 const visninger = [{ navn: "390", viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }, { navn: "1280", viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 }];
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});

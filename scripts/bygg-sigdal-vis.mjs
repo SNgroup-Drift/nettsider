@@ -69,6 +69,7 @@ const LOGO_NAVN = `<span class="kundelogo kundelogo-vis">${LOGO_INNHOLD}<span cl
 function html(t, fil) {
   let u = t;
   u = u.replace(/<meta property="og:image"[^>]*>\n?/g, "");
+  u = u.replace(/\s*<p class="demo-lenke">[\s\S]*?<\/p>/g, ""); // «Prøv i demoen» (K-229) er Hengsels demo; Sigdal-utgaven lenker ikke ut av /kunde/sigdal
   u = u.replace(/<link rel="preload" href="\/assets\/ds\/[^>]*>\n?/g, "");
   u = u.replace(/<link rel="stylesheet" href="\/assets\/hengsel-fonts\.css">\n?/g, "");
   u = u.replace(/(<link rel="stylesheet" href="\/assets\/hengsel-tokens\.css">)/, `$1\n<link rel="stylesheet" href="${profil.sti}/tema.css">`);

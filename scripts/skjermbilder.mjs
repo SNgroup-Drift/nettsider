@@ -31,7 +31,7 @@ const meld = (ok, tekst) => {
 // De åtte sidene på hengsel.no 2.0 (K-160)
 const HENGSEL_SIDER = [
   { sti: "/", fil: "forside" }, { sti: "/crm", fil: "crm" }, { sti: "/ute", fil: "ute" }, { sti: "/kundeportal", fil: "kundeportal" },
-  { sti: "/slik-virker-det", fil: "slik-virker-det" }, { sti: "/dokumenter", fil: "dokumenter" }, { sti: "/integrasjoner", fil: "integrasjoner" },
+  { sti: "/integrasjoner", fil: "integrasjoner" },
   { sti: "/priser-og-demo", fil: "priser-og-demo" },
 ];
 const servere = {};
