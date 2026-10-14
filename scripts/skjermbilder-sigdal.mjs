@@ -28,7 +28,9 @@ try {
       const ctx = await browser.newContext({ ...v, colorScheme: "light", reducedMotion: "reduce" });
       const page = await ctx.newPage();
       const konsoll = [];
-      page.on("console", (m) => { if (m.type() === "error") konsoll.push(m.text()); });
+      // Vis-rommene har inline stil og får egen CSP av Workeren (worker/sigdal.ts); den statiske serveren her gir dem den strenge CSP-en, så den meldingen er forventet der
+      const forventet = (t) => sti.startsWith("/sigdal/vis/") && /inline style because it violates/.test(t);
+      page.on("console", (m) => { if (m.type() === "error" && !forventet(m.text())) konsoll.push(m.text()); });
       page.on("pageerror", (e) => konsoll.push(String(e)));
       page.on("requestfailed", (r) => konsoll.push(`feilet: ${r.url()}`));
       page.on("response", (r) => { if (r.status() >= 400) konsoll.push(`${r.status()} ${r.url()}`); });
