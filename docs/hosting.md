@@ -61,6 +61,9 @@ Node: `.nvmrc` i rotmappen sier 22. `NODE_VERSION` = `22` gjør det samme i bygg
 
 K-233: byggene henter `https://bilder.hengsel.no/skjermbilder/v1/manifest.json` (bare manifestet, aldri bildene) og bruker kopien i
 `packages/hengsel-tokens/skjermbilder-manifest.json` når den ikke svarer, så bygget feiler ikke om biblioteket er nede. CSP-ene har `img-src … https://bilder.hengsel.no`.
+Workflowen **Bibliotek-sjekk** (`.github/workflows/bibliotek-sjekk.yml`, for hånd og på hver PR) henter det ekte manifestet, ber om hver bildeadresse, bygger,
+kjører testene og lenkesjekken mot ekte adresser, og legger manifest-kopi, sjekk, rapport per side og skjermbilder som artefakt; valget «oppdater kopi» committer
+kopien til grenen. Ingen hemmeligheter.
 
 Byggekommandoen kjører `astro build` og så `scripts/csp-hasher.mjs`, som legger hashen for inline-CSS-en inn i
 `Content-Security-Policy` i `dist/_headers`. Bygg alltid med `npm run build`, ikke bare `astro build`; ellers blokkerer

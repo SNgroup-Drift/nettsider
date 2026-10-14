@@ -22,11 +22,12 @@ const si = (s = "") => { linjer.push(s); console.log(s); };
 
 const kopi = lesManifest();
 const url = `${BILDEDOMENE}/manifest.json`;
-let ekte;
+let ekte, ekteTekst;
 try {
   const svar = await fetch(url, { signal: AbortSignal.timeout(15000) });
   if (!svar.ok) throw new Error(`svarte ${svar.status}`);
-  ekte = await svar.json();
+  ekteTekst = await svar.text();
+  ekte = JSON.parse(ekteTekst);
 } catch (e) {
   console.error(`✗ ${url} nås ikke: ${e?.message ?? e}`);
   process.exit(2);
@@ -92,8 +93,8 @@ if (!bareManifest) {
   for (const [sti, p] of resultater.sort()) si(`- ${sti}: ${p}`);
 }
 if (skriv) {
-  const tekst = JSON.stringify(ekte, null, 2) + "\n";
-  await writeFile(MANIFEST_FIL, tekst);
+  // Samme tekst som biblioteket serverer (slik oppdaterManifest() i byggene også skriver den), så kopien ikke endres igjen ved neste bygg
+  await writeFile(MANIFEST_FIL, ekteTekst.endsWith("\n") ? ekteTekst : `${ekteTekst}\n`);
   si();
   si(`Kopien ${MANIFEST_FIL.slice(rot.length + 1)} er skrevet over med det ekte manifestet.`);
 }

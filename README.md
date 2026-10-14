@@ -47,6 +47,7 @@ scripts/
   skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene), og romkortene for rom uten app-skjermbilde (sites/vis/src/img, nettsidenes egne)
   sjekk-bibliotek.mjs     npm run bibliotek:sjekk (K-233): henter det ekte manifest.json, sammenlikner med kopien (nye, borte, endrede filer), ber om hver bildeadresse
                           (200, image/webp, riktig lengde) og skriver kopien med --skriv. SKJERMBILDER_NETT=1 npm test ber også om bibliotekadressene i dist
+  bibliotek-rapport.mjs   Antall bilder fra biblioteket, egne bilder og plassholdere per bygd side (claude/k233/bibliotek-rapport.md); kjøres av workflowen Bibliotek-sjekk
   skjermbilder-bibliotek.test.mjs  npm test (K-233): ingen app-skjermbilder utenom biblioteket (unntatt LOKALE_BILDER), ingen #5074A9, «Skjermbilde kommer» bare for KJENTE_MANGLER
                           (scripts/lib/bildedomene.mjs), bibliotekadressene i dist står i manifestet
   hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til packages/hengsel-tokens/ds og genererer den delte token-fila (K-182, K-192)

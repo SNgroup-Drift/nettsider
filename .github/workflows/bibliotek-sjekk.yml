@@ -1,0 +1,116 @@
+# K-233: sjekker skjermbildebiblioteket på bilder.hengsel.no mot nettsidene (Code-økta når ikke biblioteket, så dette gjøres her).
+#
+# - Kjøres for hånd (Actions › Bibliotek-sjekk › Run workflow, velg gren) og på hver pull request.
+# - Henter https://bilder.hengsel.no/skjermbilder/v1/manifest.json, sammenlikner med kopien packages/hengsel-tokens/skjermbilder-manifest.json
+#   (nye, borte, endrede filer), ber om hver bildeadresse i manifestet (200, image/webp, riktig lengde), bygger alle sidene med det ekte manifestet,
+#   kjører bibliotekstesten og lenkesjekken (SKJERMBILDER_NETT=1: hver bibliotekadresse i dist bes om over nettet), tar skjermbildene i claude/k233
+#   uten stand-in, og legger manifest-kopien, sjekken, rapporten (antall ekte bilder og plassholdere per side) og skjermbildene som artefakt.
+# - Valget «oppdater kopi» (bare for hånd) committer den oppdaterte manifest-kopien til grenen workflowen kjøres på. Merger aldri.
+# - Ingen hemmeligheter: biblioteket er åpent, og committen bruker GITHUB_TOKEN.
+name: Bibliotek-sjekk
+
+on:
+  workflow_dispatch:
+    inputs:
+      oppdater_kopi:
+        description: "oppdater kopi: commit den oppdaterte manifest-kopien (packages/hengsel-tokens/skjermbilder-manifest.json) til grenen"
+        type: boolean
+        default: false
+  pull_request:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bibliotek-sjekk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sjekk:
+    name: Manifest, bilder, bygg og test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.pw-browsers
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          # Ved pull_request sjekkes PR-grenens hode; ved kjøring for hånd grenen som er valgt
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Installer avhengigheter
+        run: npm ci --no-audit --no-fund
+
+      - name: Installer Chromium (testene og skjermbildene bruker Playwright)
+        run: npx playwright install --with-deps chromium
+
+      - name: Hent det ekte manifestet og be om hver bildeadresse
+        id: bibliotek
+        # Exit 1 ved avvik fra kopien eller bilder som ikke svarer: det skal ikke stoppe byggingen og testene, men vises i sammendraget og i artefaktet
+        run: |
+          set +e
+          node scripts/sjekk-bibliotek.mjs --skriv
+          kode=$?
+          set -e
+          echo "kode=$kode" >> "$GITHUB_OUTPUT"
+          if [ "$kode" = "2" ]; then echo "::error::manifest.json nås ikke fra Actions"; exit 2; fi
+          if [ "$kode" != "0" ]; then echo "::warning::Bibliotek-sjekken fant avvik, se claude/k233/bibliotek-sjekk.md"; fi
+
+      - name: Vis endringen i manifest-kopien
+        run: git --no-pager diff --stat -- packages/hengsel-tokens/skjermbilder-manifest.json
+
+      - name: Bygg alle sidene (med det ekte manifestet)
+        run: npm run build
+
+      - name: Bibliotekstesten og lenkesjekken mot ekte adresser
+        env:
+          SKJERMBILDER_NETT: "1"
+        run: npm test
+
+      - name: Rapport per side og skjermbilder uten stand-in
+        if: always()
+        run: |
+          node scripts/bibliotek-rapport.mjs claude/k233/bibliotek-rapport.md
+          node scripts/skjermbilder-k233.mjs --ekte
+
+      - name: Artefakt (manifest-kopi, sjekk, rapport, skjermbilder)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bibliotek-sjekk-${{ github.run_number }}
+          path: |
+            packages/hengsel-tokens/skjermbilder-manifest.json
+            claude/k233/bibliotek-sjekk.md
+            claude/k233/bibliotek-rapport.md
+            claude/k233/LES-MEG.md
+            claude/k233/*.webp
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Sammendrag
+        if: always()
+        run: |
+          for f in claude/k233/bibliotek-sjekk.md claude/k233/bibliotek-rapport.md claude/k233/LES-MEG.md; do
+            if [ -f "$f" ]; then cat "$f" >> "$GITHUB_STEP_SUMMARY"; echo >> "$GITHUB_STEP_SUMMARY"; fi
+          done
+
+      - name: Commit den oppdaterte manifest-kopien til grenen («oppdater kopi»)
+        if: github.event_name == 'workflow_dispatch' && inputs.oppdater_kopi
+        env:
+          GREN: ${{ github.ref_name }}
+        run: |
+          if git diff --quiet -- packages/hengsel-tokens/skjermbilder-manifest.json; then
+            echo "Kopien er alt lik det ekte manifestet; ingenting å committe."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/hengsel-tokens/skjermbilder-manifest.json
+          git commit -m "K-233: manifest-kopien oppdatert fra bilder.hengsel.no (Bibliotek-sjekk, kjøring ${{ github.run_number }})"
+          git push origin "HEAD:refs/heads/$GREN"

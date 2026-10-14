@@ -102,13 +102,25 @@ montasjeplan, opplæring, prosjekt, sv, system, veikart) og dokumentforsiden ald
 
 45 plassholder-nøkler er i bruk: alle står i `KJENTE_MANGLER`, eller er `LOKALE_BILDER` under `/kunde/sigdal`.
 
+## 3b. Sjekken mot det ekte biblioteket gjøres i GitHub Actions (14.10, kveld)
+
+Code-økta når ikke `bilder.hengsel.no` (proxyen avviser verten, og WebFetch slår ikke opp navnet), så sjekken er lagt i workflowen **Bibliotek-sjekk**
+(`.github/workflows/bibliotek-sjekk.yml`, `workflow_dispatch` og `pull_request`):
+1. `scripts/sjekk-bibliotek.mjs --skriv`: henter det ekte `manifest.json`, lister avvik fra kopien (nye, borte, endrede mål/sha256, kjente mangler som nå finnes,
+   egne bilder som likevel ligger der), ber om hver bildeadresse i manifestet (200, `image/webp`, `content-length` = bytes) og skriver kopien i arbeidsmappa.
+2. `npm run build` med det ekte manifestet, så `SKJERMBILDER_NETT=1 npm test` (bibliotekstesten, og lenkesjekken ber om hver bibliotekadresse i dist over nettet).
+3. `scripts/bibliotek-rapport.mjs` (antall bilder fra biblioteket, egne bilder og plassholdere per side) og `scripts/skjermbilder-k233.mjs --ekte` (uten stand-in).
+4. Artefakt `bibliotek-sjekk-<n>`: manifest-kopien, `bibliotek-sjekk.md`, `bibliotek-rapport.md`, `LES-MEG.md` og skjermbildene; det samme i jobbsammendraget.
+5. Valget «oppdater kopi» (bare for hånd) committer `packages/hengsel-tokens/skjermbilder-manifest.json` til grenen workflowen kjøres på. Ingen hemmeligheter (GITHUB_TOKEN).
+Avvik mellom det ekte manifestet og kopien jeg bygde mot står i `bibliotek-sjekk.md` i artefaktet; jeg har ikke gjettet på dem. Finner workflowen kjente mangler
+som nå finnes, feiler test 4 i bibliotekstesten med beskjed om hvilke nøkler som skal ut av `KJENTE_MANGLER`.
+
 ## 4. Dette må Eirik gjøre
 
-1. **Sjekk PR-en på nytt når `https://bilder.hengsel.no/skjermbilder/v1/manifest.json` svarer 200.** Biblioteket var tomt og nås ikke fra Code-økta
-   (proxyen avviser), så alt her er bygd mot kopien fra `claude/k228/manifest.json`. Kjør `npm run build` lokalt eller se Workers Builds: byggloggen
-   sier `✓ skjermbilder: manifest.json hentet fra biblioteket (…)`, og kopien i `packages/hengsel-tokens/skjermbilder-manifest.json` oppdateres (commit den).
-   Hvis manifestet fra biblioteket har færre eller andre filer enn kopien, sier `npm test` fra: test 3/4 i `skjermbilder-bibliotek.test.mjs` og lenkesjekken.
-   **Ikke flett før «manifest ok».**
+1. **Kjør Actions › Bibliotek-sjekk › Run workflow på grenen `claude/k233-bibliotek`** (manifestet svarer 200 fra 14.10 kveld), først uten, så med «oppdater kopi»
+   når sjekken er grønn, så kopien committes til PR-grenen. Les `bibliotek-sjekk.md` og `bibliotek-rapport.md` i artefaktet eller jobbsammendraget.
+   Avviker manifestet fra kopien (navn, mål, manglende filer), står det der; kjente mangler som nå finnes, gir rød test 4 med nøklene som skal ut av `KJENTE_MANGLER`.
+   **Ikke flett før sjekken er grønn.**
 2. Workers Builds for **hengsel, vis og design** bygger forhåndsversjoner av PR-grenen; sjekk at de er grønne og at bildene faktisk lastes der (CSP-en har
    `img-src https://bilder.hengsel.no`; Sigdal-utgaven av vis får den fra `worker/kunde.ts`).
 3. Når bildene i punkt 6 i K-228-rapporten kommer (iOS på Mac, kundeportalen, PDF-arkene, k119, Mål og skisser, e-post, rommene uten app): fjern nøklene fra
@@ -131,4 +143,4 @@ er ekte lokale filer. hengsel.no-forsiden og Sigdal-forsiden viser den ekte plas
 - `sites/vis/src/skjermbilder/_kart.json` (kartet til `fiktive-skjermer.mjs`) står igjen som dokumentasjon; testen krever bare at mappene ikke har bilder.
 - HawkScan er ikke kjørt (ingen `HAWK_API_KEY`). Ingen Cloudflare- eller GitHub-miljøer er rørt; ingen nøkler eller passord i endringene.
 
-**K-233 RETTELSE KLAR**
+**K-233 SJEKK KLAR**

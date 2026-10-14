@@ -55,7 +55,7 @@ await rm(ut, { recursive: true, force: true });
 await mkdir(ut, { recursive: true });
 const tjenere = {};
 for (const s of new Set(SIDER.map((x) => x[0]))) tjenere[s] = await startServer(join(rot, "sites", s, "dist"));
-const nettleser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
+const nettleser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const feil = [];
 const brukt = { standIn: new Set(), plassholder: new Set(), ikke: new Set() };
 const perSide = [];
