@@ -2,9 +2,9 @@
   "kunde": "sigdal",
   "navn": "Sigdal",
   "produkt": "Sigdal CRM",
-  "sti": "/sigdal",
+  "sti": "/kunde/sigdal",
   "attributt": "data-kunde",
-  "vis": "/sigdal/vis/",
+  "vis": "/kunde/sigdal/vis/",
   "sider": [
     "/",
     "/crm",

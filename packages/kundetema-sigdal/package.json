@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "K-223: kundetema for Sigdal (hengsel.no/sigdal). Et eget tema-sett som legger Sigdals palett og skrift over Hengsel-rollene. Flere kunder kan få egne pakker etter samme mal (packages/kundetema-<navn>).",
+  "description": "K-223: kundetema for Sigdal (hengsel.no/kunde/sigdal). Et eget tema-sett som legger Sigdals palett og skrift over Hengsel-rollene. Flere kunder kan få egne pakker etter samme mal (packages/kundetema-<navn>).",
   "exports": {
     "./tokens.css": "./tokens.css",
     "./fonter.mjs": "./fonter.mjs",

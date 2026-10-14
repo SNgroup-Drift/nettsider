@@ -1,0 +1,11 @@
+---
+/** /kunde/dokumenter (K-229, før /dokumenter): ni hele A4-dokumenter, side for side. Fasit: Dokumenter.dc.html. Visningen er gjenbrukbar (docs/dokumentvisning.md). Bak Cloudflare Access. */
+import Side from "../../layouts/Side.astro";
+import KundeHode from "../../components/KundeHode.astro";
+import DokumenterInnhold from "../../components/dokumenter/DokumenterInnhold.astro";
+import { DOK_SIDE } from "../../content/dokumenter";
+---
+<Side title={DOK_SIDE.title} description={DOK_SIDE.description} robots="noindex,nofollow" utenMeny>
+  <KundeHode slot="hode" aktiv="dokumenter" />
+  <DokumenterInnhold />
+</Side>

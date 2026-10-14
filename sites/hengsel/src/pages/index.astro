@@ -1,13 +1,13 @@
 ---
 /**
- * Forsiden (Forside.dc.html): hero med Studio Display (CRM Min dag), iPad og iPhone, tre løfter, Ordrens reise, «Se nærmere på» og demo.
+ * Forsiden (Forside.dc.html), kortet ned i K-229: hero med Studio Display (CRM Min dag) og iPhone, «Prøv selv» til demoen, tre løfter, «Se nærmere på» og demo.
  * Tekster og data i content/forside.ts, ordrett fra LES-MEG.md. Skjermen i Studio Display er HTML (CrmSkjerm), ikke bilde;
  * bare den rammen lastes med en gang, appbildene i iPad og iPhone er lazy. Ingen skript utover Enhets skalering.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
 import CrmSkjerm from "../components/CrmSkjerm.astro";
-import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/forside";
+import { DEMO, HERO, LOFTER, NARMERE, PROV_SELV, TEL, TEL_HREF } from "../content/forside";
 ---
 <Side title="Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker" description="Hengsel er løsningen for kjøkken- og interiørbutikker. Salg, tilbud, bestilling, montasje og kundeportal ligger på samme ordre og samme kundekort." aktiv="">
   <main id="innhold">
@@ -18,16 +18,13 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
           <h1>{HERO.h1}</h1>
           <p class="lede">{HERO.lede}</p>
           <div class="knapper">
-            <a class="btn primary" href="/priser-og-demo#demo">{HERO.demo}</a>
-            <a class="btn" href="/slik-virker-det">{HERO.slik}</a>
+            <a class="btn primary" href={PROV_SELV}>{HERO.prov}</a>
+            <a class="btn" href="/priser-og-demo#demo">{HERO.demo}</a>
           </div>
         </div>
         <div class="komposisjon">
           <div class="pc">
             <Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet>
-          </div>
-          <div class="ipad">
-            <Enhet type="ipad" src="/img/app/ipad-idag-lys.webp" w={1180} h={820} alt={HERO.altIpad} />
           </div>
           <div class="iphone">
             <Enhet type="iphone" src="/img/app/idag-lys.webp" w={402} h={874} alt={HERO.altIphone} />
@@ -41,23 +38,6 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
         {LOFTER.map(([nr, t, s]) => (
           <div class="card lofte"><span class="nr">{nr}</span><h2>{t}</h2><p>{s}</p></div>
         ))}
-      </div>
-    </section>
-
-    <section class="sek">
-      <div class="h-innhold reise-inn">
-        <div class="reise-hode">
-          <div class="sek-hode"><span class="eyebrow">{REISE.eyebrow}</span><h2>{REISE.h2}</h2></div>
-          <a class="reise-lenke" href="/slik-virker-det">{REISE.lenke}</a>
-        </div>
-        <ol class="reise">
-          {REISE.steg.map(([t, s], i) => (
-            <li class:list={{ valgt: i === 0 || i === REISE.steg.length - 1 }}>
-              <span class="prikk">{i + 1}</span>
-              <div class="rt"><b>{t}</b><span>{s}</span></div>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
 
@@ -102,7 +82,6 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
   /* Komposisjonen: Studio Display bak, iPad nede til venstre og iPhone nede til høyre overlapper rammen (som i designet, også på 390) */
   .komposisjon { position: relative; width: 100%; padding-bottom: 6%; }
   .pc { width: 80%; margin-left: auto; margin-right: 4%; }
-  .ipad { position: absolute; left: 0; bottom: 0; width: 36%; }
   .iphone { position: absolute; right: 0; bottom: 0; width: 17%; }
 
   .lofter { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
@@ -110,23 +89,6 @@ import { DEMO, HERO, LOFTER, NARMERE, REISE, TEL, TEL_HREF } from "../content/fo
   .lofte .nr { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); }
   .lofte h2 { font-size: 1.75rem; line-height: 1.15; }
   .lofte p { color: var(--muted); }
-
-  .reise-inn { display: flex; flex-direction: column; gap: 40px; }
-  .reise-hode { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 40px; }
-  .reise-lenke { font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; }
-  .reise { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 16px; background-image: linear-gradient(var(--line), var(--line)); background-size: 100% 1px; background-position: 0 18px; background-repeat: no-repeat; }
-  .reise li { display: flex; flex-direction: column; gap: 14px; }
-  .prikk { width: 36px; height: 36px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; box-sizing: border-box; }
-  .valgt .prikk { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-  .rt { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .rt b { font-weight: 600; font-size: 1rem; }
-  .rt span { font-size: 0.92rem; color: var(--muted); line-height: 1.5; }
-  @media (max-width: 819px) {
-    .reise { display: flex; flex-direction: column; gap: 0; background-image: none; }
-    .reise li { flex-direction: row; gap: 16px; padding-bottom: 20px; border-left: 1px solid var(--line); margin-left: 18px; }
-    .reise li:last-child { border-left-color: transparent; }
-    .prikk { margin-left: -18px; }
-  }
 
   .narmere-inn { display: flex; flex-direction: column; gap: 32px; }
   .kort-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }

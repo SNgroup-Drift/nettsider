@@ -54,8 +54,8 @@ test("a) bygde sider: hver fargeverdi i CSS/HTML/JS finnes i den delte fila", ()
       let t = readFileSync(f, "utf8");
       // Tekst på siden (design. viser verdiene fra JSON som tekst, inkl. «aldri #FFFFFF») er innhold, ikke styling: sjekk bare tagger, attributter og <style>
       if (f.endsWith(".html")) t = t.replace(/<script[\s\S]*?<\/script>/g, "").replace(/(<\/style>|>)[^<]*(?=<)/g, "$1");
-      // K-223: bare sidene under /sigdal (og /sigdal/tema.css) kan ha Sigdal-fargene; Hengsel-sidene bare Hengsel-fargene
-      const underSigdal = relative(dist, f).startsWith("sigdal");
+      // K-223: bare sidene under /kunde/sigdal (og /kunde/sigdal/tema.css) kan ha Sigdal-fargene; Hengsel-sidene bare Hengsel-fargene
+      const underSigdal = relative(dist, f).startsWith("kunde/sigdal");
       for (const m of t.matchAll(/(?<![\w&#/-])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![\w-])/g)) {
         // Verdier fra pinnet JSON vises som tekst (design.) eller er theme-color; de må uansett finnes i den delte fila
         assert.ok(tillatt.has(m[0].toLowerCase()) || (underSigdal && sigdalHex().has(m[0].toLowerCase())), `${relative(rot, f)}: ${m[0]} finnes ikke i den delte token-fila`);

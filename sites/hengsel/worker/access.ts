@@ -1,5 +1,5 @@
 /**
- * Delt sjekk av Cloudflare Access foran sider på hengsel.no som ikke skal være åpne (K-226 /hjelp; /sigdal, K-223, bruker den samme koden).
+ * Delt sjekk av Cloudflare Access foran sider på hengsel.no som ikke skal være åpne (K-226 /hjelp; /kunde/sigdal, K-223, bruker den samme koden).
  *
  * Tokenet er en JWT (header Cf-Access-Jwt-Assertion) signert med RS256 av teamets nøkler (https://<team>.cloudflareaccess.com/cdn-cgi/access/certs).
  * Vi sjekker signatur, utsteder (iss), målgruppe (aud = Access-appen), utløp (exp), tidligst-gyldig (nbf) og at e-postadressen finnes.
@@ -11,7 +11,7 @@
 export interface AccessEnv {
   /** «<team>.cloudflareaccess.com». Ikke en hemmelighet, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke i repoet. */
   ACCESS_TEAM_DOMAIN?: string;
-  /** Application Audience (AUD) Tag for Access-appen. Flere kan skilles med komma (én app for /sigdal og én for /hjelp). */
+  /** Application Audience (AUD) Tag for Access-appen. Flere kan skilles med komma (én app for /kunde/sigdal og én for /hjelp). */
   ACCESS_AUD?: string;
 }
 
@@ -101,7 +101,7 @@ export function avvis(status: number, tekst: string, ekstra: Record<string, stri
 /**
  * Vakten for en beskyttet sti. Gir et avvisningssvar, eller null når forespørselen har gyldig Access-token.
  * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 403.
- * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 403 også med token (ikke åpent, og ikke noe sted å sjekke tokenet mot). Gjelder alle beskyttede stier (/hjelp og /sigdal).
+ * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 403 også med token (ikke åpent, og ikke noe sted å sjekke tokenet mot). Gjelder alle beskyttede stier (/hjelp og /kunde/sigdal).
  * - Annen metode enn GET og HEAD: 405.
  */
 export async function vakt(req: Request, env: AccessEnv, valg: { hent?: typeof fetch; na?: number } = {}): Promise<Response | null> {

@@ -1,0 +1,39 @@
+---
+/** Innholdet på dokumentsiden: ni hele A4-dokumenter, side for side. Fasit: Dokumenter.dc.html. Brukes av /kunde/dokumenter og Sigdal-utgaven. */
+import Dokumentvisning from "./Dokumentvisning.astro";
+import { DOKUMENTER } from "../../content/dokumenter-data";
+import { DOK_KORT, DOK_SIDE } from "../../content/dokumenter";
+---
+<main id="innhold">
+  <section class="sek vis">
+    <div class="h-innhold inn">
+      <div class="hode">
+        <span class="eyebrow">{DOK_SIDE.eyebrow}</span>
+        <h1>{DOK_SIDE.h1}</h1>
+        <p class="lede">{DOK_SIDE.lede}</p>
+      </div>
+      <Dokumentvisning dokumenter={DOKUMENTER} />
+    </div>
+  </section>
+  <section class="sek flate">
+    <div class="h-innhold kort-rad">
+      {DOK_KORT.map((k) => (
+        <div class="card kort">
+          <b>{k.t}</b>
+          <span>{k.s}{"lenke" in k && <> <a href={k.lenke.href}>{k.lenke.tekst}</a></>}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+</main>
+
+<style>
+  .sek.vis { padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(48px, 6vw, 88px); }
+  .inn { display: flex; flex-direction: column; gap: 28px; }
+  .hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
+  .kort-rad { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+  .kort { display: flex; flex-direction: column; gap: 6px; }
+  .kort b { font-weight: 600; }
+  .kort span { color: var(--muted); font-size: 0.95rem; }
+  .kort a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+</style>

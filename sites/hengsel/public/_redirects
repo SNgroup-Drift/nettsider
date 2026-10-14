@@ -9,7 +9,7 @@
 /produkt            /crm                 301
 /kontoret           /crm                 301
 /kundeportalen      /kundeportal         301
-/jobb               /slik-virker-det     301
+/jobb               /                    301
 /priser             /priser-og-demo      301
 /kontakt            /priser-og-demo#demo 301
 /demo               /priser-og-demo#demo 301
@@ -19,3 +19,17 @@
 # så adressen står uendret og iOS kan åpne appen fra den). Siden sender PC videre til CRM-et (src/content/crm-lenke.mjs). /.well-known/* røres ikke.
 /app/jobb/*         /app/lenke           200
 /app/foresporsel/*  /app/lenke           200
+
+# Kundeområdet (K-229): hjelp, dokumenter og kundens egen utgave bor under /kunde, bak én innlogging (Cloudflare Access, worker/kunde.ts). Gamle adresser
+# videresendes med 301, også undersider. Omdirigeringen viser ikke noe innhold, så den trenger ikke innlogging.
+# /apptest er ikke med her: passordet gjelder til Access står foran /kunde, så flyttes den av Workeren (APPTEST_VIDERE, worker/index.ts).
+# «Slik virker det» (historien) hører hjemme i Visningsrommet (vis.hengsel.no), ikke på hengsel.no
+/slik-virker-det    /                            301
+/hjelp              /kunde/hjelp                 301
+/hjelp.html         /kunde/hjelp                 301
+/hjelp/*            /kunde/hjelp/:splat          301
+/dokumenter         /kunde/dokumenter            301
+/dokumenter.html    /kunde/dokumenter            301
+/dokumenter/*       /kunde/dokumenter/:splat     301
+/sigdal             /kunde/sigdal                301
+/sigdal/*           /kunde/sigdal/:splat         301

@@ -1,0 +1,32 @@
+---
+/**
+ * Toppfeltet i kundeområdet (/kunde, K-229): logoen, «Kundeområde» og de tre fellesdelene. Aktiv del får aria-current="page".
+ * Kundens egen utgave (Sigdal) har sin egen meny og bruker ikke denne.
+ */
+interface Props { aktiv?: "hjelp" | "apptest" | "dokumenter" | "" }
+const { aktiv = "" } = Astro.props;
+const DELER = [["hjelp", "Hjelp", "/kunde/hjelp"], ["apptest", "Test appen", "/kunde/apptest"], ["dokumenter", "Dokumenter", "/kunde/dokumenter"]] as const;
+---
+<header class="sidehode">
+  <div class="rad h-innhold">
+    <a class="logo" href="/" aria-label="Hengsel – til forsiden">
+      <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
+    </a>
+    <nav class="deler" aria-label="Kundeområdet">
+      <a class:list={["fane", "hjem", aktiv === "" && "her"]} href="/kunde" aria-current={aktiv === "" ? "page" : undefined}>Kundeområde</a>
+      {DELER.map(([id, tekst, href]) => <a class:list={["fane", aktiv === id && "her"]} href={href} aria-current={aktiv === id ? "page" : undefined}>{tekst}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .sidehode { border-bottom: 1px solid var(--line); background: var(--bg); }
+  .rad { min-height: var(--topp); display: flex; align-items: center; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; padding-block: 8px; }
+  .logo { display: flex; align-items: center; min-height: 44px; }
+  .logo img { display: block; height: 30px; width: auto; }
+  .deler { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+  .fane { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 0.95rem; text-decoration: none; }
+  .fane.hjem { color: var(--ink); }
+  .fane:hover, .fane:focus-visible { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+  .fane.her { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+</style>

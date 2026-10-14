@@ -1,11 +1,11 @@
 /**
- * K-223: kundetema. /sigdal bruker bare Sigdal-temaet (packages/kundetema-sigdal), og Hengsel-sidene bare Hengsel-temaet. Kjør `npm run build` først.
+ * K-223: kundetema. /kunde/sigdal bruker bare Sigdal-temaet (packages/kundetema-sigdal), og Hengsel-sidene bare Hengsel-temaet. Kjør `npm run build` først.
  *  a) Sigdal-paletten er den som er bestilt: bare de åtte fargene, aldri #FFFFFF og ingen rosa/magenta
  *  b) hver farge-rolle i den delte Hengsel-fila er byttet ut i Sigdal-temaet (ingen Hengsel-farge kan slå gjennom via en variabel)
- *  c) bygde sider: alle under /sigdal har data-kunde, laster /sigdal/tema.css og har noindex; ingen Hengsel-side har noe av det, og ingen Hengsel-side har Sigdal-skriften
- *  d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /sigdal (unntatt hengsel.no/personvern, mailto og tel) og ingen Hengsel-skjermbilder
+ *  c) bygde sider: alle under /kunde/sigdal har data-kunde, laster /kunde/sigdal/tema.css og har noindex; ingen Hengsel-side har noe av det, og ingen Hengsel-side har Sigdal-skriften
+ *  d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal (unntatt hengsel.no/personvern, mailto og tel) og ingen Hengsel-skjermbilder
  *  e) hver tekstserstatning i profil.json treffer minst én gang i de bygde Hengsel-sidene
- *  f) i en ekte nettleser: ingen element på /sigdal har en Hengsel-farge, og ingen element på Hengsel-sidene har en Sigdal-farge
+ *  f) i en ekte nettleser: ingen element på /kunde/sigdal har en Hengsel-farge, og ingen element på Hengsel-sidene har en Sigdal-farge
  */
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
@@ -50,34 +50,34 @@ test("b) hver farge-rolle i den delte Hengsel-fila er byttet ut i Sigdal-temaet"
   assert.deepEqual(mangler, [], "disse Hengsel-rollene er ikke byttet ut i packages/kundetema-sigdal/tokens.css");
 });
 
-test("c) bygde sider: /sigdal har temaet, Hengsel-sidene har det ikke", () => {
-  assert.ok(existsSync(join(dist, "sigdal", "tema.css")), "kjør npm run build først");
+test("c) bygde sider: /kunde/sigdal har temaet, Hengsel-sidene har det ikke", () => {
+  assert.ok(existsSync(join(dist, "kunde", "sigdal", "tema.css")), "kjør npm run build først");
   const sider = alle(dist).filter((f) => f.endsWith(".html"));
-  const sigdal = sider.filter((f) => relative(dist, f).startsWith("sigdal"));
-  const hengsel = sider.filter((f) => !relative(dist, f).startsWith("sigdal"));
+  const sigdal = sider.filter((f) => relative(dist, f).startsWith("kunde/sigdal"));
+  const hengsel = sider.filter((f) => !relative(dist, f).startsWith("kunde/sigdal"));
   assert.ok(sigdal.length >= 8 + 25, `fant ${sigdal.length} Sigdal-sider (8 sider og Visningsrommet)`);
   for (const f of sigdal) {
     const t = readFileSync(f, "utf8");
     const r = relative(dist, f);
     assert.match(t, /<html[^>]* data-kunde="sigdal"/, `${r}: data-kunde`);
-    assert.ok(t.includes('href="/sigdal/tema.css"'), `${r}: laster ikke /sigdal/tema.css`);
+    assert.ok(t.includes('href="/kunde/sigdal/tema.css"'), `${r}: laster ikke /kunde/sigdal/tema.css`);
     assert.match(t, /<meta name="robots" content="noindex,\s?nofollow">/, `${r}: noindex,nofollow`);
   }
   for (const f of hengsel) {
     const t = readFileSync(f, "utf8");
     const r = relative(dist, f);
-    assert.ok(!t.includes("data-kunde") && !t.includes("/sigdal/tema.css") && !/Newsreader|Inter Variable/.test(t), `${r}: har kundetema eller Sigdal-skrift`);
+    assert.ok(!t.includes("data-kunde") && !t.includes("/kunde/sigdal/tema.css") && !/Newsreader|Inter Variable/.test(t), `${r}: har kundetema eller Sigdal-skrift`);
     assert.ok(!hex(t.replace(/<script[\s\S]*?<\/script>/g, "")).some((h) => Object.values(PALETT).includes(h) && !hex(deltCss).includes(h)), `${r}: har Sigdal-farger`);
   }
   // Sigdal-skriftene og -fargene finnes bare i tema.css (og skriftfilene), ikke i noen Hengsel-CSS
-  for (const f of alle(dist).filter((x) => x.endsWith(".css") && !relative(dist, x).startsWith("sigdal"))) {
+  for (const f of alle(dist).filter((x) => x.endsWith(".css") && !relative(dist, x).startsWith("kunde/sigdal"))) {
     assert.ok(!/Newsreader|Inter Variable/.test(readFileSync(f, "utf8")), `${relative(dist, f)}: Sigdal-skrift i Hengsel-CSS`);
   }
-  assert.ok(!existsSync(join(dist, "sitemap.txt")) || !/\/sigdal(?:\/|\s|$)/m.test(les(dist, "sitemap.txt")), "sitemap");
+  assert.ok(!existsSync(join(dist, "sitemap.txt")) || !/\/kunde\/sigdal(?:\/|\s|$)/m.test(les(dist, "sitemap.txt")), "sitemap");
 });
 
-test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /sigdal og ingen Hengsel-skjermbilder", () => {
-  const sigdal = alle(join(dist, "sigdal")).filter((f) => f.endsWith(".html"));
+test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal og ingen Hengsel-skjermbilder", () => {
+  const sigdal = alle(join(dist, "kunde", "sigdal")).filter((f) => f.endsWith(".html"));
   for (const f of sigdal) {
     const t = readFileSync(f, "utf8");
     const r = relative(dist, f);
@@ -85,19 +85,21 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /sigdal og in
     assert.ok(!/Hengsel CRM|Butikknavn/.test(t), `${r}: «Hengsel CRM» eller «Butikknavn» står igjen`);
     // Studio Display-rammen (Apples ramme, ingen Hengsel-farger) er den eneste filen som hentes fra /img
     const utenRamme = t.replace(/\/img\/ramme-studio-display\.webp/g, "");
-    assert.ok(!/(?:src|srcset|poster)="\/(?:img|skjermbilder)\//.test(utenRamme) && !/,\s\/(?:img|skjermbilder)\//.test(utenRamme), `${r}: skjermbilde utenfor /sigdal/img`);
+    assert.ok(!/(?:src|srcset|poster)="\/(?:img|skjermbilder)\//.test(utenRamme) && !/,\s\/(?:img|skjermbilder)\//.test(utenRamme), `${r}: skjermbilde utenfor /kunde/sigdal/img`);
     for (const m of t.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
       const u = m[1];
       if (/^(#|mailto:|tel:|https:\/\/hengsel\.no\/personvern$)/.test(u)) continue;
       if (/^https:\/\/(?!(?:www\.|vis\.)?hengsel\.no)/.test(u)) continue; // eksterne tjenester (TestFlight, Google Play …)
       if (u === "/img/ramme-studio-display.webp" || u.startsWith("/_astro/") || /^\/favicon-/.test(u) || u.startsWith("/cdn-cgi/")) continue;
-      assert.ok(u.startsWith("/sigdal"), `${r}: lenke ut av /sigdal: ${u}`);
+      assert.ok(u.startsWith("/kunde/sigdal"), `${r}: lenke ut av /kunde/sigdal: ${u}`);
     }
   }
 });
 
 test("e) hver tekstserstatning i profil.json treffer i de bygde Hengsel-sidene", () => {
-  const kilde = [...profil.sider, "/priser-og-demo"].map((s) => join(dist, s === "/" ? "index.html" : `${s.slice(1)}.html`)).filter(existsSync).map((f) => readFileSync(f, "utf8")).join("\n");
+  const kilde = [...profil.sider, "/priser-og-demo"].map((s) => (s === "/dokumenter" ? join(dist, "kunde", "dokumenter.html") : join(dist, s === "/" ? "index.html" : `${s.slice(1)}.html`))).filter(existsSync).map((f) => readFileSync(f, "utf8")).join("\n")
+    // K-229: «Slik virker det» er ikke lenger en side på hengsel.no, bare kilden til Sigdal-utgaven
+    + "\n" + les(rot, "sites", "hengsel", "src", "content", "slikvirker.ts");
   const visTekst = alle(join(rot, "sites", "vis", "src")).filter((f) => /\.(html|js)$/.test(f)).map((f) => readFileSync(f, "utf8")).join("\n") + les(rot, "packages", "hengsel-dokumenter", "src", "render.js");
   const ingen = profil.tekst.map(([fra]) => fra).filter((fra) => !kilde.includes(fra) && !visTekst.includes(fra));
   assert.deepEqual(ingen, [], "erstatninger som ikke treffer noe (fjern dem eller rett teksten)");
@@ -114,7 +116,7 @@ const farger = async (page) => page.evaluate((egenskaper) => {
   return [...ut];
 }, FARGEEGENSKAPER);
 
-test("f) i nettleseren: /sigdal har ingen Hengsel-farger, og Hengsel-sidene ingen Sigdal-farger", async () => {
+test("f) i nettleseren: /kunde/sigdal har ingen Hengsel-farger, og Hengsel-sidene ingen Sigdal-farger", async () => {
   assert.ok(existsSync(dist), "kjør npm run build først");
   const blokk = deltCss.slice(deltCss.indexOf(":root {"), deltCss.indexOf("/* nettbrett */"));
   const hengselFarger = new Set(hex(blokk.replace(/--kunde-eksempel-[^;]+;/g, "")).map(tilRgb));
@@ -133,7 +135,7 @@ test("f) i nettleseren: /sigdal har ingen Hengsel-farger, og Hengsel-sidene inge
       await ctx.close();
       assert.deepEqual(funnet, [], `${sti}: ${hva}`);
     };
-    for (const sti of ["/sigdal", "/sigdal/crm", "/sigdal/ute", "/sigdal/kundeportal", "/sigdal/slik-virker-det", "/sigdal/dokumenter", "/sigdal/integrasjoner", "/sigdal/apptest", "/sigdal/vis/", "/sigdal/vis/crm/", "/sigdal/vis/minside/"]) await sjekk(sti, hengselFarger, "Hengsel-farge på Sigdal-siden");
+    for (const sti of ["/kunde/sigdal", "/kunde/sigdal/crm", "/kunde/sigdal/ute", "/kunde/sigdal/kundeportal", "/kunde/sigdal/slik-virker-det", "/kunde/sigdal/dokumenter", "/kunde/sigdal/integrasjoner", "/kunde/sigdal/apptest", "/kunde/sigdal/vis/", "/kunde/sigdal/vis/crm/", "/kunde/sigdal/vis/minside/"]) await sjekk(sti, hengselFarger, "Hengsel-farge på Sigdal-siden");
     for (const sti of ["/", "/crm", "/kundeportal", "/ute"]) await sjekk(sti, sigdalFarger, "Sigdal-farge på Hengsel-siden");
   } finally {
     await nettleser.close();

@@ -1,11 +1,11 @@
-// Vakt for hengsel.no/hjelp (K-226): Access-sjekken i Workeren, merkene på svarene, wrangler-oppsettet, datafila og den bygde siden.
+// Vakt for hengsel.no/kunde/hjelp (K-226, flyttet til /kunde i K-229): Access-sjekken i Workeren, merkene på svarene, wrangler-oppsettet, datafila og den bygde siden.
 // Importerer worker/*.ts direkte (Node 22.18+ fjerner typene selv). Ingen hemmeligheter: nøklene lages i testen, og Cloudflare etterlignes.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { nullstillBuffer, sjekkAccess } from "../sites/hengsel/worker/access.ts";
-import { erHjelp, handterHjelp } from "../sites/hengsel/worker/hjelp.ts";
+import { ER_KUNDE as erHjelp, handterKunde as handterHjelp } from "../sites/hengsel/worker/kunde.ts";
 import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../sites/hengsel/src/data/hjelp.ts";
 
 const rot = join(import.meta.dirname, "..");
@@ -13,17 +13,18 @@ const les = (sti) => readFileSync(join(rot, sti), "utf8");
 const COPYRIGHT = "© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.";
 
 // ── Oppsett ──────────────────────────────────────────────────────────────────────────────────────────────────────────
-test("wrangler.jsonc sender /hjelp, /hjelp.html og /hjelp/* gjennom Workeren først, og Workeren ruter dit", () => {
+test("wrangler.jsonc sender /kunde og /kunde/* gjennom Workeren først, og Workeren ruter dit", () => {
   const w = JSON.parse(les("sites/hengsel/wrangler.jsonc").replace(/^\s*\/\/.*$/gm, ""));
-  for (const sti of ["/hjelp", "/hjelp.html", "/hjelp/*"]) assert.ok(w.assets.run_worker_first.includes(sti), sti);
+  for (const sti of ["/kunde", "/kunde/*"]) assert.ok(w.assets.run_worker_first.includes(sti), sti);
+  for (const gammel of ["/hjelp", "/hjelp/*", "/sigdal", "/sigdal/*"]) assert.ok(!w.assets.run_worker_first.includes(gammel), `${gammel} videresendes av _redirects, ikke av Workeren`);
   assert.equal(w.keep_vars, true, "keep_vars sørger for at utrulling ikke overskriver ACCESS_TEAM_DOMAIN og ACCESS_AUD");
-  assert.match(les("sites/hengsel/worker/index.ts"), /erHjelp\(pathname\)\) return handterHjelp\(req, env\)/);
-  assert.ok(erHjelp("/hjelp") && erHjelp("/hjelp/") && erHjelp("/hjelp/x/y") && erHjelp("/hjelp.html"));
-  assert.ok(!erHjelp("/hjelpesenter") && !erHjelp("/hjelpe") && !erHjelp("/") && !erHjelp("/apptest"));
+  assert.match(les("sites/hengsel/worker/index.ts"), /ER_KUNDE\(pathname\)\) return handterKunde\(req, env\)/);
+  assert.ok(erHjelp("/kunde") && erHjelp("/kunde/") && erHjelp("/kunde/hjelp") && erHjelp("/kunde/sigdal/vis/x"));
+  assert.ok(!erHjelp("/kundeservice") && !erHjelp("/kunder") && !erHjelp("/") && !erHjelp("/apptest") && !erHjelp("/hjelp"));
 });
 
 test("ingen testmodus eller omgåelse av Access-sjekken i Worker-koden", () => {
-  for (const f of ["access.ts", "hjelp.ts", "sigdal.ts", "index.ts"]) {
+  for (const f of ["access.ts", "kunde.ts", "index.ts"]) {
     const kode = les(`sites/hengsel/worker/${f}`).replace(/\/\*[\s\S]*?\*\/|^\s*\/\/.*$/gm, "");
     assert.doesNotMatch(kode, /\b(?:TEST|BYPASS|OMGA|SKIP_ACCESS|localhost|127\.0\.0\.1)\w*/i, f);
   }
@@ -59,7 +60,7 @@ const merkene = (r) => {
 };
 
 test("uten Cf-Access-Jwt-Assertion gir /hjelp og alt under 403, med noindex og no-store", async () => {
-  for (const sti of ["/hjelp", "/hjelp/", "/hjelp/noe", "/hjelp/a/b.html", "/hjelp.html"]) {
+  for (const sti of ["/kunde/hjelp", "/kunde/hjelp/", "/kunde/hjelp/noe", "/kunde/hjelp/a/b.html", "/kunde/hjelp.html"]) {
     for (const metode of ["GET", "HEAD", "POST"]) {
       const r = await kjor(be(sti, null, metode));
       assert.equal(r.status, 403, `${metode} ${sti}`);
@@ -71,8 +72,8 @@ test("uten Cf-Access-Jwt-Assertion gir /hjelp og alt under 403, med noindex og n
 
 test("403 også når Access ikke er koblet til ennå: både uten token og med gyldig-utseende token (variablene mangler)", async () => {
   for (const e of [env({ ACCESS_TEAM_DOMAIN: "" }), env({ ACCESS_AUD: "" }), env({ ACCESS_TEAM_DOMAIN: undefined, ACCESS_AUD: undefined })]) {
-    assert.equal((await kjor(be("/hjelp"), e)).status, 403);
-    const r = await kjor(be("/hjelp", await lagToken()), e);
+    assert.equal((await kjor(be("/kunde/hjelp"), e)).status, 403);
+    const r = await kjor(be("/kunde/hjelp", await lagToken()), e);
     assert.equal(r.status, 403);
     merkene(r);
     assert.doesNotMatch(await r.text(), /<h1>hjelp<\/h1>/);
@@ -80,7 +81,7 @@ test("403 også når Access ikke er koblet til ennå: både uten token og med gy
 });
 
 test("gyldig token: siden serveres med noindex, private og no-store, og ETag fjernes", async () => {
-  for (const sti of ["/hjelp", "/hjelp/"]) {
+  for (const sti of ["/kunde/hjelp", "/kunde/hjelp/"]) {
     const r = await kjor(be(sti, await lagToken()));
     assert.equal(r.status, 200);
     assert.equal(await r.text(), "<h1>hjelp</h1>");
@@ -88,11 +89,11 @@ test("gyldig token: siden serveres med noindex, private og no-store, og ETag fje
     assert.equal(r.headers.get("ETag"), null);
     assert.match(r.headers.get("Vary") ?? "", /Cf-Access-Jwt-Assertion/);
   }
-  assert.equal((await kjor(be("/hjelp", await lagToken(), "HEAD"))).status, 200);
+  assert.equal((await kjor(be("/kunde/hjelp", await lagToken(), "HEAD"))).status, 200);
 });
 
 test("gyldig token, men annen metode enn GET og HEAD: 405", async () => {
-  const r = await kjor(be("/hjelp", await lagToken(), "POST"));
+  const r = await kjor(be("/kunde/hjelp", await lagToken(), "POST"));
   assert.equal(r.status, 405);
   merkene(r);
 });
@@ -115,17 +116,17 @@ test("ugyldige tokens gir 403: feil signatur, endret innhold, feil app, feil uts
     "tom del": "a.b",
   };
   for (const [navn, token] of Object.entries(tilfeller)) {
-    const r = await kjor(be("/hjelp", token));
+    const r = await kjor(be("/kunde/hjelp", token));
     assert.equal(r.status, 403, navn);
     merkene(r);
   }
 });
 
-test("ACCESS_AUD kan ha flere apper skilt med komma (én for /sigdal og én for /hjelp), og e-posten returneres med små bokstaver", async () => {
+test("ACCESS_AUD kan ha flere apper skilt med komma (én app, eller flere under flyttingen til /kunde), og e-posten returneres med små bokstaver", async () => {
   const e = env({ ACCESS_AUD: ` ${AUD2} , ${AUD} ` });
-  assert.equal((await kjor(be("/hjelp", await lagToken({ krav: { aud: [AUD2] } })), e)).status, 200);
-  assert.equal((await kjor(be("/hjelp", await lagToken()), e)).status, 200);
-  assert.equal((await kjor(be("/hjelp", await lagToken({ krav: { aud: ["c".repeat(64)] } })), e)).status, 403);
+  assert.equal((await kjor(be("/kunde/hjelp", await lagToken({ krav: { aud: [AUD2] } })), e)).status, 200);
+  assert.equal((await kjor(be("/kunde/hjelp", await lagToken()), e)).status, 200);
+  assert.equal((await kjor(be("/kunde/hjelp", await lagToken({ krav: { aud: ["c".repeat(64)] } })), e)).status, 403);
   nullstillBuffer();
   const sjekk = await sjekkAccess(await lagToken({ krav: { email: "Kunde@Eksempel.NO" } }), { team: TEAM, aud: [AUD] }, { hent });
   assert.deepEqual(sjekk, { ok: true, epost: "kunde@eksempel.no" });
@@ -163,10 +164,10 @@ test("alle oppgavene i kildeteksten (docs/hjelp/hengsel-brukerveiledning.html) f
 });
 
 // ── Den bygde siden ───────────────────────────────────────────────────────────────────────────────────────────────────
-test("dist/hjelp.html: noindex, copyright, rollevelger, plassholdere og ikke i sitemap eller menyen", () => {
+test("dist/kunde/hjelp.html: noindex, copyright, rollevelger, plassholdere og ikke i sitemap eller menyen", () => {
   const dist = join(rot, "sites", "hengsel", "dist");
-  assert.ok(existsSync(join(dist, "hjelp.html")), "dist/hjelp.html mangler, kjør npm run build først");
-  const html = readFileSync(join(dist, "hjelp.html"), "utf8");
+  assert.ok(existsSync(join(dist, "kunde", "hjelp.html")), "dist/kunde/hjelp.html mangler, kjør npm run build først");
+  const html = readFileSync(join(dist, "kunde", "hjelp.html"), "utf8");
   assert.match(html, /<meta name="robots" content="noindex,nofollow">/);
   assert.ok(html.includes(COPYRIGHT), "copyright-linjen mangler");
   assert.ok(html.indexOf(COPYRIGHT) > html.lastIndexOf("</main>"), "copyright-linjen skal stå under innholdet");
@@ -179,10 +180,10 @@ test("dist/hjelp.html: noindex, copyright, rollevelger, plassholdere og ikke i s
   assert.equal(html.split(">Skjermbilde kommer<").length - 1, plassholdere);
   assert.doesNotMatch(html, /<script/);
   assert.doesNotMatch(html, /fonts\.googleapis|fonts\.gstatic/);
-  for (const sti of ["index.html", "crm.html", "personvern.html", "priser-og-demo.html"]) assert.doesNotMatch(readFileSync(join(dist, sti), "utf8"), /href="\/hjelp/, sti);
+  for (const sti of ["index.html", "crm.html", "personvern.html", "priser-og-demo.html"]) assert.doesNotMatch(readFileSync(join(dist, sti), "utf8"), /href="\/(?:kunde\/)?hjelp/, sti);
   assert.doesNotMatch(readFileSync(join(dist, "sitemap.txt"), "utf8"), /hjelp/);
   assert.doesNotMatch(readFileSync(join(dist, "robots.txt"), "utf8"), /hjelp/);
   const headers = readFileSync(join(dist, "_headers"), "utf8");
-  assert.match(headers, /\/hjelp\n\s+X-Robots-Tag: noindex, nofollow\n\s+Cache-Control: private, no-store/);
-  assert.match(headers, /\/hjelp\/\*\n\s+X-Robots-Tag: noindex, nofollow\n\s+Cache-Control: private, no-store/);
+  assert.match(headers, /\/kunde\n\s+X-Robots-Tag: noindex, nofollow\n\s+Cache-Control: private, no-store/);
+  assert.match(headers, /\/kunde\/\*\n\s+X-Robots-Tag: noindex, nofollow\n\s+Cache-Control: private, no-store/);
 });

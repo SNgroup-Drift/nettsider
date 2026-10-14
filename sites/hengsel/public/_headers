@@ -28,10 +28,10 @@
 /app/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
-# Brukerveiledningen (K-226) ligger bak Cloudflare Access; Workeren setter de samme hodene på svarene sine
-/hjelp
+# Kundeområdet (K-229: hjelp, apptest, dokumenter, kundens egen utgave) ligger bak Cloudflare Access; Workeren setter de samme hodene på svarene sine
+/kunde
   X-Robots-Tag: noindex, nofollow
   Cache-Control: private, no-store
-/hjelp/*
+/kunde/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: private, no-store

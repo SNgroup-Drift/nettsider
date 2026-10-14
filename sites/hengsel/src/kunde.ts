@@ -50,7 +50,7 @@ export const SIGDAL: Kunde = {
 
 export const KUNDER: Record<KundeNokkel, Kunde> = { sigdal: SIGDAL };
 
-/** Kunden en sti hører til, eller undefined for Hengsel-sidene. Astro.url.pathname er «/sigdal.html» eller «/sigdal/crm.html» (build.format «file»). */
+/** Kunden en sti hører til, eller undefined for Hengsel-sidene. Astro.url.pathname er «/kunde/sigdal.html» eller «/kunde/sigdal/crm.html» (build.format «file»). */
 export function kundeFra(pathname: string): Kunde | undefined {
   const sti = pathname.replace(/\/index\.html$/, "").replace(/\.html$/, "");
   for (const k of Object.values(KUNDER)) if (sti === k.sti || sti.startsWith(k.sti + "/")) return k;
@@ -63,7 +63,7 @@ export function kundeSti(k: Kunde, pathname: string): string {
   return s === "" ? "/" : s;
 }
 
-/** Adressen til en side i kundeutgaven: «/» → «/sigdal», «/crm» → «/sigdal/crm» */
+/** Adressen til en side i kundeutgaven: «/» → «/kunde/sigdal», «/crm» → «/kunde/sigdal/crm» */
 export const kundeHref = (k: Kunde, href: string) => (href === "/" ? k.sti : `${k.sti}${href}`);
 
 /** Hengsel-sidens HTML → kundens utgave (se packages/kundetema-sigdal/tilkunde.mjs) */

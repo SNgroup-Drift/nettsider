@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * K-223: lager plassholderne «Skjermbilde kommer» for Sigdal-utgaven (hengsel.no/sigdal): én fil per skjermbilde på Hengsel-sidene og i
+ * K-223: lager plassholderne «Skjermbilde kommer» for Sigdal-utgaven (hengsel.no/kunde/sigdal): én fil per skjermbilde på Hengsel-sidene og i
  * Visningsrommet, med samme filnavn og samme mål, i Sigdal-stil (Beige 3 flate, Warm Black tekst, fargene leses fra packages/kundetema-sigdal/tokens.css).
- * Ingen Hengsel-grønne skjermbilder vises under /sigdal. Når Design leverer Sigdal-utgavene, legges de over filene i sites/hengsel/public/sigdal/img/
+ * Ingen Hengsel-grønne skjermbilder vises under /kunde/sigdal. Når Design leverer Sigdal-utgavene, legges de over filene i sites/hengsel/public/kunde/sigdal/img/
  * med samme navn. Skriptet skriver også claude/k223-plassholdere.md (lista over filene).
  *
  *   node scripts/lag-sigdal-plassholdere.mjs           lager filene som mangler
@@ -10,9 +10,9 @@
  *   node scripts/lag-sigdal-plassholdere.mjs --sjekk   exit 1 hvis en plassholder mangler
  *
  * Kilde → plassholder:
- *   sites/hengsel/public/img/{app,apptest}/*.webp, img/dok-forside.webp  → sites/hengsel/public/sigdal/img/…
- *   sites/vis/src/img/*.webp (hero, romkort, flater)                      → sites/hengsel/public/sigdal/img/vis/*.webp
- *   sites/vis/src/skjermbilder/*.webp (uten -mork: Sigdal er bare lys)    → sites/hengsel/public/sigdal/img/vis/skjermbilder/*.webp
+ *   sites/hengsel/public/img/{app,apptest}/*.webp, img/dok-forside.webp  → sites/hengsel/public/kunde/sigdal/img/…
+ *   sites/vis/src/img/*.webp (hero, romkort, flater)                      → sites/hengsel/public/kunde/sigdal/img/vis/*.webp
+ *   sites/vis/src/skjermbilder/*.webp (uten -mork: Sigdal er bare lys)    → sites/hengsel/public/kunde/sigdal/img/vis/skjermbilder/*.webp
  * Enhetsrammene (ramme-studio-display.webp, assets/rammer/*) er Apples rammer uten Hengsel-farger og beholdes.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -20,7 +20,7 @@ import { dirname, join, relative } from "node:path";
 import sharp from "sharp";
 
 const rot = join(import.meta.dirname, "..");
-const ut = join(rot, "sites", "hengsel", "public", "sigdal", "img");
+const ut = join(rot, "sites", "hengsel", "public", "kunde", "sigdal", "img");
 const tokens = readFileSync(join(rot, "packages", "kundetema-sigdal", "tokens.css"), "utf8");
 const farge = (navn) => {
   const m = new RegExp(`--sigdal-${navn}:\\s*(#[0-9A-Fa-f]{6})`).exec(tokens);
@@ -84,7 +84,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }
   // Lista (claude/k223-plassholdere.md)
   const rader = filer.map((f) => `| \`/${f.rel.replace(/^sigdal\//, "sigdal/")}\` | ${relative(rot, f.fil)} |`);
-  const md = `# K-223 · Plassholdere for Sigdal-skjermbilder (${filer.length} filer)\n\nGenerert av \`node scripts/lag-sigdal-plassholdere.mjs\`. Hver fil er en nøytral flate med teksten «Skjermbilde kommer» i Sigdal-stil, med samme navn og mål som originalen. Design leverer Sigdal-utgavene med samme filnavn under \`sites/hengsel/public/sigdal/img/\`; da erstatter de plassholderne (kjør aldri skriptet med \`--alle\` etter at ekte bilder er lagt inn).\n\n| Plassholder (adresse) | Tilsvarer (Hengsel-skjermbildet) |\n|---|---|\n${rader.join("\n")}\n`;
+  const md = `# K-223 · Plassholdere for Sigdal-skjermbilder (${filer.length} filer)\n\nGenerert av \`node scripts/lag-sigdal-plassholdere.mjs\`. Hver fil er en nøytral flate med teksten «Skjermbilde kommer» i Sigdal-stil, med samme navn og mål som originalen. Design leverer Sigdal-utgavene med samme filnavn under \`sites/hengsel/public/kunde/sigdal/img/\`; da erstatter de plassholderne (kjør aldri skriptet med \`--alle\` etter at ekte bilder er lagt inn).\n\n| Plassholder (adresse) | Tilsvarer (Hengsel-skjermbildet) |\n|---|---|\n${rader.join("\n")}\n`;
   writeFileSync(join(rot, "claude", "k223-plassholdere.md"), md);
   console.log(`✓ ${laget} plassholdere laget (${cache.size} ulike størrelser), ${filer.length} totalt. Lista: claude/k223-plassholdere.md`);
 }

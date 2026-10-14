@@ -36,7 +36,7 @@ export function sigdalHex() {
 
 /** K-223: kundens egen logofil (sites/hengsel/public/<kunde>/logo/*.svg) er lov å ha fargeverdier hvis alle er fra kundens palett (Warm Black for Sigdal) */
 export function erKundelogo(fil, tekst) {
-  if (!/sites\/hengsel\/public\/sigdal\/logo\/[^/]+\.svg$/.test(fil.split("\\").join("/"))) return false;
+  if (!/sites\/hengsel\/public\/kunde\/sigdal\/logo\/[^/]+\.svg$/.test(fil.split("\\").join("/"))) return false;
   const lov = sigdalHex();
   return [...tekst.matchAll(/#[0-9A-Fa-f]{6}\b/g)].every((m) => lov.has(m[0].toLowerCase()));
 }

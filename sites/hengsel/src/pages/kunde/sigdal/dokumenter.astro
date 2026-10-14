@@ -1,0 +1,9 @@
+---
+/** K-223: Sigdal-utgaven av dokumentsiden. Samme innhold som /kunde/dokumenter; Side.astro bytter tema, meny, bunn, tekst og bilder når stien ligger under /kunde/sigdal. */
+import Side from "../../../layouts/Side.astro";
+import DokumenterInnhold from "../../../components/dokumenter/DokumenterInnhold.astro";
+import { DOK_SIDE } from "../../../content/dokumenter";
+---
+<Side title={DOK_SIDE.title} description={DOK_SIDE.description} aktiv="dok">
+  <DokumenterInnhold />
+</Side>

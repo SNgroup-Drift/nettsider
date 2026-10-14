@@ -1,9 +1,9 @@
 // Cloudflare Worker for hengsel: statiske filer fra ./dist. Bygg med `npm run build -w sites/hengsel` først. Se docs/hosting.md.
-// Skriptet (worker/index.ts) kjører BARE for /apptest og alt under (passordet, K-107, worker/apptest.ts), for
-// /api/demo (demoskjemaet, K-160, worker/demo.ts), for /hjelp (brukerveiledningen, K-226, worker/hjelp.ts) og for /sigdal og alt under (kundeutgaven
-// for Sigdal, K-223, worker/sigdal.ts). /hjelp og /sigdal står bak Cloudflare Access og deler sjekken i worker/access.ts (403 uten gyldig token,
-// også når ACCESS_TEAM_DOMAIN og ACCESS_AUD mangler). Resten av hengsel.no serveres som statiske filer uten kode. Hemmelighetene APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD (K-114, vises på
-// /apptest for innloggede) settes med
+// Skriptet (worker/index.ts) kjører BARE for /kunde og alt under (kundeområdet bak Cloudflare Access, K-229, worker/kunde.ts: hjelp, apptest, dokumenter og
+// kundens egen utgave), for /api/demo (demoskjemaet, K-160, worker/demo.ts) og for /apptest og alt under (passordet, K-107, worker/apptest.ts, til Access står
+// foran /kunde; se APPTEST_VIDERE i worker/index.ts). /kunde/* deler Access-sjekken i worker/access.ts (403 uten gyldig token, også når ACCESS_TEAM_DOMAIN
+// og ACCESS_AUD mangler). Resten av hengsel.no serveres som statiske filer uten kode; gamle adresser (/hjelp, /dokumenter, /sigdal) videresendes av
+// public/_redirects. Hemmelighetene APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD (K-114, vises på /kunde/apptest for innloggede) settes med
 // `npx wrangler secret put … -c sites/hengsel/wrangler.jsonc`, aldri i repoet.
 // Access (K-226): variablene ACCESS_TEAM_DOMAIN («<team>.cloudflareaccess.com») og ACCESS_AUD (AUD-taggen til Access-appen; flere skilles med komma) er ikke
 // hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her. keep_vars sørger for at utrulling ikke overskriver dem.
@@ -17,8 +17,8 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    // Bare disse stiene går gjennom skriptet først (/hjelp.html er med så filnavnet ikke kan nås uten sjekk)
-    "run_worker_first": ["/apptest", "/apptest/*", "/api/demo", "/hjelp", "/hjelp.html", "/hjelp/*", "/sigdal", "/sigdal/*"],
+    // Bare disse stiene går gjennom skriptet først. Gamle adresser (/hjelp, /dokumenter, /sigdal) har ingen filer lenger og videresendes av public/_redirects
+    "run_worker_first": ["/apptest", "/apptest/*", "/api/demo", "/kunde", "/kunde/*"],
     // Ukjente sider får dist/404.html med status 404
     "not_found_handling": "404-page",
     // /personvern serverer personvern.html; /personvern.html sendes til /personvern

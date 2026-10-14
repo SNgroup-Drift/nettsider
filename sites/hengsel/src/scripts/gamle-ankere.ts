@@ -8,7 +8,7 @@ const MAL: Record<string, string> = {
   kontoret: "/crm",
   ute: "/ute",
   kundeportalen: "/kundeportal",
-  jobb: "/slik-virker-det",
+  jobb: "/", // /slik-virker-det finnes ikke lenger på hengsel.no (K-229)
   integrasjoner: "/integrasjoner",
   priser: "/priser-og-demo",
   kontakt: "/priser-og-demo#demo",

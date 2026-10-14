@@ -1,9 +1,9 @@
 /**
- * K-229 tillegg 1: Visningsrommet har én side per menyfane, både vis.hengsel.no og Sigdal-utgaven (/sigdal/vis/). Kjør `npm run build` først.
+ * K-229 tillegg 1: Visningsrommet har én side per menyfane, både vis.hengsel.no og Sigdal-utgaven (/kunde/sigdal/vis/). Kjør `npm run build` først.
  *  a) /forsta/, /prov/, /dokumenter/ og /presenter/ finnes, og menyen på hver av dem lenker til de fire sidene (ikke til ankre)
  *  b) aktiv side har aria-current="page" (på rommene under Prøv står aria-current="true" på Prøv); ingen sider har ankerlenker (#forsta osv.) i menyen
  *  c) forsiden er en kort inngang: rollevelgeren og fire kort til sidene, ingen romkort
- *  d) Sigdal-utgaven har de samme sidene og lenkene med /sigdal/vis som rot, og laster Sigdal-temaet
+ *  d) Sigdal-utgaven har de samme sidene og lenkene med /kunde/sigdal/vis som rot, og laster Sigdal-temaet
  *  e) i en ekte nettleser: gamle ankerlenker (/#forsta, /#prov, /#dokumenter, /#presenter) sendes til den nye siden, i begge utgavene, og ≡-menyen på 390 px viser aktiv side
  */
 import { test, after } from "node:test";
@@ -16,7 +16,7 @@ import { startServer } from "./statisk-server.mjs";
 const rot = resolve(import.meta.dirname, "..");
 const UTGAVER = [
   { navn: "vis", dist: join(rot, "sites", "vis", "dist"), base: "" },
-  { navn: "Sigdal", dist: join(rot, "sites", "hengsel", "dist", "sigdal", "vis"), base: "/sigdal/vis" },
+  { navn: "Sigdal", dist: join(rot, "sites", "hengsel", "dist", "kunde", "sigdal", "vis"), base: "/kunde/sigdal/vis" },
 ];
 const SIDER = [["forsta", "Forstå"], ["prov", "Prøv"], ["dokumenter", "Dokumenter"], ["presenter", "Presenter"]];
 const GRUPPER = ["butikken", "montoren", "kunden", "leverandoren"];
@@ -53,13 +53,13 @@ for (const u of UTGAVER) {
   });
 }
 
-test("d) Sigdal-utgaven laster Sigdal-temaet og har ingen lenker ut av /sigdal/vis", () => {
+test("d) Sigdal-utgaven laster Sigdal-temaet og har ingen lenker ut av /kunde/sigdal/vis", () => {
   const u = UTGAVER[1];
   for (const [id] of SIDER) {
     const h = side(u, id);
-    assert.match(h, /href="\/sigdal\/tema\.css"/, `/sigdal/vis/${id}/ mangler Sigdal-temaet`);
+    assert.match(h, /href="\/kunde\/sigdal\/tema\.css"/, `/kunde/sigdal/vis/${id}/ mangler Sigdal-temaet`);
     assert.match(h, /data-kunde="sigdal"/);
-    assert.ok(!/href="\/(?!sigdal\/)(forsta|prov|dokumenter|presenter)\//.test(h), `/sigdal/vis/${id}/ lenker til Hengsel-utgaven`);
+    assert.ok(!/href="\/(?!sigdal\/)(forsta|prov|dokumenter|presenter)\//.test(h), `/kunde/sigdal/vis/${id}/ lenker til Hengsel-utgaven`);
   }
 });
 

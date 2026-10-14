@@ -1,14 +1,14 @@
 ---
 /**
- * hengsel.no/hjelp: brukerveiledningen for kunder og interessenter Eirik inviterer (K-226). Utkast 0.1, kilde docs/hjelp/hengsel-brukerveiledning.html.
+ * hengsel.no/kunde/hjelp (K-229, før /hjelp): brukerveiledningen for kunder og interessenter Eirik inviterer (K-226). Utkast 0.1, kilde docs/hjelp/hengsel-brukerveiledning.html.
  *
- * Ligger bak Cloudflare Access (e-postkode, samme opplegg som /sigdal, K-223): Workeren (worker/hjelp.ts) svarer 403 på /hjelp og /hjelp/* uten gyldig
+ * Ligger bak Cloudflare Access (e-postkode, samme innlogging som resten av /kunde): Workeren (worker/kunde.ts) svarer 403 på /kunde/* uten gyldig
  * Cf-Access-Jwt-Assertion. Siden har noindex,nofollow, står ikke i sitemap.txt og lenkes ikke fra menyen eller bunnen (scripts/sjekk-lenker.mjs passer på det).
  * Innholdet ligger i src/data/hjelp.ts (samme oppbygging som Hjelp i CRM-et, K-225). Én side med rollevelger øverst; velgeren er ankere, uten skript.
  */
-import Side from "../layouts/Side.astro";
-import Hjelpebunn from "../components/Hjelpebunn.astro";
-import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../data/hjelp";
+import Side from "../../layouts/Side.astro";
+import Hjelpebunn from "../../components/Hjelpebunn.astro";
+import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../../data/hjelp";
 ---
 <Side title="Brukerveiledning · Hengsel" description="Brukerveiledning for Hengsel CRM, Hengsel Ute og Min side." robots="noindex,nofollow" utenMeny utenBunn>
   <header slot="hode" class="sidehode">
@@ -18,7 +18,7 @@ import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../data/hjelp";
           <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
         </picture>
       </a>
-      <span class="merke">Brukerveiledning</span>
+      <a class="merke" href="/kunde">‹ Kundeområdet</a>
     </div>
   </header>
 
@@ -82,7 +82,7 @@ import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../data/hjelp";
   .rad { height: var(--topp); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .logo { display: flex; align-items: center; min-height: 44px; }
   .logo img { display: block; height: 30px; width: auto; }
-  .merke { color: var(--muted); font-size: 0.95rem; }
+  .merke { color: var(--muted); font-size: 0.95rem; min-height: 44px; display: inline-flex; align-items: center; }
 
   .hjelp { padding-block: 32px 72px; }
   .spalte { max-width: 820px; margin: 0 auto; padding-inline: var(--pad); display: grid; gap: 28px; box-sizing: border-box; }

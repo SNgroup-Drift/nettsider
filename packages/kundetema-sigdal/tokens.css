@@ -1,6 +1,6 @@
-/* Kundetema Sigdal (K-223), brukt av hengsel.no/sigdal. Legges OVER den delte Hengsel-fila (packages/hengsel-tokens/tokens.css) og bytter ut
+/* Kundetema Sigdal (K-223), brukt av hengsel.no/kunde/sigdal. Legges OVER den delte Hengsel-fila (packages/hengsel-tokens/tokens.css) og bytter ut
  * hver farge-rolle og skriften. Velgeren :root[data-kunde="sigdal"] er mer spesifikk enn :root i den delte fila, også i dens
- * @media-blokker (Display P3, økt kontrast), så Hengsel-fargene slår aldri gjennom på /sigdal.
+ * @media-blokker (Display P3, økt kontrast), så Hengsel-fargene slår aldri gjennom på /kunde/sigdal.
  *
  * Profilen (Sigdal, 14.10.2026): Warm Black #31261D (tekst), Off White #FBF9F6 (bakgrunn, aldri #FFFFFF), Beige 4/3/2/1 (flater),
  * Deep Blue og Dusty Blue (sparsomt). Ikke den rosa/magenta fargen. Newsreader til overskrifter (aldri små størrelser, aldri bare versaler),

@@ -1,0 +1,53 @@
+---
+/**
+ * /kunde (K-229): forsiden i kundeområdet, bak én innlogging (Cloudflare Access, worker/kunde.ts). Fire kort: Hjelp, Test appen, Dokumenter og kundens egen utgave.
+ * Tekstene er hentet fra sidene de lenker til. Siden har noindex,nofollow, står ikke i sitemap.txt og lenkes ikke fra menyen eller bunnen på hengsel.no.
+ */
+import Side from "../../layouts/Side.astro";
+import KundeHode from "../../components/KundeHode.astro";
+import { DOK_SIDE } from "../../content/dokumenter";
+import { HJELP } from "../../data/hjelp";
+import { SIGDAL } from "../../kunde";
+
+const KORT = [
+  { href: "/kunde/hjelp", navn: "Hjelp", tittel: HJELP.overskrift, tekst: "Brukerveiledning for Hengsel CRM, Hengsel Ute og Min side." },
+  { href: "/kunde/apptest", navn: "Test appen", tittel: "Test Hengsel Ute", tekst: "Testversjon av montørappen." },
+  { href: "/kunde/dokumenter", navn: "Dokumenter", tittel: DOK_SIDE.h1, tekst: DOK_SIDE.description },
+  { href: SIGDAL.sti, navn: "Din utgave", tittel: SIGDAL.titler["/"], tekst: "Hengsel-sidene og Visningsrommet i kundens egen utgave." },
+];
+---
+<Side title="Kundeområde · Hengsel" description="Kundeområdet: hjelp, test av appen, dokumenter og kundens egen utgave." robots="noindex,nofollow" utenMeny>
+  <KundeHode slot="hode" />
+  <main id="innhold">
+    <section class="sek">
+      <div class="h-innhold inn">
+        <div class="hode">
+          <span class="eyebrow">Kundeområde</span>
+          <h1>Kundeområdet</h1>
+        </div>
+        <ul class="kort-rad">
+          {KORT.map((k) => (
+            <li class="card kort">
+              <span class="eyebrow">{k.navn}</span>
+              <h2><a href={k.href}>{k.tittel}</a></h2>
+              <p>{k.tekst}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+</Side>
+
+<style>
+  .sek { padding-block: clamp(40px, 6vw, 72px); }
+  .inn { display: flex; flex-direction: column; gap: 28px; }
+  .hode { display: flex; flex-direction: column; gap: 12px; }
+  .kort-rad { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  .kort { position: relative; display: flex; flex-direction: column; gap: 8px; }
+  .kort h2 { font-size: 1.25rem; line-height: 1.25; }
+  .kort h2 a { color: var(--ink); text-decoration: none; }
+  .kort h2 a::after { content: ""; position: absolute; inset: 0; }
+  .kort:hover { border-color: var(--accent); }
+  .kort p { color: var(--muted); font-size: 0.95rem; }
+</style>

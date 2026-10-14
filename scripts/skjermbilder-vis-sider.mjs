@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * K-229 tillegg 1: skjermbilder (390 og 1280 px) av Visningsrommets forside og de nye menysidene, i Hengsel-utgaven (vis) og Sigdal-utgaven (/sigdal/vis/).
+ * K-229 tillegg 1: skjermbilder (390 og 1280 px) av Visningsrommets forside og de nye menysidene, i Hengsel-utgaven (vis) og Sigdal-utgaven (/kunde/sigdal/vis/).
  * Statisk server fra dist (uten Worker og Access). Kjør `npm run build` først. Resultat: claude/k229-skjermbilder/*.png
  *   node scripts/skjermbilder-vis-sider.mjs
  */
@@ -14,7 +14,7 @@ const ut = join(rot, "claude", "k229-skjermbilder");
 await mkdir(ut, { recursive: true });
 const UTGAVER = [
   { navn: "vis", dist: join(rot, "sites", "vis", "dist"), base: "", sider: [["forside", "/"], ["forsta", "/forsta/"], ["prov", "/prov/"], ["dokumenter", "/dokumenter/"], ["presenter", "/presenter/"]] },
-  { navn: "sigdal", dist: join(rot, "sites", "hengsel", "dist"), base: "/sigdal/vis", sider: [["forside", "/sigdal/vis/"], ["forsta", "/sigdal/vis/forsta/"], ["presenter", "/sigdal/vis/presenter/"]] },
+  { navn: "sigdal", dist: join(rot, "sites", "hengsel", "dist"), base: "/kunde/sigdal/vis", sider: [["forside", "/kunde/sigdal/vis/"], ["forsta", "/kunde/sigdal/vis/forsta/"], ["presenter", "/kunde/sigdal/vis/presenter/"]] },
 ];
 const visninger = [{ navn: "390", viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }, { navn: "1280", viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 }];
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});

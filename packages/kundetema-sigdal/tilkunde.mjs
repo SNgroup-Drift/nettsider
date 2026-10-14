@@ -1,6 +1,6 @@
 /**
  * K-223: gjør HTML fra en Hengsel-side (hengsel.no eller Visningsrommet) om til kundens utgave. Brukes av sites/hengsel/src/kunde.ts (Side.astro, ved
- * bygging av sidene under /sigdal) og scripts/bygg-sigdal-vis.mjs (Visningsrommet i Sigdal-utgave). Profilen er profil.json.
+ * bygging av sidene under /kunde/sigdal) og scripts/bygg-sigdal-vis.mjs (Visningsrommet i Sigdal-utgave). Profilen er profil.json.
  *  - lenker til sidene i utgaven får kunderoten, demo og priser blir e-post, personvern peker til hengsel.no, innloggingen til Visningsrommet til kundens vis
  *  - skjermbilder på Hengsel-sidene (/img/app, /img/apptest, /img/dok-forside) hentes fra kundens plassholdermappe (<rot>/img/…)
  *  - Hengsel-logoene (SVG med Hengsel-farger) byttes mot tekstmerke, så ingen Hengsel-farger står på kundens sider

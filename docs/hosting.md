@@ -273,7 +273,7 @@ node scripts/skjermbilder-apptest.mjs                       # skjermbilder og sj
 Brukerveiledningen for kunder og interessenter Eirik inviterer. Én Astro-side (`sites/hengsel/src/pages/hjelp.astro`) med rollevelger øverst; innholdet
 ligger i `sites/hengsel/src/data/hjelp.ts` (samme oppbygging som Hjelp i CRM-et, K-225). Kilden er `docs/hjelp/hengsel-brukerveiledning.html`.
 
-- Workeren (`worker/hjelp.ts`, sjekken i `worker/access.ts`, delt med /sigdal) svarer **403** på `/hjelp`, `/hjelp/*` og `/hjelp.html` uten gyldig
+- Workeren (`worker/hjelp.ts`, sjekken i `worker/access.ts`, delt med /kunde/sigdal) svarer **403** på `/hjelp`, `/hjelp/*` og `/hjelp.html` uten gyldig
   `Cf-Access-Jwt-Assertion` (signatur, utsteder, Access-app, utløp). Gyldig token gir siden; annen metode enn GET og HEAD gir 405.
   Mangler `ACCESS_TEAM_DOMAIN` eller `ACCESS_AUD` (dashbordet, ikke repoet; `keep_vars` er på), svarer Workeren 503 når en token kommer, og 403 uten.
 - Alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Siden har `noindex,nofollow`, står ikke i `sitemap.txt` eller
@@ -391,6 +391,6 @@ utrulling overskriver dem). Mangler de, svarer Workeren 503. Build command `npm 
 Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Access-app og policy: se `claude/k184-rapport.md`.
 
 
-## hengsel.no/sigdal (K-223)
+## hengsel.no/kunde/sigdal (K-223)
 
-Kundeutgave for Sigdal i samme Worker som hengsel.no, bak **Cloudflare Access** (appen «Hengsel kunde», samme som `/hjelp`). `run_worker_first` har `/sigdal` og `/sigdal/*`; `worker/sigdal.ts` bruker den delte Access-sjekken i `worker/access.ts` (signatur, utsteder, AUD, utløp og e-post, mot `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD`). Uten gyldig `Cf-Access-Jwt-Assertion`, **eller når variablene mangler**, svarer alle stier under `/sigdal` og `/hjelp` 403 (aldri åpent). Alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Ingen testmodus: skjermbilder tas fra de statiske filene (`npm run skjermbilder:sigdal`). Visningsrommet bygges inn i `dist/sigdal/vis/` av `scripts/bygg-sigdal-vis.mjs` (kjøres av `npm run build -w sites/hengsel`), så **Build watch paths for hengsel må også ha `sites/vis/*`**. `/sigdal/vis/*` får vis' egen CSP fra Workeren (rommene har inline stil).
+Kundeutgave for Sigdal i samme Worker som hengsel.no, bak **Cloudflare Access** (appen «Hengsel kunde», samme som `/hjelp`). `run_worker_first` har `/kunde/sigdal` og `/kunde/sigdal/*`; `worker/kunde.ts` bruker den delte Access-sjekken i `worker/access.ts` (signatur, utsteder, AUD, utløp og e-post, mot `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD`). Uten gyldig `Cf-Access-Jwt-Assertion`, **eller når variablene mangler**, svarer alle stier under `/kunde/sigdal` og `/hjelp` 403 (aldri åpent). Alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Ingen testmodus: skjermbilder tas fra de statiske filene (`npm run skjermbilder:sigdal`). Visningsrommet bygges inn i `dist/kunde/sigdal/vis/` av `scripts/bygg-sigdal-vis.mjs` (kjøres av `npm run build -w sites/hengsel`), så **Build watch paths for hengsel må også ha `sites/vis/*`**. `/kunde/sigdal/vis/*` får vis' egen CSP fra Workeren (rommene har inline stil).
