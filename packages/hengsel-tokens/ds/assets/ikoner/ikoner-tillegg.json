@@ -1,0 +1,62 @@
+{
+  "navn": "Hengsel ikoner, tillegg",
+  "dato": "2026-10-14",
+  "status": "besluttet av Eirik 14.10: lag egne. Formen er forslag",
+  "rutenett": 20,
+  "strek": {
+    "16": 1.5,
+    "20": 1.6,
+    "24": 1.75
+  },
+  "ikoner": [
+    {
+      "fil": "montasjeplan",
+      "navn": "Montasjeplan",
+      "sf": "calendar.badge.clock",
+      "egen": false,
+      "bruk": "Menypunkt «Montasjeplan»",
+      "filer": {
+        "16": "16/montasjeplan.svg",
+        "20": "20/montasjeplan.svg",
+        "24": "24/montasjeplan.svg"
+      }
+    },
+    {
+      "fil": "innboks",
+      "navn": "Innboks",
+      "sf": "tray",
+      "egen": false,
+      "bruk": "Menypunkt «Innboks»",
+      "filer": {
+        "16": "16/innboks.svg",
+        "20": "20/innboks.svg",
+        "24": "24/innboks.svg"
+      }
+    },
+    {
+      "fil": "profil",
+      "navn": "Profil",
+      "sf": "person.crop.circle",
+      "egen": false,
+      "bruk": "Menypunkt «Profil», brukermeny",
+      "filer": {
+        "16": "16/profil.svg",
+        "20": "20/profil.svg",
+        "24": "24/profil.svg"
+      }
+    },
+    {
+      "fil": "hjelp",
+      "navn": "Hjelp",
+      "sf": "questionmark.circle",
+      "egen": false,
+      "bruk": "Menypunkt «Hjelp», hjelpeknapp",
+      "filer": {
+        "16": "16/hjelp.svg",
+        "20": "20/hjelp.svg",
+        "24": "24/hjelp.svg"
+      }
+    }
+  ],
+  "venter": "Resten av lista fra K-220/K-222 er ikke mottatt."
+}

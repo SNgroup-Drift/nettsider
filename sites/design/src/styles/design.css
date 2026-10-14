@@ -136,6 +136,8 @@ td.tall { font-variant-numeric: tabular-nums; white-space: nowrap; }
 /* Skjermer */
 .enhet { display: grid; gap: 8px; align-content: start; }
 .enhet img { width: 100%; height: auto; display: block; border-radius: var(--radius-bilde); border: 1px solid var(--linje); background: var(--flate-senket); }
+.enhet video { width: 100%; height: auto; display: block; border-radius: var(--radius-bilde); border: 1px solid var(--linje); background: var(--flate-senket); }
+.favicon-rad .enhet img { width: auto; }
 .skjerm-rutenett { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
 .skjerm-rutenett.smal { grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
 .par { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }

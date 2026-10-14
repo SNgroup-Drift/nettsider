@@ -13,7 +13,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 
 ## Logo
 - [ ] Hengsel-merket er SVG fra merkepakken (`src/assets/logo/*-aksent-lys.svg` / `-mork.svg` som `<img>`, byttes med CSS; konturert tekst). Aldri strukket, rotert eller i andre farger.
-- [ ] Størrelser (merkepakken 12.10): toppfelt og topplinje i rom 28 px (`hengsel-aksent`) · i tekst («Samtidig i …») 24 px (`crm-aksent`) · CRM-noden i Ordrens reise 34 px og navet i Systemkartet 42 px (`hengsel-crm-aksent`) · bunn 14 px (`levert-av-aksent`).
+- [ ] Størrelser (merkepakken 12.10): toppfelt og topplinje i rom 28 px (`hengsel-aksent`) · i tekst («Samtidig i …») 24 px (`crm-aksent`) · CRM-noden i Ordrens reise 34 px og navet i Systemkartet 42 px (`hengsel-crm-aksent`) · bunn 14 px (`levert-av-hengsel`).
 - [ ] Mørk modus bruker `-aksent-mork`-utgavene (symbol og ord i Off White, stift i Dusty Blue).
 - [ ] SN-logoen 26 px høy, 90 % opasitet, bytter til `logo-mork.svg` i mørk modus.
 - [ ] «Sigdal CRM» er borte fra simulert innhold; butikken heter «Kjøkkenstudio Hamar» (bestilling@kjokkenstudio-hamar.no); «Sigdal» står bare som fabrikk/leverandør.
@@ -44,7 +44,7 @@ Kjør gjennom alle 24 sider i lys og mørk, PC 1440 og mobil 390. Fasit: `Visnin
 - [ ] Rollevelger `.btn`, valgt `.btn.dark`. Filtrerer kortene, lagrer i localStorage og `?rolle=`.
 - [ ] Romkort: enhetsbilde 4:3 → type-pille `.pill.info.nodot` → tittel 1,45 rem → én setning → lenketekst med « ›» nederst. Like høye. 4 / 2 / 1 i bredden (1440 / 1180 iPad / 390).
 - [ ] Hover på kort: kantfarge `--sand`, ingen løft.
-- [ ] Bunn: «Alle data i Visningsrommet er oppdiktet.» + «Levert av» + Hengsel (`levert-av-aksent`, 14 px) + familiebåndet (`gjeldende="hengsel.no"`).
+- [ ] Bunn: «Alle data i Visningsrommet er oppdiktet.» + «Levert av» + Hengsel (`levert-av-hengsel`, 14 px) + familiebåndet (`gjeldende="hengsel.no"`).
 
 ## Rommaler
 - [ ] Simulering: panelene stables på 390 px; scenelinjen ruller horisontalt (`flex:1 0 108px`); Spill av / Pause / Fortsett / Spill av igjen; «Spill videre» er `.switch`; piltaster og mellomrom virker.

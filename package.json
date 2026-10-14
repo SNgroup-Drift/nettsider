@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/apptest-innhold.test.mjs scripts/demo.test.mjs scripts/dokumenter.test.mjs scripts/app-lenker.test.mjs scripts/admin.test.mjs scripts/design-fasit.test.mjs scripts/hengsel-regler.test.mjs scripts/mork-modus-nettleser.test.mjs scripts/design-stiler.test.mjs scripts/gamle-farger.test.mjs scripts/kundetema.test.mjs scripts/sigdal-worker.test.mjs && node scripts/sjekk-lenker.mjs",
+    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/apptest-innhold.test.mjs scripts/demo.test.mjs scripts/dokumenter.test.mjs scripts/app-lenker.test.mjs scripts/admin.test.mjs scripts/design-fasit.test.mjs scripts/hengsel-regler.test.mjs scripts/mork-modus-nettleser.test.mjs scripts/design-stiler.test.mjs scripts/gamle-farger.test.mjs scripts/kundetema.test.mjs scripts/sigdal-worker.test.mjs scripts/merkepakke.test.mjs && node scripts/sjekk-lenker.mjs",
     "skjermbilder": "node scripts/skjermbilder.mjs",
     "skjermer": "node scripts/fiktive-skjermer.mjs",
     "kvalitet:k177": "node scripts/kvalitet-k177.mjs",

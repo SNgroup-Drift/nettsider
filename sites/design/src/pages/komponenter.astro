@@ -7,7 +7,7 @@
 import Side from "../layouts/Side.astro";
 import Komponent from "../components/Komponent.astro";
 import Ikon from "../components/Ikon.astro";
-import { GRUPPER, ikonStatus, ikoner } from "../lib/ikoner";
+import { GRUPPER, ikonStatus, ikonTilleggStatus, ikoner } from "../lib/ikoner";
 import { status } from "../lib/tokens";
 const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "Venter på svar", sannsynlig: "Sannsynlig", ferdig: "Ferdig", advarsel: "Advarsel", feil: "Feilet" };
 ---
@@ -103,7 +103,7 @@ const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "V
       </div>
     </Komponent>
 
-    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`49 strekikoner på et 20 px rutenett, i 16, 20 og 24 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
+    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`${ikoner.length} strekikoner (49 fra palettpakke v2 og fire nye fra merkepakke v2: Montasjeplan, Innboks, Profil og Hjelp) på et 20 px rutenett, i 16, 20 og 24 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}. De fire nye: ${ikonTilleggStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
       <div class="flate-kort ikon-gruppe">
         <div class="ikon-storrelser"><Ikon navn="ordre" storrelse={16} /><Ikon navn="ordre" storrelse={20} /><Ikon navn="ordre" storrelse={24} /><span class="dempet">Ordre i 16, 20 og 24 px</span></div>
         {GRUPPER.map(([g, tittel]) => (

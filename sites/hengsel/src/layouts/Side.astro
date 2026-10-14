@@ -1,7 +1,7 @@
 ---
 /**
  * Ramme for hengsel.no 2.0: Hode.astro, den faste menyen (Meny.astro) og bunnen (Bunn.astro).
- * Fasit: docs/design/hengsel (Meny.dc.html, Bunn.dc.html); favicon og manifest fra merkepakkens favicon/head.html (brand/). Bare lys modus.
+ * Fasit: docs/design/hengsel (Meny.dc.html, Bunn.dc.html); favicon med hvit flis fra merkepakke v2 (Hode.astro). Bare lys modus.
  * Ramme, tokens og skrifter kommer fra @sngroup/hengsel-tokens (Hode.astro). Alle sider bruker denne rammen, også /personvern, /apptest og 404.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
@@ -25,7 +25,7 @@ interface Props {
   /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title: hengselTittel, description: hengselBeskrivelse, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+const { title: hengselTittel, description: hengselBeskrivelse, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og-hengsel-no.png" } = Astro.props;
 
 // K-223: under /sigdal er dette Sigdal-utgaven av siden (tema, meny, bunn, tekst og bilder). Hengsel-sidene er uendret.
 const kunde = kundeFra(Astro.url.pathname);
@@ -42,7 +42,6 @@ const temaFarge = /--sigdal-off-white:\s*(#[0-9A-Fa-f]{6})/.exec(temaTokens)?.[1
   noindex={noindex || !!kunde}
   robots={kunde ? "noindex, nofollow" : robots}
   delingsbilde={kunde ? undefined : delingsbilde}
-  ikon={{ href: "/favicon-32.png", type: "image/png" }}
   appleIkon="/favicon-180.png"
   manifest={kunde ? undefined : "/manifest.webmanifest"}
   forhandslast={kunde ? [FONTER.newsreader, FONTER.inter] : undefined}

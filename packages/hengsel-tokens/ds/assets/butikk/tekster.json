@@ -1,0 +1,36 @@
+{
+  "app": "Hengsel Ute",
+  "status": "forslag",
+  "skjermbilder": [
+    {
+      "nr": 1,
+      "overskrift": "Dagens jobber på ett blikk",
+      "undertekst": "Tid, adresse og sjekkliste for hver jobb.",
+      "skjerm": "I dag"
+    },
+    {
+      "nr": 2,
+      "overskrift": "Sjekklisten følger jobben",
+      "undertekst": "Kryss av punkt for punkt mens du monterer.",
+      "skjerm": "Jobben, sjekkliste"
+    },
+    {
+      "nr": 3,
+      "overskrift": "Avvik med bilde på sekunder",
+      "undertekst": "Ta bilde, velg type og send til butikken.",
+      "skjerm": "Avvik"
+    },
+    {
+      "nr": 4,
+      "overskrift": "Kunden signerer på skjermen",
+      "undertekst": "Ferdigmeldingen går rett til butikken.",
+      "skjerm": "Signering"
+    },
+    {
+      "nr": 5,
+      "overskrift": "Ruten for dagen",
+      "undertekst": "Naviger til neste jobb med ett trykk.",
+      "skjerm": "Kart"
+    }
+  ]
+}

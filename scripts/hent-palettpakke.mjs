@@ -12,6 +12,7 @@
  * Plattformlag, K-206-roller, mørke foreslåtte verdier og skrivebord-laget er heller ikke med.
  * Kjør deretter: node scripts/lag-hengsel-tokens.mjs (ingen endring ventet) og npm run build.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { join, relative, resolve } from "node:path";
@@ -53,9 +54,15 @@ for (const f of (await alle(ds)).sort()) filer[relative(ds, f)] = createHash("sh
 const ny = {
   repo: pin.repo, sti: pin.sti, commit: pin.commit, versjon: pin.versjon,
   palettpakke: { navn: "design_handoff_hengsel_furu_v2", dato: "2026-10-14", kilde: relative(rot, pakke), merknad: "assets (logo, ikoner, favicon, app-ikon) fra pakken; tokens uendret fordi hengsel.tokens.json allerede er lik pakkens besluttede palett", ikkeTattIBruk: utelatt },
+  ...(pin.merkepakke ? { merkepakke: pin.merkepakke } : {}),
   filer,
 };
 await writeFile(PIN, JSON.stringify(ny, null, 2) + "\n");
 const n = Object.keys(filer).length;
 console.log(`✓ ${n} filer i ds, pin oppdatert (${utelatt.length} foreslåtte monokrome logoer ikke tatt med)`);
 await stat(join(ds, "tokens", "hengsel.tokens.json"));
+// K-231: merkepakke v2 ligger oppå palettpakken (levert av, sendt med, favicon med flis, nye ikoner, motion, deling, butikk, PWA). Tømmingen over tok dem med seg, så de legges inn igjen.
+if (pin.merkepakke) {
+  console.log(`→ legger merkepakken ${pin.merkepakke.navn} inn igjen (${pin.merkepakke.kilde})`);
+  execFileSync(process.execPath, [join(rot, "scripts", "hent-merkepakke.mjs"), "--pakke", join(rot, pin.merkepakke.kilde)], { stdio: "inherit" });
+}

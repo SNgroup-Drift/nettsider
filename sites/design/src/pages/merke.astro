@@ -2,8 +2,10 @@
 /** Merket (palettpakke v2): alle former og utgaver, luft og minste størrelse, app-ikoner, plasseringer og kundens logo. Filene er designsystemets ferdige SVG-er. */
 import Side from "../layouts/Side.astro";
 import Logo, { fil, type Form } from "../components/Logo.astro";
+import Ikon from "../components/Ikon.astro";
 import { fargeKlasse } from "../lib/tokens";
 import { logoMaal } from "../lib/logo";
+import { ikoner } from "../lib/ikoner";
 const m = (f: Form, modus: "lys" | "mork", u: "aksent" | "ensfarget", h: number) => logoMaal(fil(f, modus, u), h);
 
 // Palettpakke v2 (14.10.2026): Hengsel og produktlogoene CRM, Ute, Admin og Levering. Ensfarget (blekk/hvit) finnes bare for symbolet og Hengsel; de monokrome produktlogoene er foreslått.
@@ -13,7 +15,7 @@ const FORMER: { form: Form; navn: string; bruk: string; hoyde: number; ensfarget
   { form: "crm", navn: "Hengsel CRM", bruk: "hengsel.no/crm, og nederst til venstre i CRM-ets sidemeny.", hoyde: 32, ensfarget: false },
   { form: "ute", navn: "Hengsel Ute", bruk: "hengsel.no/ute og butikkene for appen.", hoyde: 32, ensfarget: false },
   { form: "admin", navn: "Hengsel Admin", bruk: "admin.hengsel.no og innlogging i admin.", hoyde: 32, ensfarget: false },
-  { form: "levering", navn: "Hengsel Levering", bruk: "Bunntekst i kundeportalen.", hoyde: 32, ensfarget: false },
+  { form: "levering", navn: "Hengsel Levering", bruk: "Produktlogo for leveringen. Bunnteksten i kundeportalen er «Levert av Hengsel» (se under).", hoyde: 32, ensfarget: false },
 ];
 const PLASSERINGER = [
   ["hengsel.no, toppfelt og bunn", "–", "hengsel, aksent, 30 px (34 px fra 1180 px)"],
@@ -24,11 +26,26 @@ const PLASSERINGER = [
   ["CRM, innlogging", "midtstilt, maks 200 × 64 px", "crm, aksent, 16 px nederst midtstilt"],
   ["Hengsel Ute, innlogging og låseskjerm", "midtstilt, maks 200 × 64 px", "ute, aksent, 18 px nederst midtstilt"],
   ["Hengsel Ute, Meg og Profil", "–", "ute, aksent, 16 px nederst, med «Versjon x (bygg)» 12 px"],
-  ["Kundeportal", "toppfelt, maks 180 × 36 px", "levering, aksent, 14 px, bunntekst høyre"],
+  ["Kundeportal og Visningsrommet", "toppfelt, maks 180 × 36 px", "levert-av-hengsel, lys, 14 px, bunntekst høyre"],
   ["PDF-maler", "øverst, maks 50 × 12 mm", "hengsel, ensfarget lys (blekk), 3 mm, bunnlinje høyre"],
-  ["E-post", "øverst midtstilt, maks 160 × 48 px", "hengsel, ensfarget lys (blekk), 12 px nederst midtstilt. «Sendt med» finnes ikke i palettpakke v2: venter på Design"],
+  ["E-post", "øverst midtstilt, maks 160 × 48 px", "sendt-med-hengsel, lys, PNG 160 px bred (2×-fila), nederst midtstilt"],
   ["sngroup.no, familiebånd", "–", "hengsel, aksent, 24 px"],
+  ["hengsel.no/sigdal og Visningsrommet i kundeutgave", "«Sigdal CRM · levert av Hengsel» i toppfeltet, ett merke i Warm Black (Off White på mørk flate)", "inkludert i kundemerket: ingen egen Hengsel-logo"],
 ];
+// Merkepakke v2 (K-231, 14.10.2026): «Levert av Hengsel» og «Sendt med Hengsel». Fire utgaver av Levert av, to av Sendt med. SVG til web og PDF, PNG (1×, 2×, 3×) til e-post.
+const FAMILIE = [
+  { navn: "Levert av Hengsel", bruk: "Bunntekst i kundeportalen og Visningsrommet, og kundeområdet.", utg: [["lys", "Lys flate"], ["mork", "Mørk flate"], ["blekk", "Ensfarget blekk"], ["hvit", "Ensfarget hvit"]] as const, fil: "levert-av-hengsel", hoyde: 24 },
+  { navn: "Sendt med Hengsel", bruk: "E-post fra butikken. Bruk PNG i e-post (mange e-postklienter viser ikke SVG), 160 px bred med 2×-fila.", utg: [["lys", "Lys bakgrunn"], ["mork", "Mørk bakgrunn"]] as const, fil: "sendt-med-hengsel", hoyde: 24 },
+];
+const IKON_NYE = ["montasjeplan", "innboks", "profil", "hjelp"] as const;
+const BUTIKK = [
+  ["app-store-iphone-6-9", "App Store, iPhone 6,9\" (påkrevd)", 1320, 2868],
+  ["app-store-iphone-6-5", "App Store, iPhone 6,5\"", 1284, 2778],
+  ["app-store-ipad-13", "App Store, iPad 13\"", 2064, 2752],
+  ["google-play-telefon", "Google Play, telefon", 1080, 1920],
+  ["google-play-nettbrett-10", "Google Play, nettbrett 10\"", 1600, 2560],
+] as const;
+const MOTION = [["1080x1080", "Kvadrat, 1080 × 1080"], ["1080x1920", "Stående, 1080 × 1920"]] as const;
 // Icon Composer-pakken hengsel_ute.icon (iOS 26). PNG-ene er flate gjengivelser av lagene (uten glass), avrundet av siden: scripts/lag-appikon.mjs
 const APPIKON = [
   ["ute", "Hengsel Ute, lys", "/merke/app-ikon/ute.png"],
@@ -39,7 +56,7 @@ const APPIKON = [
 <Side title="Merket – Hengsel designfasit" description="Hengsel-merket: symbolet og alle formene (Hengsel, CRM, Ute, Admin og Levering), i aksent og ensfarget, på lys og mørk flate, med luft, minste størrelse, app-ikoner og plasseringer." aktiv="merke">
   <div class="wrap">
     <div class="hode">
-      <span class="merkelapp">Merket · v3</span>
+      <span class="merkelapp">Merket · v3 · merkepakke v2</span>
       <h1>Leddet som danner en H</h1>
       <p class="lede">To hengselblader og en stift. Symbolet er Hengsel og står alene der navnet står ved siden av. Navnet står i Schibsted Grotesk Bold, produktnavnet i en lettere vekt. Det nye merket har smalere høyre blad (K-206). Alle filer er ferdige SVG-er med konturert tekst: ikke tegn dem om, og ikke legg til farger eller effekter.</p>
     </div>
@@ -68,6 +85,78 @@ const APPIKON = [
         </div>
       ))}
       <p class="svak">Filnavn: <code>logo-{"{form}"}-{"{lys|mork}"}.svg</code> (for eksempel <code>logo-crm-lys.svg</code>), <code>merke-hengsel-lys.svg</code> for symbolet og <code>logo-hengsel-blekk.svg</code> / <code>logo-hengsel-hvit.svg</code> for ensfarget. Alle ligger i <a href="/last-ned">logopakken</a>.</p>
+    </section>
+
+    <section class="sek" id="familien">
+      <header>
+        <h2>Levert av og Sendt med</h2>
+        <p>Merkefamilien for det som står nederst der butikken er avsender (merkepakke v2, 14.10.2026). «Levert av Hengsel» (lys, mørk, ensfarget blekk og hvit) står lite i bunnen av kundeportalen og Visningsrommet. «Sendt med Hengsel» (lys og mørk) står nederst i e-post fra butikken. Filene finnes som SVG (konturert tekst) og som PNG i 1×, 2× og 3× til e-post. Ikke tegn dem om, og bruk ikke den gamle versjonen med Hengsel-blå.</p>
+      </header>
+      {FAMILIE.map((f) => (
+        <div class="merkerad">
+          <div class="navn"><div>{f.navn}</div><div class="svak">{f.bruk}</div></div>
+          {f.utg.map(([u, tekst]) => {
+            const src = `/ds/assets/logo/${f.fil}-${u}.svg`;
+            const flate = u === "mork" || u === "hvit" ? "mork" : "lys";
+            return <div class={`flis ${fargeKlasse("flate-side", flate)}`}><img src={src} alt={`${f.navn}, ${tekst.toLowerCase()}`} {...logoMaal(src, f.hoyde)} loading="lazy" /></div>;
+          })}
+        </div>
+      ))}
+      <p class="svak">Filnavn: <code>levert-av-hengsel-{"{lys|mork|blekk|hvit}"}.svg</code> og <code>sendt-med-hengsel-{"{lys|mork}"}.svg</code>. PNG ligger i <code>/ds/assets/logo/png/</code> med <code>-2x</code> og <code>-3x</code> (for eksempel <code>sendt-med-hengsel-lys-2x.png</code>, 534 × 80 px). Alle ligger i <a href="/last-ned">logopakken</a>.</p>
+    </section>
+
+    <section class="sek" id="favicon">
+      <header>
+        <h2>Favicon med hvit flis</h2>
+        <p>Symbolet står på en hvit flis, så merket synes også i mørke nettleserfaner. Filene er <code>favicon.ico</code> (16, 32 og 48 px), <code>favicon-flis.svg</code> og <code>favicon-flis-16/32/48.png</code>. Alle Hengsel-sidene (hengsel.no, vis, design og admin) bruker dem: <code>&lt;link rel="icon" href="/favicon.ico" sizes="any"&gt;</code> og <code>&lt;link rel="icon" href="/favicon-flis.svg" type="image/svg+xml"&gt;</code>.</p>
+      </header>
+      <div class="rad-flex favicon-rad">
+        {[16, 32, 48].map((n) => (
+          <figure class="enhet"><img src={`/ds/assets/favicon/favicon-flis-${n}.png`} alt={`Favicon med flis, ${n} px`} width={n} height={n} loading="lazy" /><figcaption>{n} px</figcaption></figure>
+        ))}
+        <figure class="enhet"><img src="/ds/assets/favicon/favicon-flis.svg" alt="Favicon med flis, SVG" width="64" height="64" loading="lazy" /><figcaption>SVG</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="sek" id="nye-ikoner">
+      <header>
+        <h2>De fire nye ikonene</h2>
+        <p>Montasjeplan, Innboks, Profil og Hjelp (merkepakke v2), strekikoner på samme rutenett som resten av settet, i 16, 20 og 24 px med <code>currentColor</code>. Resten av listen fra K-220 og K-222 kommer når den er mottatt. Alle ikonene står på <a href="/komponenter#ikoner">Komponenter</a>.</p>
+      </header>
+      <div class="rad-flex">
+        {IKON_NYE.map((n) => { const i = ikoner.find((x) => x.fil === n)!; return <div class="ikonrute"><Ikon navn={n} storrelse={24} /><span>{i.navn}</span></div>; })}
+      </div>
+    </section>
+
+    <section class="sek" id="butikk">
+      <header>
+        <h2>Butikkmaler</h2>
+        <p>Maler for App Store og Google Play med navngitte felt (<code>#overskrift</code>, <code>#undertekst</code>, <code>#skjermbilde</code>), og funksjonsgrafikken til Google Play (1024 × 500, uten gjennomsiktighet). Forhåndsvisningene har eksempeltekst; overskriftene er forslag. Skjermbildene i malene tas automatisk fra demo.hengsel.no (K-228). SVG-malene, <code>maler.json</code> og <code>tekster.json</code> ligger i <a href="/last-ned#butikk">butikkpakken</a>.</p>
+      </header>
+      <div class="skjerm-rutenett smal">
+        {BUTIKK.map(([fil, navn, b, h]) => (
+          <figure class="enhet"><img src={`/ds/assets/butikk/forhandsvisning/${fil}.png`} alt={`Butikkmal: ${navn}`} width={b} height={h} loading="lazy" /><figcaption>{navn}, {b} × {h}</figcaption></figure>
+        ))}
+        <figure class="enhet"><img src="/ds/assets/butikk/google-play/funksjonsgrafikk-1024x500.png" alt="Funksjonsgrafikk for Google Play" width="1024" height="500" loading="lazy" /><figcaption>Google Play, funksjonsgrafikk, 1024 × 500</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="sek" id="motion">
+      <header>
+        <h2>Motion</h2>
+        <p>Hengsel Ute i 10 sekunder, uten lyd og uten skjermbilder: appikonet åpner seg, stiften fyller bildet, tre punkter (Dagens jobber, Sjekkliste og avvik, Signert hos kunden), og så lukker ikonet seg igjen. Kvadrat (1080 × 1080) og stående (1080 × 1920), som MP4 (H.264) og WebM (VP9), med plakatbilde. Kilden er <code>motion.js</code>. Brukes på hengsel.no/ute og /apptest.</p>
+      </header>
+      <div class="skjerm-rutenett smal">
+        {MOTION.map(([s, navn]) => (
+          <figure class="enhet">
+            <video controls muted loop playsinline preload="none" width={s === "1080x1080" ? 1080 : 1080} height={s === "1080x1080" ? 1080 : 1920} poster={`/ds/assets/motion/ute-motion-${s}-plakat.png`} aria-label={`Hengsel Ute-motion, ${navn}`}>
+              <source src={`/ds/assets/motion/ute-motion-${s}.webm`} type="video/webm" />
+              <source src={`/ds/assets/motion/ute-motion-${s}.mp4`} type="video/mp4" />
+            </video>
+            <figcaption>{navn} · <a href={`/ds/assets/motion/ute-motion-${s}.mp4`} download>MP4</a> · <a href={`/ds/assets/motion/ute-motion-${s}.webm`} download>WebM</a></figcaption>
+          </figure>
+        ))}
+      </div>
     </section>
 
     <section class="sek" id="luft">
@@ -142,7 +231,7 @@ const APPIKON = [
           <div class="flate-kort mock-meny">
             <span class="logo-boks">Din logo</span>
             <p>Tilbudet ditt er klart.</p>
-            <div class="mock-bunn hoyre"><Logo form="levering" modus="lys" hoyde={14} alt="Hengsel Levering" /></div>
+            <div class="mock-bunn hoyre"><img src="/ds/assets/logo/levert-av-hengsel-lys.svg" alt="Levert av Hengsel" {...logoMaal("/ds/assets/logo/levert-av-hengsel-lys.svg", 14)} /></div>
           </div>
         </div>
         <div class="prove-lys">
@@ -150,8 +239,20 @@ const APPIKON = [
           <div class="flate-kort mock-meny midt">
             <span class="logo-boks">Din logo</span>
             <p>Hei Kari, her er tilbudet.</p>
-            <div class="mock-bunn midt"><Logo form="hengsel" modus="lys" utgave="ensfarget" hoyde={14} alt="Hengsel" /></div>
+            <div class="mock-bunn midt"><img src="/ds/assets/logo/sendt-med-hengsel-lys.svg" alt="Sendt med Hengsel" {...logoMaal("/ds/assets/logo/sendt-med-hengsel-lys.svg", 14)} /></div>
           </div>
+        </div>
+      </div>
+      <h3 id="kundemerke">Kundemerke: Sigdal CRM · levert av Hengsel</h3>
+      <p>Når butikken har eget CRM-navn, får den ett merke med navnet og «levert av Hengsel» i én farge (hele merket, også Hengsel-delen). Sigdal er eksempelet: Warm Black på lys flate og Off White på mørk flate, gjennomsiktig bakgrunn (PNG i 1×, 2×, 3× og 4×). Merket står i toppfeltet på hengsel.no/sigdal og i Visningsrommet i Sigdal-utgave. Ikke rosa eller magenta, og ingen Hengsel-farger inni kundens merke.</p>
+      <div class="prove-par">
+        <div class="prove-lys">
+          <span class="prove-navn">Sigdal · lys flate (Warm Black)</span>
+          <div class="flate-kort"><img src="/merke/sigdal-crm-levert-av-hengsel-warm-black-2x.png" srcset="/merke/sigdal-crm-levert-av-hengsel-warm-black.png 1x, /merke/sigdal-crm-levert-av-hengsel-warm-black-2x.png 2x" alt="Sigdal CRM · levert av Hengsel, Warm Black" width="277" height="32" loading="lazy" /></div>
+        </div>
+        <div class="prove-mork">
+          <span class="prove-navn">Sigdal · mørk flate (Off White)</span>
+          <div class="flate-kort"><img src="/merke/sigdal-crm-levert-av-hengsel-off-white-2x.png" srcset="/merke/sigdal-crm-levert-av-hengsel-off-white.png 1x, /merke/sigdal-crm-levert-av-hengsel-off-white-2x.png 2x" alt="Sigdal CRM · levert av Hengsel, Off White" width="277" height="32" loading="lazy" /></div>
         </div>
       </div>
       <div class="tabell" tabindex="0" role="region" aria-label="Plasseringer">
