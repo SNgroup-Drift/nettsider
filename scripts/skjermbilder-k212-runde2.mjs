@@ -4,6 +4,8 @@
  *
  *   node scripts/skjermbilder-k212-runde2.mjs
  *
+
+ * Etterpå ble PNG-ene gjort om til webp (Pillow, kvalitet 80, method 6) og PNG-ene slettet, for å holde repoet lite.
  * Sidene: hengsel.no (forsiden, /apptest, /dokumenter, /crm, /kundeportal), design.hengsel.no (forsiden, /merke, /komponenter), admin, og tre vis-rom (forsiden, crm, montoren).
  * Skriver webp til claude/k212-runde2-skjermbilder/ og en JSON-rapport med sjekkene: aksent (computed), P3-aksent med emulert `color-gamut: p3` (CDP), ingen overflow på 390 px,
  * alle bilder lastet (logoer og favicon), ingen konsollfeil. Selve skjermen er sRGB: P3 vises som det Chromium gjengir i sRGB; sjekken er at variabelen er furu-verdien i P3.
@@ -24,6 +26,8 @@ const SIDER = [
 ];
 const BREDDER = [390, 1280];
 const AKSENT_P3 = "color(display-p3 0.2275 0.5098 0.4471)";
+/** Bygget CSS er minifisert (.2275 i stedet for 0.2275): sammenlikn tallene, ikke teksten. */
+const p3tall = (v) => (v.match(/[\d.]+/g) ?? []).map(Number).join(" ");
 
 await rm(ut, { recursive: true, force: true });
 await mkdir(ut, { recursive: true });
@@ -81,7 +85,7 @@ for (const t of Object.values(tjenere)) t.close();
 await writeFile(join(ut, "sjekker.json"), JSON.stringify({ aksentP3Forventet: AKSENT_P3, rapport }, null, 2) + "\n");
 const feil = rapport.flatMap((r) => [
   ...(r.aksent !== "#068472" ? [`${r.side}${r.sti} ${r.bredde}: --aksent er «${r.aksent}»`] : []),
-  ...(r.p3.aksent !== AKSENT_P3 ? [`${r.side}${r.sti} ${r.bredde}: P3-aksent er «${r.p3.aksent}» (ma=${r.p3.ma})`] : []),
+  ...(p3tall(r.p3.aksent) !== p3tall(AKSENT_P3) || !r.p3.aksent.startsWith("color(display-p3") ? [`${r.side}${r.sti} ${r.bredde}: P3-aksent er «${r.p3.aksent}» (ma=${r.p3.ma})`] : []),
   ...(r.bredde === 390 && r.overflow > 0 ? [`${r.side}${r.sti}: horisontal overflow ${r.overflow} px på 390`] : []),
   ...r.bilderUtenInnhold.map((b) => `${r.side}${r.sti} ${r.bredde}: bildet ${b} lastet ikke`),
   ...r.konsoll.map((k) => `${r.side}${r.sti} ${r.bredde}: konsollfeil ${k.slice(0, 100)}`),
