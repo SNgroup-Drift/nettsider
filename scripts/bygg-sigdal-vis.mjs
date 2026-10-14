@@ -59,7 +59,7 @@ const VIS_TEKST = [
   ["Skrift: Schibsted Grotesk", "Skrift: Newsreader og Inter"],
   ['<span class="eyebrow">SN Group</span>', `<span class="eyebrow">${profil.produkt} · levert av Hengsel</span>`],
 ];
-const LOGO_NAVN = `<span class="kundelogo kundelogo-vis"><span class="kundelogo-navn">${profil.navn}</span><span class="kundelogo-levert">levert av Hengsel</span></span>`;
+const LOGO_NAVN = `<span class="kundelogo kundelogo-vis"><img class="kundelogo-bilde" src="${profil.sti}/logo/${profil.kunde}-logo-warm-black.png" alt="${profil.navn}" width="70" height="30"><span class="kundelogo-levert">levert av Hengsel</span></span>`;
 
 function html(t, fil) {
   let u = t;
