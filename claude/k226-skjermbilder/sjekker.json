@@ -1,0 +1,47 @@
+[
+  {
+    "navn": "hjelp-390",
+    "ok": true,
+    "overflow": 0,
+    "colorScheme": "light",
+    "bakgrunn": "rgb(246, 248, 251)",
+    "skrift": "\"Schibsted Grotesk\"",
+    "skriftLastet": true,
+    "navSticky": "sticky",
+    "plassholdere": 7,
+    "copyright": "© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.",
+    "kapitler": 7,
+    "ankerTilMontor": true,
+    "konsoll": []
+  },
+  {
+    "navn": "hjelp-390-maskin-mork",
+    "ok": true,
+    "overflow": 0,
+    "colorScheme": "light",
+    "bakgrunn": "rgb(246, 248, 251)",
+    "skrift": "\"Schibsted Grotesk\"",
+    "skriftLastet": true,
+    "navSticky": "sticky",
+    "plassholdere": 7,
+    "copyright": "© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.",
+    "kapitler": 7,
+    "ankerTilMontor": true,
+    "konsoll": []
+  },
+  {
+    "navn": "hjelp-1280",
+    "ok": true,
+    "overflow": 0,
+    "colorScheme": "light",
+    "bakgrunn": "rgb(246, 248, 251)",
+    "skrift": "\"Schibsted Grotesk\"",
+    "skriftLastet": true,
+    "navSticky": "sticky",
+    "plassholdere": 7,
+    "copyright": "© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.",
+    "kapitler": 7,
+    "ankerTilMontor": true,
+    "konsoll": []
+  }
+]

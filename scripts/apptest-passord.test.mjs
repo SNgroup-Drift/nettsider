@@ -12,7 +12,7 @@ const utenKommentarer = (jsonc) => jsonc.replace(/^\s*\/\/.*$/gm, "");
 test("wrangler.jsonc sender /apptest gjennom Workeren først", () => {
   const w = JSON.parse(utenKommentarer(les("wrangler.jsonc")));
   assert.equal(w.main, "./worker/index.ts");
-  assert.deepEqual(w.assets.run_worker_first, ["/apptest", "/apptest/*", "/api/demo"]);
+  assert.deepEqual(w.assets.run_worker_first, ["/apptest", "/apptest/*", "/api/demo", "/hjelp", "/hjelp.html", "/hjelp/*"]);
   assert.match(les("worker/index.ts"), /import apptest from "\.\/apptest"/);
 });
 

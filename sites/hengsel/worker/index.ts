@@ -1,15 +1,18 @@
 /**
- * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare to stier går gjennom kode (assets.run_worker_first):
- * /api/demo (demoskjemaet, worker/demo.ts) og /apptest og alt under (passordet, worker/apptest.ts). Resten er statiske filer.
+ * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare tre stier går gjennom kode (assets.run_worker_first):
+ * /api/demo (demoskjemaet, worker/demo.ts), /apptest og alt under (passordet, worker/apptest.ts) og /hjelp og alt under
+ * (brukerveiledningen bak Cloudflare Access, worker/hjelp.ts, K-226). Resten er statiske filer.
  */
 import apptest from "./apptest";
 import { handterDemo, type DemoEnv } from "./demo";
+import { erHjelp, handterHjelp, type HjelpEnv } from "./hjelp";
 
-type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv;
+type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & HjelpEnv;
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(req.url);
+    if (erHjelp(pathname)) return handterHjelp(req, env);
     if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env));
     return apptest.fetch(req, env);
   },

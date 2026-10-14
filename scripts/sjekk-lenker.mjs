@@ -157,13 +157,16 @@ for (const navn of nettsteder) {
   // /apptest (hengsel.no, testsiden): «Bli tester» og «App Store» lenker dit (hengsel.no 2.0, K-160), men den står ikke i sitemap og har noindex,nofollow
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
-    if (side.startsWith("/apptest")) {
+    if (side.startsWith("/apptest") || side.startsWith("/hjelp")) {
       if (!/<meta name="robots" content="noindex,\s?nofollow">/.test(html)) mangler.push(`${side}: mangler robots noindex,nofollow`);
     }
+    // /hjelp (hengsel.no, brukerveiledningen bak Cloudflare Access, K-226) lenkes ikke fra noen annen side
+    if (!side.startsWith("/hjelp") && /href="\/hjelp[\/"#]/.test(html)) mangler.push(`${side}: lenker til /hjelp (skal ikke ligge i åpne sider eller menyen)`);
   }
   try {
     const sitemap = await (await fetch(new URL("/sitemap.txt", base))).text();
     if (sitemap.includes("/apptest")) mangler.push("sitemap.txt: inneholder /apptest");
+    if (sitemap.includes("/hjelp")) mangler.push("sitemap.txt: inneholder /hjelp");
   } catch {}
 
   server.close();

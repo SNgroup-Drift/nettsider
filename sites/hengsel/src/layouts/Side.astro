@@ -19,10 +19,12 @@ interface Props {
   aktiv?: MenyNokkel | "";
   /** Uten hovedmenyen: /apptest viser bare sitt eget sidehode (slot «hode») */
   utenMeny?: boolean;
+  /** Uten den vanlige bunnen: /hjelp har sin egen bunn med opphavsrettslinjen (K-226) */
+  utenBunn?: boolean;
   /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title, description, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+const { title, description, noindex, robots, aktiv = "", utenMeny = false, utenBunn = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
 ---
 <Hode
   title={title}
@@ -37,7 +39,7 @@ const { title, description, noindex, robots, aktiv = "", utenMeny = false, delin
   <div class="side">
     {utenMeny ? <slot name="hode" /> : <Meny aktiv={aktiv} />}
     <slot />
-    <Bunn />
+    {!utenBunn && <Bunn />}
   </div>
 </Hode>
 
