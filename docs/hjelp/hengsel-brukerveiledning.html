@@ -1,0 +1,142 @@
+<title>Hengsel brukerveiledning</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: håndbok. Rolle-velger øverst (sticky), én kolonne med kapitler per rolle; hver oppgave er et nummerert steg-kort med plass til skjermbilde */
+:root{
+  --side:#F6F8FB; --kort:#FBFDFF; --senket:#EFF1F4; --tekst:#1A1D22; --dempet:#51565C; --linje:#D9DDE2;
+  --aksent:#068472; --aksent-myk:#DCEFEA; --varsel:#7A5212; --varsel-myk:#F6EBD3;
+  --font:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif; --mono:ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --side:#14171B; --kort:#1C2026; --senket:#232830; --tekst:#E8EBF1; --dempet:#A9AFB7; --linje:#343A42;
+  --aksent:#54B9A5; --aksent-myk:#163F37; --varsel:#E3C27E; --varsel-myk:#3A3120; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --side:#14171B; --kort:#1C2026; --senket:#232830; --tekst:#E8EBF1; --dempet:#A9AFB7; --linje:#343A42;
+  --aksent:#54B9A5; --aksent-myk:#163F37; --varsel:#E3C27E; --varsel-myk:#3A3120; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--side);color:var(--tekst);font-family:var(--font);font-size:16px;line-height:1.55}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px;display:grid;gap:22px}
+header{display:grid;gap:8px}
+.eyebrow{font:600 12px var(--font);letter-spacing:.07em;text-transform:uppercase;color:var(--aksent)}
+h1{font-weight:700;font-size:clamp(32px,6vw,44px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-weight:700;font-size:26px;line-height:1.15;margin:0;text-wrap:balance}
+h3{font-weight:600;font-size:18px;line-height:1.3;margin:0}
+p{margin:0;max-width:66ch}
+.lead{color:var(--dempet);font-size:17px}
+.status{display:inline-flex;gap:8px;align-items:center;background:var(--varsel-myk);color:var(--varsel);font:500 13px var(--font);padding:4px 10px;border-radius:20px;justify-self:start}
+nav.roller{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--side);padding-block:10px;border-bottom:1px solid var(--linje);display:flex;gap:6px;overflow-x:auto}
+nav.roller a{flex:none;text-decoration:none;color:var(--dempet);font:500 14px var(--font);padding:7px 12px;border-radius:20px;border:1px solid var(--linje);background:var(--kort)}
+nav.roller a:hover,nav.roller a:focus-visible{color:var(--tekst);border-color:var(--aksent)}
+section.kap{display:grid;gap:14px;scroll-margin-top:64px}
+.kap-hode{display:grid;gap:6px}
+.meny{background:var(--kort);border:1px solid var(--linje);border-radius:12px;padding:14px 16px;display:grid;gap:8px;font-size:14px}
+.meny b{font-weight:600}
+.meny .rad{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+.meny .gr{font:600 11px var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--dempet);min-width:84px}
+.meny code{font:13px var(--mono);background:var(--senket);padding:1px 6px;border-radius:5px}
+.oppg{background:var(--kort);border:1px solid var(--linje);border-radius:12px;padding:16px;display:grid;gap:10px;min-width:0}
+.oppg ol{margin:0;padding-left:22px;display:grid;gap:5px}
+.oppg .vei{font:13px var(--mono);color:var(--dempet)}
+.bilde{border:1.5px dashed var(--linje);border-radius:10px;background:var(--senket);color:var(--dempet);font-size:13px;padding:18px;text-align:center}
+.tips{background:var(--aksent-myk);border-radius:10px;padding:10px 12px;font-size:14px}
+.tips b{color:var(--aksent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.grid2 > *{min-width:0}
+footer{color:var(--dempet);font-size:13px;display:grid;gap:6px;border-top:1px solid var(--linje);padding-top:16px}
+a{color:var(--aksent)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Hengsel · Håndbok</span>
+    <h1>Hengsel brukerveiledning</h1>
+    <p class="lead">Slik bruker du Hengsel CRM, Hengsel Ute og Min side i det daglige. Velg rollen din, så finner du de vanligste oppgavene steg for steg.</p>
+    <span class="status">Utkast 0.1 · 14.10.2026 · skjermbilder kommer når ny meny er i demo</span>
+  </header>
+
+  <nav class="roller" aria-label="Velg rolle">
+    <a href="#kom-i-gang">Kom i gang</a>
+    <a href="#selger">Selger</a>
+    <a href="#prosjektleder">Prosjektleder</a>
+    <a href="#montasjeleder">Montasjeleder</a>
+    <a href="#leder">Leder og admin</a>
+    <a href="#montor">Montør (Ute)</a>
+    <a href="#kunde">Kunde (Min side)</a>
+  </nav>
+
+  <section class="kap" id="kom-i-gang">
+    <div class="kap-hode"><h2>Kom i gang</h2><p>Det alle trenger første dag.</p></div>
+    <div class="grid2">
+      <article class="oppg"><h3>Logg inn</h3><ol><li>Åpne adressen butikken din bruker i nettleseren.</li><li>Velg «Logg inn med Microsoft» og bruk jobbkontoen din, eller e-post og passord hvis du har fått det.</li><li>Glemt passord: trykk «Glemt passord» og følg lenken i e-posten.</li></ol><div class="tips"><b>Tips:</b> Legg siden til på hjemskjermen på telefon og nettbrett. Den oppfører seg da som en app.</div></article>
+      <article class="oppg"><h3>Min dag</h3><p>Startsiden din. Øverst ligger det som trenger handling (avvik, oppfølging, svar fra kunder), og til høyre det du har i kalenderen i dag. Tallet ved Min dag i menyen viser hvor mange oppgaver som venter.</p><div class="bilde">Skjermbilde: Min dag</div></article>
+      <article class="oppg"><h3>Menyen</h3><p>På PC står menyen til venstre, gruppert i Salg, Leveranse, Tall og (for ledere) Ledelse. På mobil ligger Min dag, Kunder, Ordre og Saker nederst, og resten under «Mer». Hengsel CRM og versjonsnummeret står nederst i menyen.</p><div class="bilde">Skjermbilde: meny på PC og mobil</div></article>
+      <article class="oppg"><h3>Innstillinger</h3><p>Under Innstillinger › Utseende velger du tetthet (tett, normal eller luftig). Valget følger brukeren din. Admin laster opp butikkens logo og styrer automatiske oppgaver.</p></article>
+    </div>
+  </section>
+
+  <section class="kap" id="selger">
+    <div class="kap-hode"><h2>Selger</h2><p>Fra første henvendelse til signert avtale og levering.</p></div>
+    <div class="meny"><div class="rad"><span class="gr">Øverst</span><b>Min dag</b>, Samtaler</div><div class="rad"><span class="gr">Salg</span>Innkommende, Salgstavle, Kunder, Tilbud, Ordre, Prosjekter</div><div class="rad"><span class="gr">Leveranse</span>Montasje, Prosjektplan, Saker, Bestilling</div><div class="rad"><span class="gr">Tall</span>Resultater, Fakturaer, Rapporter, Salgsbanken</div></div>
+    <article class="oppg"><h3>1. Ta imot en ny henvendelse</h3><p class="vei">Salg › Innkommende</p><ol><li>Åpne Innkommende. Fanene viser anbud, henvendelser fra nettsiden og fra kundeportalen.</li><li>Åpne henvendelsen og velg «Opprett kunde», eller koble den til en kunde som finnes.</li><li>Sett neste steg (befaring, tegnemøte eller ring tilbake). Det havner på Min dag.</li></ol><div class="bilde">Skjermbilde: Innkommende</div></article>
+    <article class="oppg"><h3>2. Lag et tilbud</h3><p class="vei">Salg › Tilbud › Nytt tilbud</p><ol><li>Velg kunde og kategori (kjøkken, garderobe, bad).</li><li>Importer fra tegneprogrammet eller legg inn linjene. Bruk priseksempler eller hurtigpris for et raskt anslag.</li><li>Legg til montering og frakt. Sjekk dekningsgraden før du sender.</li><li>«Lag PDF og send». Kunden får tilbudet på e-post og på Min side.</li></ol><div class="bilde">Skjermbilde: tilbud</div></article>
+    <article class="oppg"><h3>3. Følg opp på Salgstavla</h3><p class="vei">Salg › Salgstavle</p><p>Hvert kort er et tilbud. Dra kortet til riktig kolonne når status endres. Tilbud som står stille, får et varsel på Min dag.</p></article>
+    <article class="oppg"><h3>4. Fra signert tilbud til ordre</h3><p class="vei">Tilbud › Signert › Ordre</p><ol><li>Kunden signerer med BankID. Tilbudet blir en ordre av seg selv.</li><li>Kontroller leveringsdato og adresse på ordren.</li><li>Send ordrebekreftelsen fra ordren.</li><li>Bestill varene under Bestilling, eller gi beskjed til den som bestiller.</li></ol><div class="bilde">Skjermbilde: ordre</div></article>
+    <article class="oppg"><h3>5. Snakk med kunden</h3><p class="vei">Samtaler</p><p>Alle meldinger med kunden (e-post og Min side) ligger samlet per kunde. Tallet i menyen viser ubesvarte.</p></article>
+    <article class="oppg"><h3>6. Når noe går galt</h3><p class="vei">Leveranse › Saker</p><ol><li>Opprett en sak fra ordren: avvik, reklamasjon eller mangel.</li><li>Legg ved bilde. Alle bilder går gjennom bildeverktøyet, så du kan merke og måle.</li><li>Saken får et nummer og følges til den er løst.</li></ol></article>
+  </section>
+
+  <section class="kap" id="prosjektleder">
+    <div class="kap-hode"><h2>Prosjektleder</h2><p>Prosjekter med mange boenheter, anbud og tilvalg. Har alt selgeren har, pluss «Mine prosjekter».</p></div>
+    <article class="oppg"><h3>1. Fra anbud til prosjekt</h3><p class="vei">Salg › Innkommende › Anbud</p><ol><li>Legg inn anbudet og kalkylen. Lag en kopi per entreprenør hvis flere regner.</li><li>Sett påslag eller rabatt per entreprenør hvis den skal avvike fra prosjektet.</li><li>Når anbudet er vunnet: «Lag prosjekt fra anbud».</li></ol></article>
+    <article class="oppg"><h3>2. Boenheter og tilvalg</h3><p class="vei">Prosjekter › prosjektet › Boenheter</p><ol><li>Lås standardkjøkkenet.</li><li>Importer tilvalgene per leilighet.</li><li>«Send til kjøper». Kjøperen ser fratrekk, tillegg og samlet pris på Min side.</li><li>Lag tilvalg-PDF når kjøperen vil ha det på papir.</li></ol><div class="tips"><b>Faktura:</b> Hvem som faktureres for tilvalg, avtales per prosjekt. Velg «Delt» når standard skal til entreprenøren og tilvalg til kjøperen.</div></article>
+    <article class="oppg"><h3>3. Fremdrift</h3><p class="vei">Leveranse › Prosjektplan</p><p>Leveranser og frister per oppgang og uke. Endringer gir varsel til dem som berøres.</p></article>
+    <p class="muted" style="color:var(--dempet);font-size:14px">Full veiledning for tilvalg finnes i «Prosjektleder og tilvalg i Sigdal CRM». Den flyttes inn her når menyen er på plass.</p>
+  </section>
+
+  <section class="kap" id="montasjeleder">
+    <div class="kap-hode"><h2>Montasjeleder og bestilling</h2><p>Planlegger montører, følger opp KS og bestiller varer.</p></div>
+    <div class="meny"><div class="rad"><span class="gr">Øverst</span><b>Min dag</b>, Resultater</div><div class="rad"><span class="gr">Leveranse</span>Montasje, Prosjektplan, Saker, Bestilling</div><div class="rad"><span class="gr">Oppslag</span>Kunder, Ordre, Prosjekter, Fakturaer</div></div>
+    <article class="oppg"><h3>1. Planlegg montering</h3><p class="vei">Leveranse › Montasje › Oversikt</p><ol><li>Finn ordren som er klar for montering.</li><li>Velg montør eller montørfirma og dato. Forespørselen går til Ute-appen.</li><li>Følg status: akseptert, i gang, ferdig montert.</li></ol><div class="bilde">Skjermbilde: Montasje, oversikt</div></article>
+    <article class="oppg"><h3>2. KS og montørfaktura</h3><p class="vei">Ordre › KS / Fakturaer</p><ol><li>Montøren leverer KS i Ute-appen med bilder.</li><li>Montørfakturaen kan ikke settes til «Klar til attestering» før KS er levert.</li><li>Leder og admin kan overstyre med en årsak. Årsaken lagres på fakturaen.</li></ol></article>
+    <article class="oppg"><h3>3. Bestilling</h3><p class="vei">Leveranse › Bestilling</p><p>Alt som skal bestilles, samlet per leverandør. Når ordrebekreftelsen kommer, kontrolleres den mot ordren, og avvik vises.</p></article>
+  </section>
+
+  <section class="kap" id="leder">
+    <div class="kap-hode"><h2>Leder og admin</h2><p>Oversikt, team og tall. Har gruppen Ledelse øverst i menyen.</p></div>
+    <div class="meny"><div class="rad"><span class="gr">Ledelse</span>Leder, Mitt team, Etterkalkyler, Bestilling, Utstillinger, Forskudd til leverandør, Unoterte til leverandør</div><div class="rad"><span class="gr">Ellers</span>som selger</div></div>
+    <div class="grid2">
+      <article class="oppg"><h3>Leder</h3><p>Det som venter på deg: rabatter til godkjenning, avvik og frister som glipper.</p></article>
+      <article class="oppg"><h3>Mitt team</h3><p>Budsjett og resultat per selger og butikk.</p></article>
+      <article class="oppg"><h3>Etterkalkyler</h3><p>Faktisk dekningsgrad mot tilbudt, per ordre.</p></article>
+      <article class="oppg"><h3>Brukere og innstillinger</h3><p>Admin inviterer brukere, setter roller og slår automatiske oppgaver av og på, for eksempel tilvalgsinvitasjon på e-post.</p></article>
+    </div>
+  </section>
+
+  <section class="kap" id="montor">
+    <div class="kap-hode"><h2>Montør · Hengsel Ute</h2><p>Appen på iPhone, iPad og Android. Montører, montørfirma og utkjørere bruker den.</p></div>
+    <article class="oppg"><h3>1. Dagen din</h3><p class="vei">I dag</p><p>Jobbene for dagen med adresse og tid. Trykk på en jobb for tegninger, mål og kontaktinfo. «Naviger» åpner kartet.</p><div class="bilde">Skjermbilde: I dag</div></article>
+    <article class="oppg"><h3>2. Under jobben</h3><ol><li>Ta bilder underveis. Hvert bilde går gjennom bildeverktøyet, så du kan merke, måle og nummerere punkter.</li><li>Mål med Bosch-laseren over Bluetooth der det trengs.</li><li>Avvik: registrer det med bilde. Det går rett til butikken.</li></ol></article>
+    <article class="oppg"><h3>3. KS og Ferdig montert</h3><ol><li>Gå gjennom KS-punktene. Et bilde kreves også når punktet er OK.</li><li>Trykk «Ferdig montert» når KS er levert.</li></ol><div class="tips"><b>Uten nett:</b> Appen lagrer alt og sender når du får dekning igjen.</div></article>
+    <article class="oppg"><h3>Montørfirma og utkjører</h3><p>Firmaleder ser forespørsler, svarer og fordeler jobber på egne montører. Utkjøreren ser ruten, registrerer mottak på lager, levering og eventuell skade.</p></article>
+  </section>
+
+  <section class="kap" id="kunde">
+    <div class="kap-hode"><h2>Kunde · Min side</h2><p>Det kunden ser. Bruk dette når du forklarer Min side til en kunde.</p></div>
+    <div class="grid2">
+      <article class="oppg"><h3>Tilbud og avtale</h3><p>Tilbudet, signering med BankID og avtalen samlet ett sted.</p></article>
+      <article class="oppg"><h3>Tilvalg</h3><p>For boliger i prosjekt: standard, fratrekk, tillegg og samlet pris.</p></article>
+      <article class="oppg"><h3>Levering og montering</h3><p>Datoer, hvem som kommer, og beskjed når noe endres.</p></article>
+      <article class="oppg"><h3>FDV og meldinger</h3><p>Leveringspakken med dokumentasjon, og meldinger til butikken.</p></article>
+    </div>
+  </section>
+
+  <footer>
+    <p>Utkast skrevet fra løsningen slik den er i demo 14.10.2026. Menyveiene følger den nye menyen (K-222). Skjermbildene tas fra demo.hengsel.no med fiktive data når menyen er i demo. Kunder med eget tema (for eksempel Sigdal) får en egen utgave med sitt utseende.</p>
+    <p>© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.</p>
+    <p>Skrift på siden: Schibsted Grotesk (Hengsel).</p>
+  </footer>
+</div>
