@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="../ikoner/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#ECEFF3} a{color:#016D5E;text-decoration:none} a:hover{color:#007665;text-decoration:underline} input,button{font:inherit;color:inherit}</style>
+</helmet>
+<div data-plattform="pc" data-screen-label="CRM PC" style="min-height:100vh;background:#ECEFF3;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;display:grid;grid-template-columns:248px minmax(0,1fr)">
+
+  <aside style="position:sticky;top:0;height:100vh;box-sizing:border-box;background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;display:flex;flex-direction:column">
+    <nav style="flex:1;overflow-y:auto;padding:12px 10px 10px;display:flex;flex-direction:column;gap:1px">
+      <sc-for list="{{ meny }}" as="m" hint-placeholder-count="25">
+        <button onClick="{{ m.klikk }}" style="all:unset;cursor:pointer;flex:none;display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:8px;font-size:14px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.vekt }}" style-hover="background:#F3F5F8">
+          <span style="color:{{ m.ikonFarge }};display:flex">{{ m.ikon }}</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.navn }}</span><span style="font-size:12px;color:#62686F;font-variant-numeric:tabular-nums">{{ m.tall }}</span>
+        </button>
+      </sc-for>
+    </nav>
+    <div style="flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px;box-shadow:inset 0 1px 0 #E3E6EA">
+      <div style="width:32px;height:32px;border-radius:50%;background:#BCE6DB;color:#016D5E;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">MS</div>
+      <div style="display:flex;flex-direction:column;line-height:1.3;min-width:0"><span style="font-weight:600;font-size:14px">Marte Sæther</span><span style="font-size:12px;color:#62686F">Kjøkkendesigner</span></div>
+    </div>
+    <div style="flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px 14px;box-shadow:inset 0 1px 0 #E3E6EA">
+      <img src="../designsystem/logo/logo-crm-lys.svg" alt="Hengsel CRM" style="height:16px;display:block;flex:none">
+      <span style="font-size:12px;color:#62686F">2.0.0</span>
+    </div>
+  </aside>
+
+  <main style="min-width:0;display:flex;flex-direction:column">
+    <header style="position:sticky;top:0;z-index:5;height:60px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 28px;background:rgba(236,239,243,.9);backdrop-filter:blur(8px);box-shadow:inset 0 -1px 0 #CDD1D6">
+      <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-size:14px;color:#51565C">
+        <sc-for list="{{ sti }}" as="s" hint-placeholder-count="2">
+          <span style="display:flex;align-items:center;gap:6px"><span style="color:{{ s.fg }};font-weight:{{ s.vekt }}">{{ s.navn }}</span><span style="display:{{ s.pil }};color:#62686F">{{ ik16.pil_hoyre }}</span></span>
+        </sc-for>
+      </div>
+      <div style="height:36px;width:340px;max-width:36vw;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F;font-size:14px">{{ ik.sok }}<span style="flex:1;white-space:nowrap;overflow:hidden">Søk etter kunde, ordre eller prosjekt</span><span style="font-size:12px;padding:1px 6px;border-radius:5px;box-shadow:inset 0 0 0 1px #CDD1D6">⌘K</span></div>
+      <button aria-label="Kalender" style="all:unset;cursor:pointer;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#51565C" style-hover="background:#FFFFFF">{{ ik.kalender }}</button>
+      <button aria-label="Varsler" style="all:unset;cursor:pointer;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#51565C;position:relative" style-hover="background:#FFFFFF">{{ ik.varsler }}<span style="position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:#9E2D28;box-shadow:0 0 0 2px #ECEFF3"></span></button>
+      <span style="width:1px;height:28px;background:#CDD1D6;margin-left:4px"></span>
+      <div title="Kundens logo (plassholder), maks 28 px høy" style="height:28px;display:flex;flex-direction:column;justify-content:center;line-height:1;color:#1A1D22;flex:none">
+        <span style="font-size:8px;font-weight:700;letter-spacing:1px">KJØKKENHUSET</span>
+        <span style="font-size:13px;font-weight:800;letter-spacing:2.6px">BRYN</span>
+      </div>
+    </header>
+
+    <div style="padding:26px 28px 56px;display:flex;flex-direction:column;gap:20px;max-width:1440px;width:100%;box-sizing:border-box">
+
+<sc-if value="{{ visMinDag }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:240px"><span style="font-size:13px;color:#51565C">Onsdag 14. oktober</span><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">God morgen, Marte</h1></div>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#F3F5F8">{{ ik.kalender }}Book tegnetime</button>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Nytt tilbud</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px">
+    <sc-for list="{{ nokkeltall }}" as="k" hint-placeholder-count="4">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:13px;color:#51565C">{{ k.navn }}</span>
+        <span style="font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">{{ k.verdi }}</span>
+        <span style="font-size:13px;color:{{ k.farge }}">{{ k.under }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Dagens avtaler</h2><a href="#" style="font-size:14px;font-weight:600">Kalender</a></div>
+      <sc-for list="{{ avtaler }}" as="a" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 18px;box-shadow:{{ a.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="font-weight:700">{{ a.tid }}</span>
+          <div style="min-width:0;display:flex;flex-direction:column"><span style="font-weight:600">{{ a.kunde }}</span><span style="font-size:13px;color:#62686F">{{ a.hva }}</span></div>
+          <span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ a.s.bg }};color:{{ a.s.fg }};box-shadow:inset 0 0 0 1px {{ a.s.kant }}">{{ a.type }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Trenger handling</h2><span style="font-size:13px;color:#62686F">{{ antallHandling }}</span></div>
+      <sc-for list="{{ handling }}" as="h" hint-placeholder-count="6">
+        <div onClick="{{ h.klikk }}" style="display:flex;gap:12px;align-items:center;padding:12px 18px;box-shadow:{{ h.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="width:32px;height:32px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;background:{{ h.bg }};color:{{ h.fg }}">{{ h.ikon }}</span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-weight:600">{{ h.tittel }}</span><span style="font-size:13px;color:#51565C;text-wrap:pretty">{{ h.tekst }}</span></div>
+          <span style="color:#62686F">{{ ik.pil_hoyre }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Ordreinngang</h2><span style="font-size:13px;color:#62686F">Siste 6 måneder, inkl. mva</span></div>
+    <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;align-items:end;height:170px">
+      <sc-for list="{{ stolper }}" as="s" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%">
+          <span style="font-size:13px;color:#51565C">{{ s.verdi }}</span>
+          <div style="width:100%;max-width:76px;height:{{ s.hoyde }};border-radius:6px 6px 2px 2px;background:{{ s.farge }}"></div>
+          <span style="font-size:13px;color:#62686F">{{ s.mnd }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ visOrdre }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">Ordre</h1>
+    <label style="height:36px;width:280px;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F">{{ ik.sok }}<input value="{{ sok }}" onChange="{{ settSok }}" placeholder="Søk etter kunde eller ordre" style="border:0;outline:0;background:transparent;flex:1;min-width:0;color:#1A1D22;font-size:14px"></label>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny ordre</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <sc-for list="{{ filtre }}" as="f" hint-placeholder-count="7">
+      <button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}<span style="color:#62686F;font-variant-numeric:tabular-nums">{{ f.antall }}</span></button>
+    </sc-for>
+    <span style="flex:1"></span>
+    <div role="group" aria-label="Tetthet" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ tettheter }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.klikk }}" style="all:unset;cursor:pointer;height:28px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;background:{{ t.bg }};color:{{ t.fg }}">{{ t.navn }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:900px;font-size:{{ t.font }}">
+      <div style="display:grid;grid-template-columns:96px minmax(0,1.6fr) minmax(0,1fr) 120px 130px 124px;gap:12px;align-items:center;height:36px;padding:0 {{ t.pad }};font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Ordre</span><span>Kunde</span><span>Selger</span><span>Montasje</span><span style="text-align:right">Beløp</span><span>Status</span></div>
+      <sc-for list="{{ ordreRader }}" as="o" hint-placeholder-count="10">
+        <div onClick="{{ o.klikk }}" style="display:grid;grid-template-columns:96px minmax(0,1.6fr) minmax(0,1fr) 120px 130px 124px;gap:12px;align-items:center;height:{{ t.rad }};padding:0 {{ t.pad }};box-shadow:{{ o.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="color:#016D5E;font-weight:600">{{ o.nr }}</span>
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-weight:500">{{ o.kunde }}</span><span style="color:#62686F">  · {{ o.sted }}</span></span>
+          <span style="color:#51565C">{{ o.selger }}</span>
+          <span style="color:#51565C">{{ o.montasje }}</span>
+          <span style="text-align:right;font-variant-numeric:tabular-nums">{{ o.belop }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ o.s.bg }};color:{{ o.s.fg }};box-shadow:inset 0 0 0 1px {{ o.s.kant }}">{{ o.s.navn }}</span></span>
+        </div>
+      </sc-for>
+      <sc-if value="{{ ingenTreff }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;color:#51565C;text-align:center"><span style="color:#62686F">{{ ik24.sok }}</span><span style="font-weight:600;color:#1A1D22">Ingen ordre passer søket</span><span style="font-size:14px">Prøv et annet navn eller ordrenummer.</span></div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ visDetalj }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:260px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#51565C">H-24117</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ dS.bg }};color:{{ dS.fg }};box-shadow:inset 0 0 0 1px {{ dS.kant }}">{{ dS.navn }}</span></div>
+      <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Ingrid Solbakken</h1>
+      <span style="color:#51565C">Kjøkken Lind, eik matt · Selger Marte Sæther</span>
+    </div>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#F3F5F8">{{ ik.tilbud }}Ordrebekreftelse</button>
+    <button onClick="{{ sendMontasje }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ knappIkon }}{{ knappTekst }}</button>
+  </div>
+  <sc-if value="{{ avvik }}" hint-placeholder-val="{{ true }}">
+    <div role="status" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">
+      <span style="padding-top:1px">{{ ik.prisavvik }}</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px"><b>Prisavvik på benkeplate</b><span style="text-wrap:pretty">Platen kom 12 cm kortere enn bestilt. Leverandøren sender ny plate i uke 44 uten kostnad. Montasjen kan gå som planlagt.</span></div>
+      <button onClick="{{ lukkAvvik }}" style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #6D5000">Marker som løst</button>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Varelinjer</h2><span style="font-size:13px;color:#62686F">Fra tilbud T-3312</span></div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 70px 120px;gap:12px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Vare</span><span style="text-align:right">Antall</span><span style="text-align:right">Sum</span></div>
+        <sc-for list="{{ varelinjer }}" as="v" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 70px 120px;gap:12px;align-items:center;padding:10px 18px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:14px">
+            <div style="min-width:0;display:flex;flex-direction:column"><span style="font-weight:500">{{ v.navn }}</span><span style="font-size:13px;color:#62686F">{{ v.info }}</span></div>
+            <span style="text-align:right;color:#51565C;font-variant-numeric:tabular-nums">{{ v.antall }}</span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums">{{ v.sum }}</span>
+          </div>
+        </sc-for>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;padding:14px 18px;background:#F3F5F8;box-shadow:inset 0 1px 0 #E3E6EA"><b>Totalt inkl. mva</b><b style="text-align:right;font-variant-numeric:tabular-nums">279 450 kr</b></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+        <h2 style="margin:0;font-size:16px;font-weight:700">Historikk</h2>
+        <sc-for list="{{ historikk }}" as="h" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:start;font-size:14px">
+            <span style="width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:{{ h.bg }};color:{{ h.fg }}">{{ h.ikon }}</span>
+            <div style="display:flex;flex-direction:column"><span style="font-weight:500">{{ h.tekst }}</span><span style="font-size:13px;color:#62686F">{{ h.hvem }}</span></div>
+            <span style="font-size:13px;color:#62686F">{{ h.dato }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:10px;font-size:14px">
+        <div style="display:flex;align-items:center"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Kunde</h2><a href="#" style="font-weight:600">Åpne kunde</a></div>
+        <span style="font-weight:600;font-size:15px">Ingrid Solbakken</span>
+        <div style="display:grid;grid-template-columns:20px 1fr;gap:8px 10px;align-items:center;color:#51565C"><span>{{ ik.telefon }}</span><span>918 44 203</span><span>{{ ik.samtaler }}</span><span>ingrid.solbakken@epost.no</span><span>{{ ik.naviger }}</span><span>Grefsenveien 41B, 0485 Oslo</span></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="display:flex;align-items:center"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Levering og montasje</h2><a href="#" style="font-weight:600">Prosjektplan</a></div>
+        <div style="display:grid;grid-template-columns:20px 100px 1fr;gap:10px;align-items:center">
+          <span style="color:#51565C">{{ ik.levering }}</span><span style="color:#51565C">Levering</span><span>Uke 44, mandag 26.10</span>
+          <span style="color:#51565C">{{ ik.montering }}</span><span style="color:#51565C">Montering</span><span>4.–6. november</span>
+          <span style="color:#51565C">{{ ik.mitt_team }}</span><span style="color:#51565C">Team</span><span>Team Øst · Ali Hassan og Sven Moe</span>
+          <span style="color:#51565C">{{ ik.kontrollmal }}</span><span style="color:#51565C">Kontrollmål</span><span>Tatt 9.10 av Sven Moe</span>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <h2 style="margin:0;font-size:16px;font-weight:700">Betaling</h2>
+        <div style="height:8px;border-radius:4px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #E3E6EA;overflow:hidden"><div style="width:30%;height:100%;background:#068472"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#51565C"><span>Forskudd 30 % betalt</span><span style="font-variant-numeric:tabular-nums">83 835 kr</span></div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ visProsjekt }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:260px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;color:#51565C">P-0312 · Prosjekt</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#EFEEFF;color:#5C46A7;box-shadow:inset 0 0 0 1px #C3BBFB">Pågår</span></div>
+      <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Bryn Hage, byggetrinn 2</h1>
+      <span style="color:#51565C">Solberg Bolig AS · 18 leiligheter · Prosjektleder Petter Nygård</span>
+    </div>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#F3F5F8">{{ ik.prosjektplan }}Prosjektplan</button>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.bestilling }}Bestill neste puljer</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+    <sc-for list="{{ faser }}" as="f" hint-placeholder-count="4">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px;color:#51565C;font-size:13px">{{ f.ikon }}<span>{{ f.navn }}</span></div>
+        <div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:28px;line-height:1;font-weight:700;letter-spacing:-0.8px">{{ f.ferdig }}</span><span style="color:#62686F">av 18</span></div>
+        <div style="height:6px;border-radius:3px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #E3E6EA;overflow:hidden"><div style="width:{{ f.prosent }};height:100%;background:#068472"></div></div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <h2 style="margin:0;font-size:18px;font-weight:700;flex:1">Leiligheter</h2>
+    <button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600">{{ ik16.filter }}Filter</button>
+    <div role="group" aria-label="Tetthet" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ tettheter }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.klikk }}" style="all:unset;cursor:pointer;height:28px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;background:{{ t.bg }};color:{{ t.fg }}">{{ t.navn }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1040px;font-size:{{ t.font }}">
+      <div style="display:grid;grid-template-columns:80px minmax(0,1.2fr) minmax(0,1.1fr) 116px 116px 104px 104px 132px;gap:12px;align-items:center;height:36px;padding:0 {{ t.pad }};font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Leil.</span><span>Kjøper</span><span>Kjøkken</span><span>Endringsfrist</span><span>Kontrollmål</span><span>Levering</span><span>Montering</span><span>Status</span></div>
+      <sc-for list="{{ leiligheter }}" as="l" hint-placeholder-count="12">
+        <div style="display:grid;grid-template-columns:80px minmax(0,1.2fr) minmax(0,1.1fr) 116px 116px 104px 104px 132px;gap:12px;align-items:center;height:{{ t.rad }};padding:0 {{ t.pad }};box-shadow:{{ l.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="font-weight:600;color:#016D5E">{{ l.nr }}</span>
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ l.kjoper }}</span>
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#51565C">{{ l.kjokken }}</span>
+          <span style="display:flex;align-items:center;gap:6px;color:{{ l.fristFarge }};font-weight:{{ l.fristVekt }}"><span style="display:{{ l.fristIkon }}">{{ ik16.endringsfrist }}</span>{{ l.frist }}</span>
+          <span style="display:flex;align-items:center;gap:6px;color:{{ l.kmFarge }}"><span style="display:{{ l.kmIkon }}">{{ ik16.hake }}</span>{{ l.km }}</span>
+          <span style="color:#51565C">{{ l.lev }}</span>
+          <span style="color:#51565C">{{ l.mont }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ l.s.bg }};color:{{ l.s.fg }};box-shadow:inset 0 0 0 1px {{ l.s.kant }};white-space:nowrap">{{ l.s.navn }}</span></span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+    </div>
+  </main>
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:20;background:#1A1D22;color:#FBFDFF;padding:12px 18px;border-radius:12px;display:flex;align-items:center;gap:10px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);font-weight:500;font-size:14px"><span style="color:#54B9A5">{{ ik.hake }}</span>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:960}}">
+class Component extends DCLogic {
+  state = { side: 'minDag', filter: 'alle', sok: '', tetthet: 'normal', avvik: true, sendt: false, toast: '' };
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { if (!window.HengselIkoner) this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); clearTimeout(this._t); }
+  vis(t) { clearTimeout(this._t); this.setState({ toast: t }); this._t = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  renderVals() {
+    const st = this.state;
+    const S = {
+      ny: { navn: 'Ny', bg: '#E7F1FF', fg: '#1A57AD', kant: '#A0C6FF' }, pagar: { navn: 'Pågår', bg: '#EFEEFF', fg: '#5C46A7', kant: '#C3BBFB' },
+      venter: { navn: 'Venter', bg: '#E9F1FB', fg: '#555B64', kant: '#BDC5CF' }, sannsynlig: { navn: 'Sannsynlig', bg: '#FCE9FF', fg: '#80378C', kant: '#E0B1E7' },
+      ferdig: { navn: 'Ferdig', bg: '#E3F7DE', fg: '#1F6D02', kant: '#A5D39B' }, advarsel: { navn: 'Prisavvik', bg: '#FFE9BC', fg: '#6D5000', kant: '#E0C07F' },
+      feil: { navn: 'Stoppet', bg: '#FFEBE8', fg: '#9E2D28', kant: '#F9AEA5' }
+    };
+    const gaa = side => () => { this.setState({ side }); window.scrollTo(0, 0); };
+    const menyNavn = [['min-dag', 'Min dag', '', 'minDag'], ['samtaler', 'Samtaler', '3'], ['innkommende', 'Innkommende', '7'], ['salgstavle', 'Salgstavle'], ['kunder', 'Kunder'], ['tilbud', 'Tilbud', '14'], ['ordre', 'Ordre', '42', 'ordre'], ['prosjekter', 'Prosjekter', '', 'prosjekt'], ['montasje', 'Montasje'], ['prosjektplan', 'Prosjektplan'], ['saker', 'Saker', '5'], ['bestilling', 'Bestilling'], ['resultater', 'Resultater'], ['fakturaer', 'Fakturaer'], ['rapporter', 'Rapporter'], ['salgsbanken', 'Salgsbanken'], ['leder', 'Leder'], ['mitt-team', 'Mitt team'], ['etterkalkyler', 'Etterkalkyler'], ['utstillinger', 'Utstillinger'], ['forskudd-leverandor', 'Forskudd til leverandør'], ['unoterte-leverandor', 'Unoterte til leverandør'], ['lager', 'Lager'], ['innstillinger', 'Innstillinger'], ['mer', 'Mer']];
+    const aktiv = { minDag: 'minDag', ordre: 'ordre', detalj: 'ordre', prosjekt: 'prosjekt' }[st.side];
+    const meny = menyNavn.map(([ik, navn, tall, side]) => {
+      const a = side && side === aktiv;
+      return { navn, tall: tall || '', ikon: this.ikon(ik, 20), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#1A1D22', ikonFarge: a ? '#016D5E' : '#51565C', vekt: a ? 600 : 500,
+        klikk: side ? gaa(side) : () => this.vis(navn + ' er ikke tegnet i denne pakken') };
+    });
+    const sti = ({ minDag: ['Min dag'], ordre: ['Ordre'], detalj: ['Ordre', 'H-24117'], prosjekt: ['Prosjekter', 'Bryn Hage, byggetrinn 2'] }[st.side]).map((navn, i, a) => ({ navn, fg: i === a.length - 1 ? '#1A1D22' : '#51565C', vekt: i === a.length - 1 ? 600 : 400, pil: i === a.length - 1 ? 'none' : 'flex' }));
+    const nokkeltall = [
+      { navn: 'Ordreinngang oktober', verdi: '1,28 mill', under: '+18 % mot oktober i fjor', farge: '#1F6D02' },
+      { navn: 'Tilbud ute', verdi: '14', under: '2,1 mill. 3 utløper denne uka', farge: '#51565C' },
+      { navn: 'Tegnetimer denne uka', verdi: '9', under: '2 ledige timer torsdag', farge: '#51565C' },
+      { navn: 'Treffprosent, 90 dager', verdi: '38 %', under: 'Butikkens snitt er 33 %', farge: '#51565C' }
+    ];
+    const T = { tegnetime: { bg: '#E0F4EE', fg: '#016D5E', kant: '#BCE6DB' }, befaring: S.ny, oppfolging: S.venter };
+    const avtaler = [['09:00', 'Ingrid Solbakken', 'Vaskerom og garderobe, tegning 2', 'Tegnetime', 'tegnetime'], ['11:00', 'Anders og Lise Moen', 'Måle opp kjøkken, Østensjøveien 112', 'Befaring', 'befaring'], ['14:00', 'Kristian Holt', 'Første tegnetime', 'Tegnetime', 'tegnetime'], ['16:00', 'Linn Kristoffersen', 'Ny fargeprøve på fronter', 'Oppfølging', 'oppfolging']]
+      .map(([tid, kunde, hva, type, k], i) => ({ tid, kunde, hva, type, s: T[k], skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }));
+    const handling = [
+      ['prisavvik', S.advarsel, 'Prisavvik på H-24117', 'Benkeplaten til Ingrid Solbakken er 12 cm for kort.', 'detalj'],
+      ['endringsfrist', S.sannsynlig, 'Endringsfrist fredag, Bryn Hage', '4 kjøpere har ikke levert tilvalg for kjøkken.', 'prosjekt'],
+      ['frist', S.venter, 'Tilbud T-3402 utløper om 13 dager', 'Ingrid Solbakken, vaskerom og garderobe.', null],
+      ['stoppet', S.feil, 'H-24078 er stoppet', 'Mangler godkjent tegning fra Erik og Hanne Vik.', 'ordre'],
+      ['mangler-montor', S.ny, '3 jobber mangler montør', 'Uke 44 og 45 i prosjektplanen.', null],
+      ['kontrollmal', S.pagar, 'Kontrollmål mangler i H0204 og H0205', 'Bryn Hage. Levering er planlagt uke 45.', 'prosjekt']
+    ].map(([ik, s, tittel, tekst, side], i) => ({ ikon: this.ikon(ik, 18), bg: s.bg, fg: s.fg, tittel, tekst, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: side ? gaa(side) : () => this.vis('Åpner ' + tittel.toLowerCase()) }));
+    const stolper = [['Mai', 910], ['Jun', 1180], ['Jul', 420], ['Aug', 1040], ['Sep', 1350], ['Okt', 1284]].map(([mnd, v], i) => ({ mnd, verdi: (v / 1000).toFixed(2).replace('.', ',') + ' m', hoyde: Math.round(v / 1350 * 118) + 'px', farge: i === 5 ? '#068472' : '#BCE6DB' }));
+    const kr = n => n.toLocaleString('nb-NO') + ' kr';
+    const ordre = [['H-24117', 'Ingrid Solbakken', 'Grefsen', 'Marte S.', '4.–6. nov', 279450, st.sendt ? 'pagar' : st.avvik ? 'advarsel' : 'ny'], ['H-24114', 'Jonas Fjeld', 'Sagene', 'Marte S.', '30. okt', 186200, 'ny'], ['H-24110', 'Kari Haugland', 'Ullern', 'Petter N.', '2.–5. nov', 412800, 'advarsel'], ['H-24103', 'Thomas Berg', 'Bryn', 'Marte S.', '27.–28. okt', 154900, 'pagar'], ['H-24096', 'Familien Nilsen-Aas', 'Nordstrand', 'Petter N.', '26.–28. okt', 338600, 'pagar'], ['H-24092', 'Linn Kristoffersen', 'Hasle', 'Amina R.', 'Ikke satt', 97400, 'venter'], ['H-24089', 'Ola Rustad', 'Lørenskog', 'Amina R.', '28.–30. okt', 221300, 'ny'], ['H-24121', 'Mette Lie', 'Kjelsås', 'Marte S.', '26.–27. okt', 128750, 'ferdig'], ['H-24078', 'Erik og Hanne Vik', 'Ski', 'Petter N.', 'Stoppet', 264000, 'feil'], ['H-24071', 'Nora Bakken', 'Torshov', 'Amina R.', '12. okt', 143200, 'ferdig'], ['H-24068', 'Sindre Aune', 'Kampen', 'Marte S.', '9. okt', 118900, 'ferdig'], ['H-24063', 'Hilde og Rune Sand', 'Ås', 'Petter N.', '7.–8. okt', 301500, 'ferdig']]
+      .map(([nr, kunde, sted, selger, montasje, belop, status]) => ({ nr, kunde, sted, selger, montasje, belop, status }));
+    const q = st.sok.trim().toLowerCase();
+    const synlige = ordre.filter(o => (st.filter === 'alle' || o.status === st.filter) && (!q || (o.nr + ' ' + o.kunde + ' ' + o.sted).toLowerCase().includes(q)));
+    const ordreRader = synlige.map((o, i) => ({ ...o, belop: kr(o.belop), s: S[o.status], skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: o.nr === 'H-24117' ? gaa('detalj') : () => this.vis('Bare H-24117 er tegnet') }));
+    const filtre = [['alle', 'Alle'], ['ny', 'Ny'], ['pagar', 'Pågår'], ['venter', 'Venter'], ['advarsel', 'Prisavvik'], ['ferdig', 'Ferdig'], ['feil', 'Stoppet']].map(([id, navn]) => {
+      const a = st.filter === id;
+      return { navn, antall: id === 'alle' ? ordre.length : ordre.filter(o => o.status === id).length, klikk: () => this.setState({ filter: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#068472' : '#CDD1D6', vekt: a ? 600 : 500 };
+    });
+    const TT = { tett: { rad: '36px', font: '13px', pad: '12px' }, normal: { rad: '44px', font: '14px', pad: '16px' }, luftig: { rad: '52px', font: '15px', pad: '18px' } };
+    const tettheter = [['tett', 'Tett'], ['normal', 'Normal'], ['luftig', 'Luftig']].map(([id, navn]) => { const a = st.tetthet === id; return { navn, klikk: () => this.setState({ tetthet: id }), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#51565C' }; });
+    const varelinjer = [['Kjøkken Lind, eik matt', '14 skap, sokkel og listverk', 1, 148600], ['Benkeplate kompaktlaminat', '12 mm, 4,2 m, Mørk skifer', 1, 24900], ['Vask og blandebatteri', 'Underlimt stålvask, børstet stål', 1, 8450], ['Integrerte hvitevarer', 'Oppvask, kjøl/frys, ovn, induksjon, vifte', 5, 61200], ['Belysning under overskap', 'LED-list, 3 m med dimmer', 1, 4300], ['Montering og frakt', 'To montører, tre dager', 1, 32000]].map(([navn, info, antall, sum]) => ({ navn, info, antall, sum: kr(sum) }));
+    const historikk = [
+      st.sendt ? ['sendt', S.pagar, 'Sendt til montasje', 'Marte Sæther', 'I dag'] : null,
+      st.avvik ? ['prisavvik', S.advarsel, 'Prisavvik registrert på benkeplate', 'Leverandør via Hengsel Levering', '12.10'] : null,
+      ['kontrollmal', S.venter, 'Kontrollmål tatt', 'Sven Moe', '09.10'],
+      ['hake', S.ferdig, 'Forskudd betalt', 'Vipps', '05.10'],
+      ['signert', { bg: '#E0F4EE', fg: '#016D5E' }, 'Ordrebekreftelse signert', 'Ingrid Solbakken', '02.10'],
+      ['tilbud', S.venter, 'Tilbud T-3312 akseptert', 'Ingrid Solbakken', '01.10']
+    ].filter(Boolean).map(([ik, s, tekst, hvem, dato]) => ({ ikon: this.ikon(ik, 16), bg: s.bg, fg: s.fg, tekst, hvem, dato }));
+    const faser = [['tilbud', 'Tegnet og godkjent', 18], ['kontrollmal', 'Kontrollmål tatt', 11], ['levering', 'Levert', 6], ['montering', 'Montert', 4]].map(([ik, navn, f]) => ({ ikon: this.ikon(ik, 16), navn, ferdig: f, prosent: Math.round(f / 18 * 100) + '%' }));
+    const kjopere = ['Silje Aasen', 'Tor og Mari Berge', 'Henrik Dale', 'Aisha Noor', 'Karin og Ola Fosse', 'Magnus Hagen', 'Ingvild Lie', 'Emil og Nora Rød', 'Fatima Ali', 'Kjell Moen', 'Lene Strøm', 'Ida og Jon Vik', 'Sander Ødegård', 'Hanne Solli', 'Jakob Brekke', 'Malin Ås', 'Rune og Eva Lund', 'Tiril Holm'];
+    const kj = ['Lind, eik matt', 'Lind, hvit matt', 'Fjell, grønngrå', 'Lind, eik matt', 'Strand, sort eik', 'Lind, hvit matt'];
+    const leiligheter = kjopere.map((k, i) => {
+      const et = Math.floor(i / 6) + 1, nr = 'H0' + et + String(i % 6 + 1).padStart(2, '0');
+      const status = i < 4 ? 'ferdig' : i < 6 ? 'pagar' : i < 11 ? 'ny' : i === 11 ? 'feil' : 'venter';
+      const fristGatt = i < 11, kritisk = i >= 14;
+      const km = i < 11 ? 'Tatt' : i < 13 ? 'Mangler' : '–';
+      return { nr, kjoper: k, kjokken: kj[i % kj.length], frist: fristGatt ? 'Levert' : kritisk ? '16.10' : '23.10', fristFarge: kritisk ? '#6D5000' : fristGatt ? '#62686F' : '#1A1D22', fristVekt: kritisk ? 600 : 400, fristIkon: kritisk ? 'flex' : 'none',
+        km, kmFarge: km === 'Tatt' ? '#1F6D02' : km === 'Mangler' ? '#9E2D28' : '#62686F', kmIkon: km === 'Tatt' ? 'flex' : 'none',
+        lev: i < 6 ? 'Uke 42' : i < 12 ? 'Uke 45' : 'Uke 47', mont: i < 4 ? 'Ferdig' : i < 6 ? 'Uke 43' : i < 12 ? 'Uke 46' : 'Uke 48',
+        s: status === 'feil' ? { ...S.feil, navn: 'Reklamasjon' } : status === 'venter' ? { ...S.venter, navn: 'Venter tilvalg' } : status === 'ny' ? { ...S.ny, navn: 'Bestilt' } : status === 'pagar' ? { ...S.pagar, navn: 'Montering' } : { ...S.ferdig, navn: 'Overlevert' },
+        skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' };
+    });
+    return {
+      ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24),
+      meny, sti, toast: st.toast,
+      visMinDag: st.side === 'minDag', visOrdre: st.side === 'ordre', visDetalj: st.side === 'detalj', visProsjekt: st.side === 'prosjekt',
+      nokkeltall, avtaler, handling, antallHandling: String(handling.length), stolper,
+      sok: st.sok, settSok: e => this.setState({ sok: e.target.value }), filtre, ordreRader, ingenTreff: ordreRader.length === 0, tettheter, t: TT[st.tetthet],
+      dS: S[ordre[0].status], avvik: st.avvik, varelinjer, historikk,
+      knappTekst: st.sendt ? 'Sendt til montasje' : 'Send til montasje', knappIkon: this.ikon(st.sendt ? 'hake' : 'sendt', 20),
+      sendMontasje: () => { if (st.sendt) return; this.setState({ sendt: true }); this.vis('H-24117 er sendt til Team Øst'); },
+      lukkAvvik: () => { this.setState({ avvik: false }); this.vis('Avviket er markert som løst'); },
+      faser, leiligheter
+    };
+  }
+}
+</script>
+</body>
+</html>

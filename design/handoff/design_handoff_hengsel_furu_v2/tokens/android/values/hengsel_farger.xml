@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hengsel – lys modus. Generert fra hengsel-palett.tokens.json, 14.10.2026. -->
+<resources>
+    <color name="hengsel_flate_side">#F6F8FB</color>
+    <color name="hengsel_flate_kort">#FBFDFF</color>
+    <color name="hengsel_flate_senket">#EFF1F4</color>
+    <color name="hengsel_flate_valgt">#E0F4EE</color>
+    <color name="hengsel_linje">#D7DADE</color>
+    <color name="hengsel_kant">#7B8188</color>
+    <color name="hengsel_tekst">#1A1D22</color>
+    <color name="hengsel_tekst_dempet">#51565C</color>
+    <color name="hengsel_tekst_svak">#686E75</color>
+    <color name="hengsel_tekst_invers">#FBFDFF</color>
+    <color name="hengsel_aksent">#068472</color>
+    <color name="hengsel_aksent_trykk">#007665</color>
+    <color name="hengsel_aksent_tekst">#016D5E</color>
+    <color name="hengsel_aksent_svak">#E0F4EE</color>
+    <color name="hengsel_aksent_valgt">#BCE6DB</color>
+    <color name="hengsel_paa_aksent">#FFFFFF</color>
+    <color name="hengsel_varsel_flate">#FFE9BC</color>
+    <color name="hengsel_varsel_tekst">#6D5000</color>
+    <color name="hengsel_feil_flate">#FFEBE8</color>
+    <color name="hengsel_feil_tekst">#9E2D28</color>
+    <color name="hengsel_status_ny_fg">#1A57AD</color>
+    <color name="hengsel_status_ny_bg">#E7F1FF</color>
+    <color name="hengsel_status_ny_kant">#A0C6FF</color>
+    <color name="hengsel_status_pagar_fg">#5C46A7</color>
+    <color name="hengsel_status_pagar_bg">#EFEEFF</color>
+    <color name="hengsel_status_pagar_kant">#C3BBFB</color>
+    <color name="hengsel_status_venter_fg">#555B64</color>
+    <color name="hengsel_status_venter_bg">#E9F1FB</color>
+    <color name="hengsel_status_venter_kant">#BDC5CF</color>
+    <color name="hengsel_status_sannsynlig_fg">#80378C</color>
+    <color name="hengsel_status_sannsynlig_bg">#FCE9FF</color>
+    <color name="hengsel_status_sannsynlig_kant">#E0B1E7</color>
+    <color name="hengsel_status_ferdig_fg">#1F6D02</color>
+    <color name="hengsel_status_ferdig_bg">#E3F7DE</color>
+    <color name="hengsel_status_ferdig_kant">#A5D39B</color>
+    <color name="hengsel_status_advarsel_fg">#6D5000</color>
+    <color name="hengsel_status_advarsel_bg">#FFE9BC</color>
+    <color name="hengsel_status_advarsel_kant">#E0C07F</color>
+    <color name="hengsel_status_feil_fg">#9E2D28</color>
+    <color name="hengsel_status_feil_bg">#FFEBE8</color>
+    <color name="hengsel_status_feil_kant">#F9AEA5</color>
+    <color name="hengsel_merke_blekk">#1D2430</color>
+    <color name="hengsel_merke_stift">#068472</color>
+</resources>
