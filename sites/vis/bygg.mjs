@@ -61,13 +61,13 @@ await mkdir(img, { recursive: true });
 await cp(join(sites, "hengsel", "public", "img", "dok-forside.webp"), join(img, "dok-forside.webp"));
 await cp(join(sites, "sngroup", "public", "logo.svg"), join(img, "sn-logo.svg"));
 
-// Merket (merkepakken i brand/, fasit 12.10.2026) der det står <!--logo-hengsel 28--> (tallet er høyden i px). Skjemaet kan stå etter tallet:
-// <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent, lys utgave (bare lys modus). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
+// Merket (palettpakke v2 og merkepakke v2) der det står <!--logo-hengsel 28--> (tallet er høyden i px). Skjemaet kan stå etter tallet:
+// <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent, lys utgave (levert-av: levert-av-hengsel-lys fra merkepakke v2) (bare lys modus). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
 const LOGOER = {
   hengsel: { fil: "hengsel-aksent", alt: "Hengsel", b: 422, h: 100 },
   crm: { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
   "hengsel-crm": { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
-  "levert-av": { fil: "hengsel-levering-aksent", alt: "Hengsel Levering", b: 763, h: 100 },
+  "levert-av": { fil: "levert-av-hengsel", alt: "Levert av Hengsel", b: 254, h: 40 },
 };
 function hengselLogo(size, skjema = "hengsel") {
   const l = LOGOER[skjema];

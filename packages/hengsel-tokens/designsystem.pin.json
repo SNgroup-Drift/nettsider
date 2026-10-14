@@ -27,7 +27,251 @@
       "assets/logo/merke-ute-hvit.svg"
     ]
   },
+  "merkepakke": {
+    "navn": "hengsel_merke_v2",
+    "dato": "2026-10-14",
+    "kilde": "design/handoff/hengsel_merke_v2",
+    "merknad": "assets i ds fra pakken (levert av, sendt med, favicon med flis, fire nye ikoner, motion, deling, butikk, PWA, app-ikon for Expo og Android); utplassert til sidene byte for byte",
+    "ikkeTattIBruk": [
+      "4-pwa-appikon/ios/hengsel_ute.icon (lik palettpakken)",
+      "LES-MEG.md (blir liggende i pakken)"
+    ],
+    "utplassert": {
+      "sites/admin/public/favicon-flis-16.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-16.png",
+        "sha256": "1e8f6132289ee73f8f270a93f323fa1585a7892b8104ed01b52232e47d00d769"
+      },
+      "sites/admin/public/favicon-flis-32.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-32.png",
+        "sha256": "5e8f9608dc8089a7a043e682ab166db1c2c34f70ca46dce695d651eb18fb883d"
+      },
+      "sites/admin/public/favicon-flis-48.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-48.png",
+        "sha256": "c751451641ccdfd2e2c0791c1409303f5f940b0153cce62236d371da67f4f3c7"
+      },
+      "sites/admin/public/favicon-flis.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis.svg",
+        "sha256": "52f5ae897eb75ae19154fdebba57eef9bf02a66d8c3b3c8f43108028b98f572e"
+      },
+      "sites/admin/public/favicon.ico": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon.ico",
+        "sha256": "4039d46528a6322b1094d82fafa134d498d2008d7ebfa49985445fc44f8898c8"
+      },
+      "sites/design/public/favicon-flis-16.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-16.png",
+        "sha256": "1e8f6132289ee73f8f270a93f323fa1585a7892b8104ed01b52232e47d00d769"
+      },
+      "sites/design/public/favicon-flis-32.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-32.png",
+        "sha256": "5e8f9608dc8089a7a043e682ab166db1c2c34f70ca46dce695d651eb18fb883d"
+      },
+      "sites/design/public/favicon-flis-48.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-48.png",
+        "sha256": "c751451641ccdfd2e2c0791c1409303f5f940b0153cce62236d371da67f4f3c7"
+      },
+      "sites/design/public/favicon-flis.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis.svg",
+        "sha256": "52f5ae897eb75ae19154fdebba57eef9bf02a66d8c3b3c8f43108028b98f572e"
+      },
+      "sites/design/public/favicon.ico": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon.ico",
+        "sha256": "4039d46528a6322b1094d82fafa134d498d2008d7ebfa49985445fc44f8898c8"
+      },
+      "sites/design/public/merke/sigdal-crm-levert-av-hengsel-off-white-2x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white-2x.png",
+        "sha256": "9e79582d61374c0eecd0dcea8285a89d902b056c3640a90ca64dd023fa07fea2"
+      },
+      "sites/design/public/merke/sigdal-crm-levert-av-hengsel-off-white.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white.png",
+        "sha256": "fe6dc9a561aa8fdf210eaff06c52e2678e8b3fdf339fa7e00e4ab52a8f2126ce"
+      },
+      "sites/design/public/merke/sigdal-crm-levert-av-hengsel-warm-black-2x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black-2x.png",
+        "sha256": "4958cf843de8880e74e553f1298c6d575b517cb4b29d0187bee6886b1a393ebf"
+      },
+      "sites/design/public/merke/sigdal-crm-levert-av-hengsel-warm-black.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black.png",
+        "sha256": "12daf3aef72d014df26db9ed2281ece4ced230b3d92e00dc4930ac4cedb65ccf"
+      },
+      "sites/hengsel/public/favicon-flis-16.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-16.png",
+        "sha256": "1e8f6132289ee73f8f270a93f323fa1585a7892b8104ed01b52232e47d00d769"
+      },
+      "sites/hengsel/public/favicon-flis-32.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-32.png",
+        "sha256": "5e8f9608dc8089a7a043e682ab166db1c2c34f70ca46dce695d651eb18fb883d"
+      },
+      "sites/hengsel/public/favicon-flis-48.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-48.png",
+        "sha256": "c751451641ccdfd2e2c0791c1409303f5f940b0153cce62236d371da67f4f3c7"
+      },
+      "sites/hengsel/public/favicon-flis.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis.svg",
+        "sha256": "52f5ae897eb75ae19154fdebba57eef9bf02a66d8c3b3c8f43108028b98f572e"
+      },
+      "sites/hengsel/public/favicon.ico": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon.ico",
+        "sha256": "4039d46528a6322b1094d82fafa134d498d2008d7ebfa49985445fc44f8898c8"
+      },
+      "sites/hengsel/public/logo/levert-av-hengsel-lys.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/levert-av-hengsel-lys.svg",
+        "sha256": "44a494c3d87877af7450440f2419010e7a65c49c40299abf17cdec323d4ac51c"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1080-plakat.png": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1080-plakat.png",
+        "sha256": "fce296008c14ac732f6dea7e7a746c9bd78cc546dec9357a02e5b1e8c61f5c93"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1080.mp4": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1080.mp4",
+        "sha256": "591a8e8100496746dc6189a871e1a735ad57428227249fd5c6ce797a1b05b262"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1080.webm": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1080.webm",
+        "sha256": "45b42291b37483e95130f10fbdd113a275017c1f53a5d8cd2ee450a9cb780851"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1920-plakat.png": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1920-plakat.png",
+        "sha256": "e27d9a0caa9cf8dcc60a213601b4a9aaf7f986cfc5c28059403e95eb9ba97b6a"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1920.mp4": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1920.mp4",
+        "sha256": "08b9e52c27c4dda471d27184b1df56346875ce40c3c15dd400b1f5503a9071a6"
+      },
+      "sites/hengsel/public/media/ute-motion-1080x1920.webm": {
+        "fra": "design/handoff/hengsel_merke_v2/1-motion/ute-motion-1080x1920.webm",
+        "sha256": "4dfb3a86040596c6885a1c00890bdab4d9199257c3d189771e5b4f60bddfd44d"
+      },
+      "sites/hengsel/public/og-apptest.png": {
+        "fra": "design/handoff/hengsel_merke_v2/2-deling/og-apptest.png",
+        "sha256": "8b4e2bdcf82446316595a410c78415817fa8f721951d5a092488c838ba4fc773"
+      },
+      "sites/hengsel/public/og-hengsel-no.png": {
+        "fra": "design/handoff/hengsel_merke_v2/2-deling/og-hengsel-no.png",
+        "sha256": "4a54b724a963bc63691d9f68c481769fbde73ab22575a2d3541418738893938a"
+      },
+      "sites/hengsel/public/og-kunde.png": {
+        "fra": "design/handoff/hengsel_merke_v2/2-deling/og-kunde.png",
+        "sha256": "82f76d65c36890df3c20265c9edef9aaad0bb0917c9e5a5bb267c156ab51249c"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-2x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white-2x.png",
+        "sha256": "9e79582d61374c0eecd0dcea8285a89d902b056c3640a90ca64dd023fa07fea2"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-3x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white-3x.png",
+        "sha256": "3cfca30316bdcd687e87ec281876b7dd5c4e3818732b20aa75e25b6314862a63"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white.png",
+        "sha256": "fe6dc9a561aa8fdf210eaff06c52e2678e8b3fdf339fa7e00e4ab52a8f2126ce"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-2x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black-2x.png",
+        "sha256": "4958cf843de8880e74e553f1298c6d575b517cb4b29d0187bee6886b1a393ebf"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-3x.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black-3x.png",
+        "sha256": "ba113b3497452ee0fdd925a4f2c5d9248c46d59293049b75acbcd66876bc679f"
+      },
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black.png": {
+        "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black.png",
+        "sha256": "12daf3aef72d014df26db9ed2281ece4ced230b3d92e00dc4930ac4cedb65ccf"
+      },
+      "sites/vis/src/assets/logo/levert-av-hengsel-lys.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/levert-av-hengsel-lys.svg",
+        "sha256": "44a494c3d87877af7450440f2419010e7a65c49c40299abf17cdec323d4ac51c"
+      },
+      "sites/vis/src/favicon-flis-16.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-16.png",
+        "sha256": "1e8f6132289ee73f8f270a93f323fa1585a7892b8104ed01b52232e47d00d769"
+      },
+      "sites/vis/src/favicon-flis-32.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-32.png",
+        "sha256": "5e8f9608dc8089a7a043e682ab166db1c2c34f70ca46dce695d651eb18fb883d"
+      },
+      "sites/vis/src/favicon-flis-48.png": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis-48.png",
+        "sha256": "c751451641ccdfd2e2c0791c1409303f5f940b0153cce62236d371da67f4f3c7"
+      },
+      "sites/vis/src/favicon-flis.svg": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon-flis.svg",
+        "sha256": "52f5ae897eb75ae19154fdebba57eef9bf02a66d8c3b3c8f43108028b98f572e"
+      },
+      "sites/vis/src/favicon.ico": {
+        "fra": "design/handoff/hengsel_merke_v2/5-logoer-ikoner/favicon.ico",
+        "sha256": "4039d46528a6322b1094d82fafa134d498d2008d7ebfa49985445fc44f8898c8"
+      },
+      "sites/vis/src/og-vis-hengsel-no.png": {
+        "fra": "design/handoff/hengsel_merke_v2/2-deling/og-vis-hengsel-no.png",
+        "sha256": "9681df58a3129638c68cbc84d3204f0b7b4dbfb386439666fb977020cdfec83f"
+      }
+    }
+  },
   "filer": {
+    "assets/app-ikon/android/ute/ic_launcher-playstore-512.png": "a830ec6b1326aefdcf5a2603df126b56389514e2f70c264df75759a1d3941c8d",
+    "assets/app-ikon/android/ute/res/mipmap-anydpi-v26/ic_launcher.xml": "cee3ff6c73e61072d4f99f71d5311df6de2540630951b0f9fbd4fc4bb010f62f",
+    "assets/app-ikon/android/ute/res/mipmap-anydpi-v26/ic_launcher_round.xml": "cee3ff6c73e61072d4f99f71d5311df6de2540630951b0f9fbd4fc4bb010f62f",
+    "assets/app-ikon/android/ute/res/mipmap-hdpi/ic_launcher.png": "62a673f51a6a6adfae0dde3702765e6aa2cabda18127ca5d8dec42c8239bab65",
+    "assets/app-ikon/android/ute/res/mipmap-hdpi/ic_launcher_foreground.png": "6d005ec072ad2e5ff98ccf2a4d1f2f92dc5d77499186e65afd3b9f65a89a1aa1",
+    "assets/app-ikon/android/ute/res/mipmap-hdpi/ic_launcher_monochrome.png": "a62b940c2e11349ee908bc6855e8dc4d63987c9051e44ea7ff5143f4a3500774",
+    "assets/app-ikon/android/ute/res/mipmap-hdpi/ic_launcher_round.png": "73a6b88b4bae4575aadfb97c276bc108fd723afafa5bb0a602450714c6d8a380",
+    "assets/app-ikon/android/ute/res/mipmap-mdpi/ic_launcher.png": "399eb20b52f345b0b8401f13a518deae80b00a4a2c2ae08862fe33e6fd8b09b3",
+    "assets/app-ikon/android/ute/res/mipmap-mdpi/ic_launcher_foreground.png": "3c1f0f4dd6d0ed586516cb9b450220abc0ac01b0025ac7d3be13c84875781494",
+    "assets/app-ikon/android/ute/res/mipmap-mdpi/ic_launcher_monochrome.png": "97899d4854bb96b6451959fbc653b04c934251bd9b2182dfb1ef2ec01458eae7",
+    "assets/app-ikon/android/ute/res/mipmap-mdpi/ic_launcher_round.png": "508d84623ad724232bdbdce7ff6b59466b68844d92a15d2882f1857d1df8cf56",
+    "assets/app-ikon/android/ute/res/mipmap-xhdpi/ic_launcher.png": "2b1330c2806403a681b51a185b31bc26d49d71fc1e9c1be0b955e0ad825bffaa",
+    "assets/app-ikon/android/ute/res/mipmap-xhdpi/ic_launcher_foreground.png": "a256a31da7d4c05a8abec3ae76c16fe1726e5c3e1788e2ed634aa773c25f3a4a",
+    "assets/app-ikon/android/ute/res/mipmap-xhdpi/ic_launcher_monochrome.png": "d47a8ba67a96afe83768959e10a7ba64163ac4d9523c0a51a05da772602a13ab",
+    "assets/app-ikon/android/ute/res/mipmap-xhdpi/ic_launcher_round.png": "862c3c4f74b256b92e4bd976e83acf6953d52b652517aa7af8afccac7fedf075",
+    "assets/app-ikon/android/ute/res/mipmap-xxhdpi/ic_launcher.png": "7cc7335688ac57f95b91f898fdc05fcab0b13811ab5f2f53712b242dc64535e6",
+    "assets/app-ikon/android/ute/res/mipmap-xxhdpi/ic_launcher_foreground.png": "74ab3679e06c513384ab43df41fde80c8ce0a4b5075b5c833f4f085f8bdcb6f8",
+    "assets/app-ikon/android/ute/res/mipmap-xxhdpi/ic_launcher_monochrome.png": "a163dd00f89fa83b5a0a3e766ee52d07fc5a59dd54343b71639bed0dea4410f1",
+    "assets/app-ikon/android/ute/res/mipmap-xxhdpi/ic_launcher_round.png": "c696a5569b0f7492a4fa69a090333c220e44a9d67db3dc462a63debc8a5dbe5f",
+    "assets/app-ikon/android/ute/res/mipmap-xxxhdpi/ic_launcher.png": "40c2daa88fb190a032957a22dc146abd3058356b55030c4639bca2adba653d13",
+    "assets/app-ikon/android/ute/res/mipmap-xxxhdpi/ic_launcher_foreground.png": "b2208c8cda5a07edc090ff7229ff386e08ace1e15dfc11e5c82077e5b6bdc5c2",
+    "assets/app-ikon/android/ute/res/mipmap-xxxhdpi/ic_launcher_monochrome.png": "4cdc72959db6951277f2beaab51b75198b8ce19beba8e44debe0f91f9597ed1f",
+    "assets/app-ikon/android/ute/res/mipmap-xxxhdpi/ic_launcher_round.png": "fda53b1493b0a138c5d757c255108ff4d72c5da92577a8c132b8f4e253fb6f7a",
+    "assets/app-ikon/android/ute/res/values/ic_launcher_background.xml": "f13200510964e4f64a9bdf35441fa2f1a75e804278b41599fd5967ca5770d062",
+    "assets/app-ikon/android/visning/ic_launcher-playstore-512.png": "83383b3f33c07a8ab4b240424e97ad4afdf0b3d8ffd9da618fe299d1c806e4cb",
+    "assets/app-ikon/android/visning/res/mipmap-anydpi-v26/ic_launcher.xml": "cee3ff6c73e61072d4f99f71d5311df6de2540630951b0f9fbd4fc4bb010f62f",
+    "assets/app-ikon/android/visning/res/mipmap-anydpi-v26/ic_launcher_round.xml": "cee3ff6c73e61072d4f99f71d5311df6de2540630951b0f9fbd4fc4bb010f62f",
+    "assets/app-ikon/android/visning/res/mipmap-hdpi/ic_launcher.png": "d66107111f77948309a56600d4e446d452330e47f03bc7a3cdcd2d7c93a4248c",
+    "assets/app-ikon/android/visning/res/mipmap-hdpi/ic_launcher_foreground.png": "e1b22fa7d3ad8f3f8262ca41e3544f8dc0a3ab767cc23223de80da1ff271ba75",
+    "assets/app-ikon/android/visning/res/mipmap-hdpi/ic_launcher_monochrome.png": "d78e26a9774085194cda732e535bb7cab1e7d6f9ec6bd6b89c83b92eb32c3459",
+    "assets/app-ikon/android/visning/res/mipmap-hdpi/ic_launcher_round.png": "1be2caef2d2eeddb96761380c64581bb5c926cb171790dabb867869aaca26723",
+    "assets/app-ikon/android/visning/res/mipmap-mdpi/ic_launcher.png": "68eb1c1a9d6c2f198fed96dbf49703f262ac7cfb8b8601d658bb9ab9c1185e15",
+    "assets/app-ikon/android/visning/res/mipmap-mdpi/ic_launcher_foreground.png": "4d641a6487f6d129c46cf1a0adf8fd60a866de87dffb425183dea0681e2c8995",
+    "assets/app-ikon/android/visning/res/mipmap-mdpi/ic_launcher_monochrome.png": "aac526a8e0df4faba3478cb3c97647b0e1953a65c4ea245d684be6ae6d18f1cc",
+    "assets/app-ikon/android/visning/res/mipmap-mdpi/ic_launcher_round.png": "9cb93c22beb4ca9969765d8a327ffa02d6a09d618dbddeb85a3cb384b8a2183c",
+    "assets/app-ikon/android/visning/res/mipmap-xhdpi/ic_launcher.png": "3059e61688c77a64f8e92bacfbc0af657eaacecf942b22e57a79376350a2126f",
+    "assets/app-ikon/android/visning/res/mipmap-xhdpi/ic_launcher_foreground.png": "869d7dafb06322c85de7b39b3f19707f46f037fbc9a2baacb25e61cf3be3be3f",
+    "assets/app-ikon/android/visning/res/mipmap-xhdpi/ic_launcher_monochrome.png": "650b79f72697e8fc26868a3f1772f09546edacfb1c032d4f5a2ce179dfb2353d",
+    "assets/app-ikon/android/visning/res/mipmap-xhdpi/ic_launcher_round.png": "3f34465c96ca9fdffb3ce280ec21fb826a06738c436c833ba0e9859188e940de",
+    "assets/app-ikon/android/visning/res/mipmap-xxhdpi/ic_launcher.png": "14f445df70a185912d3fa0cb4f2745c1ff3d92bf0b3219c5a6e33857d4d01aee",
+    "assets/app-ikon/android/visning/res/mipmap-xxhdpi/ic_launcher_foreground.png": "e6745511c7b9df777a4718aa4cdcac18a7e894dfe7ce04e181f1b46c381e08b1",
+    "assets/app-ikon/android/visning/res/mipmap-xxhdpi/ic_launcher_monochrome.png": "19722f7ddad70db69a44f29b244f451594a79917ff50bb6e51be30e08b340061",
+    "assets/app-ikon/android/visning/res/mipmap-xxhdpi/ic_launcher_round.png": "228cbad535193a1011d67ee060596e293b3f614c782ec0ffb9da197e09697ee9",
+    "assets/app-ikon/android/visning/res/mipmap-xxxhdpi/ic_launcher.png": "dce6601759ed167e78d99800a9a1e91ae180d432d22ca74a9c07f2731d6651ca",
+    "assets/app-ikon/android/visning/res/mipmap-xxxhdpi/ic_launcher_foreground.png": "8c00918666832cfc0c2c5057e980032e40cffe3d30ebc79c518989cbb631662b",
+    "assets/app-ikon/android/visning/res/mipmap-xxxhdpi/ic_launcher_monochrome.png": "856c7aa7aa14513abf0fbb7b4f44c4dfae12f17f543ab7499466307e6d9d4a46",
+    "assets/app-ikon/android/visning/res/mipmap-xxxhdpi/ic_launcher_round.png": "29e7cc0ab42ad4280006b67d8d3b76ae42a50cca2169f8406050be56ebcb9994",
+    "assets/app-ikon/android/visning/res/values/ic_launcher_background.xml": "f13200510964e4f64a9bdf35441fa2f1a75e804278b41599fd5967ca5770d062",
+    "assets/app-ikon/expo/ute/adaptive-icon-monochrome.png": "faf7fa4fc8ac3199c919a173d4ebbf8d80c9584282ac33f46d24df26c36bceaf",
+    "assets/app-ikon/expo/ute/adaptive-icon.png": "d64b24dab43215da2172ddf5ed45f29eda2c7a033b9f88190c5be9c3b82a39b1",
+    "assets/app-ikon/expo/ute/app-json-utdrag.json": "37b6823e3dcf32cc9e9d2934fa48b483f0091e10dac1a6802f21df639a7eaa37",
+    "assets/app-ikon/expo/ute/icon-dark.png": "bb02b68eaae9906dad80c3520b847c31c8a6d56a44b3788d48bbcae3d90c75a4",
+    "assets/app-ikon/expo/ute/icon-tinted.png": "e208c5e95bb6e55e48b0470ed6f6cdca0f5c7422dbaf0f73e7f19ee5f45780c8",
+    "assets/app-ikon/expo/ute/icon.png": "2756fc3652b19af2a06ca64cbf9f18f97e46f774f58d78e6f4f55e1fd8dbbc3e",
+    "assets/app-ikon/expo/ute/splash-icon-dark.png": "f8fe8ca8ec71724187a0c2e8bbf6e6527eb902ec1191c80bb680de3fb79c15bf",
+    "assets/app-ikon/expo/ute/splash-icon.png": "b8006c335cb08da04249600fa33dbcbd24064205ebd0d3c66909e6ee9caae315",
+    "assets/app-ikon/expo/visning/adaptive-icon-monochrome.png": "185be83bb83cb062b315fcf2eb912de306e7987e1b476de45f03464a76e6873c",
+    "assets/app-ikon/expo/visning/adaptive-icon.png": "899c90c675e7d648b77b816f63da44e89b46c8808c5ac691e8d61bd392709a58",
+    "assets/app-ikon/expo/visning/app-json-utdrag.json": "37b6823e3dcf32cc9e9d2934fa48b483f0091e10dac1a6802f21df639a7eaa37",
+    "assets/app-ikon/expo/visning/icon-dark.png": "f88e6108394b2b38a3cabdb7f8845b1560195d1f5c1d7ad306a1f0694e790de7",
+    "assets/app-ikon/expo/visning/icon-tinted.png": "1e4950175ca6c0c306347c76f4d864407146baf764fcb730607223887d0a1b39",
+    "assets/app-ikon/expo/visning/icon.png": "537db5973e059e83b5a9461ca319d03388d48a13c11cc3b86af9a82c4a39a5e0",
+    "assets/app-ikon/expo/visning/splash-icon-dark.png": "40bdcfda816db38d38f0340f9b6f509de826ea62860b716879878c720880496a",
+    "assets/app-ikon/expo/visning/splash-icon.png": "07cfeadb3043244ff7bd7ca5b3ad32e548b6810b59b36444773bb14d3b3560d0",
     "assets/app-ikon/hengsel_ute.icon/Assets/1-blad-venstre-mork.svg": "1b6d93f99f2ecf6756fc6cdea78ce1f82727a9850728c3a32e2dee2c585e6720",
     "assets/app-ikon/hengsel_ute.icon/Assets/1-blad-venstre.svg": "06c22afb4794ecf17d23c1fdd8674d3e889ee6ec852690fd8e67426d30115baf",
     "assets/app-ikon/hengsel_ute.icon/Assets/2-blad-hoyre-mork.svg": "536f19ac4fa2910505a0c078571e911ce10a3882ab1f2716c2ead182c0424a91",
@@ -35,10 +279,37 @@
     "assets/app-ikon/hengsel_ute.icon/Assets/3-stift-mork.svg": "36ef7bfcc34e11a8dd925e002e51fbb762742ed936c92fb37c66568b86402fe4",
     "assets/app-ikon/hengsel_ute.icon/Assets/3-stift.svg": "3de438cf5aaae00c17f463e384ac0f8ed2ca5c6c79337e6fcc3c8d5fdfef5e05",
     "assets/app-ikon/hengsel_ute.icon/icon.json": "7875fbaee3396f271ff62224136ed0e9fb76e0d219751c961e61f23375e5e5ca",
+    "assets/butikk/app-store/ipad-13.svg": "912494e14268a47ddcbdbed5704dafb73be9a4387eabdc5ef6ae5d7e42f3f8a4",
+    "assets/butikk/app-store/iphone-6-5.svg": "33bff6a9285ff87201c493dcdb2de7e068becaa02823f462fbfbb548faf41901",
+    "assets/butikk/app-store/iphone-6-9.svg": "7cd9e29f0940553d1267704efa9392f50355e20fb6079095f3b289c1440da7b4",
+    "assets/butikk/forhandsvisning/app-store-ipad-13.png": "c6014fd4cbc5c474d317c1eb4ea623e5c260261ebac036882f49abcdf427b931",
+    "assets/butikk/forhandsvisning/app-store-iphone-6-5.png": "696030348c2f4e7eff6a057d919310cf3e58a34010ead3c4b73cd6e88ae63e82",
+    "assets/butikk/forhandsvisning/app-store-iphone-6-9.png": "c95dd3665fb9c7b24f8294e9824511af7beee4849d384534f39179f1823e4592",
+    "assets/butikk/forhandsvisning/google-play-nettbrett-10.png": "ceb14dc58816fb6aa9aac90e777358a1ead298d2ee8d47883dac129610dc62ba",
+    "assets/butikk/forhandsvisning/google-play-telefon.png": "dde51566b839dcb7ec1383cdfee429892da1c557c8e5e6b3b780d8ac174f2119",
+    "assets/butikk/google-play/funksjonsgrafikk-1024x500.png": "cd3dbe87d1a91e2b8ca5031bffc7167384e22f13300c8301b5f62de2d8d748bb",
+    "assets/butikk/google-play/funksjonsgrafikk-1024x500.svg": "b37a3cee7274067eeef45c32160dd0882921b08139c53fd4ad866fa9e57b976d",
+    "assets/butikk/google-play/nettbrett-10.svg": "132177d6f307d985920588950bfa710528596bbdba354162f5de55e05b3a11bf",
+    "assets/butikk/google-play/telefon.svg": "99ff6d66e040a7d5bbfa82d93ef21fb8cf2c3908e4a8bf2e993ddeb9941a6d4d",
+    "assets/butikk/maler.json": "e5e7506ead66dbeb4bd40317b35d2b8f00488fdb2f51b608310982721ac6fd44",
+    "assets/butikk/tekster.json": "a45481120dedca5600fafd447665ac359d3b0ca91300749369ec43817c9443cf",
+    "assets/deling/og-apptest.png": "8b4e2bdcf82446316595a410c78415817fa8f721951d5a092488c838ba4fc773",
+    "assets/deling/og-apptest.svg": "1f7b1a9d2e635729ab83155d5282c97bd8f498c3fcf276c0a08cd20f1d22ff22",
+    "assets/deling/og-hengsel-no.png": "4a54b724a963bc63691d9f68c481769fbde73ab22575a2d3541418738893938a",
+    "assets/deling/og-hengsel-no.svg": "1d7756d61d1036dd105336bc65f71af4bf8e6b770ee11cd5b17594ff8a819931",
+    "assets/deling/og-kunde.png": "82f76d65c36890df3c20265c9edef9aaad0bb0917c9e5a5bb267c156ab51249c",
+    "assets/deling/og-kunde.svg": "a5f47b0e38f54aeae5c9fb026175dacb70574f75cc57a56f4c6fb8bf648ae4f3",
+    "assets/deling/og-vis-hengsel-no.png": "9681df58a3129638c68cbc84d3204f0b7b4dbfb386439666fb977020cdfec83f",
+    "assets/deling/og-vis-hengsel-no.svg": "f2caf238fca6f2e602fdb93ab85dfaaa0042d9372d9dc90c22d47d2f6d9752b2",
     "assets/favicon/README.md": "bad5625948d801d03cd84aa472d040b5b8959c094b6f2d2ed31134c82a11cc29",
     "assets/favicon/apple-touch-icon-180.png": "aaa57ba70de287cba7ca667ad0ad6e7037518f9bca2a1afc18ee366d8a9b7051",
     "assets/favicon/favicon-16.png": "8bb9dd509414fe34a6bc85d1448b669e5fc2765c082fafa23bf460dbd07583e8",
     "assets/favicon/favicon-32.png": "914b1eed6c32b6ab6e2e7474be35994f0f5ddad4bc421ae4e8ca4084513bcc50",
+    "assets/favicon/favicon-flis-16.png": "1e8f6132289ee73f8f270a93f323fa1585a7892b8104ed01b52232e47d00d769",
+    "assets/favicon/favicon-flis-32.png": "5e8f9608dc8089a7a043e682ab166db1c2c34f70ca46dce695d651eb18fb883d",
+    "assets/favicon/favicon-flis-48.png": "c751451641ccdfd2e2c0791c1409303f5f940b0153cce62236d371da67f4f3c7",
+    "assets/favicon/favicon-flis.svg": "52f5ae897eb75ae19154fdebba57eef9bf02a66d8c3b3c8f43108028b98f572e",
+    "assets/favicon/favicon.ico": "4039d46528a6322b1094d82fafa134d498d2008d7ebfa49985445fc44f8898c8",
     "assets/favicon/favicon.svg": "d4935c5dfee7a38440981de035fa0c6875240040f27a1256df8b8ec2b9bbb3a1",
     "assets/favicon/icon-192.png": "33d72809ab234d7a29e052b147b457f074bb1b31bc4f961ad6cea29e891f2394",
     "assets/favicon/icon-512.png": "5242afac244f09fc37f2b08fc250b04282508bb6d1cbaff7e879092fee944f99",
@@ -72,6 +343,8 @@
     "assets/ikoner/16/forskudd-leverandor.svg": "fbf470c0d00bdb76ee556dc8bf58ee35a64914ab8036a2018da3e47019aee4b1",
     "assets/ikoner/16/frist.svg": "d5259265336d0d0de36cf319cc11949fd664afcf01aacea5aaffe6cddb724300",
     "assets/ikoner/16/hake.svg": "a6115120f34c366802f9e2c1568d5d54b130805046e0693a057c4bd01df25936",
+    "assets/ikoner/16/hjelp.svg": "a559bf2e16692d2f5f5df400266ea38569537dc2c560dc04881cc574e24c2761",
+    "assets/ikoner/16/innboks.svg": "3e0a1c2d4d1705092ebcb8658ecf49c96790de114a7b090687f11e78ab778ca9",
     "assets/ikoner/16/innkommende.svg": "03542eb8dff7d251a0ecb85ca6af9abe2374c471a1687887e31ff2060540d3b6",
     "assets/ikoner/16/innstillinger.svg": "a7ce10c5b3b57f24a379e60d64bef65663ecfc62ef24e2f556bc32c026ff0ac6",
     "assets/ikoner/16/kalender.svg": "ecfd9616d45eb5c19698d5fac2384468350e251236aa4566fdf3ff80edc49c0c",
@@ -87,6 +360,7 @@
     "assets/ikoner/16/min-dag.svg": "c1ef34c79743d28074e2adadb7fd535b4779bb1eec66ad1f68e435537a7e99bc",
     "assets/ikoner/16/mitt-team.svg": "6dc0305c5eecd0c0233a66bef79b9064256ce6c4bffaa0bdd7723cae7e679ffa",
     "assets/ikoner/16/montasje.svg": "f69776a756860f55774da1d6bf3477bd3bbbbae623dea47d17d47c3888d1a346",
+    "assets/ikoner/16/montasjeplan.svg": "002f2e6670a4c2719ecdebbb105862bc2d4078c72c4331ba9f18deaa97f7eddb",
     "assets/ikoner/16/montering.svg": "5f555899a2f111708edd25a31c5a911160b49b0a33ed067d3dd4a35bb5f603fb",
     "assets/ikoner/16/naviger.svg": "975b34e5abe5ff06db78302a790d62447a510bbed1d951b9803134836ca3d569",
     "assets/ikoner/16/ordre.svg": "7a2e755e5c86d8af311c6b18ffbc21976fcfdfa635e242c577a7c483b0fe7e3d",
@@ -95,6 +369,7 @@
     "assets/ikoner/16/pil-venstre.svg": "0a086d85122f84be4024c2d05056081e54c79e77f3d876aefabd096457047b87",
     "assets/ikoner/16/pluss.svg": "b295d5ef8e2512018ef4c903f8237f2a0b42e43f16f87bf46a28f1779c9162ce",
     "assets/ikoner/16/prisavvik.svg": "27aea6c5af3d2e0875389bed7ef7fa8b38a96518c6f70c75fbaa0f4015d8571b",
+    "assets/ikoner/16/profil.svg": "b945af64ba986bcde3f0119d2aae3ff284ee113cf1fda1552b913cf7ec992d81",
     "assets/ikoner/16/prosjekter.svg": "73e995a59435465c3bc27dd262bef4ff9576a7793e6f63dc348515c75c4ad392",
     "assets/ikoner/16/prosjektplan.svg": "93d84594bc50c98cb452e495c811586683fbfa4fc82c180cf05fc4465207abe6",
     "assets/ikoner/16/rapporter.svg": "26434ebe4bc533055afedd152e5bf4199ba3064b2d22ff99db48e05f7c09d4ae",
@@ -121,6 +396,8 @@
     "assets/ikoner/20/forskudd-leverandor.svg": "465439636c2743369cab267e896b3c6c007628b7f65e0d571f397d5be04d0fb7",
     "assets/ikoner/20/frist.svg": "baec45c6e823d955a4fbf9186f419629067ca5fadee632349799da6324dbe324",
     "assets/ikoner/20/hake.svg": "c5a8ded90420bbe33d01c1b96b2b634a61f3a4c709bc31e84a15c94322238e25",
+    "assets/ikoner/20/hjelp.svg": "e64604ccfac16aaeb089e2b5ea4b8f0fe26c300937041a15ba462c5cb51dbd6b",
+    "assets/ikoner/20/innboks.svg": "799832146ae5c3541c089365562210a52c0f2763de92e5c826acfd10054a2f20",
     "assets/ikoner/20/innkommende.svg": "2b284738b41e1723162f46bf9afb19ed07a4638175277cac10f98752448544bd",
     "assets/ikoner/20/innstillinger.svg": "aa72cf8aaec9052db139af3c9e8366fd69d01fb8aad8685cf535d209be37ccc9",
     "assets/ikoner/20/kalender.svg": "420c4f6c766c6749cc2bd360dae379bb2c73df3df9a1f869564e34c7ca76cd6d",
@@ -136,6 +413,7 @@
     "assets/ikoner/20/min-dag.svg": "9efbc4ef41197b15df505c5da180ddbfcc335e5e7a244d7a324f71bbc6c82343",
     "assets/ikoner/20/mitt-team.svg": "a9f35ab2f93cc293568dc561639fa24c9993115bd520168aefee5c7a10a40e44",
     "assets/ikoner/20/montasje.svg": "bcd2753dd602198e6c379f4f28d867a586896b87ac31801582cddd237aa6e6a8",
+    "assets/ikoner/20/montasjeplan.svg": "b4ad527da0e057fa3adfe38a087c7b9b382c4038d36a1320e3779b0f1669fc53",
     "assets/ikoner/20/montering.svg": "1eaf8cfaa68c71483990c3d4275a6e81bfe7f44d58f45c0e56ee0cea3fae6c97",
     "assets/ikoner/20/naviger.svg": "53f72b0995b22cb1d9d6fd25e9d08180375be1456fad761767a1b129a960fc1c",
     "assets/ikoner/20/ordre.svg": "83c9b1f93b2a12007e2d08c02b506360f85604bac2e0a87962de168e328be99f",
@@ -144,6 +422,7 @@
     "assets/ikoner/20/pil-venstre.svg": "11e34cd21834b1442e625afbcf350517635e89f391c863a722350647dc1138d7",
     "assets/ikoner/20/pluss.svg": "8d3ca4bae88222fac7e9440edc013757b1a174047d6b6b58376dc4fc9efb01d6",
     "assets/ikoner/20/prisavvik.svg": "6b573fda26e2d8382ca7ed98c26d8fdfa86c7bd1511f4ee5cf5efaa68825eec4",
+    "assets/ikoner/20/profil.svg": "ca9131f18ee7e88f9565b454d9ccd3c7f6da672b19778ea6c7e0cd5b88ca7d4d",
     "assets/ikoner/20/prosjekter.svg": "ea3aadc5342fec4b9fe971faaad629a6374eba6b1bbaffe4009c711bd3fb21d0",
     "assets/ikoner/20/prosjektplan.svg": "dbeb8c4772a18bc80bd0efc79ea8a7b9f49d549b15c5c03c107904cce12602ba",
     "assets/ikoner/20/rapporter.svg": "9f31d046917853d7ebb48dcae08a782e41f4504bee6c8e49deb07ff94d3c00c9",
@@ -170,6 +449,8 @@
     "assets/ikoner/24/forskudd-leverandor.svg": "98b1af6bde3167f8dffbd3cf232a13d1cfcfb2c26aaa862cd6f860e0c309ef9f",
     "assets/ikoner/24/frist.svg": "b7cdce285af84781ef9672cc9c595e11ef14cd98a9cb6d86059573d62e902580",
     "assets/ikoner/24/hake.svg": "5c2aceef9acdd1593f85fcba0eacfe9df23a3d62f80bdef706ea41f09146c393",
+    "assets/ikoner/24/hjelp.svg": "804c3c61b51e544f3fd343cae56002f26488677b97b6ab2b7c20703e6fd8ad7b",
+    "assets/ikoner/24/innboks.svg": "639b339b0898cd6edd0fb3c2f79667589a84ac65770d5bf9f168db067b3a696d",
     "assets/ikoner/24/innkommende.svg": "086b87bc3dc129a266f23184b119234f12c74bec6c876bf236f1b725c897cd06",
     "assets/ikoner/24/innstillinger.svg": "f67b81ad1bc2756c4e7ac2e6726b1147cae25dce96d4a2cadf468136a72a2d48",
     "assets/ikoner/24/kalender.svg": "e10847cc12b416fbaa6e546e413baf74fda0a59b3f92112e2226a0b220c2a9d9",
@@ -185,6 +466,7 @@
     "assets/ikoner/24/min-dag.svg": "779c364fd0549f0c33cc7c7d2c1eab94e8f4e7f97ce375eaaded86034eb58735",
     "assets/ikoner/24/mitt-team.svg": "02fc839a01d5066918517d8211dac71d7f45617498a962db523644fb5e67d29e",
     "assets/ikoner/24/montasje.svg": "5e1c7df52577c876847cff729c22582faf08e5a72e6181b30a4d7b4af599cd57",
+    "assets/ikoner/24/montasjeplan.svg": "bda2e54b74690c081616290ee24bc356bbbb2a2f15d632ac99314cbf097e40cc",
     "assets/ikoner/24/montering.svg": "aea2d88cac8f1501707ade90176f9e7c40a685df8a7a5ac59b39ce2cf8da2d5c",
     "assets/ikoner/24/naviger.svg": "f1e580c097bdcb21ce69e68b49766b3183e7ba1646f9d55d63c5449d62707cf8",
     "assets/ikoner/24/ordre.svg": "28f723be12b19e415db39ccc3a85b29fb6dbceef753fd244c7cae92ad4edf47b",
@@ -193,6 +475,7 @@
     "assets/ikoner/24/pil-venstre.svg": "331e722b288f60d44cdb969656ee5747be02b3d057aeade735e9949a7e3345eb",
     "assets/ikoner/24/pluss.svg": "9c6bf7cdf2e2825d746e288c0a4d4e82de89976eefc2a6c60cdc7e8a687ca7f2",
     "assets/ikoner/24/prisavvik.svg": "4abe7c80bb3cdce16eddc5b1cd7b3133b40e9416ccf5223ebe5a9ef4a299c1b6",
+    "assets/ikoner/24/profil.svg": "bd15954c7e3457f8efd563ab09f53d89837b64154e57d400a4ce97f6d916c910",
     "assets/ikoner/24/prosjekter.svg": "3a7b6c805321d226f3fb41a5eb872ff875dcd8cf683958abbe921099b3aab854",
     "assets/ikoner/24/prosjektplan.svg": "e432ebe10e582bff4c59d3aae63ef01467a25a4f0fbdd2b1f964fedcc2dbd441",
     "assets/ikoner/24/rapporter.svg": "c82b0f45239ede753081e9d8df0b72966ae8f707a8de71bb6dc78190370e6604",
@@ -213,6 +496,7 @@
     "assets/ikoner/24/varsler.svg": "4fc1a747d028ea96dcbd2e5ae2f5a6c55e578adb9351862ba10c78a3e0f33abc",
     "assets/ikoner/IKONER.md": "53eb1b500c008c607996df7e772898e13059b13ed2e53cfa03ff5fb9448a4e99",
     "assets/ikoner/hengsel-ikoner.svg": "bbf7cd05ec65004359d7db3a418f6761dd4043568547883f1e9c7d0bad62e451",
+    "assets/ikoner/ikoner-tillegg.json": "ac3fcb28d46745c2243c2896663218ca0595e4bf560c426368b6704e1e33fdb2",
     "assets/ikoner/ikoner.json": "f94e37f5e83a38f6be12abdda888320c648d79542ac41ab58ba4393809d5b251",
     "assets/logo/hengsel-merke-blekk.svg": "216126e7f5dbcc3e585573515d8b5e73b0b1b5c8ae389b8f9cf0f1fe90cbbf60",
     "assets/logo/hengsel-merke-glass-lys.svg": "c35d87892440d24e24d268c594380c7af019a939a1073522240c95790ba80e79",
@@ -221,6 +505,10 @@
     "assets/logo/hengsel-merke-lys.svg": "e4452447474c2f642004074c72e177bdda9b23cf4699c27b8001e6f8eacd31da",
     "assets/logo/hengsel-merke-mork.svg": "a79f110d7490aaed8c2f9b7321a309a1a00b8c61fd9652926355fc397c2609ce",
     "assets/logo/hengsel-merke-tonet.svg": "1743d11c95ad485eb6c171bed1902cf6d3e444214fbdad03008296e8d45f105c",
+    "assets/logo/levert-av-hengsel-blekk.svg": "f018e3d29b649bcc5b1cbe4de8be325b17d023f2df93d06cb5460840f91953db",
+    "assets/logo/levert-av-hengsel-hvit.svg": "01248006227784cbecbf53c3706cefa2e54e05a67aaba4024b8fe95718d826ea",
+    "assets/logo/levert-av-hengsel-lys.svg": "44a494c3d87877af7450440f2419010e7a65c49c40299abf17cdec323d4ac51c",
+    "assets/logo/levert-av-hengsel-mork.svg": "3218d67a59c0be8f6f993200638717c11624244d4e589eb162d134c8fe9889d7",
     "assets/logo/logo-admin-lys.svg": "e582b26696e0c83f7d8203dcf17889920f23bb58b5329d97dfdc08873845775f",
     "assets/logo/logo-admin-mork.svg": "81943e56ad0a0bdc160bff94ecd9820fa49dfaf3c97d35a712258ae49759e767",
     "assets/logo/logo-crm-lys.svg": "c63f887666bf29c44e7858bb8b502db435d8be42401ac37602f13469e807b85f",
@@ -250,6 +538,44 @@
     "assets/logo/merke-ute-mork.svg": "c42de5af11b2ad7b08bf392f9a41bd20407bac6cdb610bd5ba7e2dab2c5a526c",
     "assets/logo/ordmerke-hengsel-blekk.svg": "928df747c9e20189b5a4e934d16b453cc9567bd37cc2fbd30ed5e0624327cb97",
     "assets/logo/ordmerke-hengsel-hvit.svg": "c3c5c505f4f18fb41a2ab33722209268494476567ec7a7caf8f261e517841cb5",
+    "assets/logo/png/levert-av-hengsel-blekk-2x.png": "b13e06bf3ba34ec3f1665fba41ed3a806f5f445fb40ef8aae408f5326db13669",
+    "assets/logo/png/levert-av-hengsel-blekk-3x.png": "c3e30053c5b3f80970fc1289e8c943e8071183798420cf04203297ca2d551040",
+    "assets/logo/png/levert-av-hengsel-blekk.png": "4ecf9cbf98e6e49f8cef4289f42b21d390e690911c646206256de747ad14006e",
+    "assets/logo/png/levert-av-hengsel-hvit-2x.png": "50512fbd7995c6c39186c7f1de49fe4487be9cd988e34615b80d2c5f7ff83bed",
+    "assets/logo/png/levert-av-hengsel-hvit-3x.png": "25a9d21a48ab17faba885d7181d95bb923efacfc5a4bc9538f633780e029c15f",
+    "assets/logo/png/levert-av-hengsel-hvit.png": "5e11ed1efc3a5ca576b3c2ac5cbaa5d8d611aa86346b9a1d69b75f893e788078",
+    "assets/logo/png/levert-av-hengsel-lys-2x.png": "2d55fc8c9e3323cad40c50c302935a0603cd1e56a6ba4e8cc1f02f5a9c610523",
+    "assets/logo/png/levert-av-hengsel-lys-3x.png": "7db8dc28476edcf8dafc997253e9bb65f6c68bb0bfec2bf2feb86038acad50c6",
+    "assets/logo/png/levert-av-hengsel-lys.png": "a5dede2286de5f6a10108fbe84a39e68aefbaa8775749f89772402ffcf8017ff",
+    "assets/logo/png/levert-av-hengsel-mork-2x.png": "4c92924a765066dd2d8152e1dee19e2539c8118b0f401559ddaf3bfe6e8d270b",
+    "assets/logo/png/levert-av-hengsel-mork-3x.png": "e208a9ef475f094c8ec047a0326c6837300c4e73b2447704515da7a949d0f706",
+    "assets/logo/png/levert-av-hengsel-mork.png": "70fc8f2a24ef35a3644a150a4dd197f23fffe87732b29038610442459549c44d",
+    "assets/logo/png/sendt-med-hengsel-lys-2x.png": "73bec67f6da423b99ff1a84c140b0e831bbc5b685f34623f08656b5e1d1eee2f",
+    "assets/logo/png/sendt-med-hengsel-lys-3x.png": "e6c3dc19980aa9246b87905ffb0f0587a00b29579a37be3dbebd0b13fc5bd1d5",
+    "assets/logo/png/sendt-med-hengsel-lys.png": "2f7cf906d0b5dac3c33c9b58d44a6da9440185865782001ad151df9fc8bbc6ae",
+    "assets/logo/png/sendt-med-hengsel-mork-2x.png": "837107e9a98b22bc3279f618ce48518f18fc3e083dee2b4d64574849ed0e489f",
+    "assets/logo/png/sendt-med-hengsel-mork-3x.png": "e95b5eef0c9c9e38f552677f7b7dd0cdab7ca3327921781ea318891f42f77740",
+    "assets/logo/png/sendt-med-hengsel-mork.png": "11053960e6b0c13f2722c14ff17888b6838642b25b65d9121d403a6d5f79acbc",
+    "assets/logo/sendt-med-hengsel-lys.svg": "f244890b52a4f2972a346f3fd41fcdc8296631b63a88c22038c7ba03e0eb65ac",
+    "assets/logo/sendt-med-hengsel-mork.svg": "ff6ca3dcef637d7c141e3e4bef9acd8b35a2d6a8f0f1910081bdc6028c67474a",
+    "assets/motion/kilde/motion.js": "0dcdd1eb315f0ff934866f71de2328743c88a564af906b7eaee4031d7f2897a0",
+    "assets/motion/ute-motion-1080x1080-plakat.png": "fce296008c14ac732f6dea7e7a746c9bd78cc546dec9357a02e5b1e8c61f5c93",
+    "assets/motion/ute-motion-1080x1080.mp4": "591a8e8100496746dc6189a871e1a735ad57428227249fd5c6ce797a1b05b262",
+    "assets/motion/ute-motion-1080x1080.webm": "45b42291b37483e95130f10fbdd113a275017c1f53a5d8cd2ee450a9cb780851",
+    "assets/motion/ute-motion-1080x1920-plakat.png": "e27d9a0caa9cf8dcc60a213601b4a9aaf7f986cfc5c28059403e95eb9ba97b6a",
+    "assets/motion/ute-motion-1080x1920.mp4": "08b9e52c27c4dda471d27184b1df56346875ce40c3c15dd400b1f5503a9071a6",
+    "assets/motion/ute-motion-1080x1920.webm": "4dfb3a86040596c6885a1c00890bdab4d9199257c3d189771e5b4f60bddfd44d",
+    "assets/pwa/crm-192.png": "e0311e275a7246cbb1f3a0b990a128cef93975a4998430e135baec539ab382e9",
+    "assets/pwa/crm-192.svg": "e00a3eaa9d52660515493bf4ab9ed7aaa5d86d538459f264bc19952c70105d77",
+    "assets/pwa/crm-512.png": "cd84da9aba8622f8bc5ba83c9ee6d3db715cddb0b366a11a1d897c46a459a90c",
+    "assets/pwa/crm-512.svg": "3e7713fc9e1d1f8f4e2a0399ecb681c6ed17f741e9552ff5c0348055b8ccdf7d",
+    "assets/pwa/crm-apple-touch-180.png": "3a6ca152b08d58cad1cb4420de41a26d22292840d1607b11faf554fabcefd2d5",
+    "assets/pwa/crm-apple-touch-180.svg": "8a77fc06284205708f0879511aaedcb5aab593f23e4b65f38232f06dbb6c1c50",
+    "assets/pwa/crm-maskable-512.png": "1382620bd112a647ed866c345eb888b7b2e0aab1f56d963a9becab99adecd6f2",
+    "assets/pwa/crm-maskable-512.svg": "3dcbc0fbf42122a0485af2a52225cfd68fe8f2eb53d7c1ff29a100f5611c0d3a",
+    "assets/pwa/manifest-utdrag.json": "1b9cc212c97669eaed31cd067a8a913e92085923983152ed0ac7581cf27127d8",
+    "assets/pwa/vis-maskable-512.png": "870ff45aa7ac9f5ec8376a9fe522b7563afbd501bfa2359c7193ffe5d2303218",
+    "assets/pwa/vis-maskable-512.svg": "ab990aef1d8a187d41631fa284531ec69f6ff3be88b1750a0fa9bf6d22f1026c",
     "tokens/fonts-fri-liste.css": "f5ad14c53364da6884ac675ebf1909201ff44aa3c6408092669c6ae215cbcd6d",
     "tokens/fonts.css": "e7bbb03233d07725cc86efb7098a37e4d0b0028744c68de7264969e7832a5a3e",
     "tokens/hengsel.tokens.json": "d38ee4d3f0a50107a7a4092f23079077b30b103db2c95dab841a91dc4e158a1f",

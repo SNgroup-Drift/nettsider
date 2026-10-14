@@ -1,0 +1,266 @@
+{
+  "dato": "2026-10-14",
+  "merknad": "Enhetsrammen nederst går utenfor bildet med vilje. Fyll href på #skjermbilde, sett tekst i #overskrift-linje-1/2 og #undertekst. Fjern #skjermbilde-felt når bildet er satt.",
+  "maler": [
+    {
+      "fil": "app-store/iphone-6-9.svg",
+      "bredde": 1320,
+      "hoyde": 2868,
+      "butikk": "App Store",
+      "beskrivelse": "App Store, iPhone 6,9\" (påkrevd)",
+      "felt": {
+        "bakgrunn": {
+          "id": "bakgrunn",
+          "farge": "#F6F8FB"
+        },
+        "overskrift": {
+          "id": "overskrift",
+          "linjer": "overskrift-linje-1, overskrift-linje-2",
+          "x": 106,
+          "y_forste_grunnlinje": 310,
+          "skrift": "Schibsted Grotesk 700",
+          "str": 95,
+          "sporing": -0.02,
+          "linjeavstand": 1.08,
+          "maks_bredde": 1013,
+          "maks_linjer": 2,
+          "farge": "#1A1D22"
+        },
+        "undertekst": {
+          "id": "undertekst",
+          "skrift": "Schibsted Grotesk 400",
+          "str": 48,
+          "farge": "#51565C",
+          "maks_linjer": 1
+        },
+        "enhetsramme": {
+          "id": "enhetsramme",
+          "x": 172,
+          "y": 774,
+          "bredde": 977,
+          "hoyde": 2123,
+          "radius": 147
+        },
+        "skjermbilde": {
+          "id": "skjermbilde",
+          "plassholder": "skjermbilde-felt",
+          "x": 206,
+          "y": 808,
+          "bredde": 909,
+          "hoyde": 2055,
+          "radius": 113,
+          "tilpasning": "xMidYMin slice",
+          "kilde": "iPhone-skjermbilde, f.eks. 1320×2868"
+        }
+      }
+    },
+    {
+      "fil": "app-store/iphone-6-5.svg",
+      "bredde": 1284,
+      "hoyde": 2778,
+      "butikk": "App Store",
+      "beskrivelse": "App Store, iPhone 6,5\"",
+      "felt": {
+        "bakgrunn": {
+          "id": "bakgrunn",
+          "farge": "#F6F8FB"
+        },
+        "overskrift": {
+          "id": "overskrift",
+          "linjer": "overskrift-linje-1, overskrift-linje-2",
+          "x": 103,
+          "y_forste_grunnlinje": 300,
+          "skrift": "Schibsted Grotesk 700",
+          "str": 92,
+          "sporing": -0.02,
+          "linjeavstand": 1.08,
+          "maks_bredde": 986,
+          "maks_linjer": 2,
+          "farge": "#1A1D22"
+        },
+        "undertekst": {
+          "id": "undertekst",
+          "skrift": "Schibsted Grotesk 400",
+          "str": 46,
+          "farge": "#51565C",
+          "maks_linjer": 1
+        },
+        "enhetsramme": {
+          "id": "enhetsramme",
+          "x": 167,
+          "y": 750,
+          "bredde": 950,
+          "hoyde": 2064,
+          "radius": 143
+        },
+        "skjermbilde": {
+          "id": "skjermbilde",
+          "plassholder": "skjermbilde-felt",
+          "x": 200,
+          "y": 783,
+          "bredde": 884,
+          "hoyde": 1998,
+          "radius": 110,
+          "tilpasning": "xMidYMin slice",
+          "kilde": "iPhone-skjermbilde, f.eks. 1320×2868"
+        }
+      }
+    },
+    {
+      "fil": "app-store/ipad-13.svg",
+      "bredde": 2064,
+      "hoyde": 2752,
+      "butikk": "App Store",
+      "beskrivelse": "App Store, iPad 13\" (påkrevd hvis appen støtter iPad)",
+      "felt": {
+        "bakgrunn": {
+          "id": "bakgrunn",
+          "farge": "#F6F8FB"
+        },
+        "overskrift": {
+          "id": "overskrift",
+          "linjer": "overskrift-linje-1, overskrift-linje-2",
+          "x": 165,
+          "y_forste_grunnlinje": 326,
+          "skrift": "Schibsted Grotesk 700",
+          "str": 120,
+          "sporing": -0.02,
+          "linjeavstand": 1.08,
+          "maks_bredde": 1614,
+          "maks_linjer": 2,
+          "farge": "#1A1D22"
+        },
+        "undertekst": {
+          "id": "undertekst",
+          "skrift": "Schibsted Grotesk 400",
+          "str": 60,
+          "farge": "#51565C",
+          "maks_linjer": 1
+        },
+        "enhetsramme": {
+          "id": "enhetsramme",
+          "x": 207,
+          "y": 688,
+          "bredde": 1651,
+          "hoyde": 2201,
+          "radius": 99
+        },
+        "skjermbilde": {
+          "id": "skjermbilde",
+          "plassholder": "skjermbilde-felt",
+          "x": 248,
+          "y": 729,
+          "bredde": 1569,
+          "hoyde": 2119,
+          "radius": 58,
+          "tilpasning": "xMidYMin slice",
+          "kilde": "iPad-skjermbilde, f.eks. 2064×2752"
+        }
+      }
+    },
+    {
+      "fil": "google-play/telefon.svg",
+      "bredde": 1080,
+      "hoyde": 1920,
+      "butikk": "Google Play",
+      "beskrivelse": "Google Play, telefon 9:16",
+      "felt": {
+        "bakgrunn": {
+          "id": "bakgrunn",
+          "farge": "#F6F8FB"
+        },
+        "overskrift": {
+          "id": "overskrift",
+          "linjer": "overskrift-linje-1, overskrift-linje-2",
+          "x": 86,
+          "y_forste_grunnlinje": 222,
+          "skrift": "Schibsted Grotesk 700",
+          "str": 78,
+          "sporing": -0.02,
+          "linjeavstand": 1.08,
+          "maks_bredde": 830,
+          "maks_linjer": 2,
+          "farge": "#1A1D22"
+        },
+        "undertekst": {
+          "id": "undertekst",
+          "skrift": "Schibsted Grotesk 400",
+          "str": 39,
+          "farge": "#51565C",
+          "maks_linjer": 1
+        },
+        "enhetsramme": {
+          "id": "enhetsramme",
+          "x": 141,
+          "y": 518,
+          "bredde": 799,
+          "hoyde": 1736,
+          "radius": 120
+        },
+        "skjermbilde": {
+          "id": "skjermbilde",
+          "plassholder": "skjermbilde-felt",
+          "x": 169,
+          "y": 546,
+          "bredde": 743,
+          "hoyde": 1680,
+          "radius": 92,
+          "tilpasning": "xMidYMin slice",
+          "kilde": "iPhone-skjermbilde, f.eks. 1320×2868"
+        }
+      }
+    },
+    {
+      "fil": "google-play/nettbrett-10.svg",
+      "bredde": 1600,
+      "hoyde": 2560,
+      "butikk": "Google Play",
+      "beskrivelse": "Google Play, nettbrett 10\"",
+      "felt": {
+        "bakgrunn": {
+          "id": "bakgrunn",
+          "farge": "#F6F8FB"
+        },
+        "overskrift": {
+          "id": "overskrift",
+          "linjer": "overskrift-linje-1, overskrift-linje-2",
+          "x": 128,
+          "y_forste_grunnlinje": 285,
+          "skrift": "Schibsted Grotesk 700",
+          "str": 93,
+          "sporing": -0.02,
+          "linjeavstand": 1.08,
+          "maks_bredde": 1251,
+          "maks_linjer": 2,
+          "farge": "#1A1D22"
+        },
+        "undertekst": {
+          "id": "undertekst",
+          "skrift": "Schibsted Grotesk 400",
+          "str": 47,
+          "farge": "#51565C",
+          "maks_linjer": 1
+        },
+        "enhetsramme": {
+          "id": "enhetsramme",
+          "x": 160,
+          "y": 640,
+          "bredde": 1280,
+          "hoyde": 1707,
+          "radius": 77
+        },
+        "skjermbilde": {
+          "id": "skjermbilde",
+          "plassholder": "skjermbilde-felt",
+          "x": 192,
+          "y": 672,
+          "bredde": 1216,
+          "hoyde": 1643,
+          "radius": 45,
+          "tilpasning": "xMidYMin slice",
+          "kilde": "iPad-skjermbilde, f.eks. 2064×2752"
+        }
+      }
+    }
+  ]
+}

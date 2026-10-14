@@ -1,22 +1,20 @@
 ---
 /**
- * Kundens logo i menyen og bunnen (K-223): public/<kunde>/logo/<kunde>-logo.svg, ellers <kunde>-logo-warm-black.png (Sigdal: transparent PNG
- * i Warm Black). Finnes ingen av dem, står kundens navn som tekstmerke i kundens overskriftsskrift.
- * «levert av Hengsel» står under som tekst; Hengsel Levering-logoen er ikke brukt fordi den har Hengsel-farger. Stilen (.kundelogo-*) ligger i kundetemaet (tokens.css).
+ * Kundens merke i menyen og bunnen (K-223, K-231): «<Kunde> CRM · levert av Hengsel» som ett merke i én farge (merkepakke v2, hengsel_merke_v2/6-sigdal),
+ * public/<kunde>/logo/<kunde>-crm-levert-av-hengsel-{warm-black|off-white}.png (1x, -2x og -3x). PNG, ikke SVG: SVG-ene i pakken mangler selve Sigdal-logoen (tomt <image>). Warm Black på lys flate, Off White på mørk flate (flate="mork").
+ * Kundens logo og «levert av Hengsel» er ett bilde: ingen tekst under. Mangler filen, står kundens navn som tekstmerke i kundens overskriftsskrift,
+ * med «levert av Hengsel» som tekst under. Stilen (.kundelogo-*) ligger i kundetemaet (tokens.css).
  */
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Kunde } from "../kunde";
-interface Props { kunde: Kunde; levertAv?: "under" | "ingen" }
-const { kunde, levertAv = "under" } = Astro.props;
-// SVG når den er levert, ellers PNG-en fra merkevareprofilen (transparent, Warm Black)
-const kandidater = [`${kunde.sti}/logo/${kunde.nokkel}-logo.svg`, `${kunde.sti}/logo/${kunde.nokkel}-logo-warm-black.png`];
-const logoFil = kandidater.find((f) => existsSync(join(process.cwd(), "public", f)));
-const harLogo = !!logoFil;
+interface Props { kunde: Kunde; flate?: "lys" | "mork" }
+const { kunde, flate = "lys" } = Astro.props;
+const grunn = `${kunde.sti}/logo/${kunde.nokkel}-crm-levert-av-hengsel-${flate === "mork" ? "off-white" : "warm-black"}`;
+const harMerke = existsSync(join(process.cwd(), "public", `${grunn}.png`));
 ---
 <span class="kundelogo">
-  {harLogo
-    ? <img class="kundelogo-bilde" src={logoFil} alt={kunde.navn} height="30" width="70" />
-    : <span class="kundelogo-navn">{kunde.navn}</span>}
-  {levertAv === "under" && <span class="kundelogo-levert">levert av Hengsel</span>}
+  {harMerke
+    ? <img class="kundelogo-merke" src={`${grunn}-2x.png`} srcset={`${grunn}.png 1x, ${grunn}-2x.png 2x, ${grunn}-3x.png 3x`} alt={`${kunde.produkt} · levert av Hengsel`} width="416" height="48" />
+    : <Fragment><span class="kundelogo-navn">{kunde.navn}</span><span class="kundelogo-levert">levert av Hengsel</span></Fragment>}
 </span>

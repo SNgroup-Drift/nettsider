@@ -11,7 +11,7 @@ const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const LOGO_TEKST = [
   [/hengsel-crm-aksent-lys\.svg$|logo-crm-/, (p) => p.produkt],
   [/hengsel-ute-aksent-lys\.svg$/, () => "Hengsel Ute"],
-  [/hengsel-levering-aksent-lys\.svg$/, () => "levert av Hengsel"],
+  [/levert-av-hengsel-lys\.svg$/, () => "levert av Hengsel"],
   [/hengsel-(?:aksent-)?lys\.svg$/, () => "levert av Hengsel"],
 ];
 
@@ -22,7 +22,7 @@ const LOGO_TEKST = [
 export function tilKunde(html, p, { rot = p.sti, kunTekstOgLogo = false } = {}) {
   let ut = html;
   // Hengsel-logoene som <img> → tekstmerke (class og alt tas med)
-  ut = ut.replace(/<img\b[^>]*\bsrc="(?:\/assets)?\/logo\/(hengsel-[a-z-]*lys\.svg)"[^>]*>/g, (tag, fil) => {
+  ut = ut.replace(/<img\b[^>]*\bsrc="(?:\/assets)?\/logo\/((?:levert-av-)?hengsel-[a-z-]*lys\.svg)"[^>]*>/g, (tag, fil) => {
     const alt = /\balt="([^"]*)"/.exec(tag)?.[1] ?? "";
     const klasse = /\bclass="([^"]*)"/.exec(tag)?.[1] ?? "";
     const tekst = LOGO_TEKST.find(([re]) => re.test(fil))?.[1](p) ?? p.produkt;

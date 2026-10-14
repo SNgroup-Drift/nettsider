@@ -36,7 +36,7 @@ test("a) filer med fargeverdier som ikke er pinnede logoer eller merkepakken v3 
   const merke = merkefilSha();
   for (const s of SIDER) for (const f of alle(join(rot, "sites", s)).filter((x) => x.endsWith(".svg") && !/node_modules|\/dist\/|public\/ds\/|\/fasit\//.test(x))) {
     const t = readFileSync(f);
-    if (finnBrudd(t.toString("utf8"), { mork: false }).length) assert.ok(merke.has(createHash("sha256").update(t).digest("hex")) || erKundelogo(f, t.toString("utf8")), `${relative(rot, f)} har fargeverdier og er ikke en pinnet logo eller en fil fra merkepakken (brand/hengsel-merke)`);
+    if (finnBrudd(t.toString("utf8"), { mork: false }).length) assert.ok(merke.has(createHash("sha256").update(t).digest("hex")) || erKundelogo(f, t.toString("utf8")), `${relative(rot, f)} har fargeverdier og er ikke en pinnet logo eller en fil fra merkepakke v2 (design/handoff/hengsel_merke_v2)`);
   }
 });
 

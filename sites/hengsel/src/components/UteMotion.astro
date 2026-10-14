@@ -1,14 +1,17 @@
 ---
 /**
- * Hengsel Ute-motion (brand/hengsel-merke/motion, 3 s sømløs loop, ingen lyd): autoplay, muted, loop og playsinline.
+ * Hengsel Ute-motion (merkepakke v2, hengsel_merke_v2/1-motion; 10 s, 30 fps, ingen lyd): autoplay, muted, loop og playsinline.
+ * Appikonet åpner seg, stiften fyller bildet, tre punkter, og så lukker ikonet seg igjen. Første bilde er plakaten.
+ * Formatet er `kvadrat` (1080 × 1080, standard) eller `staende` (1080 × 1920) der flaten er stående.
  * Videoen lazy-lastes: kildene settes inn av scripts/motion.ts når den nærmer seg skjermen. Ved prefers-reduced-motion og uten skript
- * vises bare plakaten. Størrelsen settes av omslaget (klassen .motion); width og height er 1080 × 1080 (ingen CLS).
+ * vises bare plakaten. Størrelsen settes av omslaget (klassen .motion); width og height følger formatet (ingen CLS).
  */
-interface Props { class?: string }
-const { class: klasse } = Astro.props;
+interface Props { class?: string; format?: "kvadrat" | "staende" }
+const { class: klasse, format = "kvadrat" } = Astro.props;
+const mal = format === "staende" ? { b: 1080, h: 1920, s: "1080x1920" } : { b: 1080, h: 1080, s: "1080x1080" };
 ---
-<div class:list={["motion", klasse]} data-motion>
-  <video muted loop playsinline autoplay preload="none" width="1080" height="1080" poster="/media/ute-motion-1080x1080-plakat.webp" aria-label="Hengsel Ute-ikonet: hengselet åpner seg" data-webm="/media/ute-motion-1080x1080.webm" data-mp4="/media/ute-motion-1080x1080.mp4"></video>
+<div class:list={["motion", format, klasse]} data-motion>
+  <video muted loop playsinline autoplay preload="none" width={mal.b} height={mal.h} poster={`/media/ute-motion-${mal.s}-plakat.png`} aria-label="Hengsel Ute: appikonet åpner seg og viser dagens jobber, sjekkliste og avvik, og signert hos kunden" data-webm={`/media/ute-motion-${mal.s}.webm`} data-mp4={`/media/ute-motion-${mal.s}.mp4`}></video>
 </div>
 
 <script>
@@ -17,5 +20,6 @@ const { class: klasse } = Astro.props;
 
 <style>
   .motion { width: 100%; aspect-ratio: 1; border-radius: var(--r-lg); overflow: hidden; background: var(--surface-highlight); }
+  .motion.staende { aspect-ratio: 9 / 16; }
   .motion video { display: block; width: 100%; height: 100%; object-fit: cover; }
 </style>
