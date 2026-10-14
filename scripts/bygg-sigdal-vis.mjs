@@ -59,7 +59,10 @@ const VIS_TEKST = [
   ["Skrift: Schibsted Grotesk", "Skrift: Newsreader og Inter"],
   ['<span class="eyebrow">SN Group</span>', `<span class="eyebrow">${profil.produkt} · levert av Hengsel</span>`],
 ];
-const LOGO_NAVN = `<span class="kundelogo kundelogo-vis"><span class="kundelogo-navn">${profil.navn}</span><span class="kundelogo-levert">levert av Hengsel</span></span>`;
+// Sigdal-logoen (SVG eller PNG i Warm Black) når den finnes i public/sigdal/logo, ellers navnet som tekstmerke
+const logoFil = [`${profil.kunde}-logo.svg`, `${profil.kunde}-logo-warm-black.png`].find((f) => existsSync(join(rot, "sites/hengsel/public", profil.kunde, "logo", f)));
+const LOGO_INNHOLD = logoFil ? `<img class="kundelogo-bilde" src="${profil.sti}/logo/${logoFil}" alt="${profil.navn}" height="24">` : `<span class="kundelogo-navn">${profil.navn}</span>`;
+const LOGO_NAVN = `<span class="kundelogo kundelogo-vis">${LOGO_INNHOLD}<span class="kundelogo-levert">levert av Hengsel</span></span>`;
 
 function html(t, fil) {
   let u = t;

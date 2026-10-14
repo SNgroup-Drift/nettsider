@@ -121,3 +121,6 @@
 .kundelogo-levert { font-family: var(--skrift-familie-hengsel-tekst); font-size: 0.78rem; line-height: 1.2; color: var(--tekst-dempet); letter-spacing: 0.01em; }
 /* Tekstmerke i stedet for Hengsel-logoene (produktnavn og «levert av Hengsel») inne i sidene */
 .kl-ord { display: inline-block; width: auto; height: auto; max-width: 100%; font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--tekst); white-space: nowrap; }
+/* Visningsrommet: logoen i toppfeltet er mindre, og plassen under er smalere på telefon */
+:root[data-kunde="sigdal"] .hlogo { height: auto; min-height: var(--h, 28px); }
+.kundelogo-vis .kundelogo-bilde { height: 22px; }
