@@ -22,7 +22,7 @@ await side.evaluate(([flate, tekst, dempet, aksent, kort, linje]) => {
   document.documentElement.setAttribute("data-theme", "light");
   document.body.innerHTML = `
     <div style="width:1200px;height:630px;box-sizing:border-box;background:${flate};color:${tekst};padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between;font-family:Inter,system-ui,sans-serif">
-      <img src="/ds/assets/logo/hengsel-aksent-lys.svg" alt="" style="height:64px;width:auto;align-self:flex-start">
+      <img src="/ds/assets/logo/logo-hengsel-lys.svg" alt="" style="height:64px;width:auto;align-self:flex-start">
       <div>
         <div style="font:400 112px/1.02 Newsreader,Georgia,serif;letter-spacing:-0.015em">Designfasit</div>
         <div style="font:400 34px/1.35 Inter,system-ui,sans-serif;color:${dempet};margin-top:24px;max-width:860px">Merket, farger, skrift, komponenter og skjermer.</div>

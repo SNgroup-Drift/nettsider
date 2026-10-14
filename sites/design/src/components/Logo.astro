@@ -1,20 +1,29 @@
 ---
 /**
- * Hengsel-merket v3 som ferdige SVG-filer fra designsystemet (packages/hengsel-tokens/ds/assets/logo, kopiert til /ds/assets/logo ved bygging). Filnavn: {form}-{aksent-}{lys|mork}.svg (symbol heter hengsel-symbol).
- * Regelen er den samme som `brandFil.mjs` i designsystemet (komponenten Brand). Ikke tegn om filene.
+ * Hengsel-logoene og merkene som ferdige SVG-filer fra designsystemet (palettpakke v2, 14.10.2026; packages/hengsel-tokens/ds/assets/logo, kopiert til /ds/assets/logo ved bygging).
+ * Former: symbol (merket alene), hengsel (merke og navn), og produktlogoene crm, ute, admin og levering. Aksent er standard (blekk på bladene, furu på stiften, produktfarge i
+ * produktmerkene); ensfarget (blekk på lys flate, hvit på mørk) finnes for symbol og hengsel. De monokrome produktlogoene er foreslått og ikke tatt i bruk.
+ * Ikke tegn om filene.
  */
 import { logoMaal } from "../lib/logo";
-export type Form = "symbol" | "hengsel" | "hengsel-ute" | "hengsel-crm" | "ute" | "crm" | "levert-av" | "sendt-med";
-export const fil = (form: Form, modus: "lys" | "mork", utgave: "aksent" | "ensfarget" = "aksent") =>
-  `/ds/assets/logo/${form === "symbol" ? "hengsel-symbol" : form}-${utgave === "aksent" ? "aksent-" : ""}${modus}.svg`;
+export type Form = "symbol" | "hengsel" | "crm" | "ute" | "admin" | "levering";
+export type Modus = "lys" | "mork";
+export type Utgave = "aksent" | "ensfarget";
+export const fil = (form: Form, modus: Modus, utgave: Utgave = "aksent"): string => {
+  const f = (n: string) => `/ds/assets/logo/${n}.svg`;
+  if (form === "symbol") return f(utgave === "aksent" ? `merke-hengsel-${modus}` : modus === "lys" ? "merke-blekk" : "merke-hvit");
+  if (form === "hengsel") return f(utgave === "aksent" ? `logo-hengsel-${modus}` : `logo-hengsel-${modus === "lys" ? "blekk" : "hvit"}`);
+  if (utgave === "ensfarget") throw new Error(`Ensfarget ${form} finnes ikke i bruk: de monokrome produktlogoene er foreslått (palettpakke v2), ikke besluttet`);
+  return f(`logo-${form}-${modus}`);
+};
 interface Props {
   form?: Form;
-  utgave?: "aksent" | "ensfarget";
+  utgave?: Utgave;
   /** Høyde i px. Minst 16 (symbol) og 14 (logo med tekst). */
   hoyde?: number;
   alt?: string;
   /** Utgave for lys eller mørk flate. Siden er lys: uten verdi brukes «lys». «mork» er bare til fargeprøver som viser logoen på den mørke flaten i appene og CRM-et. */
-  modus?: "lys" | "mork";
+  modus?: Modus;
 }
 const { form = "hengsel", utgave = "aksent", hoyde = 28, alt = "Hengsel", modus = "lys" } = Astro.props;
 const mal = (src: string) => logoMaal(src, hoyde);

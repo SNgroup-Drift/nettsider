@@ -42,7 +42,7 @@ export const PORTAL = {
   butikk: "Butikknavn",
   kunde: { init: "KN", navn: "Kari Nordmann", firma: "Kjøkken Nordmann" },
   selger: { init: "KB", navn: "Kristine B.", linje: "Butikknavn · 900 00 001", tittel: "Selgeren din", skriv: "Skriv til Kristine", skrivFelt: "Skriv til Kristine …", fra: "Kari" },
-  levertAv: "Levert av Hengsel",
+  levertAv: "Hengsel Levering",
   ordrelinje: "Kjøkken Nordmann · Ordre O-2417 · Oppdiktet allé 8, 2850 Lena",
   eksempel: "Eksempel",
   smsAvsender: "SMS · Butikknavn",

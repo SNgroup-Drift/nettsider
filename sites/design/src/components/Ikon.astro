@@ -1,0 +1,7 @@
+---
+/** Ett ikon fra ikonsettet (palettpakke v2), tegnet inline med currentColor: fargen kommer fra teksten rundt (tokens). Dekor: navnet står ved siden av. */
+import { ikonSvg } from "../lib/ikoner";
+interface Props { navn: string; storrelse?: 16 | 20 | 24 }
+const { navn, storrelse = 24 } = Astro.props;
+---
+<Fragment set:html={ikonSvg(navn, storrelse)} />

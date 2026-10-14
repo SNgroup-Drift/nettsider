@@ -42,6 +42,8 @@ scripts/
   apptest-versjon.mjs     Oppdaterer versjon, APK, dato og «Hva er nytt» på /apptest fra EAS og byggnotatene (kjøres av .github/workflows/apptest-versjon.yml; testet av apptest-versjon.test.mjs)
   skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene)
   hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til packages/hengsel-tokens/ds og genererer den delte token-fila (K-182, K-192)
+  hent-palettpakke.mjs    Legger palettpakke v2 (design/handoff/…, K-212 runde 2): logoer, ikonsett, favicon og app-ikon inn i ds og pin-fila
+  lag-appikon.mjs         PNG-forhåndsvisninger av app-ikonet Hengsel Ute fra Icon Composer-pakken (ds/assets/app-ikon)
   lag-hengsel-tokens.mjs  Genererer packages/hengsel-tokens/tokens.css og fonts.css fra hengsel.tokens.json (--sjekk)
   hengsel-regler.mjs      Skanner Hengsel-sidene for fargeverdier og mørk modus; hengsel-regler.test.mjs er testen (K-192)
   design-fasit.test.mjs   npm test: design.hengsel.no og tokens er like (pin, tokens.css/ts, roller, status, skrift, logoer, komponenter, ingen ekte navn eller gammel logo)

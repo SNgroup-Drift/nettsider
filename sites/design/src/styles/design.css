@@ -163,11 +163,21 @@ figcaption { color: var(--tekst-dempet); font-size: var(--skrift-minste); line-h
 .ikon { width: 100%; max-width: 120px; height: auto; border-radius: 22%; display: block; }
 .mock-meny { min-height: 220px; align-content: start; }
 .mock-meny.midt { justify-items: center; text-align: center; }
+.mock-topp { display: flex; justify-content: flex-end; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--linje); }
 .mock-punkt { padding: 6px 10px; border-radius: var(--radius-kort-lite); }
 .mock-punkt.valgt { background: var(--flate-valgt); font-weight: 600; }
 .mock-bunn { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--linje); display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: var(--skrift-minste); color: var(--tekst-dempet); }
 .mock-bunn.hoyre { justify-content: flex-end; }
 .mock-bunn.midt { justify-content: center; width: 100%; }
+/* Ikonsettet (palettpakke v2): inline SVG med currentColor, så fargen følger teksten */
+.ikon-svg { flex: none; display: block; }
+.ikon-gruppe { display: grid; gap: 10px; }
+.ikon-gruppe h3 { font-size: var(--skrift-tittel); line-height: var(--skrift-tittel-lh); }
+.ikonrutenett { display: grid; gap: 4px 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); }
+.ikonrute { display: flex; align-items: center; gap: 10px; min-height: 40px; color: var(--tekst-dempet); font-size: var(--skrift-meta); line-height: var(--skrift-meta-lh); }
+.ikonrute .ikon-svg { color: var(--tekst); }
+.ikonrute.egen .ikon-svg { color: var(--aksent-tekst); }
+.ikon-storrelser { display: flex; align-items: center; gap: 20px; color: var(--tekst); }
 .kort-tittel { font-size: 1.5rem; line-height: 1.2; }
 
 /* Rutenettbarn kan krympe under innholdets bredde (ellers sprenger en tabell eller rad bredden på telefon) */

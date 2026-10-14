@@ -32,8 +32,8 @@ const sider: Side[] = ["sngroup.no", "hengsel.no", "byggem.no"];
           {navn === "hengsel.no" && hengselLogo ? (
             <Fragment>
               {navn === gjeldende
-                ? <span aria-current="page" class="her"><picture><source media="(prefers-color-scheme: dark)" srcset={hengselLogo.mork} /><img src={hengselLogo.lys} alt="Hengsel" width="83" height="24" /></picture></span>
-                : <a href="https://hengsel.no" class="logolenke"><picture><source media="(prefers-color-scheme: dark)" srcset={hengselLogo.mork} /><img src={hengselLogo.lys} alt="Hengsel" width="83" height="24" /></picture></a>}
+                ? <span aria-current="page" class="her"><picture><source media="(prefers-color-scheme: dark)" srcset={hengselLogo.mork} /><img src={hengselLogo.lys} alt="Hengsel" width="101" height="24" /></picture></span>
+                : <a href="https://hengsel.no" class="logolenke"><picture><source media="(prefers-color-scheme: dark)" srcset={hengselLogo.mork} /><img src={hengselLogo.lys} alt="Hengsel" width="101" height="24" /></picture></a>}
             </Fragment>
           ) : navn === gjeldende
             ? <span aria-current="page" class="her">{navn}</span>

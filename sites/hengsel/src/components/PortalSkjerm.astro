@@ -6,7 +6,7 @@
  * Alle fem stegene ligger i markupen som egne «skjermer» ([data-steg]); bare steg 1 vises uten JS (de andre har hidden fra bygget).
  * scripts/kundeportal.ts bytter steg og lar SMS-en gli inn øverst (telefon) eller nederst til høyre (PC).
  * Tekst og data: src/content/kundeportal.ts (ordrett fra LES-MEG.md). Oppdiktet demoinnhold er merket «Eksempel» (.eks).
- * Valgt og info er furutonet (Eirik 11.10). «Din logo» øverst; «Levert av» Hengsel (levert-av-aksent, 14 px) står bare nederst i menyen på PC.
+ * Valgt og info er furutonet (Eirik 11.10). «Din logo» øverst; Hengsel Levering (hengsel-levering-aksent, 14 px) står bare nederst i menyen på PC.
  * Ingen style-attributter (CSP): alt styres av klasser, og farger kommer fra tokens.
  */
 import { PORTAL as P, STEG } from "../content/kundeportal";
@@ -43,7 +43,7 @@ const aktivMeny = (s: Steg) => P.meny.find((m) => m.steg.includes(s))?.l;
               <div class="bruker"><span class="avatar">{P.kunde.init}</span><span class="navn"><span>{P.kunde.navn}</span><span class="dempet">{P.kunde.firma}</span></span></div>
               <div class="levert">
                 <picture>
-                  <img src="/logo/levert-av-aksent-lys.svg" alt={P.levertAv} width="671" height="108" loading="lazy" decoding="async" />
+                  <img src="/logo/hengsel-levering-aksent-lys.svg" alt={P.levertAv} width="763" height="100" loading="lazy" decoding="async" />
                 </picture>
               </div>
             </div>
