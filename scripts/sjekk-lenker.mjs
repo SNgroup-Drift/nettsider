@@ -122,11 +122,14 @@ for (const navn of nettsteder) {
     const html = await (await fetch(new URL(side, base))).text();
     for (const m of html.matchAll(/\b(?:src|poster|data-webm|data-mp4)="(\/[^"]+\.(?:webp|png|jpg|svg|mp4|webm))"/g)) medier.add(m[1]);
     for (const m of html.matchAll(/\bsrcset="([^"]+)"/g)) for (const d of m[1].split(",")) { const u = d.trim().split(/\s+/)[0]; if (u.startsWith("/")) medier.add(u); }
+    // K-223: Visningsrommet i Sigdal-utgave (/sigdal/vis/) har skjermbildene som plassholdere i /sigdal/img/vis/skjermbilder/ og bare lys utgave
+    const sigdalVis = side.startsWith("/sigdal/vis/");
+    const skjermMappe = sigdalVis ? "/sigdal/img/vis/skjermbilder/" : "/skjermbilder/";
     for (const m of html.matchAll(/data-bilder="([^"]+)"/g))
       for (const n of m[1].split(",").map((s) => s.trim()).filter((s) => /^[\w-]+$/.test(s)))
         for (const s of ["", "@1x"]) {
-          medier.add(`/skjermbilder/${n}${s}.webp`);
-          if (morkListe.has(n)) medier.add(`/skjermbilder/${n}-mork${s}.webp`);
+          medier.add(`${skjermMappe}${n}${s}.webp`);
+          if (morkListe.has(n) && !sigdalVis) medier.add(`${skjermMappe}${n}-mork${s}.webp`);
         }
   }
   for (const u of medier) {
@@ -155,15 +158,17 @@ for (const navn of nettsteder) {
     mangler.push("dist/404.html mangler");
   }
   // /apptest (hengsel.no, testsiden): «Bli tester» og «App Store» lenker dit (hengsel.no 2.0, K-160), men den står ikke i sitemap og har noindex,nofollow
+  // K-223: det samme gjelder alt under /sigdal (kundeutgaven bak Cloudflare Access): noindex,nofollow, og ikke i sitemap
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
-    if (side.startsWith("/apptest")) {
+    if (side.startsWith("/apptest") || side.startsWith("/sigdal")) {
       if (!/<meta name="robots" content="noindex,\s?nofollow">/.test(html)) mangler.push(`${side}: mangler robots noindex,nofollow`);
     }
   }
   try {
     const sitemap = await (await fetch(new URL("/sitemap.txt", base))).text();
     if (sitemap.includes("/apptest")) mangler.push("sitemap.txt: inneholder /apptest");
+    if (/\/sigdal(?=[\/\s]|$)/m.test(sitemap)) mangler.push("sitemap.txt: inneholder /sigdal");
   } catch {}
 
   server.close();

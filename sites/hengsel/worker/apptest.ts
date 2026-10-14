@@ -79,7 +79,7 @@ async function apptest(req: Request, env: Env, url: URL): Promise<Response> {
  * Uten hemmeligheten står spanen med «••••••••», knappene er skjult og «Passordet får du av den som inviterte deg» vises.
  * Passordet er aldri i de statiske filene.
  */
-function medDemopassord(svar: Response, passord: string | undefined): Response {
+export function medDemopassord(svar: Response, passord: string | undefined): Response {
   if (!passord || !(svar.headers.get("Content-Type") ?? "").startsWith("text/html")) return svar;
   return new HTMLRewriter()
     .on("[data-demopassord]", { element: (el) => el.setInnerContent(passord) })
@@ -103,7 +103,7 @@ async function passordside(req: Request, env: Env, status: number, feil: boolean
 }
 
 /** Samme hoder som public/_headers. Svar som Workeren lager selv (303, 405, 503) får dem herfra. */
-const SIKKERHET: Record<string, string> = {
+export const SIKKERHET: Record<string, string> = {
   "Strict-Transport-Security": "max-age=31536000",
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "DENY",

@@ -27,14 +27,18 @@ interface Props {
   manifest?: string;
   /** Skriftfiler som skal forhåndslastes. Standard: Schibsted Grotesk (variabel) */
   forhandslast?: string[];
+  /** K-223: kundeutgave. Setter data-kunde på html og laster kundens tema (tema-CSS som egen fil, etter de delte variablene). Se packages/kundetema-*. */
+  kunde?: { attributt: string; verdi: string; temaCss: string; temaFarge: string };
 }
-const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, ikon = { href: "/favicon-32.png", type: "image/png" }, appleIkon, ikon32, manifest, forhandslast = [schibsted] } = Astro.props;
+const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, ikon = { href: "/favicon-32.png", type: "image/png" }, appleIkon, ikon32, manifest, forhandslast = [schibsted], kunde } = Astro.props;
+const htmlAttr = kunde ? { [kunde.attributt]: kunde.verdi } : {};
 // Nettstedene bygger med build.format «file» og trailingSlash «never», så Astro.url.pathname er «/index.html» og «/personvern.html».
 const renSti = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
-const canonical = Astro.site ? new URL(renSti, Astro.site).href : undefined;
+// Kundeutgaver er lukkede (Access) og har ingen kanonisk adresse
+const canonical = Astro.site && !kunde ? new URL(renSti, Astro.site).href : undefined;
 ---
 <!doctype html>
-<html lang="nb">
+<html lang="nb" {...htmlAttr}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,12 +53,13 @@ const canonical = Astro.site ? new URL(renSti, Astro.site).href : undefined;
     {canonical && <meta property="og:url" content={canonical} />}
     {delingsbilde && <meta property="og:image" content={delingsbilde} />}
     {delingsbilde && <meta name="twitter:card" content="summary_large_image" />}
-    <meta name="theme-color" content={tokens.farge["flate-side"].lys} />
+    <meta name="theme-color" content={kunde ? kunde.temaFarge : tokens.farge["flate-side"].lys} />
     <link rel="icon" href={ikon.href} type={ikon.type} />
     {ikon32 && <link rel="icon" href={ikon32} sizes="32x32" />}
     {appleIkon && <link rel="apple-touch-icon" href={appleIkon} />}
     {manifest && <link rel="manifest" href={manifest} />}
     {forhandslast.map((f) => <link rel="preload" href={f} as="font" type="font/woff2" crossorigin />)}
+    {kunde && <link rel="stylesheet" href={kunde.temaCss} />}
   </head>
   <body>
     <a class="skip" href="#innhold">Hopp til innholdet</a>

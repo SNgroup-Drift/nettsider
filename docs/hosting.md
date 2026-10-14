@@ -373,3 +373,8 @@ gjennom `worker/index.js`, som avviser alt uten gyldig `Cf-Access-Jwt-Assertion`
 Variablene `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD` settes i dashbordet (ikke hemmeligheter, men heller ikke i repoet; `keep_vars` hindrer at
 utrulling overskriver dem). Mangler de, svarer Workeren 503. Build command `npm run build -w sites/admin`, Deploy command og
 Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Access-app og policy: se `claude/k184-rapport.md`.
+
+
+## hengsel.no/sigdal (K-223)
+
+Kundeutgave for Sigdal i samme Worker som hengsel.no. `run_worker_first` har `/sigdal` og `/sigdal/*`; `worker/sigdal.ts` svarer 403 uten `Cf-Access-Jwt-Assertion` (Cloudflare Access legger den på), og alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Cloudflare Access settes opp i dashbordet (steg i `claude/k223-rapport.md`). Testmodus (`wrangler dev --var SIGDAL_TESTMODUS:1`) virker bare på localhost. Visningsrommet bygges inn i `dist/sigdal/vis/` av `scripts/bygg-sigdal-vis.mjs` (kjøres av `npm run build -w sites/hengsel`), så **Build watch paths for hengsel må også ha `sites/vis/*`**.
