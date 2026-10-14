@@ -10,6 +10,7 @@
  * og alle filene i dist/img må svare 200. For Visningsrommet (vis) sjekkes også rommene i arrayet C på forsiden.
  * K-233: app-skjermbildene lenkes fra biblioteket på bilder.hengsel.no og hentes ikke her; hver bibliotekadresse i de bygde sidene (src, srcset og
  * adressene bygg.mjs har lagt i rom.js og bilder.js) må i stedet stå i manifestet (packages/hengsel-tokens/skjermbilder-manifest.json).
+ * Med SKJERMBILDER_NETT=1 bes det i tillegg om hver bibliotekadresse (HEAD) over nettet, og den må svare 200 som image/webp.
  *
  * Kjør etter `npm run build`: npm test
  */
@@ -143,6 +144,13 @@ for (const navn of nettsteder) {
   for (const u of bibliotek) {
     sjekket++;
     if (!Object.hasOwn(manifest.filer, u.slice(BILDEDOMENE.length + 1))) mangler.push(`${u} står ikke i manifestet (packages/hengsel-tokens/skjermbilder-manifest.json)`);
+    else if (process.env.SKJERMBILDER_NETT === "1") {
+      sjekket++;
+      try {
+        const r = await fetch(u, { method: "HEAD", signal: AbortSignal.timeout(15000) });
+        if (r.status !== 200 || !(r.headers.get("content-type") ?? "").startsWith("image/webp")) mangler.push(`${u} → ${r.status} ${r.headers.get("content-type") ?? ""} (biblioteket)`);
+      } catch (e) { mangler.push(`${u} → ${e?.message ?? e} (biblioteket)`); }
+    }
   }
   let antallBilder = 0;
   try {
@@ -208,7 +216,7 @@ for (const navn of nettsteder) {
     console.error(`✗ ${navn}: ${mangler.length} feil`);
     for (const m of mangler) console.error(`    ${m}`);
   } else {
-    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, ${medier.size} bilder og videoer fra sidene svarer 200, ${bibliotek.size} bibliotekbilder står i manifestet, og ukjente sider får 404.html`);
+    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, ${medier.size} bilder og videoer fra sidene svarer 200, ${bibliotek.size} bibliotekbilder står i manifestet${process.env.SKJERMBILDER_NETT === "1" ? " og svarer 200" : ""}, og ukjente sider får 404.html`);
   }
 }
 

@@ -24,7 +24,8 @@
     "dev:design": "npm run dev -w sites/design",
     "design:hent": "node scripts/hent-designsystem.mjs",
     "design:skjermbilder": "node scripts/skjermbilder-design.mjs",
-    "skjermbilder:sigdal": "node scripts/skjermbilder-sigdal.mjs"
+    "skjermbilder:sigdal": "node scripts/skjermbilder-sigdal.mjs",
+    "bibliotek:sjekk": "node scripts/sjekk-bibliotek.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",

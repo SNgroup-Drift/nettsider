@@ -5,9 +5,9 @@
  *
  *   node scripts/skjermbilder-k233.mjs
  *
- * Biblioteket nås ikke fra Code-økta (og er tomt til første kjøring av workflowen i hengsel-crm). For at bildene skal vise layouten, svares
- * forespørsler til BILDEDOMENE her med sist kjente lokale kopi fra git (origin/main, filene K-233 fjernet), bare når stien finnes i manifestet;
- * alt annet får 404, så plassholderne vises som i ekte drift. Rapporten sier hvilke bilder som er stand-in. Skriver webp til claude/k233/.
+ * Uten --ekte svares forespørsler til BILDEDOMENE med sist kjente lokale kopi fra git (origin/main, filene K-233 fjernet) som stand-in, bare når
+ * stien finnes i manifestet; alt annet får 404, så plassholderne vises som i drift (for økter der biblioteket ikke nås). Med --ekte hentes bildene
+ * fra biblioteket, og hvert bilde må laste. LES-MEG.md i claude/k233/ sier hva som ble brukt, og antall ekte bilder og plassholdere per side.
  * Sjekker også: ingen konsollfeil (utenom 404 fra biblioteket), ingen horisontal rulling på 390 px.
  */
 import { execFileSync } from "node:child_process";
@@ -19,6 +19,7 @@ import { startServer } from "./statisk-server.mjs";
 import { BILDEDOMENE, finnes } from "./lib/bildedomene.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
+const ekte = process.argv.includes("--ekte");
 const ut = join(rot, "claude", "k233");
 /** [side, sti, navn] */
 const SIDER = [
@@ -57,10 +58,11 @@ for (const s of new Set(SIDER.map((x) => x[0]))) tjenere[s] = await startServer(
 const nettleser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium" });
 const feil = [];
 const brukt = { standIn: new Set(), plassholder: new Set(), ikke: new Set() };
+const perSide = [];
 for (const [side, sti, navn] of SIDER) {
   for (const bredde of [390, 1280]) {
     const ctx = await nettleser.newContext({ viewport: { width: bredde, height: bredde === 390 ? 844 : 900 }, deviceScaleFactor: 1, colorScheme: "light", bypassCSP: side === "vis" });
-    await ctx.route(`${BILDEDOMENE}/**`, async (route) => {
+    if (!ekte) await ctx.route(`${BILDEDOMENE}/**`, async (route) => {
       const adresse = route.request().url();
       const rest = adresse.slice(BILDEDOMENE.length + 1);
       const [tema, ...deler] = rest.split("/");
@@ -87,7 +89,9 @@ for (const [side, sti, navn] of SIDER) {
     for (const [b, ok] of [...info.bilder, ...info.lokale]) if (!ok) feil.push(`${navn} ${bredde}: bildet ${b} lastet ikke`);
     const png = await p.screenshot({ fullPage: true });
     await sharp(png).webp({ quality: 80 }).toFile(join(ut, `${navn}-${bredde}.webp`));
-    console.log(`✓ ${navn} ${bredde}: ${info.bilder.length} bibliotekbilder (stand-in fra git), ${info.lokale.length} egne bilder lokalt, plassholdere: ${info.plassholdere.join(", ") || "ingen"}`);
+    const l = `${navn} ${bredde}: ${info.bilder.length} bilder fra biblioteket${ekte ? "" : " (stand-in fra git)"}, ${info.lokale.length} egne bilder lokalt, ${info.plassholdere.length} plassholdere${info.plassholdere.length ? ` (${info.plassholdere.join(", ")})` : ""}`;
+    perSide.push(l);
+    console.log(`✓ ${l}`);
     await ctx.close();
   }
 }
@@ -98,9 +102,12 @@ const notat = `# K-233: skjermbilder (${new Date().toISOString().slice(0, 10)})
 390 og 1280 px av hengsel.no (forsiden), hengsel.no/kunde/sigdal, vis.hengsel.no (forsiden, /rom/ og /crm/) og sngroup.no, tatt av scripts/skjermbilder-k233.mjs mot de bygde sidene.
 Nettsidenes egne bilder (romkortene for rom uten app-skjermbilde og dokumentforsiden) ligger lokalt og vises som i drift.
 
-Biblioteket (bilder.hengsel.no) nås ikke fra Code-økta og er tomt til workflowen i hengsel-crm har kjørt. Adressene i biblioteket som står i manifestet
+${ekte ? "Bildene er hentet fra biblioteket (bilder.hengsel.no), ingen stand-in." : `Biblioteket (bilder.hengsel.no) nås ikke fra denne økta. Adressene i biblioteket som står i manifestet
 ble derfor svart med sist kjente lokale kopi fra git (origin/main, filene K-233 fjernet) som stand-in; alt annet fikk 404, så plassholderne
-«Skjermbilde kommer» vises som i drift.
+«Skjermbilde kommer» vises som i drift.`}
+
+Per side (bilder fra biblioteket, egne bilder lokalt, plassholdere):
+${perSide.map((l) => `- ${l}`).join("\n")}
 
 Stand-in (${brukt.standIn.size}): ${[...brukt.standIn].sort().join(", ") || "ingen"}
 Plassholdere vist (${brukt.plassholder.size}): ${[...brukt.plassholder].sort().join(", ") || "ingen"}
