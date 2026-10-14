@@ -80,7 +80,7 @@ test("brand/hengsel-merke (det blå merket) er slettet, og gamle favicon- og del
     }
   }
   for (const f of ["sites/hengsel/public/og.png", "sites/vis/src/og.png", "sites/hengsel/public/media/ute-motion-1080x1080-plakat.webp", "sites/hengsel/public/logo/hengsel-levering-aksent-lys.svg", "sites/vis/src/assets/logo/hengsel-levering-aksent-lys.svg"]) assert.ok(!existsSync(join(rot, f)), `${f} er gammel`);
-  assert.ok(!readdirSync(join(rot, "sites", "hengsel", "public", "kunde", "sigdal", "logo")).some((f) => /^sigdal-logo-/.test(f)), "Sigdal-logoen alene (med «levert av» som tekst under) er erstattet av sigdal-crm-levert-av-hengsel-*");
+  assert.ok(!readdirSync(join(rot, "sites", "hengsel", "public", "kunde", "sigdal", "logo")).some((f) => /^sigdal-logo-.*\.png$/.test(f)), "Sigdal-logoen alene (PNG; vektorlogoene sigdal-logo*.svg er lov, men ikke i bruk i toppen) (med «levert av» som tekst under) er erstattet av sigdal-crm-levert-av-hengsel-*");
 });
 
 const GAMLE_NAVN = [
