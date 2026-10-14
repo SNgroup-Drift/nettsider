@@ -9,6 +9,9 @@ import "../styles/hengsel.css";
 import Meny from "../components/Meny.astro";
 import Bunn from "../components/Bunn.astro";
 import type { MenyNokkel } from "../content/nav";
+import { kundeFra, kundeSti, tilKunde } from "../kunde";
+import temaTokens from "@sngroup/kundetema-sigdal/tokens.css?raw";
+import { FONTER } from "@sngroup/kundetema-sigdal/fonter.mjs";
 
 interface Props {
   title: string;
@@ -22,22 +25,35 @@ interface Props {
   /** Delingsbilde (og:image) som full URL */
   delingsbilde?: string;
 }
-const { title, description, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+const { title: hengselTittel, description: hengselBeskrivelse, noindex, robots, aktiv = "", utenMeny = false, delingsbilde = "https://hengsel.no/og.png" } = Astro.props;
+
+// K-223: under /sigdal er dette Sigdal-utgaven av siden (tema, meny, bunn, tekst og bilder). Hengsel-sidene er uendret.
+const kunde = kundeFra(Astro.url.pathname);
+const title = kunde ? (kunde.titler[kundeSti(kunde, Astro.url.pathname)] ?? hengselTittel) : hengselTittel;
+const description = kunde ? tilKunde(hengselBeskrivelse, kunde) : hengselBeskrivelse;
+const innhold = kunde ? tilKunde(await Astro.slots.render("default"), kunde) : "";
+const hodeInnhold = kunde && utenMeny ? tilKunde(await Astro.slots.render("hode"), kunde) : "";
+// Off White fra Sigdal-temaet (adressefeltet); verdien står bare i temaet
+const temaFarge = /--sigdal-off-white:\s*(#[0-9A-Fa-f]{6})/.exec(temaTokens)?.[1] ?? "";
 ---
 <Hode
   title={title}
   description={description}
-  noindex={noindex}
-  robots={robots}
-  delingsbilde={delingsbilde}
+  noindex={noindex || !!kunde}
+  robots={kunde ? "noindex, nofollow" : robots}
+  delingsbilde={kunde ? undefined : delingsbilde}
   ikon={{ href: "/favicon-32.png", type: "image/png" }}
   appleIkon="/favicon-180.png"
-  manifest="/manifest.webmanifest"
+  manifest={kunde ? undefined : "/manifest.webmanifest"}
+  forhandslast={kunde ? [FONTER.newsreader, FONTER.inter] : undefined}
+  kunde={kunde ? { attributt: "data-kunde", verdi: kunde.nokkel, temaCss: `${kunde.sti}/tema.css`, temaFarge } : undefined}
 >
   <div class="side">
-    {utenMeny ? <slot name="hode" /> : <Meny aktiv={aktiv} />}
-    <slot />
-    <Bunn />
+    {kunde
+      ? (utenMeny ? <Fragment set:html={hodeInnhold} /> : <Meny aktiv={aktiv} kunde={kunde} />)
+      : (utenMeny ? <slot name="hode" /> : <Meny aktiv={aktiv} />)}
+    {kunde ? <Fragment set:html={innhold} /> : <slot />}
+    <Bunn kunde={kunde} />
   </div>
 </Hode>
 

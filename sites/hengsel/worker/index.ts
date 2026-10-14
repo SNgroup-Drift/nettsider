@@ -1,16 +1,19 @@
 /**
- * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare to stier går gjennom kode (assets.run_worker_first):
- * /api/demo (demoskjemaet, worker/demo.ts) og /apptest og alt under (passordet, worker/apptest.ts). Resten er statiske filer.
+ * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare disse stiene går gjennom kode (assets.run_worker_first):
+ * /api/demo (demoskjemaet, worker/demo.ts), /apptest og alt under (passordet, worker/apptest.ts) og /sigdal og alt under
+ * (kundeutgaven for Sigdal bak Cloudflare Access, worker/sigdal.ts). Resten er statiske filer.
  */
 import apptest from "./apptest";
 import { handterDemo, type DemoEnv } from "./demo";
+import { ER_SIGDAL, handterSigdal, type SigdalEnv } from "./sigdal";
 
-type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv;
+type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & SigdalEnv;
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(req.url);
     if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env));
+    if (ER_SIGDAL(pathname)) return handterSigdal(req, env);
     return apptest.fetch(req, env);
   },
 };

@@ -1,0 +1,123 @@
+/* Kundetema Sigdal (K-223), brukt av hengsel.no/sigdal. Legges OVER den delte Hengsel-fila (packages/hengsel-tokens/tokens.css) og bytter ut
+ * hver farge-rolle og skriften. Velgeren :root[data-kunde="sigdal"] er mer spesifikk enn :root i den delte fila, også i dens
+ * @media-blokker (Display P3, økt kontrast), så Hengsel-fargene slår aldri gjennom på /sigdal.
+ *
+ * Profilen (Sigdal, 14.10.2026): Warm Black #31261D (tekst), Off White #FBF9F6 (bakgrunn, aldri #FFFFFF), Beige 4/3/2/1 (flater),
+ * Deep Blue og Dusty Blue (sparsomt). Ikke den rosa/magenta fargen. Newsreader til overskrifter (aldri små størrelser, aldri bare versaler),
+ * Inter til brødtekst, knapper og underoverskrifter (Inter 650 bare til underoverskrifter). Bare lys modus.
+ *
+ * Sidene skal bare bruke variablene (hengsel-regler.md); fargeverdiene finnes bare her. scripts/kundetema.test.mjs sjekker at hver
+ * farge-rolle i den delte fila er byttet ut her, så ingen Hengsel-farge blir stående igjen.
+ * Profilen har ingen rød eller grønn: statustonene og feil/varsel er tegnet med paletten (se claude/k223-rapport.md). */
+
+:root[data-kunde="sigdal"] {
+  /* Paletten */
+  --sigdal-warm-black: #31261D;
+  --sigdal-off-white: #FBF9F6;
+  --sigdal-beige-4: #F8F2EC;
+  --sigdal-beige-3: #F2E9DB;
+  --sigdal-beige-2: #E4D4C4;
+  --sigdal-beige-1: #C3B5A7;
+  --sigdal-deep-blue: #5074A9;
+  --sigdal-dusty-blue: #9CA9BD;
+  /* Avledede toner (blanding av paletten, for kontrast ≥ 4,5:1 mot Off White og alle beige flater) */
+  --sigdal-tekst-dempet: color-mix(in srgb, var(--sigdal-warm-black) 80%, var(--sigdal-off-white));
+  --sigdal-tekst-svak: color-mix(in srgb, var(--sigdal-warm-black) 70%, var(--sigdal-off-white));
+  --sigdal-blaa-tekst: color-mix(in srgb, var(--sigdal-deep-blue) 80%, var(--sigdal-warm-black));
+  --sigdal-blaa-flate: color-mix(in srgb, var(--sigdal-dusty-blue) 28%, var(--sigdal-off-white));
+  --sigdal-blaa-valgt: color-mix(in srgb, var(--sigdal-dusty-blue) 48%, var(--sigdal-off-white));
+
+  /* Palett (råfarger) */
+  --blekk: var(--sigdal-warm-black);
+  --blekk-mork: var(--sigdal-off-white);
+  --furu: var(--sigdal-deep-blue);
+  --aksent-mork: var(--sigdal-dusty-blue);
+  --produkt-crm: var(--sigdal-deep-blue);
+  --produkt-crm-mork: var(--sigdal-dusty-blue);
+  --produkt-ute: var(--sigdal-warm-black);
+  --produkt-ute-mork: var(--sigdal-beige-1);
+  --produkt-levering: var(--sigdal-blaa-tekst);
+  --produkt-levering-mork: var(--sigdal-dusty-blue);
+  --produkt-admin: var(--sigdal-tekst-svak);
+  --produkt-admin-mork: var(--sigdal-beige-1);
+
+  /* Roller */
+  --flate-side: var(--sigdal-off-white);
+  --flate-kort: var(--sigdal-beige-4);
+  --flate-senket: var(--sigdal-beige-3);
+  --flate-valgt: var(--sigdal-beige-3);
+  --linje: var(--sigdal-beige-2);
+  --kant: var(--sigdal-beige-1);
+  --tekst: var(--sigdal-warm-black);
+  --tekst-dempet: var(--sigdal-tekst-dempet);
+  --tekst-svak: var(--sigdal-tekst-svak);
+  --tekst-invers: var(--sigdal-off-white);
+  --aksent: var(--sigdal-deep-blue);
+  --aksent-trykk: var(--sigdal-blaa-tekst);
+  --aksent-tekst: var(--sigdal-blaa-tekst);
+  --aksent-svak: var(--sigdal-blaa-flate);
+  --aksent-valgt: var(--sigdal-blaa-valgt);
+  --paa-aksent: var(--sigdal-off-white);
+  --varsel-flate: var(--sigdal-beige-2);
+  --varsel-tekst: var(--sigdal-warm-black);
+  --feil-flate: var(--sigdal-beige-2);
+  --feil-tekst: var(--sigdal-warm-black);
+  --ramme: var(--sigdal-beige-1);
+  --overlegg: color-mix(in srgb, var(--sigdal-warm-black) 48%, transparent);
+  --alltid-mork: var(--sigdal-warm-black);
+
+  /* Statustoner: fg = tekst og prikk, bg = flate, kant = ramme */
+  --status-ny-fg: var(--sigdal-blaa-tekst);
+  --status-ny-bg: var(--sigdal-blaa-flate);
+  --status-ny-kant: var(--sigdal-dusty-blue);
+  --status-pagar-fg: var(--sigdal-warm-black);
+  --status-pagar-bg: var(--sigdal-beige-3);
+  --status-pagar-kant: var(--sigdal-beige-1);
+  --status-venter-fg: var(--sigdal-tekst-dempet);
+  --status-venter-bg: var(--sigdal-beige-4);
+  --status-venter-kant: var(--sigdal-beige-2);
+  --status-sannsynlig-fg: var(--sigdal-blaa-tekst);
+  --status-sannsynlig-bg: var(--sigdal-beige-3);
+  --status-sannsynlig-kant: var(--sigdal-dusty-blue);
+  --status-ferdig-fg: var(--sigdal-warm-black);
+  --status-ferdig-bg: var(--sigdal-blaa-valgt);
+  --status-ferdig-kant: var(--sigdal-dusty-blue);
+  --status-advarsel-fg: var(--sigdal-warm-black);
+  --status-advarsel-bg: var(--sigdal-beige-2);
+  --status-advarsel-kant: var(--sigdal-beige-1);
+  --status-feil-fg: var(--sigdal-warm-black);
+  --status-feil-bg: var(--sigdal-beige-2);
+  --status-feil-kant: var(--sigdal-warm-black);
+
+  /* Skygger */
+  --skygge-overlegg: 0 1px 2px color-mix(in srgb, var(--sigdal-warm-black) 6%, transparent), 0 8px 24px color-mix(in srgb, var(--sigdal-warm-black) 10%, transparent);
+  --skygge-dialog: 0 24px 64px color-mix(in srgb, var(--sigdal-warm-black) 18%, transparent);
+
+  /* Skrift: Inter til tekst, knapper og underoverskrifter; Newsreader til overskrifter (vekt 500) */
+  --skrift-familie-hengsel-tekst: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --skrift-familie-hengsel-overskrift: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --skrift-vekt-fet: 500;
+  --sigdal-vekt-underoverskrift: 650;
+
+  /* Sidene bruker --accent som tekstfarge og fyll; Deep Blue alene har under 4,5:1 mot Beige 4, så den mørkere tonen brukes der */
+  --accent: var(--sigdal-blaa-tekst);
+}
+
+/* Overskrifter: Newsreader, vekt 500, ikke versaler. Underoverskrifter (h3) i Inter 650. */
+:root[data-kunde="sigdal"] h1,
+:root[data-kunde="sigdal"] h2 { font-weight: var(--skrift-vekt-fet); letter-spacing: -0.012em; }
+:root[data-kunde="sigdal"] h3 { font-family: var(--skrift-familie-hengsel-tekst); font-weight: var(--sigdal-vekt-underoverskrift); letter-spacing: 0; }
+
+/* Primærknappen er Warm Black med Off White-tekst (Deep Blue brukes sparsomt) */
+:root[data-kunde="sigdal"] .btn.primary { background: var(--tekst); border-color: var(--tekst); color: var(--flate-side); }
+:root[data-kunde="sigdal"] .btn.primary:hover { background: var(--tekst); color: var(--flate-side); opacity: 0.86; }
+:root[data-kunde="sigdal"] .btn { font-family: var(--skrift-familie-hengsel-tekst); font-weight: var(--skrift-vekt-medium); }
+
+/* Kundelogoen: Sigdal-logoen (transparent SVG i Warm Black) når den er levert, til da navnet som tekstmerke. «levert av Hengsel» står under.
+   Luft rundt og minst 26 px bredde. Brukes av Meny og Bunn (sites/hengsel) og av Visningsrommet i Sigdal-utgave. */
+.kundelogo { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 3px; line-height: 1; padding-block: 2px; }
+.kundelogo-navn { font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); font-size: 1.7rem; line-height: 1; letter-spacing: -0.012em; color: var(--tekst); min-width: 26px; }
+.kundelogo-bilde { display: block; height: 30px; width: auto; min-width: 26px; }
+.kundelogo-levert { font-family: var(--skrift-familie-hengsel-tekst); font-size: 0.78rem; line-height: 1.2; color: var(--tekst-dempet); letter-spacing: 0.01em; }
+/* Tekstmerke i stedet for Hengsel-logoene (produktnavn og «levert av Hengsel») inne i sidene */
+.kl-ord { display: inline-block; width: auto; height: auto; max-width: 100%; font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--tekst); white-space: nowrap; }

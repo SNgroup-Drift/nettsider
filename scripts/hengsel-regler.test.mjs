@@ -10,7 +10,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
-import { OMRADER, finnBrudd, merkefilSha, rot, skann } from "./hengsel-regler.mjs";
+import { OMRADER, erKundelogo, finnBrudd, merkefilSha, rot, sigdalHex, skann } from "./hengsel-regler.mjs";
 import { lagFontsCss, lagMorkProverCss, lagTokensCss } from "./lag-hengsel-tokens.mjs";
 
 const pakke = join(rot, "packages", "hengsel-tokens");
@@ -36,7 +36,7 @@ test("a) filer med fargeverdier som ikke er pinnede logoer eller merkepakken v3 
   const merke = merkefilSha();
   for (const s of SIDER) for (const f of alle(join(rot, "sites", s)).filter((x) => x.endsWith(".svg") && !/node_modules|\/dist\/|public\/ds\/|\/fasit\//.test(x))) {
     const t = readFileSync(f);
-    if (finnBrudd(t.toString("utf8"), { mork: false }).length) assert.ok(merke.has(createHash("sha256").update(t).digest("hex")), `${relative(rot, f)} har fargeverdier og er ikke en pinnet logo eller en fil fra merkepakken (brand/hengsel-merke)`);
+    if (finnBrudd(t.toString("utf8"), { mork: false }).length) assert.ok(merke.has(createHash("sha256").update(t).digest("hex")) || erKundelogo(f, t.toString("utf8")), `${relative(rot, f)} har fargeverdier og er ikke en pinnet logo eller en fil fra merkepakken (brand/hengsel-merke)`);
   }
 });
 
@@ -54,9 +54,11 @@ test("a) bygde sider: hver fargeverdi i CSS/HTML/JS finnes i den delte fila", ()
       let t = readFileSync(f, "utf8");
       // Tekst på siden (design. viser verdiene fra JSON som tekst, inkl. «aldri #FFFFFF») er innhold, ikke styling: sjekk bare tagger, attributter og <style>
       if (f.endsWith(".html")) t = t.replace(/<script[\s\S]*?<\/script>/g, "").replace(/(<\/style>|>)[^<]*(?=<)/g, "$1");
+      // K-223: bare sidene under /sigdal (og /sigdal/tema.css) kan ha Sigdal-fargene; Hengsel-sidene bare Hengsel-fargene
+      const underSigdal = relative(dist, f).startsWith("sigdal");
       for (const m of t.matchAll(/(?<![\w&#/-])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![\w-])/g)) {
         // Verdier fra pinnet JSON vises som tekst (design.) eller er theme-color; de må uansett finnes i den delte fila
-        assert.ok(tillatt.has(m[0].toLowerCase()), `${relative(rot, f)}: ${m[0]} finnes ikke i den delte token-fila`);
+        assert.ok(tillatt.has(m[0].toLowerCase()) || (underSigdal && sigdalHex().has(m[0].toLowerCase())), `${relative(rot, f)}: ${m[0]} finnes ikke i den delte token-fila`);
       }
     }
   }

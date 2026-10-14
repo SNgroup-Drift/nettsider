@@ -17,11 +17,14 @@ import UteMotion from "../components/UteMotion.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
 import { BYGG, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
 import { lagQr } from "../apptest-qr";
+import { kundeFra } from "../kunde";
 import { EPOST } from "../content/forside";
 
 const { versjon, oppdatert } = APPTEST;
 const dato = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${iso}T12:00:00Z`)); // dd.mm.åååå
-const qr = lagQr();
+// K-223: i en kundeutgave peker QR-koden til kundens egen adresse (hengsel.no/sigdal/apptest), ikke til passordsiden
+const kundeUtgave = kundeFra(Astro.url.pathname);
+const qr = lagQr(kundeUtgave ? `https://hengsel.no${kundeUtgave.sti}/apptest` : undefined);
 
 const VEIER = [
   {
@@ -95,7 +98,7 @@ const harFeil = KJENTE_FEIL.length > 0;
         <div class="veier">
           <div class="kort qr">
             <div class="qr-rute">
-              <svg viewBox={`-2 -2 ${qr.storrelse + 4} ${qr.storrelse + 4}`} width="168" height="168" role="img" aria-label="QR-kode til hengsel.no/apptest" shape-rendering="crispEdges"><path d={qr.sti} /></svg>
+              <svg viewBox={`-2 -2 ${qr.storrelse + 4} ${qr.storrelse + 4}`} width="168" height="168" role="img" aria-label={`QR-kode til hengsel.no${kundeUtgave ? kundeUtgave.sti : ""}/apptest`} shape-rendering="crispEdges"><path d={qr.sti} /></svg>
             </div>
             <span>Skann med telefonen for å åpne siden der</span>
           </div>
@@ -154,7 +157,7 @@ const harFeil = KJENTE_FEIL.length > 0;
                 </div>
                 {r.merknad && <p class="liten dempet merknad">{r.merknad}</p>}
               </div>
-              <a class="pdf" href="/apptest/Logg_inn_i_demoen.pdf" download>Alle demobrukere (PDF)</a>
+              <a class="pdf" href={`${kundeUtgave ? kundeUtgave.sti : ""}/apptest/Logg_inn_i_demoen.pdf`} download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
               <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} w={maal(r.bilde).w} h={maal(r.bilde).h} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />

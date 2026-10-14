@@ -29,6 +29,18 @@ export function merkefilSha() {
   return s;
 }
 
+/** K-223: Sigdal-paletten (hex fra packages/kundetema-sigdal/tokens.css), små bokstaver */
+export function sigdalHex() {
+  return new Set([...readFileSync(join(rot, "packages/kundetema-sigdal/tokens.css"), "utf8").matchAll(/--sigdal-[a-z0-9-]+:\s*(#[0-9A-Fa-f]{6})/g)].map((m) => m[1].toLowerCase()));
+}
+
+/** K-223: kundens egen logofil (sites/hengsel/public/<kunde>/logo/*.svg) er lov å ha fargeverdier hvis alle er fra kundens palett (Warm Black for Sigdal) */
+export function erKundelogo(fil, tekst) {
+  if (!/sites\/hengsel\/public\/sigdal\/logo\/[^/]+\.svg$/.test(fil.split("\\").join("/"))) return false;
+  const lov = sigdalHex();
+  return [...tekst.matchAll(/#[0-9A-Fa-f]{6}\b/g)].every((m) => lov.has(m[0].toLowerCase()));
+}
+
 export function filer(omrader = OMRADER) {
   const ut = [];
   const gaa = (dir) => {
@@ -92,7 +104,7 @@ export function skann(omrader = OMRADER) {
   const ut = [];
   for (const f of filer(omrader)) {
     const buf = readFileSync(f);
-    const erMerkefil = f.endsWith(".svg") && merke.has(sha(buf));
+    const erMerkefil = f.endsWith(".svg") && (merke.has(sha(buf)) || erKundelogo(f, buf.toString("utf8")));
     for (const b of finnBrudd(buf.toString("utf8"), { farger: !erMerkefil, mork: true })) ut.push({ fil: relative(rot, f), ...b });
   }
   return ut;

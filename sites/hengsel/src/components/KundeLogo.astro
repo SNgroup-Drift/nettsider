@@ -1,0 +1,20 @@
+---
+/**
+ * Kundens logo i menyen og bunnen (K-223). Når kundens egen logofil (transparent SVG i Warm Black for Sigdal) ligger i
+ * public/<kunde>/logo/<kunde>-logo.svg, brukes den som bilde; til da står kundens navn som tekstmerke i kundens overskriftsskrift.
+ * «levert av Hengsel» står under som tekst; Hengsel Levering-logoen er ikke brukt fordi den har Hengsel-farger. Stilen (.kundelogo-*) ligger i kundetemaet (tokens.css).
+ */
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import type { Kunde } from "../kunde";
+interface Props { kunde: Kunde; levertAv?: "under" | "ingen" }
+const { kunde, levertAv = "under" } = Astro.props;
+const logoFil = `${kunde.sti}/logo/${kunde.nokkel}-logo.svg`;
+const harLogo = existsSync(join(process.cwd(), "public", logoFil));
+---
+<span class="kundelogo">
+  {harLogo
+    ? <img class="kundelogo-bilde" src={logoFil} alt={kunde.navn} height="30" />
+    : <span class="kundelogo-navn">{kunde.navn}</span>}
+  {levertAv === "under" && <span class="kundelogo-levert">levert av Hengsel</span>}
+</span>

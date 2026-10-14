@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node ../../scripts/csp-hasher.mjs dist",
+    "build": "astro build && node ../../scripts/csp-hasher.mjs dist && node ../../scripts/bygg-sigdal-vis.mjs dist",
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.3.6",
+    "@sngroup/hengsel-dokumenter": "*",
     "@sngroup/hengsel-tokens": "*",
-    "@sngroup/hengsel-dokumenter": "*"
+    "@sngroup/kundetema-sigdal": "*",
+    "astro": "^7.3.6"
   },
   "devDependencies": {
     "qrcode-generator": "^1.4.4"
