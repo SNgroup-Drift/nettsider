@@ -3,7 +3,8 @@
 Bestemt 07.10.2026 (erstatter Pages-beslutningen fra 04.10): hvert nettsted er sin egen Cloudflare Worker med
 statiske filer, bygd med **Workers Builds** og Git-integrasjon fra samme repo (`SNgroup-Drift/sngroup-nettsider`).
 Workerne serverer `sites/<navn>/dist`. Unntaket er `hengsel`, som har et lite skript bare for `/apptest` (passordet, se
-«hengsel.no/apptest» under) og `/api/demo` (demoskjemaet, se «hengsel.no/api/demo» under). Eirik kobler Cloudflare til GitHub selv.
+«hengsel.no/apptest» under), `/api/demo` (demoskjemaet, se «hengsel.no/api/demo» under) og `/hjelp` (brukerveiledningen bak Cloudflare Access, se
+«hengsel.no/hjelp» under). Eirik kobler Cloudflare til GitHub selv.
 
 Repoet har ingen API-nøkler, ingen kontoinformasjon, ingen hemmeligheter og ingen wrangler-innlogging. Det eneste
 Cloudflare-oppsettet i repoet er `sites/<navn>/wrangler.jsonc` (her sngroup; hengsel har i tillegg `main`, `binding` og
@@ -136,10 +137,10 @@ curl -s -o /dev/null -w '%{http_code}\n' https://sngroup.no/finnes-ikke   # skal
 
 - Cloudflare Web Analytics / Zaraz: ikke slå på (ingen sporing). Web Analytics ville også trenge en endring i CSP-en.
 - Ingen `main` i wrangler.jsonc og ingen Worker-kode: nettstedene er rent statiske.
-- Ingen `main` og ingen Worker-kode for sngroup og byggem: de er rent statiske. hengsel har bare skriptet for `/apptest` og `/api/demo`.
+- Ingen `main` og ingen Worker-kode for sngroup og byggem: de er rent statiske. hengsel har bare skriptet for `/apptest`, `/api/demo` og `/hjelp`.
 - Ingen bindinger (KV, D1, R2) og ingen `account_id` i repoet. Den eneste hemmeligheten er passordet for
   hengsel.no/apptest, og den ligger bare i Cloudflare.
-- `run_worker_first`: bare `["/apptest", "/apptest/*", "/api/demo"]` i hengsel. Ikke utvid den; resten av nettstedet skal ikke gå
+- `run_worker_first`: bare `["/apptest", "/apptest/*", "/api/demo", "/hjelp", "/hjelp.html", "/hjelp/*"]` i hengsel. Ikke utvid den; resten av nettstedet skal ikke gå
   gjennom kode.
 
 ## hengsel.no/api/demo (demoskjemaet)
@@ -267,6 +268,21 @@ npx wrangler dev -c sites/hengsel/wrangler.jsonc          # http://localhost:878
 node scripts/skjermbilder-apptest.mjs                       # skjermbilder og sjekker mot wrangler dev
 ```
 
+## hengsel.no/hjelp (brukerveiledningen bak Cloudflare Access, K-226)
+
+Brukerveiledningen for kunder og interessenter Eirik inviterer. Én Astro-side (`sites/hengsel/src/pages/hjelp.astro`) med rollevelger øverst; innholdet
+ligger i `sites/hengsel/src/data/hjelp.ts` (samme oppbygging som Hjelp i CRM-et, K-225). Kilden er `docs/hjelp/hengsel-brukerveiledning.html`.
+
+- Workeren (`worker/hjelp.ts`, sjekken i `worker/access.ts`, delt med /sigdal) svarer **403** på `/hjelp`, `/hjelp/*` og `/hjelp.html` uten gyldig
+  `Cf-Access-Jwt-Assertion` (signatur, utsteder, Access-app, utløp). Gyldig token gir siden; annen metode enn GET og HEAD gir 405.
+  Mangler `ACCESS_TEAM_DOMAIN` eller `ACCESS_AUD` (dashbordet, ikke repoet; `keep_vars` er på), svarer Workeren 503 når en token kommer, og 403 uten.
+- Alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Siden har `noindex,nofollow`, står ikke i `sitemap.txt` eller
+  `robots.txt`, og lenkes ikke fra menyen eller bunnen (`scripts/sjekk-lenker.mjs` og `scripts/hjelp.test.mjs` passer på det).
+- Hvem som slipper inn, bestemmes av policyen i Access-appen (e-postkode til adressene Eirik inviterer), ikke av en liste i repoet.
+- Ingen omgåelse av Access i Worker-koden. Skjermbilder tas fra `dist` med den statiske testserveren (`node scripts/skjermbilder-k226.mjs`).
+- Skjermbilder: legg bildet i `sites/hengsel/public/img/hjelp/` og sett `fil` på `skjermbilde` i `hjelp.ts`; uten `fil` vises «Skjermbilde kommer».
+- Access-appen: utvid appen fra K-223 med stien `hengsel.no/hjelp*` (eller lag én app for begge). Se `claude/k226-rapport.md`.
+
 ## vis
 
 Visningsrommet (`vis.sngroup.no`, K-110) er et rent statisk nettsted uten byggesteg utover kopiering (se
@@ -377,4 +393,4 @@ Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Ac
 
 ## hengsel.no/sigdal (K-223)
 
-Kundeutgave for Sigdal i samme Worker som hengsel.no. `run_worker_first` har `/sigdal` og `/sigdal/*`; `worker/sigdal.ts` svarer 403 uten `Cf-Access-Jwt-Assertion` (Cloudflare Access legger den på), og alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Cloudflare Access settes opp i dashbordet (steg i `claude/k223-rapport.md`). Testmodus (`wrangler dev --var SIGDAL_TESTMODUS:1`) virker bare på localhost. Visningsrommet bygges inn i `dist/sigdal/vis/` av `scripts/bygg-sigdal-vis.mjs` (kjøres av `npm run build -w sites/hengsel`), så **Build watch paths for hengsel må også ha `sites/vis/*`**.
+Kundeutgave for Sigdal i samme Worker som hengsel.no, bak **Cloudflare Access** (appen «Hengsel kunde», samme som `/hjelp`). `run_worker_first` har `/sigdal` og `/sigdal/*`; `worker/sigdal.ts` bruker den delte Access-sjekken i `worker/access.ts` (signatur, utsteder, AUD, utløp og e-post, mot `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD`). Uten gyldig `Cf-Access-Jwt-Assertion`, **eller når variablene mangler**, svarer alle stier under `/sigdal` og `/hjelp` 403 (aldri åpent). Alle svar har `X-Robots-Tag: noindex, nofollow` og `Cache-Control: private, no-store`. Ingen testmodus: skjermbilder tas fra de statiske filene (`npm run skjermbilder:sigdal`). Visningsrommet bygges inn i `dist/sigdal/vis/` av `scripts/bygg-sigdal-vis.mjs` (kjøres av `npm run build -w sites/hengsel`), så **Build watch paths for hengsel må også ha `sites/vis/*`**. `/sigdal/vis/*` får vis' egen CSP fra Workeren (rommene har inline stil).

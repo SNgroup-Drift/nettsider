@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
  * K-223: skjermbilder og nettlesersjekker av hengsel.no/sigdal (390 og 1280 px): forsiden, /sigdal/crm og ett vis-rom (/sigdal/vis/crm/).
- * Kjører mot wrangler dev med testmodus (SIGDAL_TESTMODUS=1), som bare virker på localhost: Access-sjekken i Worker-en omgås lokalt og ellers aldri.
- * Kjør `npm run build` først. Resultat: claude/k223-skjermbilder/*.png
+ * Sidene serveres som statiske filer fra dist (samme filer og _headers som Workeren henter fra), uten Worker og dermed uten Access-sjekken. Det finnes ingen
+ * testmodus eller omgåelse i Worker-koden; Access-sjekken testes i scripts/sigdal-worker.test.mjs. Kjør `npm run build` først. Resultat: claude/k223-skjermbilder/*.png
  *   node scripts/skjermbilder-sigdal.mjs [sti …]   (standard: de tre sidene)
  */
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { startHengsel } from "./lib-wrangler.mjs";
+import { startServer } from "./statisk-server.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const ut = join(rot, "claude", "k223-skjermbilder");
@@ -17,7 +17,8 @@ const SIDER = process.argv.length > 2 ? process.argv.slice(2) : [["sigdal-forsid
 const sider = SIDER.map((s) => (Array.isArray(s) ? s : [s.replace(/\W+/g, "-").replace(/^-|-$/g, "") || "forside", s]));
 const visninger = [{ navn: "390", viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }, { navn: "1280", viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 }];
 
-const hengsel = await startHengsel({ vars: { SIGDAL_TESTMODUS: "1" } });
+const server = await startServer(join(rot, "sites", "hengsel", "dist"));
+const hengsel = { base: `http://127.0.0.1:${server.address().port}`, stopp: async () => server.close() };
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let feil = 0;
 const meld = (ok, tekst) => { if (!ok) feil++; console.log(`${ok ? "✓" : "✗"} ${tekst}`); };
@@ -27,7 +28,9 @@ try {
       const ctx = await browser.newContext({ ...v, colorScheme: "light", reducedMotion: "reduce" });
       const page = await ctx.newPage();
       const konsoll = [];
-      page.on("console", (m) => { if (m.type() === "error") konsoll.push(m.text()); });
+      // Vis-rommene har inline stil og får egen CSP av Workeren (worker/sigdal.ts); den statiske serveren her gir dem den strenge CSP-en, så den meldingen er forventet der
+      const forventet = (t) => sti.startsWith("/sigdal/vis/") && /inline style because it violates/.test(t);
+      page.on("console", (m) => { if (m.type() === "error" && !forventet(m.text())) konsoll.push(m.text()); });
       page.on("pageerror", (e) => konsoll.push(String(e)));
       page.on("requestfailed", (r) => konsoll.push(`feilet: ${r.url()}`));
       page.on("response", (r) => { if (r.status() >= 400) konsoll.push(`${r.status()} ${r.url()}`); });

@@ -46,3 +46,6 @@ Kjør aldri skriptet med `--alle` etter at ekte bilder er lagt inn.
 - `npm run build`: grønn. `npm test`: 118 tester, 117 grønne, 0 røde, 1 hoppet over av testen selv (som før). Lenkesjekken grønn (834 forespørsler, 0 feil; inkl. alle /sigdal-sider, vis-rommene og plassholderne).
 - Skjermbilder 390 og 1280 px med lokal omgåelse av Access-sjekken (`SIGDAL_TESTMODUS=1`, bare localhost): `claude/k223-skjermbilder/` (`sigdal-forside`, `sigdal-crm`, `sigdal-vis-crm`, og i tillegg ute, kundeportal, dokumenter, apptest). Sjekket: Off White-bakgrunn, Warm Black-tekst, Newsreader og Inter lastet, ingen vannrett rulling, ingen konsollfeil eller 4xx. Lag på nytt: `npm run skjermbilder:sigdal`.
 - Workers Builds: se PR-en (status sjekket etter push).
+
+## Oppdatering etter fletting med K-226 (14.10.2026)
+- Access-sjekken for `/sigdal` er nå den delte modulen `worker/access.ts` (signaturkontroll mot `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD`, samme som `/hjelp`). Den enkle header-sjekken og `SIGDAL_TESTMODUS` er fjernet. Mangler variablene, gir både `/sigdal` og `/hjelp` 403. Skjermbildene tas nå fra de statiske filene uten Worker.

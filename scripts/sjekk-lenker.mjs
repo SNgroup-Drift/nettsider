@@ -161,13 +161,16 @@ for (const navn of nettsteder) {
   // K-223: det samme gjelder alt under /sigdal (kundeutgaven bak Cloudflare Access): noindex,nofollow, og ikke i sitemap
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
-    if (side.startsWith("/apptest") || side.startsWith("/sigdal")) {
+    if (side.startsWith("/apptest") || side.startsWith("/hjelp") || side.startsWith("/sigdal")) {
       if (!/<meta name="robots" content="noindex,\s?nofollow">/.test(html)) mangler.push(`${side}: mangler robots noindex,nofollow`);
     }
+    // /hjelp (hengsel.no, brukerveiledningen bak Cloudflare Access, K-226) lenkes ikke fra noen annen side
+    if (!side.startsWith("/hjelp") && /href="\/hjelp[\/"#]/.test(html)) mangler.push(`${side}: lenker til /hjelp (skal ikke ligge i åpne sider eller menyen)`);
   }
   try {
     const sitemap = await (await fetch(new URL("/sitemap.txt", base))).text();
     if (sitemap.includes("/apptest")) mangler.push("sitemap.txt: inneholder /apptest");
+    if (sitemap.includes("/hjelp")) mangler.push("sitemap.txt: inneholder /hjelp");
     if (/\/sigdal(?=[\/\s]|$)/m.test(sitemap)) mangler.push("sitemap.txt: inneholder /sigdal");
   } catch {}
 

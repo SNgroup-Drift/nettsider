@@ -1,0 +1,17 @@
+---
+/**
+ * Bunnen på /hjelp (K-226): opphavsrettslinjen står nederst på hver side i veiledningen. Teksten ligger i data/hjelp.ts.
+ */
+import { HJELP } from "../data/hjelp";
+---
+<footer class="hjelpebunn">
+  <div class="inn">
+    <p>{HJELP.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .hjelpebunn { background: var(--bg); border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
+  .inn { max-width: 820px; margin: 0 auto; padding: 20px var(--pad) 28px; box-sizing: border-box; }
+  .inn p { max-width: 70ch; }
+</style>
