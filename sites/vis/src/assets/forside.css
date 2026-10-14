@@ -121,3 +121,12 @@ footer .inner{padding-block:32px;display:flex;flex-direction:column;gap:20px}
   .ark-rad{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hode{flex-direction:column;align-items:flex-start;gap:4px}
 }
+
+/* Menysidene (K-229): /forsta/, /prov/, /presenter/ er egne sider. Aktiv side i menyen, og forsidens fire kort til sidene. */
+.meny a[aria-current]{color:var(--tekst);font-weight:600;box-shadow:inset 0 -2px 0 var(--aksent)}
+@media (max-width:767px){.meny a[aria-current]{box-shadow:inset 3px 0 0 var(--aksent);padding-left:10px}}
+.seksjon.side{padding-block:48px 56px}
+.seksjon.side .hode h1{font-size:clamp(2rem,4vw,2.75rem);line-height:1.1}
+.sidekort{display:grid;align-content:start;gap:8px;text-decoration:none;color:inherit}
+.sidekort .go{font-size:20px;color:var(--aksent-tekst)}
+.seksjon.sider{padding-block:0 56px}

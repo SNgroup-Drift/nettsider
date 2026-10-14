@@ -48,7 +48,9 @@ await mkdir(join(dist, "assets", "dokumenter"), { recursive: true });
 for (const fil of ["a4.css", "dokumentvisning.css", "dokumentvisning.js"]) await cp(join(dokKilde, fil), join(dist, "assets", "dokumenter", fil));
 const img = join(dist, "img");
 await mkdir(img, { recursive: true });
-const forside = (await readFile(join(src, "index.html"), "utf8")) + (await readFile(join(src, "assets", "rom.js"), "utf8"));
+// Bildene som brukes av forsiden og de tre menysidene (forsta, prov, presenter), og av rom.js (romkortene)
+let forside = await readFile(join(src, "assets", "rom.js"), "utf8");
+for (const side of ["index.html", "forsta/index.html", "prov/index.html", "presenter/index.html"]) forside += await readFile(join(src, side), "utf8");
 const bilder = [...new Set([...forside.matchAll(/\/img\/([a-z0-9-]+\.(?:webp|svg))/g)].map((m) => m[1]))];
 for (const navn of bilder) {
   if (navn.startsWith("sn-logo") || navn.startsWith("rom-")) continue;
@@ -73,6 +75,18 @@ function hengselLogo(size, skjema = "hengsel") {
   return `<span class="hlogo" style="--h:${size}px">` +
     `<img src="/assets/logo/${l.fil}-lys.svg" alt="${l.alt}" width="${l.b}" height="${l.h}"></span>`;
 }
+// Menyen øverst (K-229): Forstå, Prøv, Dokumenter og Presenter er egne sider. <!--meny prov--> setter aria-current="page" på den aktive.
+// Gruppesidene (butikken, montoren, kunden, leverandoren) ligger under Prøv og bruker <!--meny prov-->; oversiktssiden /rom/ bruker <!--meny-->.
+const MENY = [["forsta", "Forstå"], ["prov", "Prøv"], ["dokumenter", "Dokumenter"], ["presenter", "Presenter"]];
+function menyHtml(aktiv, under) {
+  const lenker = MENY.map(([id, navn]) => {
+    const her = id === aktiv ? (under ? ' aria-current="true"' : ' aria-current="page"') : "";
+    return `<a href="/${id}/"${her}>${navn}</a>`;
+  });
+  return lenker.join("") + `<a class="crm" href="/crm/">Logg inn på CRM</a>`;
+}
+// Bunnen (samme på alle sidene med toppfelt)
+const BUNN = (await readFile(join(her, "bunn.html"), "utf8")).trim();
 let sider = 0;
 async function settInnLogo(dir) {
   for (const e of await readdir(dir, { withFileTypes: true })) {
@@ -81,6 +95,8 @@ async function settInnLogo(dir) {
     else if (e.name.endsWith(".html")) {
       const tekst = await readFile(sti, "utf8");
       const ny = tekst
+        .replace("<!--bunn-->", () => BUNN)
+        .replace(/<!--meny(?: ([a-z]+))?(?: (under))?-->/, (_, aktiv, under) => menyHtml(aktiv, under))
         .replaceAll("%TEMAFARGE%", palett.farge["flate-side"].lys)
         .replace(/<!--logo-hengsel (\d+)(?: ([a-z-]+))?-->/g, (_, n, f) => hengselLogo(Number(n), f))
         .replace("<!--dokumentvisning-->", () => dokumentvisningHtml())
