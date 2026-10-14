@@ -3,8 +3,8 @@
  * Visningsrommet (sites/vis/bygg.mjs), så markeringen finnes ett sted. Klassene er kontrakten mot a4.css.
  *
  * Alle tekster escapes. Merket øverst er «Din logo | Butikknavn Hamar», og Hengsel-logoen (hengsel-lys.svg, 3 mm) står i bunnlinjen til høyre (aldri to Hengsel-logoer).
- * Papiret er alltid lyst. Forsidebildet (1200 × 768) hentes fra `bildeSti`: adressen i skjermbildebiblioteket (K-233, bilder.hengsel.no/…/dok-forside.webp)
- * eller null når det ikke står i manifestet; da tegnes plassholderen «Skjermbilde kommer» (data-skjermbilde="dok-forside"). Logoen fra `logoSti` (standard /logo/hengsel-lys.svg).
+ * Papiret er alltid lyst. Forsidebildet (1200 × 768) hentes fra `bildeSti` (nettsidenes eget bilde, /img/dok-forside.webp, K-233: LOKALE_BILDER) eller null
+ * (Sigdal-utgaven, der det ikke finnes); da tegnes plassholderen «Skjermbilde kommer» (data-skjermbilde="dok-forside"). Logoen fra `logoSti` (standard /logo/hengsel-lys.svg).
  */
 import { hhKlasse, malKlasse } from "./a4-stil.js";
 

@@ -1,7 +1,7 @@
 /**
  * Apples Product Bezels (sites/vis/src/assets/rammer) med skjermbilde i hullet, som ett bilde på gjennomsiktig bunn.
- * Samme mål som assets/enhet.css (skjermhull og hjørneradius i prosent). K-233: brukes bare av scripts/skjermbilder-vis.mjs (rommet selv i Studio Display);
- * romkort, flater og hero med app-skjermbilder komponeres av K-228 i hengsel-crm med de samme tallene, og sidene lenker alt fra biblioteket.
+ * Samme mål som assets/enhet.css (skjermhull og hjørneradius i prosent). K-233: brukes bare av scripts/skjermbilder-vis.mjs (rommet selv i Studio Display,
+ * nettsidenes egne romkort i src/img); romkort, flater og hero med app-skjermbilder komponeres av K-228 i hengsel-crm med de samme tallene og ligger i biblioteket.
  * Skjermbildet ligger under rammen, klippes med skjermens hjørner og fyller hullet (cover, fra toppen). Rammen brukes som den er.
  */
 import sharp from "sharp";

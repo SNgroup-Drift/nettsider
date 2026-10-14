@@ -9,7 +9,8 @@
  * scripts/skjermbilder-bibliotek.test.mjs godtar bare nøklene i KJENTE_MANGLER.
  *
  * Stiene i biblioteket (samme som sites/hengsel/public/kunde/sigdal/img hadde i K-223): app/<navn>-lys.webp (iOS), apptest/<navn>-lys[@1x].webp,
- * hjelp/<id>[@1x].webp, dok-forside.webp, vis/skjermbilder/<navn>[-mork][@1x].webp og vis/<rom|flate|forsta|hero>*.webp. Ingen hemmeligheter her.
+ * hjelp/<id>[@1x].webp, vis/skjermbilder/<navn>[-mork][@1x].webp og vis/<rom|flate|forsta|hero>*.webp. Unntaket er LOKALE_BILDER (nettsidenes egne:
+ * romkortene for rom uten app-skjermbilde og dokumentforsiden), som ligger i repoet og lenkes lokalt. Ingen hemmeligheter her.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -26,6 +27,21 @@ export const bildeUrl = (tema, sti) => `${BILDEDOMENE}/${tema}/${sti}`;
 
 /** Nøkkelen i KJENTE_MANGLER og data-skjermbilde: «app/idag-lys.webp» → «app/idag», «vis/skjermbilder/ute-ks-mork@1x.webp» → «vis/skjermbilder/ute-ks» */
 export const skjermbildeNokkel = (sti) => sti.replace(/(?:-lys|-mork)?(?:@1x)?\.webp$/, "");
+
+/**
+ * Nettsidenes egne bilder (K-228-rapporten punkt 6, K-233-rettelsen 14.10): romkortene for rommene uten app-skjermbilde (rommet selv i Studio Display,
+ * laget av scripts/skjermbilder-vis.mjs) og dokumentforsiden på A4-arkene. De ligger lokalt i repoet (nøkkel → fil), lenkes som /img/<fil> på
+ * hengsel.no og vis, og kommer aldri i biblioteket. I Sigdal-utgavene (tema sigdal) finnes de ikke og vises som plassholder, som i K-223.
+ */
+export const LOKALE_BILDER = {
+  "dok-forside": "sites/hengsel/public/img/dok-forside.webp",
+  ...Object.fromEntries(["dokumenter", "gevinst", "hvitevarer", "kontroll", "leder", "leverandor", "levprov", "montasjeplan", "opplaering", "prosjekt", "sv", "system", "veikart"].map((r) => [`vis/rom-${r}`, `sites/vis/src/img/rom-${r}.webp`])),
+};
+/** Er stien (uten tema) et av nettsidenes egne bilder? */
+export const erLokal = (sti) => Object.hasOwn(LOKALE_BILDER, skjermbildeNokkel(sti));
+/** Adressen til et lokalt bilde på siden (hengsel.no og vis har begge /img/): lokalUrl("vis/rom-system.webp") → "/img/rom-system.webp" */
+export const lokalUrl = (sti) => `/img/${sti.split("/").pop()}`;
+
 
 let lest;
 /** Sist kjente manifest (kopien i repoet, eller det oppdaterManifest() hentet). { versjon, laget, antall, filer: { "<tema>/<sti>": { sha256, bytes, bredde, hoyde } } } */

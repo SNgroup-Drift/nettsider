@@ -6,12 +6,12 @@
  * Siden skalerer med bredden den får (CSS container-enheter, se a4.css): sett bredden på omslaget eller i --a4-maks. Ingen skript.
  * Kolonnemaler og bildehøyder blir klasser; reglene lages av a4DynamiskCss() (Dokumentvisning legger dem i én <style>).
  * Merket øverst er «Din logo | Butikknavn Hamar», og Hengsel-logoen står i bunnlinjen til høyre. Papiret er alltid lyst.
- * Forsidebildet kommer fra skjermbildebiblioteket (K-233, se packages/hengsel-tokens/skjermbilder.mjs).
+ * Forsidebildet er nettsidenes eget (K-233: LOKALE_BILDER i packages/hengsel-tokens/skjermbilder.mjs), ikke fra skjermbildebiblioteket.
  */
 import "@sngroup/hengsel-dokumenter/a4.css";
 import type { DokSide } from "@sngroup/hengsel-dokumenter/data";
 import { renderA4Side } from "@sngroup/hengsel-dokumenter/render";
-import { skjermbilde } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+import { lokalUrl } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
 import { kundeFra } from "../../kunde";
 
 interface Props {
@@ -26,8 +26,9 @@ interface Props {
   class?: string;
 }
 const { side, fot, nr, total, ligg = false, forst = false, class: klasse } = Astro.props;
-// K-233: forsidebildet (dok-forside.webp, 1200 × 768) hentes fra biblioteket på bilder.hengsel.no i sidens tema; finnes det ikke i manifestet, tegnes plassholderen
+// K-233: forsidebildet (dok-forside.webp, 1200 × 768) er nettsidenes eget (LOKALE_BILDER, public/img) og kommer ikke fra biblioteket; i Sigdal-utgaven
+// (/kunde/sigdal) finnes det ikke, og plassholderen tegnes (som K-223)
 const tema = kundeFra(Astro.url.pathname)?.nokkel ?? "hengsel";
-const html = renderA4Side(side, { fot, nr, total, ligg, forst, klasse, bildeSti: skjermbilde(tema, "dok-forside.webp")?.url ?? null });
+const html = renderA4Side(side, { fot, nr, total, ligg, forst, klasse, bildeSti: tema === "hengsel" ? lokalUrl("dok-forside.webp") : null });
 ---
 <Fragment set:html={html} />

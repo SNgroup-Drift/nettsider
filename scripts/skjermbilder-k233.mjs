@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * K-233: skjermbilder (390 og 1280 px) etter at app-skjermbildene hentes fra biblioteket på bilder.hengsel.no: hengsel.no (forsiden), /kunde/sigdal,
- * ett rom i Visningsrommet (/crm/) og sngroup.no. Krever `npm run build` (leser sites/<side>/dist) og Chromium.
+ * Visningsrommet (forsiden, /rom/ med romkortene og rommet /crm/) og sngroup.no. Krever `npm run build` (leser sites/<side>/dist) og Chromium.
  *
  *   node scripts/skjermbilder-k233.mjs
  *
@@ -24,6 +24,8 @@ const ut = join(rot, "claude", "k233");
 const SIDER = [
   ["hengsel", "/", "hengsel-no-forside"],
   ["hengsel", "/kunde/sigdal", "hengsel-no-kunde-sigdal"],
+  ["vis", "/", "vis-forside"],
+  ["vis", "/rom/", "vis-alle-rom"],
   ["vis", "/crm/", "vis-rom-crm"],
   ["sngroup", "/", "sngroup-no-forside"],
 ];
@@ -78,13 +80,14 @@ for (const [side, sti, navn] of SIDER) {
       sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
       plassholdere: [...document.querySelectorAll("[data-skjermbilde]")].filter((e) => !e.hidden).map((e) => e.dataset.skjermbilde),
       bilder: [...document.images].filter((i) => i.src.startsWith("https://bilder.hengsel.no")).map((i) => [i.src.split("/v1/")[1], i.complete && i.naturalWidth > 0]),
+      lokale: [...document.images].filter((i) => /\/img\/(rom-|dok-forside)/.test(i.src)).map((i) => [i.src.split("/img/")[1], i.complete && i.naturalWidth > 0]),
     }));
     if (info.sw > info.cw) feil.push(`${navn} ${bredde}: horisontal rulling (${info.sw} > ${info.cw})`);
     for (const k of info.plassholdere) brukt.plassholder.add(k);
-    for (const [b, ok] of info.bilder) if (!ok) feil.push(`${navn} ${bredde}: bildet ${b} lastet ikke`);
+    for (const [b, ok] of [...info.bilder, ...info.lokale]) if (!ok) feil.push(`${navn} ${bredde}: bildet ${b} lastet ikke`);
     const png = await p.screenshot({ fullPage: true });
     await sharp(png).webp({ quality: 80 }).toFile(join(ut, `${navn}-${bredde}.webp`));
-    console.log(`✓ ${navn} ${bredde}: ${info.bilder.length} bibliotekbilder (stand-in fra git), plassholdere: ${info.plassholdere.join(", ") || "ingen"}`);
+    console.log(`✓ ${navn} ${bredde}: ${info.bilder.length} bibliotekbilder (stand-in fra git), ${info.lokale.length} egne bilder lokalt, plassholdere: ${info.plassholdere.join(", ") || "ingen"}`);
     await ctx.close();
   }
 }
@@ -92,7 +95,8 @@ await nettleser.close();
 for (const t of Object.values(tjenere)) t.close();
 const notat = `# K-233: skjermbilder (${new Date().toISOString().slice(0, 10)})
 
-390 og 1280 px av hengsel.no (forsiden), hengsel.no/kunde/sigdal, vis.hengsel.no/crm/ og sngroup.no, tatt av scripts/skjermbilder-k233.mjs mot de bygde sidene.
+390 og 1280 px av hengsel.no (forsiden), hengsel.no/kunde/sigdal, vis.hengsel.no (forsiden, /rom/ og /crm/) og sngroup.no, tatt av scripts/skjermbilder-k233.mjs mot de bygde sidene.
+Nettsidenes egne bilder (romkortene for rom uten app-skjermbilde og dokumentforsiden) ligger lokalt og vises som i drift.
 
 Biblioteket (bilder.hengsel.no) nås ikke fra Code-økta og er tomt til workflowen i hengsel-crm har kjørt. Adressene i biblioteket som står i manifestet
 ble derfor svart med sist kjente lokale kopi fra git (origin/main, filene K-233 fjernet) som stand-in; alt annet fikk 404, så plassholderne

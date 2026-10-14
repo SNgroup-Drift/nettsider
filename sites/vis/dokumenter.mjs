@@ -10,7 +10,7 @@ import { DOKUMENTER, LAGES_STEG } from "../../packages/hengsel-dokumenter/src/da
 import { ETTERPA_TYPE, LAGES } from "../../packages/hengsel-dokumenter/src/lages.js";
 import { a4DynamiskCss } from "../../packages/hengsel-dokumenter/src/a4-stil.js";
 import { esc, renderA4Side } from "../../packages/hengsel-dokumenter/src/render.js";
-import { PLASSHOLDER, skjermbilde as fraBibliotek, skjermbildeNokkel } from "../../packages/hengsel-tokens/skjermbilder.mjs";
+import { PLASSHOLDER, lokalUrl, skjermbilde as fraBibliotek, skjermbildeNokkel } from "../../packages/hengsel-tokens/skjermbilder.mjs";
 
 // K-233: skjermbildene i «Slik lages det» og forsidebildet på arkene kommer fra biblioteket på bilder.hengsel.no i temaet VIS_TEMA (bygg.mjs);
 // det som ikke står i manifestet, blir plassholderen «Skjermbilde kommer» (data-skjermbilde).
@@ -24,8 +24,8 @@ function skjermbilde(navn, alt) {
   const x = b.x1 ?? b;
   return `<picture><img class="sk" src="${x.url}"${b.srcset ? ` srcset="${b.srcset}"` : ""} alt="${alt}" width="${x.bredde}" height="${x.hoyde}" loading="lazy" decoding="async"></picture>`;
 }
-/** Forsidebildet på arkene (dok-forside.webp, 1200 × 768), eller null (plassholder i render.js) */
-const forsideBilde = () => fraBibliotek(tema, "dok-forside.webp")?.url ?? null;
+/** Forsidebildet på arkene (dok-forside.webp, 1200 × 768): nettsidenes eget (LOKALE_BILDER, /img/dok-forside.webp fra hengsel.no) i Hengsel-utgaven; i Sigdal-utgaven plassholder (render.js) */
+const forsideBilde = () => (tema === "hengsel" ? lokalUrl("dok-forside.webp") : null);
 
 /** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
 const LOGO_STI = "/assets/logo/hengsel-lys.svg";

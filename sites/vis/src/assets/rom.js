@@ -1,6 +1,6 @@
 /* Rommene i Visningsrommet: data til forsiden, /rom/ og gruppesidene (/butikken/, /montoren/, /kunden/, /leverandoren/).
    R = rollene (rollevalget), C = rommene. u = adresse, g = gruppe (forsta, butikken, montoren, kunden, leverandoren, presenter, dokumenter),
-   b = bildet i biblioteket (bilder.hengsel.no, vis/<b>.webp, K-233): ferdig sammensatt enhet + skjermbilde, r = roller. */
+   b = romkortet (vis/<b>.webp i biblioteket på bilder.hengsel.no, eller nettsidenes eget i src/img for rom uten app, K-233), r = roller. */
 (function(){
 var R=[
  ['alle','Alt',''],
@@ -9,8 +9,8 @@ var R=[
  ['leverandor','Leverandør','Hva vi ønsker fra dere, hvordan det kommer inn hos oss, og hva dere får tilbake.'],
  ['nobia','Fabrikken og leverandøren','Hvordan butikkene jobber med fabrikkordrene, og hva som må til for at alt går av seg selv.']
 ];
-// b: bildet i biblioteket (vis/rom-*.webp): enhetsramme + skjermbilde, komponert av K-228 i hengsel-crm. Rom uten app-skjermbilde: rommet selv i
-// Studio Display (scripts/skjermbilder-vis.mjs) når det er lastet opp. bygg.mjs fyller BILDER med adresse og mål fra manifestet; null = plassholder.
+// b: romkortet (vis/rom-*.webp): enhetsramme + skjermbilde fra biblioteket, komponert av K-228 i hengsel-crm, eller for rom uten app-skjermbilde
+// nettsidenes eget bilde av rommet selv i Studio Display (src/img, scripts/skjermbilder-vis.mjs, LOKALE_BILDER). bygg.mjs fyller BILDER med adresse og mål; null = plassholder.
 var C=[
  {u:'/reise/',g:'forsta',b:'rom-reise',t:'Ordrens reise',type:'Simulering',p:'Én kjøkkenordre fra tegning i CET til montert kjøkken og faktura, i åtte scener med fem leverandører.',r:['selger','montor','leverandor','nobia'],go:'Spill av'},
  {u:'/crm/',g:'butikken',b:'rom-crm',t:'Prøv CRM selv',type:'Prøv selv',p:'En dag som selger: Min dag, avvik fra leverandører, tilbud fra CET, ordre og montasjeplan.',r:['selger','nobia'],go:'Prøv CRM'},

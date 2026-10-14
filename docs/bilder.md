@@ -6,7 +6,10 @@
 > repoet lenger, og bygget laster ingen ned: bare `manifest.json` leses (med fallback til `skjermbilder-manifest.json` i repoet, som bygget oppdaterer).
 > Bilder som ikke står i manifestet, vises som plassholderen «Skjermbilde kommer» med `data-skjermbilde="<nøkkel>"`; `scripts/skjermbilder-bibliotek.test.mjs`
 > godtar bare nøklene i `KJENTE_MANGLER` (`scripts/lib/bildedomene.mjs`). Stiene: `app/<navn>-lys.webp` (iOS), `apptest/<navn>-lys[@1x].webp`, `hjelp/<id>[@1x].webp`,
-> `dok-forside.webp`, `vis/skjermbilder/<navn>[-mork][@1x].webp` og `vis/<rom|flate|forsta|hero>*.webp`. CSP-ene har `img-src … https://bilder.hengsel.no`.
+> `vis/skjermbilder/<navn>[-mork][@1x].webp` og `vis/<rom|flate|forsta|hero>*.webp`. CSP-ene har `img-src … https://bilder.hengsel.no`.
+> **Nettsidenes egne bilder** (`LOKALE_BILDER`, K-228 punkt 6) kommer aldri i biblioteket og ligger i repoet som før: romkortene for de 13 rommene uten
+> app-skjermbilde (`sites/vis/src/img/rom-*.webp`, rommet selv i Studio Display, `npm run skjermbilder:vis`) og dokumentforsiden (`sites/hengsel/public/img/dok-forside.webp`).
+> I Sigdal-utgavene (/kunde/sigdal) finnes de ikke og vises som plassholder (K-223).
 > Resten av dette dokumentet beskriver rammene (som fortsatt ligger lokalt) og historikken for bildene.
 
 > K-177 (12.10): skjermbildene i `public/img/app/` (Hengsel Ute, iOS-designet) og `public/img/apptest/` (CRM-designet, bare lys) er fiktive demo-skjermer fra designfasiten. Statuslinje og Dynamic Island tegnes av rammen (`Enhet.astro`), ikke av bildet. De gamle `crm-*`, `ute-*`, `portal-tilbud` og `ramme-ipad/-iphone/-macbook` er fjernet. Se `claude/k177-rapport.md`.
