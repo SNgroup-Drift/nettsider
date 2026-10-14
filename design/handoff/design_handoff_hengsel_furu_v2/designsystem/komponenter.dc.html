@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&amp;display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="../ikoner/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#D9DDE2} a{color:#016D5E;text-decoration:none} a:hover{color:#007665}</style>
+</helmet>
+<div style="min-height:100vh;background:#D9DDE2;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px;width:max-content">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.6px">Komponenter per plattform</h1>
+    <p style="margin:0;font-size:15px;color:#51565C;text-wrap:pretty">Samme komponent side ved side. PC og mobil i nettleser er bare lyse. iOS (SwiftUI, Liquid Glass) og montørappen (Expo, uten glass) vises lys og mørk. iOS bruker Schibsted Grotesk ingen steder, bare systemskrift.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:170px repeat(6,320px);gap:12px;align-items:stretch">
+    <span></span>
+    <div style="padding:10px 14px;border-radius:12px;background:#FFFFFF;display:flex;flex-direction:column"><b style="font-size:15px">PC</b><span style="font-size:13px;color:#51565C">CRM og admin, fra 1024 px, lys</span></div>
+    <div style="padding:10px 14px;border-radius:12px;background:#FFFFFF;display:flex;flex-direction:column"><b style="font-size:15px">Mobil i nettleser</b><span style="font-size:13px;color:#51565C">CRM under 1024 px, lys</span></div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="padding:10px 14px;border-radius:12px;background:#FFFFFF;display:flex;flex-direction:column"><b style="font-size:15px">iPhone og iPad · {{ t.navn }}</b><span style="font-size:13px;color:#51565C">SwiftUI, Liquid Glass</span></div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="padding:10px 14px;border-radius:12px;background:#FFFFFF;display:flex;flex-direction:column"><b style="font-size:15px">Montørapp · {{ t.navn }}</b><span style="font-size:13px;color:#51565C">Expo, uten glass</span></div>
+    </sc-for>
+
+    <!-- 1 Navigasjon -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Navigasjon</b><span style="font-size:13px;color:#51565C">Sidemeny og toppfelt (PC), fanelinje (mobil og iPhone)</span></div>
+    <div style="height:300px;border-radius:14px;overflow:hidden;background:#ECEFF3;box-shadow:inset 0 0 0 1px #CDD1D6;display:grid;grid-template-columns:150px 1fr;grid-template-rows:48px 1fr;font-size:13px">
+      <div style="grid-column:1/3;display:flex;align-items:center;gap:8px;padding:0 12px;background:#FFFFFF;box-shadow:inset 0 -1px 0 #CDD1D6"><span style="flex:1"></span><span style="height:26px;width:84px;border-radius:8px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:4px;padding:0 6px;color:#62686F;background:#FFFFFF">{{ ik16.sok }}Søk</span><span style="color:#51565C">{{ ik.varsler }}</span><span style="width:1px;height:18px;background:#CDD1D6"></span><span style="font-weight:800;font-size:9px;letter-spacing:1.4px">BRYN</span></div>
+      <div style="background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;padding:8px 6px;display:flex;flex-direction:column;gap:1px">
+        <sc-for list="{{ pcMeny }}" as="m" hint-placeholder-count="6">
+          <div style="height:30px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:7px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.vekt }}"><span style="color:{{ m.ikonFg }}">{{ m.ikon }}</span>{{ m.navn }}</div>
+        </sc-for>
+      </div>
+      <div style="padding:12px;display:flex;flex-direction:column;gap:6px;color:#51565C"><span>Sidemeny 248 px, rad 34 px, aktiv: aksent-svak og aksent-tekst.</span><span>Toppfelt 60 px. Kundelogo øverst til høyre, maks 28 px. Hengsel-logo med versjon nederst til venstre.</span></div>
+    </div>
+    <div style="height:300px;border-radius:14px;overflow:hidden;background:#ECEFF3;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;flex-direction:column;font-size:16px">
+      <div style="height:56px;display:flex;align-items:center;gap:8px;padding:0 4px 0 14px;background:rgba(236,239,243,.92);box-shadow:inset 0 -1px 0 #CDD1D6"><img src="../designsystem/logo/merke-hengsel-lys.svg" alt="" style="height:22px"><span style="font-weight:800;font-size:10px;letter-spacing:1.8px">BRYN</span><span style="flex:1"></span><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik24.sok }}</span></div>
+      <div style="flex:1;padding:12px 14px;color:#51565C;font-size:14px">Toppfelt 56 px. Trykkflater 44 px.</div>
+      <div style="height:64px;display:grid;grid-template-columns:repeat(5,1fr);background:#FFFFFF;box-shadow:inset 0 1px 0 #CDD1D6">
+        <sc-for list="{{ mobilFaner }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:{{ f.fg }};font-weight:{{ f.vekt }}">{{ f.ikon }}{{ f.navn }}</div></sc-for>
+      </div>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="height:300px;border-radius:14px;overflow:hidden;background:{{ t.side }};color:{{ t.tekst }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;display:flex;flex-direction:column;position:relative">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0"><span style="width:40px;height:40px;border-radius:50%;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center">{{ ik.pil_venstre }}</span><span style="font-size:17px;font-weight:600">Jobben</span><span style="width:40px;height:40px;border-radius:50%;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center">{{ ik.mer }}</span></div>
+        <div style="flex:1;padding:12px 16px;font-size:13px;color:{{ t.dempet }}">Verktøyknapper: runde glassknapper. Fanelinje: flytende glass med furu-tint på aktiv fane.</div>
+        <div style="margin:0 12px 12px;display:flex;gap:8px"><div style="flex:1;height:56px;border-radius:28px;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:grid;grid-template-columns:repeat(3,1fr);padding:4px;box-sizing:border-box">
+          <sc-for list="{{ t.faner }}" as="f" hint-placeholder-count="3"><div style="border-radius:24px;background:{{ f.bg }};color:{{ f.fg }};display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:600;gap:1px">{{ f.ikon }}{{ f.navn }}</div></sc-for>
+        </div><div style="width:56px;height:56px;border-radius:50%;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center">{{ ik.sok }}</div></div>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="height:300px;border-radius:14px;overflow:hidden;background:{{ t.side }};color:{{ t.tekst }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;display:flex;flex-direction:column">
+        <div style="height:52px;display:flex;align-items:center;gap:4px;padding:0 8px;background:{{ t.kort }};box-shadow:inset 0 -.5px 0 {{ t.linje }}"><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:{{ t.aksentTekst }}">{{ ik24.pil_venstre }}</span><span style="flex:1;text-align:center;font-size:17px;font-weight:600;margin-right:48px">Jobben</span></div>
+        <div style="flex:1;padding:12px 16px;font-size:13px;color:{{ t.dempet }}">Hele flater med hårstrek. Aktiv fane i aksent-tekst.</div>
+        <div style="height:64px;display:grid;grid-template-columns:repeat(3,1fr);background:{{ t.kort }};box-shadow:inset 0 .5px 0 {{ t.linje }}">
+          <sc-for list="{{ t.faner }}" as="f" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:600;color:{{ f.fg }}">{{ f.ikon }}{{ f.navn }}</div></sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <!-- 2 Sidefelt -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Sidefelt</b><span style="font-size:13px;color:#51565C">iPad. Mobil i nettleser: skuff</span></div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px;font-size:14px;color:#51565C;display:flex;align-items:center">PC bruker sidemenyen over.</div>
+    <div style="height:260px;border-radius:14px;overflow:hidden;position:relative;background:#ECEFF3;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <div style="position:absolute;inset:0;background:rgba(26,29,34,.40)"></div>
+      <div style="position:absolute;left:0;top:0;bottom:0;width:250px;background:#FFFFFF;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);padding:10px 8px;display:flex;flex-direction:column;gap:1px;font-size:16px">
+        <sc-for list="{{ skuff }}" as="m" hint-placeholder-count="5"><div style="min-height:44px;display:flex;align-items:center;gap:12px;padding:0 10px;border-radius:10px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.vekt }}"><span style="color:{{ m.ikonFg }}">{{ m.ikon }}</span>{{ m.navn }}</div></sc-for>
+      </div>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="height:260px;border-radius:14px;overflow:hidden;background:{{ t.side }};color:{{ t.tekst }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;padding:8px;box-sizing:border-box">
+        <div style="height:100%;width:240px;border-radius:20px;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};padding:12px 8px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px">
+          <b style="font-size:22px;padding:0 8px 6px">I dag</b>
+          <sc-for list="{{ t.sidefelt }}" as="j" hint-placeholder-count="3"><div style="border-radius:11px;padding:8px 10px;background:{{ j.bg }};color:{{ j.fg }};display:flex;flex-direction:column"><span style="font-size:16px;font-weight:600">{{ j.kunde }}</span><span style="font-size:14px;color:{{ j.dempet }}">{{ j.tid }}</span></div></sc-for>
+          <span style="font-size:12px;color:{{ t.dempet }};padding:6px 8px 0">{{ t.sidefeltMerk }}</span>
+        </div>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.kort }};color:{{ t.dempet }};padding:16px;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;display:flex;align-items:center">Finnes ikke. Montørappen er bare for iPhone.</div>
+    </sc-for>
+
+    <!-- 3 Kort -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Kort</b><span style="font-size:13px;color:#51565C">Flate-kort på flate-side</span></div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:4px;font-size:15px"><span style="font-size:13px;color:#51565C">Tilbud ute</span><span style="font-size:28px;font-weight:700;letter-spacing:-0.8px">14</span><span style="font-size:13px;color:#62686F">3 utløper denne uka</span></div>
+      <span style="display:block;font-size:12px;color:#51565C;margin-top:8px">Radius 14, ramme #CDD1D6, skygge-kort, padding 16×18</span>
+    </div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px">
+      <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:14px 16px;display:flex;flex-direction:column;gap:2px;font-size:16px"><span style="font-size:14px;color:#51565C">Tilbud ute</span><span style="font-size:24px;font-weight:700">14</span><span style="font-size:14px;color:#62686F">3 utløper denne uka</span></div>
+      <span style="display:block;font-size:12px;color:#51565C;margin-top:8px">Radius 12, padding 14×16</span>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:15px"><b>1 av 3 jobber ferdig</b><span style="color:{{ t.dempet }}">Team Øst</span></div><div style="height:6px;border-radius:3px;background:{{ t.senket }};overflow:hidden"><div style="width:33%;height:100%;background:{{ t.aksent }}"></div></div></div>
+        <span style="display:block;font-size:12px;color:{{ t.dempet }};margin-top:8px">secondarySystemGroupedBackground, radius 20, ingen kant</span>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:15px"><b>1 av 3 jobber ferdig</b><span style="color:{{ t.dempet }}">Team Øst</span></div><div style="height:6px;border-radius:3px;background:{{ t.senket }};overflow:hidden"><div style="width:33%;height:100%;background:{{ t.aksent }}"></div></div></div>
+        <span style="display:block;font-size:12px;color:{{ t.dempet }};margin-top:8px">flateKort, radius 20</span>
+      </div>
+    </sc-for>
+
+    <!-- 4 Rader -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Tabellrad og liste-rad</b><span style="font-size:13px;color:#51565C">PC: tabell. Ellers: liste</span></div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden;font-size:14px">
+      <div style="display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;height:36px;padding:0 14px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Ordre</span><span>Kunde</span><span>Status</span></div>
+      <sc-for list="{{ pcRader }}" as="r" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;height:{{ r.h }};padding:0 14px;box-shadow:inset 0 1px 0 #E3E6EA;background:{{ r.bg }};font-size:{{ r.f }}"><span style="color:#016D5E;font-weight:600">{{ r.nr }}</span><span>{{ r.kunde }}</span><span style="font-size:12px;color:#51565C">{{ r.navn }}</span></div>
+      </sc-for>
+    </div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden;font-size:16px">
+      <sc-for list="{{ mobilRader }}" as="r" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:12px;min-height:56px;padding:6px 16px;box-sizing:border-box;box-shadow:{{ r.skille }}"><div style="flex:1;display:flex;flex-direction:column;line-height:1.3"><span style="font-weight:600">{{ r.kunde }}</span><span style="font-size:14px;color:#62686F">{{ r.nr }} · {{ r.sted }}</span></div><span style="color:#62686F">{{ ik.pil_hoyre }}</span></div>
+      </sc-for>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:12px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="background:{{ t.kort }};border-radius:20px;overflow:hidden">
+          <sc-for list="{{ t.rader }}" as="r" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;position:relative"><span style="width:30px;height:30px;border-radius:8px;background:{{ t.tintFlate }};color:{{ t.aksentTekst }};display:flex;align-items:center;justify-content:center">{{ r.ikon }}</span><span style="flex:1;font-size:17px">{{ r.navn }}</span><span style="font-size:17px;color:{{ t.dempet }}">{{ r.verdi }}</span><span style="color:{{ t.dempet }}">{{ ik16.pil_hoyre }}</span><span style="position:absolute;left:58px;right:0;bottom:0;height:.5px;background:{{ t.linje }};display:{{ r.linje }}"></span></div></sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:12px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="background:{{ t.kort }};border-radius:20px;overflow:hidden">
+          <sc-for list="{{ t.rader }}" as="r" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;position:relative"><span style="color:{{ t.aksentTekst }}">{{ r.ikon }}</span><span style="flex:1;font-size:17px">{{ r.navn }}</span><span style="font-size:17px;color:{{ t.dempet }}">{{ r.verdi }}</span><span style="color:{{ t.dempet }}">{{ ik16.pil_hoyre }}</span><span style="position:absolute;left:48px;right:0;bottom:0;height:.5px;background:{{ t.linje }};display:{{ r.linje }}"></span></div></sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <!-- 5 Statuspille -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Statuspille</b><span style="font-size:13px;color:#51565C">12 px, vekt 600, kant 1 px</span></div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+      <sc-for list="{{ pillerLys }}" as="p" hint-placeholder-count="7"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</span></sc-for>
+    </div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+      <sc-for list="{{ pillerLys }}" as="p" hint-placeholder-count="7"><span style="font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</span></sc-for>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.kort }};padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <sc-for list="{{ t.piller }}" as="p" hint-placeholder-count="7"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</span></sc-for>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.kort }};padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <sc-for list="{{ t.piller }}" as="p" hint-placeholder-count="7"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</span></sc-for>
+      </div>
+    </sc-for>
+
+    <!-- 6 Knapper -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Knapper</b><span style="font-size:13px;color:#51565C">Primær, sekundær, tekst</span></div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;font-size:14px">
+      <span style="height:36px;padding:0 16px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;gap:8px;font-weight:600">{{ ik.pluss }}Nytt tilbud</span>
+      <span style="height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600">{{ ik.kalender }}Book tegnetime</span>
+      <span style="height:36px;padding:0 6px;display:flex;align-items:center;color:#016D5E;font-weight:600">Åpne kunde</span>
+      <span style="font-size:12px;color:#51565C">Høyde 36, radius 10. Hover: aksent-trykk / flate-hover</span>
+    </div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px;display:flex;flex-direction:column;gap:10px;font-size:16px">
+      <span style="height:44px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600">{{ ik.pluss }}Nytt tilbud</span>
+      <span style="height:44px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600">{{ ik.kalender }}Book tegnetime</span>
+      <span style="height:44px;display:flex;align-items:center;justify-content:center;color:#016D5E;font-weight:600">Åpne kunde</span>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;display:flex;flex-direction:column;gap:10px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;font-size:17px;color:{{ t.tekst }}">
+        <span style="height:50px;border-radius:25px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35)">{{ ik.signert }}Fullfør og signer</span>
+        <span style="height:50px;border-radius:25px;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600">{{ ik.kamera }}Ta bilde</span>
+        <span style="height:44px;display:flex;align-items:center;justify-content:center;color:{{ t.aksentTekst }};font-weight:400">Vis tegninger</span>
+        <span style="font-size:12px;color:{{ t.dempet }}">.glassProminent, .glass, tekst med tint</span>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;display:flex;flex-direction:column;gap:10px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;font-size:17px;color:{{ t.tekst }}">
+        <span style="height:50px;border-radius:25px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600">{{ ik.signert }}Fullfør og signer</span>
+        <span style="height:50px;border-radius:25px;background:{{ t.kort }};box-shadow:inset 0 0 0 1px {{ t.kant }};display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600">{{ ik.kamera }}Ta bilde</span>
+        <span style="height:44px;display:flex;align-items:center;justify-content:center;color:{{ t.aksentTekst }}">Vis tegninger</span>
+      </div>
+    </sc-for>
+
+    <!-- 7 Søkefelt -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Søkefelt</b></div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px;display:flex;flex-direction:column;gap:8px">
+      <div style="height:36px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F;font-size:14px">{{ ik.sok }}<span style="flex:1">Søk etter kunde eller ordre</span><span style="font-size:12px;padding:1px 6px;border-radius:5px;box-shadow:inset 0 0 0 1px #CDD1D6">⌘K</span></div>
+      <div style="height:36px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 2px #068472;display:flex;align-items:center;gap:8px;padding:0 10px;font-size:14px"><span style="color:#62686F">{{ ik.sok }}</span><span>Solbakk</span></div>
+      <span style="font-size:12px;color:#51565C">Kant 3,9:1. Fokus: 2 px aksent</span>
+    </div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px;display:flex;flex-direction:column;gap:8px">
+      <div style="height:44px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:10px;padding:0 12px;color:#62686F;font-size:16px">{{ ik.sok }}<span>Søk</span></div>
+      <span style="font-size:12px;color:#51565C">Høyde 44, skrift 16 (hindrer zoom)</span>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <div style="height:40px;border-radius:20px;background:{{ t.glass }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;gap:8px;padding:0 14px;color:{{ t.dempet }};font-size:17px">{{ ik.sok }}Søk etter jobb eller kunde</div>
+        <span style="display:block;font-size:12px;color:{{ t.dempet }};margin-top:8px">.searchable, glass nederst på iOS 26</span>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <div style="height:40px;border-radius:12px;background:{{ t.senket }};display:flex;align-items:center;gap:8px;padding:0 12px;color:{{ t.dempet }};font-size:17px">{{ ik.sok }}Søk etter jobb eller kunde</div>
+      </div>
+    </sc-for>
+
+    <!-- 8 Dialog og ark -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Dialog og ark</b><span style="font-size:13px;color:#51565C">Overlegg rgba(26,29,34,.40) i lys, (0,0,0,.60) i mørk</span></div>
+    <div style="height:280px;border-radius:14px;overflow:hidden;position:relative;background:#ECEFF3">
+      <div style="position:absolute;inset:0;background:rgba(26,29,34,.40)"></div>
+      <div role="dialog" style="position:absolute;left:20px;right:20px;top:40px;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);padding:18px;display:flex;flex-direction:column;gap:10px;font-size:14px">
+        <b style="font-size:16px">Send til montasje?</b><span style="color:#51565C">H-24117 sendes til Team Øst. Montøren får varsel i appen.</span>
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px"><span style="height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Avbryt</span><span style="height:36px;padding:0 14px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;font-weight:600">Send</span></div>
+      </div>
+    </div>
+    <div style="height:280px;border-radius:14px;overflow:hidden;position:relative;background:#ECEFF3">
+      <div style="position:absolute;inset:0;background:rgba(26,29,34,.40)"></div>
+      <div role="dialog" style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:16px 16px 0 0;padding:8px 16px 20px;display:flex;flex-direction:column;gap:10px;font-size:16px">
+        <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#CDD1D6"></span>
+        <b style="font-size:18px">Send til montasje?</b><span style="color:#51565C;font-size:15px">H-24117 sendes til Team Øst.</span>
+        <span style="height:44px;border-radius:10px;background:#068472;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:600">Send</span>
+      </div>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="height:280px;border-radius:14px;overflow:hidden;position:relative;background:{{ t.side }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="position:absolute;inset:0;background:{{ t.overlegg }}"></div>
+        <div role="dialog" style="position:absolute;left:8px;right:8px;bottom:8px;border-radius:32px;background:{{ t.ark }};box-shadow:inset 0 0 0 .5px {{ t.glassKant }},0 -8px 30px -10px rgba(0,0,0,.3);padding:8px 18px 18px;display:flex;flex-direction:column;gap:10px">
+          <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:{{ t.linje }}"></span>
+          <b style="font-size:20px">Registrer avvik</b><span style="font-size:15px;color:{{ t.dempet }}">Velg type og ta bilde.</span>
+          <span style="height:50px;border-radius:25px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:17px">Send avvik</span>
+        </div>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="height:280px;border-radius:14px;overflow:hidden;position:relative;background:{{ t.side }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <div style="position:absolute;inset:0;background:{{ t.overlegg }}"></div>
+        <div role="dialog" style="position:absolute;left:0;right:0;bottom:0;border-radius:20px 20px 0 0;background:{{ t.kort }};padding:8px 16px 20px;display:flex;flex-direction:column;gap:10px">
+          <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:{{ t.linje }}"></span>
+          <b style="font-size:20px">Registrer avvik</b><span style="font-size:15px;color:{{ t.dempet }}">Velg type og ta bilde.</span>
+          <span style="height:50px;border-radius:25px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:17px">Send avvik</span>
+        </div>
+      </div>
+    </sc-for>
+
+    <!-- 9 Tomtilstand -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Tomtilstand</b></div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:28px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:14px">
+      <span style="width:48px;height:48px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.saker }}</span><b style="font-size:16px">Ingen åpne saker</b><span style="color:#51565C">Nye saker fra kunder og montører kommer hit.</span>
+      <span style="height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:6px;font-weight:600;margin-top:6px">{{ ik.pluss }}Ny sak</span>
+    </div>
+    <div style="border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;padding:28px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:16px">
+      <span style="width:56px;height:56px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.saker }}</span><b style="font-size:18px">Ingen åpne saker</b><span style="color:#51565C;font-size:15px">Nye saker kommer hit.</span>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:32px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <span style="color:{{ t.dempet }};margin-bottom:6px">{{ t.tomIkon }}</span><b style="font-size:22px">Ingen jobber i dag</b><span style="font-size:15px;color:{{ t.dempet }}">Neste jobb er torsdag 07:30.</span><span style="font-size:12px;color:{{ t.dempet }};margin-top:8px">ContentUnavailableView</span>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:32px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:{{ t.tekst }}">
+        <span style="color:{{ t.dempet }};margin-bottom:6px">{{ t.tomIkon }}</span><b style="font-size:22px">Ingen jobber i dag</b><span style="font-size:15px;color:{{ t.dempet }}">Neste jobb er torsdag 07:30.</span>
+      </div>
+    </sc-for>
+
+    <!-- 10 Varsel -->
+    <div style="padding:14px 4px;display:flex;flex-direction:column;gap:4px"><b style="font-size:15px">Varsel</b><span style="font-size:13px;color:#51565C">Varsel-flate og varsel-tekst</span></div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px">
+      <div role="status" style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F;font-size:14px">{{ ik.prisavvik }}<div style="display:flex;flex-direction:column"><b>Prisavvik på benkeplate</b><span>Ny plate kommer uke 44.</span></div></div>
+    </div>
+    <div style="border-radius:14px;background:#ECEFF3;padding:16px">
+      <div role="status" style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F;font-size:16px">{{ ik.prisavvik }}<div style="display:flex;flex-direction:column"><b>Prisavvik</b><span style="font-size:15px">Ny plate kommer uke 44.</span></div></div>
+    </div>
+    <sc-for list="{{ ios }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <div role="status" style="display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:20px;background:{{ t.varselFlate }};color:{{ t.varselTekst }};font-size:15px">{{ ik.prisavvik }}<div style="display:flex;flex-direction:column"><b style="font-size:17px">Prisavvik</b><span>Ny plate kommer uke 44.</span></div></div>
+      </div>
+    </sc-for>
+    <sc-for list="{{ expo }}" as="t" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:{{ t.side }};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">
+        <div role="status" style="display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:20px;background:{{ t.varselFlate }};color:{{ t.varselTekst }};font-size:15px">{{ ik.prisavvik }}<div style="display:flex;flex-direction:column"><b style="font-size:17px">Prisavvik</b><span>Ny plate kommer uke 44.</span></div></div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { if (!window.HengselIkoner) this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    const PL = [['Ny', '#E7F1FF', '#1A57AD', '#A0C6FF'], ['Pågår', '#EFEEFF', '#5C46A7', '#C3BBFB'], ['Venter', '#E9F1FB', '#555B64', '#BDC5CF'], ['Sannsynlig', '#FCE9FF', '#80378C', '#E0B1E7'], ['Ferdig', '#E3F7DE', '#1F6D02', '#A5D39B'], ['Prisavvik', '#FFE9BC', '#6D5000', '#E0C07F'], ['Stoppet', '#FFEBE8', '#9E2D28', '#F9AEA5']].map(([navn, bg, fg, kant]) => ({ navn, bg, fg, kant }));
+    const PM = [['Ny', '#152946', '#B5D3FF', '#37588A'], ['Pågår', '#292344', '#D0C9FF', '#584E87'], ['Venter', '#242931', '#CAD2DC', '#525961'], ['Sannsynlig', '#361E3A', '#F3B9FC', '#6F4676'], ['Ferdig', '#173012', '#AAE39E', '#3B6432'], ['Prisavvik', '#3D2A00', '#FCC959', '#70530B'], ['Stoppet', '#421C18', '#FFBFB6', '#83423C']].map(([navn, bg, fg, kant]) => ({ navn, bg, fg, kant }));
+    const radData = [['ordre', 'Sjekkliste', '7 av 12'], ['tilbud', 'Tegninger', '3'], ['lager', 'Kolliliste', '14']];
+    const iosTema = (t) => ({ ...t,
+      faner: [['min-dag', 'I dag', 1], ['naviger', 'Kart'], ['kunder', 'Meg']].map(([ik, navn, a]) => ({ navn, ikon: this.ikon(ik, 20), bg: a ? t.tintFlate : 'transparent', fg: a ? t.aksentTekst : t.tekst })),
+      sidefelt: [['Mette Lie', '07:30'], ['Thomas Berg', '10:30', 1], ['Ola Rustad', '15:30']].map(([kunde, tid, v]) => ({ kunde, tid, bg: v ? t.valgtBg : 'transparent', fg: v ? '#FFFFFF' : t.tekst, dempet: v ? t.valgtDempet : t.dempet })),
+      rader: radData.map(([ik, navn, verdi], i) => ({ ikon: this.ikon(ik, 18), navn, verdi, linje: i < 2 ? 'block' : 'none' })),
+      tomIkon: this.ikon('min-dag', 24) });
+    const ios = [
+      iosTema({ navn: 'lys', side: '#F2F2F7', kort: '#FFFFFF', senket: '#E9E9EE', tekst: '#000000', dempet: '#51565C', linje: '#C6C6C8', aksent: '#068472', aksentTekst: '#016D5E', paaAksent: '#FFFFFF', tintFlate: 'rgba(6,132,114,.12)', glass: 'rgba(255,255,255,.72)', glassKant: 'rgba(255,255,255,.9)', glassSkygge: '0 8px 24px -6px rgba(0,0,0,.14)', ark: 'rgba(255,255,255,.88)', overlegg: 'rgba(26,29,34,.40)', valgtBg: '#068472', valgtDempet: 'rgba(255,255,255,.88)', sidefeltMerk: 'Valgt: aksent med hvit tekst, 4,6:1', piller: PL, varselFlate: '#FFE9BC', varselTekst: '#6D5000' }),
+      iosTema({ navn: 'mørk', side: '#000000', kort: '#1C1C1E', senket: '#2C2C2E', tekst: '#FFFFFF', dempet: '#ADB1B7', linje: '#38383A', aksent: '#54B9A5', aksentTekst: '#54B9A5', paaAksent: '#0D1013', tintFlate: 'rgba(84,185,165,.16)', glass: 'rgba(44,44,46,.62)', glassKant: 'rgba(255,255,255,.14)', glassSkygge: '0 8px 24px -6px rgba(0,0,0,.5)', ark: 'rgba(44,44,46,.86)', overlegg: 'rgba(0,0,0,.60)', valgtBg: '#163F37', valgtDempet: '#ADB1B7', sidefeltMerk: 'Valgt: #163F37 med hvit tekst. Systemets hvit på #54B9A5 har 2,37:1', piller: PM, varselFlate: '#3D2A00', varselTekst: '#FCC959' })
+    ];
+    const expoTema = (t) => ({ ...t,
+      faner: [['min-dag', 'I dag', 1], ['naviger', 'Kart'], ['kunder', 'Meg']].map(([ik, navn, a]) => ({ navn, ikon: this.ikon(ik, 24), fg: a ? t.aksentTekst : t.dempet })),
+      rader: radData.map(([ik, navn, verdi], i) => ({ ikon: this.ikon(ik, 20), navn, verdi, linje: i < 2 ? 'block' : 'none' })),
+      tomIkon: this.ikon('min-dag', 24) });
+    const expo = [
+      expoTema({ navn: 'lys', side: '#F2F2F7', kort: '#FFFFFF', senket: '#E9E9EE', linje: '#D1D1D6', kant: '#7B8188', tekst: '#1A1D22', dempet: '#51565C', aksent: '#068472', aksentTekst: '#016D5E', paaAksent: '#FFFFFF', overlegg: 'rgba(26,29,34,.40)', piller: PL, varselFlate: '#FFE9BC', varselTekst: '#6D5000' }),
+      expoTema({ navn: 'mørk', side: '#000000', kort: '#1C1C1E', senket: '#2C2C2E', linje: '#38383A', kant: '#6A6F76', tekst: '#EAEDF0', dempet: '#ADB1B7', aksent: '#54B9A5', aksentTekst: '#8ACDBE', paaAksent: '#0D1013', overlegg: 'rgba(0,0,0,.60)', piller: PM, varselFlate: '#3D2A00', varselTekst: '#FCC959' })
+    ];
+    const menyEl = (liste, px, aktiv) => liste.map(([ik, navn]) => { const a = ik === aktiv; return { navn, ikon: this.ikon(ik, px), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#1A1D22', ikonFg: a ? '#016D5E' : '#51565C', vekt: a ? 600 : 500 }; });
+    return {
+      ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), ios, expo, pillerLys: PL,
+      pcMeny: menyEl([['min-dag', 'Min dag'], ['samtaler', 'Samtaler'], ['kunder', 'Kunder'], ['tilbud', 'Tilbud'], ['ordre', 'Ordre'], ['prosjekter', 'Prosjekter'], ['saker', 'Saker']], 16, 'ordre'),
+      skuff: menyEl([['min-dag', 'Min dag'], ['samtaler', 'Samtaler'], ['kunder', 'Kunder'], ['tilbud', 'Tilbud'], ['ordre', 'Ordre']], 20, 'min-dag'),
+      mobilFaner: [['min-dag', 'Min dag', 1], ['kunder', 'Kunder'], ['ordre', 'Ordre'], ['saker', 'Saker'], ['mer', 'Mer']].map(([ik, navn, a]) => ({ navn, ikon: this.ikon(ik, 24), fg: a ? '#016D5E' : '#51565C', vekt: a ? 600 : 500 })),
+      pcRader: [['tett', 'H-24117', 'Ingrid Solbakken', '36px', '13px'], ['normal', 'H-24114', 'Jonas Fjeld', '44px', '14px'], ['luftig', 'H-24110', 'Kari Haugland', '52px', '15px']].map(([navn, nr, kunde, h, f], i) => ({ navn: navn[0].toUpperCase() + navn.slice(1) + ' ' + h, nr, kunde, h, f, bg: i === 1 ? '#F3F5F8' : '#FFFFFF' })),
+      mobilRader: [['H-24117', 'Ingrid Solbakken', 'Grefsen'], ['H-24114', 'Jonas Fjeld', 'Sagene'], ['H-24110', 'Kari Haugland', 'Ullern']].map(([nr, kunde, sted], i) => ({ nr, kunde, sted, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

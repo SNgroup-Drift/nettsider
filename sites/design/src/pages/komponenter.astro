@@ -6,10 +6,12 @@
  */
 import Side from "../layouts/Side.astro";
 import Komponent from "../components/Komponent.astro";
+import Ikon from "../components/Ikon.astro";
+import { GRUPPER, ikonStatus, ikoner } from "../lib/ikoner";
 import { status } from "../lib/tokens";
 const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "Venter på svar", sannsynlig: "Sannsynlig", ferdig: "Ferdig", advarsel: "Advarsel", feil: "Feilet" };
 ---
-<Side title="Komponenter – Hengsel designfasit" description="Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand og Sheet/Dialog i lys og mørk, med hva de brukes til og ikke til." aktiv="komponenter">
+<Side title="Komponenter – Hengsel designfasit" description="Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand, Sheet/Dialog og ikonsettet i lys og mørk, med hva de brukes til og ikke til." aktiv="komponenter">
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Komponenter · slik de er i dag</span>
@@ -100,5 +102,32 @@ const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "V
         <div class="rad-flex"><span class="knapp sekundaer">Avbryt</span><span class="knapp primaer">Lagre</span></div>
       </div>
     </Komponent>
+
+    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`49 strekikoner på et 20 px rutenett, i 16, 20 og 24 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
+      <div class="flate-kort ikon-gruppe">
+        <div class="ikon-storrelser"><Ikon navn="ordre" storrelse={16} /><Ikon navn="ordre" storrelse={20} /><Ikon navn="ordre" storrelse={24} /><span class="dempet">Ordre i 16, 20 og 24 px</span></div>
+        {GRUPPER.map(([g, tittel]) => (
+          <div class="ikon-gruppe">
+            <h3>{tittel}</h3>
+            <div class="ikonrutenett">
+              {ikoner.filter((i) => i.gruppe === g).map((i) => <div class:list={["ikonrute", { egen: i.egen }]}><Ikon navn={i.fil} /><span>{i.navn}</span></div>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Komponent>
+
+    <section class="sek" id="ikon-sf">
+      <header>
+        <h2>Ikoner og SF Symbols</h2>
+        <p>På iOS brukes SF Symbol i stedet for SVG. «Egen» betyr at SF Symbols ikke har et godt treff: Forskudd til leverandør og Unoterte til leverandør bruker nærmeste symbol (<code>banknote</code> og <code>doc.badge.ellipsis</code>) til Design har avklart om de skal lages som egne symboler. Salgsbanken, Leder, Etterkalkyler og de to leverandørikonene bygger på antatt betydning (venter på Eirik).</p>
+      </header>
+      <div class="tabell" tabindex="0" role="region" aria-label="Ikoner og SF Symbols">
+        <table>
+          <thead><tr><th>Ikon</th><th>Navn</th><th>SF Symbol</th><th>Bruk</th></tr></thead>
+          <tbody>{ikoner.map((i) => <tr><td><Ikon navn={i.fil} storrelse={20} /></td><td>{i.navn}{i.egen ? " (egen)" : ""}</td><td><code>{i.sf}</code></td><td>{i.bruk}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
   </div>
 </Side>

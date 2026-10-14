@@ -21,7 +21,7 @@ const { aktiv = "" } = Astro.props;
     <div class="hoyre">
       <a class="btn primary demo" href="/priser-og-demo#demo">Be om demo</a>
       <button type="button" class="burger" aria-expanded="false" aria-controls="meny-panel" aria-label="Meny" data-burger>
-        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path class="strek apen" d="M3 5h14M3 10h14M3 15h14" /><path class="strek lukk" d="M4.5 4.5l11 11M15.5 4.5l-11 11" /></svg>
+        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path class="strek apen" d="M3 5h14M3 10h14M3 15h14" /><path class="strek lukk" d="M5 5l10 10M15 5L5 15" /></svg>
       </button>
     </div>
   </div>
@@ -50,7 +50,8 @@ const { aktiv = "" } = Astro.props;
   .hoyre { display: flex; gap: 8px; align-items: center; }
   .demo { padding-inline: 20px; }
   .burger { display: none; width: 44px; height: 44px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; place-items: center; padding: 0; }
-  .burger .strek { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  /* Lukk-ikonet (×) er lukk.svg fra ikonsettet i palettpakke v2 (rutenett 20, strek 1,6); ≡ finnes ikke i settet og tegnes med samme strek */
+  .burger .strek { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
   .burger .lukk, .burger[aria-expanded="true"] .apen { display: none; }
   .burger[aria-expanded="true"] .lukk { display: block; }
   .panel { position: absolute; left: 0; right: 0; top: var(--topp); background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }

@@ -3,7 +3,7 @@
  * Krever `npm run build` først (leser sites/design/dist). Sjekker:
  *  - pinnet commit: hver fil i packages/hengsel-tokens/ds har sha256 som i designsystem.pin.json (den ene pinnen for alle Hengsel-sidene), og ingen filer mangler eller er lagt til
  *  - tokens.css (generert i designsystemet) har samme verdier som hengsel.tokens.json i lys og mørk, og tokens.ts samme roller
- *  - den bygde siden viser hver rolle, hver statustone og hver skriftstørrelse fra JSON med riktig verdi, alle 32 logoene, alle komponentene og alle nedlastingene
+ *  - den bygde siden viser hver rolle, hver statustone og hver skriftstørrelse fra JSON med riktig verdi, logoene fra palettpakke v2, alle komponentene og alle nedlastingene
  *  - alle kontrastpar på siden er godkjent
  *  - ingen ekte navn (K-151: FORBUDT), ingen gammel H-logo, ingenting av «by Hengsel», Lausanne eller Reckless på sidene
  *  - noindex, streng CSP, favicon, og:image
@@ -104,14 +104,31 @@ test("/skrift viser skalaen og skriftene fra JSON", () => {
   assert.ok(existsSync(join(ds, "assets", "fonts", "schibsted-grotesk-latin-wght-normal.woff2")) && existsSync(join(ds, "assets", "fonts", "LICENSE-Schibsted-Grotesk.txt")));
 });
 
-test("/merke viser alle 32 logoene, og filene finnes", () => {
+test("/merke viser logoene fra palettpakke v2 (besluttede former og utgaver), og filene finnes", () => {
   const h = html("merke");
-  // K-212: designsystemet har også de nye merkefilene (merke-*, logo-*, ordmerke-*); siden viser de 32 Brand-filene
-  const filer = readdirSync(join(ds, "assets", "logo")).filter((f) => /^(hengsel-symbol|hengsel-ute|hengsel-crm|hengsel|ute|crm|levert-av|sendt-med)(-aksent)?-(lys|mork)\.svg$/.test(f));
-  assert.equal(filer.length, 32);
-  // 8 former × aksent/ensfarget × lys/mørk, som 4 fliser per form på siden
+  // Palettpakke v2: symbol (merke-hengsel-*, merke-blekk/-hvit) og logo-{hengsel,crm,ute,admin,levering}-{lys,mork}, ensfarget (blekk/hvit) bare for Hengsel. De monokrome produktlogoene er foreslått og ikke i bruk.
+  const filer = readdirSync(join(ds, "assets", "logo")).filter((f) => /^(logo-(hengsel|crm|ute|admin|levering)-(lys|mork)|merke-hengsel-(lys|mork)|merke-(blekk|hvit)|logo-hengsel-(blekk|hvit))\.svg$/.test(f));
+  assert.equal(filer.length, 16);
   for (const f of filer) assert.ok(h.includes(`/ds/assets/logo/${f}`), `${f} vises ikke på /merke`);
-  assert.ok(existsSync(join(side, "public", "merke", "app-ikon", "crm.png")));
+  assert.ok(!readdirSync(join(ds, "assets", "logo")).some((f) => /^(logo|merke)-(crm|ute|admin|levering)-(hvit|blekk)\.svg$/.test(f)), "de monokrome produktlogoene er foreslått og skal ikke ligge i designsystemet");
+  assert.ok(!/levert-av|sendt-med|hengsel-ute-aksent|crm-aksent/.test(h), "gamle logonavn (levert-av, sendt-med, …) står på /merke");
+  for (const f of ["ute", "ute-mork", "web"]) assert.ok(existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `app-ikon ${f}.png mangler`);
+  for (const f of ["crm", "ute-tonet"]) assert.ok(!existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `gammelt app-ikon ${f}.png (brevann) skal ikke finnes`);
+});
+
+test("/komponenter viser alle 49 ikonene fra palettpakke v2 med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
+  const h = html("komponenter");
+  const ikoner = JSON.parse(les(ds, "assets", "ikoner", "ikoner.json")).ikoner;
+  assert.equal(ikoner.length, 49);
+  const t = tekst(h);
+  for (const i of ikoner) {
+    assert.ok(t.includes(i.navn), `ikonet ${i.navn} vises ikke`);
+    assert.ok(h.includes(`<code>${i.sf}</code>`), `SF Symbol ${i.sf} vises ikke`);
+    for (const m of ["16", "20", "24"]) assert.ok(existsSync(join(dist, "ds", "assets", "ikoner", m, `${i.fil}.svg`)), `${m}/${i.fil}.svg mangler i dist`);
+  }
+  assert.ok(/foreslått/i.test(t.slice(t.indexOf("49 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
+  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 49 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
+  assert.ok(!/stroke="#|stroke="rgb/.test(h), "ikonene skal bruke currentColor, ikke egne farger");
 });
 
 test("/komponenter har alle komponentene i lys og mørk med brukes til og ikke til", () => {
@@ -132,7 +149,10 @@ test("/skjermer og /last-ned peker på filer som finnes", () => {
   assert.ok(l.includes("/last-ned/hengsel-logopakke.zip") && existsSync(join(dist, "last-ned", "hengsel-logopakke.zip")));
   const zip = readFileSync(join(dist, "last-ned", "hengsel-logopakke.zip"));
   assert.equal(zip.readUInt32LE(0), 0x04034b50);
-  assert.equal([...zip.toString("latin1").matchAll(/logo\/[\w-]+\.svg/g)].length / 2, 32, "zip-fila skal ha 32 logoer");
+  assert.equal([...zip.toString("latin1").matchAll(/logo\/[\w-]+\.svg/g)].length / 2, readdirSync(join(ds, "assets", "logo")).length, "zip-fila skal ha alle logoene i designsystemet");
+  assert.ok(l.includes("/last-ned/hengsel-ikoner.zip") && existsSync(join(dist, "last-ned", "hengsel-ikoner.zip")), "ikonpakken mangler");
+  const ikonZip = readFileSync(join(dist, "last-ned", "hengsel-ikoner.zip"));
+  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 147 + 4, "ikonpakken skal ha 49 ikoner i 3 størrelser, pluss LES-MEG, ikoner.json, sprite og tabell");
 });
 
 test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlandet, Lausanne eller Reckless på sidene eller i nedlastingene", () => {

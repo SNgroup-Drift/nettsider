@@ -11,7 +11,7 @@ const FILER = [
   ["tokens/fonts-fri-liste.css", "fonts-fri-liste.css", "@font-face for kundetemaets frie skriftliste. Last bare de kunden har valgt."],
 ] as const;
 ---
-<Side title="Last ned – Hengsel designfasit" description="Last ned designsystemets tokens (css, ts, json), skriftene og logopakken med alle 32 SVG-filene i merket v3." aktiv="last-ned">
+<Side title="Last ned – Hengsel designfasit" description="Last ned designsystemets tokens (css, ts, json), skriftene logopakken (alle logoene og merkene fra palettpakke v2) og ikonsettet." aktiv="last-ned">
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Last ned · versjon {designsystem.versjon}</span>
@@ -38,9 +38,16 @@ const FILER = [
     <section class="sek" id="logopakke">
       <header>
         <h2>Logopakken</h2>
-        <p>Alle 32 SVG-filene (åtte former × aksent og ensfarget × lys og mørk) med lisensfilene for skriftene. Ferdige og konturerte: ikke tegn dem om.</p>
+        <p>Alle logoene og merkene fra palettpakke v2 (Hengsel, CRM, Ute, Admin og Levering, i lys og mørk, pluss blekk, hvit, glass og tonet for Hengsel) som SVG, med lisensfilen for skriften. Ferdige og konturerte: ikke tegn dem om. De monokrome produktlogoene er foreslått og ikke med.</p>
       </header>
       <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-logopakke.zip" download>Last ned hengsel-logopakke.zip</a></div>
+    </section>
+    <section class="sek" id="ikonpakke">
+      <header>
+        <h2>Ikonene</h2>
+        <p>49 strekikoner (SVG med currentColor) i 16, 20 og 24 px, med navn, gruppe og SF Symbol i <code>ikoner.json</code>, sprite og tabell. Status: foreslått, venter på bekreftelse. Se <a href="/komponenter#ikoner">Komponenter</a>.</p>
+      </header>
+      <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-ikoner.zip" download>Last ned hengsel-ikoner.zip</a></div>
     </section>
     <section class="sek" id="skrifter">
       <header>

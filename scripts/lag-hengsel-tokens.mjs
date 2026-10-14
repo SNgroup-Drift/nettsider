@@ -21,6 +21,26 @@ const pin = JSON.parse(readFileSync(join(pakke, "designsystem.pin.json"), "utf8"
 const uten$ = (o) => Object.entries(o).filter(([k]) => !k.startsWith("$"));
 const skygge = (l) => (l.length ? l.map(([x, y, b, f]) => `${x ? x + "px" : "0"} ${y}px ${b}px ${f}`).join(", ") : "none");
 
+/** K-212 runde 2: palettpakke v2 (14.10) har besluttede P3- og økt-kontrast-blokker for lys modus. Verdiene ligger allerede i pinnet hengsel.tokens.json
+ *  (rolle.p3.lys, rolle.lys-okt-kontrast, rolle.p3.lys-okt-kontrast; hex-sifrene i p3 er P3-koordinater). Bare roller som avviker fra det som ellers gjelder tas med.
+ *  Mørk og mørk økt kontrast er ikke med: nettsidene er bare lyse. */
+const p3 = (h) => `color(display-p3 ${[1, 3, 5].map((i) => (parseInt(h.slice(i, i + 2), 16) / 255).toFixed(4)).join(" ")})`;
+const siffer = (v) => (v.startsWith("#") ? v.toLowerCase() : v);
+function lysUtgaver() {
+  const roller = {};
+  for (const [n, r] of uten$(json.farge)) roller[n] = { lys: r.lys, p3: r.p3?.lys, okt: r["lys-okt-kontrast"], p3okt: r.p3?.["lys-okt-kontrast"] };
+  for (const [n, s] of uten$(json.status)) for (const d of ["fg", "bg", "kant"]) roller[`status-${n}-${d}`] = { lys: s.lys[d], p3: s.p3?.lys?.[d], okt: s["lys-okt-kontrast"]?.[d], p3okt: s.p3?.["lys-okt-kontrast"]?.[d] };
+  const p3Lys = {}, okt = {}, p3Okt = {};
+  for (const [n, r] of Object.entries(roller)) {
+    if (r.p3 && siffer(r.p3) !== siffer(r.lys)) p3Lys[n] = p3(r.p3);
+    if (r.okt && siffer(r.okt) !== siffer(r.lys)) okt[n] = r.okt;
+    const gjelder = okt[n] ?? p3Lys[n] ?? r.lys; // det som gjelder på en P3-skjerm med økt kontrast uten den siste blokka
+    if (r.p3okt && siffer(r.p3okt) !== siffer(okt[n] ?? r.lys) && p3(r.p3okt) !== gjelder) p3Okt[n] = p3(r.p3okt);
+  }
+  return { p3Lys, okt, p3Okt };
+}
+const lagBlokk = (kommentar, betingelse, v) => (Object.keys(v).length ? `\n/* ${kommentar} */\n@media ${betingelse} {\n  :root {\n${Object.entries(v).map(([n, x]) => `    --${n}: ${x};`).join("\n")}\n  }\n}\n` : "");
+
 export function lagTokensCss() {
   const u = [];
   const v = (navn, verdi) => u.push(`  --${navn}: ${verdi};`);
@@ -59,7 +79,7 @@ export function lagTokensCss() {
 
 :root {${u.join("\n").replace(/^\n/, "\n")}
 }
-${blokk("nettbrett", sm.nettbrett)}${blokk("telefon", sm.telefon)}`;
+${blokk("nettbrett", sm.nettbrett)}${blokk("telefon", sm.telefon)}${(() => { const { p3Lys, okt, p3Okt } = lysUtgaver(); return lagBlokk("Display P3, lys (besluttet, palettpakke v2): furu også på Mac og iPhone", "(color-gamut: p3)", p3Lys) + lagBlokk("Økt kontrast, lys (besluttet, palettpakke v2)", "(prefers-contrast: more)", okt) + lagBlokk("Økt kontrast og Display P3, lys (besluttet, palettpakke v2)", "(prefers-contrast: more) and (color-gamut: p3)", p3Okt); })()}`;
 }
 
 /** K-202: de mørke verdiene som fargeprøver (--mork-*), scopet til klassen .mork-prover, aldri :root. Importeres bare av design.hengsel.no. */

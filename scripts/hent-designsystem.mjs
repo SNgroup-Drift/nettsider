@@ -43,7 +43,14 @@ for (const f of filer) {
   ut[rel] = createHash("sha256").update(data).digest("hex");
 }
 const nyPin = { repo: "SNgroup-Drift/innlandet-crm-sync", sti: DS, commit: full, versjon: JSON.parse(await readFile(join(MAL, "tokens", "hengsel.tokens.json"), "utf8")).versjon, filer: ut };
-if (!arg("--commit") && pin.filer && JSON.stringify(pin.filer) !== JSON.stringify(ut)) throw new Error("Filene på pinnet commit avviker fra pin-fila (pin-fila er redigert for hånd?).");
+// Med palettpakke (K-212 runde 2) er logo, ikoner, favicon og app-ikon i pin-fila fra pakken, ikke fra commiten: bare tokens og fonter sammenliknes.
+const fraCommit = (f) => (pin.palettpakke ? Object.fromEntries(Object.entries(f).filter(([k]) => /^(tokens|assets\/fonts)\//.test(k))) : f);
+if (!arg("--commit") && pin.filer && JSON.stringify(fraCommit(pin.filer)) !== JSON.stringify(fraCommit(ut))) throw new Error("Filene på pinnet commit avviker fra pin-fila (pin-fila er redigert for hånd?).");
 await writeFile(PIN, JSON.stringify(nyPin, null, 2) + "\n");
 console.log(`✓ ${Object.keys(ut).length} filer fra ${full.slice(0, 8)} (designsystem ${nyPin.versjon}) → packages/hengsel-tokens/ds`);
 execFileSync(process.execPath, [join(rot, "scripts", "lag-hengsel-tokens.mjs")], { stdio: "inherit" });
+// K-212 runde 2: assets fra palettpakke v2 (logo, ikoner, favicon, app-ikon) ligger i ds fra pakken i design/handoff, ikke fra pinnet commit. Legges inn igjen til Design har pinnet dem i designsystemet.
+if (pin.palettpakke) {
+  console.log(`→ legger palettpakken ${pin.palettpakke.navn} inn igjen (${pin.palettpakke.kilde})`);
+  execFileSync(process.execPath, [join(rot, "scripts", "hent-palettpakke.mjs"), "--pakke", join(rot, pin.palettpakke.kilde)], { stdio: "inherit" });
+}

@@ -1,0 +1,99 @@
+{
+  "fill": {
+    "automatic-gradient": "srgb:0.93725,0.94510,0.95294,1.00000"
+  },
+  "fill-specializations": [
+    {
+      "appearance": "dark",
+      "value": {
+        "automatic-gradient": "srgb:0.07059,0.07843,0.08627,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "Stift",
+      "layers": [
+        {
+          "name": "Stift",
+          "image-name": "3-stift.svg",
+          "glass": true,
+          "image-name-specializations": [
+            {
+              "appearance": "dark",
+              "value": "3-stift-mork.svg"
+            }
+          ]
+        }
+      ],
+      "lighting": "combined",
+      "specular": true,
+      "blur-material": null,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.45
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "name": "Høyre blad",
+      "layers": [
+        {
+          "name": "Høyre blad",
+          "image-name": "2-blad-hoyre.svg",
+          "glass": true,
+          "image-name-specializations": [
+            {
+              "appearance": "dark",
+              "value": "2-blad-hoyre-mork.svg"
+            }
+          ]
+        }
+      ],
+      "lighting": "combined",
+      "specular": true,
+      "blur-material": null,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.32
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    },
+    {
+      "name": "Venstre blad",
+      "layers": [
+        {
+          "name": "Venstre blad",
+          "image-name": "1-blad-venstre.svg",
+          "glass": true,
+          "image-name-specializations": [
+            {
+              "appearance": "dark",
+              "value": "1-blad-venstre-mork.svg"
+            }
+          ]
+        }
+      ],
+      "lighting": "combined",
+      "specular": true,
+      "blur-material": null,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.3
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

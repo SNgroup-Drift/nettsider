@@ -9,8 +9,11 @@
  * gjengitt i Chromium (Playwright). Flatene er rollene flate-senket og flate-side i pinnet hengsel.tokens.json, aldri egne farger.
  * Lager PNG-ene (ikke favicon.svg: den pinnede merkefila er gjennomsiktig og blir usynlig i mørke nettleserfaner).
  * Skriften i design.hengsel.no-bildet er Schibsted Grotesk (pinnet woff2).
+ *
+ * K-212 runde 2 (palettpakke v2): apple-touch-icon (180), 192 og 512 er filene fra pakken (ds/assets/favicon: apple-touch-icon-180.png, icon-192.png, icon-512.png; merket på hvit flate).
+ * 32 px lages her som før (avrundet flis): pakkens favicon-32.png er gjennomsiktig med mørke blad og blir usynlig i mørke nettleserfaner (K-202). Merket er det samme (hengsel-merke-lys.svg).
  */
-import { readFile, writeFile, rm } from "node:fs/promises";
+import { copyFile, readFile, writeFile, rm } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { chromium } from "playwright";
 
@@ -51,9 +54,13 @@ const senteret = await delingsbilde(`<img src="${ordmerke}" style="position:abso
 const designBilde = await delingsbilde(`<img src="${ordmerke}" style="position:absolute;left:80px;top:72px;height:60px"><div style="position:absolute;left:80px;top:215px;font-size:112px;font-weight:700;letter-spacing:-3px;line-height:1">Designfasit</div><div style="position:absolute;left:80px;top:360px;font-size:32px;color:${DEMPET}">Merket, farger, skrift, komponenter og skjermer.</div><div style="position:absolute;left:80px;right:80px;top:505px;border-top:1px solid ${LINJE}"></div><div style="position:absolute;left:80px;top:525px;font-size:28px;font-weight:500">design.hengsel.no</div>`);
 
 const mapper = { hengsel: "sites/hengsel/public", admin: "sites/admin/public", design: "sites/design/public", vis: "sites/vis/src" };
+const PAKKE = { 180: "apple-touch-icon-180.png", 192: "icon-192.png", 512: "icon-512.png" };
 const sett = { hengsel: [32, 180, 192, 512], admin: [32, 180], design: [32, 180, 192], vis: [32, 180] };
 for (const [s, m] of Object.entries(mapper)) {
-  for (const n of sett[s]) await writeFile(join(rot, m, `favicon-${n}.png`), await ikon(n, { luft: n <= 48 ? 0.12 : 0.2, rund: n <= 48 ? 0.22 : 0 }));
+  for (const n of sett[s]) {
+    if (PAKKE[n]) await copyFile(join(pakke, "ds", "assets", "favicon", PAKKE[n]), join(rot, m, `favicon-${n}.png`));
+    else await writeFile(join(rot, m, `favicon-${n}.png`), await ikon(n, { luft: n <= 48 ? 0.12 : 0.2, rund: n <= 48 ? 0.22 : 0 }));
+  }
   await rm(join(rot, m, "favicon.svg"), { force: true });
 }
 await writeFile(join(rot, mapper.hengsel, "og.png"), senteret);

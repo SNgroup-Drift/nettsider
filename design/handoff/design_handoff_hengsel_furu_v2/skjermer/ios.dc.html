@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&amp;display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<script src="../ikoner/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#D9DDE2} a{color:#016D5E} a:hover{color:#007665}</style>
+</helmet>
+<div style="min-height:100vh;background:#D9DDE2;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:#1A1D22;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <h1 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.4px">Hengsel 2.0 på iPhone og iPad</h1>
+    <p style="margin:0;font-size:15px;color:#51565C;text-wrap:pretty">Lag c. Systemflater, systemkomponenter og Liquid Glass. Hengsel-farger bare i tint, statuspiller, valgt rad og merket. Ikonene her står i for SF Symbols (se ikonoversikten). Glass er etterlignet i nettleseren og må sjekkes på enhet.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:17px;font-weight:700">iPhone · I dag</h2>
+    <div style="display:flex;gap:40px;flex-wrap:wrap">
+      <sc-for list="{{ temaer }}" as="t" hint-placeholder-count="2">
+        <div data-screen-label="iPhone I dag" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:#51565C">{{ t.navn }}</span>
+          <div style="width:393px;height:852px;border-radius:56px;overflow:hidden;position:relative;background:{{ t.side }};color:{{ t.tekst }};box-shadow:0 0 0 10px #1C1C1E,0 0 0 11px #3A3A3C,0 30px 60px -20px rgba(0,0,0,.45)">
+            <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:6px 34px 0 44px;box-sizing:border-box;font-size:17px;font-weight:600"><span>9:41</span><span style="width:124px;height:36px;border-radius:20px;background:#000;position:absolute;left:134px;top:11px"></span><span style="display:flex;gap:6px;align-items:center"><span style="width:18px;height:11px;border-radius:2px;background:{{ t.tekst }};opacity:.9"></span><span style="width:26px;height:12px;border-radius:4px;box-shadow:inset 0 0 0 1.5px {{ t.tekst }};display:flex;padding:2px;box-sizing:border-box"><span style="width:70%;background:{{ t.tekst }};border-radius:2px"></span></span></span></div>
+            <div style="padding:8px 16px 140px;display:flex;flex-direction:column;gap:14px;height:100%;box-sizing:border-box;overflow:hidden">
+              <div style="display:flex;align-items:flex-end;gap:10px;padding:0 4px">
+                <div style="flex:1;display:flex;flex-direction:column"><h3 style="margin:0;font-size:34px;line-height:1.15;font-weight:700;letter-spacing:.3px">I dag</h3><span style="font-size:15px;color:{{ t.dempet }}">Onsdag 14. oktober · 3 jobber</span></div>
+                <span style="width:40px;height:40px;border-radius:50%;background:{{ t.aksentValgt }};color:{{ t.aksentTekst }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px">AH</span>
+              </div>
+              <div style="background:{{ t.kort }};border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;font-size:15px"><span style="font-weight:600">1 av 3 jobber ferdig</span><span style="color:{{ t.dempet }}">Team Øst</span></div>
+                <div style="height:6px;border-radius:3px;background:{{ t.senket }};overflow:hidden"><div style="width:33%;height:100%;background:{{ t.aksent }}"></div></div>
+              </div>
+              <span style="font-size:13px;font-weight:600;color:{{ t.dempet }};text-transform:uppercase;letter-spacing:.4px;padding:4px 4px 0">Jobber</span>
+              <sc-for list="{{ t.jobber }}" as="j" hint-placeholder-count="3">
+                <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:{{ j.ring }}">
+                  <div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px;font-weight:600">{{ j.tid }}</span><span style="flex:1"></span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ j.s.bg }};color:{{ j.s.fg }};box-shadow:inset 0 0 0 1px {{ j.s.kant }}">{{ j.s.navn }}</span></div>
+                  <span style="font-size:17px;font-weight:600">{{ j.kunde }}</span>
+                  <span style="font-size:15px;color:{{ t.dempet }}">{{ j.adresse }}</span>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:15px;color:{{ t.dempet }}"><span style="color:{{ t.aksentTekst }}">{{ j.ikon }}</span>{{ j.type }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="position:absolute;left:16px;right:16px;bottom:28px;display:flex;gap:10px;align-items:center">
+              <div style="flex:1;height:62px;border-radius:32px;background:{{ t.glass }};backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:grid;grid-template-columns:repeat(3,1fr);padding:4px;box-sizing:border-box">
+                <sc-for list="{{ t.faner }}" as="f" hint-placeholder-count="3">
+                  <div style="border-radius:28px;background:{{ f.bg }};color:{{ f.fg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:600">{{ f.ikon }}<span>{{ f.navn }}</span></div>
+                </sc-for>
+              </div>
+              <div style="width:62px;height:62px;border-radius:50%;background:{{ t.glass }};backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center;color:{{ t.tekst }}">{{ ik24.sok }}</div>
+            </div>
+            <div style="position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:{{ t.tekst }}"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:17px;font-weight:700">iPhone · Jobben</h2>
+    <div style="display:flex;gap:40px;flex-wrap:wrap">
+      <sc-for list="{{ temaer }}" as="t" hint-placeholder-count="2">
+        <div data-screen-label="iPhone Jobben" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:#51565C">{{ t.navn }}</span>
+          <div style="width:393px;height:852px;border-radius:56px;overflow:hidden;position:relative;background:{{ t.side }};color:{{ t.tekst }};box-shadow:0 0 0 10px #1C1C1E,0 0 0 11px #3A3A3C,0 30px 60px -20px rgba(0,0,0,.45)">
+            <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:6px 34px 0 44px;box-sizing:border-box;font-size:17px;font-weight:600"><span>9:41</span><span style="width:124px;height:36px;border-radius:20px;background:#000;position:absolute;left:134px;top:11px"></span><span style="width:26px;height:12px;border-radius:4px;box-shadow:inset 0 0 0 1.5px {{ t.tekst }}"></span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 16px 0">
+              <span style="width:44px;height:44px;border-radius:50%;background:{{ t.glass }};backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center">{{ ik24.pil_venstre }}</span>
+              <span style="font-size:17px;font-weight:600">Jobb 2 av 3</span>
+              <span style="width:44px;height:44px;border-radius:50%;background:{{ t.glass }};backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;align-items:center;justify-content:center">{{ ik24.mer }}</span>
+            </div>
+            <div style="padding:16px 16px 130px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px">
+                <div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px;color:{{ t.dempet }}">10:30–15:00 · H-24103</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ t.sPagar.bg }};color:{{ t.sPagar.fg }};box-shadow:inset 0 0 0 1px {{ t.sPagar.kant }}">Pågår</span></div>
+                <h3 style="margin:0;font-size:28px;line-height:1.15;font-weight:700">Thomas Berg</h3>
+                <span style="font-size:17px;color:{{ t.dempet }}">Brynsveien 18, 0667 Oslo · 3. etasje</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                <sc-for list="{{ t.handlinger }}" as="h" hint-placeholder-count="3">
+                  <div style="height:64px;border-radius:20px;background:{{ t.tintFlate }};color:{{ t.aksentTekst }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:13px;font-weight:600">{{ h.ikon }}<span>{{ h.navn }}</span></div>
+                </sc-for>
+              </div>
+              <div style="background:{{ t.kort }};border-radius:20px;overflow:hidden">
+                <sc-for list="{{ t.rader }}" as="r" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;position:relative">
+                    <span style="width:30px;height:30px;border-radius:8px;background:{{ r.ikonBg }};color:{{ r.ikonFg }};display:flex;align-items:center;justify-content:center;flex:none">{{ r.ikon }}</span>
+                    <span style="flex:1;font-size:17px">{{ r.navn }}</span>
+                    <span style="font-size:17px;color:{{ t.dempet }};display:{{ r.visVerdi }}">{{ r.verdi }}</span>
+                    <span style="display:{{ r.visPille }};font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ t.sAvvik.bg }};color:{{ t.sAvvik.fg }};box-shadow:inset 0 0 0 1px {{ t.sAvvik.kant }}">Prisavvik</span>
+                    <span style="color:{{ t.dempet }}">{{ ik16.pil_hoyre }}</span>
+                    <span style="position:absolute;left:58px;right:0;bottom:0;height:.5px;background:{{ t.linje }};display:{{ r.visLinje }}"></span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:13px;font-weight:600;color:{{ t.dempet }}">Notat fra selger · Marte Sæther</span>
+                <span style="font-size:17px;line-height:1.35;text-wrap:pretty">Kunden er hjemme etter 12. Bær benkeplaten inn via bakdøren, heisen er for liten.</span>
+              </div>
+            </div>
+            <div style="position:absolute;left:16px;right:16px;bottom:30px;height:56px;border-radius:28px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35),0 10px 28px -8px rgba(0,0,0,.35)">{{ ik.signert }}Fullfør og signer</div>
+            <div style="position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:{{ t.tekst }}"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:17px;font-weight:700">iPad · Jobben med sidefelt</h2>
+    <div style="display:flex;gap:40px;flex-wrap:wrap">
+      <sc-for list="{{ temaer }}" as="t" hint-placeholder-count="2">
+        <div data-screen-label="iPad Jobben" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:#51565C">{{ t.navn }} · 1180 × 820</span>
+          <div style="width:1180px;height:820px;border-radius:28px;overflow:hidden;position:relative;background:{{ t.side }};color:{{ t.tekst }};box-shadow:0 0 0 14px #1C1C1E,0 0 0 15px #3A3A3C,0 30px 60px -20px rgba(0,0,0,.45);display:flex">
+            <aside style="width:320px;flex:none;margin:8px 0 8px 8px;border-radius:22px;background:{{ t.glass }};backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};display:flex;flex-direction:column;padding:16px 10px;box-sizing:border-box;gap:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 0;font-size:15px;font-weight:600"><span>9:41</span><img src="{{ t.merke }}" alt="Hengsel" style="height:22px"></div>
+              <h3 style="margin:8px 8px 0;font-size:28px;font-weight:700">I dag</h3>
+              <span style="font-size:13px;font-weight:600;color:{{ t.dempet }};padding:8px 8px 0;text-transform:uppercase;letter-spacing:.4px">Jobber</span>
+              <sc-for list="{{ t.sidefelt }}" as="j" hint-placeholder-count="3">
+                <div style="border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:{{ j.bg }};color:{{ j.fg }}">
+                  <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:17px;font-weight:600">{{ j.kunde }}</span><span style="font-size:15px;opacity:{{ j.tidOpasitet }}">{{ j.tid }}</span></div>
+                  <span style="font-size:15px;color:{{ j.dempet }}">{{ j.adresse }}</span>
+                </div>
+              </sc-for>
+              <span style="flex:1"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;padding:0 4px">
+                <sc-for list="{{ t.sidefeltNed }}" as="n" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 8px;font-size:17px"><span style="color:{{ t.aksentTekst }}">{{ n.ikon }}</span>{{ n.navn }}</div>
+                </sc-for>
+              </div>
+            </aside>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="height:72px;flex:none;display:flex;align-items:center;gap:10px;padding:16px 20px 0;box-sizing:border-box">
+                <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:13px;color:{{ t.dempet }}">10:30–15:00 · H-24103</span><span style="font-size:22px;font-weight:700">Thomas Berg</span></div>
+                <div style="display:flex;gap:4px;height:44px;padding:0 6px;border-radius:22px;background:{{ t.glass }};backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:inset 0 0 0 .5px {{ t.glassKant }},{{ t.glassSkygge }};align-items:center">
+                  <sc-for list="{{ t.handlinger }}" as="h" hint-placeholder-count="3"><span title="{{ h.navn }}" style="width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:{{ t.aksentTekst }}">{{ h.ikon }}</span></sc-for>
+                </div>
+                <div style="height:44px;padding:0 18px;border-radius:22px;background:{{ t.aksent }};color:{{ t.paaAksent }};display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35),0 8px 20px -8px rgba(0,0,0,.3)">{{ ik.signert }}Fullfør og signer</div>
+              </div>
+              <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;padding:16px 20px 20px">
+                <div style="display:flex;flex-direction:column;gap:8px;min-height:0">
+                  <div style="display:flex;justify-content:space-between;padding:0 4px;font-size:13px;font-weight:600;color:{{ t.dempet }};text-transform:uppercase;letter-spacing:.4px"><span>Sjekkliste</span><span>7 av 12</span></div>
+                  <div style="background:{{ t.kort }};border-radius:20px;overflow:hidden">
+                    <sc-for list="{{ t.sjekk }}" as="s" hint-placeholder-count="8">
+                      <div style="display:flex;align-items:center;gap:12px;min-height:48px;padding:0 16px;position:relative">
+                        <span style="width:24px;height:24px;flex:none;border-radius:50%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:{{ s.bg }};box-shadow:{{ s.kant }};color:{{ t.paaAksent }}">{{ s.hake }}</span>
+                        <span style="font-size:17px;flex:1;color:{{ s.fg }}">{{ s.navn }}</span>
+                        <span style="position:absolute;left:52px;right:0;bottom:0;height:.5px;background:{{ t.linje }};display:{{ s.visLinje }}"></span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px;min-height:0">
+                  <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+                    <span style="width:30px;height:30px;border-radius:8px;flex:none;background:{{ t.sAvvik.bg }};color:{{ t.sAvvik.fg }};display:flex;align-items:center;justify-content:center">{{ ik.prisavvik }}</span>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">Prisavvik på benkeplate</span><span style="font-size:15px;color:{{ t.dempet }};text-wrap:pretty">Platen er 12 cm kortere enn bestilt. Ny plate kommer uke 44. Monter resten som planlagt.</span></div>
+                  </div>
+                  <div style="flex:1;min-height:180px;border-radius:20px;background:repeating-linear-gradient(135deg,{{ t.senket }} 0 10px,{{ t.kort }} 10px 20px);display:flex;align-items:flex-end;padding:12px 14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:{{ t.dempet }}">tegning: kjøkken, plan og oppriss</div>
+                  <div style="background:{{ t.kort }};border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px">
+                    <span style="font-size:13px;font-weight:600;color:{{ t.dempet }}">Notat fra selger · Marte Sæther</span>
+                    <span style="font-size:17px;line-height:1.35">Kunden er hjemme etter 12. Bær benkeplaten inn via bakdøren.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { if (!window.HengselIkoner) this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    const L = {
+      navn: 'Lys', side: '#F2F2F7', kort: '#FFFFFF', senket: '#E9E9EE', tekst: '#000000', dempet: '#51565C', linje: '#C6C6C8',
+      aksent: '#068472', aksentTekst: '#016D5E', aksentValgt: '#BCE6DB', paaAksent: '#FFFFFF', tintFlate: 'rgba(6,132,114,.12)',
+      glass: 'rgba(255,255,255,.72)', glassKant: 'rgba(255,255,255,.9)', glassSkygge: '0 8px 24px -6px rgba(0,0,0,.14)', merke: '../designsystem/logo/merke-hengsel-lys.svg',
+      valgtBg: '#068472', valgtFg: '#FFFFFF', valgtDempet: 'rgba(255,255,255,.88)',
+      S: { ny: { navn: 'Neste', bg: '#E7F1FF', fg: '#1A57AD', kant: '#A0C6FF' }, pagar: { navn: 'Pågår', bg: '#EFEEFF', fg: '#5C46A7', kant: '#C3BBFB' }, ferdig: { navn: 'Ferdig', bg: '#E3F7DE', fg: '#1F6D02', kant: '#A5D39B' }, advarsel: { navn: 'Prisavvik', bg: '#FFE9BC', fg: '#6D5000', kant: '#E0C07F' } }
+    };
+    const M = {
+      navn: 'Mørk', side: '#000000', kort: '#1C1C1E', senket: '#2C2C2E', tekst: '#FFFFFF', dempet: '#ADB1B7', linje: '#38383A',
+      aksent: '#54B9A5', aksentTekst: '#54B9A5', aksentValgt: '#163F37', paaAksent: '#0D1013', tintFlate: 'rgba(84,185,165,.16)',
+      glass: 'rgba(44,44,46,.62)', glassKant: 'rgba(255,255,255,.14)', glassSkygge: '0 8px 24px -6px rgba(0,0,0,.5)', merke: '../designsystem/logo/merke-hengsel-mork.svg',
+      valgtBg: '#163F37', valgtFg: '#FFFFFF', valgtDempet: '#ADB1B7',
+      S: { ny: { navn: 'Neste', bg: '#152946', fg: '#B5D3FF', kant: '#37588A' }, pagar: { navn: 'Pågår', bg: '#292344', fg: '#D0C9FF', kant: '#584E87' }, ferdig: { navn: 'Ferdig', bg: '#173012', fg: '#AAE39E', kant: '#3B6432' }, advarsel: { navn: 'Prisavvik', bg: '#3D2A00', fg: '#FCC959', kant: '#70530B' } }
+    };
+    const jobb = [['07:30–10:00', 'Mette Lie', 'Kjelsåsveien 140, Oslo', 'Montering, kjøkken', 'montering', 'ferdig'], ['10:30–15:00', 'Thomas Berg', 'Brynsveien 18, Oslo', 'Montering, kjøkken og bad', 'montering', 'pagar'], ['15:30–16:30', 'Ola Rustad', 'Bjerkeveien 7, Lørenskog', 'Kontrollmål', 'kontrollmal', 'ny']];
+    const tema = t => ({
+      ...t, sPagar: t.S.pagar, sAvvik: t.S.advarsel,
+      jobber: jobb.map(([tid, kunde, adresse, type, ik, s]) => ({ tid, kunde, adresse, type, ikon: this.ikon(ik, 16), s: t.S[s], ring: s === 'pagar' ? 'inset 0 0 0 2px ' + t.aksent : 'none' })),
+      faner: [['min-dag', 'I dag', true], ['naviger', 'Kart'], ['kunder', 'Meg']].map(([ik, navn, a]) => ({ navn, ikon: this.ikon(ik, 24), bg: a ? t.tintFlate : 'transparent', fg: a ? t.aksentTekst : t.tekst })),
+      handlinger: [['telefon', 'Ring'], ['naviger', 'Naviger'], ['samtaler', 'Melding']].map(([ik, navn]) => ({ navn, ikon: this.ikon(ik, 24) })),
+      rader: [['ordre', 'Sjekkliste', '7 av 12'], ['prisavvik', 'Avvik', ''], ['tilbud', 'Tegninger', '3'], ['lager', 'Kolliliste', '14 kolli']].map(([ik, navn, verdi], i, a) => ({ navn, verdi, ikon: this.ikon(ik, 18), ikonBg: ik === 'prisavvik' ? t.S.advarsel.bg : t.tintFlate, ikonFg: ik === 'prisavvik' ? t.S.advarsel.fg : t.aksentTekst, visVerdi: verdi ? 'inline' : 'none', visPille: verdi ? 'none' : 'inline', visLinje: i < a.length - 1 ? 'block' : 'none' })),
+      sidefelt: jobb.map(([tid, kunde, adresse], i) => { const v = i === 1; return { tid: tid.slice(0, 5), kunde, adresse, bg: v ? t.valgtBg : 'transparent', fg: v ? t.valgtFg : t.tekst, dempet: v ? t.valgtDempet : t.dempet, tidOpasitet: v ? 1 : .7 }; }),
+      sidefeltNed: [['naviger', 'Kart'], ['kalender', 'Uke 42']].map(([ik, navn]) => ({ navn, ikon: this.ikon(ik, 20) })),
+      sjekk: ['Dekk til gulv og trapp', 'Sjekk kolli mot liste', 'Monter skrog, vegg', 'Monter skrog, øy', 'Fronter og håndtak', 'Hvitevarer på plass', 'Benkeplate, vegg', 'Benkeplate, øy', 'Vask og blandebatteri', 'Belysning', 'Rydd og støvsug', 'Gå gjennom med kunden'].map((navn, i, a) => { const ok = i < 7; return { navn, hake: ok ? this.ikon('hake', 16) : null, bg: ok ? t.aksent : 'transparent', kant: ok ? 'none' : 'inset 0 0 0 1.5px ' + (t.navn === 'Lys' ? '#7B8188' : '#6A6F76'), fg: ok ? t.dempet : t.tekst, visLinje: i < a.length - 1 ? 'block' : 'none' }; })
+    });
+    return { ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), temaer: [tema(L), tema(M)] };
+  }
+}
+</script>
+</body>
+</html>

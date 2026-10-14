@@ -144,3 +144,123 @@
     --skrift-tall-lh: 34px;
   }
 }
+
+/* Display P3, lys (besluttet, palettpakke v2): furu også på Mac og iPhone */
+@media (color-gamut: p3) {
+  :root {
+    --flate-side: color(display-p3 0.9686 0.9725 0.9843);
+    --flate-valgt: color(display-p3 0.8941 0.9529 0.9333);
+    --kant: color(display-p3 0.4863 0.5059 0.5294);
+    --tekst: color(display-p3 0.1020 0.1137 0.1294);
+    --tekst-dempet: color(display-p3 0.3216 0.3373 0.3608);
+    --tekst-svak: color(display-p3 0.4118 0.4314 0.4549);
+    --aksent: color(display-p3 0.2275 0.5098 0.4471);
+    --aksent-trykk: color(display-p3 0.1725 0.4588 0.3961);
+    --aksent-tekst: color(display-p3 0.1804 0.4235 0.3686);
+    --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
+    --aksent-valgt: color(display-p3 0.7686 0.8980 0.8627);
+    --varsel-flate: color(display-p3 0.9961 0.9137 0.7333);
+    --varsel-tekst: color(display-p3 0.4235 0.3137 0.0000);
+    --feil-flate: color(display-p3 0.9922 0.9216 0.9098);
+    --feil-tekst: color(display-p3 0.5686 0.2118 0.1804);
+    --status-ny-fg: color(display-p3 0.1725 0.3373 0.6549);
+    --status-ny-bg: color(display-p3 0.9098 0.9451 1.0000);
+    --status-ny-kant: color(display-p3 0.6588 0.7725 0.9804);
+    --status-pagar-fg: color(display-p3 0.3490 0.2784 0.6353);
+    --status-pagar-kant: color(display-p3 0.7569 0.7333 0.9647);
+    --status-venter-fg: color(display-p3 0.3373 0.3569 0.3882);
+    --status-venter-bg: color(display-p3 0.9216 0.9451 0.9804);
+    --status-venter-kant: color(display-p3 0.7490 0.7725 0.8078);
+    --status-sannsynlig-fg: color(display-p3 0.4667 0.2314 0.5294);
+    --status-sannsynlig-bg: color(display-p3 0.9804 0.9137 1.0000);
+    --status-sannsynlig-kant: color(display-p3 0.8510 0.7020 0.8941);
+    --status-ferdig-fg: color(display-p3 0.2157 0.4235 0.1137);
+    --status-ferdig-bg: color(display-p3 0.9020 0.9686 0.8784);
+    --status-ferdig-kant: color(display-p3 0.6863 0.8235 0.6275);
+    --status-advarsel-fg: color(display-p3 0.4235 0.3137 0.0000);
+    --status-advarsel-bg: color(display-p3 0.9961 0.9137 0.7333);
+    --status-advarsel-kant: color(display-p3 0.8588 0.7569 0.5333);
+    --status-feil-fg: color(display-p3 0.5686 0.2118 0.1804);
+    --status-feil-bg: color(display-p3 0.9922 0.9216 0.9098);
+    --status-feil-kant: color(display-p3 0.9333 0.6941 0.6549);
+  }
+}
+
+/* Økt kontrast, lys (besluttet, palettpakke v2) */
+@media (prefers-contrast: more) {
+  :root {
+    --linje: #9A9FA5;
+    --kant: #494E54;
+    --tekst: #040608;
+    --tekst-dempet: #2A2E33;
+    --tekst-svak: #43484E;
+    --aksent: #006a5b;
+    --aksent-trykk: #005b4d;
+    --aksent-tekst: #004E42;
+    --aksent-valgt: #AADDD0;
+    --varsel-flate: #FFF6E4;
+    --varsel-tekst: #503900;
+    --feil-flate: #FFF4F2;
+    --feil-tekst: #780007;
+    --status-ny-fg: #003882;
+    --status-ny-bg: #F2F7FF;
+    --status-ny-kant: #3E71BC;
+    --status-pagar-fg: #402584;
+    --status-pagar-bg: #F6F6FF;
+    --status-pagar-kant: #7262B7;
+    --status-venter-fg: #383E46;
+    --status-venter-bg: #F1F7FF;
+    --status-venter-kant: #6B727B;
+    --status-sannsynlig-fg: #5F136A;
+    --status-sannsynlig-bg: #FEF3FF;
+    --status-sannsynlig-kant: #94559E;
+    --status-ferdig-fg: #104B00;
+    --status-ferdig-bg: #E9FEE5;
+    --status-ferdig-kant: #448335;
+    --status-advarsel-fg: #503900;
+    --status-advarsel-bg: #FFF6E4;
+    --status-advarsel-kant: #916B00;
+    --status-feil-fg: #780007;
+    --status-feil-bg: #FFF4F2;
+    --status-feil-kant: #B14F46;
+  }
+}
+
+/* Økt kontrast og Display P3, lys (besluttet, palettpakke v2) */
+@media (prefers-contrast: more) and (color-gamut: p3) {
+  :root {
+    --linje: color(display-p3 0.6078 0.6235 0.6471);
+    --kant: color(display-p3 0.2902 0.3020 0.3255);
+    --tekst: color(display-p3 0.0196 0.0235 0.0314);
+    --tekst-dempet: color(display-p3 0.1686 0.1804 0.2000);
+    --tekst-svak: color(display-p3 0.2667 0.2824 0.3059);
+    --aksent: color(display-p3 0.1255 0.4157 0.3569);
+    --aksent-trykk: color(display-p3 0.1020 0.3569 0.3059);
+    --aksent-tekst: color(display-p3 0.0824 0.3059 0.2627);
+    --aksent-valgt: color(display-p3 0.7059 0.8588 0.8196);
+    --varsel-flate: color(display-p3 0.9961 0.9647 0.8902);
+    --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
+    --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
+    --feil-tekst: color(display-p3 0.4314 0.0627 0.0588);
+    --status-ny-fg: color(display-p3 0.0471 0.2078 0.5176);
+    --status-ny-kant: color(display-p3 0.2902 0.4392 0.7176);
+    --status-pagar-fg: color(display-p3 0.2353 0.1490 0.4980);
+    --status-pagar-bg: color(display-p3 0.9647 0.9608 1.0000);
+    --status-pagar-kant: color(display-p3 0.4353 0.3843 0.6980);
+    --status-venter-fg: color(display-p3 0.2235 0.2392 0.2706);
+    --status-venter-bg: color(display-p3 0.9490 0.9686 1.0000);
+    --status-venter-kant: color(display-p3 0.4275 0.4471 0.4784);
+    --status-sannsynlig-fg: color(display-p3 0.3412 0.1020 0.4000);
+    --status-sannsynlig-bg: color(display-p3 0.9882 0.9529 1.0000);
+    --status-sannsynlig-kant: color(display-p3 0.5451 0.3451 0.6039);
+    --status-ferdig-fg: color(display-p3 0.1137 0.2941 0.0039);
+    --status-ferdig-bg: color(display-p3 0.9294 0.9922 0.9059);
+    --status-ferdig-kant: color(display-p3 0.3255 0.5098 0.2471);
+    --status-advarsel-fg: color(display-p3 0.3059 0.2235 0.0000);
+    --status-advarsel-bg: color(display-p3 0.9961 0.9647 0.8902);
+    --status-advarsel-kant: color(display-p3 0.5569 0.4196 0.0000);
+    --status-feil-fg: color(display-p3 0.4314 0.0627 0.0588);
+    --status-feil-bg: color(display-p3 0.9961 0.9569 0.9490);
+    --status-feil-kant: color(display-p3 0.6471 0.3294 0.2941);
+  }
+}

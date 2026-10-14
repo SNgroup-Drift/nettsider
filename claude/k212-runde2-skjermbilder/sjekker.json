@@ -1,0 +1,613 @@
+{
+  "aksentP3Forventet": "color(display-p3 0.2275 0.5098 0.4471)",
+  "rapport": [
+    {
+      "side": "hengsel",
+      "sti": "/",
+      "bredde": 390,
+      "fil": "hengsel-no-forside-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/",
+      "bredde": 1280,
+      "fil": "hengsel-no-forside-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/apptest",
+      "bredde": 390,
+      "fil": "hengsel-no-apptest-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Test Hengsel Ute – testversjon av montørappen",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/apptest",
+      "bredde": 1280,
+      "fil": "hengsel-no-apptest-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Test Hengsel Ute – testversjon av montørappen",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/dokumenter",
+      "bredde": 390,
+      "fil": "hengsel-no-dokumenter-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Dokumenter – Hengsel",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/dokumenter",
+      "bredde": 1280,
+      "fil": "hengsel-no-dokumenter-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Dokumenter – Hengsel",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/crm",
+      "bredde": 390,
+      "fil": "hengsel-no-crm-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Hengsel CRM – Min dag, ordre og montasjeplan",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/crm",
+      "bredde": 1280,
+      "fil": "hengsel-no-crm-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-crm-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Hengsel CRM – Min dag, ordre og montasjeplan",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/kundeportal",
+      "bredde": 390,
+      "fil": "hengsel-no-kundeportal-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Kundeportalen – Hengsel",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "hengsel",
+      "sti": "/kundeportal",
+      "bredde": 1280,
+      "fil": "hengsel-no-kundeportal-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/hengsel-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-levering-aksent-lys.svg",
+        "/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Kundeportalen – Hengsel",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/",
+      "bredde": 390,
+      "fil": "design-forside-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/",
+      "bredde": 1280,
+      "fil": "design-forside-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/merke",
+      "bredde": 390,
+      "fil": "design-merke-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-mork.svg",
+        "/ds/assets/logo/merke-blekk.svg",
+        "/ds/assets/logo/merke-hvit.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-mork.svg",
+        "/ds/assets/logo/logo-hengsel-blekk.svg",
+        "/ds/assets/logo/logo-hengsel-hvit.svg",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-crm-mork.svg",
+        "/ds/assets/logo/logo-ute-lys.svg",
+        "/ds/assets/logo/logo-ute-mork.svg",
+        "/ds/assets/logo/logo-admin-lys.svg",
+        "/ds/assets/logo/logo-admin-mork.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/ds/assets/logo/logo-levering-mork.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/merke/app-ikon/ute.png",
+        "/merke/app-ikon/ute-mork.png",
+        "/merke/app-ikon/web.png",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-crm-mork.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/ds/assets/logo/logo-hengsel-blekk.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Merket – Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/merke",
+      "bredde": 1280,
+      "fil": "design-merke-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-mork.svg",
+        "/ds/assets/logo/merke-blekk.svg",
+        "/ds/assets/logo/merke-hvit.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-mork.svg",
+        "/ds/assets/logo/logo-hengsel-blekk.svg",
+        "/ds/assets/logo/logo-hengsel-hvit.svg",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-crm-mork.svg",
+        "/ds/assets/logo/logo-ute-lys.svg",
+        "/ds/assets/logo/logo-ute-mork.svg",
+        "/ds/assets/logo/logo-admin-lys.svg",
+        "/ds/assets/logo/logo-admin-mork.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/ds/assets/logo/logo-levering-mork.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/merke-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/merke/app-ikon/ute.png",
+        "/merke/app-ikon/ute-mork.png",
+        "/merke/app-ikon/web.png",
+        "/ds/assets/logo/logo-crm-lys.svg",
+        "/ds/assets/logo/logo-crm-mork.svg",
+        "/ds/assets/logo/logo-levering-lys.svg",
+        "/ds/assets/logo/logo-hengsel-blekk.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Merket – Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/komponenter",
+      "bredde": 390,
+      "fil": "design-komponenter-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Komponenter – Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "design",
+      "sti": "/komponenter",
+      "bredde": 1280,
+      "fil": "design-komponenter-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/ds/assets/logo/logo-hengsel-lys.svg",
+        "/ds/assets/logo/logo-hengsel-lys.svg"
+      ],
+      "tittel": "Komponenter – Hengsel designfasit",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "admin",
+      "sti": "/",
+      "bredde": 390,
+      "fil": "admin-forside-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/merke-admin-lys.svg"
+      ],
+      "tittel": "Hengsel Admin",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "admin",
+      "sti": "/",
+      "bredde": 1280,
+      "fil": "admin-forside-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#e0f4ee",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/logo/merke-admin-lys.svg"
+      ],
+      "tittel": "Hengsel Admin",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 .2275 .5098 .4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/",
+      "bredde": 390,
+      "fil": "vis-forside-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-levering-aksent-lys.svg"
+      ],
+      "tittel": "Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/",
+      "bredde": 1280,
+      "fil": "vis-forside-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-lys.svg",
+        "/assets/logo/hengsel-levering-aksent-lys.svg"
+      ],
+      "tittel": "Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/crm/",
+      "bredde": 390,
+      "fil": "vis-crm-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Prøv CRM · Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/crm/",
+      "bredde": 1280,
+      "fil": "vis-crm-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg"
+      ],
+      "tittel": "Prøv CRM · Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/montoren/",
+      "bredde": 390,
+      "fil": "vis-montoren-390.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg",
+        "/assets/logo/hengsel-levering-aksent-lys.svg"
+      ],
+      "tittel": "Montøren · Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    },
+    {
+      "side": "vis",
+      "sti": "/montoren/",
+      "bredde": 1280,
+      "fil": "vis-montoren-1280.png",
+      "aksent": "#068472",
+      "flateValgt": "#E0F4EE",
+      "colorScheme": "light",
+      "overflow": 0,
+      "bilderUtenInnhold": [],
+      "logoer": [
+        "/assets/logo/hengsel-aksent-lys.svg",
+        "/assets/logo/hengsel-levering-aksent-lys.svg"
+      ],
+      "tittel": "Montøren · Visningsrommet",
+      "p3": {
+        "ma": true,
+        "aksent": "color(display-p3 0.2275 0.5098 0.4471)"
+      },
+      "konsoll": []
+    }
+  ]
+}

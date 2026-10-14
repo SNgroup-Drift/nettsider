@@ -4,12 +4,12 @@ import Side from "../layouts/Side.astro";
 import Logo from "../components/Logo.astro";
 import { designsystem, palett, roller, status } from "../lib/tokens";
 const SIDER = [
-  ["Merket", "/merke", "Symbolet og alle formene i aksent og ensfarget, på lys og mørk flate. Luft, minste størrelse, app-ikoner og kundens logo øverst."],
+  ["Merket", "/merke", "Symbolet og logoene for Hengsel, CRM, Ute, Admin og Levering, på lys og mørk flate. Luft, minste størrelse, app-ikoner og kundens logo øverst til høyre."],
   ["Farger", "/farger", `${roller.length} roller i lys og mørk med hex og kontrast, ${status.length} statustoner og regelen for kundens aksent.`],
   ["Skrift", "/skrift", "Schibsted Grotesk, skalaen, SF Pro på iPhone og kundetemaets valg av skrift."],
-  ["Komponenter", "/komponenter", "Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand og Sheet/Dialog, med hva de brukes til og ikke til."],
+  ["Komponenter", "/komponenter", "Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand, Sheet/Dialog og ikonsettet, med hva de brukes til og ikke til."],
   ["Skjermer", "/skjermer", "Fiktive skjermer fra CRM, kundeportalen, Hengsel Ute og hengsel.no."],
-  ["Last ned", "/last-ned", "Tokens (css, ts, json), skriftene og logopakken."],
+  ["Last ned", "/last-ned", "Tokens (css, ts, json), skriftene, logopakken og ikonene."],
 ] as const;
 ---
 <Side title="Hengsel designfasit" description="Designfasiten for Hengsel: merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer, generert fra designsystemets tokens.">

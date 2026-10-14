@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * K-182: lager sites/design/public/last-ned/hengsel-logopakke.zip fra logoene i designsystemet (packages/hengsel-tokens/ds/assets/logo, 32 SVG-filer)
- * pluss lisensfilene for skriftene. Kjøres først i `npm run build -w sites/design`. Ren Node (zip uten komprimering), og alltid de samme bytene for de samme filene
+ * K-182, oppdatert i K-212 runde 2: lager sites/design/public/last-ned/hengsel-logopakke.zip fra logoene og merkene i designsystemet (packages/hengsel-tokens/ds/assets/logo, palettpakke v2)
+ * pluss lisensfilene for skriftene, og hengsel-ikoner.zip fra ikonsettet (ds/assets/ikoner). Kjøres først i `npm run build -w sites/design`. Ren Node (zip uten komprimering), og alltid de samme bytene for de samme filene
  * (fast tidsstempel, sortert), så bygget er reproduserbart. Fila genereres, den er ikke i git.
  */
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
@@ -42,16 +42,18 @@ export async function lagZip(filer) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const logoer = (await readdir(join(ds, "assets", "logo"))).filter((f) => /^(hengsel-symbol|hengsel-ute|hengsel-crm|hengsel|ute|crm|levert-av|sendt-med)(-aksent)?-(lys|mork)\.svg$/.test(f)).sort(); // K-212: de 32 Brand-filene; de nye merkefilene (merke-*, logo-*, ordmerke-*) ligger i /ds/assets/logo/
-  if (logoer.length !== 32) throw new Error(`Forventet 32 logofiler i designsystemet, fant ${logoer.length}`);
+  const logoer = (await readdir(join(ds, "assets", "logo"))).filter((f) => f.endsWith(".svg")).sort();
+  if (logoer.length < 30) throw new Error(`Forventet logoene fra palettpakke v2 i designsystemet, fant ${logoer.length}`);
   const les = (...s) => readFile(join(ds, ...s));
-  const les_meg = `Hengsel-logopakken (merke v3). Designsystem fra ${JSON.parse(await readFile(join(rot, "packages", "hengsel-tokens", "designsystem.pin.json"), "utf8")).versjon}.
+  const pin = JSON.parse(await readFile(join(rot, "packages", "hengsel-tokens", "designsystem.pin.json"), "utf8"));
+  const les_meg = `Hengsel-logopakken (palettpakke v2, ${pin.palettpakke?.dato ?? ""}). Designsystem ${pin.versjon}.
 
-Åtte former, to utgaver (aksent og ensfarget), lys og mørk: 32 SVG-filer. Filnavn: {form}-{aksent-}{lys|mork}.svg (symbolet heter hengsel-symbol).
-  aksent-lys   Warm Black med stift i Deep Blue. Standard på lys flate.
-  aksent-mork  Off White med stift i Dusty Blue. Standard på mørk flate.
-  lys          helt Warm Black (trykk og PDF)
-  mork         helt Off White (blå flater og foto)
+${logoer.length} SVG-filer: logo-{hengsel|crm|ute|admin|levering}-{lys|mork}.svg (merke og navn), merke-{hengsel|crm|ute|admin|levering}-{lys|mork}.svg (merket alene),
+hengsel-merke-* (glass, tonet, blekk, hvit), logo-hengsel-{blekk|hvit|glass-*|tonet}.svg og ordmerke-hengsel-*.svg.
+  lys    blekk på bladene og furu på stiften (produktfarge i stiften på produktmerkene). Standard på lys flate.
+  mork   lys blekk på bladene og lysere furu på stiften. Standard på mørk flate.
+  blekk  helt blekk (trykk og PDF).  hvit  helt hvit (furuflater og foto).
+De monokrome produktlogoene (hvit og blekk for CRM, Ute, Admin og Levering) er foreslått og ikke med.
 
 Ikke tegn filene om, strekk eller roter dem, legg til skygge eller kontur, eller bytt farger. Minste høyde: symbol 16 px, logo med tekst 14 px. Fri sone: halve symbolhøyden.
 Alle regler og plasseringer: https://design.hengsel.no/merke
@@ -59,10 +61,21 @@ Alle regler og plasseringer: https://design.hengsel.no/merke
   const filer = [
     ["LES-MEG.txt", Buffer.from(les_meg)],
     ...(await Promise.all(logoer.map(async (f) => [`logo/${f}`, await les("assets", "logo", f)]))),
-    ["skrifter/LICENSE-Inter.txt", await les("assets", "fonts", "LICENSE-Inter.txt")],
-    ["skrifter/LICENSE-Newsreader.txt", await les("assets", "fonts", "LICENSE-Newsreader.txt")],
+    ["skrifter/LICENSE-Schibsted-Grotesk.txt", await les("assets", "fonts", "LICENSE-Schibsted-Grotesk.txt")],
   ];
   await mkdir(ut, { recursive: true });
   await writeFile(join(ut, "hengsel-logopakke.zip"), await lagZip(filer));
   console.log(`✓ hengsel-logopakke.zip: ${logoer.length} logoer`);
+
+  // Ikonsettet: 49 SVG-er i 16, 20 og 24 px (currentColor), navn og SF Symbol i ikoner.json, sprite og tabell
+  const ikonNavn = JSON.parse(await readFile(join(ds, "assets", "ikoner", "ikoner.json"), "utf8")).ikoner.map((i) => i.fil).sort();
+  const ikonFiler = [
+    ["LES-MEG.txt", Buffer.from(`Hengsel-ikonene (palettpakke v2). Status: foreslått, venter på bekreftelse.\n\n${ikonNavn.length} strekikoner på et 20 px rutenett, i 16, 20 og 24 px. Fargen er currentColor.\nikoner.json har navn, gruppe, SF Symbol og bruk. hengsel-ikoner.svg er en sprite med <symbol id>. IKONER.md er tabellen.\nhttps://design.hengsel.no/komponenter#ikoner\n`)],
+    ["ikoner.json", await les("assets", "ikoner", "ikoner.json")],
+    ["hengsel-ikoner.svg", await les("assets", "ikoner", "hengsel-ikoner.svg")],
+    ["IKONER.md", await les("assets", "ikoner", "IKONER.md")],
+    ...(await Promise.all(["16", "20", "24"].flatMap((m) => ikonNavn.map(async (n) => [`${m}/${n}.svg`, await les("assets", "ikoner", m, `${n}.svg`)])))),
+  ];
+  await writeFile(join(ut, "hengsel-ikoner.zip"), await lagZip(ikonFiler));
+  console.log(`✓ hengsel-ikoner.zip: ${ikonNavn.length} ikoner × 3 størrelser`);
 }

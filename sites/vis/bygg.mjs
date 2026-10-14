@@ -63,9 +63,9 @@ await cp(join(sites, "sngroup", "public", "logo.svg"), join(img, "sn-logo.svg"))
 // <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent, lys utgave (bare lys modus). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
 const LOGOER = {
   hengsel: { fil: "hengsel-aksent", alt: "Hengsel", b: 422, h: 100 },
-  crm: { fil: "crm-aksent", alt: "CRM", b: 270, h: 108 },
+  crm: { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
   "hengsel-crm": { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
-  "levert-av": { fil: "levert-av-aksent", alt: "Levert av Hengsel", b: 671, h: 108 },
+  "levert-av": { fil: "hengsel-levering-aksent", alt: "Hengsel Levering", b: 763, h: 100 },
 };
 function hengselLogo(size, skjema = "hengsel") {
   const l = LOGOER[skjema];

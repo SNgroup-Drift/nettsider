@@ -2,7 +2,7 @@
 /**
  * CRM-skjermene i demoen (CrmSkjerm.dc.html): Min dag, Ordre/avvik, Tilbud/import fra CET og Montasje, tegnet som ekte HTML i
  * naturlig størrelse (pc 1440 × 810, ipad 1180 × 796, telefon 402 × 874). Brukes i sporet til Enhet.astro, som skalerer den inn i rammen
- * (scripts/skala.ts). Tekst og data i content/crm.ts. «Din logo» i sidemenyen (PC, iPad) og toppen (telefon); crm-aksent-logoen (16 px) nederst i sidemenyen.
+ * (scripts/skala.ts). Tekst og data i content/crm.ts. «Din logo» i sidemenyen (PC, iPad) og toppen (telefon); Hengsel CRM-logoen (hengsel-crm-aksent, 16 px) nederst i sidemenyen.
  * Uten `interaktiv` er skjermen en ren illustrasjon (inert, role="img"); med `interaktiv` har den data-neste på raden og knappene
  * som går videre i demoen (scripts/crm.ts).
  */
@@ -26,7 +26,7 @@ import { APPTEST } from "../apptest-lenker";
       <div class="bruker"><div class="ink">{CRM_BRUKER[0]}</div><div>{CRM_BRUKER[1]}</div></div>
       <div class="hengsel-crm">
         <picture>
-          <img src="/logo/crm-aksent-lys.svg" alt="CRM" width="270" height="108" loading="lazy" decoding="async" />
+          <img src="/logo/hengsel-crm-aksent-lys.svg" alt="Hengsel CRM" width="622" height="100" loading="lazy" decoding="async" />
         </picture>
         <span>v. {APPTEST.versjon}</span>
       </div>

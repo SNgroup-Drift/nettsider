@@ -1,5 +1,7 @@
 # Visningsrommet i Hengsel-profilen – instruks til Code
 
+> **K-212:** fargene og skriftene i dette dokumentet (Off White, Warm Black, Deep Blue, Newsreader og Inter) er historiske, fra før furu-profilen. Gjeldende verdier står bare i `packages/hengsel-tokens/tokens.css` (generert fra pinnet `hengsel.tokens.json`); siden bruker variablene og ingen egne fargeverdier. Se `docs/design/hengsel-regler.md`.
+
 ## Regel for skjermbilder (10.10.2026)
 
 Alle skjermbilder av løsningen på vis.hengsel.no kommer fra **designfilene i CRM_v4** (`docs/design/**/*.dc.html` på demo), aldri fra kjørende demo eller tegnet UI i rammene. Visningsrommet viser hvordan løsningen blir, ikke hvordan den er nå. Filene er webp i Apples skjermoppløsning (se «Apple-rammer» under) og ligger i `sites/vis/src/skjermbilder/` (vis har ingen `public/`; `bygg.mjs` kopierer `src/` til `dist/`). `assets/bilder.js` legger dem i rammene fra `assets/enhet.css`: Studio Display (1180 × 740, høyere bilder kan rulles i skjermen), iPad liggende 1180 × 820 (stående 820 × 1180 snus automatisk), iPhone 390 × 844, alle med `object-fit: cover; object-position: top`. Aldri PC-bildet i iPad- eller telefonrammen. Rom med flere enheter har velgeren PC · iPad · Telefon; «Prøv dette»-stegene viser skjermen for steget og skriver loggen «Samtidig i Hengsel». Tekster, steg og logg er som før.
