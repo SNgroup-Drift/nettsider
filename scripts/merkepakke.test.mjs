@@ -3,7 +3,7 @@
  *  a) hver utplassert fil (favicon, motion, delingsbilder, «levert av», Sigdal-merket) er byte-lik kilden i pakken og pinnen, og hver fil i ds fra pakken er lik pakkefila
  *  b) og:image: hver bygd side på hengsel.no, vis og design peker på et delingsbilde som finnes, er PNG, 1200 × 630, under 1 MB, med riktig bilde for riktig side
  *  c) favicon med hvit flis (ico og SVG) på alle fire Hengsel-sidene, motion i 1080 × 1080 og 1080 × 1920 på hengsel.no, «Levert av Hengsel» i kundeportal-mock og vis-rom
- *  d) /sigdal har «Sigdal CRM · levert av Hengsel» i toppen (Warm Black), og Off White-utgaven finnes for mørke flater
+ *  d) /kunde/sigdal har «Sigdal CRM · levert av Hengsel» i toppen (Warm Black), og Off White-utgaven finnes for mørke flater
  * Kjør npm run build først (manglende dist er feil).
  */
 import { test } from "node:test";
@@ -53,7 +53,7 @@ test("a) pin: hver utplassert fil er uendret, lik pakkefila og pinnet (sha256)",
 
 test("b) og:image: hver bygd side peker på et delingsbilde som finnes (PNG, 1200 × 630, under 1 MB), med riktig bilde per side", () => {
   const FORVENTET = [
-    ["hengsel", "https://hengsel.no", (rel) => (rel === "apptest.html" ? "og-apptest.png" : "og-hengsel-no.png")],
+    ["hengsel", "https://hengsel.no", (rel) => (rel === "apptest.html" || rel === "kunde/apptest.html" ? "og-apptest.png" : "og-hengsel-no.png")],
     ["vis", "https://vis.hengsel.no", () => "og-vis-hengsel-no.png"],
     ["design", "https://design.hengsel.no", () => "og.png"],
   ];
@@ -64,7 +64,7 @@ test("b) og:image: hver bygd side peker på et delingsbilde som finnes (PNG, 120
       const rel = relative(d, f).split("\\").join("/");
       const t = readFileSync(f, "utf8");
       const m = [...t.matchAll(/<meta property="og:image" content="([^"]+)"/g)].map((x) => x[1]);
-      if (rel.startsWith("sigdal")) { assert.deepEqual(m, [], `${site}/${rel}: kundeutgaven skal ikke ha og:image`); continue; }
+      if (rel.startsWith("kunde/sigdal")) { assert.deepEqual(m, [], `${site}/${rel}: kundeutgaven skal ikke ha og:image`); continue; }
       assert.equal(m.length, 1, `${site}/${rel}: skal ha nøyaktig én og:image, har ${m.length}`);
       const url = new URL(m[0]);
       assert.equal(url.origin, origin, `${site}/${rel}: og:image skal være absolutt på ${origin}, var ${m[0]}`);
@@ -101,7 +101,7 @@ test("c) favicon med hvit flis på alle fire Hengsel-sidene, og ingen gammel fli
     assert.equal(ico.readUInt16LE(2), 1, "favicon.ico er ikke en ICO");
     const storrelser = Array.from({ length: ico.readUInt16LE(4) }, (_, i) => ico[6 + i * 16] || 256).sort((a, b) => a - b);
     assert.deepEqual(storrelser, [16, 32, 48], `${site}: favicon.ico skal ha 16, 32 og 48`);
-    for (const f of alle(d).filter((x) => x.endsWith(".html") && !relative(d, x).startsWith("sigdal/") && !/(^|\/)fasit\//.test(relative(d, x)))) {
+    for (const f of alle(d).filter((x) => x.endsWith(".html") && !relative(d, x).startsWith("kunde/sigdal/") && !/(^|\/)fasit\//.test(relative(d, x)))) {
       const t = readFileSync(f, "utf8");
       const rel = relative(d, f);
       assert.match(t, /<link rel="icon" href="\/favicon\.ico" sizes="any"\s*\/?>/, `${site}/${rel}: favicon.ico`);
@@ -148,10 +148,10 @@ test("c) «Levert av Hengsel» (lys) i kundeportal-mocken og i alle vis-rommene,
   assert.ok(rom >= 6, `forventet «Levert av» i minst seks vis-sider, fant ${rom}`);
 });
 
-test("d) /sigdal: «Sigdal CRM · levert av Hengsel» (Warm Black) i toppen i stedet for Sigdal-logoen med tekst under, Off White-utgaven finnes for mørke flater", () => {
+test("d) /kunde/sigdal: «Sigdal CRM · levert av Hengsel» (Warm Black) i toppen i stedet for Sigdal-logoen med tekst under, Off White-utgaven finnes for mørke flater", () => {
   const d = dist("hengsel");
-  const warm = "/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black";
-  for (const side of ["sigdal.html", "sigdal/crm.html", "sigdal/ute.html"]) {
+  const warm = "/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black";
+  for (const side of ["kunde/sigdal.html", "kunde/sigdal/crm.html", "kunde/sigdal/ute.html"]) {
     const t = readFileSync(join(d, side), "utf8");
     const topp = /<header class="meny"[\s\S]*?<\/header>/.exec(t)?.[0] ?? "";
     assert.ok(topp.includes(`src="${warm}-2x.png"`) && topp.includes(`${warm}-3x.png 3x`) && topp.includes('alt="Sigdal CRM · levert av Hengsel"'), `${side}: merket skal stå i toppen`);
@@ -161,15 +161,15 @@ test("d) /sigdal: «Sigdal CRM · levert av Hengsel» (Warm Black) i toppen i st
   for (const v of ["warm-black", "off-white"]) {
     for (const x of ["", "-2x", "-3x"]) {
       const f = `sigdal-crm-levert-av-hengsel-${v}${x}.png`;
-      assert.equal(sha(readFileSync(join(d, "sigdal", "logo", f))), sha(readFileSync(join(pakke, "6-sigdal", f))), `${f} er ikke filen fra pakken`);
+      assert.equal(sha(readFileSync(join(d, "kunde", "sigdal", "logo", f))), sha(readFileSync(join(pakke, "6-sigdal", f))), `${f} er ikke filen fra pakken`);
     }
-    assert.deepEqual(png(readFileSync(join(d, "sigdal", "logo", `sigdal-crm-levert-av-hengsel-${v}.png`))), { b: 416, h: 48 });
-    assert.ok(!existsSync(join(d, "sigdal", "logo", `sigdal-crm-levert-av-hengsel-${v}.svg`)), "SVG-en uten Sigdal-logo skal ikke brukes");
+    assert.deepEqual(png(readFileSync(join(d, "kunde", "sigdal", "logo", `sigdal-crm-levert-av-hengsel-${v}.png`))), { b: 416, h: 48 });
+    assert.ok(!existsSync(join(d, "kunde", "sigdal", "logo", `sigdal-crm-levert-av-hengsel-${v}.svg`)), "SVG-en uten Sigdal-logo skal ikke brukes");
   }
   const tomt = readFileSync(join(pakke, "6-sigdal", "sigdal-crm-levert-av-hengsel-warm-black.svg"), "utf8");
   if (/<image[^>]*><\/image>/.test(tomt) && !/href=/.test(/<image[^>]*>/.exec(tomt)[0])) console.log("merknad: Sigdal-SVG-en i pakken har et tomt <image> (PNG brukes i stedet)");
   // Visningsrommet i Sigdal-utgave har samme merke i toppfeltet
-  const vis = readFileSync(join(d, "sigdal", "vis", "index.html"), "utf8");
+  const vis = readFileSync(join(d, "kunde", "sigdal", "vis", "index.html"), "utf8");
   assert.ok(vis.includes(`src="${warm}-2x.png"`), "Visningsrommet i Sigdal-utgave: merket i toppfeltet");
   assert.ok(!/sigdal-logo-warm-black/.test(vis));
   // Off White på mørk flate: KundeLogo tar flate="mork"

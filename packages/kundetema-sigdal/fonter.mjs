@@ -1,5 +1,5 @@
 // Skriftfilene til Sigdal-temaet (selvhostet fra npm, @fontsource-variable): Newsreader til overskrifter, Inter til alt annet.
-// Importeres med ?url av sites/hengsel/src/pages/sigdal/tema.css.ts, som lager @font-face i /sigdal/tema.css. Bare latin (æ, ø og å ligger der).
+// Importeres med ?url av sites/hengsel/src/pages/kunde/sigdal/tema.css.ts, som lager @font-face i /kunde/sigdal/tema.css. Bare latin (æ, ø og å ligger der).
 import newsreader from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url";
 import inter from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 

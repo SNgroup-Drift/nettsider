@@ -11,7 +11,7 @@
  *
  * Kjør etter `npm run build`: npm test
  */
-import { readdir, stat } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startServer } from "./statisk-server.mjs";
 
@@ -122,9 +122,9 @@ for (const navn of nettsteder) {
     const html = await (await fetch(new URL(side, base))).text();
     for (const m of html.matchAll(/\b(?:src|poster|data-webm|data-mp4)="(\/[^"]+\.(?:webp|png|jpg|svg|mp4|webm))"/g)) medier.add(m[1]);
     for (const m of html.matchAll(/\bsrcset="([^"]+)"/g)) for (const d of m[1].split(",")) { const u = d.trim().split(/\s+/)[0]; if (u.startsWith("/")) medier.add(u); }
-    // K-223: Visningsrommet i Sigdal-utgave (/sigdal/vis/) har skjermbildene som plassholdere i /sigdal/img/vis/skjermbilder/ og bare lys utgave
-    const sigdalVis = side.startsWith("/sigdal/vis/");
-    const skjermMappe = sigdalVis ? "/sigdal/img/vis/skjermbilder/" : "/skjermbilder/";
+    // K-223: Visningsrommet i Sigdal-utgave (/kunde/sigdal/vis/) har skjermbildene som plassholdere i /kunde/sigdal/img/vis/skjermbilder/ og bare lys utgave
+    const sigdalVis = side.startsWith("/kunde/sigdal/vis/");
+    const skjermMappe = sigdalVis ? "/kunde/sigdal/img/vis/skjermbilder/" : "/skjermbilder/";
     for (const m of html.matchAll(/data-bilder="([^"]+)"/g))
       for (const n of m[1].split(",").map((s) => s.trim()).filter((s) => /^[\w-]+$/.test(s)))
         for (const s of ["", "@1x"]) {
@@ -158,21 +158,42 @@ for (const navn of nettsteder) {
     mangler.push("dist/404.html mangler");
   }
   // /apptest (hengsel.no, testsiden): «Bli tester» og «App Store» lenker dit (hengsel.no 2.0, K-160), men den står ikke i sitemap og har noindex,nofollow
-  // K-223: det samme gjelder alt under /sigdal (kundeutgaven bak Cloudflare Access): noindex,nofollow, og ikke i sitemap
+  // K-223: det samme gjelder alt under /kunde/sigdal (kundeutgaven bak Cloudflare Access): noindex,nofollow, og ikke i sitemap
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
-    if (side.startsWith("/apptest") || side.startsWith("/hjelp") || side.startsWith("/sigdal")) {
+    // K-229: alt under /kunde (hjelp, apptest, dokumenter og kundens egen utgave bak Cloudflare Access) har noindex,nofollow. /apptest er passordsiden til Access står foran /kunde.
+    if (side.startsWith("/apptest") || (navn === "hengsel" && (side === "/kunde" || side.startsWith("/kunde/")))) {
       if (!/<meta name="robots" content="noindex,\s?nofollow">/.test(html)) mangler.push(`${side}: mangler robots noindex,nofollow`);
     }
-    // /hjelp (hengsel.no, brukerveiledningen bak Cloudflare Access, K-226) lenkes ikke fra noen annen side
-    if (!side.startsWith("/hjelp") && /href="\/hjelp[\/"#]/.test(html)) mangler.push(`${side}: lenker til /hjelp (skal ikke ligge i åpne sider eller menyen)`);
+    // Kundeområdet (K-229, bak Cloudflare Access) lenkes ikke fra åpne sider eller menyen, og gamle adresser (/hjelp, /dokumenter, /sigdal) brukes ikke i lenker
+    if (navn === "hengsel" && side !== "/kunde" && !side.startsWith("/kunde/") && /href="\/kunde[\/"#]/.test(html)) mangler.push(`${side}: lenker til /kunde (skal ikke ligge i åpne sider eller menyen)`);
+    if (/href="\/(?:hjelp|sigdal)[\/"#]/.test(html)) mangler.push(`${side}: lenker til gammel adresse (/hjelp eller /sigdal). Bruk /kunde/…`);
   }
   try {
     const sitemap = await (await fetch(new URL("/sitemap.txt", base))).text();
     if (sitemap.includes("/apptest")) mangler.push("sitemap.txt: inneholder /apptest");
-    if (sitemap.includes("/hjelp")) mangler.push("sitemap.txt: inneholder /hjelp");
-    if (/\/sigdal(?=[\/\s]|$)/m.test(sitemap)) mangler.push("sitemap.txt: inneholder /sigdal");
+    for (const sti of ["/hjelp", "/kunde", "/sigdal", "/dokumenter", "/slik-virker-det"]) if (new RegExp(`${sti}(?=[/\\s]|$)`, "m").test(sitemap)) mangler.push(`sitemap.txt: inneholder ${sti}`);
   } catch {}
+
+  // K-229: omdirigeringene i public/_redirects. Hvert mål (301) finnes, og ingen side i dist ligger bak en omdirigering (den ville aldri blitt vist).
+  // Splat-regler (/gammel/* → /ny/:splat) sjekkes ved at målet finnes og at ingen side i dist ligger under kilden.
+  try {
+    const regler = (await readFile(join(dist, "_redirects"), "utf8")).split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#")).map((l) => l.split(/\s+/)).filter(([k, m, kode]) => k && m && kode === "301");
+    for (const [kilde, mal] of regler) {
+      const malSti = mal.split("#")[0].replace(/\/?:splat$/, "");
+      const splat = kilde.endsWith("/*");
+      const kildeSti = kilde.replace(/\/\*$/, "");
+      const r = await fetch(new URL(malSti, base));
+      sjekket++;
+      if (r.status !== 200) mangler.push(`_redirects: ${kilde} → ${mal}: målet svarer ${r.status}`);
+      if (kildeSti !== "/" && (sett.has(kildeSti) || sider.includes(kildeSti))) mangler.push(`_redirects: ${kilde} ligger over en side som finnes i dist (${kildeSti}); siden vises aldri`);
+      if (splat) {
+        for (const side of sider.filter((x) => x.startsWith(kildeSti + "/") || x === kildeSti)) mangler.push(`_redirects: ${kilde} ligger over ${side}, som finnes i dist`);
+      }
+    }
+  } catch (e) {
+    if (e.code !== "ENOENT") throw e;
+  }
 
   server.close();
   if (mangler.length) {

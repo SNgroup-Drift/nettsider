@@ -13,9 +13,9 @@ Gjelder hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.he
 8. **Farger endres bare i designsystemet** i innlandet-crm-sync, og deretter pinnes ny commit her. Ingen retter farger på én side alene.
 9. **Omfang:** hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.hengsel.no og nye Hengsel-sider.
 
-## Kundeutgaver (K-223): hengsel.no/sigdal
+## Kundeutgaver (K-223): hengsel.no/kunde/sigdal
 
-En kundeutgave er ikke en Hengsel-side: den har kundens tema i `packages/kundetema-<kunde>/` (for Sigdal `tokens.css`, `profil.json`), lastet som egen fil (`/sigdal/tema.css`) og bare under kunderoten, aldri på Hengsel-sidene. Temaet bytter ut hver farge-rolle og skriften over de delte variablene (`:root[data-kunde="sigdal"]`). Sidene bruker fortsatt bare variabler. `scripts/kundetema.test.mjs` sjekker at /sigdal bare har Sigdal-fargene (i nettleser, computed styles), at hver farge-rolle i den delte fila er byttet ut, og at Hengsel-sidene ikke har noe av Sigdal-temaet. Ny kunde: kopier pakken, legg kunden til i `sites/hengsel/src/kunde.ts`, `worker/sigdal.ts` og testene. Se `claude/k223-rapport.md`.
+En kundeutgave er ikke en Hengsel-side: den har kundens tema i `packages/kundetema-<kunde>/` (for Sigdal `tokens.css`, `profil.json`), lastet som egen fil (`/kunde/sigdal/tema.css`) og bare under kunderoten, aldri på Hengsel-sidene. Temaet bytter ut hver farge-rolle og skriften over de delte variablene (`:root[data-kunde="sigdal"]`). Sidene bruker fortsatt bare variabler. `scripts/kundetema.test.mjs` sjekker at /kunde/sigdal bare har Sigdal-fargene (i nettleser, computed styles), at hver farge-rolle i den delte fila er byttet ut, og at Hengsel-sidene ikke har noe av Sigdal-temaet. Ny kunde: kopier pakken, legg kunden til i `sites/hengsel/src/kunde.ts`, `worker/kunde.ts` og testene. Se `claude/k223-rapport.md`.
 
 ## Slik følger du reglene
 

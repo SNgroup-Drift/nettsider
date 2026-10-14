@@ -29,7 +29,7 @@ interface Props {
 }
 const { title: hengselTittel, description: hengselBeskrivelse, noindex, robots, aktiv = "", utenMeny = false, utenBunn = false, delingsbilde = "https://hengsel.no/og-hengsel-no.png" } = Astro.props;
 
-// K-223: under /sigdal er dette Sigdal-utgaven av siden (tema, meny, bunn, tekst og bilder). Hengsel-sidene er uendret.
+// K-223: under /kunde/sigdal er dette Sigdal-utgaven av siden (tema, meny, bunn, tekst og bilder). Hengsel-sidene er uendret.
 const kunde = kundeFra(Astro.url.pathname);
 const title = kunde ? (kunde.titler[kundeSti(kunde, Astro.url.pathname)] ?? hengselTittel) : hengselTittel;
 const description = kunde ? tilKunde(hengselBeskrivelse, kunde) : hengselBeskrivelse;

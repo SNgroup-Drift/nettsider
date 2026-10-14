@@ -33,6 +33,6 @@ export const UTPLASSERT = [
   [`${P5}levert-av-hengsel-lys.svg`, "sites/vis/src/assets/logo/levert-av-hengsel-lys.svg"],
   // Sigdal: «Sigdal CRM · levert av Hengsel» (hele merket i én farge) på hengsel.no/sigdal og som kundemerke-eksempel på design.hengsel.no.
   // PNG, ikke SVG: SVG-ene i pakken har et tomt <image> (selve Sigdal-logoen er ikke lagt inn), så de gjengir bare «CRM · levert av Hengsel». PNG-ene er riktige.
-  ...["warm-black", "off-white"].flatMap((v) => ["", "-2x", "-3x"].map((x) => [`${P6}sigdal-crm-levert-av-hengsel-${v}${x}.png`, `sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-${v}${x}.png`])),
+  ...["warm-black", "off-white"].flatMap((v) => ["", "-2x", "-3x"].map((x) => [`${P6}sigdal-crm-levert-av-hengsel-${v}${x}.png`, `sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-${v}${x}.png`])),
   ...["warm-black", "off-white"].flatMap((v) => ["", "-2x"].map((x) => [`${P6}sigdal-crm-levert-av-hengsel-${v}${x}.png`, `sites/design/public/merke/sigdal-crm-levert-av-hengsel-${v}${x}.png`])),
 ];

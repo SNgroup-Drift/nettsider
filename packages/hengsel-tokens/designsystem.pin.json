@@ -153,27 +153,27 @@
         "fra": "design/handoff/hengsel_merke_v2/2-deling/og-kunde.png",
         "sha256": "82f76d65c36890df3c20265c9edef9aaad0bb0917c9e5a5bb267c156ab51249c"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-2x.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-2x.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white-2x.png",
         "sha256": "9e79582d61374c0eecd0dcea8285a89d902b056c3640a90ca64dd023fa07fea2"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-3x.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white-3x.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white-3x.png",
         "sha256": "3cfca30316bdcd687e87ec281876b7dd5c4e3818732b20aa75e25b6314862a63"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-off-white.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-off-white.png",
         "sha256": "fe6dc9a561aa8fdf210eaff06c52e2678e8b3fdf339fa7e00e4ab52a8f2126ce"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-2x.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-2x.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black-2x.png",
         "sha256": "4958cf843de8880e74e553f1298c6d575b517cb4b29d0187bee6886b1a393ebf"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-3x.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black-3x.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black-3x.png",
         "sha256": "ba113b3497452ee0fdd925a4f2c5d9248c46d59293049b75acbcd66876bc679f"
       },
-      "sites/hengsel/public/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black.png": {
+      "sites/hengsel/public/kunde/sigdal/logo/sigdal-crm-levert-av-hengsel-warm-black.png": {
         "fra": "design/handoff/hengsel_merke_v2/6-sigdal/sigdal-crm-levert-av-hengsel-warm-black.png",
         "sha256": "12daf3aef72d014df26db9ed2281ece4ced230b3d92e00dc4930ac4cedb65ccf"
       },

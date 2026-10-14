@@ -22,9 +22,11 @@ import { EPOST } from "../content/forside";
 
 const { versjon, oppdatert } = APPTEST;
 const dato = (iso: string) => new Intl.DateTimeFormat("nb-NO", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Europe/Oslo" }).format(new Date(`${iso}T12:00:00Z`)); // dd.mm.åååå
-// K-223: i en kundeutgave peker QR-koden til kundens egen adresse (hengsel.no/sigdal/apptest), ikke til passordsiden
+// K-223: i en kundeutgave peker QR-koden til kundens egen adresse (hengsel.no/kunde/sigdal/apptest), ikke til passordsiden
 const kundeUtgave = kundeFra(Astro.url.pathname);
-const qr = lagQr(kundeUtgave ? `https://hengsel.no${kundeUtgave.sti}/apptest` : undefined);
+// K-229: /kunde/apptest (bak Access, uten passord) har QR-kode til seg selv; /apptest (passordet) til /apptest
+const iKunde = Astro.url.pathname.replace(/\.html$/, "") === "/kunde/apptest";
+const qr = lagQr(kundeUtgave ? `https://hengsel.no${kundeUtgave.sti}/apptest` : iKunde ? "https://hengsel.no/kunde/apptest" : undefined);
 
 const VEIER = [
   {

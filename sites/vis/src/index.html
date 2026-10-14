@@ -19,9 +19,6 @@
 <link rel="stylesheet" href="/assets/vis.css">
 <link rel="stylesheet" href="/assets/enhet.css">
 <link rel="stylesheet" href="/assets/forside.css">
-<link rel="stylesheet" href="/assets/dokumenter/a4.css">
-<link rel="stylesheet" href="/assets/dokumenter.css">
-<!--a4-stil-->
 </head>
 <body>
 <header class="topp">
@@ -29,7 +26,7 @@
     <a class="hjem" href="/" aria-label="Visningsrommet – forsiden"><!--logo-hengsel 28--><span class="sep" aria-hidden="true"></span><b>Visningsrommet</b></a>
     <button type="button" class="menyknapp" id="menyknapp" aria-label="Meny" aria-expanded="false" aria-controls="meny">≡</button>
     <nav class="meny" id="meny" aria-label="Seksjoner">
-      <a href="#forsta">Forstå</a><a href="#prov">Prøv</a><a href="#dokumenter">Dokumenter</a><a href="#presenter">Presenter</a><a class="crm" href="/crm/">Logg inn på CRM</a>
+      <!--meny-->
     </nav>
   </div>
 </header>
@@ -51,64 +48,16 @@
     </div>
   </section>
 
-  <section class="inner seksjon forsta" id="forsta" aria-labelledby="forsta-h">
-    <div class="hode"><h2 id="forsta-h">Forstå på ti minutter</h2><span>Tre rom, i rekkefølge</span></div>
-    <div class="rad3 sveip">
-      <a class="card rom" href="/reise/" data-rom="reise"><span class="meta">1 · Simulering · 4 min</span><div class="bilde"><img src="/img/forsta-reise.webp" alt="Hengsel CRM: tilbudet slik kunden ser det, på en MacBook" loading="lazy"></div><span class="ktittel">Ordrens reise</span><p>Fra tegning i CET til montert kjøkken og faktura, i åtte scener.</p><span class="go">Spill av ›</span></a>
-      <a class="card rom" href="/kunde/" data-rom="kunde"><span class="meta">2 · Simulering · 3 min</span><div class="bilde"><img src="/img/forsta-kunde.webp" alt="Min side på en iPhone: tilbudet" loading="lazy"></div><span class="ktittel">Kundens reise</span><p>Det kunden ser i Min side og på SMS, fra tilbud til reklamasjon.</p><span class="go">Spill av ›</span></a>
-      <a class="card rom" href="/system/" data-rom="system"><span class="meta">3 · Oversikt · 3 min</span><div class="bilde"><img src="/img/rom-system.webp" alt="Systemkartet på en Studio Display" loading="lazy"></div><span class="ktittel">Systemkartet</span><p>Hva som går inn og ut av CRM, og hvor langt hver kobling er kommet.</p><span class="go">Åpne kartet ›</span></a>
-    </div>
-  </section>
-
-  <section class="inner seksjon prov" id="prov" aria-labelledby="prov-h">
-    <div class="hode"><h2 id="prov-h">Prøv selv</h2><span>Klikk rundt med oppdiktede data. Ingen innlogging.</span></div>
+  <section class="inner seksjon sider" aria-label="Sidene i Visningsrommet">
     <div class="rad4">
-      <a class="card gruppe-kort" href="/butikken/" data-gruppe="butikken"><div class="bilde"><img src="/img/flate-butikken.webp" alt="Hengsel CRM: salgstavlen på en Studio Display" loading="lazy"></div><span class="meta">Butikken</span><span class="ktittel">Hengsel CRM</span><p>Min dag, tilbud, bestilling, montasjeplan og kontroll.</p><span class="go"></span></a>
-      <a class="card gruppe-kort" href="/montoren/" data-gruppe="montoren"><div class="bilde"><img src="/img/flate-montoren.webp" alt="Hengsel Ute: i dag på en iPhone" loading="lazy"></div><span class="meta">Montøren</span><span class="ktittel">Hengsel Ute</span><p>Dagen, tegningen, laser, KS og ferdigmelding. Også for firmaleder.</p><span class="go"></span></a>
-      <a class="card gruppe-kort" href="/kunden/" data-gruppe="kunden"><div class="bilde"><img src="/img/flate-kunden.webp" alt="Min side på to iPhoner: hjem og tilbudet" loading="lazy"></div><span class="meta">Kunden</span><span class="ktittel">Min side</span><p>Tilvalg, signering, levering, montering og reklamasjon. Uten app.</p><span class="go"></span></a>
-      <a class="card gruppe-kort" href="/leverandoren/" data-gruppe="leverandoren"><div class="bilde"><img src="/img/flate-leverandoren.webp" alt="Hengsel CRM: kontrollmål på en MacBook" loading="lazy"></div><span class="meta">Leverandøren</span><span class="ktittel">Koblingene</span><p>Ordrebekreftelse på e-post, hvitevarer via Tradeplace, CET.</p><span class="go"></span></a>
+      <a class="card sidekort" href="/forsta/"><span class="meta">Forstå</span><span class="ktittel">Forstå på ti minutter</span><p>Tre rom, i rekkefølge</p><span class="go">›</span></a>
+      <a class="card sidekort" href="/prov/"><span class="meta">Prøv</span><span class="ktittel">Prøv selv</span><p>Klikk rundt med oppdiktede data. Ingen innlogging.</p><span class="go">›</span></a>
+      <a class="card sidekort" href="/dokumenter/"><span class="meta">Dokumenter</span><span class="ktittel">Det kunden og butikken får i hånden</span><p>Alle 9 dokumenter</p><span class="go">›</span></a>
+      <a class="card sidekort" href="/presenter/"><span class="meta">Presenter</span><span class="ktittel">Presenter og regn</span><p>For møter med ledelse og leverandører</p><span class="go">›</span></a>
     </div>
-  </section>
-
-  <section class="inner seksjon" id="dokumenter" data-rom="dokumenter" aria-labelledby="dok-h">
-    <div class="hode"><h2 id="dok-h">Det kunden og butikken får i hånden</h2><a href="/dokumenter/">Alle 9 dokumenter ›</a></div>
-    <div class="ark-rad">
-      <!--a4-ark:tilbud:0:Tilbudet-->
-      <!--a4-ark:kjopsavtale:0:Kjøpsavtalen-->
-      <!--a4-ark:montering:0:Monteringsrapporten-->
-      <!--a4-ark:fdv:0:FDV og garanti-->
-      <!--a4-ark:anbud:0:Anbud for prosjekt-->
-    </div>
-  </section>
-
-  <section class="inner seksjon" id="presenter" aria-labelledby="pres-h">
-    <div class="hode"><h2 id="pres-h">Presenter og regn</h2><span>For møter med ledelse og leverandører</span></div>
-    <div class="rad4">
-      <a class="card rom tekstkort" href="/leverandor/" data-rom="leverandor"><span class="meta">Presentasjon</span><span class="ktittel">Leverandørløsningen</span><p>Tolv strømmer, krav og frister</p></a>
-      <a class="card rom tekstkort" href="/leder/" data-rom="leder"><span class="meta">Oversikt</span><span class="ktittel">Daglig leder</span><p>Ordrereserve, margin, risiko</p></a>
-      <a class="card rom tekstkort" href="/veikart/" data-rom="veikart"><span class="meta">Oversikt</span><span class="ktittel">Veikart og status</span><p>I drift, kvartal for kvartal</p></a>
-      <a class="card rom tekstkort" href="/gevinst/" data-rom="gevinst"><span class="meta">Verktøy</span><span class="ktittel">Gevinstkalkulator</span><p>Butikkens egne tall</p></a>
-    </div>
-    <div class="lenkerad"><a href="/sv/" data-rom="sv">För leverantören (svenska / English) ›</a><a href="/opplaering/" data-rom="opplaering">Opplæring for selgere ›</a><a href="/rom/" id="alle-rom">Alle rommene ›</a></div>
   </section>
 </main>
-<footer>
-  <div class="inner">
-    <div class="levert"><p>Et utstillingsrom, ikke en salgsside. Alle navn, kunder, ordre og tall er oppdiktet. <a href="/cdn-cgi/access/logout">Logg ut</a></p><span><!--logo-hengsel 14 levert-av--></span></div>
-    <div class="levert"><p>Del lenke til én rolle: <code>?rolle=selger</code> · <code>montor</code> · <code>leverandor</code> · <code>nobia</code></p></div>
-    <aside class="baand" aria-label="SN Group">
-      <a href="https://sngroup.no" class="avsender">
-        <svg width="32" height="32" viewBox="0 0 44 44" aria-hidden="true"><g transform="translate(5,5)"><rect class="strek-sn" x="0" y="0" width="34" height="34"/><line class="strek-sn" x1="17" y1="0" x2="17" y2="21"/><line class="strek-sn" x1="0" y1="21" x2="34" y2="21"/><path class="bue" d="M17 21 A9 9 0 0 1 26 30"/></g></svg>
-        <span>En del av SN Group</span>
-      </a>
-      <ul aria-label="Søstersidene">
-        <li><a href="https://sngroup.no">sngroup.no</a></li>
-        <li><span class="skille" aria-hidden="true">·</span><span aria-current="page" class="her">hengsel.no</span></li>
-        <li><span class="skille" aria-hidden="true">·</span><a href="https://byggem.no">byggem.no</a></li>
-      </ul>
-    </aside>
-  </div>
-</footer>
+<!--bunn-->
 <script src="/assets/rom.js"></script>
 <script src="/forside.js"></script>
 </body>

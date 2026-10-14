@@ -20,9 +20,9 @@ const ut = join(rot, "claude", "k231-skjermbilder");
 const SIDER = [
   ["hengsel", "/ute", "hengsel-no-ute-motion", "motion"],
   ["hengsel", "/apptest", "hengsel-no-apptest-motion", "motion"],
-  ["hengsel", "/sigdal", "sigdal-topp", "topp"],
-  ["hengsel", "/sigdal/crm", "sigdal-crm-topp", "topp"],
-  ["hengsel", "/sigdal/vis/", "sigdal-vis-topp", "topp"],
+  ["hengsel", "/kunde/sigdal", "sigdal-topp", "topp"],
+  ["hengsel", "/kunde/sigdal/crm", "sigdal-crm-topp", "topp"],
+  ["hengsel", "/kunde/sigdal/vis/", "sigdal-vis-topp", "topp"],
   ["hengsel", "/kundeportal", "hengsel-no-kundeportal", "hel"],
   ["design", "/merke", "design-merke", "hel"],
   ["design", "/last-ned", "design-last-ned", "hel"],
@@ -35,7 +35,7 @@ const nettleser = await chromium.launch({ executablePath: process.env.CHROMIUM_P
 const feil = [];
 for (const [side, sti, navn, utsnitt] of SIDER) {
   for (const bredde of [390, 1280]) {
-    const ctx = await nettleser.newContext({ viewport: { width: bredde, height: utsnitt === "hel" ? 900 : 760 }, deviceScaleFactor: 1, colorScheme: "light", bypassCSP: sti.startsWith("/sigdal/vis") });  // Visningsrommet i Sigdal-utgave har inline stil og får egen CSP i Worker-en, ikke den lokale serverens
+    const ctx = await nettleser.newContext({ viewport: { width: bredde, height: utsnitt === "hel" ? 900 : 760 }, deviceScaleFactor: 1, colorScheme: "light", bypassCSP: sti.startsWith("/kunde/sigdal/vis") });  // Visningsrommet i Sigdal-utgave har inline stil og får egen CSP i Worker-en, ikke den lokale serverens
     const p = await ctx.newPage();
     p.on("console", (m) => { if (m.type() === "error") feil.push(`${navn} ${bredde}: ${m.text()}`); });
     p.on("pageerror", (e) => feil.push(`${navn} ${bredde}: ${e}`));

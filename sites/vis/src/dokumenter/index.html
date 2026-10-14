@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/assets/hengsel-fonts.css">
 <link rel="stylesheet" href="/assets/vis.css">
 <link rel="stylesheet" href="/assets/enhet.css">
+<link rel="stylesheet" href="/assets/forside.css">
 <link rel="stylesheet" href="/assets/dokumenter/a4.css">
 <link rel="stylesheet" href="/assets/dokumenter/dokumentvisning.css">
 <link rel="stylesheet" href="/assets/dokumenter.css">
@@ -25,7 +26,15 @@
 <style>.wrap{max-width:1180px;margin:0 auto;padding:16px 24px 40px;display:grid;gap:32px}@media (max-width:640px){.wrap{padding-inline:16px}}</style>
 </head>
 <body>
-<div class="topbar"><span class="topl"><a class="back" href="/">‹ Visningsrommet</a><span class="sep" aria-hidden="true"></span><!--logo-hengsel 28--></span><span class="pill nodot">Oppdiktede data</span></div>
+<header class="topp">
+  <div class="inner">
+    <a class="hjem" href="/" aria-label="Visningsrommet – forsiden"><!--logo-hengsel 28--><span class="sep" aria-hidden="true"></span><b>Visningsrommet</b></a>
+    <button type="button" class="menyknapp" id="menyknapp" aria-label="Meny" aria-expanded="false" aria-controls="meny">≡</button>
+    <nav class="meny" id="meny" aria-label="Seksjoner">
+      <!--meny dokumenter-->
+    </nav>
+  </div>
+</header>
 <div class="wrap">
   <header class="sidehode">
     <div class="eyebrow">Det kunden får i hånden</div>
@@ -38,5 +47,6 @@
   <p class="foot">Demoen er ikke koblet til ekte data. Dokumentene er de samme som på hengsel.no/dokumenter, og skjermbildene er fra designfilene. Skrift: Schibsted Grotesk.</p>
 </div>
 <script src="/assets/dokumenter/dokumentvisning.js" defer></script>
+<script src="/assets/meny.js" defer></script>
 </body>
 </html>

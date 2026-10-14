@@ -1,0 +1,12 @@
+{
+  "_om": "K-229: «Prøv i demoen» i rommene som bare viser skjermer. rom: sti i demoen per rom (bare stien, uten adresse). «/» = forsiden i demoen til stedet er avklart (demo.hengsel.no har ikke fast rute per rom ennå). Bytt stien her; bygget henter den herfra.",
+  "adresse": "https://demo.hengsel.no",
+  "tekst": "Prøv i demoen",
+  "rom": {
+    "crm": "/",
+    "firmaleder": "/",
+    "montor": "/",
+    "minside": "/",
+    "tegning": "/"
+  }
+}

@@ -7,7 +7,7 @@
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
 import UteMotion from "../components/UteMotion.astro";
-import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, IPAD, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
+import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
 
 const n = STEG.length;
 ---
@@ -49,21 +49,6 @@ const n = STEG.length;
             <span class="teller" aria-live="polite" data-teller>{`1 av ${n}`}</span>
             <button type="button" class="rund" data-neste aria-label={NESTE}>›</button>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek flate">
-      <div class="h-innhold ipad">
-        <div class="ipad-hode">
-          <div class="sek-hode">
-            <span class="eyebrow">{IPAD.eyebrow}</span>
-            <h2>{IPAD.tittel}</h2>
-          </div>
-          <p class="dempet">{IPAD.tekst}</p>
-        </div>
-        <div class="ipad-ramme">
-          <Enhet type="ipad" src={IPAD.bilde} w={IPAD.w} h={IPAD.h} alt={IPAD.alt} symboler={false} />
         </div>
       </div>
     </section>
@@ -147,10 +132,6 @@ const n = STEG.length;
   .rund:disabled { opacity: 0.45; cursor: not-allowed; }
   .teller { font-size: 0.92rem; color: var(--muted); min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
 
-  .ipad { display: flex; flex-direction: column; gap: 32px; }
-  .ipad-hode { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px 48px; align-items: end; }
-  .ipad-hode p { font-size: 1.05rem; }
-  .ipad-ramme { width: 100%; max-width: 1040px; margin: 0 auto; }
 
   .nett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
   .nett-bilde { width: 100%; max-width: 340px; justify-self: center; }

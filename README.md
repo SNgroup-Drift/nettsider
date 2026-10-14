@@ -5,10 +5,10 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | Nettsted | Mappe | Innhold |
 |---|---|---|
 | sngroup.no | `sites/sngroup` | Forsiden med plantegningen, virksomhetene, Hengsel, kontakt, `/personvern` (montørappen Hengsel) og `/design` |
-| hengsel.no | `sites/hengsel` | hengsel.no 2.0 (K-160): forside, /crm, /ute, /kundeportal, /slik-virker-det, /dokumenter, /integrasjoner, /priser-og-demo (skjema til /api/demo), personvern, /apptest og 404 |
+| hengsel.no | `sites/hengsel` | hengsel.no 2.0 (K-160), kortet ned i K-229: forside med «Prøv selv» til demo.hengsel.no, /crm, /ute, /kundeportal, /integrasjoner, /priser-og-demo (skjema til /api/demo), personvern, /apptest (passord til Access står foran /kunde) og 404. Kundeområdet `/kunde` (hjelp, test appen, dokumenter og kundens egen utgave) ligger bak én Cloudflare Access-innlogging |
 | byggem.no | `sites/byggem` | Forside, prosjekter, kontakt, personvern og 404 (K-87 del 5) |
 | design.hengsel.no | `sites/design` | Designfasiten for Hengsel (K-182): merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer. Astro, generert fra Hengsel-designsystemets tokens (pinnet commit), åpen men noindex, egen Worker `design` (se `docs/hosting.md`) |
-| hengsel.no/sigdal | `sites/hengsel` (`src/pages/sigdal*`) + `packages/kundetema-sigdal` | K-223: Sigdal-utgave av Hengsel-sidene og Visningsrommet (`/sigdal/vis/`), bak Cloudflare Access, noindex. Se `claude/k223-rapport.md` |
+| hengsel.no/kunde/sigdal | `sites/hengsel` (`src/pages/kunde/sigdal*`) + `packages/kundetema-sigdal` | K-223: Sigdal-utgave av Hengsel-sidene og Visningsrommet (`/kunde/sigdal/vis/`), bak Cloudflare Access, noindex. Se `claude/k223-rapport.md` |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
 **Hengsel-sidene** (hengsel.no, vis., design., admin.) har én delt token-fil og bare lys modus; reglene står i [docs/design/hengsel-regler.md](docs/design/hengsel-regler.md).

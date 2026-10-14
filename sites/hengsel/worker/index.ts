@@ -1,22 +1,34 @@
 /**
  * Inngangen til Workeren for hengsel.no (wrangler.jsonc: main). Bare disse stiene går gjennom kode (assets.run_worker_first):
- * /api/demo (demoskjemaet, worker/demo.ts), /apptest og alt under (passordet, worker/apptest.ts), /hjelp og alt under (brukerveiledningen,
- * worker/hjelp.ts, K-226) og /sigdal og alt under (kundeutgaven for Sigdal, worker/sigdal.ts, K-223). /hjelp og /sigdal står bak Cloudflare Access
- * og bruker samme sjekk (worker/access.ts). Resten er statiske filer.
+ * /kunde og alt under (kundeområdet bak Cloudflare Access: hjelp, apptest, dokumenter og kundens egen utgave, worker/kunde.ts, K-229),
+ * /api/demo (demoskjemaet, worker/demo.ts) og /apptest og alt under (passordet, worker/apptest.ts, K-107). Resten er statiske filer; gamle adresser
+ * (/hjelp, /dokumenter, /sigdal) videresendes av public/_redirects.
+ *
+ * /apptest: passordet gjelder til Access står foran /kunde. Da settes variabelen APPTEST_VIDERE til «1» (vanlig variabel, ikke hemmelighet), og
+ * /apptest og alt under videresendes med 301 til /kunde/apptest. Slik står ingen testere uten tilgang mens Access settes opp.
  */
 import apptest from "./apptest";
 import { handterDemo, type DemoEnv } from "./demo";
-import { erHjelp, handterHjelp, type HjelpEnv } from "./hjelp";
-import { ER_SIGDAL, handterSigdal, type SigdalEnv } from "./sigdal";
+import { ER_KUNDE, handterKunde, type KundeEnv } from "./kunde";
 
-type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & HjelpEnv & SigdalEnv;
+type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & KundeEnv & { APPTEST_VIDERE?: string };
+
+const ER_APPTEST = (sti: string) => sti === "/apptest" || sti.startsWith("/apptest/");
+
+/** /apptest → /kunde/apptest, /apptest/<fil> → /kunde/apptest/<fil>; passordsiden finnes ikke i kundeområdet */
+export function apptestTilKunde(sti: string): string {
+  if (sti === "/apptest/passord" || sti === "/apptest/passord.html") return "/kunde/apptest";
+  return `/kunde${sti}`;
+}
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
-    const { pathname } = new URL(req.url);
-    if (erHjelp(pathname)) return handterHjelp(req, env);
+    const { pathname, search } = new URL(req.url);
+    if (ER_KUNDE(pathname)) return handterKunde(req, env);
     if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env));
-    if (ER_SIGDAL(pathname)) return handterSigdal(req, env);
+    if (ER_APPTEST(pathname) && env.APPTEST_VIDERE === "1") {
+      return new Response(null, { status: 301, headers: { Location: apptestTilKunde(pathname) + search, "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" } });
+    }
     return apptest.fetch(req, env);
   },
 };
