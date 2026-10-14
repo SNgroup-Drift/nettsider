@@ -113,14 +113,14 @@
 :root[data-kunde="sigdal"] .btn.primary:hover { background: var(--tekst); color: var(--flate-side); opacity: 0.86; }
 :root[data-kunde="sigdal"] .btn { font-family: var(--skrift-familie-hengsel-tekst); font-weight: var(--skrift-vekt-medium); }
 
-/* Kundelogoen: Sigdal-logoen (transparent SVG i Warm Black) når den er levert, til da navnet som tekstmerke. «levert av Hengsel» står under.
-   Luft rundt og minst 26 px bredde. Brukes av Meny og Bunn (sites/hengsel) og av Visningsrommet i Sigdal-utgave. */
+/* Kundemerket: «Sigdal CRM · levert av Hengsel» som ett SVG-merke i Warm Black (Off White på mørk flate). Mangler filen, står navnet som tekstmerke med «levert av Hengsel» under.
+   Brukes av Meny og Bunn (sites/hengsel) og av Visningsrommet i Sigdal-utgave. */
 .kundelogo { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 3px; line-height: 1; padding-block: 2px; }
+.kundelogo-merke { display: block; height: 26px; width: auto; max-width: 100%; }
 .kundelogo-navn { font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); font-size: 1.7rem; line-height: 1; letter-spacing: -0.012em; color: var(--tekst); min-width: 26px; }
-.kundelogo-bilde { display: block; height: 30px; width: auto; min-width: 26px; margin-block: 2px 4px; }
 .kundelogo-levert { font-family: var(--skrift-familie-hengsel-tekst); font-size: 0.78rem; line-height: 1.2; color: var(--tekst-dempet); letter-spacing: 0.01em; }
 /* Tekstmerke i stedet for Hengsel-logoene (produktnavn og «levert av Hengsel») inne i sidene */
 .kl-ord { display: inline-block; width: auto; height: auto; max-width: 100%; font-family: var(--skrift-familie-hengsel-overskrift); font-weight: var(--skrift-vekt-fet); font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--tekst); white-space: nowrap; }
 /* Visningsrommet: logoen i toppfeltet er mindre, og plassen under er smalere på telefon */
 :root[data-kunde="sigdal"] .hlogo { height: auto; min-height: var(--h, 28px); }
-.kundelogo-vis .kundelogo-bilde { height: 22px; }
+.kundelogo-vis .kundelogo-merke { height: 22px; }

@@ -11,7 +11,7 @@ const FILER = [
   ["tokens/fonts-fri-liste.css", "fonts-fri-liste.css", "@font-face for kundetemaets frie skriftliste. Last bare de kunden har valgt."],
 ] as const;
 ---
-<Side title="Last ned – Hengsel designfasit" description="Last ned designsystemets tokens (css, ts, json), skriftene logopakken (alle logoene og merkene fra palettpakke v2) og ikonsettet." aktiv="last-ned">
+<Side title="Last ned – Hengsel designfasit" description="Last ned designsystemets tokens (css, ts, json), skriftene, logopakken (logoene og merkene fra palettpakke v2, Levert av og Sendt med, favicon med flis), ikonsettet, butikkmalene, app-ikonene, motion og delingsbildene." aktiv="last-ned">
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Last ned · versjon {designsystem.versjon}</span>
@@ -38,16 +38,53 @@ const FILER = [
     <section class="sek" id="logopakke">
       <header>
         <h2>Logopakken</h2>
-        <p>Alle logoene og merkene fra palettpakke v2 (Hengsel, CRM, Ute, Admin og Levering, i lys og mørk, pluss blekk, hvit, glass og tonet for Hengsel) som SVG, med lisensfilen for skriften. Ferdige og konturerte: ikke tegn dem om. De monokrome produktlogoene er foreslått og ikke med.</p>
+        <p>Alle logoene og merkene fra palettpakke v2 (Hengsel, CRM, Ute, Admin og Levering, i lys og mørk, pluss blekk, hvit, glass og tonet for Hengsel) som SVG, pluss «Levert av Hengsel» og «Sendt med Hengsel» (SVG og PNG i 1×, 2× og 3×, merkepakke v2) og favicon med hvit flis (<code>favicon.ico</code>, SVG og PNG 16, 32 og 48). Med lisensfilen for skriften. Ferdige og konturerte: ikke tegn dem om. De monokrome produktlogoene er foreslått og ikke med.</p>
       </header>
       <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-logopakke.zip" download>Last ned hengsel-logopakke.zip</a></div>
     </section>
     <section class="sek" id="ikonpakke">
       <header>
         <h2>Ikonene</h2>
-        <p>49 strekikoner (SVG med currentColor) i 16, 20 og 24 px, med navn, gruppe og SF Symbol i <code>ikoner.json</code>, sprite og tabell. Status: foreslått, venter på bekreftelse. Se <a href="/komponenter#ikoner">Komponenter</a>.</p>
+        <p>53 strekikoner (SVG med currentColor): de 49 fra palettpakke v2 og de fire nye fra merkepakke v2 (Montasjeplan, Innboks, Profil og Hjelp, i <code>ikoner-tillegg.json</code>), i 16, 20 og 24 px, med navn, gruppe og SF Symbol i <code>ikoner.json</code>, sprite og tabell. Status: foreslått, venter på bekreftelse. Se <a href="/komponenter#ikoner">Komponenter</a>.</p>
       </header>
       <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-ikoner.zip" download>Last ned hengsel-ikoner.zip</a></div>
+    </section>
+    <section class="sek" id="butikk">
+      <header>
+        <h2>Butikkmaler</h2>
+        <p>Maler for App Store (iPhone 6,9" og 6,5", iPad 13") og Google Play (telefon, nettbrett 10", funksjonsgrafikk 1024 × 500) med navngitte felt, forhåndsvisninger, <code>maler.json</code> og <code>tekster.json</code>. Se <a href="/merke#butikk">Merket</a>.</p>
+      </header>
+      <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-butikkmaler.zip" download>Last ned hengsel-butikkmaler.zip</a></div>
+    </section>
+    <section class="sek" id="appikoner">
+      <header>
+        <h2>App-ikoner</h2>
+        <p>PWA-ikoner for CRM og Visning, og app-ikon for Expo og Android (Ute og Visning), bygd fra <code>hengsel_ute.icon</code>, med <code>manifest-utdrag.json</code> og <code>app-json-utdrag.json</code>. Icon Composer-pakken for iOS ligger i <a href="/ds/assets/app-ikon/hengsel_ute.icon/icon.json"><code>/ds/assets/app-ikon/hengsel_ute.icon</code></a>.</p>
+      </header>
+      <div class="rad-flex"><a class="knapp primaer" href="/last-ned/hengsel-appikoner.zip" download>Last ned hengsel-appikoner.zip</a></div>
+    </section>
+    <section class="sek" id="motion">
+      <header>
+        <h2>Motion</h2>
+        <p>Hengsel Ute-motion, 10 s uten lyd, kvadrat og stående, med plakatbilde og kilden <code>motion.js</code>. Se <a href="/merke#motion">Merket</a>.</p>
+      </header>
+      <ul class="regler">
+        {["1080x1080", "1080x1920"].map((s) => (
+          <li>{s.replace("x", " × ")}: <a href={`/ds/assets/motion/ute-motion-${s}.mp4`} download>MP4</a> · <a href={`/ds/assets/motion/ute-motion-${s}.webm`} download>WebM</a> · <a href={`/ds/assets/motion/ute-motion-${s}-plakat.png`} download>plakat (PNG)</a></li>
+        ))}
+        <li><a href="/ds/assets/motion/kilde/motion.js" download>motion.js</a> (kilden, til ny rendring)</li>
+      </ul>
+    </section>
+    <section class="sek" id="deling">
+      <header>
+        <h2>Delingsbilder</h2>
+        <p>Open Graph-bilder, 1200 × 630, som PNG og SVG: hengsel.no, vis.hengsel.no, apptest og kundeområdet. Tekstene er forslag.</p>
+      </header>
+      <ul class="regler">
+        {[["og-hengsel-no", "hengsel.no"], ["og-vis-hengsel-no", "vis.hengsel.no"], ["og-apptest", "Invitasjon til apptest"], ["og-kunde", "Kundeområdet"]].map(([f, n]) => (
+          <li>{n}: <a href={`/ds/assets/deling/${f}.png`} download>PNG</a> · <a href={`/ds/assets/deling/${f}.svg`} download>SVG</a></li>
+        ))}
+      </ul>
     </section>
     <section class="sek" id="skrifter">
       <header>

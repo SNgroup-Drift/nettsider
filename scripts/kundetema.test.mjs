@@ -90,7 +90,7 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /sigdal og in
       const u = m[1];
       if (/^(#|mailto:|tel:|https:\/\/hengsel\.no\/personvern$)/.test(u)) continue;
       if (/^https:\/\/(?!(?:www\.|vis\.)?hengsel\.no)/.test(u)) continue; // eksterne tjenester (TestFlight, Google Play …)
-      if (u === "/img/ramme-studio-display.webp" || u.startsWith("/_astro/") || /^\/favicon-/.test(u) || u.startsWith("/cdn-cgi/")) continue;
+      if (u === "/img/ramme-studio-display.webp" || u.startsWith("/_astro/") || /^\/favicon[-.]/.test(u) || u.startsWith("/cdn-cgi/")) continue;
       assert.ok(u.startsWith("/sigdal"), `${r}: lenke ut av /sigdal: ${u}`);
     }
   }
