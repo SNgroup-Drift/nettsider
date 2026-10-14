@@ -7,8 +7,8 @@
  * Hvorfor her og ikke en egen kopi av rommene: rommene (sites/vis/src) bygges av sites/vis/bygg.mjs som før, til en midlertidig mappe, og så
  * gjøres de om til Sigdal-utgaven av dette skriptet: Sigdal-temaet (/kunde/sigdal/tema.css, samme fil som resten av /kunde/sigdal) legges over de delte
  * Hengsel-variablene, Hengsel-logoen byttes mot «Sigdal CRM · levert av Hengsel», stiene får /kunde/sigdal/vis som rot, skjermbildene hentes fra
- * plassholdermappa (/kunde/sigdal/img/vis/…) og tekstene følger profil.json. Ingen rom er kopiert for hånd, så en endring i et rom
- * kommer med i begge utgavene ved neste bygg. Hengsel-skriften, Hengsel-logoene og de grønne skjermbildene følger ikke med.
+ * biblioteket på bilder.hengsel.no i Sigdal-tema (VIS_TEMA=sigdal til bygg.mjs, K-233) og tekstene følger profil.json. Ingen rom er kopiert for hånd,
+ * så en endring i et rom kommer med i begge utgavene ved neste bygg. Hengsel-skriften, Hengsel-logoene og Hengsel-skjermbildene følger ikke med.
  * Sikkerhet: ligger under /kunde/sigdal/*, altså bak Cloudflare Access og Worker-sjekken (sites/hengsel/worker/kunde.ts).
  * Kjøres etter csp-hasher.mjs (rommene har inline stil og får egen CSP i Worker-en).
  */
@@ -28,12 +28,11 @@ const kunderot = join(dist, ...profil.sti.split("/").filter(Boolean)); // dist/k
 if (!existsSync(join(kunderot, "tema.css"))) throw new Error(`${kunderot}/tema.css finnes ikke: bygg hengsel.no først (npm run build -w sites/hengsel)`);
 
 const BASE = `${profil.sti}/vis`; // /kunde/sigdal/vis
-const IMG = `${profil.sti}/img/vis`; // plassholderne
 const mål = join(kunderot, "vis");
 
-// 1. Vanlig vis-bygg til en midlertidig mappe
+// 1. Vanlig vis-bygg til en midlertidig mappe, i Sigdal-tema (skjermbildene fra biblioteket får …/v1/sigdal/…). Manifestet er alt hentet av hengsel-bygget.
 const tmp = mkdtempSync(join(tmpdir(), "vis-sigdal-"));
-const bygg = spawnSync(process.execPath, [join(rot, "sites/vis/bygg.mjs")], { env: { ...process.env, VIS_DIST: tmp }, stdio: ["ignore", "ignore", "inherit"] });
+const bygg = spawnSync(process.execPath, [join(rot, "sites/vis/bygg.mjs")], { env: { ...process.env, VIS_DIST: tmp, VIS_TEMA: profil.kunde, SKJERMBILDER_MANIFEST: "kopi" }, stdio: ["ignore", "ignore", "inherit"] });
 if (bygg.status !== 0) throw new Error("bygget av sites/vis feilet");
 
 // 2. Hva som ikke følger med: Hengsel-skriften, -logoene og -skjermbildene, favicon (hengsel.no har egne i roten), delingsbildet og _headers
@@ -44,11 +43,11 @@ const rotnavn = toppNavn.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 // (?!kunde/sigdal): Visningsrommet har et rom på /kunde/, og Sigdal-utgaven ligger selv under /kunde/sigdal (K-229). Adresser som alt har riktig rot, skal ikke få den én gang til.
 const STI = new RegExp(`(["'(]|,\\s)/(?!kunde/sigdal)(${rotnavn.join("|")})(?![\\w-])`, "g");
 
-function stier(t) {
+function stier(t, fil) {
+  // K-233: ingen lokale skjermbilder lenger (/img/ hadde bare SN-logoen, som tas bort i html()); alt annet kommer fra bilder.hengsel.no
+  const lokalt = /(["'(]|,\s)\/(?:img|skjermbilder)\//.exec(t);
+  if (lokalt) throw new Error(`${fil}: peker på et lokalt bilde (${lokalt[0]}…). Skjermbildene skal komme fra biblioteket (bilder.hengsel.no)`);
   return t
-    .replace(/(["'(]|,\s)\/img\/dok-forside\.webp/g, `$1${profil.sti}/img/dok-forside.webp`)
-    .replace(/(["'(]|,\s)\/img\//g, `$1${IMG}/`)
-    .replace(/(["'(]|,\s)\/skjermbilder\//g, `$1${IMG}/skjermbilder/`)
     .replace(/href="\/(?=["#])/g, `href="${BASE}/`)
     .replace(STI, `$1${BASE}/$2`);
 }
@@ -86,7 +85,7 @@ function html(t, fil) {
   u = u.replace(/<img class="sn" src="\/img\/sn-logo\.svg"[^>]*>/g, ""); // SN Group-merket hører ikke til Sigdal-utgaven
   for (const [fra, til] of VIS_TEKST) u = u.split(fra).join(til);
   u = tilKunde(u, profil, { kunTekstOgLogo: true });
-  return stier(u);
+  return stier(u, fil);
 }
 
 function js(t, fil) {
@@ -96,7 +95,7 @@ function js(t, fil) {
     u = eksakt(u, "e.href='/'+g+'/'+", `e.href='${BASE}/'+g+'/'+`, fil);
   }
   u = tilKunde(u, profil, { kunTekstOgLogo: true });
-  return stier(u);
+  return stier(u, fil);
 }
 
 let antall = 0;
@@ -110,7 +109,7 @@ function kopier(dir) {
     mkdirSync(dirname(til), { recursive: true });
     if (/\.html$/.test(n)) writeFileSync(til, html(readFileSync(fra, "utf8"), rel));
     else if (/\.js$/.test(n)) writeFileSync(til, js(readFileSync(fra, "utf8"), rel));
-    else if (/\.css$/.test(n)) writeFileSync(til, stier(readFileSync(fra, "utf8")));
+    else if (/\.css$/.test(n)) writeFileSync(til, stier(readFileSync(fra, "utf8"), rel));
     else cpSync(fra, til);
     antall++;
   }

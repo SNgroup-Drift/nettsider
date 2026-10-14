@@ -8,7 +8,12 @@
  */
 import Side from "../../layouts/Side.astro";
 import Hjelpebunn from "../../components/Hjelpebunn.astro";
-import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../../data/hjelp";
+import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER, type Skjermbilde } from "../../data/hjelp";
+import { skjermbilde } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+
+// K-233: skjermbildene hentes fra biblioteket på bilder.hengsel.no (hjelp/<id>.webp, 2× med @1x). Hjelp finnes bare i Hengsel-utgave (tema hengsel).
+// Et bilde som ikke står i manifestet, vises som plassholderen «Skjermbilde kommer» (data-skjermbilde="hjelp/<id>").
+const bilde = (s: Skjermbilde) => skjermbilde("hengsel", `hjelp/${s.id}.webp`, { hd: true });
 ---
 <Side title="Brukerveiledning · Hengsel" description="Brukerveiledning for Hengsel CRM, Hengsel Ute og Min side." robots="noindex,nofollow" utenMeny utenBunn>
   <header slot="hode" class="sidehode">
@@ -58,11 +63,9 @@ import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../../data/hjelp";
                   {o.tekst && <p>{o.tekst}</p>}
                   {o.steg && <ol>{o.steg.map((s) => <li>{s}</li>)}</ol>}
                   {o.tips && <p class="tips"><b>{o.tips.etikett}:</b> {o.tips.tekst}</p>}
-                  {o.skjermbilde && (
-                    o.skjermbilde.fil
-                      ? <img class="bilde" src={o.skjermbilde.fil} alt={`Skjermbilde: ${o.skjermbilde.navn}`} loading="lazy" />
-                      : <div class="bilde plassholder" role="img" aria-label={`${HJELP.plassholder}: ${o.skjermbilde.navn}`}><b>{HJELP.plassholder}</b><span>{o.skjermbilde.navn}</span></div>
-                  )}
+                  {o.skjermbilde && (() => { const b = bilde(o.skjermbilde); return b
+                      ? <img class="bilde" src={b.x1?.url ?? b.url} srcset={b.srcset} width={b.x1?.bredde ?? b.bredde} height={b.x1?.hoyde ?? b.hoyde} alt={`Skjermbilde: ${o.skjermbilde.navn}`} loading="lazy" decoding="async" />
+                      : <figure class="bilde plassholder" data-skjermbilde={`hjelp/${o.skjermbilde.id}`} role="img" aria-label={`${HJELP.plassholder}: ${o.skjermbilde.navn}`}><b>{HJELP.plassholder}</b><span>{o.skjermbilde.navn}</span></figure>; })()}
                 </article>
               ))}
             </div>
@@ -114,7 +117,7 @@ import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../../data/hjelp";
   .tips { background: var(--accent-soft); border-radius: var(--r-sm); padding: 10px 12px; font-size: 0.92rem; }
   .tips b { color: var(--aksent-tekst); }
 
-  .bilde { display: block; width: 100%; height: auto; border-radius: var(--radius-bilde); border: 1px solid var(--line); }
+  .bilde { display: block; width: 100%; height: auto; margin: 0; border-radius: var(--radius-bilde); border: 1px solid var(--line); box-sizing: border-box; }
   .plassholder { display: grid; gap: 2px; justify-items: center; padding: 22px 18px; border: 1.5px dashed var(--line); background: var(--surface-soft); color: var(--muted); font-size: 0.88rem; text-align: center; }
   .plassholder b { font-weight: var(--w-medium); color: var(--ink); }
 </style>

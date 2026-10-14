@@ -1,11 +1,11 @@
 // Dokumentdata (packages/hengsel-dokumenter/src): felles for hengsel.no og Visningsrommet. node --test scripts/dokumenter.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { DOKUMENTER, LAGES_STEG } from "../packages/hengsel-dokumenter/src/data.js";
 import { LAGES } from "../packages/hengsel-dokumenter/src/lages.js";
 import { renderA4Side } from "../packages/hengsel-dokumenter/src/render.js";
+import { KJENTE_MANGLER, finnes } from "./lib/bildedomene.mjs";
 
 const rot = join(import.meta.dirname, "..");
 
@@ -24,7 +24,8 @@ test("hvert dokument har 3–5 steg med skjermbilde som finnes, alt-tekst, og hv
     assert.ok(l, `mangler LAGES.${d.id}`);
     assert.ok(l.steg.length >= 3 && l.steg.length <= 5, `${d.id}: ${l.steg.length} steg`);
     for (const s of l.steg) {
-      assert.ok(existsSync(join(rot, "sites", "vis", "src", "skjermbilder", `${s.bilde}.webp`)), `${d.id}: ${s.bilde}.webp finnes ikke`);
+      // K-233: skjermbildet ligger i biblioteket (vis/skjermbilder/<bilde>.webp i manifestet), eller er en kjent mangel som vises som plassholder
+      assert.ok(finnes("hengsel", `vis/skjermbilder/${s.bilde}.webp`) || KJENTE_MANGLER.includes(`vis/skjermbilder/${s.bilde}`), `${d.id}: ${s.bilde}.webp står verken i manifestet eller i KJENTE_MANGLER`);
       assert.ok(s.alt.length > 10 && s.t && s.s, `${d.id}: steg uten tekst eller alt`);
     }
     assert.ok(l.etterpa.some(([t]) => t === "pdf"), `${d.id}: etterpå må nevne PDF`);

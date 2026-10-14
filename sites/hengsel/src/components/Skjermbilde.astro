@@ -1,14 +1,47 @@
 ---
-/** Bildet inne i en enhetsramme: <picture>, bredde og høyde (ingen CLS), lazy med mindre det er øverst. */
-interface Props { src: string; w: number; h: number; alt: string; forst?: boolean; topp?: boolean; hd?: boolean }
-const { src, w, h, alt, forst = false, topp = false, hd = false } = Astro.props;
-// hd: src er 2×, og @1x-utgaven ligger ved siden av
-const sett = (s: string) => (hd ? `${s.replace(/\.webp$/, "@1x.webp")} 1x, ${s} 2x` : s);
+/**
+ * Bildet inne i en enhetsramme: <picture>, bredde og høyde (ingen CLS), lazy med mindre det er øverst.
+ * K-233: app-skjermbildene hentes fra biblioteket på bilder.hengsel.no (bilde="app/idag-lys.webp", stien uten tema; se
+ * packages/hengsel-tokens/skjermbilder.mjs). Under /kunde/sigdal hentes Sigdal-utgaven (samme sti, tema sigdal). Målene kommer fra manifestet.
+ * Et bilde som ikke står i manifestet, vises som plassholderen «Skjermbilde kommer» med data-skjermbilde="<nøkkel>" (scripts/skjermbilder-bibliotek.test.mjs
+ * godtar bare de kjente manglene). src brukes bare for lokale filer som ikke er app-skjermbilder.
+ */
+import { PLASSHOLDER, skjermbilde, skjermbildeNokkel } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+import { kundeFra } from "../kunde";
+
+interface Props {
+  /** Sti i biblioteket uten tema, for eksempel «app/idag-lys.webp» eller «apptest/ruten-lys.webp» */
+  bilde?: string;
+  /** Lokal fil (ikke et app-skjermbilde) */
+  src?: string;
+  w?: number;
+  h?: number;
+  alt: string;
+  forst?: boolean;
+  topp?: boolean;
+  /** 2× med @1x-utgave ved siden av: srcset med 1x og 2x */
+  hd?: boolean;
+}
+const { bilde, src, w, h, alt, forst = false, topp = false, hd = false } = Astro.props;
+const tema = kundeFra(Astro.url.pathname)?.nokkel ?? "hengsel";
+const fraBibliotek = bilde ? skjermbilde(tema, bilde, { hd }) : null;
+const lokal = src ? { url: src, srcset: hd ? `${src.replace(/\.webp$/, "@1x.webp")} 1x, ${src} 2x` : undefined, bredde: w, hoyde: h } : null;
+const b = fraBibliotek ?? lokal;
+const navn = alt.replace(/^Hengsel (?:Ute|CRM)(?: på iPad| uten nett)?: /, "");
 ---
-<picture>
-  <img class:list={["innhold", { topp }]} src={src} srcset={hd ? sett(src) : undefined} alt={alt} width={w} height={h} loading={forst ? "eager" : "lazy"} fetchpriority={forst ? "high" : undefined} decoding="async" />
-</picture>
+{b ? (
+  <picture>
+    <img class:list={["innhold", { topp }]} src={b.url} srcset={b.srcset} alt={alt} width={b.bredde ?? w} height={b.hoyde ?? h} loading={forst ? "eager" : "lazy"} fetchpriority={forst ? "high" : undefined} decoding="async" />
+  </picture>
+) : (
+  <figure class:list={["innhold", "plassholder", { topp }]} data-skjermbilde={skjermbildeNokkel(bilde ?? "")} role="img" aria-label={`${PLASSHOLDER}: ${navn}`}><b>{PLASSHOLDER}</b><span>{navn}</span></figure>
+)}
 <style>
   img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
   img.topp { object-position: top left; }
+  /* Skaleres med skjermen i rammen (container-enheter fra .skjerm); i små rammer vises bare «Skjermbilde kommer» */
+  .plassholder { display: grid; align-content: center; justify-items: center; gap: 4px; width: 100%; height: 100%; margin: 0; padding: 4%; box-sizing: border-box; overflow: hidden; background: var(--app-flate); color: var(--tekst-dempet); font: 500 clamp(0.5rem, 7cqi, 1rem) / 1.35 var(--f-body); text-align: center; }
+  .plassholder b { color: var(--tekst); font-weight: 600; }
+  .plassholder span { font-size: 0.85em; }
+  @container (max-width: 200px) { .plassholder span { display: none; } }
 </style>

@@ -30,7 +30,7 @@ Pakken eksporterer dem som `@sngroup/hengsel-dokumenter/data`, `…/render`, `�
 | `<!--a4-stil-->` | `<style>` med kolonnemaler og bildehøyder | alle sider som viser A4 |
 | `<!--a4-ark:id:side:Tittel-->` | Ett lite ark som lenke til `/dokumenter/#id` | forsiden |
 
-Det finnes ingen dokumentbilder (`dok-*.webp` er fjernet). Romkortet `src/img/rom-dokumenter.webp` lages av `npm run rammer:vis` fra en gjengitt tilbudsforside (krever `npm run build -w sites/vis` først).
+Det finnes ingen dokumentbilder (`dok-*.webp` er fjernet). Romkortet `vis/rom-dokumenter.webp` hentes fra biblioteket (K-233); til det er lastet opp, vises plassholderen. Forsidebildet på arkene (`dok-forside.webp`) hentes også derfra, med plassholder til det finnes.
 
 Lenker til et dokument: `/dokumenter/#tilbud`, `#kjopsavtale`, `#ob`, `#anbud`, `#montering`, `#punkt`, `#fdv`, `#plan`, `#faktura`.
 

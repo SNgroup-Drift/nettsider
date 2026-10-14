@@ -1,16 +1,18 @@
-/* Skjermbilder fra designfilene i Apples enhetsrammer (README «Regel for skjermbilder», assets/enhet.css).
-   Et element med data-bilder="navn,navn,…" får bildene fra /skjermbilder/<navn>.webp lagt i sin .skjerm,
-   én om gangen, med ‹ › og teller under rammen når det er flere. data-alt gir alt-teksten, data-ingen-nav dropper ‹ ›.
+/* Skjermbilder fra biblioteket på bilder.hengsel.no i Apples enhetsrammer (README «Regel for skjermbilder», assets/enhet.css).
+   Et element med data-bilder="navn,navn,…" får bildene (vis/skjermbilder/<navn>.webp i biblioteket, adresse og mål fra SKJERM som bygg.mjs
+   fyller fra manifest.json) lagt i sin .skjerm, én om gangen, med ‹ › og teller under rammen når det er flere. Et navn som ikke står i manifestet
+   (SKJERM[navn] = null) viser plassholderen «Skjermbilde kommer» som bygg.mjs har lagt i .skjerm. data-alt gir alt-teksten, data-ingen-nav dropper ‹ ›.
    Bildene har ingen statuslinje (iPhone-rammen har island), så ingen tegnes.
    Skjermbilder.velger(tabs) bytter mellom [data-enhet]-rammer (PC · iPad · Telefon), og Skjermbilder.guide(…)
    kobler «Prøv dette»-stegene til bilder og til loggen «Samtidig i Hengsel». Ingen inline-skript (CSP). */
 window.Skjermbilder=(function(){
-  /* Bare lys utgave. 1× og 2× som srcset. Lages av scripts/fiktive-skjermer.mjs. */
-  var SKJERMMAL=/*SKJERMMAL*/{}/*SKJERMMAL-slutt*/;
+  /* Bare lys utgave (CRM-et har bare lys modus). u = 2×, u1 = 1× (srcset), b/h = mål på 2×. null = plassholder. */
+  var SKJERM=/*SKJERM*/{}/*SKJERM-slutt*/;
   function sett(img,navn){
-    var m=SKJERMMAL[navn];if(m){img.width=m[0];img.height=m[1]}
-    var b='/skjermbilder/'+navn;
-    img.srcset=b+'@1x.webp 1x, '+b+'.webp 2x';img.src=b+'.webp';
+    var m=SKJERM[navn],skjerm=img.parentNode;
+    [].forEach.call(skjerm.querySelectorAll('figure.plassholder'),function(f){f.hidden=true});
+    if(m){img.hidden=false;img.width=m.b;img.height=m.h;if(m.u1)img.srcset=m.u1+' 1x, '+m.u+' 2x';else img.removeAttribute('srcset');img.src=m.u}
+    else{img.hidden=true;img.removeAttribute('srcset');img.removeAttribute('src');var f=skjerm.querySelector('figure[data-skjermbilde="vis/skjermbilder/'+navn+'"]');if(f)f.hidden=false}
   }
   function lag(frame){
     var liste=frame.dataset.bilder.split(',').map(function(s){return s.trim()}).filter(Boolean);

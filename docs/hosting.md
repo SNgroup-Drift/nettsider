@@ -59,6 +59,9 @@ feilen i stedet `Could not read file: …`. Rettes i Worker → Settings → Bui
 Node: `.nvmrc` i rotmappen sier 22. `NODE_VERSION` = `22` gjør det samme i byggmiljøet (Astro krever 22.12 eller nyere).
 `wrangler` står som `devDependency` i rotens `package.json`, så `npx wrangler` bruker den låste versjonen.
 
+K-233: byggene henter `https://bilder.hengsel.no/skjermbilder/v1/manifest.json` (bare manifestet, aldri bildene) og bruker kopien i
+`packages/hengsel-tokens/skjermbilder-manifest.json` når den ikke svarer, så bygget feiler ikke om biblioteket er nede. CSP-ene har `img-src … https://bilder.hengsel.no`.
+
 Byggekommandoen kjører `astro build` og så `scripts/csp-hasher.mjs`, som legger hashen for inline-CSS-en inn i
 `Content-Security-Policy` i `dist/_headers`. Bygg alltid med `npm run build`, ikke bare `astro build`; ellers blokkerer
 CSP-en stilarket.

@@ -11,12 +11,11 @@
   },
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/apptest-innhold.test.mjs scripts/demo.test.mjs scripts/dokumenter.test.mjs scripts/app-lenker.test.mjs scripts/admin.test.mjs scripts/design-fasit.test.mjs scripts/hengsel-regler.test.mjs scripts/mork-modus-nettleser.test.mjs scripts/design-stiler.test.mjs scripts/gamle-farger.test.mjs scripts/kundetema.test.mjs scripts/kunde-worker.test.mjs scripts/hjelp.test.mjs scripts/vis-meny.test.mjs scripts/nettsider-struktur.test.mjs scripts/merkepakke.test.mjs && node scripts/sjekk-lenker.mjs",
+    "test": "node --test scripts/apptest-versjon.test.mjs scripts/apptest-passord.test.mjs scripts/apptest-innhold.test.mjs scripts/demo.test.mjs scripts/dokumenter.test.mjs scripts/app-lenker.test.mjs scripts/admin.test.mjs scripts/design-fasit.test.mjs scripts/hengsel-regler.test.mjs scripts/mork-modus-nettleser.test.mjs scripts/design-stiler.test.mjs scripts/gamle-farger.test.mjs scripts/kundetema.test.mjs scripts/kunde-worker.test.mjs scripts/hjelp.test.mjs scripts/vis-meny.test.mjs scripts/nettsider-struktur.test.mjs scripts/merkepakke.test.mjs scripts/skjermbilder-bibliotek.test.mjs && node scripts/sjekk-lenker.mjs",
     "skjermbilder": "node scripts/skjermbilder.mjs",
     "skjermer": "node scripts/fiktive-skjermer.mjs",
     "kvalitet:k177": "node scripts/kvalitet-k177.mjs",
     "skjermbilder:vis": "node scripts/skjermbilder-vis.mjs",
-    "rammer:vis": "node scripts/rammer-vis.mjs",
     "dev:sngroup": "npm run dev -w sites/sngroup",
     "dev:hengsel": "npm run dev -w sites/hengsel",
     "dev:byggem": "npm run dev -w sites/byggem",
@@ -25,8 +24,7 @@
     "dev:design": "npm run dev -w sites/design",
     "design:hent": "node scripts/hent-designsystem.mjs",
     "design:skjermbilder": "node scripts/skjermbilder-design.mjs",
-    "skjermbilder:sigdal": "node scripts/skjermbilder-sigdal.mjs",
-    "sigdal:plassholdere": "node scripts/lag-sigdal-plassholdere.mjs"
+    "skjermbilder:sigdal": "node scripts/skjermbilder-sigdal.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",

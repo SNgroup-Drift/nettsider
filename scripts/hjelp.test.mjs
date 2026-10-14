@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { nullstillBuffer, sjekkAccess } from "../sites/hengsel/worker/access.ts";
 import { ER_KUNDE as erHjelp, handterKunde as handterHjelp } from "../sites/hengsel/worker/kunde.ts";
 import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER } from "../sites/hengsel/src/data/hjelp.ts";
+import { BILDEDOMENE, finnes } from "./lib/bildedomene.mjs";
 
 const rot = join(import.meta.dirname, "..");
 const les = (sti) => readFileSync(join(rot, sti), "utf8");
@@ -140,7 +141,7 @@ test("datafila har samme oppbygging som Hjelp i CRM-et (kapittel, rolle, tittel,
     assert.ok(ider.includes(o.rolle), o.tittel);
     assert.equal(o.kapittel, HJELP_ROLLER.find((r) => r.id === o.rolle).kapittel, o.tittel);
     assert.ok(o.tittel && (o.tekst || o.steg?.length), `${o.tittel}: mangler tekst eller steg`);
-    if (o.skjermbilde) assert.ok(o.skjermbilde.navn);
+    if (o.skjermbilde) assert.ok(o.skjermbilde.navn && /^[a-z0-9-]+$/.test(o.skjermbilde.id), `${o.tittel}: skjermbilde trenger navn og id (hjelp/<id>.webp i biblioteket)`);
   }
   for (const r of HJELP_ROLLER) assert.ok(HJELP_OPPGAVER.some((o) => o.rolle === r.id), r.id);
   assert.equal(HJELP.copyright, COPYRIGHT);
@@ -176,8 +177,13 @@ test("dist/kunde/hjelp.html: noindex, copyright, rollevelger, plassholdere og ik
     assert.ok(html.includes(`href="#${r.id}"`), `rollevelger: ${r.id}`);
     assert.ok(html.includes(`id="${r.id}"`), `kapittel: ${r.id}`);
   }
-  const plassholdere = HJELP_OPPGAVER.filter((o) => o.skjermbilde && !o.skjermbilde.fil).length;
-  assert.equal(html.split(">Skjermbilde kommer<").length - 1, plassholdere);
+  // K-233: skjermbildene kommer fra biblioteket (hjelp/<id>.webp); de som ikke står i manifestet, vises som plassholder med data-skjermbilde="hjelp/<id>"
+  const medBilde = HJELP_OPPGAVER.filter((o) => o.skjermbilde);
+  const plassholdere = medBilde.filter((o) => !finnes("hengsel", `hjelp/${o.skjermbilde.id}.webp`));
+  assert.equal(html.split(">Skjermbilde kommer<").length - 1, plassholdere.length);
+  for (const o of plassholdere) assert.ok(html.includes(`data-skjermbilde="hjelp/${o.skjermbilde.id}"`), `plassholder for ${o.skjermbilde.id} mangler data-skjermbilde`);
+  for (const o of medBilde.filter((o) => !plassholdere.includes(o))) assert.ok(html.includes(`${BILDEDOMENE}/hengsel/hjelp/${o.skjermbilde.id}.webp`), `${o.skjermbilde.id}: bildet lenkes ikke fra biblioteket`);
+  assert.doesNotMatch(html, /src="\/img\/hjelp\//, "hjelp-bilder skal ikke ligge lokalt");
   assert.doesNotMatch(html, /<script/);
   assert.doesNotMatch(html, /fonts\.googleapis|fonts\.gstatic/);
   for (const sti of ["index.html", "crm.html", "personvern.html", "priser-og-demo.html"]) assert.doesNotMatch(readFileSync(join(dist, sti), "utf8"), /href="\/(?:kunde\/)?hjelp/, sti);

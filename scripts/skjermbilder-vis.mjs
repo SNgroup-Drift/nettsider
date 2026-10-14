@@ -8,8 +8,10 @@
  *  - /dokumenter/ (K-161): skjermbilder av oversikten og tre dokumenter (tilbud, kjøpsavtale, monteringsrapport) på 390 og 1280 px, lys og mørk,
  *    til claude/k161-skjermbilder/. Sjekker i tillegg bla med piler og sveip, lazy-lasting av sidene, bredde og høyde på bilder, alt-tekster,
  *    CLS og kontrast (minst 4,5:1, 3:1 for stor tekst) på selve siden.
- *  - Romkortbildene på forsiden for rom uten skjermbilde fra designfilene: rommet på 1920 × 1080 (lys, øverst) i Studio Display-rammen
- *    som webp til sites/vis/src/img/rom-*.webp. Bildene ligger i repoet og følger med i neste bygg (ingen bilder fra hengsel.no).
+ *  - Romkortbildene for rom uten app-skjermbilde: rommet på 1920 × 1080 (lys, øverst) i Studio Display-rammen som webp til
+ *    docs/skjermbilder/bibliotek/vis/rom-*.webp. K-233: sidene lenker romkortene fra biblioteket på bilder.hengsel.no (vis/rom-*.webp i manifestet);
+ *    filene her lastes opp dit (scripts/skjermbilder/last-opp-r2.mjs i hengsel-crm) og fjernes fra KJENTE_MANGLER i scripts/lib/bildedomene.mjs.
+ *    Ingen bilder ligger lokalt i sites/vis lenger.
  *
  * Kjør etter `npm run build`: node scripts/skjermbilder-vis.mjs
  * Chromium: PLAYWRIGHT_BROWSERS_PATH, eller CHROMIUM_PATH for en bestemt fil.
@@ -86,11 +88,11 @@ for (const v of visninger) {
     await ctx.close();
   }
 }
-// Romkortbildene for rom uten skjermbilde fra designfilene: rommet selv på 1920 × 1080 (lys, øverst) i Studio Display-rammen
-// (scripts/lib/rammer.mjs), webp med gjennomsiktig bunn i src/img. Rommene med skjermbilder lages av scripts/rammer-vis.mjs.
-const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "hvitevarer", "gevinst", "leverandor", "leder", "veikart", "sv", "system"];
+// Romkortbildene for rom uten app-skjermbilde: rommet selv på 1920 × 1080 (lys, øverst) i Studio Display-rammen (scripts/lib/rammer.mjs), webp med
+// gjennomsiktig bunn, til opplasting i biblioteket (K-233). Rommene med app-skjermbilder komponeres av K-228 i hengsel-crm.
+const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "hvitevarer", "gevinst", "leverandor", "leder", "veikart", "sv", "system", "dokumenter"];
 {
-  const img = join(rot, "sites", "vis", "src", "img");
+  const img = join(rot, "docs", "skjermbilder", "bibliotek", "vis");
   await mkdir(img, { recursive: true });
   const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1, colorScheme: "light", reducedMotion: "reduce" });
   for (const r of rom) {
@@ -109,7 +111,7 @@ const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "h
     await page.close();
   }
   await ctx.close();
-  console.log(`\n${rom.length} romkortbilder i sites/vis/src/img/`);
+  console.log(`\n${rom.length} romkortbilder i docs/skjermbilder/bibliotek/vis/ (til opplasting i biblioteket som vis/rom-*.webp)`);
 }
 
 // /dokumenter/ (K-161): skjermbilder, bla med tastatur og sveip, lazy-lasting, CLS, alt-tekster og kontrast

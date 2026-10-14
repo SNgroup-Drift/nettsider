@@ -3,7 +3,8 @@
  * Visningsrommet (sites/vis/bygg.mjs), så markeringen finnes ett sted. Klassene er kontrakten mot a4.css.
  *
  * Alle tekster escapes. Merket øverst er «Din logo | Butikknavn Hamar», og Hengsel-logoen (hengsel-lys.svg, 3 mm) står i bunnlinjen til høyre (aldri to Hengsel-logoer).
- * Papiret er alltid lyst. Forsidebildet hentes fra `bildeSti` (standard /img/dok-forside.webp, 1200 × 768) og logoen fra `logoSti` (standard /logo/hengsel-lys.svg).
+ * Papiret er alltid lyst. Forsidebildet (1200 × 768) hentes fra `bildeSti`: adressen i skjermbildebiblioteket (K-233, bilder.hengsel.no/…/dok-forside.webp)
+ * eller null når det ikke står i manifestet; da tegnes plassholderen «Skjermbilde kommer» (data-skjermbilde="dok-forside"). Logoen fra `logoSti` (standard /logo/hengsel-lys.svg).
  */
 import { hhKlasse, malKlasse } from "./a4-stil.js";
 
@@ -70,14 +71,18 @@ function blokk(b) {
 /**
  * Én A4-side som HTML.
  * @param {import("./data").DokSide} side
- * @param {{ fot: string, nr: number, total: number, ligg?: boolean, forst?: boolean, klasse?: string, bildeSti?: string, logoSti?: string }} o
+ * @param {{ fot: string, nr: number, total: number, ligg?: boolean, forst?: boolean, klasse?: string, bildeSti?: string | null, logoSti?: string }} o
  */
-export function renderA4Side(side, { fot, nr, total, ligg = false, forst = false, klasse = "", bildeSti = "/img/dok-forside.webp", logoSti = "/logo/hengsel-lys.svg" }) {
+export function renderA4Side(side, { fot, nr, total, ligg = false, forst = false, klasse = "", bildeSti = null, logoSti = "/logo/hengsel-lys.svg" }) {
+  if (bildeSti !== null && typeof bildeSti !== "string") throw new Error("renderA4Side: bildeSti må være adressen til forsidebildet i biblioteket, eller null (plassholder)");
   const fs = side.forside;
   const td = side.todelt;
   let inn = "";
   if (fs) {
-    inn += `<div class="a4-foto"><img src="${esc(bildeSti)}" alt="" width="1200" height="768" loading="${forst ? "eager" : "lazy"}"${forst ? ' fetchpriority="high"' : ""} decoding="async">` +
+    const foto = bildeSti
+      ? `<img src="${esc(bildeSti)}" alt="" width="1200" height="768" loading="${forst ? "eager" : "lazy"}"${forst ? ' fetchpriority="high"' : ""} decoding="async">`
+      : `<figure class="a4-plassholder" data-skjermbilde="dok-forside" role="img" aria-label="Skjermbilde kommer: forsidebildet"><b>Skjermbilde kommer</b><span>Illustrasjon fra tegningen</span></figure>`;
+    inn += `<div class="a4-foto">${foto}` +
       `<div class="a4-plate a4-merke"><span class="a4-dinlogo">Din logo</span><span class="a4-skille"></span><span class="a4-butikk"><span>Butikknavn</span><b>Hamar</b></span></div>` +
       `<span class="a4-bildetekst">Illustrasjon laget fra tegningen. Endelig utseende kan avvike.</span></div>`;
     inn += `<div class="a4-fs">${span(fs.eyebrow, "a4-eb")}${span(fs.tittel, "a4-disp a4-fs-tittel")}${span(fs.under, "a4-fs-under")}`;

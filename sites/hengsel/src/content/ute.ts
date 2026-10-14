@@ -1,5 +1,5 @@
 // /ute: tekstene ordrett fra docs/design/hengsel/LES-MEG.md («/ute · Ute.dc.html»).
-// Appbildene ligger i public/img/app (faste filnavn; byttes senere mot ekte skjermbilder).
+// Appbildene hentes fra skjermbildebiblioteket på bilder.hengsel.no (K-233): stien under app/ uten tema, se packages/hengsel-tokens/skjermbilder.mjs.
 
 export const APPTEST_URL = "https://hengsel.no/apptest";
 
@@ -13,7 +13,7 @@ export const STEG_ARIA = "Steg i appen";
 export const FORRIGE = "Forrige steg";
 export const NESTE = "Neste steg";
 
-/** Steg i appen: nøkkel (bildefil: app/<nokkel>-lys.webp), tittel, setning, alt-tekst */
+/** Steg i appen: nøkkel (bildet i biblioteket: app/<nokkel>-lys.webp), tittel, setning, alt-tekst */
 export const STEG = [
   { nokkel: "idag", tittel: "I dag", tekst: "Neste jobb, På vei, og det du må vite før du starter.", alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei" },
   { nokkel: "jobben", tittel: "Jobben", tekst: "Tegning, mål, bilder og restpunkter samlet før, under og etter.", alt: "Hengsel Ute: jobben med Noe mangler, Før og Under" },
@@ -29,7 +29,7 @@ export const IPAD = {
   tekst: "Punkter, mål, piler og tekst rett på bildet, med Apple Pencil eller finger. Laseren kobles til, og målene går rett inn i bildet. Punktlista til høyre har samme nummer som i CRM og kundeportalen.",
   alt: "Hengsel Ute på iPad: bildeverktøyet med punkter på bildet og punktliste til høyre",
   /** Laserens modellnavn i bildet er «Lasermåler» */
-  bilde: "/img/app/ipad-bildeverktoy-laser.webp",
+  bilde: "app/ipad-bildeverktoy-laser.webp",
   w: 2360,
   h: 1640,
 } as const;
@@ -47,7 +47,7 @@ export const UTEN_NETT = {
     "Pillen øverst viser hva som venter: «3 venter på nett».",
   ],
   alt: "Hengsel Ute uten nett: I dag med varsel om at bilder og kryss sendes når nettet er tilbake",
-  lys: "/img/app/uten-nett-lys.webp",
+  bilde: "app/uten-nett-lys.webp",
 } as const;
 
 export const BLI_TESTER = {

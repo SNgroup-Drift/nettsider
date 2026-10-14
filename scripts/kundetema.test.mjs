@@ -13,6 +13,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { chromium } from "playwright";
 import { startServer } from "./statisk-server.mjs";
+import { BILDEDOMENE, finnes } from "./lib/bildedomene.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const dist = join(rot, "sites", "hengsel", "dist");
@@ -85,7 +86,10 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal
     assert.ok(!/Hengsel CRM|Butikknavn/.test(t), `${r}: «Hengsel CRM» eller «Butikknavn» står igjen`);
     // Studio Display-rammen (Apples ramme, ingen Hengsel-farger) er den eneste filen som hentes fra /img
     const utenRamme = t.replace(/\/img\/ramme-studio-display\.webp/g, "");
-    assert.ok(!/(?:src|srcset|poster)="\/(?:img|skjermbilder)\//.test(utenRamme) && !/,\s\/(?:img|skjermbilder)\//.test(utenRamme), `${r}: skjermbilde utenfor /kunde/sigdal/img`);
+    assert.ok(!/(?:src|srcset|poster)="\/(?:img|skjermbilder)\//.test(utenRamme) && !/,\s\/(?:img|skjermbilder)\//.test(utenRamme), `${r}: lokalt skjermbilde (alle app-skjermbilder kommer fra biblioteket)`);
+    // K-233: app-skjermbildene fra biblioteket hentes i Sigdal-tema (…/v1/sigdal/…), aldri Hengsel-utgaven
+    assert.ok(!t.includes(`${BILDEDOMENE}/hengsel/`), `${r}: skjermbilde i Hengsel-tema fra biblioteket`);
+    for (const m of t.matchAll(new RegExp(`${BILDEDOMENE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/([\\w@./-]+\\.webp)`, "g"))) assert.ok(m[1].startsWith("sigdal/") && finnes("sigdal", m[1].slice(7)), `${r}: ${m[0]} står ikke i manifestet`);
     for (const m of t.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
       const u = m[1];
       if (/^(#|mailto:|tel:|https:\/\/hengsel\.no\/personvern$)/.test(u)) continue;

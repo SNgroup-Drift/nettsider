@@ -35,6 +35,9 @@
 .a4-foto { position: relative; height: calc(620 * var(--u)); overflow: hidden; }
 .a4.ligg .a4-foto { height: calc(360 * var(--u)); }
 .a4-foto img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+/* K-233: forsidebildet mangler i skjermbildebiblioteket: plassholder i samme flate (ingen bilder ligger lokalt) */
+.a4-foto .a4-plassholder { display: grid; align-content: center; justify-items: center; gap: calc(4 * var(--u)); width: 100%; height: 100%; margin: 0; background: var(--flate-senket); color: var(--tekst-dempet); font: 500 calc(14 * var(--u)) / 1.4 var(--skrift-familie-hengsel-tekst); text-align: center; }
+.a4-foto .a4-plassholder b { color: var(--tekst); }
 .a4-plate { position: absolute; left: calc(56 * var(--u)); top: calc(36 * var(--u)); background: var(--flate-kort); border-radius: calc(8 * var(--u)); padding: calc(12 * var(--u)) calc(18 * var(--u)); }
 .a4-bildetekst { position: absolute; right: calc(56 * var(--u)); bottom: calc(18 * var(--u)); color: var(--flate-kort); font-size: calc(11 * var(--u)); }
 .a4-fs { padding: calc(40 * var(--u)) calc(56 * var(--u)) 0; display: flex; flex-direction: column; gap: calc(14 * var(--u)); }

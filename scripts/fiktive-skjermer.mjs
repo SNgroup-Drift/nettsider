@@ -26,7 +26,14 @@ const rot = resolve(import.meta.dirname, "..");
 const DESIGN = process.env.DESIGN ?? "/home/user/innlandet-crm-sync/docs/design/v4";
 // SKJERMER_UT: skriv til en annen mappe (K-182: sites/design/public/skjermer) uten å røre Visningsrommet, sngroup.no og kartet deres
 const UT_EGEN = process.env.SKJERMER_UT ? resolve(process.env.SKJERMER_UT) : null;
-const UT = UT_EGEN ?? join(rot, "sites", "vis", "src", "skjermbilder");
+// K-233: app-skjermbildene kommer fra biblioteket på bilder.hengsel.no (tatt fra demoen av K-228 i hengsel-crm), og sidene bruker ikke de fiktive
+// skjermene fra designfilene lenger. Skriptet må ikke skrive inn i sites/ (scripts/skjermbilder-bibliotek.test.mjs krever tomme bildemapper):
+// kjør bare med SKJERMER_UT=<mappe utenfor sites/> når du trenger skjermene til noe annet.
+if (!UT_EGEN || UT_EGEN.startsWith(join(rot, "sites"))) {
+  console.error("fiktive-skjermer.mjs: skjermbildene kommer fra biblioteket (K-233). Sett SKJERMER_UT=<mappe utenfor sites/> for å lage de fiktive skjermene til eget bruk.");
+  process.exit(1);
+}
+const UT = UT_EGEN;
 const versjon = (await readFile(join(rot, "sites", "hengsel", "src", "apptest-lenker.ts"), "utf8")).match(/versjon: "([^"]+)"/)[1];
 
 const E = "crm/eksport/CRM sju skjermer.dc.html";
