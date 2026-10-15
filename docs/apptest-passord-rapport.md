@@ -1,110 +1,118 @@
-# Hengsel apptest: passordet og demobrukerne tilbake (S-56)
+# Hengsel apptest: passordet og demobrukerne tilbake på hengsel.no/apptest (S-56, runde 2)
 
-Gren: `claude/apptest-passord-tilbake` (fra `main` 64d96fd). Ingen database. Ikke pushet til `main`, ikke deployet (ingen `wrangler deploy`, ingen versions upload).
-Ingen passord står i denne rapporten, i koden eller i en innsjekket `.dev.vars`. Testverdiene under kontrollen var tilfeldige, lokale og står bare
-i en `.dev.vars` som er slettet igjen (filen står i `.gitignore`).
+Gren: `claude/apptest-passord-tilbake`, laget fra `main` f041603 (15.10). Ingen database. Ikke pushet til `main`, ikke deployet (ingen `wrangler deploy`, ingen versions upload).
+Ingen passord står i denne rapporten, i koden eller i en innsjekket `.dev.vars`. Under kontrollen brukte jeg tilfeldige lokale testverdier i en `.dev.vars` som er slettet igjen
+(filen står i `.gitignore`). Det ekte demopassordet har jeg ikke sett eller brukt.
 
-## 1. Hva fjernet passordet og demobrukerne?
+## 0. Kort
 
-Tidslinjen i `git log -p` for `sites/hengsel` (wrangler.jsonc, `worker/apptest.ts`, `src/pages/apptest.astro`):
+- Bestillingen bygger på at passordet og demobrukerne er borte. **Det stemmer ikke for koden på `main`.** Samme bestilling ble levert 11.10 (PR #44, `c9ff6c4`, rapporten som lå i denne filen). Passordet foran
+  `/apptest` har ligget i Workeren hele tiden, og demobrukerne kom tilbake i #44.
+- Siden da har `main` fått to endringer som gjør at deler av bestillingen ikke lenger stemmer med siden: K-172 (11.10, `7b7e43e`) skrev `/apptest` om etter Claude Design «apptest v3», der demobruker og
+  passord står i hvert rollekort, og delen «Prøv med demobrukerne» og passordsidens tekster forsvant. K-229 (14.10) la `/kunde/apptest` bak Cloudflare Access.
+- Jeg har derfor ikke gjort bestillingen om fra bunnen, men lagt inn det som manglet mot den: delen «Prøv med demobrukerne» og passordsidens tekster. Resten var på plass og er bekreftet (punkt 4).
+- Jeg kan ikke se hvorfor hengsel.no/apptest viste siden uten passord. Det er listet som åpne punkter under (punkt 1). Sandkassen når ikke hengsel.no.
 
-| Når | Hva | Effekt |
-|---|---|---|
-| 07.10 `a4c1581` (K-107, PR #1 08.10) | Workeren `worker/apptest.ts`, `run_worker_first`, `passord.astro` | Passordet foran `/apptest` |
-| 08.10 `665cb4f` (K-114, PR #3 08.10 19:33) | `DEMO_PASSORD` satt inn av Workeren, PDF med fyllbart passordfelt, delen «Prøv med demobrukerne» | Demobrukerne |
-| 10.10 `4f36a73` (PR #9, merget 10.10 01:09) | «ny testside for Hengsel Ute 1.6.0, statisk og uten passord»: slettet `worker/apptest.ts`, `passord.astro`, `scripts/apptest.ts`, PDF-en og skrev `apptest.astro` om | Passord **og** demobrukere borte |
-| 10.10 `407f115` (samme PR #9) | «passordet tilbake som før»: Workeren, `passord.astro` og `run_worker_first` kom tilbake, men fra K-107-versjonen | Passordet tilbake. **Demobrukerne kom ikke tilbake**: `DEMO_PASSORD`-koden i Workeren, PDF-en og demodelen i siden mangler. |
-| 11.10 #34 (`4f7fab3`) | Ny `/apptest` etter fil 60 | Rørte ikke Workeren; demodelen var allerede borte |
+## 1. Hva fjernet passordet?
+
+`git log -p` for `sites/hengsel` (`wrangler.jsonc`, `worker/apptest.ts`, `worker/index.ts`, `src/pages/apptest.astro`) siden 09.10:
+
+| Når | Commit | Hva | Effekt på passord / demobrukere |
+|---|---|---|---|
+| 10.10 | PR #9 `4f36a73` | «ny testside … statisk og uten passord»: slettet Worker, passordside og PDF | Passord **og** demobrukere borte |
+| 10.10 | PR #9 `407f115` | «passordet tilbake som før» | Passordet tilbake. Demobrukerne ikke. |
+| 11.10 | `c9ff6c4` (#44) | Første levering av denne bestillingen: `DEMO_PASSORD`, delen «Prøv med demobrukerne», passordside, PDF, vakttest | Demobrukerne tilbake |
+| 11.10 | `7b7e43e` K-172 | `/apptest` etter «apptest v3»: demobruker og passord i rollekortene | Egen demodel og passordsidens gamle tekster borte. Workeren uendret |
+| 11.10 | `ebc30fe` K-160 | `worker/index.ts` blir `main`, `/api/demo` kommer til; `/apptest*` går til `worker/apptest.ts` | Ingen endring i passordet |
+| 14.10 | `f4fabbf` K-229 | `/kunde/*` bak Access. `/apptest` beholder passordet; variabelen `APPTEST_VIDERE=1` (dashbordet) sender `/apptest*` med 301 til `/kunde/apptest` | Se under |
 
 Funn:
 
-- **Demobrukerne og demopassordet** ble fjernet av PR #9 (`4f36a73`) og aldri tatt inn igjen av `407f115`. Dette er rettet her.
-- **Passordet foran siden finnes på `main`**: `wrangler.jsonc` har `main: ./worker/apptest.ts` og `run_worker_first: ["/apptest", "/apptest/*"]`, og
-  Workeren er uendret siden `407f115`. Jeg leste også Worker-koden som ligger utrullet på Cloudflare (Worker `hengsel`, endret 11.10 09:04, etter
-  #34): det er samme kode (passordside, 303/401/503, HMAC-informasjonskapsel), uten `DEMO_PASSORD`. Jeg fant altså ingen endring i koden som slipper
-  folk inn uten passord. Sandkassen når ikke hengsel.no, så jeg har ikke selv sett at `/apptest` er åpen.
-- Det jeg ser som mulige forklaringer på at siden åpnes uten passordside, i denne rekkefølgen:
-  1. En nettleser med en gyldig informasjonskapsel (`hengsel_apptest`, 30 dager, Path=/apptest). Signaturen avhenger bare av
-     `APPTEST_PASSORD` og `APPTEST_NOKKEL`, som ikke er byttet, så kapselen fra tidligere innlogging virker fortsatt. Test i et privat vindu eller med
-     `curl -sI https://hengsel.no/apptest` (skal gi 200 med passordsiden; se `docs/hosting.md`).
-  2. Hemmelighetene mangler på Workeren i en annen Cloudflare-konto/miljø enn jeg ser: da gir siden 503, ikke åpen side (kontrollert lokalt, under).
-  3. Utrullingen: `assets.run_worker_first` er en innstilling som bare virker hvis Workers Builds bruker `-c sites/hengsel/wrangler.jsonc` i både
-     Deploy command og Non-production branch deploy command. Jeg kan ikke lese bygginnstillingene herfra.
-  Hvis `curl` uten informasjonskapsel gir selve «Test Hengsel Ute»-siden (ikke passordsiden eller 503), er det 3, og da må Deploy command sjekkes i
-  dashbordet. Det er ikke noe jeg kan se eller endre fra repoet.
-- Åpent: jeg vet ikke om hemmeligheten `DEMO_PASSORD` ligger på Workeren `hengsel` (ingen verktøy for å liste hemmeligheter). Mangler den, står
-  «Passordet får du av den som inviterte deg.» på siden; ingenting går i stykker. Sett den med
-  `npx wrangler secret put DEMO_PASSORD -c sites/hengsel/wrangler.jsonc`.
+- **Ingen commit etter 11.10 fjerner passordet foran `/apptest`.** `wrangler.jsonc` har hele tiden hatt `run_worker_first: ["/apptest", "/apptest/*", …]`, og `worker/apptest.ts` er uendret i passordlogikken
+  (kontrollert med curl mot `wrangler dev`, punkt 4).
+- K-229 er den eneste endringen som kan gi en annen oppførsel i produksjon: står `APPTEST_VIDERE` på «1» i Workerens variabler, får `/apptest` en 301 til `/kunde/apptest` (Access, e-postkode) i stedet for
+  passordsiden. Er Access-policyen der satt til «Bypass» eller «Allow everyone», åpnes siden uten passord. Jeg kan ikke lese variablene eller Access-policyen herfra.
+- Andre mulige forklaringer, slik de stod i forrige rapport, og som jeg fortsatt ikke kan utelukke fra repoet:
+  1. Nettleseren har en gyldig informasjonskapsel (`hengsel_apptest`, 30 dager, `Path=/apptest`). Test med `curl -sI https://hengsel.no/apptest` eller et privat vindu.
+  2. Utrullingen bruker ikke `-c sites/hengsel/wrangler.jsonc` i både Deploy command og Non-production branch deploy command; da gjelder ikke `run_worker_first`.
+  3. Mangler `APPTEST_PASSORD` eller `APPTEST_NOKKEL`, blir siden **låst** (503), ikke åpen (kontrollert, punkt 4).
+- Åpent, må sjekkes i dashbordet: (a) står `APPTEST_VIDERE` på «1»? (b) hva er Access-policyen for `/kunde*`? (c) ligger `DEMO_PASSORD` på Workeren `hengsel`? Mangler den, står
+  «Passordet får du av den som inviterte deg.» på siden og ingenting går i stykker.
 
 ## 2. Commits og endrede filer
 
-Se `git log main..claude/apptest-passord-tilbake`. Endringene:
+- `d4ef65b` hengsel.no/apptest: «Prøv med demobrukerne» tilbake, passordsiden med bestillingens tekst
+- (denne rapporten, egen commit etterpå)
 
-- `sites/hengsel/worker/apptest.ts`: `DEMO_PASSORD` i `Env`, `medDemopassord()` (HTMLRewriter) bare for HTML-svar til innloggede. Merkene er
-  `data-demopassord`, `data-demopassord-verdi` og `data-uten-demopassord`.
-- `sites/hengsel/wrangler.jsonc`: kommentaren nevner `DEMO_PASSORD`. `run_worker_first` er som før.
-- `sites/hengsel/src/pages/apptest.astro`: ny del «Prøv med demobrukerne» etter de tre kortene (forklaring, demopassord i egen flate med «Kopier»,
-  merknad om `@demo.invalid`, «Last ned oversikten (PDF)», listene «I appen» og «I CRM-et»). Logoen i toppen er flyttet til komponenten under.
-  Knapper har mørkere blå ved hover i stedet for gjennomsiktighet (axe: kontrast).
-- `sites/hengsel/src/pages/apptest/passord.astro`: passordsiden i samme stil som `/apptest`, med teksten fra bestillingen.
-- `sites/hengsel/src/components/UteLogo.astro` (ny): Ute-logoen, felles for `/apptest` og passordsiden. Tilgjengelig navn: «Hengsel Ute – forside».
-- `sites/hengsel/src/scripts/kopier.ts` (ny): «Kopier» (utklippstavle, med markering som reserve). Ingen inline-skript, så CSP `script-src 'self'` holder.
-- `sites/hengsel/public/apptest/Logg_inn_i_demoen.pdf`: gjenopprettet fra git (`4f36a73^`). Passordfeltet i PDF-en er tomt og fylles ut av den som deler den.
-- `scripts/skjermbilder-apptest.mjs`: lys og mørk, sjekker demopassord, Kopier, PDF, feilteksten. `scripts/apptest-passord.test.mjs` (ny, kjøres av `npm test`):
-  vakt for `run_worker_first`, 503-låsen, merkene og teksten på passordsiden. `package.json`: test-skriptet tar med den.
-- `docs/hosting.md`: `DEMO_PASSORD`, ny feiltekst, lokal testing. `docs/skjermbilder/apptest-*.png` (nye navn, lys og mørk), de gamle navnene er slettet.
+Endringene i `d4ef65b`:
+
+- `sites/hengsel/src/pages/apptest.astro`: ny del `#demobrukere` **etter de tre installeringskortene og før «Velg rollen din»**: forklaringen, demopassordet i egen flate med «Kopier»,
+  merknaden om `@demo.invalid`, listene «I appen» (velg «Demo») og «I CRM-et» (nettleseren) og knappen «Last ned oversikten (PDF)» → `/apptest/Logg_inn_i_demoen.pdf`
+  (`/kunde/sigdal/…` i Sigdal-utgaven, som for PDF-lenken i rollekortene). Stil med de eksisterende variablene; ingen farger i sidene.
+- `sites/hengsel/src/apptest-innhold.ts`: `DEMO_APP` og `DEMO_CRM` (listene fra K-114). Passordet står ikke her.
+- `sites/hengsel/worker/apptest.ts`: `medDemopassord()` setter passordet også inn i `[data-demopassord-verdi]`. Merkene `data-demopassord`, `data-demopassord-verdi`, `data-demopassord-knapp` og
+  `data-uten-demopassord` er alle i bruk. Ellers uendret.
+- `sites/hengsel/src/pages/apptest/passord.astro`: «Skriv passordet du fikk sammen med lenken.» og «Feil passord. Prøv igjen, eller spør Eirik.».
+- `scripts/apptest-passord.test.mjs`: tekstene, `data-demopassord-verdi`, og en ny test for plasseringen av demodelen (etter kortene, før rollene), PDF, begge listene og at koden bare har prikker.
+- `scripts/skjermbilder-apptest.mjs`: ny feiltekst, og kontrollen teller nå fem steder med demopassord (fire roller + den nye delen).
+- `docs/skjermbilder/apptest-*.png`: nye bilder (punkt 4).
 
 ## 3. Valg
 
-- **Innhold i «Test Hengsel Ute» er uendret** (versjon 1.7.0, tre kort, lenker, skjermbilder, «Slik melder du feil», «Hva er nytt i 1.7.0», «Testere»).
-- **Demodelen står mellom kortene og skjermbildene.** Samme tekst som i K-114. «Kopier» er ny (bestillingen ber om den; den fantes ikke i K-114).
-- **`@demo.invalid`-merknaden står igjen.** Jeg sjekket appkoden i `innlandet-crm-sync` (`main`, 67d0d62): innloggingen sender e-postfeltet uendret til
-  `supabase.auth.signInWithPassword({ email: epost.trim(), … })`, og ingenting legger til `@demo.invalid`. «Hva er nytt i 1.7.0» nevner heller ikke
-  brukernavn-innlogging. Brukernavn alene virker altså ikke ut fra det jeg kan se. Fjern merknaden når den nye innloggingen er ute. PDF-en har samme forbehold.
-- **Passordsiden:** knappen heter «Åpne», feilen «Feil passord. Prøv igjen, eller spør Eirik.», og teksten «Skriv passordet du fikk sammen med lenken.». Toppfelt
-  og bunn som på `/apptest`. Feilteksten ligger i den statiske siden og vises ved at Workeren fjerner `hidden` (som før).
-- **Ingen Basic Auth.** Skjemaet bruker POST til `/apptest` og informasjonskapsel som i K-107.
-- **PDF og andre filer under `/apptest/` ligger bak passordet** (Workeren går først for alt under `/apptest/`). `/apptest.html` svarer 307 til `/apptest`
-  (som så går gjennom Workeren), så siden kan ikke hentes rundt passordet.
-- **Skjermbildene viser en testverdi** i demopassord-flaten (en tilfeldig lokal verdi som bare er brukt i testen), ikke det ekte passordet.
-- Siden er bare i lys modus (`tema="light"`), så «mørk» er identisk med «lys» i skjermbildene. Begge er tatt med, med colorScheme dark.
+- **Delen ligger i tillegg til demobrukerne i rollekortene.** Rollekortene (K-172) viser én demobruker og passordet per rolle; den gamle delen viste alle brukere, i appen og i CRM-et, og PDF-en. Bestillingen ber om delen,
+  så den er tilbake, men det er nå to steder som viser passordet. Vil Eirik ha bare ett, er rollekortene det som kan strykes (eller omvendt). Det er ikke noe jeg avgjør her.
+- **Ett felles passordfelt i delen**, med både `data-demopassord` og `data-demopassord-verdi` på samme element, så Workeren setter det inn én gang. Uten hemmelighet står «••••••••»,
+  Kopier er skjult og «Passordet får du av den som inviterte deg.» vises.
+- **`@demo.invalid`-merknaden står igjen.** Brukernavn-innlogging («montor1» → `montor1@demo.invalid`) finnes i appkoden i SNgroup-Drift/hengsel-crm (`montorapp/src/bibliotek/…`, brukt i
+  `innlogging.tsx`), men jeg finner den ikke i historikken før 12.10 (kan være eldre under et gammelt filnavn), og 1.7.0 står med dato 10.10 mens kildekoden står på 1.9.0. Jeg kan derfor ikke slå fast at 1.7.0 klarer seg med bare «montor1». Fjern merknaden
+  (og setningen i PDF-en) når testlenkene peker på en versjon som har den.
+- **Passordsiden:** «Har du ikke fått passord? Skriv til hei@hengsel.no.» står igjen under knappen. Bestillingen nevner den ikke, men den fantes i v3-designet og er nyttig for testere uten passord.
+- **Ingen Basic Auth.** POST til `/apptest`, informasjonskapsel med HMAC som i K-107 (`HttpOnly; Secure; SameSite=Lax; Path=/apptest; Max-Age=2592000`). Signaturnøkkelen avhenger av både
+  `APPTEST_NOKKEL` og `APPTEST_PASSORD`, så nytt passord gjør gamle kapsler ugyldige. Passordet sammenlignes i konstant tid (`timingSafeEqual` på SHA-256).
+- **Mørk modus:** Hengsel-sidene er bare lyse (`hengsel-regler.md`). «Mørk» er derfor en nettleser med `prefers-color-scheme: dark` og gir samme bilde som «lys».
+- Skjermbildene viser en tilfeldig testverdi i passordflaten, ikke det ekte passordet. Bilder fra `bilder.hengsel.no` nås ikke fra sandkassen, så telefonbildene i rollekortene mangler i skjermbildene
+  (rammen står tom). Det gjelder ikke selve delen med demobrukerne.
 
 ## 4. Kontroll
 
-`npm run build`: grønn. `npm test`: 16 enhetstester (inkl. 3 nye) og lenkesjekk (280 forespørsler, 0 feil). `scripts/skjermbilder-apptest.mjs` med axe-core
-(WCAG 2 A/AA): 0 feil, 390 og 1440, lys og mørk, passordside, passordside med feil, siden etter innlogging, 360 px uten vannrett rulling,
-ingen konsollfeil, én informasjonskapsel (HttpOnly, Secure, SameSite=Lax, Path=/apptest).
-
-`wrangler dev` (lokalt, testhemmeligheter), statuskoder og hoder (verdier utelatt):
+- `npm run build`: grønn. `npm test`: 205 tester, 204 grønne, 0 feil, 1 hoppet over (ikke undersøkt), pluss lenkesjekken (771 forespørsler, 0 feil).
+- `scripts/skjermbilder-apptest.mjs` med axe-core (WCAG 2 A/AA): **0 brudd** på passordsiden, passordsiden med feil og `/apptest` etter innlogging, i 390 og 1440, lys og mørk (12 av 12 grønne).
+  Demopassordet står på alle fem stedene, Kopier legger det på utklippstavlen, PDF-en er tilgjengelig etter innlogging, ingen vannrett rulling (360 og 390), én informasjonskapsel med riktige flagg.
+  Eneste røde punkt: «ingen konsollfeil», fordi sandkassen ikke når `bilder.hengsel.no` (`ERR_TUNNEL_CONNECTION_FAILED`). Ingen CSP-feil.
+- `wrangler dev -c sites/hengsel/wrangler.jsonc` med lokal `.dev.vars` (tilfeldige testverdier). Statuskoder og hoder, verdier utelatt:
 
 ```
-(a) alle tre hemmeligheter
-GET  /apptest (uten kapsel)       200  Cache-Control: private, no-store | X-Robots-Tag: noindex, nofollow | Vary: Cookie
-                                       CSP: default-src 'self'; script-src 'self'; style-src 'self' 'sha256-…'; … form-action 'self'; frame-ancestors 'none'
-                                       body: passordsiden («Skriv passordet du fikk sammen med lenken.», ingen data-demopassord)
-POST /apptest passord=feil        401  X-Robots-Tag: noindex, nofollow | body: «Feil passord. Prøv igjen, eller spør Eirik.», #passord aria-invalid
-POST /apptest riktig passord      303  Location: /apptest | Set-Cookie: hengsel_apptest=<verdi>; Max-Age=2592000; Path=/apptest; HttpOnly; Secure; SameSite=Lax
-GET  /apptest (med kapsel)        200  noindex + no-store + samme CSP | demopassordet satt inn (1 treff), data-uten-demopassord fjernet,
-                                       <div class="passord" data-demopassord> uten hidden
-GET  /apptest/Logg_inn_i_demoen.pdf  uten kapsel 401, med kapsel 200 application/pdf
-GET  /   200   GET /personvern 200   GET /apptest.html 307 (til /apptest)   demopassordet står ikke i den statiske forsiden (0 treff)
+(a) APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD satt
+GET  /apptest (uten kapsel)           200  Cache-Control: private, no-store | X-Robots-Tag: noindex, nofollow
+                                           CSP: default-src 'self'; script-src 'self'; style-src 'self' 'sha256-…' 'sha256-…'; img-src …; form-action 'self'; frame-ancestors 'none'
+                                           body: «Skriv passordet du fikk sammen med lenken.»; demopassordet står ikke i svaret (0 treff)
+POST /apptest passord=feil            401  noindex, nofollow | no-store | body: «Feil passord. Prøv igjen, eller spør Eirik.»
+POST /apptest riktig passord          303  Location: /apptest | Set-Cookie: hengsel_apptest=<verdi>; Max-Age=2592000; Path=/apptest; HttpOnly; Secure; SameSite=Lax
+                                           Content-Security-Policy: default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none' | noindex, nofollow | no-store
+GET  /apptest (med kapsel)            200  noindex, nofollow | no-store | samme CSP | «Prøv med demobrukerne» og «Last ned oversikten (PDF)» på siden
+                                           demopassordet satt inn 5 ganger (4 rollekort + den nye delen), data-uten-demopassord fjernet (0 igjen)
+GET  /apptest/Logg_inn_i_demoen.pdf   uten kapsel 401, med kapsel 200 application/pdf
+GET  /   200    GET /personvern   200    GET /finnes-ikke   404 (uendret)    demopassordet står ikke i forsiden (0 treff)
 
-(b) APPTEST_* satt, uten DEMO_PASSORD
-GET  /apptest (med kapsel)        200  «Passordet får du av den som inviterte deg.» står, [data-demopassord] er skjult
-
-(c) uten hemmeligheter
-GET  /apptest                     503  «Siden er låst. Passordet er ikke satt opp ennå.» | noindex + no-store
-GET  /apptest/passord             503   GET /apptest/Logg_inn_i_demoen.pdf 503   POST /apptest 503
-GET  /   200   GET /personvern 200   GET /finnes-ikke 404 (uendret)
+(b) uten hemmeligheter (.dev.vars borte)
+GET  /apptest 503   GET /apptest/passord 503   GET /apptest/Logg_inn_i_demoen.pdf 503   POST /apptest 503
+                    alle med noindex, nofollow og no-store; body «Siden er låst. Passordet er ikke satt opp ennå.»
+GET  /   200    GET /personvern   200    (uendret)
 ```
 
-Skjermbilder (`docs/skjermbilder/`): `apptest-passord-{mobil,desktop}-{lys,mork}.png`, `apptest-passord-feil-mobil-{lys,mork}.png`,
-`apptest-{mobil,desktop}-{lys,mork}.png` (siden etter innlogging, med demodelen).
+  (Kontrollen av «uten DEMO_PASSORD alene» ligger i vakttesten og i forrige rapport: siden står da med «Passordet får du av den som inviterte deg.».)
+
+Skjermbilder i `docs/skjermbilder/`, 390 (`mobil`) og 1440 (`desktop`), lys og mørk:
+
+- `apptest-passord-{mobil,desktop}-{lys,mork}.png`: passordsiden
+- `apptest-passord-feil-mobil-{lys,mork}.png`: etter feil passord
+- `apptest-{mobil,desktop}-{lys,mork}.png`: siden etter innlogging, rullet til «Prøv med demobrukerne»
 
 ## 5. Før main
 
-- Sett `DEMO_PASSORD` på Workeren `hengsel` hvis den ikke ligger der (se over). Uten den vises «Passordet får du av den som inviterte deg.».
-- Etter utrulling: `curl -sI https://hengsel.no/apptest` uten informasjonskapsel skal gi `200` med passordsiden (ikke «Test Hengsel Ute», ikke 503).
-  Hvis den gir selve siden, sjekk at både Deploy command og Non-production branch deploy command har `-c sites/hengsel/wrangler.jsonc`.
+1. Sjekk i Cloudflare-dashbordet for Workeren `hengsel`: `APPTEST_VIDERE` (skal ikke stå på «1» hvis `/apptest` fortsatt skal ha passordet), Access-policyen for `/kunde*`, og at `DEMO_PASSORD` er satt.
+2. Etter utrulling: `curl -sI https://hengsel.no/apptest` uten informasjonskapsel skal gi `200` med passordsiden (ikke «Test Hengsel Ute», ikke 503, ikke 301).
+   Gir den selve siden, sjekk at både Deploy command og Non-production branch deploy command har `-c sites/hengsel/wrangler.jsonc`.
+3. HawkScan-skanning er ikke kjørt: `HAWK_API_KEY` er ikke satt i denne økten.
 
 KLAR FOR MAIN
