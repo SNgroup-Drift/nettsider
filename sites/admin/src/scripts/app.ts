@@ -112,7 +112,7 @@ function settTall(id: string, tekst: string, feil = false) { const el = q(`[data
 function visMenytall(rolle: string) {
   api<{ saker: number; oppstart?: number }>("GET", "/api/meny-tall").then((t) => { settTall("saker", t.saker ? String(t.saker) : ""); if (t.oppstart !== undefined) settTall("oppstart", t.oppstart ? String(t.oppstart) : ""); }).catch(() => {});
   if (rolle !== "eier") return;
-  api<{ feil?: number }>("GET", "/api/fakturakjoring/neste").then((k) => { if (k && k.feil) settTall("kjoring", `${k.feil} feil`, true); }).catch(() => { /* kommer med K-260 */ });
+  api<{ feil?: number }>("GET", "/api/oversikt/fakturering").then((k) => { if (k && k.feil) settTall("kjoring", `${k.feil} feil`, true); }).catch(() => { /* kommer med K-260 */ });
 }
 const fristTall = q("[data-tall='drift-frister']");
 if (fristTall?.dataset.datoer !== undefined) {

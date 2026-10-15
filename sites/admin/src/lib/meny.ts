@@ -35,11 +35,11 @@ export const MENY: Gruppe[] = [
   ] },
   { punkter: [{ id: "tall", navn: "Tall", sti: "/tall", ikon: "rapporter", fase: "c" }] },
   { navn: "Drift", punkter: [
-    { id: "drift", navn: "Status", sti: "/drift", ikon: "resultater", fase: "a", under: true },
-    { id: "drift-lenker", navn: "Lenker", sti: "/drift#lenker", ikon: "lenke", fase: "a", under: true },
-    { id: "drift-kontoer", navn: "Kontoer", sti: "/drift#kontoer", ikon: "profil", fase: "a", under: true },
-    { id: "drift-frister", navn: "Frister", sti: "/drift#frister", ikon: "frist", fase: "a", under: true },
-    { id: "drift-rutiner", navn: "Rutiner", sti: "/drift#rutiner", ikon: "kontrollmal", fase: "a", under: true },
+    { id: "drift", navn: "Status", sti: "/drift/status", ikon: "resultater", fase: "a", under: true },
+    { id: "drift-lenker", navn: "Lenker", sti: "/drift/lenker", ikon: "lenke", fase: "a", under: true },
+    { id: "drift-kontoer", navn: "Kontoer", sti: "/drift/kontoer", ikon: "profil", fase: "a", under: true },
+    { id: "drift-frister", navn: "Frister", sti: "/drift/frister", ikon: "frist", fase: "a", under: true },
+    { id: "drift-rutiner", navn: "Rutiner", sti: "/drift/rutiner", ikon: "kontrollmal", fase: "a", under: true },
     { id: "drift-kunder", navn: "Kundemapper", sti: "/drift/kunder", ikon: "kunder", fase: "a", under: true },
   ] },
   { navn: "Innstillinger", punkter: [

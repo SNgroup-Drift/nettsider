@@ -1,0 +1,11 @@
+---
+/** Status (K-260, 60-211). Dataene hentes fra /api i nettleseren; bare rollen eier ser innholdet (ADM-403 ellers). */
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
+---
+<Side title="Status" description="Kundemiljøene og plattformen, bare til å lese" aktiv="drift-status">
+  <div id="side"></div>
+  <script>
+    import "../../scripts/drift-status";
+  </script>
+</Side>

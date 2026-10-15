@@ -1,0 +1,11 @@
+---
+/** Tall (K-260, 60-211). Dataene hentes fra /api i nettleseren; bare rollen eier ser innholdet (ADM-403 ellers). */
+import Side from "../layouts/Side.astro";
+import "../styles/fase-c.css";
+---
+<Side title="Tall" description="Inntekt, kunder, butikker, churn og salgstrakt" aktiv="tall">
+  <div id="side"></div>
+  <script>
+    import "../scripts/tall";
+  </script>
+</Side>

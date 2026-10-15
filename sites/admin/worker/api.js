@@ -18,6 +18,8 @@ import { lesOpplasting, forhandsvis, importer, KILDER } from "./import.js";
 import { lagTilbudPdf } from "./pdf.js";
 import * as penneo from "./penneo.js";
 import tokens from "@sngroup/hengsel-tokens/tokens.json" with { type: "json" };
+import { RUTER_FAKTURERING } from "./api-fakturering.js"; // K-260 fase C
+import { RUTER_DRIFT } from "./api-drift.js"; // K-260 Drift
 
 export const STATUSER = ["ny", "demo", "tilbud", "forhandling", "signert", "tapt"];
 export const APNE = ["ny", "demo", "tilbud", "forhandling"];
@@ -819,5 +821,6 @@ rute("POST", "/api/import", async ({ req, db, bruker }) => {
 
 import { monter as monterSupport } from "./api-support.js"; monterSupport(rute); // K-259 Support (saker, timer)
 import { monter as monterOppstart } from "./api-oppstart.js"; monterOppstart(rute); // K-259 Oppstart
+RUTER.push(...RUTER_FAKTURERING, ...RUTER_DRIFT); // K-260
 
 export { RUTER };
