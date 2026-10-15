@@ -27,9 +27,11 @@ interface Props {
   forhandslast?: string[];
   /** K-223: kundeutgave. Setter data-kunde på html og laster kundens tema (tema-CSS som egen fil, etter de delte variablene). Se packages/kundetema-*. */
   kunde?: { attributt: string; verdi: string; temaCss: string; temaFarge: string };
+  /** K-240: flere attributter på <html>, f.eks. data-plattform="pc" for Admin (PC-laget i designsystemet). Aldri tema-attributter. */
+  htmlAttributter?: Record<string, string>;
 }
-const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, appleIkon, manifest, forhandslast = [schibsted], kunde } = Astro.props;
-const htmlAttr = kunde ? { [kunde.attributt]: kunde.verdi } : {};
+const { title, description, path = Astro.url.pathname, noindex = false, robots, delingsbilde, appleIkon, manifest, forhandslast = [schibsted], kunde, htmlAttributter = {} } = Astro.props;
+const htmlAttr = { ...htmlAttributter, ...(kunde ? { [kunde.attributt]: kunde.verdi } : {}) };
 // Nettstedene bygger med build.format «file» og trailingSlash «never», så Astro.url.pathname er «/index.html» og «/personvern.html».
 const renSti = path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
 // Kundeutgaver er lukkede (Access) og har ingen kanonisk adresse

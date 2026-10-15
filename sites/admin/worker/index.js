@@ -1,36 +1,79 @@
 /**
- * Worker-skriptet for admin.hengsel.no (K-184). Kjører for ALLE forespørsler (assets.run_worker_first = true).
+ * Worker-skriptet for admin.hengsel.no (K-184, K-240). Kjører for ALLE forespørsler (assets.run_worker_first = true).
  *
+ * - /api/lead (POST fra hengsel.no): unntatt Access, eget vern i worker/lead.js. Alt annet:
  * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 503, ingenting vises (Access er ikke koblet til).
- * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401.
- * - Gyldig token, men e-postadressen står ikke i worker/tilgang.js, eller stien er utenfor rollen: 403.
+ * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401 (ADM-401).
+ * - Gyldig token, men e-postadressen står ikke i worker/tilgang.js, eller stien er utenfor rollen: 403 (ADM-403).
+ * - /api/*: JSON-API-et i worker/api.js mot D1 (binding DB). POST/PATCH/PUT/DELETE bare for rollen eier (ADM-403 ellers).
+ * - /salg/tilbud/:nr/:versjon.pdf: tilbudet som PDF fra databasen.
+ * - Sider med id i adressen (/salg/eiere/:id, /kunder/:id, /avtaler/:nr) serveres fra én statisk fil (worker/ruter.js).
  * - Ellers serveres de statiske filene, med Cache-Control: private, no-store og X-Robots-Tag: noindex.
  * Alle svar får noindex. Ingen innlogging, informasjonskapsler eller hemmeligheter i denne koden.
  */
 import { sjekkAccess } from "./access.js";
-import { rolleFor, kanSe } from "./tilgang.js";
+import { rolleFor, kanSe, kanSkrive } from "./tilgang.js";
+import { handterApi, tilbudPdf } from "./api.js";
+import { handterLead } from "./lead.js";
+import { stiTilFil, TILBUD_PDF } from "./ruter.js";
+import { json } from "./db.js";
 
 const MERKE = { "X-Robots-Tag": "noindex, nofollow, noarchive", "Cache-Control": "private, no-store" };
+const LOGO = "/logo/logo-hengsel-lys.svg";
 
 function avvis(status, tekst) {
   return new Response(`${tekst}\n`, { status, headers: { "Content-Type": "text/plain; charset=utf-8", ...MERKE } });
 }
+function merk(svar) {
+  const ny = new Response(svar.body, svar);
+  for (const [k, v] of Object.entries(MERKE)) ny.headers.set(k, v);
+  ny.headers.set("X-Content-Type-Options", "nosniff");
+  ny.headers.set("X-Frame-Options", "DENY");
+  ny.headers.set("Referrer-Policy", "no-referrer");
+  return ny;
+}
+
+/** Hengsel-logoen (pinnet SVG i public/logo) til PDF-en, uten metadata */
+async function hentLogo(env, origin) {
+  try {
+    const r = await env.ASSETS.fetch(new Request(`${origin}${LOGO}`));
+    if (!r.ok) return null;
+    return (await r.text()).replace(/<metadata>[\s\S]*?<\/metadata>/, "");
+  } catch { return null; }
+}
 
 export default {
   async fetch(req, env) {
+    const url = new URL(req.url);
+    const sti = url.pathname;
+    const erApi = sti === "/api" || sti.startsWith("/api/");
+
+    // Lead fra «Be om demo»: eget vern, uten Access (hengsel.no kaller server til server)
+    if (sti === "/api/lead") return merk(await handterLead(req, env));
+
     const team = (env.ACCESS_TEAM_DOMAIN ?? "").trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
     const aud = (env.ACCESS_AUD ?? "").trim();
-    if (!team || !aud) return avvis(503, "Siden er låst. Cloudflare Access er ikke koblet til ennå.");
-    if (req.method !== "GET" && req.method !== "HEAD") return avvis(405, "Metoden er ikke tillatt.");
+    if (!team || !aud) return erApi ? merk(json(503, { ok: false, kode: "ADM-503", melding: "Cloudflare Access er ikke koblet til." })) : avvis(503, "Siden er låst. Cloudflare Access er ikke koblet til ennå.");
 
     const sjekk = await sjekkAccess(req.headers.get("Cf-Access-Jwt-Assertion"), { team, aud });
-    if (!sjekk.ok) return avvis(401, "Ikke innlogget via Cloudflare Access.");
+    if (!sjekk.ok) return erApi ? merk(json(401, { ok: false, kode: "ADM-401", melding: "Ikke innlogget." })) : avvis(401, "Ikke innlogget via Cloudflare Access.");
 
     const rolle = rolleFor(sjekk.epost);
-    const sti = new URL(req.url).pathname;
-    if (!kanSe(rolle, sti)) return avvis(403, "Ingen tilgang.");
+    if (!kanSe(rolle, sti)) return erApi ? merk(json(403, { ok: false, kode: "ADM-403", melding: "Ingen tilgang." })) : avvis(403, "Ingen tilgang.");
 
-    const svar = await env.ASSETS.fetch(req);
+    if (erApi) {
+      const leser = req.method === "GET" || req.method === "HEAD";
+      if (!leser && !kanSkrive(rolle)) return merk(json(403, { ok: false, kode: "ADM-403", melding: "Bare eier kan endre." }));
+      const bruker = { epost: sjekk.epost, navn: rolle.navn ?? sjekk.epost, rolle: rolle.rolle ?? "leser" };
+      return merk(await handterApi(req, env, { bruker, hentLogo: () => hentLogo(env, url.origin) }));
+    }
+    if (req.method !== "GET" && req.method !== "HEAD") return avvis(405, "Metoden er ikke tillatt.");
+
+    const pdf = TILBUD_PDF.exec(sti);
+    if (pdf) return merk(await tilbudPdf(env, pdf[1], Number(pdf[2]), { hentLogo: () => hentLogo(env, url.origin) }));
+
+    const fil = stiTilFil(sti);
+    const svar = await env.ASSETS.fetch(fil === sti ? req : new Request(`${url.origin}${fil}`, { method: req.method, headers: req.headers }));
     const hoder = new Headers(svar.headers);
     for (const [k, v] of Object.entries(MERKE)) hoder.set(k, v);
     // Immutable hash-filer under /_astro og /fonts beholder sin lange (private) cache fra _headers

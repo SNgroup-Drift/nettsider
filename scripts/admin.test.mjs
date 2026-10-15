@@ -187,7 +187,7 @@ test("gyldig token for es@sngroup.no: siden serveres", medNokler(async () => {
   assert.equal(await r.text(), "<h1>admin</h1>");
   assert.match(r.headers.get("X-Robots-Tag"), /noindex/);
   assert.match(r.headers.get("Cache-Control"), /private, no-store/);
-  assert.equal((await worker.fetch(be("/kunder/sigdal-innlandet", await lagToken()), env())).status, 200);
+  assert.equal((await worker.fetch(be("/drift/kunder/sigdal-innlandet", await lagToken()), env())).status, 200);
 }));
 
 test("ugyldige tokens avvises (401): feil signatur, endret innhold, feil app, feil utsteder, utløpt, alg none, uten e-post", medNokler(async () => {
@@ -219,7 +219,7 @@ test("gyldig token for en adresse som ikke står i worker/tilgang.js: 403", medN
   assert.equal(r.status, 403);
 }));
 
-test("andre metoder enn GET og HEAD: 405", medNokler(async () => {
+test("andre metoder enn GET og HEAD utenfor /api: 405", medNokler(async () => {
   assert.equal((await worker.fetch(be("/", await lagToken(), "POST"), env())).status, 405);
 }));
 
@@ -227,19 +227,29 @@ test("e-postadressen sjekkes uten hensyn til store og små bokstaver", medNokler
   assert.equal((await worker.fetch(be("/", await lagToken({ krav: { email: "ES@sngroup.no" } })), env())).status, 200);
 }));
 
-test("rolle: Eirik ser alt; en senere kunde-admin ser bare sin egen kundemappe", () => {
-  assert.deepEqual(rolleFor("es@sngroup.no"), { alle: true });
+test("rolle: Eirik ser alt; en senere kunde-admin ser bare sin egen kundemappe", async () => {
+  assert.deepEqual(rolleFor("es@sngroup.no"), { alle: true, rolle: "eier", navn: "Eirik" });
   assert.equal(rolleFor("ukjent@eksempel.no"), null);
   assert.equal(kanSe(null, "/"), false);
   assert.equal(kanSe({ alle: true }, "/kunder/hvilken-som-helst"), true);
   const kundeAdmin = { kunder: ["eksempel-kjokken"] };
-  assert.equal(kanSe(kundeAdmin, "/kunder/eksempel-kjokken"), true);
-  assert.equal(kanSe(kundeAdmin, "/kunder/eksempel-kjokken.html"), true);
-  assert.equal(kanSe(kundeAdmin, "/kunder/sigdal-innlandet"), false);
+  assert.equal(kanSe(kundeAdmin, "/drift/kunder/eksempel-kjokken"), true);
+  assert.equal(kanSe(kundeAdmin, "/drift/kunder/eksempel-kjokken.html"), true);
+  assert.equal(kanSe(kundeAdmin, "/drift/kunder/sigdal-innlandet"), false);
   assert.equal(kanSe(kundeAdmin, "/"), false);
+  assert.equal(kanSe(kundeAdmin, "/drift"), false);
+  assert.equal(kanSe(kundeAdmin, "/drift/kunder"), false);
   assert.equal(kanSe(kundeAdmin, "/kunder"), false);
-  assert.equal(kanSe(kundeAdmin, "/kunder/eksempel-kjokken/../sigdal-innlandet"), false);
+  assert.equal(kanSe(kundeAdmin, "/salg/tavle"), false);
+  assert.equal(kanSe(kundeAdmin, "/api/oversikt"), false);
+  assert.equal(kanSe(kundeAdmin, "/drift/kunder/eksempel-kjokken/../sigdal-innlandet"), false);
   assert.equal(kanSe(kundeAdmin, "/_astro/Side.js"), true);
+  // K-240: bare rollen eier skriver
+  const { kanSkrive } = await import("../sites/admin/worker/tilgang.js");
+  assert.equal(kanSkrive(rolleFor("es@sngroup.no")), true);
+  assert.equal(kanSkrive(kundeAdmin), false);
+  assert.equal(kanSkrive({ alle: true }), false);
+  assert.equal(kanSkrive(null), false);
 });
 
 // ── 3. Oppsett ───────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -251,6 +261,12 @@ test("wrangler.jsonc: alle forespørsler går gjennom Workeren, variablene overs
   assert.equal(w.assets.not_found_handling, "404-page");
   assert.equal(w.keep_vars, true);
   assert.equal(w.vars, undefined, "ACCESS_* settes i dashbordet, ikke i repoet");
+  // K-240: D1 med binding DB, migreringer i ./migrations, plassholder-id til Oversikt har laget databasen
+  assert.equal(w.d1_databases?.[0]?.binding, "DB");
+  assert.equal(w.d1_databases[0].database_name, "hengsel-admin");
+  assert.equal(w.d1_databases[0].migrations_dir, "migrations");
+  assert.match(w.d1_databases[0].database_id, /^[0-9a-f-]{36}$/);
+  assert.equal(w.secrets, undefined); assert.equal(w.PENNEO_API_KEY, undefined);
   assert.deepEqual(finnHemmeligheter(les("wrangler.jsonc")), []);
 });
 
@@ -260,18 +276,27 @@ test("_headers: noindex, streng CSP uten inline-skript og uten tredjepart", () =
   const csp = /Content-Security-Policy: (.*)/.exec(h)[1];
   assert.match(csp, /default-src 'none'/);
   assert.match(csp, /script-src 'self'(?:;|$)/);
+  assert.match(csp, /connect-src 'self'(?:;|$)/, "K-240: bare eget API");
   assert.doesNotMatch(csp, /unsafe-inline|unsafe-eval|https?:|\*/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(les("public/robots.txt"), /Disallow: \//);
 });
 
-test("ingen tredjepartsskript, -stiler eller -skrifter i koden", () => {
-  for (const f of filer(join(rot, "src")).filter((f) => /\.(astro|ts|css)$/.test(f))) {
+test("ingen tredjepartsskript, -stiler eller -skrifter i koden; nettverkskall bare fra src/lib/dom.ts mot eget /api (K-240)", () => {
+  for (const f of filer(join(rot, "src")).filter((f) => /\.(astro|ts|js|css)$/.test(f))) {
     const t = readFileSync(f, "utf8");
     assert.doesNotMatch(t, /<script[^>]+src=["']https?:/i, relative(rot, f));
     assert.doesNotMatch(t, /<link[^>]+href=["']https?:/i, relative(rot, f));
     assert.doesNotMatch(t, /@import\s+url\(["']?https?:/i, relative(rot, f));
-    assert.doesNotMatch(t, /\bfetch\(|XMLHttpRequest|sendBeacon|WebSocket/, `${relative(rot, f)}: siden skal ikke gjøre nettverkskall`);
+    assert.doesNotMatch(t, /XMLHttpRequest|sendBeacon|WebSocket/, `${relative(rot, f)}: bare fetch mot eget API`);
+    if (!f.endsWith(join("src", "lib", "dom.ts"))) assert.doesNotMatch(t, /\bfetch\(/, `${relative(rot, f)}: nettverkskall skal gå gjennom api() i src/lib/dom.ts`);
+    assert.doesNotMatch(t, /https?:\/\/(?!hengsel\.no|admin\.hengsel\.no|\$\{)[\w.-]+/i, `${relative(rot, f)}: ingen eksterne adresser i koden`);
+  }
+  const dom = les("src/lib/dom.ts");
+  assert.match(dom, /fetch\(sti, \{ method: metode, headers: hoder, body, credentials: "same-origin" \}\)/, "api() kaller fetch med samme opprinnelse");
+  // Alle stiene som kalles starter med /api eller /salg/tilbud (samme Worker)
+  for (const f of filer(join(rot, "src", "scripts")).filter((f) => f.endsWith(".ts"))) {
+    for (const m of readFileSync(f, "utf8").matchAll(/api(?:<[^>]*>)?\("(?:GET|POST|PATCH|PUT|DELETE)", [`"]([^`"]+)/g)) assert.ok(m[1].startsWith("/api/"), `${relative(rot, f)}: ${m[1]}`);
   }
 });
 

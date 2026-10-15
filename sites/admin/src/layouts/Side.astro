@@ -1,61 +1,88 @@
 ---
 /**
- * Ramme for admin.hengsel.no (K-184): Hengsel-profilen, topplinje med søk, og navigasjon (Plattform øverst, så kundene).
- * Bare lys modus, delte Hengsel-tokens (K-192). Aldri indeksert.
+ * Ramme for admin.hengsel.no (K-184, K-240): sidemeny fra én konfigurasjon (src/lib/meny.ts, bare fase A vises), toppfelt med brødsmuler,
+ * søk og «Ny aktivitet», bunnfaner på telefon, og dialogen Ny aktivitet (SA8). Bare lys modus, delte Hengsel-tokens, PC-laget
+ * data-plattform="pc" på <html>. Aldri indeksert.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
 import "../styles/admin.css";
-import { kunder } from "../lib/data";
+import { menyNaa, BUNNFANER, STI } from "../lib/meny";
+import { ikon } from "../lib/ikoner";
+import NyAktivitet from "../components/NyAktivitet.astro";
 
-interface Props { title: string; description: string; aktiv?: string; sokplassholder?: string }
-const { title, description, aktiv = "", sokplassholder = "Søk i lenker og kontoer" } = Astro.props;
-const seksjoner = [["lenker", "Lenker"], ["kontoer", "Kontoer"], ["frister", "Frister"], ["rutiner", "Rutiner"]];
+interface Props { title: string; description: string; aktiv?: string; sokplassholder?: string; sokModus?: "eiere" | "side"; klasse?: string }
+const { title, description, aktiv = "", sokplassholder = "Søk etter eier, butikk eller kontakt", sokModus = "eiere", klasse = "" } = Astro.props;
+const meny = menyNaa("a");
+const sti = STI[aktiv] ?? [title];
+const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv;
 ---
-<Hode
-  title={title}
-  description={description}
-  robots="noindex, nofollow, noarchive"
-  appleIkon="/favicon-180.png"
->
-  <div class="ramme">
-    <header class="topp">
-      <a class="merke" href="/" aria-label="Hengsel Admin, til forsiden">
+<Hode title={title} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
+  <div class={`app ${klasse}`.trim()}>
+    <aside class="sidemeny" id="sidemeny" aria-label="Hovedmeny">
+      <a class="merke" href="/" aria-label="Hengsel Admin, til oversikten">
         <img src="/logo/merke-admin-lys.svg" alt="" width="28" height="28" />
         <span>Hengsel Admin</span>
       </a>
-      <div class="sok" role="search">
-        <label for="sok">Søk</label>
-        <input id="sok" type="search" placeholder={sokplassholder} autocomplete="off" spellcheck="false" />
-      </div>
-    </header>
-
-    <div class="rad">
-      <nav class="meny" aria-label="Hovedmeny">
-        <p class="etikett">Plattform</p>
-        <ul>
-          <li><a href="/" aria-current={aktiv === "plattform" ? "page" : undefined}>Oversikt</a></li>
-          {seksjoner.map(([id, navn]) => <li class="under"><a href={`/#${id}`}>{navn}</a></li>)}
-        </ul>
-        <p class="etikett">Kunder</p>
-        <ul>
-          <li><a href="/kunder" aria-current={aktiv === "kunder" ? "page" : undefined}>Alle kunder</a></li>
-          {kunder.map((k) => (
-            <li data-sok-nav data-sok={`${k.navn} ${k.id}`.toLowerCase()}>
-              <a href={`/kunder/${k.id}`} aria-current={aktiv === k.id ? "page" : undefined}>
-                {k.navn}{k.eksempel && <span class="eksempel"> (eksempel)</span>}
-              </a>
-            </li>
+      <nav>
+        <ul class="meny">
+          {meny.map((g) => (
+            <>
+              {g.navn && <li class="gruppe" aria-hidden="true">{g.navn}</li>}
+              {g.punkter.map((p) => (
+                <li class={p.under ? "under" : ""}>
+                  <a href={p.sti} aria-current={aktiv === p.id || fane === p.id ? "page" : undefined}>
+                    <Fragment set:html={ikon(p.ikon, 20)} />
+                    <span>{p.navn}</span>
+                    <span class="tall" data-tall={p.id}></span>
+                  </a>
+                </li>
+              ))}
+            </>
           ))}
         </ul>
       </nav>
+      <div class="bunn">
+        <div class="bruker" id="bruker"><span class="init">·</span><span><b>Hengsel Admin</b>fase A</span></div>
+        <img class="logo-bunn" src="/logo/logo-hengsel-lys.svg" alt="Hengsel" width="76" height="18" />
+      </div>
+    </aside>
+    <div class="skuff-overlegg" id="skuff-overlegg"></div>
 
+    <div class="hoved">
+      <header class="toppfelt">
+        <button class="knapp ikon-knapp meny-knapp" type="button" id="meny-knapp" aria-controls="sidemeny" aria-expanded="false" aria-label="Meny"><Fragment set:html={ikon("mer", 20)} /></button>
+        <nav class="brodsmuler" aria-label="Du er her">
+          {sti.map((navn, i) => (
+            <>
+              {i > 0 && <Fragment set:html={ikon("pil-hoyre", 14)} />}
+              {i === sti.length - 1 ? <b id="brodsmule-sist">{navn}</b> : <span class="forelder">{navn}</span>}
+            </>
+          ))}
+        </nav>
+        <div class="toppsok" role="search">
+          <Fragment set:html={ikon("sok", 18)} />
+          <label for="sok" class="visuelt-skjult">Søk</label>
+          <input id="sok" type="search" placeholder={sokplassholder} autocomplete="off" spellcheck="false" data-modus={sokModus} />
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <button class="knapp primar bare-pc" type="button" data-ny-aktivitet><Fragment set:html={ikon("pluss", 18)} />Ny aktivitet</button>
+        <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-aktivitet aria-label="Ny aktivitet"><Fragment set:html={ikon("pluss", 20)} /></button>
+      </header>
       <main id="innhold">
-        <p class="treff" id="treff" role="status" aria-live="polite"></p>
         <slot />
       </main>
     </div>
+
+    <nav class="bunnfaner" aria-label="Bunnfaner">
+      {BUNNFANER.map((f) => f.id === "mer"
+        ? <button type="button" id="fane-mer" aria-controls="sidemeny"><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</button>
+        : <a href={f.sti} aria-current={fane === f.id ? "page" : undefined}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</a>)}
+    </nav>
+
+    <NyAktivitet />
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </div>
   <script>
-    import "../scripts/admin";
+    import "../scripts/app";
   </script>
 </Hode>

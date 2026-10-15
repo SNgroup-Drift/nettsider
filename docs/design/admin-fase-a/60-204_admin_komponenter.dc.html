@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#ECEFF3} a{color:#016D5E} a:hover{color:#007665}</style>
+</helmet>
+<div style="min-height:100vh;background:#ECEFF3;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;width:max-content;max-width:1500px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:860px"><h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.6px">Nye komponenter i Hengsel Admin</h1><p style="margin:0;color:#51565C;text-wrap:pretty">Tavlekort, tidslinje og prisberegnerlinje. Bygger på grunnpaletten og PC-laget fra furu v2. Ingen nye farger. Forfalt vises med feil-tekst og ikon, uten rødt fyll.</p></div>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Tavlekort</h2>
+    <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+      <sc-for list="{{ kort }}" as="c" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:8px;width:260px"><span style="font-size:13px;font-weight:600;color:#51565C">{{ c.tilstand }}</span>
+          <div style="padding:10px;border-radius:14px;background:{{ c.kolBg }};box-shadow:{{ c.kolRing }}">
+            <div style="background:#FFFFFF;border-radius:12px;box-shadow:{{ c.skygge }};padding:12px 12px 10px;display:flex;flex-direction:column;gap:8px;opacity:{{ c.op }};transform:{{ c.rot }}">
+              <div style="display:flex;gap:6px"><span style="font-weight:600;flex:1">Nordli Kjøkken AS</span><span style="color:#62686F;display:flex">{{ ik16.dra }}</span></div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:12px"><span style="font-weight:600;padding:2px 8px;border-radius:999px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #CDD1D6">Sigdal</span><span style="color:#51565C;display:flex;gap:4px;align-items:center">{{ ik16.utstillinger }}3 butikker</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><b>13 234 kr</b><span style="font-size:12px;color:#62686F">per mnd</span></div>
+              <div style="display:flex;align-items:center;gap:6px;padding-top:8px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:{{ c.fg }};font-weight:{{ c.vekt }}"><span style="display:flex">{{ c.ikon }}</span><span style="flex:1">Følg opp tilbud v2</span><span>{{ c.dato }}</span></div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,480px));gap:4px 32px;font-size:14px;color:#51565C">
+      <span>Kort: <b style="color:#1A1D22">--flate-kort</b>, radius 12, <b style="color:#1A1D22">--ramme</b> + <b style="color:#1A1D22">--skygge-kort</b>, padding 12</span>
+      <span>Kolonne: <b style="color:#1A1D22">#E3E6EA</b> (trinn 6, foreslått som --flate-kolonne), radius 14, padding 10</span>
+      <span>Hover: kant <b style="color:#1A1D22">--kant</b> og skygge 0 4px 12px -6px</span>
+      <span>Slippmål: <b style="color:#1A1D22">--aksent-svak</b> med 2 px <b style="color:#1A1D22">--aksent</b></span>
+      <span>Forfalt: <b style="color:#1A1D22">--feil-tekst</b> #9E2D28, vekt 600, ikon frist. Ikke rødt fyll</span>
+      <span>I dag: <b style="color:#1A1D22">--aksent-tekst</b>, vekt 600. Senere: <b style="color:#1A1D22">--tekst-dempet</b></span>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Tidslinje</h2>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div style="width:420px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px">
+        <sc-for list="{{ tl }}" as="a" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px">
+            <div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;border-radius:50%;background:{{ a.bg }};color:{{ a.fg }};display:flex;align-items:center;justify-content:center">{{ a.ikon }}</span><span style="flex:1;width:2px;background:#E3E6EA;display:{{ a.linje }};margin:4px 0"></span></div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:4px 0 16px"><div style="display:flex;gap:8px"><b style="flex:1;font-size:14px">{{ a.tittel }}</b><span style="font-size:12px;color:#62686F">{{ a.dato }}</span></div><span style="font-size:13px;color:#51565C">{{ a.tekst }}</span><span style="font-size:12px;color:#62686F">{{ a.type }} · Eirik</span></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#51565C;max-width:520px">
+        <span>Prikk 32 px, ikon 16 px. Linje 2 px <b style="color:#1A1D22">--linje</b>.</span>
+        <sc-for list="{{ tl }}" as="a" hint-placeholder-count="5"><span style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;background:{{ a.bg }};box-shadow:inset 0 0 0 1px {{ a.fg }}"></span><b style="color:#1A1D22">{{ a.type }}</b> {{ a.tokens }}</span></sc-for>
+        <span>Nyeste øverst. Filter med chips over listen. Neste steg står i egen boks over tidslinjen.</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Prisberegnerlinje</h2>
+    <div style="width:860px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:14px 18px;display:grid;grid-template-columns:minmax(160px,1fr) auto auto auto;gap:14px 18px;align-items:center">
+      <span style="height:36px;box-sizing:border-box;border-radius:10px;padding:0 10px;font-weight:600;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center">Nordli Kjøkken Hamar</span>
+      <div style="display:flex;padding:2px;border-radius:10px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #CDD1D6"><span style="height:30px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;color:#51565C;display:flex;align-items:center">Start · 2 990</span><span style="height:30px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;color:#016D5E;background:#FFFFFF;box-shadow:inset 0 0 0 1px #05806F;display:flex;align-items:center">Butikk · 4 990</span><span style="height:30px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;color:#51565C;display:flex;align-items:center">Komplett · 6 990</span></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:12px;color:#51565C">Ekstra brukere</span><div style="display:flex;align-items:center;gap:2px"><span style="width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;align-items:center;justify-content:center;color:#51565C">–</span><b style="width:30px;text-align:center">0</b><span style="width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik16.pluss }}</span></div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:12px;color:#51565C">Montører</span><div style="display:flex;align-items:center;gap:2px"><span style="width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;align-items:center;justify-content:center;color:#51565C">–</span><b style="width:30px;text-align:center">2</b><span style="width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik16.pluss }}</span></div></div>
+      <div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;padding-top:10px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:#51565C"><span>5 brukere og 2 t support/mnd inkludert</span><span style="flex:1"></span><b style="font-size:15px;color:#1A1D22">4 990 kr/mnd</b><span style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#62686F">{{ ik.lukk }}</span></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,430px));gap:4px 32px;font-size:14px;color:#51565C">
+      <span>Pakkevelger: segment på <b style="color:#1A1D22">--flate-senket</b>, valgt med hvit flate og 1 px <b style="color:#1A1D22">--aksent</b></span>
+      <span>Teller: 32 × 32, kant <b style="color:#1A1D22">--ramme</b>. Tall vekt 600</span>
+      <span>Montører telles per butikk, men Ute prises per eier (montørpris eller firmapris). Tillegg ligger i kortet «Gjelder hele eieren»</span>
+      <span>Linjesum = pakke + ekstra brukere. 15 px vekt 700. Prisene kommer fra prislisten, aldri fra koden</span>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Status og nye tokens</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ piller }}" as="p" hint-placeholder-count="11"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</span></sc-for></div>
+    <div style="width:860px;background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden;font-size:14px">
+      <sc-for list="{{ tokens }}" as="t" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:260px 160px minmax(0,1fr);gap:12px;padding:9px 16px;box-shadow:{{ t.skille }};align-items:center"><code style="font-family:ui-monospace,Menlo,monospace;font-size:13px">{{ t.navn }}</code><span>{{ t.verdi }}</span><span style="color:#51565C">{{ t.bruk }}</span></div></sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    if (!window.HengselIkoner) return {};
+    const k = (tilstand, fg, vekt, ik, dato, o = {}) => ({ tilstand, fg, vekt, ikon: this.ikon(ik, 16), dato, kolBg: o.kolBg || '#E3E6EA', kolRing: o.kolRing || 'none', skygge: o.skygge || 'inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06)', op: o.op || 1, rot: o.rot || 'none' });
+    return {
+      ik: this.sett(20), ik16: this.sett(16),
+      kort: [k('Normal, frist senere', '#51565C', 400, 'kalender', '22.10'), k('Neste steg i dag', '#016D5E', 600, 'kalender', 'I dag'), k('Forfalt', '#9E2D28', 600, 'frist', 'Forfalt 13.10'), k('Drar, over ny kolonne', '#9E2D28', 600, 'frist', 'Forfalt 13.10', { kolBg: '#E0F4EE', kolRing: 'inset 0 0 0 2px #05806F', skygge: 'inset 0 0 0 1px #7B8188,0 12px 28px -10px rgba(26,29,34,.35)', rot: 'rotate(-1.5deg)' })],
+      tl: [['Samtale', 'telefon', '#E7F1FF', '#1A57AD', 'Første samtale', 'Vil ha tilbud for tre butikker.', '24.09', 'status-ny (bg / fg)'], ['Møte', 'mitt-team', '#EFEEFF', '#5C46A7', 'Gjennomgang av pris', 'Kari og Siri spør om binding.', '09.10', 'status-pagar'], ['Demo', 'salgstavle', '#E0F4EE', '#016D5E', 'Demo i butikken', 'Viste montørapp og kundeportal.', '02.10', 'aksent-svak / aksent-tekst'], ['E-post', 'sendt', '#E9F1FB', '#555B64', 'Tilbud v2 sendt', 'Sendt til Kari Nordli.', '13.10', 'status-venter'], ['Notat', 'tilbud', '#F3F5F8', '#51565C', 'Kom inn via kjedemøtet', 'Anbefalt av Lars Granlund.', '20.09', 'flate-senket / tekst-dempet']].map(([type, ik, bg, fg, tittel, tekst, dato, tokens], i, a) => ({ type, ikon: this.ikon(ik, 16), bg, fg, tittel, tekst, dato, tokens, linje: i < a.length - 1 ? 'block' : 'none' })),
+      piller: [['Ny', '#E7F1FF', '#1A57AD', '#A0C6FF'], ['Demo avtalt', '#EFEEFF', '#5C46A7', '#C3BBFB'], ['Tilbud sendt', '#FCE9FF', '#80378C', '#E0B1E7'], ['Forhandling', '#E0F4EE', '#016D5E', '#BCE6DB'], ['Signert / Kunde', '#E3F7DE', '#1F6D02', '#A5D39B'], ['Tapt', '#E9F1FB', '#555B64', '#BDC5CF'], ['Utkast', '#E9F1FB', '#555B64', '#BDC5CF'], ['Til signering', '#EFEEFF', '#5C46A7', '#C3BBFB'], ['Fornyes snart', '#FFE9BC', '#6D5000', '#E0C07F'], ['Sagt opp', '#FFEBE8', '#9E2D28', '#F9AEA5'], ['Kommer', '#FFFFFF', '#51565C', '#CDD1D6']].map(([navn, bg, fg, kant]) => ({ navn, bg, fg, kant })),
+      tokens: [['--flate-kolonne (foreslått)', '#E3E6EA', 'Bakgrunn i tavlekolonner. Samme som --linje i PC-laget'], ['--tavle-kolonne-min', '240px', 'Minste kolonnebredde. Tavla ruller sideveis under 1500 px'], ['--tidslinje-prikk', '32px', 'Prikk med ikon 16 px'], ['--forfalt-tekst', 'var(--feil-tekst)', 'Forfalt neste steg. Ingen fyllfarge'], ['--salg-status-*', 'status-* fra grunnpaletten', 'Ny=ny, Demo=pagar, Tilbud=sannsynlig, Forhandling=aksent, Signert=ferdig, Tapt=venter'], ['--avtale-status-*', 'status-* fra grunnpaletten', 'Utkast=venter, Til signering=pagar, Signert=ferdig, Fornyes snart=advarsel, Sagt opp=feil']].map(([navn, verdi, bruk], i) => ({ navn, verdi, bruk, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

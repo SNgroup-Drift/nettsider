@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#DDE1E6} a{color:#016D5E;text-decoration:none} a:hover{color:#007665} input,button,textarea{font:inherit;color:inherit}</style>
+</helmet>
+<div style="min-height:100vh;background:#DDE1E6;font-family:'Schibsted Grotesk',system-ui,sans-serif;color:#1A1D22;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:36px;width:max-content">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:960px">
+    <h1 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.5px">SB4 «Hjelp» sett fra kunden</h1>
+    <p style="margin:0;font-size:15px;color:#51565C;text-wrap:pretty">Den lille dialogen i Hengsel CRM og Hengsel Ute, kvitteringen og «Mine saker». Side i appen, versjon og nettleser sendes med av seg selv. Svarfristene er eksempler.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Hengsel CRM, PC</h2>
+    <div style="display:flex;gap:32px;align-items:flex-start">
+
+      <div data-screen-label="CRM Hjelp dialog" style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:#51565C">1 Dialogen</span>
+        <div style="width:960px;height:640px;position:relative;border-radius:12px;overflow:hidden;background:#ECEFF3;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -24px rgba(26,29,34,.35);font-size:15px;line-height:1.45">
+          <div style="position:absolute;inset:0;display:grid;grid-template-columns:200px 1fr">
+            <div style="background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;padding:16px 12px;display:flex;flex-direction:column;gap:8px"><img src="./assets/logo-hengsel-lys.svg" alt="Hengsel" style="height:18px;align-self:flex-start;margin:2px 6px 12px"><div style="height:30px;border-radius:8px;background:#E0F4EE"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div><span style="flex:1"></span><div style="height:34px;border-radius:8px;display:flex;align-items:center;gap:8px;padding:0 8px;color:#016D5E;font-weight:600;font-size:14px;background:#E0F4EE">{{ ik.hjelp }}Hjelp</div></div>
+            <div style="padding:20px 24px;display:flex;flex-direction:column;gap:14px"><div style="height:22px;width:260px;border-radius:6px;background:#D7DADE"></div><div style="height:200px;border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"></div><div style="height:140px;border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"></div></div>
+          </div>
+          <div style="position:absolute;inset:0;background:rgba(26,29,34,.40)"></div>
+          <div role="dialog" aria-label="Hjelp" style="position:absolute;right:24px;bottom:24px;width:420px;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);display:flex;flex-direction:column;font-size:14px">
+            <div style="display:flex;align-items:center;padding:14px 16px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="font-size:17px;flex:1">Hjelp</b><a href="#" style="font-size:13px;font-weight:600;margin-right:8px">Mine saker</a><span style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik.lukk }}</span></div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+              <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Emne</span><input value="Logoen mangler på tilbud-PDF" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188"></label>
+              <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Hva skjedde?</span><textarea rows="3" style="border:0;border-radius:10px;padding:8px 10px;box-shadow:inset 0 0 0 2px #05806F;resize:none">Logoen vår kommer ikke med når vi lager PDF av tilbudet. Den vises på skjermen, men ikke i PDF-en.</textarea></label>
+              <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Skjermbilde <span style="font-weight:400;color:#62686F">(valgfritt)</span></span><div style="display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;box-shadow:inset 0 0 0 1px #CDD1D6"><span style="width:56px;height:36px;border-radius:6px;background:repeating-linear-gradient(135deg,#F3F5F8 0 6px,#E3E6EA 6px 12px)"></span><span style="flex:1;font-size:13px">skjermbilde-tilbud-pdf.png</span><span style="color:#51565C;display:flex">{{ ik16.lukk }}</span></div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-weight:600">Hvor viktig er det?</span>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"><sc-for list="{{ pri }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.klikk }}" style="all:unset;cursor:pointer;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</button></sc-for></div>
+                <span style="font-size:13px;color:#51565C">{{ priTekst }}</span>
+              </div>
+              <span style="font-size:12px;color:#62686F">Vi sender med: Tilbud › T-2026-118, Hengsel CRM 2.0.4, Chrome 129.</span>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Avbryt</span><span style="height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600">Send</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-screen-label="CRM Hjelp kvittering" style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:#51565C">2 Kvittering og Mine saker</span>
+        <div style="width:960px;height:640px;position:relative;border-radius:12px;overflow:hidden;background:#ECEFF3;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -24px rgba(26,29,34,.35);font-size:15px;line-height:1.45">
+          <div style="position:absolute;inset:0;display:grid;grid-template-columns:200px 1fr">
+            <div style="background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;padding:16px 12px;display:flex;flex-direction:column;gap:8px"><img src="./assets/logo-hengsel-lys.svg" alt="Hengsel" style="height:18px;align-self:flex-start;margin:2px 6px 12px"><div style="height:30px;border-radius:8px;background:#E0F4EE"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div><div style="height:30px;border-radius:8px;background:#F3F5F8"></div></div>
+            <div style="padding:20px 24px;display:flex;flex-direction:column;gap:14px"><div style="height:22px;width:260px;border-radius:6px;background:#D7DADE"></div><div style="height:200px;border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"></div></div>
+          </div>
+          <div style="position:absolute;inset:0;background:rgba(26,29,34,.40)"></div>
+          <div style="position:absolute;left:228px;top:40px;width:340px;background:#FFFFFF;border-radius:14px;box-shadow:0 16px 40px -12px rgba(26,29,34,.28);padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:14px">
+            <span style="width:52px;height:52px;border-radius:50%;background:#05806F;color:#FBF9F6;display:flex;align-items:center;justify-content:center">{{ ik24.hake }}</span>
+            <b style="font-size:20px">Saken er sendt</b>
+            <span style="color:#51565C">Saksnummer H-1047. Høy prioritet: vi svarer innen 4 timer på hverdager.</span>
+            <span style="color:#51565C">Du får svar på e-post og under «Mine saker».</span>
+            <span style="margin-top:6px;height:36px;padding:0 16px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Lukk</span>
+          </div>
+          <div role="dialog" aria-label="Mine saker" style="position:absolute;right:24px;top:40px;width:340px;background:#FFFFFF;border-radius:14px;box-shadow:0 16px 40px -12px rgba(26,29,34,.28);display:flex;flex-direction:column;font-size:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;padding:14px 16px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="font-size:17px;flex:1">Mine saker</b><span style="color:#51565C;display:flex">{{ ik.lukk }}</span></div>
+            <sc-for list="{{ mine }}" as="m" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:4px;padding:12px 16px;box-shadow:{{ m.skille }}"><div style="display:flex;align-items:center;gap:8px"><b style="flex:1;line-height:1.3">{{ m.emne }}</b><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ m.bg }};color:{{ m.fg }};box-shadow:inset 0 0 0 1px {{ m.kant }};white-space:nowrap">{{ m.status }}</span></div><span style="font-size:13px;color:#51565C">{{ m.nr }} · {{ m.tekst }}</span></div></sc-for>
+            <div style="padding:10px 16px;font-size:12px;color:#62686F;box-shadow:inset 0 1px 0 #E3E6EA">Du ser saker du har sendt selv. Admin i CRM ser alle sakene fra butikken.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Hengsel Ute, telefon</h2>
+    <div style="display:flex;gap:32px;align-items:flex-start">
+
+      <div data-screen-label="Ute Hjelp dialog" style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:#51565C">1 Dialogen</span>
+        <div style="width:390px;height:844px;position:relative;border-radius:44px;overflow:hidden;background:#F2F2F7;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.4">
+          <div style="padding:64px 20px 0;display:flex;flex-direction:column;gap:12px"><span style="font-size:34px;font-weight:700;letter-spacing:-0.4px">I dag</span><div style="height:84px;border-radius:20px;background:#FFFFFF"></div><div style="height:84px;border-radius:20px;background:#FFFFFF"></div></div>
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.32)"></div>
+          <div role="dialog" aria-label="Hjelp" style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:22px 22px 0 0;padding:8px 16px 34px;display:flex;flex-direction:column;gap:12px">
+            <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#CDD1D6"></span>
+            <div style="display:flex;align-items:center"><b style="font-size:20px;flex:1">Hjelp</b><a href="#" style="font-size:15px;font-weight:600">Mine saker</a></div>
+            <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:15px">Emne</span><input value="Får ikke åpnet dagens oppdrag" style="height:48px;box-sizing:border-box;border:0;border-radius:12px;padding:0 12px;background:#F2F2F7;font-size:16px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:15px">Hva skjedde?</span><textarea rows="3" style="border:0;border-radius:12px;padding:10px 12px;background:#F2F2F7;resize:none;font-size:16px">Appen henger når jeg trykker på oppdraget hos kunden i Drammen.</textarea></label>
+            <div style="display:flex;align-items:center;gap:10px;height:48px;padding:0 12px;border-radius:12px;background:#F2F2F7;color:#016D5E;font-weight:600">{{ ik.kamera }}<span style="flex:1">Legg ved skjermbilde</span><span style="font-size:13px;font-weight:400;color:#62686F">Valgfritt</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-weight:600;font-size:15px">Hvor viktig er det?</span><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"><sc-for list="{{ priUte }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.klikk }}" style="all:unset;cursor:pointer;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;background:{{ p.bg }};color:{{ p.fg }};box-shadow:inset 0 0 0 1px {{ p.kant }}">{{ p.navn }}</button></sc-for></div><span style="font-size:14px;color:#51565C">{{ priUteTekst }}</span></div>
+            <span style="height:52px;border-radius:26px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:17px">Send</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-screen-label="Ute Hjelp kvittering" style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:#51565C">2 Kvittering</span>
+        <div style="width:390px;height:844px;position:relative;border-radius:44px;overflow:hidden;background:#F2F2F7;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 36px;box-sizing:border-box;text-align:center">
+          <span style="width:96px;height:96px;border-radius:50%;background:#05806F;color:#FBF9F6;display:flex;align-items:center;justify-content:center;transform:scale(1.6)">{{ ik24.hake }}</span>
+          <b style="font-size:28px;letter-spacing:-0.4px;margin-top:8px">Saken er sendt</b>
+          <span style="color:#51565C;text-wrap:pretty">Saksnummer H-1048. Kritisk: vi svarer innen 1 time. Du får svar som varsel i appen.</span>
+          <span style="margin-top:12px;height:52px;width:100%;border-radius:26px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:600;color:#016D5E">Tilbake til oppdragene</span>
+        </div>
+      </div>
+
+      <div data-screen-label="Ute Mine saker" style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:#51565C">3 Mine saker</span>
+        <div style="width:390px;height:844px;position:relative;border-radius:44px;overflow:hidden;background:#F2F2F7;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.4">
+          <div style="padding:58px 8px 0;display:flex;align-items:center;color:#016D5E;font-size:17px">{{ ik24.pil_venstre }}<span>Hjelp</span></div>
+          <div style="padding:6px 20px 14px;font-size:34px;font-weight:700;letter-spacing:-0.4px">Mine saker</div>
+          <div style="margin:0 16px;border-radius:20px;background:#FFFFFF;overflow:hidden">
+            <sc-for list="{{ mineUte }}" as="m" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:4px;padding:14px 16px;box-shadow:{{ m.skille }}"><div style="display:flex;align-items:center;gap:8px"><b style="flex:1;font-size:16px;line-height:1.3">{{ m.emne }}</b><span style="font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;background:{{ m.bg }};color:{{ m.fg }};box-shadow:inset 0 0 0 1px {{ m.kant }};white-space:nowrap">{{ m.status }}</span></div><span style="font-size:14px;color:#51565C">{{ m.nr }} · {{ m.tekst }}</span></div></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { pri: 'hoy', priUte: 'kritisk' };
+  ikon(n, px) { const I = window.HengselIkoner; if (!n || !I || !I[n]) return null; const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } }); }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    const P = [['kritisk', 'Kritisk', 'Ingen i butikken får jobbet. Svar innen 1 time (eksempel).'], ['hoy', 'Høy', 'Noe viktig virker ikke. Svar innen 4 timer (eksempel).'], ['normal', 'Normal', 'Det finnes en omvei, eller du lurer på noe. Svar innen 1 virkedag (eksempel).'], ['lav', 'Lav', 'Et ønske eller en liten feil. Svar innen 3 virkedager (eksempel).']];
+    const valg = felt => P.map(([id, navn]) => { const a = this.state[felt] === id; return { navn, klikk: () => this.setState({ [felt]: id }), bg: a ? (id === 'kritisk' ? '#FFEBE8' : '#E0F4EE') : '#FFFFFF', fg: a ? (id === 'kritisk' ? '#9E2D28' : '#016D5E') : '#1A1D22', kant: a ? (id === 'kritisk' ? '#9E2D28' : '#05806F') : '#CDD1D6' }; });
+    const S = { 'Ny': ['#E7F1FF', '#1A57AD', '#A0C6FF'], 'Under arbeid': ['#EFEEFF', '#5C46A7', '#C3BBFB'], 'Venter på deg': ['#FFE9BC', '#6D5000', '#E0C07F'], 'Løst': ['#E3F7DE', '#1F6D02', '#A5D39B'] };
+    const rad = (l) => l.map(([emne, nr, status, tekst], i) => ({ emne, nr, status, tekst, bg: S[status][0], fg: S[status][1], kant: S[status][2], skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }));
+    return { ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), pri: valg('pri'), priUte: valg('priUte'),
+      priTekst: P.find(p => p[0] === this.state.pri)[2], priUteTekst: P.find(p => p[0] === this.state.priUte)[2],
+      mine: rad([['Logoen mangler på tilbud-PDF', 'H-1047', 'Ny', 'Sendt i dag 08:05'], ['Ønske: eksport av montørtimer til Excel', 'H-1043', 'Under arbeid', 'Sendt 12.10']]),
+      mineUte: rad([['Får ikke åpnet dagens oppdrag', 'H-1048', 'Ny', 'Sendt i dag 10:02'], ['Feil adresse på ordrebekreftelse', 'H-1041', 'Løst', 'Løst 09.10']]) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<script src="./assets/admin-data.js"></script>
+<script src="./assets/admin-data-bc.js"></script>
+<style>body{margin:0;background:#ECEFF3} a{color:#016D5E;text-decoration:none} a:hover{color:#007665;text-decoration:underline} input,button,select,textarea{font:inherit;color:inherit}</style>
+</helmet>
+<div data-plattform="pc" data-screen-label="Hengsel Admin PC" style="min-height:100vh;background:#ECEFF3;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;display:grid;grid-template-columns:248px minmax(0,1fr)">
+
+  <aside style="position:sticky;top:0;height:100vh;box-sizing:border-box;background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;display:flex;flex-direction:column">
+    <div style="height:60px;flex:none;display:flex;align-items:center;padding:0 16px;box-shadow:inset 0 -1px 0 #E3E6EA"><img src="./assets/logo-admin-lys.svg" alt="Hengsel Admin" style="height:22px;display:block"></div>
+    <nav style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding:10px;display:flex;flex-direction:column;gap:1px">
+      <sc-for list="{{ meny }}" as="m" hint-placeholder-count="24">
+        <div style="display:flex;flex-direction:column">
+          <sc-if value="{{ m.erGruppe }}" hint-placeholder-val="{{ false }}"><span style="padding:14px 10px 4px;font-size:12px;font-weight:600;color:#62686F;letter-spacing:.2px">{{ m.navn }}</span></sc-if>
+          <sc-if value="{{ m.erPunkt }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ m.klikk }}" aria-current="{{ m.aria }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;height:34px;padding:0 10px 0 {{ m.innrykk }};border-radius:8px;font-size:14px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.vekt }}" style-hover="background:#F3F5F8">
+              <span style="display:flex;color:{{ m.ikonFg }}">{{ m.ikon }}</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.navn }}</span>
+                            <span style="font-size:12px;color:{{ m.tallFg }}">{{ m.tall }}</span>
+            </button>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px;box-shadow:inset 0 1px 0 #E3E6EA">
+      <div style="width:32px;height:32px;border-radius:50%;background:#BCE6DB;color:#016D5E;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">E</div>
+      <div style="display:flex;flex-direction:column;line-height:1.3"><span style="font-weight:600;font-size:14px">Eirik</span><span style="font-size:12px;color:#62686F">ES-Holding AS</span></div>
+    </div>
+    <div style="flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px 14px;box-shadow:inset 0 1px 0 #E3E6EA"><img src="./assets/logo-hengsel-lys.svg" alt="Hengsel" style="height:16px"><span style="font-size:12px;color:#62686F">Admin 2.1.0</span></div>
+  </aside>
+
+  <main style="min-width:0;display:flex;flex-direction:column">
+    <header style="position:sticky;top:0;z-index:5;height:60px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 28px;background:rgba(236,239,243,.9);backdrop-filter:blur(8px);box-shadow:inset 0 -1px 0 #CDD1D6">
+      <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-size:14px;color:#51565C">
+        <sc-for list="{{ sti }}" as="s" hint-placeholder-count="2"><span style="display:flex;align-items:center;gap:6px"><span style="color:{{ s.fg }};font-weight:{{ s.vekt }};white-space:nowrap">{{ s.navn }}</span><span style="display:{{ s.pil }};color:#62686F">{{ ik16.pil_hoyre }}</span></span></sc-for>
+      </div>
+      <div style="height:36px;width:320px;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F;font-size:14px">{{ ik.sok }}<span style="flex:1;white-space:nowrap;overflow:hidden">Søk etter eier, butikk eller kontakt</span><span style="font-size:12px;padding:1px 6px;border-radius:5px;box-shadow:inset 0 0 0 1px #CDD1D6">⌘K</span></div>
+      <button onClick="{{ nyAktivitet }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny aktivitet</button>
+    </header>
+
+    <div style="padding:26px 28px 64px;display:flex;flex-direction:column;gap:20px;max-width:1440px;width:100%;box-sizing:border-box">
+
+<!-- SA1 Oversikt -->
+<sc-if value="{{ v.oversikt }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#51565C">Onsdag 14. oktober</span><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Oversikt</h1></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px">
+    <sc-for list="{{ tall }}" as="k" hint-placeholder-count="5">
+      <button onClick="{{ k.klikk }}" style="all:unset;cursor:pointer;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:6px" style-hover="box-shadow:inset 0 0 0 1px #7B8188">
+        <span style="font-size:13px;color:#51565C">{{ k.navn }}</span>
+        <span style="font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;white-space:nowrap">{{ k.verdi }}</span>
+        <span style="font-size:13px;color:#62686F">{{ k.under }}</span>
+      </button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.85fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Åpne saker og frister</h2><span style="font-size:13px;color:#62686F">{{ ovSakTekst }}</span></div>
+      <sc-for list="{{ ovSaker }}" as="s" hint-placeholder-count="4">
+        <div onClick="{{ s.klikk }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 18px;box-shadow:{{ s.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <div style="min-width:0;display:flex;flex-direction:column"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.emne }}</span><span style="font-size:13px;color:#51565C">{{ s.nr }} · {{ s.kunde }}</span></div>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border-radius:8px;font-size:13px;white-space:nowrap;color:{{ s.fg }};font-weight:{{ s.vekt }};background:{{ s.bg }};box-shadow:{{ s.ring }}">{{ s.ikon }}{{ s.frist }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Oppstarter i gang</h2></div>
+      <sc-for list="{{ ovOpp }}" as="o" hint-placeholder-count="2">
+        <div onClick="{{ o.klikk }}" style="display:flex;flex-direction:column;gap:6px;padding:12px 18px;box-shadow:{{ o.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <div style="display:flex;align-items:baseline;gap:8px"><b style="flex:1">{{ o.kunde }}</b><span style="font-size:13px;color:#51565C">Start {{ o.start }}</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:8px;border-radius:4px;background:#E3E6EA;overflow:hidden"><div style="height:100%;width:{{ o.bar }};background:#05806F"></div></div><span style="font-size:13px;color:#51565C">{{ o.fremdrift }}</span></div>
+          <span style="display:{{ o.visStopper }};align-items:center;gap:6px;font-size:13px;font-weight:600;color:#9E2D28">{{ ik16.stoppet }}Stopper: {{ o.stopper }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <button onClick="{{ tilKjoring }}" style="all:unset;cursor:pointer;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:inset 0 0 0 1px #7B8188">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Neste fakturakjøring</h2></div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:2px"><span style="font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">01.11.2026</span><span style="font-size:13px;color:#51565C">November, om 18 dager</span></div>
+      <div style="padding:0 18px 12px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:14px"><sc-for list="{{ ovKj }}" as="k" hint-placeholder-count="4"><span style="color:#51565C">{{ k.navn }}</span><span style="text-align:right;font-weight:600">{{ k.verdi }}</span></sc-for></div>
+      <div style="display:flex;align-items:center;gap:6px;padding:10px 18px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;font-weight:600;color:#9E2D28">{{ ik16.stoppet }}1 feil: Nordli finnes ikke i PowerOffice</div>
+    </button>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Neste steg</h2><span style="font-size:13px;color:#62686F">I dag og forfalt</span></div>
+      <sc-for list="{{ nesteSteg }}" as="n" hint-placeholder-count="4">
+        <div onClick="{{ n.klikk }}" style="display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 18px;box-shadow:{{ n.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="color:{{ n.ikonFg }};display:flex">{{ n.ikon }}</span>
+          <div style="min-width:0;display:flex;flex-direction:column"><span style="font-weight:600">{{ n.tekst }}</span><span style="font-size:13px;color:#51565C">{{ n.eier }}</span></div>
+          <span style="font-size:13px;font-weight:{{ n.datoVekt }};color:{{ n.datoFg }};white-space:nowrap">{{ n.datoTekst }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Nye leads</h2><span style="font-size:13px;color:#62686F">Fra «Be om demo»</span></div>
+        <sc-for list="{{ leads }}" as="l" hint-placeholder-count="2">
+          <div onClick="{{ l.klikk }}" style="display:flex;flex-direction:column;gap:4px;padding:12px 18px;box-shadow:{{ l.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600;flex:1">{{ l.navn }}</span><span style="display:{{ l.visNy }};font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF">Ny</span><span style="font-size:13px;color:#62686F">{{ l.tid }}</span></div>
+            <span style="font-size:13px;color:#51565C">{{ l.kontakt }} · {{ l.butikker }} · {{ l.fylke }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Frister fra Drift</h2><a href="#" style="font-size:14px;font-weight:600">Alle frister</a></div>
+        <sc-for list="{{ frister }}" as="f" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 18px;box-shadow:{{ f.skille }}"><span style="color:#51565C;display:flex">{{ ik.frist }}</span><div style="display:flex;flex-direction:column"><span style="font-weight:500">{{ f.tekst }}</span><span style="font-size:13px;color:#62686F">{{ f.kategori }}</span></div><span style="font-size:13px;color:#51565C">{{ f.dato }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SA2 Salgstavle -->
+<sc-if value="{{ v.tavle }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">Salgstavle</h1>
+    <div role="group" aria-label="Produktlinje" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ linjeFilter }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }}">{{ f.navn }}</button></sc-for>
+    </div>
+    <span style="font-size:14px;color:#51565C">Åpen verdi <b style="color:#1A1D22">{{ apenVerdi }}</b> per måned</span>
+    <button onClick="{{ gaaEiere }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny mulighet</button>
+  </div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke hente salgstavla</b><span style="font-size:14px">Tilkoblingen til databasen svarte ikke. Det du ser kan være utdatert.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:grid;grid-template-columns:repeat(6,minmax(240px,1fr));gap:12px;min-width:1500px;align-items:start">
+      <sc-for list="{{ kolonner }}" as="k" hint-placeholder-count="6">
+        <div onDragOver="{{ k.over }}" onDragLeave="{{ k.ut }}" onDrop="{{ k.slipp }}" style="border-radius:14px;background:{{ k.bg }};box-shadow:{{ k.ring }};padding:10px;display:flex;flex-direction:column;gap:10px;min-height:520px">
+          <div style="display:flex;align-items:center;gap:8px;padding:2px 4px"><span style="width:8px;height:8px;border-radius:50%;background:{{ k.prikk }}"></span><b style="font-size:14px;flex:1">{{ k.navn }}</b><span style="font-size:13px;color:#51565C">{{ k.antall }}</span></div>
+          <span style="font-size:12px;color:#62686F;padding:0 4px;margin-top:-6px">{{ k.verdi }}</span>
+          <sc-for list="{{ k.kort }}" as="c" hint-placeholder-count="2">
+            <div draggable="{{ c.dra }}" onDragStart="{{ c.start }}" onDragEnd="{{ c.slutt }}" onClick="{{ c.klikk }}" style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:12px 12px 10px;display:flex;flex-direction:column;gap:8px;cursor:grab;opacity:{{ c.opasitet }}" style-hover="box-shadow:inset 0 0 0 1px #7B8188,0 4px 12px -6px rgba(26,29,34,.2)">
+              <div style="display:flex;align-items:flex-start;gap:6px"><span style="font-weight:600;flex:1;line-height:1.3">{{ c.navn }}</span><span style="color:#62686F;display:flex">{{ ik16.dra }}</span></div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px">
+                <span style="font-weight:600;padding:2px 8px;border-radius:999px;background:{{ c.kjedeBg }};color:{{ c.kjedeFg }};box-shadow:inset 0 0 0 1px {{ c.kjedeKant }}">{{ c.kjede }}</span>
+                <span style="color:#51565C;display:flex;align-items:center;gap:4px">{{ ik16.utstillinger }}{{ c.butikker }}</span>
+              </div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px"><b style="font-size:15px">{{ c.verdi }}</b><span style="font-size:12px;color:#62686F">per mnd</span></div>
+              <div style="display:{{ c.visNeste }};align-items:center;gap:6px;padding-top:8px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:{{ c.nesteFg }};font-weight:{{ c.nesteVekt }}"><span style="display:flex">{{ c.nesteIkon }}</span><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.neste }}</span><span style="white-space:nowrap">{{ c.nesteDato }}</span></div>
+              <div style="display:{{ c.visGrunn }};font-size:13px;color:#51565C;padding-top:8px;box-shadow:inset 0 1px 0 #E3E6EA">Grunn: {{ c.grunn }}</div>
+            </div>
+          </sc-for>
+          <sc-for list="{{ k.skjelett }}" as="s" hint-placeholder-count="0"><div style="height:118px;border-radius:12px;background:#E3E6EA"></div></sc-for>
+          <sc-if value="{{ k.tom }}" hint-placeholder-val="{{ false }}"><div style="border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:14px;font-size:13px;color:#51565C;text-align:center;background:rgba(255,255,255,.5)">{{ k.tomTekst }}</div></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <sc-if value="{{ t.tom }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:28px;display:flex;align-items:center;gap:20px"><span style="width:52px;height:52px;flex:none;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.salgstavle }}</span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><b style="font-size:16px">Ingen muligheter ennå</b><span style="color:#51565C;font-size:14px">Legg inn den første eieren, eller importer listen fra Excel. Leads fra «Be om demo» havner i «Ny» av seg selv.</span></div><button onClick="{{ aapneImport }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.last_opp }}Importer fra Excel</button><button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.pluss }}Ny eier</button></div>
+  </sc-if>
+</sc-if>
+
+<!-- SA3 Eiere og butikker / Kunder -->
+<sc-if value="{{ v.eiere }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">{{ eiereTittel }}</h1>
+    <label style="height:36px;width:280px;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F">{{ ik.sok }}<input value="{{ sok }}" onChange="{{ settSok }}" placeholder="Søk etter navn, sted eller org.nr." style="border:0;outline:0;background:transparent;flex:1;min-width:0;color:#1A1D22;font-size:14px"></label>
+    <button onClick="{{ aapneImport }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#F3F5F8">{{ ik.last_opp }}Importer fra Excel</button>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny eier</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <sc-for list="{{ filterGrupper }}" as="g" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-size:13px;color:#51565C;margin-right:2px">{{ g.navn }}</span>
+        <sc-for list="{{ g.valg }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}<span style="color:#62686F">{{ f.antall }}</span></button></sc-for>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke hente eiere og butikker</b><span style="font-size:14px">Sist oppdatert 14.10 kl. 09:12. Prøv igjen om litt.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1080px;font-size:14px">
+      <div style="display:grid;grid-template-columns:minmax(0,1.6fr) 120px 80px 110px 150px 130px 140px minmax(0,1fr);gap:12px;align-items:center;height:36px;padding:0 16px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Eier</span><span>Org.nr.</span><span>Butikker</span><span>Kjede</span><span>Fylke</span><span style="text-align:right">Verdi per mnd</span><span>Status</span><span>Kontakt</span></div>
+      <sc-for list="{{ eierRader }}" as="e" hint-placeholder-count="10">
+        <div onClick="{{ e.klikk }}" style="display:grid;grid-template-columns:minmax(0,1.6fr) 120px 80px 110px 150px 130px 140px minmax(0,1fr);gap:12px;align-items:center;height:44px;padding:0 16px;box-shadow:{{ e.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600">{{ e.navn }}</span>
+          <span style="color:#51565C">{{ e.orgnr }}</span><span>{{ e.butikker }}</span><span style="color:#51565C">{{ e.kjede }}</span><span style="color:#51565C">{{ e.fylke }}</span>
+          <span style="text-align:right">{{ e.verdi }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ e.s.bg }};color:{{ e.s.fg }};box-shadow:inset 0 0 0 1px {{ e.s.kant }};white-space:nowrap">{{ e.s.navn }}</span></span>
+          <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#51565C">{{ e.kontakt }}</span>
+        </div>
+      </sc-for>
+      <sc-for list="{{ skjelettRader }}" as="s" hint-placeholder-count="0"><div style="height:44px;padding:0 16px;display:flex;align-items:center;gap:16px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="height:12px;width:{{ s.b1 }};border-radius:6px;background:#E3E6EA"></span><span style="height:12px;width:90px;border-radius:6px;background:#E3E6EA"></span><span style="flex:1"></span><span style="height:20px;width:90px;border-radius:10px;background:#E3E6EA"></span></div></sc-for>
+      <sc-if value="{{ eiereTom }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:48px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.utstillinger }}</span><b style="font-size:16px">{{ eiereTomTittel }}</b><span style="color:#51565C;max-width:440px">{{ eiereTomTekst }}</span><button onClick="{{ aapneImport }}" style="all:unset;cursor:pointer;margin-top:6px;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.last_opp }}Importer fra Excel</button></div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SA4 Eierkort -->
+<sc-if value="{{ v.eier }}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{ t.laster }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px"><div style="height:28px;width:340px;border-radius:8px;background:#E3E6EA"></div><div style="height:14px;width:520px;border-radius:7px;background:#E3E6EA"></div><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px"><div style="height:260px;border-radius:14px;background:#E3E6EA"></div><div style="height:260px;border-radius:14px;background:#E3E6EA"></div></div><span style="font-size:13px;color:#51565C">Henter eierkortet …</span></div>
+  </sc-if>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#FFEBE8;color:#9E2D28;display:flex;align-items:center;justify-content:center">{{ ik24.stoppet }}</span><b style="font-size:16px">Kunne ikke åpne eierkortet</b><span style="color:#51565C">Eieren finnes, men dataene kunne ikke hentes. Feilkode ADM-504.</span><div style="display:flex;gap:8px;margin-top:6px"><button onClick="{{ gaaEiere }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600;font-size:14px">Tilbake til listen</button><button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600;font-size:14px">Prøv igjen</button></div></div>
+  </sc-if>
+  <sc-if value="{{ t.vis }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:300px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ e.s.bg }};color:{{ e.s.fg }};box-shadow:inset 0 0 0 1px {{ e.s.kant }}">{{ e.s.navn }}</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ e.kjedeBg }};color:{{ e.kjedeFg }};box-shadow:inset 0 0 0 1px {{ e.kjedeKant }}">{{ e.kjede }}</span><span style="font-size:13px;color:#51565C">{{ e.linjeNavn }}</span></div>
+      <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">{{ e.navn }}</h1>
+      <span style="color:#51565C">Org.nr. {{ e.orgnr }} · {{ e.adresse }} · Kilde: {{ e.kilde }}</span>
+    </div>
+    <div role="group" aria-label="Eksempel" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ eierValg }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }}">{{ f.navn }}</button></sc-for>
+    </div>
+    <button onClick="{{ nyAktivitet }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#F3F5F8">{{ ik.pluss }}Ny aktivitet</button>
+    <button onClick="{{ gaaPris }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.etterkalkyler }}{{ e.prisKnapp }}</button>
+  </div>
+  <sc-if value="{{ e.erLead }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;background:#E7F1FF;color:#1A1D22;box-shadow:inset 0 0 0 1px #A0C6FF">
+      <span style="width:36px;height:36px;flex:none;border-radius:10px;background:#FFFFFF;color:#1A57AD;display:flex;align-items:center;justify-content:center">{{ ik.innboks }}</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px"><b style="color:#1A57AD">Nytt lead fra «Be om demo» · {{ e.lead.tid }}</b><span style="text-wrap:pretty">«{{ e.lead.melding }}»</span><span style="font-size:13px;color:#51565C">{{ e.lead.kanal }} · {{ e.lead.butikker }} butikk · {{ e.lead.ansatte }} ansatte · Svar innen 24 timer</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><button onClick="{{ nyAktivitet }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.kalender }}Avtal demo</button><button onClick="{{ ikkeAktuell }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px">Ikke aktuell</button></div>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,1fr);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <sc-if value="{{ e.erKunde }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Kundemiljø</h2><a href="#" style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">Åpne kundesiden{{ ik16.pil_hoyre }}</a></div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:14px 18px;font-size:14px">
+            <sc-for list="{{ e.miljoFelt }}" as="m" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;color:#62686F">{{ m.navn }}</span><span style="font-weight:500">{{ m.verdi }}</span></div></sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Butikker</h2><span style="font-size:13px;color:#62686F">{{ e.butikkTekst }}</span></div>
+        <div style="display:grid;grid-template-columns:{{ e.butikkKol }};gap:12px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><sc-for list="{{ e.butikkHode }}" as="h" hint-placeholder-count="2"><span style="text-align:{{ h.just }}">{{ h.navn }}</span></sc-for></div>
+        <sc-for list="{{ e.butikkRader }}" as="b" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:{{ e.butikkKol }};gap:12px;align-items:center;min-height:44px;padding:6px 18px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:14px;box-sizing:border-box">
+            <sc-for list="{{ b.celler }}" as="c" hint-placeholder-count="2"><span style="text-align:{{ c.just }};color:{{ c.fg }};font-weight:{{ c.vekt }};font-size:{{ c.str }}">{{ c.t }}</span></sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Kontaktpersoner</h2><button style="all:unset;cursor:pointer;color:#016D5E;font-weight:600;font-size:14px">Legg til</button></div>
+        <sc-for list="{{ e.kontakter }}" as="k" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 18px;box-shadow:{{ k.skille }}"><span style="width:36px;height:36px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ k.init }}</span><div style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:600">{{ k.navn }}</span><span style="font-size:13px;color:#51565C">{{ k.rolle }}</span></div><div style="display:flex;flex-direction:column;align-items:flex-end;font-size:13px;color:#51565C"><span>{{ k.tlf }}</span><span>{{ k.epost }}</span></div></div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Muligheter</h2></div>
+          <sc-for list="{{ e.muligheter }}" as="m" hint-placeholder-count="1"><div style="padding:12px 18px;display:flex;flex-direction:column;gap:6px;box-shadow:{{ m.skille }}"><div style="display:flex;align-items:center;gap:8px"><b style="flex:1">{{ m.navn }}</b><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ m.s.bg }};color:{{ m.s.fg }};box-shadow:inset 0 0 0 1px {{ m.s.kant }}">{{ m.s.navn }}</span></div><span style="font-size:13px;color:#51565C">{{ m.tekst }}</span></div></sc-for>
+          <sc-if value="{{ e.ingenMuligheter }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 18px;font-size:14px;color:#51565C">Ingen åpne muligheter.</div></sc-if>
+        </div>
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Tilbud og avtaler</h2></div>
+          <sc-for list="{{ e.dokumenter }}" as="d" hint-placeholder-count="2"><a href="{{ d.lenke }}" style="display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 18px;box-shadow:{{ d.skille }};color:#1A1D22;text-decoration:none"><span style="color:#51565C;display:flex">{{ d.ikon }}</span><div style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:600">{{ d.tittel }}</span><span style="font-size:12px;color:#62686F">{{ d.tekst }}</span></div><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ d.s.bg }};color:{{ d.s.fg }};box-shadow:inset 0 0 0 1px {{ d.s.kant }};white-space:nowrap">{{ d.s.navn }}</span></a></sc-for>
+          <sc-if value="{{ e.ingenDok }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 18px;font-size:14px;color:#51565C">Ingen tilbud ennå. Lag et i prisberegneren.</div></sc-if>
+        </div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;position:sticky;top:80px">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Tidslinje</h2><button onClick="{{ nyAktivitet }}" style="all:unset;cursor:pointer;color:#016D5E;font-weight:600;font-size:14px">Ny aktivitet</button></div>
+      <sc-if value="{{ e.harNeste }}" hint-placeholder-val="{{ true }}">
+        <div style="margin:14px 18px 0;padding:12px 14px;border-radius:12px;background:#F3F5F8;display:flex;align-items:center;gap:10px"><span style="display:flex;color:{{ e.nesteFg }}">{{ e.nesteIkon }}</span><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;color:#51565C">Neste steg</span><b style="font-size:14px">{{ e.nesteTekst }}</b></div><span style="font-size:13px;font-weight:{{ e.nesteVekt }};color:{{ e.nesteFg }}">{{ e.nesteDato }}</span></div>
+      </sc-if>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px 4px">
+        <sc-for list="{{ tlFilter }}" as="f" hint-placeholder-count="6"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:28px;padding:0 10px;border-radius:999px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}</button></sc-for>
+      </div>
+      <div style="padding:8px 18px 18px;display:flex;flex-direction:column">
+        <sc-for list="{{ e.tidslinje }}" as="a" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px">
+            <div style="display:flex;flex-direction:column;align-items:center"><span style="width:32px;height:32px;flex:none;border-radius:50%;background:{{ a.bg }};color:{{ a.fg }};display:flex;align-items:center;justify-content:center">{{ a.ikon }}</span><span style="flex:1;width:2px;background:#E3E6EA;display:{{ a.linje }};margin:4px 0"></span></div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:4px 0 16px;min-width:0"><div style="display:flex;gap:8px;align-items:baseline"><b style="flex:1;font-size:14px">{{ a.tittel }}</b><span style="font-size:12px;color:#62686F;white-space:nowrap">{{ a.dato }}</span></div><span style="font-size:13px;color:#51565C;text-wrap:pretty">{{ a.tekst }}</span><span style="font-size:12px;color:#62686F">{{ a.typeNavn }} · {{ a.hvem }}</span></div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ e.tomTidslinje }}" hint-placeholder-val="{{ false }}"><div style="padding:24px 0;text-align:center;color:#51565C;font-size:14px;display:flex;flex-direction:column;gap:8px;align-items:center"><b style="color:#1A1D22">Ingen aktiviteter ennå</b><span>Logg samtaler, møter og demoer her, og sett et neste steg.</span><button onClick="{{ nyAktivitet }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:#1A1D22">{{ ik.pluss }}Første aktivitet</button></div></sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</sc-if>
+
+<!-- SA5 Prisberegner -->
+<sc-if value="{{ v.pris }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;display:flex;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Prisberegner</h1><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F;white-space:nowrap">Eksempel – prislisten er ikke låst</span></div><span style="font-size:14px;color:#51565C">Prisliste {{ pb.versjon }}, gjelder fra 01.09.2026 · Eier: <b style="color:#1A1D22">{{ pb.eier }}</b></span></div>
+    <div role="group" aria-label="Produktlinje" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ pb.linjer }}" as="f" hint-placeholder-count="2"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:32px;padding:0 14px;border-radius:8px;font-size:14px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }}">{{ f.navn }}</button></sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+      <sc-for list="{{ pb.butikker }}" as="b" hint-placeholder-count="3">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:14px 18px;display:grid;grid-template-columns:minmax(160px,1fr) auto auto auto;gap:14px 18px;align-items:center">
+          <input value="{{ b.navn }}" onChange="{{ b.settNavn }}" aria-label="Butikk" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;font-weight:600;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;outline-color:#05806F;min-width:0">
+          <div role="group" aria-label="Pakke for butikken" style="display:flex;padding:2px;border-radius:10px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #CDD1D6">
+            <sc-for list="{{ b.pakker }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:600;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.ring }};display:flex;align-items:center">{{ p.navn }}</button></sc-for>
+          </div>
+          <sc-for list="{{ b.tellere }}" as="s" hint-placeholder-count="2">
+            <div style="display:flex;flex-direction:column;gap:2px;align-items:center"><span style="font-size:12px;color:#51565C">{{ s.navn }}</span><div style="display:flex;align-items:center;gap:2px"><button onClick="{{ s.minus }}" aria-label="Færre" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px #CDD1D6;font-size:18px;color:#51565C">–</button><span style="width:30px;text-align:center;font-weight:600">{{ s.verdi }}</span><button onClick="{{ s.pluss }}" aria-label="Flere" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px #CDD1D6;color:#51565C">{{ ik16.pluss }}</button></div></div>
+          </sc-for>
+          <div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:#51565C">
+            <span>{{ b.inkludert }}</span><span style="flex:1"></span><span>{{ b.detaljer }}</span>
+            <b style="font-size:15px;min-width:96px;text-align:right;color:#1A1D22">{{ b.sum }}</b>
+            <button onClick="{{ b.fjern }}" aria-label="Fjern butikk" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#62686F" style-hover="background:#F3F5F8;color:#9E2D28">{{ ik.lukk }}</button>
+          </div>
+        </div>
+      </sc-for>
+      <button onClick="{{ pb.leggTil }}" style="all:unset;cursor:pointer;height:48px;border-radius:14px;box-shadow:inset 0 0 0 1.5px #CDD1D6;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;color:#016D5E" style-hover="background:#FFFFFF">{{ ik.pluss }}Legg til butikk</button>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Gjelder hele eieren</h2><span style="font-size:13px;color:#51565C">{{ pb.trinnTekst }}</span></div>
+        <div style="display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 18px"><span style="color:#51565C;display:flex">{{ ik.min_dag }}</span><div style="display:flex;flex-direction:column"><b>Hengsel Ute</b><span style="font-size:13px;color:#51565C">{{ pb.uteTekst }}</span></div><b>{{ pb.ute }}</b></div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:12px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="font-size:13px;color:#51565C">Tillegg per eier, uten rabatt</span><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ pb.tillegg }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.klikk }}" style="all:unset;cursor:{{ t.peker }};height:32px;padding:0 12px;border-radius:999px;font-size:13px;display:flex;align-items:center;gap:6px;background:{{ t.bg }};color:{{ t.fg }};box-shadow:inset 0 0 0 1px {{ t.kant }};font-weight:{{ t.vekt }}"><span style="display:{{ t.visHake }}">{{ ik16.hake }}</span>{{ t.navn }}<span style="color:#62686F;font-weight:400">{{ t.pris }}</span></button></sc-for></div></div>
+        <div style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;align-items:center;padding:12px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="color:#51565C;display:flex">{{ ik.sendt }}</span><span style="font-size:13px;color:#51565C">SMS, Penneo og AI viderefaktureres etter bruk: kostpris + 15 %, uten rabatt.</span></div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:18px;display:flex;flex-direction:column;gap:9px;position:sticky;top:80px;font-size:14px">
+      <h2 style="margin:0;font-size:16px;font-weight:700">Sum per måned</h2>
+      <sc-for list="{{ pb.rader }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:10px"><span style="min-width:0;display:flex;flex-direction:column"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.navn }}</span><span style="font-size:12px;color:#62686F">{{ r.under }}</span></span><span style="white-space:nowrap">{{ r.sum }}</span></div></sc-for>
+      <div style="display:flex;justify-content:space-between;gap:10px;"><span style="display:flex;flex-direction:column"><span>Hengsel Ute</span><span style="font-size:12px;color:#62686F">{{ pb.uteKort }}</span></span><span>{{ pb.ute }}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:{{ pb.rabattFg }};padding-top:8px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="display:flex;flex-direction:column"><span>{{ pb.rabattNavn }}</span><span style="font-size:12px;color:#62686F">Gjelder pakker, ekstra brukere og Ute over</span></span><span style="white-space:nowrap">{{ pb.rabatt }}</span></div>
+      <sc-if value="{{ pb.rabattHint }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#51565C;padding:8px 10px;border-radius:8px;background:#F3F5F8">{{ pb.rabattHintTekst }}</span></sc-if>
+      <sc-for list="{{ pb.tilleggRader }}" as="t" hint-placeholder-count="1"><div style="display:flex;justify-content:space-between;gap:10px;padding-top:8px;box-shadow:{{ t.skille }}"><span style="display:flex;flex-direction:column"><span>{{ t.navn }}</span><span style="font-size:12px;color:#62686F">{{ t.under }}</span></span><span>{{ t.belop }}</span></div></sc-for>
+      <div style="height:1px;background:#E3E6EA"></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><b>Per måned, uten mva</b><b style="font-size:24px;letter-spacing:-0.5px">{{ pb.netto }}</b></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:#51565C"><span>Mva 25 %</span><span>{{ pb.mva }}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;"><span>Per måned, med mva</span><b>{{ pb.inkl }}</b></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:#51565C"><span>Per år, uten mva</span><span>{{ pb.aar }}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:#51565C"><span>Per år, med mva</span><span>{{ pb.aarInkl }}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:#51565C"><span>Snitt per butikk per måned</span><span>{{ pb.perButikk }}</span></div>
+      <div style="height:1px;background:#E3E6EA"></div>
+      <b>Etablering, engangs, uten rabatt</b>
+      <sc-for list="{{ pb.etabRader }}" as="e" hint-placeholder-count="1"><div style="display:flex;justify-content:space-between;gap:10px"><span>{{ e.navn }}</span><span>{{ e.sum }}</span></div></sc-for>
+      <div style="display:flex;justify-content:space-between;gap:10px;color:#51565C"><span>Mva 25 %</span><span>{{ pb.etableringMva }}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;"><b>Etablering med mva</b><b>{{ pb.etableringInkl }}</b></div>
+      <div style="height:1px;background:#E3E6EA"></div>
+      <span style="font-size:13px;color:#51565C">{{ pb.support }} Binding 12 måneder. Prisene justeres årlig etter KPI.</span>
+      <button onClick="{{ lagTilbud }}" style="all:unset;cursor:pointer;margin-top:6px;height:44px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15px" style-hover="background:#007665">{{ ik.tilbud }}Lag tilbud</button>
+      <span style="font-size:12px;color:#62686F;text-align:center">Tilbudet lagres på muligheten som ny versjon, med prisliste {{ pb.versjon }}.</span>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SA7 Avtaler -->
+<sc-if value="{{ v.avtaler }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">Avtaler</h1><button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.pluss }}Ny avtale fra tilbud</button></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ avtaleFilter }}" as="f" hint-placeholder-count="6"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}<span style="color:#62686F">{{ f.antall }}</span></button></sc-for></div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke hente status fra Penneo</b><span style="font-size:14px">Avtalene vises, men signeringsstatus kan være utdatert.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div></sc-if>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:980px;font-size:14px">
+      <div style="display:grid;grid-template-columns:110px minmax(0,1.5fr) 140px 130px 110px 150px 110px;gap:12px;align-items:center;height:36px;padding:0 16px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Avtale</span><span>Eier</span><span>Status</span><span style="text-align:right">Per mnd</span><span>Start</span><span>Fornyes</span><span>Binding</span></div>
+      <sc-for list="{{ avtaleRader }}" as="a" hint-placeholder-count="7">
+        <div onClick="{{ a.klikk }}" style="display:grid;grid-template-columns:110px minmax(0,1.5fr) 140px 130px 110px 150px 110px;gap:12px;align-items:center;height:44px;padding:0 16px;box-shadow:{{ a.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="color:#016D5E;font-weight:600">{{ a.nr }}</span><span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.eier }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ a.s.bg }};color:{{ a.s.fg }};box-shadow:inset 0 0 0 1px {{ a.s.kant }};white-space:nowrap">{{ a.s.navn }}</span></span>
+          <span style="text-align:right">{{ a.perMnd }}</span><span style="color:#51565C">{{ a.start }}</span><span style="color:{{ a.fornyFg }};font-weight:{{ a.fornyVekt }}">{{ a.fornyes }}</span><span style="color:#51565C">{{ a.binding }}</span>
+        </div>
+      </sc-for>
+      <sc-for list="{{ skjelettRader }}" as="s" hint-placeholder-count="0"><div style="height:44px;padding:0 16px;display:flex;align-items:center;gap:16px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="height:12px;width:80px;border-radius:6px;background:#E3E6EA"></span><span style="height:12px;width:{{ s.b1 }};border-radius:6px;background:#E3E6EA"></span><span style="flex:1"></span><span style="height:20px;width:100px;border-radius:10px;background:#E3E6EA"></span></div></sc-for>
+      <sc-if value="{{ avtalerTom }}" hint-placeholder-val="{{ false }}"><div style="padding:48px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.signert }}</span><b style="font-size:16px">Ingen avtaler ennå</b><span style="color:#51565C;max-width:440px">Avtaler lages fra et tilbud som kunden har sagt ja til. Kundeavtale, databehandleravtale og supportnivå fylles ut fra malene.</span></div></sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ v.avtale }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:300px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#51565C">{{ av.nr }}</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ av.s.bg }};color:{{ av.s.fg }};box-shadow:inset 0 0 0 1px {{ av.s.kant }}">{{ av.s.navn }}</span></div><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">{{ av.eier }}</h1><span style="color:#51565C">{{ av.linje }} · {{ av.perMnd }} per måned uten mva</span></div>
+    <button onClick="{{ av.paaminn }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:{{ av.visPaaminn }};align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.varsler }}Send påminnelse</button>
+    <button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.tilbud }}{{ av.pdfKnapp }}</button>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,1fr);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Signering i Penneo</h2><span style="font-size:13px;color:#62686F">{{ av.signTekst }}</span></div>
+        <sc-for list="{{ av.signatarer }}" as="s" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 18px;box-shadow:{{ s.skille }}"><span style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ s.bg }};color:{{ s.fg }};font-weight:700;font-size:13px">{{ s.nr }}</span><div style="display:flex;flex-direction:column"><span style="font-weight:600">{{ s.navn }}</span><span style="font-size:13px;color:#51565C">{{ s.rolle }}</span></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ s.p.bg }};color:{{ s.p.fg }};box-shadow:inset 0 0 0 1px {{ s.p.kant }}">{{ s.p.navn }}</span><span style="font-size:12px;color:#62686F">{{ s.tid }}</span></div></div></sc-for><div style="padding:10px 18px 12px;font-size:13px;color:#51565C;box-shadow:inset 0 1px 0 #E3E6EA;text-wrap:pretty">Rekkefølge: 1 kunden (den med signaturrett hos eieren), 2 leverandøren. Avtalen får status «Signert» først når begge har signert.</div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Dokumenter</h2></div>
+        <sc-for list="{{ av.dokumenter }}" as="d" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:20px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 18px;box-shadow:{{ d.skille }}"><span style="color:#51565C;display:flex">{{ d.ikon }}</span><div style="display:flex;flex-direction:column"><span style="font-weight:600">{{ d.navn }}</span><span style="font-size:13px;color:#51565C">{{ d.mal }}</span></div><span style="font-size:13px;color:#62686F">{{ d.info }}</span><a href="#" style="font-size:14px;font-weight:600;color:{{ d.lenkeFg }}">{{ d.lenke }}</a></div></sc-for>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:12px;font-size:14px">
+      <h2 style="margin:0;font-size:16px;font-weight:700">Vilkår</h2>
+      <sc-for list="{{ av.vilkaar }}" as="k" hint-placeholder-count="5"><div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#51565C">{{ k.navn }}</span><span style="font-weight:500;text-align:right;color:{{ k.fg }}">{{ k.verdi }}</span></div></sc-for>
+      <div style="height:1px;background:#E3E6EA"></div>
+      <span style="font-size:13px;color:#51565C;text-wrap:pretty">Varsel om fornyelse går til eier og Eirik 90 dager før fornyelsesdatoen. Oppsigelse må komme senest 3 måneder før. Viderefakturert bruk (SMS, Penneo og AI) kommer i tillegg.</span>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SA9 Prisliste -->
+<sc-if value="{{ v.prisliste }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Prisliste</h1><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F;white-space:nowrap">Eksempel – prislisten er ikke låst</span></div><button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.pluss }}Ny versjon</button><button onClick="{{ publiser }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:{{ pl.pubBg }};color:{{ pl.pubFg }};display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ pl.pubTekst }}</button></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <sc-for list="{{ pl.versjoner }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.klikk }}" style="all:unset;cursor:pointer;min-width:200px;padding:12px 14px;border-radius:12px;background:#FFFFFF;box-shadow:{{ p.ring }};display:flex;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:8px"><b style="flex:1">Versjon {{ p.versjon }}</b><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ p.s.bg }};color:{{ p.s.fg }};box-shadow:inset 0 0 0 1px {{ p.s.kant }}">{{ p.s.navn }}</span></div><span style="font-size:13px;color:#51565C">Gjelder fra {{ p.fra }}</span><span style="font-size:12px;color:#62686F">{{ p.bruk }}</span></button></sc-for>
+  </div>
+  <span style="font-size:14px;color:#51565C">{{ pl.lestTekst }}</span>
+  <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Produktlinjer og pakker</h2><span style="font-size:13px;color:#62686F">per butikk</span></div>
+        <div style="overflow-x:auto"><div style="min-width:680px">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) repeat(5,104px);gap:10px;align-items:center;min-height:40px;padding:4px 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-sizing:border-box"><span>Pakke</span><span style="text-align:right">Pris per mnd</span><span style="text-align:right">Brukere inkl.</span><span style="text-align:right">Ekstra bruker</span><span style="text-align:right">Support år 1</span><span style="text-align:right">Etablering</span></div>
+          <sc-for list="{{ pl.linjer }}" as="l" hint-placeholder-count="2">
+            <div style="display:flex;flex-direction:column">
+              <div style="padding:12px 18px 2px;display:flex;gap:8px;align-items:baseline;box-shadow:inset 0 1px 0 #E3E6EA"><b>{{ l.navn }}</b><span style="font-size:12px;color:#62686F">{{ l.merknad }}</span></div>
+              <sc-for list="{{ l.rader }}" as="r" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:minmax(0,1fr) repeat(5,104px);gap:10px;align-items:center;height:42px;padding:0 18px;font-size:14px"><span style="padding-left:12px">{{ r.navn }}</span><sc-for list="{{ r.celler }}" as="c" hint-placeholder-count="5"><span style="display:flex;justify-content:flex-end"><span style="min-width:96px;height:32px;box-sizing:border-box;padding:0 10px;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;white-space:nowrap;box-shadow:{{ pl.feltKant }};background:{{ pl.feltBg }}">{{ c }}</span></span></sc-for></div></sc-for>
+            </div>
+          </sc-for>
+          <span style="display:block;padding:10px 18px 14px;font-size:13px;color:#51565C;box-shadow:inset 0 1px 0 #E3E6EA">Ekstra bruker per bruker per måned. Support er timer per måned, inkludert første år. Etablering er engangs per butikk, uten rabatt.</span>
+        </div></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Moduler per pakke</h2></div>
+        <div style="display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:12px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Modul</span><span style="text-align:center">Start</span><span style="text-align:center">Butikk</span><span style="text-align:center">Komplett</span></div>
+        <sc-for list="{{ pl.moduler }}" as="m" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:12px;align-items:center;height:40px;padding:0 18px;box-shadow:inset 0 1px 0 #E3E6EA;font-size:14px"><span>{{ m.navn }}</span><sc-for list="{{ m.har }}" as="h" hint-placeholder-count="3"><span style="display:flex;justify-content:center;color:{{ h.fg }}">{{ h.ikon }}</span></sc-for></div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <sc-for list="{{ pl.kort }}" as="k" hint-placeholder-count="4">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">{{ k.tittel }}</h2><span style="font-size:13px;color:#62686F">{{ k.under }}</span></div>
+          <sc-for list="{{ k.rader }}" as="e" hint-placeholder-count="2"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px;padding:5px 18px;box-shadow:{{ e.skille }};font-size:14px;box-sizing:border-box"><div style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:500">{{ e.navn }}</span><span style="font-size:12px;color:#62686F;text-wrap:pretty">{{ e.enhet }}</span></div><span style="min-width:96px;height:32px;box-sizing:border-box;padding:0 10px;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;white-space:nowrap;box-shadow:{{ pl.feltKant }};background:{{ pl.feltBg }}">{{ e.verdi }}</span></div></sc-for>
+          <div style="display:{{ k.visNotat }};padding:10px 18px 14px;font-size:13px;color:#51565C;box-shadow:inset 0 1px 0 #E3E6EA">{{ k.notat }}</div>
+        </div>
+      </sc-for>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Leverandør på tilbud og avtaler</h2><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></div>
+        <span style="display:block;padding:12px 18px 4px;font-size:13px;color:#51565C;text-wrap:pretty">Innstillinger › Leverandør. Det er ikke besluttet hvilket selskap som selger Hengsel. Feltene fylles inn i tilbud (SA6) og avtaler (SA7), og signataren signerer etter kunden i Penneo.</span>
+        <sc-for list="{{ pl.lev }}" as="e" hint-placeholder-count="5"><label style="display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:center;padding:6px 18px;font-size:14px"><span style="color:#51565C">{{ e.navn }}</span><input value="{{ e.verdi }}" readOnly="{{ true }}" style="height:34px;box-sizing:border-box;border:0;border-radius:8px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF;min-width:0;font:inherit"></label></sc-for>
+        <div style="height:12px"></div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ v.kommer }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:48px 32px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:720px;margin:24px auto">
+    <span style="width:56px;height:56px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ km.ikon }}</span>
+    <span style="font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;color:#51565C;box-shadow:inset 0 0 0 1px #CDD1D6">Kommer i en senere fase</span>
+    <h1 style="margin:4px 0 0;font-size:24px;font-weight:700">{{ km.navn }}</h1>
+    <span style="color:#51565C;max-width:520px;text-wrap:pretty">{{ km.tekst }}</span>
+  </div>
+</sc-if>
+
+<sc-if value="{{ v.annen }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:32px;display:flex;flex-direction:column;gap:6px"><h1 style="margin:0;font-size:24px;font-weight:700">{{ annenNavn }}</h1><span style="color:#51565C">Finnes i dag (sites/admin). Ikke tegnet på nytt i fase A. Får ny meny og PC-laget.</span></div>
+</sc-if>
+
+    </div>
+  </main>
+
+  <!-- SA8 Ny aktivitet -->
+  <sc-if value="{{ dlgAktivitet }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:30;background:rgba(26,29,34,.40);display:flex;align-items:flex-start;justify-content:center;padding-top:72px">
+      <div role="dialog" aria-label="Ny aktivitet" style="width:560px;max-width:calc(100vw - 32px);background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;padding:16px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="font-size:17px;flex:1">Ny aktivitet</b><button onClick="{{ lukkDialog }}" aria-label="Lukk" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik.lukk }}</button></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:14px;font-size:14px">
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ akt.typer }}" as="a" hint-placeholder-count="5"><button onClick="{{ a.klikk }}" style="all:unset;cursor:pointer;height:34px;padding:0 12px;border-radius:999px;display:flex;align-items:center;gap:6px;background:{{ a.bg }};color:{{ a.fg }};box-shadow:inset 0 0 0 1px {{ a.kant }};font-weight:{{ a.vekt }}">{{ a.ikon }}{{ a.navn }}</button></sc-for></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Eier</span><select style="height:36px;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF"><option>{{ akt.eier }}</option></select></label>
+            <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Kontakt</span><select style="height:36px;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF"><sc-for list="{{ akt.kontakter }}" as="k" hint-placeholder-count="2"><option>{{ k }}</option></sc-for></select></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Hva skjedde</span><input value="{{ akt.tittel }}" onChange="{{ akt.settTittel }}" placeholder="F.eks. Gjennomgang av pris" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;outline-color:#05806F"></label>
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Notat</span><textarea rows="3" placeholder="Valgfritt" style="border:0;border-radius:10px;padding:8px 10px;box-shadow:inset 0 0 0 1px #7B8188;resize:vertical;outline-color:#05806F"></textarea></label>
+          <div style="padding:12px;border-radius:12px;background:#F3F5F8;display:flex;flex-direction:column;gap:8px">
+            <span style="font-weight:600">Neste steg</span>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:8px"><input value="{{ akt.neste }}" onChange="{{ akt.settNeste }}" placeholder="F.eks. Send tilbud v3" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF;outline-color:#05806F"><input type="date" value="{{ akt.nesteDato }}" onChange="{{ akt.settDato }}" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF"></div>
+            <span style="font-size:13px;color:#51565C">Alle åpne muligheter skal ha et neste steg med dato.</span>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;padding:14px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><button onClick="{{ lukkDialog }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600;font-size:14px">Avbryt</button><button onClick="{{ akt.lagre }}" style="all:unset;cursor:{{ akt.peker }};height:36px;padding:0 16px;border-radius:10px;background:{{ akt.lagreBg }};color:{{ akt.lagreFg }};display:flex;align-items:center;font-weight:600;font-size:14px">Lagre</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ dlgTapt }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:30;background:rgba(26,29,34,.40);display:flex;align-items:flex-start;justify-content:center;padding-top:120px">
+      <div role="dialog" aria-label="Marker som tapt" style="width:480px;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);padding:18px;display:flex;flex-direction:column;gap:14px;font-size:14px">
+        <b style="font-size:17px">Marker {{ taptNavn }} som tapt</b>
+        <span style="color:#51565C">Grunnen må fylles ut. Den brukes i rapporten over tapte salg.</span>
+        <div style="display:flex;flex-direction:column;gap:6px"><sc-for list="{{ taptGrunner }}" as="g" hint-placeholder-count="5"><button onClick="{{ g.klikk }}" style="all:unset;cursor:pointer;min-height:40px;padding:0 12px;border-radius:10px;display:flex;align-items:center;gap:10px;box-shadow:inset 0 0 0 {{ g.kantB }} {{ g.kant }};background:{{ g.bg }}"><span style="width:16px;height:16px;border-radius:50%;box-sizing:border-box;box-shadow:inset 0 0 0 {{ g.prikkB }} {{ g.prikk }}"></span>{{ g.navn }}</button></sc-for></div>
+        <div style="display:flex;justify-content:flex-end;gap:8px"><button onClick="{{ lukkDialog }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Avbryt</button><button onClick="{{ bekreftTapt }}" style="all:unset;cursor:{{ taptPeker }};height:36px;padding:0 16px;border-radius:10px;background:{{ taptBg }};color:{{ taptFg }};display:flex;align-items:center;font-weight:600">Flytt til Tapt</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ dlgImport }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:30;background:rgba(26,29,34,.40);display:flex;align-items:flex-start;justify-content:center;padding-top:64px">
+      <div role="dialog" aria-label="Importer fra Excel" style="width:860px;max-width:calc(100vw - 32px);background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);display:flex;flex-direction:column;font-size:14px">
+        <div style="display:flex;align-items:center;padding:16px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><b style="font-size:17px">Importer fra Excel</b><span style="color:#51565C">kjedeliste-sigdal-okt.xlsx · 6 rader · forhåndsvisning før import</span></div><button onClick="{{ lukkDialog }}" aria-label="Lukk" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik.lukk }}</button></div>
+        <div style="padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#E3F7DE;color:#1F6D02;box-shadow:inset 0 0 0 1px #A5D39B">4 nye</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#E9F1FB;color:#555B64;box-shadow:inset 0 0 0 1px #BDC5CF">1 finnes, oppdateres</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">1 mangler org.nr.</span></div>
+        <div style="margin:0 18px;border-radius:10px;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden">
+          <div style="display:grid;grid-template-columns:minmax(0,1.5fr) 120px 80px 90px 130px 150px;gap:10px;height:34px;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Eier (kolonne A)</span><span>Org.nr. (B)</span><span>Butikker</span><span>Kjede</span><span>Fylke</span><span>Resultat</span></div>
+          <sc-for list="{{ importRader }}" as="r" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:minmax(0,1.5fr) 120px 80px 90px 130px 150px;gap:10px;height:40px;align-items:center;padding:0 12px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="font-weight:500">{{ r.navn }}</span><span style="color:{{ r.orgFg }}">{{ r.org }}</span><span>{{ r.b }}</span><span>{{ r.kjede }}</span><span>{{ r.fylke }}</span><span style="color:{{ r.fg }};font-weight:600;font-size:13px">{{ r.res }}</span></div></sc-for>
+        </div>
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:14px 18px"><span style="flex:1;color:#51565C;font-size:13px">Rader uten org.nr. importeres som prospekt og merkes for oppfølging.</span><button onClick="{{ lukkDialog }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Avbryt</button><button onClick="{{ importer }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600">Importer 6 rader</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:40;background:#1A1D22;color:#FBFDFF;padding:12px 18px;border-radius:12px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 40px -12px rgba(26,29,34,.28);font-weight:500;font-size:14px"><span style="color:#54B9A5;display:flex">{{ ik.hake }}</span>{{ toast }}<a href="{{ toastLenke }}" style="display:{{ toastLenkeVis }};color:#8ACDBE;font-weight:600">Åpne</a></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tilstand&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;tom&quot;,&quot;laster&quot;,&quot;feil&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;'normal'|'tom'|'laster'|'feil'&quot;,&quot;section&quot;:&quot;Tilstand for Tavle, Eiere, Eierkort og Avtaler&quot;}}">
+class Component extends DCLogic {
+  state = { side: 'oversikt', eierId: 'nordli', avtaleNr: 'A-2026-019', linje: 'alle', sok: '', fStatus: 'alle', fKjede: 'alle', fFylke: 'alle', bareKunder: false,
+    flytt: {}, drag: null, over: null, dlg: null, taptId: null, taptGrunn: null, tlFilter: 'alle', aFilter: 'alle', plVersjon: '2026.2', nyeAkt: [],
+    akt: { type: 'samtale', tittel: '', neste: '', dato: '2026-10-21' }, pb: null, pbLinje: 'sigdal', toast: '', toastLenke: '' };
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { this._v = setInterval(() => { if (window.HengselIkoner && window.AdminData && window.AdminBC) { clearInterval(this._v); this.forceUpdate(); } }, 50);
+    const h = location.hash.slice(1); if (h) this.setState(h === 'kunder' ? { side: 'eiere', bareKunder: true } : h === 'eiere' ? { side: 'eiere', bareKunder: false } : { side: h }); }
+  componentWillUnmount() { clearInterval(this._v); clearTimeout(this._t); }
+  vis(t, lenke) { clearTimeout(this._t); this.setState({ toast: t, toastLenke: lenke || '' }); this._t = setTimeout(() => this.setState({ toast: '' }), 3200); }
+  standardPb(e) { return window.AdminData.oppsett(e); }
+  renderVals() {
+    const D = window.AdminData; if (!D || !window.HengselIkoner) return { meny: [], v: {}, t: {}, ik: {}, ik16: {}, ik24: {} };
+    const st = this.state, kr = D.kr, tilstand = this.props.tilstand || 'normal';
+    const gaa = (side, ekstra) => () => { this.setState({ side, dlg: null, ...(ekstra || {}) }); window.scrollTo(0, 0); };
+    const S = { ny: ['Ny', '#E7F1FF', '#1A57AD', '#A0C6FF'], demo: ['Demo avtalt', '#EFEEFF', '#5C46A7', '#C3BBFB'], tilbud: ['Tilbud sendt', '#FCE9FF', '#80378C', '#E0B1E7'], forhandling: ['Forhandling', '#E0F4EE', '#016D5E', '#BCE6DB'], signert: ['Signert', '#E3F7DE', '#1F6D02', '#A5D39B'], tapt: ['Tapt', '#E9F1FB', '#555B64', '#BDC5CF'], kunde: ['Kunde', '#E3F7DE', '#1F6D02', '#A5D39B'] };
+    const pil = k => { const s = S[k]; return { navn: s[0], bg: s[1], fg: s[2], kant: s[3] }; };
+    const AS = { utkast: ['Utkast', '#E9F1FB', '#555B64', '#BDC5CF'], signering: ['Til signering', '#EFEEFF', '#5C46A7', '#C3BBFB'], signert: ['Signert', '#E3F7DE', '#1F6D02', '#A5D39B'], fornyes: ['Fornyes snart', '#FFE9BC', '#6D5000', '#E0C07F'], sagtopp: ['Sagt opp', '#FFEBE8', '#9E2D28', '#F9AEA5'] };
+    const apil = k => { const s = AS[k]; return { navn: s[0], bg: s[1], fg: s[2], kant: s[3] }; };
+    const eiere = D.eiere.map(e => ({ ...e, status: st.flytt[e.id] || e.status, tapGrunn: st.flytt[e.id] === 'tapt' ? (st.grunner || {})[e.id] || e.tapGrunn : e.tapGrunn }));
+    const verdi = e => D.verdi(e).netto;
+    const dato = s => { const [y, m, d] = s.split('-'); return `${d}.${m}`; };
+    const forfalt = s => s < D.idag, idag = s => s === D.idag;
+    const nesteInfo = n => n ? (forfalt(n.dato) ? { fg: '#9E2D28', vekt: 600, ikon: 'frist', dato: 'Forfalt ' + dato(n.dato) } : idag(n.dato) ? { fg: '#016D5E', vekt: 600, ikon: 'kalender', dato: 'I dag' } : { fg: '#51565C', vekt: 400, ikon: 'kalender', dato: dato(n.dato) }) : null;
+    const kjede = k => k === 'Sigdal' ? { kjede: 'Sigdal', kjedeBg: '#F3F5F8', kjedeFg: '#1A1D22', kjedeKant: '#CDD1D6' } : { kjede: 'Uavhengig', kjedeBg: '#FFFFFF', kjedeFg: '#51565C', kjedeKant: '#E3E6EA' };
+    // meny
+    const BC = window.AdminBC || { meny: [], filer: {} };
+    const punkter = BC.meny.filter(m => m[5].includes('e')).map(m => m[0] === 'g' ? ['g', m[1]] : ['p', m[1], m[2], m[3], m[6], 0, m[4]]);
+    const aktivMeny = { eier: st.bareKunder ? 'kunder' : 'eiere', avtale: 'avtaler', eiere: st.bareKunder ? 'kunder' : 'eiere' }[st.side] || st.side;
+    const meny = punkter.map(([t, id, navn, ik, inn, kommer, fil]) => {
+      if (t === 'g') return { erGruppe: true, erPunkt: false, navn: id };
+      const a = id === aktivMeny;
+      const klikk = fil === 'b' ? () => { location.href = './' + BC.filer.b + '#' + id; } : id === 'kunder' ? gaa('eiere', { bareKunder: true }) : id === 'eiere' ? gaa('eiere', { bareKunder: false }) : gaa(id);
+      return { erGruppe: false, erPunkt: true, navn, ikon: this.ikon(ik, 20), klikk, innrykk: inn ? '10px' : '10px', bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : kommer ? '#62686F' : '#1A1D22', ikonFg: a ? '#016D5E' : kommer ? '#62686F' : '#51565C', vekt: a ? 600 : 500, visKommer: kommer ? 'inline' : 'none', aria: a ? 'page' : 'false',
+        tall: id === 'tavle' ? String(eiere.filter(e => ['ny', 'demo', 'tilbud', 'forhandling'].includes(e.status)).length) : id === 'avtaler' ? String(D.avtaler.filter(a => ['signering', 'fornyes'].includes(a.status)).length) : id === 'saker' ? '6' : id === 'oppstart' ? '2' : id === 'kjoring' ? '1 feil' : id === 'd-frister' ? '2' : '', tallFg: id === 'kjoring' ? '#9E2D28' : '#62686F' };
+    });
+    const e = eiere.find(x => x.id === st.eierId) || eiere[0];
+    const stiMap = { oversikt: ['Oversikt'], tavle: ['Salg', 'Tavle'], eiere: st.bareKunder ? ['Kunder'] : ['Salg', 'Eiere og butikker'], eier: [st.bareKunder ? 'Kunder' : 'Eiere og butikker', e.navn], pris: ['Salg', 'Prisberegner'], avtaler: ['Avtaler'], avtale: ['Avtaler', st.avtaleNr], prisliste: ['Innstillinger', 'Prisliste'], support: ['Support'], fakturering: ['Fakturering'] };
+    const stiNavn = stiMap[st.side] || [punkter.find(p => p[1] === st.side)?.[2] || ''];
+    const sti = stiNavn.map((navn, i, a) => ({ navn, fg: i === a.length - 1 ? '#1A1D22' : '#51565C', vekt: i === a.length - 1 ? 600 : 400, pil: i === a.length - 1 ? 'none' : 'flex' }));
+    const brukT = ['tavle', 'eiere', 'eier', 'avtaler'].includes(st.side) ? tilstand : 'normal';
+    const t = { tom: brukT === 'tom', laster: brukT === 'laster', feil: brukT === 'feil', vis: !(st.side === 'eier' && (brukT === 'laster' || brukT === 'feil')) };
+    const v = { oversikt: st.side === 'oversikt', tavle: st.side === 'tavle', eiere: st.side === 'eiere', eier: st.side === 'eier', pris: st.side === 'pris', avtaler: st.side === 'avtaler', avtale: st.side === 'avtale', prisliste: st.side === 'prisliste', kommer: ['support', 'fakturering', 'avtalemaler'].includes(st.side), annen: st.side.startsWith('d-') };
+    const out = { ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), meny, sti, v, t, toast: st.toast, toastLenke: st.toastLenke || '#', toastLenkeVis: st.toastLenke ? 'inline' : 'none',
+      nyAktivitet: () => this.setState({ dlg: 'aktivitet', akt: { type: 'samtale', tittel: '', neste: '', dato: '2026-10-21' } }), lukkDialog: () => this.setState({ dlg: null, taptGrunn: null }),
+      gaaEiere: gaa('eiere', { bareKunder: false }), gaaPris: gaa('pris', { pb: null }), aapneImport: () => this.setState({ dlg: 'import' }),
+      dlgAktivitet: st.dlg === 'aktivitet', dlgTapt: st.dlg === 'tapt', dlgImport: st.dlg === 'import', annenNavn: punkter.find(p => p[1] === st.side)?.[2] || '' };
+    // SA1
+    const kunder = eiere.filter(x => x.kunde), aapne = eiere.filter(x => ['ny', 'demo', 'tilbud', 'forhandling'].includes(x.status));
+    const inntekt = D.avtaler.filter(a => ['signert', 'fornyes', 'sagtopp'].includes(a.status)).reduce((s, a) => s + a.perMnd, 0);
+    out.tall = [
+      { navn: 'Aktive kunder', verdi: String(kunder.length), under: '1 sagt opp, slutter 31.12', klikk: gaa('eiere', { bareKunder: true }) },
+      { navn: 'Butikker', verdi: String(kunder.reduce((s, x) => s + x.butikker.length, 0)), under: 'hos aktive kunder', klikk: gaa('eiere', { bareKunder: true }) },
+      { navn: 'Inntekt per måned', verdi: kr(inntekt), under: 'uten mva, signerte avtaler', klikk: gaa('avtaler') },
+      { navn: 'Åpne muligheter', verdi: String(aapne.length), under: kr(aapne.reduce((s, x) => s + verdi(x), 0)) + ' per mnd', klikk: gaa('tavle') },
+      { navn: 'Fornyes innen 90 dager', verdi: String(D.avtaler.filter(a => a.status === 'fornyes').length), under: 'Vestby 01.12, Aune 15.11', klikk: gaa('avtaler', { aFilter: 'fornyes' }) }
+    ];
+    out.nesteSteg = eiere.filter(x => x.neste && x.neste.dato <= D.idag && ['ny', 'demo', 'tilbud', 'forhandling', 'signert'].includes(x.status)).sort((a, b) => a.neste.dato.localeCompare(b.neste.dato)).map((x, i) => {
+      const n = nesteInfo(x.neste); return { tekst: x.neste.tekst, eier: x.navn, ikon: this.ikon(n.ikon, 20), ikonFg: n.fg, datoTekst: n.dato, datoFg: n.fg, datoVekt: n.vekt, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: gaa('eier', { eierId: x.id }) }; });
+    out.leads = eiere.filter(x => x.kilde === 'Be om demo' && x.status === 'ny').map((x, i) => ({ navn: x.navn, kontakt: x.kontakter[0].navn, butikker: x.butikker.length + (x.butikker.length > 1 ? ' butikker' : ' butikk'), fylke: x.fylke, tid: x.lead ? 'I dag 08:12' : '12.10', visNy: x.nyLead ? 'inline' : 'none', skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: gaa('eier', { eierId: x.id }) }));
+    out.frister = D.frister.map((f, i) => ({ ...f, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }));
+    const tilB = id => () => { location.href = './' + BC.filer.b + '#' + id; };
+    const FR = { forfalt: ['#9E2D28', 600, '#FFFFFF', 'inset 0 0 0 1.5px #9E2D28'], snart: ['#6D5000', 600, '#FFE9BC', 'none'], ok: ['#51565C', 400, 'transparent', 'none'], pause: ['#62686F', 400, 'transparent', 'none'] };
+    const ord = { forfalt: 0, snart: 1, ok: 2, pause: 3 };
+    const apneS = (BC.saker || []).filter(s => s.status !== 'lost').sort((a, b) => ord[a.fristTilstand] - ord[b.fristTilstand]);
+    out.ovSaker = apneS.slice(0, 4).map((s, i) => { const f = FR[s.fristTilstand]; return { emne: s.emne, kunde: (D.eiere.find(e => e.id === s.eier) || {}).navn || '', nr: s.nr, frist: s.frist, fg: f[0], vekt: f[1], bg: f[2], ring: f[3], ikon: this.ikon(s.fristTilstand === 'pause' ? 'kalender' : 'frist', 16), skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: tilB('saker') }; });
+    out.ovSakTekst = apneS.length + ' åpne · ' + apneS.filter(s => s.fristTilstand === 'forfalt').length + ' forfalt';
+    out.ovOpp = (BC.oppstarter || []).filter(o => o.status !== 'ferdig').map((o, i) => ({ kunde: (D.eiere.find(e => e.id === o.eier) || {}).navn || '', start: o.start, fremdrift: (o.eier === 'nordli' ? 2 : 0) + ' av 9', bar: (o.eier === 'nordli' ? 2 / 9 * 100 : 0) + '%', stopper: o.stopper || '', visStopper: o.stopper ? 'flex' : 'none', neste: o.neste, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: tilB('oppstart') }));
+    out.ovKj = [['Fakturaer', '6'], ['Sum uten mva', kr(149512)], ['Klar', '3'], ['Sendt', '2']].map(([navn, verdi]) => ({ navn, verdi }));
+    out.tilKjoring = tilB('kjoring');
+    // SA2
+    const kolDef = [['ny', 'Ny', '#1A57AD'], ['demo', 'Demo avtalt', '#5C46A7'], ['tilbud', 'Tilbud sendt', '#80378C'], ['forhandling', 'Forhandling', '#05806F'], ['signert', 'Signert', '#1F6D02'], ['tapt', 'Tapt', '#7B8188']];
+    const iLinje = x => st.linje === 'alle' || x.linje === st.linje;
+    out.linjeFilter = [['alle', 'Alle'], ['sigdal', 'Sigdal CRM'], ['hengsel', 'Hengsel']].map(([id, navn]) => { const a = st.linje === id; return { navn, klikk: () => this.setState({ linje: id }), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#51565C' }; });
+    out.apenVerdi = kr(aapne.filter(iLinje).reduce((s, x) => s + verdi(x), 0));
+    out.kolonner = kolDef.map(([id, navn, prikk]) => {
+      const liste = t.tom || t.laster ? [] : eiere.filter(x => x.status === id && iLinje(x));
+      const over = st.over === id && st.drag;
+      return { navn, prikk, antall: String(liste.length), verdi: liste.length ? kr(liste.reduce((s, x) => s + verdi(x), 0)) + ' per mnd' : ' ',
+        bg: over ? '#E0F4EE' : '#E3E6EA', ring: over ? 'inset 0 0 0 2px #05806F' : 'none',
+        over: ev => { ev.preventDefault(); if (st.over !== id) this.setState({ over: id }); }, ut: () => {}, slipp: ev => { ev.preventDefault(); const d = st.drag; this.setState({ over: null, drag: null }); if (!d) return; if (id === 'tapt') this.setState({ dlg: 'tapt', taptId: d }); else { this.setState(s => ({ flytt: { ...s.flytt, [d]: id } })); this.vis(eiere.find(x => x.id === d).navn + ' er flyttet til ' + navn); } },
+        skjelett: t.laster ? [{}, {}].slice(0, id === 'tapt' ? 1 : 2) : [], tom: !t.laster && liste.length === 0, tomTekst: t.tom ? 'Tomt' : 'Dra et kort hit',
+        kort: liste.map(x => { const n = nesteInfo(x.neste); return { navn: x.navn, ...kjede(x.kjede), butikker: x.butikker.length + (x.butikker.length > 1 ? ' butikker' : ' butikk'), verdi: kr(verdi(x)),
+          visNeste: x.neste && id !== 'tapt' && id !== 'signert' ? 'flex' : 'none', neste: x.neste ? x.neste.tekst : '', nesteDato: n ? n.dato : '', nesteFg: n ? n.fg : '#51565C', nesteVekt: n ? n.vekt : 400, nesteIkon: this.ikon(n ? n.ikon : 'kalender', 16),
+          visGrunn: id === 'tapt' ? 'block' : 'none', grunn: x.tapGrunn || '', dra: 'true', opasitet: st.drag === x.id ? .45 : 1,
+          start: ev => { ev.dataTransfer.effectAllowed = 'move'; ev.dataTransfer.setData('text/plain', x.id); this.setState({ drag: x.id }); }, slutt: () => this.setState({ drag: null, over: null }), klikk: gaa('eier', { eierId: x.id }) }; }) };
+    });
+    const tapt = eiere.find(x => x.id === st.taptId);
+    out.taptNavn = tapt ? tapt.navn : '';
+    out.taptGrunner = ['Valgte annen leverandør', 'For dyrt', 'Ikke riktig tidspunkt', 'Mangler funksjon', 'Svarer ikke'].map(g => { const a = st.taptGrunn === g; return { navn: g, klikk: () => this.setState({ taptGrunn: g }), bg: a ? '#E0F4EE' : '#FFFFFF', kant: a ? '#05806F' : '#CDD1D6', kantB: a ? '2px' : '1px', prikk: a ? '#05806F' : '#7B8188', prikkB: a ? '5px' : '1.5px' }; });
+    out.taptBg = st.taptGrunn ? '#05806F' : '#E3E6EA'; out.taptFg = st.taptGrunn ? '#FBF9F6' : '#62686F'; out.taptPeker = st.taptGrunn ? 'pointer' : 'not-allowed';
+    out.bekreftTapt = () => { if (!st.taptGrunn) return; this.setState(s => ({ flytt: { ...s.flytt, [s.taptId]: 'tapt' }, grunner: { ...(s.grunner || {}), [s.taptId]: s.taptGrunn }, dlg: null, taptGrunn: null })); this.vis(out.taptNavn + ' er markert som tapt'); };
+    // SA3
+    const q = st.sok.trim().toLowerCase();
+    const basis = eiere.filter(x => !st.bareKunder || x.kunde);
+    const fyl = [...new Set(basis.map(x => x.fylke))].sort();
+    const filtrer = (x, unntak) => (unntak === 's' || st.fStatus === 'alle' || (st.fStatus === 'kunde' ? x.kunde : st.fStatus === 'prospekt' ? !x.kunde && x.status !== 'tapt' : x.status === st.fStatus)) && (unntak === 'k' || st.fKjede === 'alle' || x.kjede === st.fKjede) && (unntak === 'f' || st.fFylke === 'alle' || x.fylke === st.fFylke) && (!q || (x.navn + ' ' + x.orgnr + ' ' + x.adresse + ' ' + x.butikker.map(b => b.sted).join(' ')).toLowerCase().includes(q));
+    const chip = (felt, id, navn, ant) => { const a = st[felt] === id; return { navn, antall: ant, klikk: () => this.setState({ [felt]: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; };
+    const statusValg = st.bareKunder ? [['alle', 'Alle']] : [['alle', 'Alle'], ['prospekt', 'Prospekt'], ['kunde', 'Kunde'], ['tapt', 'Tapt']];
+    out.filterGrupper = [
+      { navn: 'Status', valg: statusValg.map(([id, n]) => chip('fStatus', id, n, String(basis.filter(x => filtrer(x, 's') && (id === 'alle' || (id === 'kunde' ? x.kunde : id === 'prospekt' ? !x.kunde && x.status !== 'tapt' : x.status === id))).length))) },
+      { navn: 'Kjede', valg: [['alle', 'Alle'], ['Sigdal', 'Sigdal'], ['Annen', 'Uavhengig']].map(([id, n]) => chip('fKjede', id, n, String(basis.filter(x => filtrer(x, 'k') && (id === 'alle' || x.kjede === id)).length))) },
+      { navn: 'Fylke', valg: [['alle', 'Alle']].concat(fyl.slice(0, 4).map(f => [f, f])).map(([id, n]) => chip('fFylke', id, n, '')) }
+    ];
+    const rader = t.tom || t.laster ? [] : basis.filter(x => filtrer(x));
+    out.eiereTittel = st.bareKunder ? 'Kunder' : 'Eiere og butikker';
+    out.eierRader = rader.map((x, i) => ({ navn: x.navn, orgnr: x.orgnr, butikker: String(x.butikker.length), kjede: x.kjede === 'Sigdal' ? 'Sigdal' : 'Uavhengig', fylke: x.fylke, verdi: x.status === 'tapt' ? '–' : kr(verdi(x)), s: pil(x.kunde ? 'kunde' : x.status), kontakt: x.kontakter[0].navn, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: gaa('eier', { eierId: x.id }) }));
+    out.skjelettRader = t.laster ? [{ b1: '220px' }, { b1: '180px' }, { b1: '260px' }, { b1: '200px' }, { b1: '240px' }, { b1: '170px' }] : [];
+    out.eiereTom = !t.laster && rader.length === 0; out.eiereTomTittel = t.tom ? 'Ingen eiere ennå' : 'Ingen treff'; out.eiereTomTekst = t.tom ? 'Importer kjedelisten fra Excel, eller legg inn den første eieren. Du ser alltid en forhåndsvisning før noe lagres.' : 'Prøv et annet søk, eller fjern et filter.';
+    out.settSok = ev => this.setState({ sok: ev.target.value });
+    out.importRader = [['Lunde Kjøkken AS', '930 221 467', 2, 'Sigdal', 'Innlandet', 'Ny', '#1F6D02'], ['Brekke Interiør AS', '921 774 038', 1, 'Sigdal', 'Vestland', 'Ny', '#1F6D02'], ['Nordli Kjøkken AS', '923 456 781', 3, 'Sigdal', 'Innlandet', 'Oppdateres', '#555B64'], ['Sandvik Kjøkken AS', '928 330 115', 1, 'Sigdal', 'Rogaland', 'Ny', '#1F6D02'], ['Tveit Innredning', '–', 1, 'Sigdal', 'Agder', 'Mangler org.nr.', '#6D5000'], ['Holm & Sønn Kjøkken AS', '917 552 904', 4, 'Sigdal', 'Østfold', 'Ny', '#1F6D02']].map(([navn, org, b, k, f, res, fg]) => ({ navn, org, b: String(b), kjede: k, fylke: f, res, fg, orgFg: org === '–' ? '#6D5000' : '#51565C' }));
+    out.importer = () => { this.setState({ dlg: null }); this.vis('6 rader importert. 1 må få org.nr.'); };
+    // SA4
+    const TL = { samtale: ['Samtale', 'telefon', '#E7F1FF', '#1A57AD'], mote: ['Møte', 'mitt-team', '#EFEEFF', '#5C46A7'], demo: ['Demo', 'salgstavle', '#E0F4EE', '#016D5E'], epost: ['E-post', 'sendt', '#E9F1FB', '#555B64'], notat: ['Notat', 'tilbud', '#F3F5F8', '#51565C'] };
+    const egne = st.nyeAkt.filter(a => a.eier === e.id);
+    let akt = t.tom ? [] : [...egne, ...((D.aktiviteter[e.id]) || [{ type: 'notat', dato: '01.10.2026', tittel: 'Registrert', tekst: 'Kilde: ' + e.kilde + '.', hvem: 'Eirik' }].concat(e.kunde ? [{ type: 'mote', dato: '05.08.2026', tittel: 'Kvartalsmøte', tekst: 'Gjennomgang av bruk og ønsker.', hvem: 'Eirik' }] : []))];
+    if (st.tlFilter !== 'alle') akt = akt.filter(a => a.type === st.tlFilter);
+    out.tlFilter = [['alle', 'Alle']].concat(Object.entries(TL).map(([k, v2]) => [k, v2[0]])).map(([id, navn]) => { const a = st.tlFilter === id; return { navn, klikk: () => this.setState({ tlFilter: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; });
+    const ni = nesteInfo(e.neste), linjeNavn = D.pris.linjer[e.linje].navn;
+    const kundeKol = '1.4fr 0.9fr 1.6fr 0.6fr 0.6fr 0.9fr';
+    const tilbud = (D.tilbud[e.id] || []).map((x, i) => ({ ikon: this.ikon('tilbud', 20), tittel: `${x.nr} v${x.versjon}`, tekst: `${x.dato} · prisliste ${x.prisliste} · ${kr(x.perMnd)}/mnd`, s: x.status === 'Sendt' ? pil('tilbud') : { navn: 'Erstattet', bg: '#F3F5F8', fg: '#51565C', kant: '#E3E6EA' }, lenke: './60-203_admin_tilbud_pdf.dc.html' }));
+    const avt = D.avtaler.filter(a => a.eier === e.id).map(a => ({ ikon: this.ikon('signert', 20), tittel: a.nr, tekst: `${kr(a.perMnd)}/mnd · fornyes ${a.fornyes}`, s: apil(a.status), lenke: '#' }));
+    const dok = [...tilbud, ...avt].map((d, i) => ({ ...d, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }));
+    out.e = { navn: e.navn, orgnr: e.orgnr, adresse: e.adresse, kilde: e.kilde, s: pil(e.kunde ? 'kunde' : e.status), ...kjede(e.kjede), linjeNavn, erKunde: !!e.kunde && !t.tom, erLead: !!e.lead && e.status === 'ny',
+      lead: e.lead || {}, prisKnapp: e.kunde ? 'Endre abonnement' : 'Prisberegner',
+      miljoFelt: e.miljo ? [{ navn: 'Adresse', verdi: e.miljo.adresse }, { navn: 'Versjon', verdi: e.miljo.versjon }, { navn: 'Siste innlogging', verdi: e.miljo.sistInnlogget }, { navn: 'Tema og database', verdi: e.miljo.tema + ' · ' + e.miljo.database }] : [],
+      butikkTekst: e.butikker.length + (e.butikker.length > 1 ? ' butikker' : ' butikk') + ' · pakke per butikk',
+      butikkKol: e.kunde ? kundeKol : '1.5fr 1fr 1.1fr 0.8fr',
+      butikkHode: e.kunde ? [['Butikk', 'left'], ['Pakke', 'left'], ['Moduler', 'left'], ['Brukere', 'right'], ['Montører', 'right'], ['Pakke og brukere', 'right']].map(([navn, just]) => ({ navn, just })) : [['Butikk', 'left'], ['Sted', 'left'], ['Pakke', 'left'], ['Pakke og brukere', 'right']].map(([navn, just]) => ({ navn, just })),
+      butikkRader: (t.tom ? e.butikker.slice(0, 1) : e.butikker).map(b => {
+        if (!e.kunde) { const sp = D.oppsett(e).find(x => x.navn === b.navn) || D.oppsett(e)[0], rr = D.beregn(e.linje, [sp]).rader[0]; return { celler: [{ t: b.navn, just: 'left', fg: '#1A1D22', vekt: 600, str: '14px' }, { t: b.sted, just: 'left', fg: '#51565C', vekt: 400, str: '14px' }, { t: rr.pakkeNavn + ' (foreslått)', just: 'left', fg: '#1A1D22', vekt: 500, str: '14px' }, { t: kr(rr.sum), just: 'right', fg: '#1A1D22', vekt: 400, str: '14px' }] }; }
+        const p = D.pris.pakker[b.pakke], pr = D.beregn(e.linje, [{ pakke: b.pakke, brukere: Math.max(0, b.brukere - p.brukere), montorer: b.montorer }]);
+        return { celler: [{ t: b.navn, just: 'left', fg: '#1A1D22', vekt: 600, str: '14px' }, { t: p.navn, just: 'left', fg: '#1A1D22', vekt: 500, str: '14px' }, { t: p.moduler.join(', '), just: 'left', fg: '#51565C', vekt: 400, str: '12px' }, { t: String(b.brukere), just: 'right', fg: '#1A1D22', vekt: 400, str: '14px' }, { t: String(b.montorer), just: 'right', fg: '#1A1D22', vekt: 400, str: '14px' }, { t: kr(pr.sum), just: 'right', fg: '#1A1D22', vekt: 400, str: '14px' }] };
+      }),
+      kontakter: e.kontakter.map((k, i) => ({ ...k, init: k.navn.split(' ').map(s => s[0]).join(''), skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' })),
+      muligheter: e.kunde || e.status === 'tapt' || t.tom ? [] : [{ navn: `${linjeNavn}, ${e.butikker.length} ${e.butikker.length > 1 ? 'butikker' : 'butikk'}`, tekst: `${kr(verdi(e))} per mnd · ${D.pris.pakker[e.oppsett.pakke].navn}-pakken · åpnet ${e.id === 'nordli' ? '24.09.2026' : '01.10.2026'}`, s: pil(e.status), skille: 'none' }],
+      ingenMuligheter: e.kunde || e.status === 'tapt' || t.tom, dokumenter: t.tom ? [] : dok, ingenDok: t.tom || dok.length === 0,
+      harNeste: !!ni && !t.tom, nesteTekst: e.neste ? e.neste.tekst : '', nesteDato: ni ? ni.dato : '', nesteFg: ni ? ni.fg : '#51565C', nesteVekt: ni ? ni.vekt : 400, nesteIkon: this.ikon(ni ? ni.ikon : 'kalender', 20),
+      tidslinje: akt.map((a, i, arr) => { const d = TL[a.type]; return { ...a, typeNavn: d[0], ikon: this.ikon(d[1], 16), bg: d[2], fg: d[3], linje: i < arr.length - 1 ? 'block' : 'none' }; }), tomTidslinje: akt.length === 0 };
+    out.eierValg = [['nordli', 'Prospekt'], ['granlund', 'Kunde'], ['haugen', 'Lead']].map(([id, navn]) => { const a = st.eierId === id; return { navn, klikk: () => this.setState({ eierId: id }), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#51565C' }; });
+    out.ikkeAktuell = () => { this.setState({ dlg: 'tapt', taptId: e.id }); };
+    // SA8
+    const A = st.akt;
+    out.akt = { eier: e.navn, kontakter: e.kontakter.map(k => k.navn + ', ' + k.rolle), tittel: A.tittel, neste: A.neste, nesteDato: A.dato,
+      typer: Object.entries(TL).map(([id, d]) => { const a = A.type === id; return { navn: d[0], ikon: this.ikon(d[1], 16), klikk: () => this.setState(s => ({ akt: { ...s.akt, type: id } })), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; }),
+      settTittel: ev => this.setState(s => ({ akt: { ...s.akt, tittel: ev.target.value } })), settNeste: ev => this.setState(s => ({ akt: { ...s.akt, neste: ev.target.value } })), settDato: ev => this.setState(s => ({ akt: { ...s.akt, dato: ev.target.value } })),
+      lagreBg: A.tittel.trim() ? '#05806F' : '#E3E6EA', lagreFg: A.tittel.trim() ? '#FBF9F6' : '#62686F', peker: A.tittel.trim() ? 'pointer' : 'not-allowed',
+      lagre: () => { if (!A.tittel.trim()) return; this.setState(s => ({ dlg: null, nyeAkt: [{ eier: e.id, type: A.type, dato: '14.10.2026', tittel: A.tittel, tekst: A.neste ? 'Neste steg: ' + A.neste + ' (' + A.dato.split('-').reverse().slice(0, 2).join('.') + ')' : '', hvem: 'Eirik' }, ...s.nyeAkt] })); this.vis('Aktiviteten er lagret på ' + e.navn); } };
+    // SA5
+    const pbEier = eiere.find(x => x.id === (st.eierId && !eiere.find(y => y.id === st.eierId).kunde ? st.eierId : 'nordli')) || eiere[0];
+    const P = D.pris, pbB = st.pb || this.standardPb(pbEier), linje = st.pb ? st.pbLinje : pbEier.linje, pbT = st.pbTillegg || pbEier.oppsett.tillegg;
+    const r = D.beregn(linje, pbB, { tillegg: pbT }), nB = pbB.length;
+    const settB = (i, f) => this.setState(s => { const b = (s.pb || this.standardPb(pbEier)).map((x, j) => j === i ? f({ ...x }) : x); return { pb: b, pbLinje: s.pb ? s.pbLinje : linje }; });
+    const etab = {}; r.rader.forEach(x => { etab[x.pakkeId] = (etab[x.pakkeId] || 0) + 1; });
+    out.pb = { versjon: P.versjon, eier: pbEier.navn, antall: String(nB),
+      linjer: Object.entries(P.linjer).map(([id, L]) => { const a = linje === id; return { navn: L.navn, klikk: () => this.setState(s => ({ pb: s.pb || this.standardPb(pbEier), pbLinje: id })), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#51565C' }; }),
+      butikker: pbB.map((b, i) => { const p = P.pakker[b.pakke], x = r.rader[i]; return { navn: b.navn, settNavn: ev => settB(i, y => ({ ...y, navn: ev.target.value })),
+        pakker: Object.entries(P.pakker).map(([id, Q]) => { const a = b.pakke === id; return { navn: Q.navn + ' · ' + kr(P.linjer[linje].pakker[id]).replace(' kr', ''), klikk: () => settB(i, y => ({ ...y, pakke: id })), bg: a ? '#FFFFFF' : 'transparent', fg: a ? '#016D5E' : '#51565C', ring: a ? 'inset 0 0 0 1px #05806F' : 'none' }; }),
+        tellere: [['Ekstra brukere', 'brukere'], ['Montører', 'montorer']].map(([navn, f]) => ({ navn, verdi: String(b[f] || 0), pluss: () => settB(i, y => ({ ...y, [f]: (y[f] || 0) + 1 })), minus: () => settB(i, y => ({ ...y, [f]: Math.max(0, (y[f] || 0) - 1) })) })),
+        inkludert: p.brukere + ' brukere og ' + p.support + ' t support/mnd inkludert', detaljer: x.antallBrukere ? kr(x.pakke) + ' + ' + x.antallBrukere + ' × ' + kr(p.ekstraBruker) : '',
+        sum: kr(x.sum) + '/mnd', fjern: () => this.setState(s => ({ pb: (s.pb || this.standardPb(pbEier)).filter((y, j) => j !== i), pbLinje: s.pb ? s.pbLinje : linje })) }; }),
+      leggTil: () => this.setState(s => { const b = s.pb || this.standardPb(pbEier); return { pb: [...b, { navn: 'Ny butikk ' + (b.length + 1), pakke: 'start', brukere: 0, montorer: 0 }], pbLinje: s.pb ? s.pbLinje : linje }; }),
+      trinnTekst: r.prosent ? nB + ' butikker gir ' + r.prosent + ' % kjederabatt' : nB + (nB === 1 ? ' butikk' : ' butikker') + ' · ingen kjederabatt',
+      uteTekst: r.ute.modell === 'firma' ? r.ute.antall + ' montører · firmapris for opptil ' + P.ute.firmaMaks + ' montører' : r.ute.modell === 'montor' ? r.ute.antall + ' montører × ' + kr(P.ute.montor) + (r.ute.antall > P.ute.firmaMaks ? ' · over ' + P.ute.firmaMaks + ', firmapris gjelder ikke' : ' · billigere enn firmapris ' + kr(P.ute.firma)) : 'Ingen montører',
+      uteKort: r.ute.modell === 'firma' ? 'Firmapris, ' + r.ute.antall + ' montører' : r.ute.antall + ' × ' + kr(P.ute.montor),
+      ute: kr(r.ute.pris),
+      tillegg: r.tillegg.map(t => { const a = t.valgt; return { navn: t.navn, pris: t.inkludert ? 'Inkludert' : kr(t.pris) + '/mnd', visHake: a ? 'flex' : 'none', peker: t.inkludert ? 'default' : 'pointer', klikk: () => { if (t.inkludert) return; this.setState(s => { const c = s.pbTillegg || pbEier.oppsett.tillegg; return { pbTillegg: c.includes(t.id) ? c.filter(y => y !== t.id) : [...c, t.id] }; }); }, bg: t.inkludert ? '#F3F5F8' : a ? '#E0F4EE' : '#FFFFFF', fg: t.inkludert ? '#51565C' : a ? '#016D5E' : '#1A1D22', kant: t.inkludert ? '#E3E6EA' : a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; }),
+      rader: r.rader.map(x => ({ navn: x.navn, under: x.pakkeNavn + (x.antallBrukere ? ' + ' + x.antallBrukere + ' ekstra ' + (x.antallBrukere > 1 ? 'brukere' : 'bruker') : ''), sum: kr(x.sum) })),
+      rabattNavn: r.prosent ? 'Kjederabatt ' + r.prosent + ' % av ' + kr(r.grunnlag) : 'Kjederabatt', rabatt: r.rabatt ? '−' + kr(r.rabatt) : '0 kr', rabattFg: r.rabatt ? '#1F6D02' : '#51565C',
+      rabattHint: nB > 0 && nB < 10, rabattHintTekst: nB < 3 ? '15 % fra 3 butikker hos samme eier. ' + (3 - nB) + ' til gir rabatt.' : '25 % fra 10 butikker. ' + (10 - nB) + ' til gir 25 %.',
+      tilleggRader: r.tillegg.filter(t => t.valgt).map((t, i) => ({ navn: t.navn, under: t.inkludert ? (r.rader.some(x => x.pakkeId === 'komplett') ? 'Inkludert i Komplett' : 'Inkludert, flere butikker') : 'Tillegg, uten rabatt', belop: t.inkludert ? '0 kr' : kr(t.belop), skille: i ? 'none' : 'inset 0 1px 0 #E3E6EA' })),
+      netto: kr(r.netto), mva: kr(r.mva), inkl: kr(r.inkl), aar: kr(r.aar), aarInkl: kr(r.aarInkl), perButikk: kr(r.perButikk),
+      etabRader: Object.entries(etab).map(([id, n]) => ({ navn: n + ' × ' + P.pakker[id].navn + ' à ' + kr(P.pakker[id].etablering), sum: kr(n * P.pakker[id].etablering) })),
+      etableringMva: kr(r.etableringMva), etableringInkl: kr(r.etableringInkl),
+      support: 'Support inkludert første år: ' + r.support + ' t per måned til sammen.' };
+    out.lagTilbud = () => this.vis('Tilbud T-2026-031 v3 er lagret på ' + pbEier.navn, './60-203_admin_tilbud_pdf.dc.html');
+    // SA7
+    const eNavn = a => (eiere.find(x => x.id === a.eier) || {}).navn || a.eierNavn;
+    const avListe = t.tom || t.laster ? [] : D.avtaler.filter(a => st.aFilter === 'alle' || a.status === st.aFilter);
+    out.avtaleFilter = [['alle', 'Alle']].concat(Object.entries(AS).map(([k, x]) => [k, x[0]])).map(([id, navn]) => { const a = st.aFilter === id; return { navn, antall: t.tom || t.laster ? '' : String(id === 'alle' ? D.avtaler.length : D.avtaler.filter(x => x.status === id).length), klikk: () => this.setState({ aFilter: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; });
+    out.avtaleRader = avListe.map((a, i) => ({ nr: a.nr, eier: eNavn(a), s: apil(a.status), perMnd: kr(a.perMnd), start: a.start, fornyes: a.fornyes, binding: a.binding, fornyFg: a.status === 'fornyes' ? '#6D5000' : '#51565C', fornyVekt: a.status === 'fornyes' ? 600 : 400, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none', klikk: gaa('avtale', { avtaleNr: a.nr }) }));
+    out.avtalerTom = !t.laster && avListe.length === 0;
+    const av = D.avtaler.find(a => a.nr === st.avtaleNr) || D.avtaler[0], avE = eiere.find(x => x.id === av.eier);
+    const signert = ['signert', 'fornyes'].includes(av.status);
+    const lev = D.leverandor, ferdig = signert || av.status === 'sagtopp';
+    const kundeNavn = avE ? avE.kontakter[0].navn : 'Kontakt hos ' + eNavn(av);
+    const sig = av.signatarer || [{ navn: kundeNavn, rolle: eNavn(av) + ' · signaturrett', status: ferdig ? 'signert' : 'ikke sendt', tid: ferdig ? av.opprettet : 'Ikke sendt' }, { navn: lev.signatar, rolle: lev.navn + ' (eksempel) · leverandør', status: ferdig ? 'signert' : 'ikke sendt', tid: ferdig ? av.opprettet : 'Etter kunden' }];
+    const SP = { signert: ['Signert', '#E3F7DE', '#1F6D02', '#A5D39B'], venter: ['Venter', '#EFEEFF', '#5C46A7', '#C3BBFB'], 'ikke sendt': ['Ikke sendt', '#E9F1FB', '#555B64', '#BDC5CF'] };
+    const antSign = sig.filter(x => x.status === 'signert').length, forste = sig.find(x => x.status !== 'signert');
+    out.av = { nr: av.nr, eier: eNavn(av), s: apil(av.status), perMnd: kr(av.perMnd), linje: avE ? D.pris.linjer[avE.linje].navn : 'Hengsel',
+      visPaaminn: av.status === 'signering' ? 'flex' : 'none', paaminn: () => this.vis('Påminnelse sendt til Kari Nordli via Penneo'), pdfKnapp: signert || av.status === 'sagtopp' ? 'Last ned signert PDF' : 'Forhåndsvis PDF',
+      signTekst: av.status === 'utkast' ? 'Ikke sendt' : antSign + ' av 2 har signert' + (forste ? ' · venter på ' + forste.navn : ''),
+      signatarer: sig.map((s, i) => { const p = SP[s.status]; return { navn: s.navn, rolle: s.rolle, tid: s.tid, p: { navn: p[0], bg: p[1], fg: p[2], kant: p[3] }, nr: String(i + 1), bg: p[1], fg: p[2], skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' }; }),
+      dokumenter: D.dokumenter.map(d => ({ ...d, mal: d.mal + ', gjelder fra ' + d.gjelderFra, info: av.status === 'utkast' ? 'Utkast' : 'Til signering', lenke: 'Vis', lenkeFg: '#016D5E' })).concat([{ navn: 'Signert PDF', mal: signert || av.status === 'sagtopp' ? 'Samlet dokument fra Penneo med signaturer' : 'Lages når alle har signert', info: signert ? 'Signert ' + av.opprettet : '', lenke: signert || av.status === 'sagtopp' ? 'Last ned' : '', lenkeFg: '#016D5E' }]).map((d, i) => ({ ...d, ikon: this.ikon(i === 3 ? 'signert' : 'tilbud', 20), skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' })),
+      vilkaar: [['Start', av.start], ['Binding', av.binding], ['Oppsigelsesfrist', av.oppsigelse], ['Fornyelsesdato', av.fornyes], ['Fornyes', 'Automatisk med 12 måneder'], ['Prisjustering', 'Årlig etter KPI'], ['Prisliste', '2026.2'], ['Leverandør', lev.navn + ' (eksempel)']].map(([navn, verdi2]) => ({ navn, verdi: verdi2, fg: navn === 'Fornyelsesdato' && av.status === 'fornyes' ? '#6D5000' : '#1A1D22' })) };
+    // SA9
+    const pv = D.prislister.find(p => p.versjon === st.plVersjon), utkast = pv.status === 'utkast';
+    const PS = { arkivert: ['Arkivert', '#F3F5F8', '#51565C', '#E3E6EA'], aktiv: ['Aktiv', '#E3F7DE', '#1F6D02', '#A5D39B'], utkast: ['Utkast', '#E9F1FB', '#555B64', '#BDC5CF'] };
+    const bruk = { '2026.1': 'Brukt i 9 tilbud', '2026.2': 'Brukt i 4 tilbud', '2027.1': 'Ikke brukt ennå' };
+    const ff = s2 => s2.split('-').reverse().join('.'), P2 = D.pris, LV = D.leverandor;
+    const just = utkast ? 1.035 : st.plVersjon === '2026.1' ? 0.96 : 1, rund = n => Math.round(n * just / 10) * 10;
+    out.pl = { versjoner: D.prislister.map(p => { const a = p.versjon === st.plVersjon, s2 = PS[p.status]; return { versjon: p.versjon, fra: ff(p.gjelderFra), bruk: bruk[p.versjon], s: { navn: s2[0], bg: s2[1], fg: s2[2], kant: s2[3] }, ring: a ? 'inset 0 0 0 2px #05806F' : 'inset 0 0 0 1px #CDD1D6', klikk: () => this.setState({ plVersjon: p.versjon }) }; }),
+      lestTekst: utkast ? 'Utkast. Feltene kan endres. Publiser for å ta i bruk fra 01.01.2027. Tilbud laget før det beholder sin versjon.' : pv.status === 'aktiv' ? 'Aktiv versjon er låst. Lag en ny versjon for å endre priser. Tilbud husker hvilken versjon de ble laget med.' : 'Arkivert. Vises fordi eldre tilbud er laget med denne versjonen.',
+      feltKant: utkast ? 'inset 0 0 0 1px #7B8188' : 'none', feltBg: utkast ? '#FFFFFF' : 'transparent',
+      pubTekst: utkast ? 'Publiser 2027.1' : 'Publiser', pubBg: utkast ? '#05806F' : '#E3E6EA', pubFg: utkast ? '#FBF9F6' : '#62686F',
+      linjer: Object.entries(P2.linjer).map(([id, L]) => ({ navn: L.navn, merknad: L.merknad, rader: Object.entries(P2.pakker).map(([pid, pk]) => ({ navn: pk.navn, celler: [kr(rund(L.pakker[pid])), String(pk.brukere), kr(pk.ekstraBruker), pk.support + ' t/mnd', kr(pk.etablering)] })) })),
+      moduler: ['CRM', 'Tilbud og ordre', 'Montørapp', 'Kundeportal', 'Prosjekt og leiligheter', 'Rapporter'].map(m => ({ navn: m, har: ['start', 'butikk', 'komplett'].map(p => { const h = P2.pakker[p].moduler.includes(m); return { ikon: this.ikon(h ? 'hake' : 'lukk', 16), fg: h ? '#05806F' : '#CDD1D6' }; }) })),
+      kort: [
+        { tittel: 'Hengsel Ute', under: 'billigste velges per eier', rader: [['Montørpris', 'Per montør per måned', kr(P2.ute.montor)], ['Firmapris', 'Per eier per måned, opptil ' + P2.ute.firmaMaks + ' montører', kr(P2.ute.firma)]] },
+        { tittel: 'Tillegg', under: 'per eier, uten rabatt', rader: P2.tillegg.map(t => [t.navn, t.merknad, kr(t.pris)]) },
+        { tittel: 'Kjederabatt', under: 'butikker hos samme eier', rader: P2.rabattrinn.map(t => ['Fra ' + t.fraButikker + ' butikker', '', t.prosent + ' %']), notat: 'Gjelder: ' + P2.rabattGjelder.join(', ').toLowerCase() + '. Gjelder ikke: ' + P2.rabattGjelderIkke.join(', ').toLowerCase() + '. Avrundes til hele kroner.' },
+        { tittel: 'Viderefakturering og vilkår', under: '', rader: [['Viderefakturering', P2.viderefakturering.gjelder + ' etter bruk, kostpris + påslag, uten rabatt', P2.viderefakturering.prosent + ' %'], ['Binding', '', P2.binding + ' måneder'], ['Prisjustering', '', 'KPI, årlig'], ['Mva', '', P2.mva + ' %']] }
+      ].map(k => ({ ...k, rader: k.rader.map(([navn, enhet, verdi], i) => ({ navn, enhet, verdi, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' })), visNotat: k.notat ? 'block' : 'none', notat: k.notat || '' })),
+      lev: [['Navn', LV.navn], ['Org.nr.', LV.orgnr], ['Adresse', LV.adresse], ['E-post', LV.epost], ['Signatar', LV.signatar + ', ' + LV.signatarRolle]].map(([navn, verdi]) => ({ navn, verdi })) };
+    out.publiser = () => { if (utkast) this.vis('Versjon 2027.1 er publisert. Gjelder fra 01.01.2027'); };
+    // kommer
+    const KM = { support: ['Support', 'hjelp', 'Saker fra kundene, med kobling til eier, butikk og avtalens supportnivå. Kommer i fase B.'], fakturering: ['Fakturering', 'fakturaer', 'Fakturaer per eier fra signerte avtaler og prislisten, med eksport til regnskap. Kommer i fase B.'], avtalemaler: ['Avtalemaler', 'prosjekter', 'Kundeavtale v3.1, databehandleravtale v2.0 og supportnivå v1.2. Redigering av maler tegnes i neste runde.'] };
+    const k = KM[st.side] || KM.support; out.km = { navn: k[0], ikon: this.ikon(k[1], 24), tekst: k[2] };
+    return out;
+  }
+}
+</script>
+</body>
+</html>

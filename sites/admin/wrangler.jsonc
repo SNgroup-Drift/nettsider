@@ -1,10 +1,14 @@
-// Cloudflare Worker «admin» (admin.hengsel.no, K-184): statiske filer fra ./dist bak Cloudflare Access.
+// Cloudflare Worker «admin» (admin.hengsel.no, K-184, K-240): Astro-sider fra ./dist bak Cloudflare Access, og et JSON-API mot D1.
 // ALLE forespørsler går gjennom worker/index.js først (run_worker_first), og Workeren avviser alt som ikke har en gyldig
-// Cf-Access-Jwt-Assertion for riktig Access-app og riktig e-postadresse. Uten Access virker ikke siden.
+// Cf-Access-Jwt-Assertion for riktig Access-app og riktig e-postadresse (unntak: POST /api/lead fra hengsel.no, som har eget vern).
 // Variablene ACCESS_TEAM_DOMAIN (f.eks. «<team>.cloudflareaccess.com») og ACCESS_AUD (Application Audience-taggen til Access-appen)
 // er ikke hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her; keep_vars sørger for at
 // utrulling ikke overskriver dem. Mangler en av dem, svarer Workeren 503 og viser ingenting.
-// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/admin/wrangler.jsonc`. Se rapporten claude/k184-rapport.md.
+// K-240: Databasen er D1 med binding DB. Migreringene ligger i ./migrations og kjøres med
+//   npx wrangler d1 migrations apply hengsel-admin --remote -c sites/admin/wrangler.jsonc   (lokalt: --local)
+// Hemmeligheter (settes med `npx wrangler secret put <navn> -c sites/admin/wrangler.jsonc`, aldri her): PENNEO_API_KEY (Penneo er av uten den),
+// LEAD_NOKKEL (valgfritt ekstra vern på /api/lead). Variabler: LEAD_ORIGIN (standard https://hengsel.no), PENNEO_API_URL.
+// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/admin/wrangler.jsonc`. Se claude/k184-rapport.md og claude/k240-rapport.md.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "admin",
@@ -17,5 +21,14 @@
     "run_worker_first": true,
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hengsel-admin",
+      // Databasen «hengsel-admin» (weur) ble laget 15.10.2026 av Oversikt; 0001_fase_a.sql er kjørt mot den.
+      "database_id": "1fc32fd1-3d0c-4eae-b6ca-88e45d71c4bd",
+      "migrations_dir": "migrations"
+    }
+  ]
 }

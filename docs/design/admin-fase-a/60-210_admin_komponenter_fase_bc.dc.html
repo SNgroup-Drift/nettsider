@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<style>body{margin:0;background:#ECEFF3} a{color:#016D5E} a:hover{color:#007665}</style>
+</helmet>
+<div style="min-height:100vh;background:#ECEFF3;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:36px;width:max-content;max-width:1500px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px"><h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.6px">Nye komponenter i Hengsel Admin, fase B og C</h1><p style="margin:0;color:#51565C;text-wrap:pretty">Bygger på grunnpaletten og PC-laget fra furu v2. Ingen nye farger: alt bruker eksisterende tokens. Forfalt vises med feil-tekst, ikon og ring, uten rødt fyll. Ett nytt token er foreslått: --status-over-* er et nytt navn på de eksisterende «sannsynlig»-fargene.</p></div>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Svarfrist</h2>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:20px">
+      <sc-for list="{{ frister }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;gap:6px;width:200px"><span style="font-size:12px;font-weight:600;color:#51565C">{{ f.navn }}</span><span style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border-radius:8px;font-size:13px;white-space:nowrap;color:{{ f.fg }};font-weight:{{ f.vekt }};background:{{ f.bg }};box-shadow:{{ f.ring }}">{{ f.ikon }}{{ f.tekst }}</span><span style="font-size:12px;color:#62686F">{{ f.token }}</span></div></sc-for>
+    </div>
+    <span style="font-size:14px;color:#51565C">Høyde 26, radius 8, ikon frist 16. Snart = 25 % eller mindre av fristen igjen. Forfalt: 1,5 px ring i --feil-tekst på hvit. Venter på kunde stopper klokka.</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Prioritetsmerke og sakstatus</h2>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:center;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:20px">
+      <sc-for list="{{ pri }}" as="p" hint-placeholder-count="4"><span style="display:flex;align-items:center;gap:8px;color:{{ p.fg }};font-weight:{{ p.vekt }}"><span style="display:flex;align-items:flex-end;gap:2px;height:16px"><sc-for list="{{ p.stolper }}" as="b" hint-placeholder-count="4"><span style="width:3px;height:{{ b.h }};border-radius:1px;background:{{ b.bg }}"></span></sc-for></span>{{ p.navn }}</span></sc-for>
+      <span style="width:1px;height:28px;background:#E3E6EA"></span>
+      <sc-for list="{{ status }}" as="s" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ s.bg }};color:{{ s.fg }};box-shadow:inset 0 0 0 1px {{ s.kant }}">{{ s.navn }}</span><span style="font-size:12px;color:#62686F">{{ s.token }}</span></div></sc-for>
+    </div>
+    <span style="font-size:14px;color:#51565C">Fire stolper, 3 × 7–16 px, mellomrom 2. Fylt: --tekst (Kritisk: --feil-tekst, vekt 700). Tom: --linje-sterk #CDD1D6. Kunden ser egne navn: Ny, Under arbeid, Venter på deg, Løst.</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Melding i tråden</h2>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ meldinger }}" as="m" hint-placeholder-count="3"><div style="width:360px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:8px;font-size:13px"><b>{{ m.hvem }}</b><span style="font-weight:600;color:{{ m.etFg }}">{{ m.et }}</span></div><div style="padding:12px 14px;border-radius:12px;background:{{ m.bg }};box-shadow:{{ m.ring }};font-size:14px">{{ m.tekst }}</div><span style="font-size:12px;color:#62686F">{{ m.token }}</span></div></sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Tidtaker og timer mot inkludert</h2>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:340px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:14px 18px;display:flex;align-items:center;gap:14px"><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;color:#62686F">Tidtakeren går</span><span style="font-size:28px;font-weight:700;font-variant-numeric:tabular-nums">00:18:24</span></div><span style="height:40px;padding:0 18px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px"><span style="width:10px;height:10px;border-radius:2px;background:#1A1D22"></span>Stopp og før</span></div>
+      <div style="width:560px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:16px 18px;display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ timer }}" as="r" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:120px minmax(0,1fr) 120px;gap:12px;align-items:center;font-size:14px"><span style="font-weight:600">{{ r.navn }}</span><div style="display:flex;flex-direction:column"><div style="height:10px;border-radius:5px;background:#E3E6EA;display:flex;overflow:hidden"><span style="height:100%;width:{{ r.fyll }};background:#05806F"></span><span style="height:100%;width:{{ r.over }};background:#80378C"></span></div><div style="position:relative;height:0"><span style="position:absolute;left:{{ r.merke }};top:-12px;width:2px;height:14px;background:#1A1D22"></span></div></div><span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ r.bg }};color:{{ r.fg }};box-shadow:inset 0 0 0 1px {{ r.kant }}">{{ r.status }}</span></span></div></sc-for>
+      </div>
+    </div>
+    <span style="font-size:14px;color:#51565C">Stolpe 10 px, radius 5. Innenfor: --aksent. Over: --status-sannsynlig-fg #80378C (foreslått alias --status-over-fg). Merke for inkludert: 2 px --tekst.</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Sjekklistepunkt (oppstart)</h2>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:20px">
+      <sc-for list="{{ sjekk }}" as="s" hint-placeholder-count="5"><div style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:50%;background:{{ s.iBg }};color:{{ s.iFg }};box-shadow:{{ s.iRing }};display:flex;align-items:center;justify-content:center">{{ s.ikon }}</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ s.bg }};color:{{ s.fg }};box-shadow:inset 0 0 0 1px {{ s.kant }}">{{ s.navn }}</span></div></sc-for>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 18px;border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 2px #9E2D28;max-width:760px"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:#FFEBE8;color:#9E2D28;display:flex;align-items:center;justify-content:center">{{ ik.stoppet }}</span><div style="display:flex;flex-direction:column;gap:3px"><b style="color:#9E2D28">Stopper: Microsoft-godkjenning hos kunden</b><span style="font-size:14px">Stoppbanner øverst i oppstarten. Hvit flate med 2 px ring i --feil-tekst. Rødt fyll bare i ikonflaten.</span></div></div>
+    <span style="font-size:14px;color:#51565C">Ansvarlig: Eirik = --aksent-svak, Code = --status-pagar, Kunden = --flate-senket. Klikk på status bytter til neste.</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Fakturakort og små merker</h2>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:620px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden;font-size:14px">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="flex:1">Aune Kjøkken AS</b><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF">Klar</span></div>
+        <div style="display:flex;gap:6px;align-items:center;padding:9px 18px;box-shadow:inset 0 -1px 0 #E3E6EA;font-size:13px"><span style="color:#51565C">Endret:</span><span style="padding:2px 9px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF;font-weight:600;font-size:12px">Ny linje: support ut over inkludert</span></div>
+        <div style="display:flex;justify-content:space-between;padding:9px 18px"><span>Abonnement november</span><span>8 134 kr</span></div>
+        <div style="display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:12px;padding:9px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="font-size:12px;font-weight:600;color:#51565C">Timer ut over inkludert</span><span>1,5 t × 1 150 kr (eksempel)</span><span>1 725 kr</span></div>
+        <div style="display:flex;gap:18px;justify-content:flex-end;padding:10px 18px;background:#F3F5F8;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:#51565C"><span>Uten mva <b style="color:#1A1D22">9 859 kr</b></span><span>Med mva <b style="color:#1A1D22">12 323,75 kr</b></span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:18px">
+        <div style="display:flex;gap:8px;align-items:center"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF">Klar</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#E3F7DE;color:#1F6D02;box-shadow:inset 0 0 0 1px #A5D39B">Sendt</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5">Feil</span></div>
+        <div style="display:flex;gap:8px;align-items:center"><span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span><span style="font-size:13px;color:#51565C">Ikke besluttet. --varsel-flate, --varsel-tekst</span></div>
+        <div style="display:flex;gap:10px;align-items:center"><span style="position:relative;width:40px;height:24px;border-radius:12px;background:#05806F"><span style="position:absolute;top:2px;left:18px;width:20px;height:20px;border-radius:50%;background:#FFFFFF"></span></span><span style="position:relative;width:40px;height:24px;border-radius:12px;background:#CDD1D6"><span style="position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#FFFFFF"></span></span><span style="font-size:13px;color:#51565C">Bryter for varsler</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:18px;font-weight:700">Rolige grafer</h2>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:420px;background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:18px;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:end;height:160px;box-sizing:border-box"><sc-for list="{{ stolper }}" as="b" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%"><span style="font-size:12px;font-weight:600">{{ b.v }}</span><span style="width:100%;height:{{ b.h }};border-radius:6px 6px 2px 2px;background:{{ b.bg }}"></span><span style="font-size:12px;color:#62686F">{{ b.m }}</span></div></sc-for></div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:#51565C;max-width:520px"><span>Stolper: --aksent-valgt #BCE6DB, siste periode --aksent. Verdi over hver stolpe, 12 px 600, tabelltall.</span><span>Traktsteg: samme to farger, tallet inne i stolpen. Overgang i prosent til høyre.</span><span>Ingen akselinjer eller rutenett. Ingen rød eller grønn for opp og ned.</span></div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ikon(n, px) { const I = window.HengselIkoner; if (!n || !I || !I[n]) return null; const sw = px <= 16 ? 1.875 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } }); }
+  componentDidMount() { this._v = setInterval(() => { if (window.HengselIkoner) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    const i16 = n => this.ikon(n, 16);
+    const pill = (navn, p, token) => ({ navn, bg: p[0], fg: p[1], kant: p[2], token });
+    const PRI = [[4, 'Kritisk'], [3, 'Høy'], [2, 'Normal'], [1, 'Lav']];
+    return { ik: { stoppet: this.ikon('stoppet', 20) },
+      frister: [['Normal', '1 t 45 min igjen', '#51565C', 400, 'transparent', 'none', 'frist', '--tekst-dempet'], ['Snart', '42 min igjen', '#6D5000', 600, '#FFE9BC', 'none', 'frist', '--varsel-flate / --varsel-tekst'], ['Forfalt', 'Forfalt 50 min', '#9E2D28', 600, '#FFFFFF', 'inset 0 0 0 1.5px #9E2D28', 'frist', '--feil-tekst, ring 1,5 px'], ['Pause', 'Pause, venter på kunden', '#62686F', 400, 'transparent', 'none', 'kalender', '--tekst-svak'], ['Løst', 'Løst 12.10 10:05', '#1F6D02', 500, 'transparent', 'none', 'hake', '--status-ferdig-fg']].map(([navn, tekst, fg, vekt, bg, ring, ik, token]) => ({ navn, tekst, fg, vekt, bg, ring, ikon: i16(ik), token })),
+      pri: PRI.map(([n, navn]) => { const f = n === 4 ? '#9E2D28' : '#1A1D22'; return { navn, fg: f, vekt: n === 4 ? 700 : 500, stolper: [1, 2, 3, 4].map(i => ({ h: (4 + i * 3) + 'px', bg: i <= n ? f : '#CDD1D6' })) }; }),
+      status: [pill('Ny', ['#E7F1FF', '#1A57AD', '#A0C6FF'], '--status-ny'), pill('Åpen', ['#EFEEFF', '#5C46A7', '#C3BBFB'], '--status-pagar'), pill('Venter på kunde', ['#E9F1FB', '#555B64', '#BDC5CF'], '--status-venter'), pill('Løst', ['#E3F7DE', '#1F6D02', '#A5D39B'], '--status-ferdig')],
+      meldinger: [{ hvem: 'Eva Strand', et: '', etFg: '#62686F', bg: '#FFFFFF', ring: 'inset 0 0 0 1px #CDD1D6', tekst: 'Logoen vår kommer ikke med når vi lager PDF av tilbudet.', token: 'Kunde: --flate-kort, ramme --linje-sterk' }, { hvem: 'Eirik', et: 'Svar til kunden', etFg: '#016D5E', bg: '#E0F4EE', ring: 'inset 0 0 0 1px #BCE6DB', tekst: 'Takk, vi ser på det nå.', token: 'Svar: --aksent-svak, ramme --aksent-valgt' }, { hvem: 'Eirik', et: 'Internt notat · kunden ser ikke dette', etFg: '#6D5000', bg: '#FFE9BC', ring: 'inset 0 0 0 1px #E0C07F', tekst: 'PDF-motoren støtter kanskje ikke SVG. Sjekker med Code.', token: 'Internt: --varsel-flate, ramme --status-advarsel-kant' }],
+      timer: [['Under', 4.5, 11, ['#E3F7DE', '#1F6D02', '#A5D39B']], ['På grensen', 3.75, 4, ['#FFE9BC', '#6D5000', '#E0C07F']], ['Over inkludert', 4.5, 3, ['#FCE9FF', '#80378C', '#E0B1E7']]].map(([status, b, inkl, p]) => { const sk = Math.max(b, inkl) * 1.15; return { navn: b.toLocaleString('nb-NO') + ' av ' + inkl + ' t', status, fyll: Math.min(b, inkl) / sk * 100 + '%', over: Math.max(0, b - inkl) / sk * 100 + '%', merke: inkl / sk * 100 + '%', bg: p[0], fg: p[1], kant: p[2] }; }),
+      sjekk: [['Ikke startet', null, '#FFFFFF', '#62686F', 'inset 0 0 0 1.5px #CDD1D6', ['#E9F1FB', '#555B64', '#BDC5CF']], ['I gang', 'pil-hoyre', '#EFEEFF', '#5C46A7', 'none', ['#EFEEFF', '#5C46A7', '#C3BBFB']], ['Venter på kunden', 'kalender', '#FFE9BC', '#6D5000', 'none', ['#FFE9BC', '#6D5000', '#E0C07F']], ['Stopper', 'stoppet', '#FFFFFF', '#9E2D28', 'inset 0 0 0 1.5px #9E2D28', ['#FFEBE8', '#9E2D28', '#F9AEA5']], ['Ferdig', 'hake', '#1F6D02', '#FFFFFF', 'none', ['#E3F7DE', '#1F6D02', '#A5D39B']]].map(([navn, ik, iBg, iFg, iRing, p]) => ({ navn, ikon: i16(ik), iBg, iFg, iRing, bg: p[0], fg: p[1], kant: p[2] })),
+      stolper: [['Mai', 56.9], ['Jun', 57.9], ['Jul', 57.9], ['Aug', 57.9], ['Sep', 58.6], ['Okt', 58.6]].map(([m, v], i) => ({ m, v: v.toLocaleString('nb-NO', { minimumFractionDigits: 1 }), h: Math.round(v / 58.6 * 90) + 'px', bg: i === 5 ? '#05806F' : '#BCE6DB' })) };
+  }
+}
+</script>
+</body>
+</html>

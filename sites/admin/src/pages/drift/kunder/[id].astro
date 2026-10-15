@@ -1,10 +1,10 @@
 ---
-import Side from "../../layouts/Side.astro";
-import Lenker from "../../components/Lenker.astro";
-import Kontoer from "../../components/Kontoer.astro";
-import Frister from "../../components/Frister.astro";
-import { kunder, MODULER } from "../../lib/data";
-import { norskDato } from "../../lib/dato";
+import Side from "../../../layouts/Side.astro";
+import Lenker from "../../../components/Lenker.astro";
+import Kontoer from "../../../components/Kontoer.astro";
+import Frister from "../../../components/Frister.astro";
+import { kunder, MODULER } from "../../../lib/data";
+import { norskDato } from "../../../lib/dato";
 
 export function getStaticPaths() {
   return kunder.map((k) => ({ params: { id: k.id }, props: { k } }));
@@ -12,11 +12,12 @@ export function getStaticPaths() {
 const { k } = Astro.props;
 const fyll = (v: string | null | undefined) => v ?? null;
 ---
-<Side title={`${k.navn} · Kunde`} description={`Lenker, kontoer og frister for ${k.navn}`} aktiv={k.id} sokplassholder={`Søk hos ${k.navn}`}>
+<Side title={`${k.navn} · Kundemappe`} description={`Lenker, kontoer og frister for ${k.navn}`} aktiv="drift-kunder" sokplassholder={`Søk hos ${k.navn}`} sokModus="side" klasse="drift">
+  <p class="treff" id="treff" role="status" aria-live="polite"></p>
   <header class="sidehode">
-    <p class="etikett">Kunde</p>
+    <p class="etikett">Drift · Kundemappe</p>
     <h1>{k.navn}</h1>
-    {k.eksempel && <p class="banner">Eksempelkunde (fiktiv). Finnes ikke i noen database. Viser bare strukturen.</p>}
+    {k.eksempel && <p class="banner advarsel">Eksempelkunde (fiktiv). Finnes ikke i noen database. Viser bare strukturen.</p>}
     <p class="ingress">{k.status.tekst}</p>
   </header>
 
@@ -65,4 +66,7 @@ const fyll = (v: string | null | undefined) => v ?? null;
     <h2 id="h-frister">Frister</h2>
     <Frister frister={k.frister} />
   </section>
+  <script>
+    import "../../../scripts/drift";
+  </script>
 </Side>

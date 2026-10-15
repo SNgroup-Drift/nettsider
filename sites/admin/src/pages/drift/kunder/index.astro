@@ -1,0 +1,28 @@
+---
+import Side from "../../../layouts/Side.astro";
+import { kunder, MODULER } from "../../../lib/data";
+---
+<Side title="Kundemapper" description="Kundemappene i Drift (tenants)" aktiv="drift-kunder" sokplassholder="Søk i kundemapper" sokModus="side" klasse="drift">
+  <p class="treff" id="treff" role="status" aria-live="polite"></p>
+  <header class="sidehode">
+    <p class="etikett">Drift</p>
+    <h1>Kundemapper</h1>
+    <p class="ingress">Hver kunde er en mappe under <code>src/data/kunder/&lt;kunde-id&gt;</code>. Ny kunde = ny mappe, ingen kodeendring.</p>
+  </header>
+  <section data-seksjon>
+    <ul class="kundekort">
+      {kunder.map((k) => (
+        <li class="kort" data-sok={`${k.navn} ${k.id} ${k.selskaper.map((s) => s.navn).join(" ")} ${k.domener.join(" ")}`.toLowerCase()}>
+          <h2><a href={`/drift/kunder/${k.id}`}>{k.navn}</a></h2>
+          {k.eksempel && <p class="merke eksempel-merke-drift">Eksempel (fiktiv kunde)</p>}
+          <p class="merknad">{k.selskaper.map((s) => s.butikk).join(", ")} · {k.moduler && MODULER.filter((m) => k.moduler[m.nokkel]).length} av {MODULER.length} moduler på</p>
+          <p class="merknad">{k.status.tekst}</p>
+          <p class="adresse">Nøkkel: {k.tenant.nokkel}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <script>
+    import "../../../scripts/drift";
+  </script>
+</Side>

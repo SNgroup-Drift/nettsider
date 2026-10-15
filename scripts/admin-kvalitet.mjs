@@ -18,7 +18,8 @@ const ut = process.env.UT ? resolve(process.env.UT) : null;
 const axe = process.env.AXE_PATH ? await readFile(process.env.AXE_PATH, "utf8") : null;
 if (ut) await mkdir(ut, { recursive: true });
 
-const SIDER = ["/", "/kunder", "/kunder/sigdal-innlandet", "/kunder/eksempel-kjokken", "/finnes-ikke"];
+// K-240: Drift-sidene ligger under /drift. Salgssidene trenger API-et og tas i scripts/skjermbilder-k240.mjs.
+const SIDER = ["/drift", "/drift/kunder", "/drift/kunder/sigdal-innlandet", "/drift/kunder/eksempel-kjokken", "/finnes-ikke"];
 const BREDDER = [390, 768, 1440];
 const server = await startServer(join(rot, "sites", "admin", "dist"));
 const base = `http://127.0.0.1:${server.address().port}`;
@@ -46,7 +47,7 @@ for (const sti of SIDER) {
         kontrast = `axe ${r.violations.length} brudd, kontrast ${kon.reduce((n, v) => n + v.nodes.length, 0)}`;
         for (const v of r.violations) problemer.push(`axe ${v.id}: ${v.nodes.length} (${v.nodes[0].target.join(" ")}) ${v.nodes[0].failureSummary?.split("\n")[1] ?? ""}`.slice(0, 260));
       }
-      if (ut && sti !== "/finnes-ikke" && b !== 768) await page.screenshot({ path: join(ut, `${sti === "/" ? "plattform" : sti.slice(1).replace(/\//g, "-")}-${b}-${tema === "light" ? "lys" : "mork"}.png`), fullPage: true });
+      if (ut && sti !== "/finnes-ikke" && b !== 768) await page.screenshot({ path: join(ut, `${sti.slice(1).replace(/\//g, "-")}-${b}-${tema === "light" ? "lys" : "mork"}.png`), fullPage: true });
       sier(!problemer.length, `${sti} ${b} ${tema} ${kontrast}${problemer.length ? "\n    " + problemer.join("\n    ") : ""}`);
       await ctx.close();
     }
@@ -56,7 +57,7 @@ for (const sti of SIDER) {
 // Søket og fristfargene
 {
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
-  await page.goto(base + "/", { waitUntil: "networkidle" });
+  await page.goto(base + "/drift", { waitUntil: "networkidle" });
   const synlige = () => page.evaluate(() => [...document.querySelectorAll("[data-sok]:not([data-sok-nav])")].filter((e) => !e.hidden && e.offsetParent !== null).length);
   const alle = await synlige();
   await page.fill("#sok", "supabase");

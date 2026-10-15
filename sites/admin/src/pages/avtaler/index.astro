@@ -1,0 +1,10 @@
+---
+/** SA7 Avtaler (K-240): liste med filter på status, «Fornyes snart» innen N dager (innstilling), «Ny avtale fra tilbud». */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Avtaler" description="Avtalene: utkast, til signering, signert, fornyes snart og sagt opp" aktiv="avtaler">
+  <div id="side"></div>
+  <script>
+    import "../../scripts/avtaler";
+  </script>
+</Side>
