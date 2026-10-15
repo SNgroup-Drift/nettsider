@@ -1,0 +1,11 @@
+---
+/** Avtalemaler (K-260, 60-211). Dataene hentes fra /api i nettleseren; bare rollen eier ser innholdet (ADM-403 ellers). */
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
+---
+<Side title="Avtalemaler" description="Innstillinger: Avtalemaler" aktiv="innstillinger-avtalemaler">
+  <div id="side" data-side="avtalemaler"></div>
+  <script>
+    import "../../scripts/innstillinger-c";
+  </script>
+</Side>

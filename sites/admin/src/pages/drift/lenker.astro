@@ -1,0 +1,21 @@
+---
+/** SD2 Lenker (K-260): kort med navn, hva den er og adresse. Fra datafilene i src/data (samme som Drift fra K-184), bygd inn ved bygging. */
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
+import { plattformLenkegrupper } from "../../lib/data";
+const grupper = plattformLenkegrupper();
+const vert = (url: string) => { try { const u = new URL(url); return `${u.host}${u.pathname === "/" ? "" : u.pathname}`; } catch { return url; } };
+---
+<Side title="Lenker" description="Lenker til verktøyene som driver Hengsel" aktiv="drift-lenker" sokplassholder="Søk i lenker" sokModus="side">
+  <header class="sidehode"><div><h1>Lenker</h1><p class="under">Verktøyene som driver Hengsel. Bare lenker, aldri innlogging eller nøkler.</p></div></header>
+  {grupper.map((g) => (
+    <section class="stabel" aria-labelledby={`h-${g.id}`}>
+      <h2 id={`h-${g.id}`}>{g.tittel}</h2>
+      <div class="lenkekort">
+        {g.lenker.map((l) => l.url
+          ? <a href={l.url} target="_blank" rel="noopener noreferrer"><b>{l.navn}</b>{(l.merknad || ("kunde" in l && l.kunde)) && <span class="meta">{l.merknad ?? ""}{"kunde" in l && l.kunde ? ` · ${l.kunde}` : ""}</span>}<span class="adresse">{vert(l.url)}</span></a>
+          : <a class="uten" aria-disabled="true"><b>{l.navn}</b><span class="meta">{l.merknad ?? (l.status === "kommer" ? "Kommer" : "Ingen adresse ennå")}</span></a>)}
+      </div>
+    </section>
+  ))}
+</Side>

@@ -1,0 +1,11 @@
+---
+/** Rutiner (K-260, 60-211). Dataene hentes fra /api i nettleseren; bare rollen eier ser innholdet (ADM-403 ellers). */
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
+---
+<Side title="Rutiner" description="Rutiner per måned, uke og kvartal med avkryssing" aktiv="drift-rutiner">
+  <div id="side"></div>
+  <script>
+    import "../../scripts/drift-rutiner";
+  </script>
+</Side>
