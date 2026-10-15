@@ -12,6 +12,7 @@ export const DYNAMISKE = [
   [new RegExp(`^/avtaler/${AVTALE_NR}$`), "/avtaler/avtale"],
   [/^\/support\/saker\/H-\d{1,7}$/, "/support/sak"], // K-259 SB2
   [new RegExp(`^/oppstart/${ULID}$`), "/oppstart/kunde"], // K-259 SO1
+  [new RegExp(`^/oppstart/ny-kunde/${ULID}$`), "/oppstart/ny-kunde/jobb"], // K-272 Opprett kunde: fremdrift
 ];
 
 export const TILBUD_PDF = new RegExp(`^/salg/tilbud/(${TILBUD_NR})/(\\d{1,3})\\.pdf$`);

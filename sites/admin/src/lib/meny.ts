@@ -26,7 +26,10 @@ export const MENY: Gruppe[] = [
     { id: "saker", navn: "Saker", sti: "/support/saker", ikon: "saker", fase: "b", under: true, roller: ["eier", "support"] },
     { id: "timer", navn: "Timer", sti: "/support/timer", ikon: "kalender", fase: "b", under: true, roller: ["eier", "support"] },
   ] },
-  { punkter: [{ id: "oppstart", navn: "Oppstart", sti: "/oppstart", ikon: "prosjektplan", fase: "b" }] },
+  { punkter: [
+    { id: "oppstart", navn: "Oppstart", sti: "/oppstart", ikon: "prosjektplan", fase: "b" },
+    { id: "opprett-kunde", navn: "Opprett kunde", sti: "/oppstart/opprett-kunde", ikon: "kunder", fase: "b", under: true },
+  ] },
   { navn: "Fakturering", punkter: [
     { id: "abonnement", navn: "Abonnement", sti: "/fakturering/abonnement", ikon: "ordre", fase: "c", under: true },
     { id: "kjoring", navn: "Fakturakjøring", sti: "/fakturering/kjoring", ikon: "fakturaer", fase: "c", under: true },
@@ -82,6 +85,6 @@ export const STI: Record<string, string[]> = {
   oversikt: ["Oversikt"], tavle: ["Salg", "Tavle"], eiere: ["Salg", "Eiere og butikker"], eierkort: ["Salg", "Eiere og butikker"], prisberegner: ["Salg", "Prisberegner"],
   kunder: ["Kunder"], kundekort: ["Kunder"], avtaler: ["Avtaler"], avtale: ["Avtaler"], prisliste: ["Innstillinger", "Prisliste"], leverandor: ["Innstillinger", "Leverandør"],
   drift: ["Drift", "Status"], "drift-kunder": ["Drift", "Kundemapper"],
-  saker: ["Support", "Saker"], sak: ["Support", "Saker", "Sak"], timer: ["Support", "Timer"], oppstart: ["Oppstart"], "oppstart-kunde": ["Oppstart", "Kunde"],
+  saker: ["Support", "Saker"], sak: ["Support", "Saker", "Sak"], timer: ["Support", "Timer"], oppstart: ["Oppstart"], "oppstart-kunde": ["Oppstart", "Kunde"], "opprett-kunde": ["Oppstart", "Opprett kunde"], "ny-kunde-jobb": ["Oppstart", "Opprett kunde", "Oppsett"],
   "support-innstillinger": ["Innstillinger", "Support og roller"], "ingen-tilgang": ["Ingen tilgang"],
 };

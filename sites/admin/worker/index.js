@@ -1,8 +1,8 @@
 /**
  * Worker-skriptet for admin.hengsel.no (K-184, K-240). Kjører for ALLE forespørsler (assets.run_worker_first = true).
  *
- * - /api/lead (POST fra hengsel.no) og /api/hjelp («Hjelp» fra Hengsel CRM og Ute, K-259): unntatt Access, eget vern i worker/lead.js og
- *   worker/hjelp.js. Alt annet:
+ * - /api/lead (POST fra hengsel.no), /api/hjelp («Hjelp» fra Hengsel CRM og Ute, K-259) og /api/oppstart/rapport (GitHub Action «Ny kunde», K-272):
+ *   unntatt Access, eget vern i worker/lead.js, worker/hjelp.js og worker/ny-kunde-rapport.js. Alt annet:
  * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 503, ingenting vises (Access er ikke koblet til).
  * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401 (ADM-401).
  * - Gyldig token, men e-postadressen står ikke i worker/tilgang.js (eller som aktiv supportperson i D1), eller stien er utenfor rollen: 403
@@ -18,6 +18,7 @@ import { rolleFor, kanSe, kanSkrive, supportFraDb } from "./tilgang.js";
 import { handterApi, tilbudPdf } from "./api.js";
 import { handterLead } from "./lead.js";
 import { handterHjelp } from "./hjelp.js";
+import { handterRapport } from "./ny-kunde-rapport.js";
 import { SKJERMBILDE, skjermbilde } from "./api-support.js";
 import { stiTilFil, TILBUD_PDF } from "./ruter.js";
 import { json } from "./db.js";
@@ -55,6 +56,8 @@ export default {
     // Lead fra «Be om demo»: eget vern, uten Access (hengsel.no kaller server til server)
     if (sti === "/api/lead") return merk(await handterLead(req, env));
     if (sti === "/api/hjelp") return merk(await handterHjelp(req, env));
+    // Rapporter fra GitHub Action «Ny kunde» (K-272): signert, eget vern i worker/ny-kunde-rapport.js
+    if (sti === "/api/oppstart/rapport") return merk(await handterRapport(req, env));
 
     const team = (env.ACCESS_TEAM_DOMAIN ?? "").trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
     const aud = (env.ACCESS_AUD ?? "").trim();

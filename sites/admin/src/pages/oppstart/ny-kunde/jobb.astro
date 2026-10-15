@@ -1,0 +1,10 @@
+---
+/** Opprett kunde, fremdrift (K-272): steg for steg med logg, «Prøv igjen herfra» og sjekklisten. Dataene hentes fra /api (scripts/ny-kunde-jobb.ts). */
+import Side from "../../../layouts/Side.astro";
+---
+<Side title="Oppsett av kunde" description="Fremdrift for teknisk oppsett av en ny kunde" aktiv="ny-kunde-jobb">
+  <div id="side" class="ny-kunde-jobb-side"></div>
+  <script>
+    import "../../../scripts/ny-kunde-jobb";
+  </script>
+</Side>

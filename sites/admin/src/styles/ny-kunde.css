@@ -1,0 +1,52 @@
+/* Opprett kunde (K-272): veiviser, fremdrift og sjekkliste. Bare variablene fra tokens.css (ingen hex/rgb), bare lys modus. Ingen style-attributter
+   (CSP): alt styres med klasser og data-attributter. */
+.steg-linje { display: flex; flex-wrap: wrap; gap: 8px 20px; list-style: none; padding: 0; margin: 0 0 16px; }
+.steg-linje li { display: flex; align-items: center; gap: 8px; color: var(--tekst-dempet); font-size: var(--font-tabell); }
+.steg-linje li[aria-current="step"] { color: var(--tekst); font-weight: 600; }
+.steg-linje .nr { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: var(--radius-pille); background: var(--flate-senket); color: var(--tekst-dempet); font-size: var(--font-pille); font-weight: 600; }
+.steg-linje li[aria-current="step"] .nr { background: var(--aksent); color: var(--flate-kort); }
+.steg-linje li[data-ferdig="true"] .nr { background: var(--status-ferdig-bg); color: var(--status-ferdig-fg); box-shadow: inset 0 0 0 1px var(--status-ferdig-kant); }
+.opprett-kunde-side #innhold { display: grid; gap: 16px; align-content: start; }
+.veiviser-form, .start-form { display: grid; gap: 14px; max-width: 720px; }
+.veiviser-form .skjema-kropp { display: grid; gap: 14px; padding: 0 16px; }
+.veiviser-form .knapper, .start-form .knapper { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 16px; }
+.start-form { padding: 16px; }
+.start-form .knapper { padding: 0; }
+.avkryss { display: flex; gap: 10px; align-items: flex-start; font-size: var(--font-tabell); }
+.avkryss input { margin-top: 3px; }
+fieldset.felt { border: 0; padding: 0; margin: 0; }
+fieldset.felt legend { font-size: var(--font-meta); font-weight: 600; color: var(--tekst-dempet); padding: 0 0 6px; }
+.veiviser-form #feil { padding: 0 16px; }
+.feil { color: var(--feil-tekst); font-size: var(--font-meta); margin: 0; }
+.valg-rad { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; }
+.liten-felt { max-width: 240px; }
+.oppsummering { max-width: 720px; }
+.nokkel-verdi th { width: 28%; text-align: left; color: var(--tekst-dempet); font-weight: 600; vertical-align: top; }
+.skjer-liste { margin: 0; padding: 12px 16px 14px 36px; display: grid; gap: 8px; max-width: 720px; }
+.skjer-liste li { font-size: var(--font-tabell); }
+.skjer-liste .meta { display: block; }
+.banner.info { background: var(--status-pagar-bg); color: var(--status-pagar-fg); box-shadow: inset 0 0 0 1px var(--status-pagar-kant); }
+
+.jobb-steg-liste { list-style: none; margin: 0; padding: 0; }
+.jobb-steg { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: start; padding: 12px 16px; border-bottom: 1px solid var(--linje); }
+.jobb-steg:last-child { border-bottom: 0; }
+.steg-ikon { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: var(--radius-pille); background: var(--status-venter-bg); color: var(--status-venter-fg); box-shadow: inset 0 0 0 1px var(--status-venter-kant); }
+.steg-ikon[data-status="ok"] { background: var(--status-ferdig-bg); color: var(--status-ferdig-fg); box-shadow: inset 0 0 0 1px var(--status-ferdig-kant); }
+.steg-ikon[data-status="feil"] { background: var(--feil-flate); color: var(--feil-tekst); box-shadow: inset 0 0 0 1px var(--status-feil-kant); }
+.steg-ikon[data-status="kjorer"] { background: var(--status-pagar-bg); color: var(--status-pagar-fg); box-shadow: inset 0 0 0 1px var(--status-pagar-kant); }
+.jobb-steg[data-status="venter"] .steg-tekst > b { color: var(--tekst-dempet); }
+.steg-tekst { display: grid; gap: 4px; min-width: 0; }
+.steg-feil { margin: 0; color: var(--feil-tekst); font-size: var(--font-tabell); overflow-wrap: anywhere; }
+.steg-logg summary { cursor: pointer; font-size: var(--font-meta); color: var(--aksent-tekst); }
+.steg-logg pre { margin: 6px 0 0; padding: 10px 12px; max-height: 320px; overflow: auto; background: var(--flate-senket); border-radius: var(--radius-feltet); font-size: var(--font-meta); white-space: pre-wrap; overflow-wrap: anywhere; }
+.sjekk-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.sjekk-hode h2 { margin: 0; }
+.sjekk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
+.sjekk-liste { margin: 0; padding: 12px 16px 14px 36px; display: grid; gap: 12px; }
+.sjekk-liste li span { display: block; color: var(--tekst-dempet); font-size: var(--font-tabell); }
+.sjekk-liste code { display: inline-block; margin-top: 4px; padding: 2px 6px; background: var(--flate-senket); border-radius: var(--radius-feltet); font-size: var(--font-meta); overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+  .jobb-steg { grid-template-columns: 28px 1fr; }
+  .jobb-steg > .knapp { grid-column: 2; justify-self: start; }
+  .sjekk-hode { flex-direction: column; align-items: flex-start; }
+}

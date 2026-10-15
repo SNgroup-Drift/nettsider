@@ -7,6 +7,7 @@
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
 import "../styles/admin.css";
 import "../styles/support.css";
+import "../styles/ny-kunde.css";
 import { menyNaa, BUNNFANER, STI, rollerFor } from "../lib/meny";
 import { alleFrister } from "../lib/data";
 import { ikon } from "../lib/ikoner";
@@ -21,7 +22,7 @@ const om14 = new Date(Date.now() + 14 * 86_400_000).toISOString().slice(0, 10);
 const fristDatoer = alleFrister().map((f) => f.dato).filter(Boolean).join(",");
 const fristerSnart = alleFrister().filter((f) => f.dato && f.dato >= idag && f.dato <= om14).length;
 const sti = STI[aktiv] ?? [title];
-const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv === "sak" ? "saker" : aktiv === "oppstart-kunde" ? "oppstart" : aktiv;
+const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv === "sak" ? "saker" : aktiv === "oppstart-kunde" ? "oppstart" : aktiv === "ny-kunde-jobb" ? "opprett-kunde" : aktiv;
 ---
 <Hode title={title} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
   <div class={`app ${klasse}`.trim()}>

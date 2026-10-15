@@ -1,0 +1,10 @@
+---
+/** Opprett kunde (K-272): veiviser for teknisk oppsett av en ny kunde. Dataene hentes fra /api i nettleseren (scripts/opprett-kunde.ts). */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Opprett kunde" description="Teknisk oppsett av en ny kunde med ett klikk" aktiv="opprett-kunde">
+  <div id="side" class="opprett-kunde-side"></div>
+  <script>
+    import "../../scripts/opprett-kunde";
+  </script>
+</Side>

@@ -7,7 +7,7 @@ import { fremdrift, oppstartstatus, ansvarlig, settBredder } from "../lib/suppor
 
 const rot = q("#side")!;
 const hode = () => html`<header class="sidehode"><div><h1>Oppstart</h1><p class="under">Ni punkter fra signert avtale til første faktura. Oppstarten åpnes når avtalen sendes til signering.</p></div>
-  <div class="handlinger"><button class="knapp primar" type="button" id="ny-oppstart">${raw(ikon("pluss", 18))}Ny oppstart</button></div></header>`;
+  <div class="handlinger"><a class="knapp" href="/oppstart/opprett-kunde">${raw(ikon("kunder", 18))}Opprett kunde</a><button class="knapp primar" type="button" id="ny-oppstart">${raw(ikon("pluss", 18))}Ny oppstart</button></div></header>`;
 
 const neste = (o: any) => html`${o.neste ? html`<span class="neste-punkt">${o.neste.punkt} ${ansvarlig(o.neste.ansvarlig, o.neste.ansvarlig_navn)}</span>` : ""}
   ${o.stopper.map((s: any) => html`<span class="stopper-tekst">${raw(ikon("stoppet", 16))}<b>Stopper:</b> ${s.punkt}</span>`)}`;

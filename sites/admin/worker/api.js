@@ -824,3 +824,4 @@ import { monter as monterOppstart } from "./api-oppstart.js"; monterOppstart(rut
 RUTER.push(...RUTER_FAKTURERING, ...RUTER_DRIFT); // K-260
 
 export { RUTER };
+import { monter as monterNyKunde } from "./api-ny-kunde.js"; monterNyKunde(rute); // K-272 Opprett kunde

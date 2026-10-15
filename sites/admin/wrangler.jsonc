@@ -10,6 +10,11 @@
 // LEAD_NOKKEL (valgfritt ekstra vern på /api/lead). Variabler: LEAD_ORIGIN (standard https://hengsel.no), PENNEO_API_URL.
 // K-259: Hemmelighet HJELP_NOKKEL (valgfri) for POST /api/hjelp. Skjermbilder fra «Hjelp» lagres i R2 med binding SKJERMBILDER; bøtta
 //   «hengsel-admin-skjermbilder» finnes ikke ennå, så bindingen står kommentert ut under. Uten den lagres saken uten bilde (claude/k259-rapport.md).
+// K-272 Opprett kunde: Worker-hemmeligheter (npx wrangler secret put <navn> -c sites/admin/wrangler.jsonc): GITHUB_DISPATCH_TOKEN (fin-kornet token, bare
+//   SNgroup-Drift/hengsel-crm, rettighet «Actions: Read and write», utløp høyst 90 dager; starter workflowene «Ny kunde» og «Fjern testkunde») og
+//   NY_KUNDE_RAPPORTNOKKEL (minst 32 tegn; samme verdi som ADMIN_RAPPORT_NOKKEL i GitHub-miljøet «ny-kunde»; signerer rapportene fra Action-en til
+//   POST /api/oppstart/rapport). Valgfri variabel GITHUB_REPO (standard SNgroup-Drift/hengsel-crm). Cloudflare Access trenger en Bypass-policy for akkurat
+//   stien /api/oppstart/rapport (som for /api/lead og /api/hjelp). D1-migrering 0004_ny_kunde.sql: npx wrangler d1 migrations apply hengsel-admin --remote.
 // Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/admin/wrangler.jsonc`. Se claude/k184-rapport.md og claude/k240-rapport.md.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
