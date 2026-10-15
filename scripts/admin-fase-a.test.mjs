@@ -113,6 +113,7 @@ test("`wrangler d1 migrations apply --local` kjører migreringene mot sites/admi
   try {
     const ut = execFileSync("npx", ["wrangler", "d1", "migrations", "apply", "hengsel-admin", "--local", "-c", "sites/admin/wrangler.jsonc", "--persist-to", tmp], { cwd: rot, env: { ...process.env, WRANGLER_SEND_METRICS: "false", CI: "1" }, encoding: "utf8", timeout: 170_000 });
     assert.match(ut, /0001_fase_a\.sql/);
+    assert.match(ut, /0002_fase_b\.sql/, "K-259");
     assert.match(ut, /✅/);
     assert.doesNotMatch(ut, /❌|error/i);
   } finally { rmSync(tmp, { recursive: true, force: true }); }

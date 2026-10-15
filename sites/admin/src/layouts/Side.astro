@@ -1,20 +1,27 @@
 ---
 /**
- * Ramme for admin.hengsel.no (K-184, K-240): sidemeny fra én konfigurasjon (src/lib/meny.ts, bare fase A vises), toppfelt med brødsmuler,
- * søk og «Ny aktivitet», bunnfaner på telefon, og dialogen Ny aktivitet (SA8). Bare lys modus, delte Hengsel-tokens, PC-laget
- * data-plattform="pc" på <html>. Aldri indeksert.
+ * Ramme for admin.hengsel.no (K-184, K-240, K-259): sidemeny fra én konfigurasjon (src/lib/meny.ts, alle punktene, merket med roller),
+ * toppfelt med brødsmuler, søk og «Ny aktivitet» (eller «Ny sak» på Support-sidene), bunnfaner på telefon, og dialogene Ny aktivitet (SA8)
+ * og Ny sak. Bare lys modus, delte Hengsel-tokens, PC-laget data-plattform="pc" på <html>. Aldri indeksert.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
 import "../styles/admin.css";
-import { menyNaa, BUNNFANER, STI } from "../lib/meny";
+import "../styles/support.css";
+import { menyNaa, BUNNFANER, STI, rollerFor } from "../lib/meny";
+import { alleFrister } from "../lib/data";
 import { ikon } from "../lib/ikoner";
 import NyAktivitet from "../components/NyAktivitet.astro";
 
-interface Props { title: string; description: string; aktiv?: string; sokplassholder?: string; sokModus?: "eiere" | "side"; klasse?: string }
-const { title, description, aktiv = "", sokplassholder = "Søk etter eier, butikk eller kontakt", sokModus = "eiere", klasse = "" } = Astro.props;
-const meny = menyNaa("a");
+interface Props { title: string; description: string; aktiv?: string; sokplassholder?: string; sokModus?: "eiere" | "side" | "saker"; klasse?: string; toppknapp?: "aktivitet" | "sak" }
+const { title, description, aktiv = "", sokplassholder = "Søk etter eier, butikk eller kontakt", sokModus = "eiere", klasse = "", toppknapp = "aktivitet" } = Astro.props;
+const meny = menyNaa();
+// Tallet ved Frister i menyen: frister innen 14 dager (fra Drift; regnes på nytt i nettleseren av app.ts, så tallet følger dagen)
+const idag = new Date().toISOString().slice(0, 10);
+const om14 = new Date(Date.now() + 14 * 86_400_000).toISOString().slice(0, 10);
+const fristDatoer = alleFrister().map((f) => f.dato).filter(Boolean).join(",");
+const fristerSnart = alleFrister().filter((f) => f.dato && f.dato >= idag && f.dato <= om14).length;
 const sti = STI[aktiv] ?? [title];
-const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv;
+const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv === "sak" ? "saker" : aktiv === "oppstart-kunde" ? "oppstart" : aktiv;
 ---
 <Hode title={title} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
   <div class={`app ${klasse}`.trim()}>
@@ -27,13 +34,13 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
         <ul class="meny">
           {meny.map((g) => (
             <>
-              {g.navn && <li class="gruppe" aria-hidden="true">{g.navn}</li>}
+              {g.navn && <li class="gruppe" aria-hidden="true" data-roller={[...new Set(g.punkter.flatMap((p) => rollerFor(p)))].join(" ")}>{g.navn}</li>}
               {g.punkter.map((p) => (
-                <li class={p.under ? "under" : ""}>
+                <li class={p.under ? "under" : ""} data-roller={rollerFor(p).join(" ")}>
                   <a href={p.sti} aria-current={aktiv === p.id || fane === p.id ? "page" : undefined}>
                     <Fragment set:html={ikon(p.ikon, 20)} />
                     <span>{p.navn}</span>
-                    <span class="tall" data-tall={p.id}></span>
+                    <span class="tall" data-tall={p.id} data-datoer={p.id === "drift-frister" ? fristDatoer : undefined}>{p.id === "drift-frister" && fristerSnart ? String(fristerSnart) : ""}</span>
                   </a>
                 </li>
               ))}
@@ -42,7 +49,7 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
         </ul>
       </nav>
       <div class="bunn">
-        <div class="bruker" id="bruker"><span class="init">·</span><span><b>Hengsel Admin</b>fase A</span></div>
+        <div class="bruker" id="bruker"><span class="init">·</span><span><b>Hengsel Admin</b>&nbsp;</span></div>
         <img class="logo-bunn" src="/logo/logo-hengsel-lys.svg" alt="Hengsel" width="76" height="18" />
       </div>
     </aside>
@@ -65,8 +72,17 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
           <input id="sok" type="search" placeholder={sokplassholder} autocomplete="off" spellcheck="false" data-modus={sokModus} />
           <kbd aria-hidden="true">/</kbd>
         </div>
-        <button class="knapp primar bare-pc" type="button" data-ny-aktivitet><Fragment set:html={ikon("pluss", 18)} />Ny aktivitet</button>
-        <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-aktivitet aria-label="Ny aktivitet"><Fragment set:html={ikon("pluss", 20)} /></button>
+        {toppknapp === "sak" ? (
+          <>
+            <button class="knapp primar bare-pc" type="button" data-ny-sak><Fragment set:html={ikon("pluss", 18)} />Ny sak</button>
+            <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-sak aria-label="Ny sak"><Fragment set:html={ikon("pluss", 20)} /></button>
+          </>
+        ) : (
+          <>
+            <button class="knapp primar bare-pc" type="button" data-ny-aktivitet data-roller="eier"><Fragment set:html={ikon("pluss", 18)} />Ny aktivitet</button>
+            <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-aktivitet data-roller="eier" aria-label="Ny aktivitet"><Fragment set:html={ikon("pluss", 20)} /></button>
+          </>
+        )}
       </header>
       <main id="innhold">
         <slot />
@@ -75,8 +91,8 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
 
     <nav class="bunnfaner" aria-label="Bunnfaner">
       {BUNNFANER.map((f) => f.id === "mer"
-        ? <button type="button" id="fane-mer" aria-controls="sidemeny"><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</button>
-        : <a href={f.sti} aria-current={fane === f.id ? "page" : undefined}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</a>)}
+        ? <button type="button" id="fane-mer" aria-controls="sidemeny" data-roller={f.roller.join(" ")}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</button>
+        : <a href={f.sti} aria-current={fane === f.id ? "page" : undefined} data-roller={f.roller.join(" ")}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</a>)}
     </nav>
 
     <NyAktivitet />

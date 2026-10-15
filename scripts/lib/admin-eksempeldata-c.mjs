@@ -38,9 +38,19 @@ export async function leggInnEksempeldataC(env, { idag = idagOslo(), endringer =
   // Tidsføring forrige måned (fase B). Lages bare når K-259 ikke har laget tabellen.
   await db.exec("CREATE TABLE IF NOT EXISTS tidsforing (id TEXT PRIMARY KEY, eier_id TEXT NOT NULL, dato TEXT NOT NULL, minutter INTEGER NOT NULL, fakturert_kjoring_id TEXT)");
   const kol = new Set((await db.prepare("SELECT name FROM pragma_table_info('tidsforing')").all()).results.map((r) => r.name));
-  if (["id", "eier_id", "dato", "minutter"].every((k) => kol.has(k)) && kol.size === 5) {
-    const dag = forsteIMnd(forrige).replace(/-01$/, "-12");
-    for (const [eier, min] of [["granlund", 270], ["strand", 225], ["aune", 270], ["vestby", 45]]) {
+  const dag = forsteIMnd(forrige).replace(/-01$/, "-12");
+  const timer = [["granlund", 270], ["strand", 225], ["aune", 270], ["vestby", 45]];
+  if (kol.has("sak_id")) {
+    // K-259 (0002): tidsføring hører til en sak. Én eksempelsak per eier.
+    const t = "2026-10-01T08:00:00Z";
+    let nr = 9001;
+    for (const [eier, min] of timer) {
+      const sak = ulid();
+      await db.prepare("INSERT INTO sak (id, nr_tall, emne, eier_id, kilde, prioritet, status, svarfrist, sist_aktivitet, opprettet, endret) VALUES (?, ?, 'Eksempel for fakturakjøring', ?, 'epost', 'normal', 'lost', ?, ?, ?, ?)").bind(sak, nr++, ider[eier], t, t, t, t).run();
+      await db.prepare("INSERT INTO tidsforing (id, sak_id, eier_id, dato, minutter, hvem, maate, opprettet, endret) VALUES (?, ?, ?, ?, ?, 'Eirik', 'manuell', ?, ?)").bind(ulid(), sak, ider[eier], dag, min, t, t).run();
+    }
+  } else if (["id", "eier_id", "dato", "minutter"].every((k) => kol.has(k))) {
+    for (const [eier, min] of timer) {
       await db.prepare("INSERT INTO tidsforing (id, eier_id, dato, minutter) VALUES (?, ?, ?, ?)").bind(ulid(), ider[eier], dag, min).run();
     }
   }

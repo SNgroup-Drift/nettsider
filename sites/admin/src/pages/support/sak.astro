@@ -1,0 +1,10 @@
+---
+/** SB2 Sak (K-259, 60-211): dataene hentes fra /api i nettleseren (scripts/sak.ts). */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Sak" description="Én sak med tråd, svar, internt notat og tidsføring" aktiv="sak" toppknapp="sak" sokplassholder="Søk etter sak, kunde eller kontakt" sokModus="saker">
+  <div id="side" class="sak-side"></div>
+  <script>
+    import "../../scripts/sak";
+  </script>
+</Side>

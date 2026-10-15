@@ -1,0 +1,10 @@
+---
+/** SO1 Oppstart for én kunde (K-259, 60-211): dataene hentes fra /api i nettleseren (scripts/oppstart-kunde.ts). */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Oppstart for én kunde" description="Sjekkliste med ni punkter for én kunde" aktiv="oppstart-kunde">
+  <div id="side" class="oppstart-kunde-side"></div>
+  <script>
+    import "../../scripts/oppstart-kunde";
+  </script>
+</Side>

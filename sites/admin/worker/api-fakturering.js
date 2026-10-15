@@ -61,11 +61,15 @@ export async function timepris(db) {
  * Minutter ført per eier i en periode, fra tidsføringen i fase B (K-259) når tabellen finnes. Avtalt form (claude/k260-rapport.md):
  * tidsforing(eier_id, dato ÅÅÅÅ-MM-DD, minutter, fakturert_kjoring_id NULL|id). null når tabellen ikke finnes ennå.
  */
+/** Kolonnen som merker fakturert tid: «fakturert_i» i K-259 (0002), «fakturert_kjoring_id» i den minste utgaven fra K-260-testene. */
+function fakturertKolonne(k) { return k.has("fakturert_i") ? "fakturert_i" : k.has("fakturert_kjoring_id") ? "fakturert_kjoring_id" : null; }
+
 export async function minutterPerEier(db, fra, til, kjoringId = null) {
   if (!(await finnesTabell(db, "tidsforing"))) return null;
   const k = await kolonner(db, "tidsforing");
   if (!k.has("eier_id") || !k.has("dato") || !k.has("minutter")) return null;
-  const filter = k.has("fakturert_kjoring_id") ? " AND (fakturert_kjoring_id IS NULL OR fakturert_kjoring_id = ?)" : "";
+  const fk = fakturertKolonne(k);
+  const filter = fk ? ` AND (${fk} IS NULL OR ${fk} = ?)` : "";
   const st = db.prepare(`SELECT eier_id, SUM(minutter) AS min FROM tidsforing WHERE dato >= ? AND dato <= ?${filter} GROUP BY eier_id`);
   const rader = await alle(filter ? st.bind(fra, til, kjoringId ?? "") : st.bind(fra, til));
   return new Map(rader.map((r) => [r.eier_id, Number(r.min)]));
@@ -377,7 +381,7 @@ export async function sendKjoring(db, env, maaned, { fakturaId = null, hent = fe
   const klient = new po.PowerOfficeKlient(env, hent);
   try { await klient.hentToken(); } catch (e) { throw new ApiFeil(502, "ADM-502", `PowerOffice svarte ikke. Ingenting er sendt. ${e?.message ?? ""}`.trim()); }
   const t = naa();
-  const tidsKol = (await finnesTabell(db, "tidsforing")) && (await kolonner(db, "tidsforing")).has("fakturert_kjoring_id");
+  const tidsKol = (await finnesTabell(db, "tidsforing")) ? fakturertKolonne(await kolonner(db, "tidsforing")) : null;
   const forrige = F.leggTilMnd(maaned, -1);
   for (const f of kandidater) {
     const linjer = await alle(db.prepare("SELECT * FROM fakturalinje WHERE faktura_id = ? ORDER BY rekkefolge").bind(f.id));
@@ -392,7 +396,7 @@ export async function sendKjoring(db, env, maaned, { fakturaId = null, hent = fe
       }
       const id = await klient.lagSalgsordre({ kundeId, fakturadato: F.forsteIMnd(maaned), referanse: `Hengsel ${F.maanedNavn(maaned, false)}`, linjer });
       await db.prepare("UPDATE faktura SET status = 'sendt', feilmelding = NULL, poweroffice_id = ?, sendt = ?, endret = ? WHERE id = ?").bind(id, t, t, f.id).run();
-      if (tidsKol && linjer.some((l) => l.type === "timer")) await db.prepare("UPDATE tidsforing SET fakturert_kjoring_id = ? WHERE eier_id = ? AND dato >= ? AND dato <= ? AND fakturert_kjoring_id IS NULL").bind(k.id, f.eier_id, F.forsteIMnd(forrige), F.sisteIMnd(forrige)).run();
+      if (tidsKol && linjer.some((l) => l.type === "timer")) await db.prepare(`UPDATE tidsforing SET ${tidsKol} = ? WHERE eier_id = ? AND dato >= ? AND dato <= ? AND ${tidsKol} IS NULL`).bind(k.id, f.eier_id, F.forsteIMnd(forrige), F.sisteIMnd(forrige)).run();
     } catch (e) {
       await db.prepare("UPDATE faktura SET status = 'feil', feilmelding = ?, endret = ? WHERE id = ?").bind(String(e?.message ?? "PowerOffice svarte ikke.").slice(0, 300), t, f.id).run();
     }

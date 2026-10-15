@@ -3,6 +3,12 @@
  * dialogen «Ny aktivitet» (fra toppfeltet og eierkortet), og «/» som hopper til søkefeltet. Ingen lagring, ingen tredjepart.
  */
 import { api, ApiFeil, esc, html, q, qa, toast, skjemaData, visFeltfeil, ikon, AKTIVITET } from "../lib/dom";
+import "./ny-sak";
+
+// K-259: rollen (eier / support) styrer hva menyen og toppfeltet viser. Workeren stenger uansett; dette er bare visningen.
+// Rollen huskes i sessionStorage så menyen ikke blinker ved neste side.
+const settRolle = (r: string) => { document.documentElement.dataset.rolle = r; try { sessionStorage.setItem("admin-rolle", r); } catch { /* privat modus */ } };
+try { const r = sessionStorage.getItem("admin-rolle"); if (r === "eier" || r === "support") document.documentElement.dataset.rolle = r; } catch { /* privat modus */ }
 
 const sidemeny = q("#sidemeny");
 const overlegg = q("#skuff-overlegg");
@@ -15,7 +21,8 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") apne(false
 // Søk: Enter går til Eiere og butikker med søkeordet. På Drift-sidene filtreres siden (drift.ts).
 const sok = q<HTMLInputElement>("#sok");
 if (sok && sok.dataset.modus !== "side") {
-  sok.addEventListener("keydown", (e) => { if (e.key === "Enter" && sok.value.trim()) location.href = `/salg/eiere?sok=${encodeURIComponent(sok.value.trim())}`; });
+  const mal = sok.dataset.modus === "saker" ? "/support/saker" : "/salg/eiere";
+  sok.addEventListener("keydown", (e) => { if (e.key === "Enter" && sok.value.trim()) location.href = `${mal}?sok=${encodeURIComponent(sok.value.trim())}`; });
 }
 document.addEventListener("keydown", (e) => {
   if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -93,7 +100,27 @@ if (dlg && form) {
 // Typeknappene i dialogen får ikonene sine her (ingen inline-skript)
 qa("[data-type-ikon]").forEach((el) => { el.innerHTML = ikon(AKTIVITET[el.dataset.typeIkon!]?.[1] ?? "tilbud", 16); });
 // Hvem er innlogget (navn og rolle fra Workeren) i bunnen av sidemenyen
-api<{ navn: string; rolle: string; epost: string }>("GET", "/api/meg").then((m) => { const b = q("#bruker"); if (b) b.innerHTML = `<span class="init">${esc((m.navn || m.epost).slice(0, 1).toUpperCase())}</span><span><b>${esc(m.navn)}</b>${m.rolle === "eier" ? "Eier av Admin" : esc(m.rolle)}</span>`; }).catch(() => {});
+api<{ navn: string; rolle: string; epost: string }>("GET", "/api/meg").then((m) => {
+  settRolle(m.rolle === "support" ? "support" : "eier");
+  document.dispatchEvent(new CustomEvent("rolle", { detail: m.rolle }));
+  const b = q("#bruker"); if (b) b.innerHTML = `<span class="init">${esc((m.navn || m.epost).slice(0, 1).toUpperCase())}</span><span><b>${esc(m.navn)}</b>${m.rolle === "eier" ? "Eier av Admin" : m.rolle === "support" ? "Rolle: Support" : esc(m.rolle)}</span>`;
+  visMenytall(m.rolle);
+}).catch(() => {});
+
+// Tallene i menyen (60-211): åpne saker, oppstarter i gang, «N feil» på Fakturakjøring (fra K-260, når endepunktet finnes), frister innen 14 dager
+function settTall(id: string, tekst: string, feil = false) { const el = q(`[data-tall="${id}"]`); if (el) { el.textContent = tekst; el.classList.toggle("feil", feil); } }
+function visMenytall(rolle: string) {
+  api<{ saker: number; oppstart?: number }>("GET", "/api/meny-tall").then((t) => { settTall("saker", t.saker ? String(t.saker) : ""); if (t.oppstart !== undefined) settTall("oppstart", t.oppstart ? String(t.oppstart) : ""); }).catch(() => {});
+  if (rolle !== "eier") return;
+  api<{ feil?: number }>("GET", "/api/oversikt/fakturering").then((k) => { if (k && k.feil) settTall("kjoring", `${k.feil} feil`, true); }).catch(() => { /* kommer med K-260 */ });
+}
+const fristTall = q("[data-tall='drift-frister']");
+if (fristTall?.dataset.datoer !== undefined) {
+  const idag = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Oslo" }).format(new Date());
+  const om14 = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Oslo" }).format(new Date(Date.now() + 14 * 86_400_000));
+  const n = (fristTall.dataset.datoer ?? "").split(",").filter((d) => d && d >= idag && d <= om14).length;
+  fristTall.textContent = n ? String(n) : "";
+}
 // Toast-elementet skjules når det klikkes
 q("#toast")?.addEventListener("click", (e) => { if ((e.target as HTMLElement).tagName !== "A") (e.currentTarget as HTMLElement).hidden = true; });
 void html;

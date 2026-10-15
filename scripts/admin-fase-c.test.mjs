@@ -229,7 +229,7 @@ test("PowerOffice med nøkler (stubbet API, ingen nettverk): Klar blir Sendt, uk
   assert.match(k.fakturaer.find((f) => f.eier_id === ider.nordli).feilmelding, /kunden finnes ikke/);
   assert.equal(k.sendt, 5); assert.equal(k.status, "delvis_sendt");
   // Tidsføringen som ble fakturert, merkes med kjøringen
-  assert.equal(await env.DB.prepare("SELECT COUNT(*) AS n FROM tidsforing WHERE eier_id = ? AND fakturert_kjoring_id IS NOT NULL").bind(ider.aune).first("n"), 1);
+  assert.equal(await env.DB.prepare(`SELECT COUNT(*) AS n FROM tidsforing WHERE eier_id = ? AND ${(await env.DB.prepare("SELECT name FROM pragma_table_info('tidsforing') WHERE name = 'fakturert_i'").first("name")) ? "fakturert_i" : "fakturert_kjoring_id"} IS NOT NULL`).bind(ider.aune).first("n"), 1);
   await assert.rejects(lagApi(env)("POST", `/api/fakturakjoring/${neste}/viderefakturering`, { eier_id: ider.granlund, tekst: "SMS", kostpris_ore: 100 }), /409/);
   // PowerOffice svarer ikke på innloggingen: ingenting sendes
   await assert.rejects(sendKjoring(env.DB, env, neste, { hent: async () => new Response("", { status: 503 }) }), /ingen fakturaer er klare|svarte ikke/i);

@@ -1,7 +1,7 @@
 /**
  * K-240: lokal server for Hengsel Admin uten Cloudflare: de bygde sidene fra sites/admin/dist, API-et fra worker/api.js mot en node:sqlite-database
  * (D1-etterligning, scripts/lib/d1-node.mjs) og de samme rutene som Workeren (worker/ruter.js). Access-sjekken hoppes over her, og brukeren er
- * eier. Bare til skjermbilder og lokal prøving; produksjonen går alltid gjennom worker/index.js. Hodene fra dist/_headers (CSP) gjelder også her.
+ * eier, eller (K-259) rollen support med samme sti-sperre som Workeren (worker/tilgang.js, «Ingen tilgang» med 403). Bare til skjermbilder og lokal prøving; produksjonen går alltid gjennom worker/index.js. Hodene fra dist/_headers (CSP) gjelder også her.
  */
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -10,6 +10,7 @@ import { finnFil } from "../statisk-server.mjs";
 import { handterApi, tilbudPdf } from "../../sites/admin/worker/api.js";
 import { handterLead } from "../../sites/admin/worker/lead.js";
 import { stiTilFil, TILBUD_PDF } from "../../sites/admin/worker/ruter.js";
+import { kanSe, kanSkrive } from "../../sites/admin/worker/tilgang.js";
 import { BRUKER } from "./admin-eksempeldata.mjs";
 
 const TYPER = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".txt": "text/plain", ".ico": "image/x-icon", ".png": "image/png", ".json": "application/json" };
@@ -38,6 +39,14 @@ export async function startAdminLokalt({ dist, env, bruker = BRUKER }) {
     const sti = url.pathname;
     const erApi = sti === "/api" || sti.startsWith("/api/");
     const pdf = TILBUD_PDF.exec(sti);
+    const rolle = bruker.rolle === "support" ? { rolle: "support", navn: bruker.navn } : null;
+    if (rolle && !/^\/(?:_astro|fonts|logo)\//.test(sti) && !/^\/favicon/.test(sti) && (!kanSe(rolle, sti) || (erApi && !["GET", "HEAD"].includes(req.method) && !kanSkrive(rolle, sti)))) {
+      if (erApi) { res.writeHead(403, { "Content-Type": "application/json; charset=utf-8" }); res.end(JSON.stringify({ ok: false, kode: "ADM-403", melding: "Ingen tilgang." })); return; }
+      const side = await finnFil(dist, "/ingen-tilgang.html");
+      res.writeHead(403, { "Content-Type": TYPER[".html"], "Cache-Control": "no-store", ...hoder });
+      res.end(await readFile(side));
+      return;
+    }
     if (erApi || pdf) {
       const deler = [];
       for await (const d of req) deler.push(d);
