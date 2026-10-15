@@ -19,11 +19,6 @@ export const KJENTE_MANGLER = [
   // PDF-sidene og A4-arkene: PDF-visningen tegnes ikke i headless Chromium, og arkene er PDF-er (dokumentforsiden er nettsidenes egen, LOKALE_BILDER)
   "vis/skjermbilder/d1-lag-pdf-og-send", "vis/skjermbilder/d4-lag-tilvalgsliste",
   ...["d1", "d2a", "d2b", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "d11"].map((d) => `vis/skjermbilder/dok-${d}`),
-  // iOS-appen (tas på Mac, kilde xcode) til første opplasting
-  "app/idag", "app/jobben", "app/ks", "app/punkter", "app/avvik", "app/ferdig", "app/uten-nett", "app/ipad-idag", "app/ipad-bildeverktoy-laser",
-  // Hengsel Ute, k119-flyten (bildeverktøy, punkter, laser, typeskilt) stopper i montørappens test; rettes der
-  "vis/skjermbilder/ute-ks-kamera", "vis/skjermbilder/ute-punkter", "vis/skjermbilder/ute-punktkort", "vis/skjermbilder/ute-typeskilt",
-  "vis/skjermbilder/ute-laser", "vis/skjermbilder/ute-ipad-bildeverktoy", "vis/rom-tegning",
   // «Mål og skisser» er ikke en fane på ordresiden i CRM Demo (C01 avklares)
   "vis/skjermbilder/crm-mal-skisser", "vis/skjermbilder/mb-crm-mal-skisser",
   // E-postvarselet er ikke en skjerm (gjengis fra emailTemplate.ts senere)
