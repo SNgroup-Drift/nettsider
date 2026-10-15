@@ -14,6 +14,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { FORBUDT } from "./lib/design.mjs";
+import { BILDEDOMENE, finnes } from "./lib/bildedomene.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const side = join(rot, "sites", "design");
@@ -155,9 +156,15 @@ test("/komponenter har alle komponentene i lys og mørk med brukes til og ikke t
 });
 
 test("/skjermer og /last-ned peker på filer som finnes", () => {
-  for (const s of ["crm-min-dag", "crm-tilbud", "crm-ordre-kontrollmal", "crm-samtaler", "portal-tilbud", "ute-i-dag", "hengsel-no-forside"]) {
-    for (const f of [`${s}.webp`, `${s}@1x.webp`]) assert.ok(existsSync(join(dist, "skjermer", f)), `skjermbilde ${f} mangler`);
+  // K-233: app-skjermbildene lenkes fra biblioteket (bilder.hengsel.no, vis/skjermbilder/<navn>.webp) når de står i manifestet, ellers plassholder; hengsel.no-forsiden ligger lokalt
+  const s = html("skjermer");
+  for (const navn of ["crm-min-dag", "crm-tilbud", "crm-ordre-kontrollmal", "crm-samtaler", "portal-tilbud", "kundeportal-pc", "ute-i-dag"]) {
+    const sti = `vis/skjermbilder/${navn}.webp`;
+    if (finnes("hengsel", sti)) assert.ok(s.includes(`${BILDEDOMENE}/hengsel/${sti}`) && s.includes(`${BILDEDOMENE}/hengsel/vis/skjermbilder/${navn}@1x.webp 1x`), `${navn}: lenkes ikke fra biblioteket (1× og 2×)`);
+    else assert.ok(s.includes(`data-skjermbilde="vis/skjermbilder/${navn}"`), `${navn}: mangler i manifestet og har ingen plassholder`);
   }
+  for (const f of ["hengsel-no-forside.webp", "hengsel-no-forside@1x.webp"]) assert.ok(existsSync(join(dist, "nettsider", f)) && s.includes(`/nettsider/${f}`), `hengsel.no-forsiden ${f}`);
+  assert.ok(!existsSync(join(dist, "skjermer")) || readdirSync(join(dist, "skjermer")).length === 0, "dist/skjermer skal være tom: app-skjermbildene kommer fra biblioteket");
   const l = html("last-ned");
   for (const f of ["hengsel.tokens.json", "tokens.css", "tokens.ts", "fonts.css"]) assert.ok(l.includes(`/ds/tokens/${f}`) && existsSync(join(dist, "ds", "tokens", f)), `${f}`);
   assert.ok(l.includes("/last-ned/hengsel-logopakke.zip") && existsSync(join(dist, "last-ned", "hengsel-logopakke.zip")));

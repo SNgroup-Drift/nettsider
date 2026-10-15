@@ -1,14 +1,13 @@
 /**
  * Apples Product Bezels (sites/vis/src/assets/rammer) med skjermbilde i hullet, som ett bilde på gjennomsiktig bunn.
- * Samme mål som assets/enhet.css (skjermhull og hjørneradius i prosent), brukt til romkort, flater og hero på forsiden.
+ * Samme mål som assets/enhet.css (skjermhull og hjørneradius i prosent). K-233: brukes bare av scripts/skjermbilder-vis.mjs (rommet selv i Studio Display,
+ * nettsidenes egne romkort i src/img); romkort, flater og hero med app-skjermbilder komponeres av K-228 i hengsel-crm med de samme tallene og ligger i biblioteket.
  * Skjermbildet ligger under rammen, klippes med skjermens hjørner og fyller hullet (cover, fra toppen). Rammen brukes som den er.
  */
 import sharp from "sharp";
 import { join, resolve } from "node:path";
 
 const vis = resolve(import.meta.dirname, "..", "..", "sites", "vis", "src");
-export const skjermbilder = join(vis, "skjermbilder");
-export const img = join(vis, "img");
 export const ENHET = {
   pc: { fil: "studio-display", b: 2160, h: 1664, hull: [2.59, 3.37, 94.81, 69.23], r: [1.2, 1.6] },
   tlf: { fil: "iphone-18", b: 1174, h: 2400, hull: [5.37, 2.5, 89.27, 95], r: [14, 6.1] },

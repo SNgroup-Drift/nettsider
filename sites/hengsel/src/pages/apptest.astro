@@ -50,10 +50,10 @@ const SLIDES = [
   { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel Ute: meld ferdig montert" },
 ];
 
-// Skjermene er de fiktive demo-skjermene fra designet: iOS-skjermene (img/app, 402 × 874) og rollene uten iOS-skjerm (img/apptest, 2× og 1×, lages av scripts/fiktive-skjermer.mjs)
+// Skjermene hentes fra biblioteket på bilder.hengsel.no (K-233): iOS-skjermene under app/ (tas på Mac, kjent mangel til første opplasting) og rollene
+// uten iOS-skjerm under apptest/ (fra demoen, 2× med @1x). Stien er uten tema; under /kunde/sigdal hentes Sigdal-utgaven (Enhet → Skjermbilde).
 const APP = new Set(["idag", "jobben", "ks", "avvik", "ferdig"]);
-const bildeSrc = (b: string, tema: "lys") => (APP.has(b) ? `/img/app/${b}-${tema}.webp` : `/img/apptest/${b}-${tema}.webp`);
-const maal = (b: string) => (APP.has(b) ? { w: 402, h: 874 } : { w: 780, h: 1688 });
+const bildeSti = (b: string) => (APP.has(b) ? `app/${b}-lys.webp` : `apptest/${b}-lys.webp`);
 const harFeil = KJENTE_FEIL.length > 0;
 ---
 <Side
@@ -77,7 +77,7 @@ const harFeil = KJENTE_FEIL.length > 0;
           <div class="slides">
             {SLIDES.map((s, i) => (
               <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
-                <Enhet type="iphone" src={bildeSrc(s.bilde, "lys")} w={maal(s.bilde).w} h={maal(s.bilde).h} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
+                <Enhet type="iphone" bilde={bildeSti(s.bilde)} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
               </div>
             ))}
           </div>
@@ -162,7 +162,7 @@ const harFeil = KJENTE_FEIL.length > 0;
               <a class="pdf" href={`${kundeUtgave ? kundeUtgave.sti : ""}/apptest/Logg_inn_i_demoen.pdf`} download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
-              <Enhet type="iphone" src={bildeSrc(r.bilde, "lys")} w={maal(r.bilde).w} h={maal(r.bilde).h} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
+              <Enhet type="iphone" bilde={bildeSti(r.bilde)} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
             </div>
           </div>
         ))}

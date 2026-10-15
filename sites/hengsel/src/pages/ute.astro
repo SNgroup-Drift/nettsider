@@ -40,7 +40,7 @@ const n = STEG.length;
           <div class="telefon" data-ute-paneler>
             {STEG.map((s, i) => (
               <div role="tabpanel" id={`ute-panel-${s.nokkel}`} aria-labelledby={`ute-fane-${s.nokkel}`} hidden={i !== 0} data-panel>
-                <Enhet type="iphone" src={`/img/app/${s.nokkel}-lys.webp`} w={402} h={874} alt={s.alt} forst={i === 0} symboler={i === 0} />
+                <Enhet type="iphone" bilde={`app/${s.nokkel}-lys.webp`} alt={s.alt} forst={i === 0} symboler={i === 0} />
               </div>
             ))}
           </div>
@@ -56,7 +56,7 @@ const n = STEG.length;
     <section class="sek">
       <div class="h-innhold nett">
         <div class="nett-bilde">
-          <Enhet type="iphone" src={UTEN_NETT.lys} w={402} h={874} alt={UTEN_NETT.alt} symboler={false} />
+          <Enhet type="iphone" bilde={UTEN_NETT.bilde} alt={UTEN_NETT.alt} symboler={false} />
         </div>
         <div class="nett-tekst">
           <span class="eyebrow">{UTEN_NETT.eyebrow}</span>

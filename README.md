@@ -28,6 +28,9 @@ packages/design/        Felles designpakke
                           Familiegrep: Toppfelt, Plantegningsstrek, Familiebaand, IkkeFunnet
 packages/hengsel-tokens/  Den delte Hengsel-fila (K-192): tokens.css og fonts.css genereres fra hengsel.tokens.json (ds/, pinnet commit, designsystem.pin.json);
                           src/Hode.astro og grunn.css er rammen for hengsel.no og admin. Se docs/design/hengsel-regler.md
+                          skjermbilder.mjs og skjermbilder-manifest.json (K-233): BILDEDOMENE for skjermbildebiblioteket på bilder.hengsel.no og sist kjente
+                          manifest.json; alle app-skjermbilder på Hengsel-sidene lenkes derfra, se docs/bilder.md. Unntak: LOKALE_BILDER (romkortene for rom uten
+                          app-skjermbilde i sites/vis/src/img og dokumentforsiden i sites/hengsel/public/img) er nettsidenes egne og ligger i repoet
 packages/hengsel-dokumenter/  A4-dokumentene (data, markup, stil, visning) som hengsel.no og vis. deler
 sites/<navn>/           Ett Astro-prosjekt per nettsted
   src/content/            Tekst og selskapsopplysninger (TODO der tekst mangler)
@@ -41,7 +44,12 @@ scripts/
   skjermbilder.mjs        Skjermbilder og nettlesersjekker (360 px, konsoll, CSP)
   skjermbilder-apptest.mjs  Skjermbilder og sjekker av hengsel.no/apptest mot wrangler dev (passordet)
   apptest-versjon.mjs     Oppdaterer versjon, APK, dato og «Hva er nytt» på /apptest fra EAS og byggnotatene (kjøres av .github/workflows/apptest-versjon.yml; testet av apptest-versjon.test.mjs)
-  skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene)
+  skjermbilder-vis.mjs    Skjermbilder og sjekker av Visningsrommet (390 og 1280 px, lys og mørk, skriftene), og romkortene for rom uten app-skjermbilde (sites/vis/src/img, nettsidenes egne)
+  sjekk-bibliotek.mjs     npm run bibliotek:sjekk (K-233): henter det ekte manifest.json, sammenlikner med kopien (nye, borte, endrede filer), ber om hver bildeadresse
+                          (200, image/webp, riktig lengde) og skriver kopien med --skriv. SKJERMBILDER_NETT=1 npm test ber også om bibliotekadressene i dist
+  bibliotek-rapport.mjs   Antall bilder fra biblioteket, egne bilder og plassholdere per bygd side (claude/k233/bibliotek-rapport.md); kjøres av workflowen Bibliotek-sjekk
+  skjermbilder-bibliotek.test.mjs  npm test (K-233): ingen app-skjermbilder utenom biblioteket (unntatt LOKALE_BILDER), ingen #5074A9, «Skjermbilde kommer» bare for KJENTE_MANGLER
+                          (scripts/lib/bildedomene.mjs), bibliotekadressene i dist står i manifestet
   hent-designsystem.mjs   Henter Hengsel-designsystemet (pinnet commit) til packages/hengsel-tokens/ds og genererer den delte token-fila (K-182, K-192)
   hent-palettpakke.mjs    Legger palettpakke v2 (design/handoff/…, K-212 runde 2): logoer, ikonsett, favicon og app-ikon inn i ds og pin-fila
   lag-appikon.mjs         PNG-forhåndsvisninger av app-ikonet Hengsel Ute fra Icon Composer-pakken (ds/assets/app-ikon)
@@ -59,7 +67,7 @@ Krever Node 22.12 eller nyere (`.nvmrc`).
 ```sh
 npm install
 npm run build          # bygger alle nettstedene til sites/*/dist
-npm test               # sjekker interne lenker (etter build)
+npm test               # sjekker interne lenker (etter build); app-skjermbildene lenkes fra bilder.hengsel.no og sjekkes mot manifestet, ikke hentet
 npm run skjermbilder   # skjermbilder til docs/skjermbilder + nettlesersjekker (krever Chromium)
 npm run dev:sngroup    # utviklingsserver (også dev:hengsel, dev:byggem og dev:design)
 npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til packages/hengsel-tokens (pinnet)

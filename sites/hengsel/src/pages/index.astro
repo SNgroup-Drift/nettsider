@@ -2,7 +2,7 @@
 /**
  * Forsiden (Forside.dc.html), kortet ned i K-229: hero med Studio Display (CRM Min dag) og iPhone, «Prøv selv» til demoen, tre løfter, «Se nærmere på» og demo.
  * Tekster og data i content/forside.ts, ordrett fra LES-MEG.md. Skjermen i Studio Display er HTML (CrmSkjerm), ikke bilde;
- * bare den rammen lastes med en gang, appbildene i iPad og iPhone er lazy. Ingen skript utover Enhets skalering.
+ * bare den rammen lastes med en gang, appbildet i iPhone er lazy og hentes fra biblioteket på bilder.hengsel.no (K-233). Ingen skript utover Enhets skalering.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -27,7 +27,7 @@ import { DEMO, HERO, LOFTER, NARMERE, PROV_SELV, TEL, TEL_HREF } from "../conten
             <Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet>
           </div>
           <div class="iphone">
-            <Enhet type="iphone" src="/img/app/idag-lys.webp" w={402} h={874} alt={HERO.altIphone} />
+            <Enhet type="iphone" bilde="app/idag-lys.webp" alt={HERO.altIphone} />
           </div>
         </div>
       </div>

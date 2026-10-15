@@ -23,8 +23,8 @@ export const ER_KUNDE = (sti: string) => sti === "/kunde" || sti.startsWith("/ku
 /** Sidene som viser demopassordet (bare for innloggede) */
 const MED_DEMOPASSORD = new Set(["/kunde/apptest", "/kunde/sigdal/apptest"]);
 
-/** Samme CSP som vis.hengsel.no (sites/vis/src/_headers): rommene bruker inline stil, men ingen inline-skript. */
-const VIS_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
+/** Samme CSP som vis.hengsel.no (sites/vis/src/_headers): rommene bruker inline stil, men ingen inline-skript; skjermbildene kommer fra bilder.hengsel.no (K-233). */
+const VIS_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://bilder.hengsel.no; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
 
 export async function handterKunde(req: Request, env: KundeEnv, valg: { hent?: typeof fetch; na?: number } = {}): Promise<Response> {
   const avvist = await vakt(req, env, valg);

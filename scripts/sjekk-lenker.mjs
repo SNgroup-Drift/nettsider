@@ -8,12 +8,16 @@
  * Til slutt sjekkes at dist/404.html finnes, og at en ukjent side svarer 404 med den siden.
  * Skjermbilder som byttes inn av skript (data-bilde og JSON i siden, f.eks. fanene på hengsel.no) sjekkes også,
  * og alle filene i dist/img må svare 200. For Visningsrommet (vis) sjekkes også rommene i arrayet C på forsiden.
+ * K-233: app-skjermbildene lenkes fra biblioteket på bilder.hengsel.no og hentes ikke her; hver bibliotekadresse i de bygde sidene (src, srcset og
+ * adressene bygg.mjs har lagt i rom.js og bilder.js) må i stedet stå i manifestet (packages/hengsel-tokens/skjermbilder-manifest.json).
+ * Med SKJERMBILDER_NETT=1 bes det i tillegg om hver bibliotekadresse (HEAD) over nettet, og den må svare 200 som image/webp.
  *
  * Kjør etter `npm run build`: npm test
  */
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { startServer } from "./statisk-server.mjs";
+import { BILDEDOMENE, lesManifest } from "./lib/bildedomene.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 async function htmlFiler(dir, pre = "") {
@@ -76,9 +80,9 @@ for (const navn of nettsteder) {
     const lenker = [
       ...(type.includes("html") ? [...tekst.matchAll(/\s(?:href|src)="([^"]+)"/g)].map((m) => m[1]) : []),
       ...[...tekst.matchAll(/url\(([^)]+)\)/g)].map((m) => m[1].replace(/["']/g, "")),
-      // Rommene i Visningsrommet (vis): kortene lages av skript (side.js) fra arrayet C, med adressen i u:'/rom/'
-      // og skjermbildet i b:'/img/navn.webp'
-      ...(type.includes("html") || js ? [...tekst.matchAll(/\b[ub]:'(\/[^']*)'/g)].map((m) => m[1]) : []),
+      // Rommene i Visningsrommet (vis): kortene lages av skript (forside.js, gruppe.js) fra arrayet C i rom.js, med adressen i u:'/rom/'
+      // (bildet i b:'rom-navn' er i biblioteket og sjekkes mot manifestet under)
+      ...(type.includes("html") || js ? [...tekst.matchAll(/\bu:'(\/[^']*)'/g)].map((m) => m[1]) : []),
     ].filter((l) => !l.includes("'+")); // href="'+c.u+'" er en mal i skriptet, ikke en lenke
     for (const lenke of lenker) {
       if (!intern(lenke)) continue;
@@ -114,28 +118,39 @@ for (const navn of nettsteder) {
       if (r.status !== 200) mangler.push(`skjermbilde ${b} (${b}.webp eller ${b}-${del}.webp) → ${r.status}`);
     }
   }
-  // K-177: alle bilder og videoer sidene peker på (src, srcset, poster, data-webm/-mp4, og navnene i data-bilder i Visningsrommet, med @1x og mørk utgave) svarer 200
+  // K-177: alle lokale bilder og videoer sidene peker på (src, srcset, poster, data-webm/-mp4) svarer 200
+  // K-233: adressene i skjermbildebiblioteket (bilder.hengsel.no) hentes ikke, men må stå i manifestet: i HTML (src, srcset) og i skriptene
+  // (rom.js BILDER og bilder.js SKJERM, der bygg.mjs har lagt adressene). Plassholderne («Skjermbilde kommer») sjekkes av skjermbilder-bibliotek.test.mjs.
   const medier = new Set();
-  const bilderJs = await (await fetch(new URL("/assets/bilder.js", base))).text().catch(() => "");
-  const morkListe = new Set(JSON.parse((bilderJs.match(/var MORK=(\[[^\]]*\])/) ?? [, "[]"])[1]));
+  const bibliotek = new Set();
+  const skript = new Set();
   for (const side of sider) {
     const html = await (await fetch(new URL(side, base))).text();
     for (const m of html.matchAll(/\b(?:src|poster|data-webm|data-mp4)="(\/[^"]+\.(?:webp|png|jpg|svg|mp4|webm))"/g)) medier.add(m[1]);
     for (const m of html.matchAll(/\bsrcset="([^"]+)"/g)) for (const d of m[1].split(",")) { const u = d.trim().split(/\s+/)[0]; if (u.startsWith("/")) medier.add(u); }
-    // K-223: Visningsrommet i Sigdal-utgave (/kunde/sigdal/vis/) har skjermbildene som plassholdere i /kunde/sigdal/img/vis/skjermbilder/ og bare lys utgave
-    const sigdalVis = side.startsWith("/kunde/sigdal/vis/");
-    const skjermMappe = sigdalVis ? "/kunde/sigdal/img/vis/skjermbilder/" : "/skjermbilder/";
-    for (const m of html.matchAll(/data-bilder="([^"]+)"/g))
-      for (const n of m[1].split(",").map((s) => s.trim()).filter((s) => /^[\w-]+$/.test(s)))
-        for (const s of ["", "@1x"]) {
-          medier.add(`${skjermMappe}${n}${s}.webp`);
-          if (morkListe.has(n) && !sigdalVis) medier.add(`${skjermMappe}${n}-mork${s}.webp`);
-        }
+    for (const m of html.matchAll(/\bsrc="(\/[^"]+\.js)"/g)) skript.add(new URL(m[1], new URL(side, base)).pathname);
+    for (const m of html.matchAll(new RegExp(`${BILDEDOMENE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/[\\w@./-]+\\.webp`, "g"))) bibliotek.add(m[0]);
+  }
+  for (const s of skript) {
+    const js = await (await fetch(new URL(s, base))).text().catch(() => "");
+    for (const m of js.matchAll(new RegExp(`${BILDEDOMENE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/[\\w@./-]+\\.webp`, "g"))) bibliotek.add(m[0]);
   }
   for (const u of medier) {
     const r = await fetch(new URL(u, base));
     sjekket++;
     if (r.status !== 200) mangler.push(`${u} → ${r.status}`);
+  }
+  const manifest = lesManifest();
+  for (const u of bibliotek) {
+    sjekket++;
+    if (!Object.hasOwn(manifest.filer, u.slice(BILDEDOMENE.length + 1))) mangler.push(`${u} står ikke i manifestet (packages/hengsel-tokens/skjermbilder-manifest.json)`);
+    else if (process.env.SKJERMBILDER_NETT === "1") {
+      sjekket++;
+      try {
+        const r = await fetch(u, { method: "HEAD", signal: AbortSignal.timeout(15000) });
+        if (r.status !== 200 || !(r.headers.get("content-type") ?? "").startsWith("image/webp")) mangler.push(`${u} → ${r.status} ${r.headers.get("content-type") ?? ""} (biblioteket)`);
+      } catch (e) { mangler.push(`${u} → ${e?.message ?? e} (biblioteket)`); }
+    }
   }
   let antallBilder = 0;
   try {
@@ -201,7 +216,7 @@ for (const navn of nettsteder) {
     console.error(`✗ ${navn}: ${mangler.length} feil`);
     for (const m of mangler) console.error(`    ${m}`);
   } else {
-    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, ${medier.size} bilder og videoer fra sidene svarer 200, og ukjente sider får 404.html`);
+    console.log(`✓ ${navn}: ${sett.size} interne adresser svarer 200 (${sider.join(", ")})${antallBilder ? `, ${antallBilder} bilder i img/ svarer 200 (${bilder.size} skjermbilder brukt av fanene)` : ""}, ${medier.size} bilder og videoer fra sidene svarer 200, ${bibliotek.size} bibliotekbilder står i manifestet${process.env.SKJERMBILDER_NETT === "1" ? " og svarer 200" : ""}, og ukjente sider får 404.html`);
   }
 }
 

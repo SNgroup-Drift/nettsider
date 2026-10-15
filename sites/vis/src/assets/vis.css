@@ -92,3 +92,9 @@ main:has(#out:empty)+footer{visibility:hidden}
 
 /* «Prøv i demoen» (K-229): lenke til demo.hengsel.no i rommene som bare viser skjermer */
 .demo-lenke{margin:14px 0 0}
+
+/* K-233: plassholderen «Skjermbilde kommer» når bildet ikke står i skjermbildebibliotekets manifest (bygg.mjs, rom.js, bilder.js). Samme flate som skjermen. */
+.plassholder{display:grid;align-content:center;justify-items:center;gap:4px;margin:0;padding:8%;box-sizing:border-box;width:100%;height:100%;min-height:120px;background:var(--flate-senket);color:var(--tekst-dempet);font:500 14px/1.4 var(--skrift-familie-hengsel-tekst);text-align:center}
+.plassholder b{color:var(--tekst)}
+.plassholder span{font-size:13px}
+.plassholder[hidden],img.sk[hidden]{display:none}
