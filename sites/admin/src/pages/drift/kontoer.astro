@@ -1,0 +1,11 @@
+---
+/** Kontoer (K-260, 60-211). Dataene hentes fra /api i nettleseren; bare rollen eier ser innholdet (ADM-403 ellers). */
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
+---
+<Side title="Kontoer" description="Kontoer med kost, fornyelse og lenke til 1Password" aktiv="drift-kontoer">
+  <div id="side"></div>
+  <script>
+    import "../../scripts/drift-kontoer";
+  </script>
+</Side>

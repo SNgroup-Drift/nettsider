@@ -1,0 +1,118 @@
+/* Hengsel Admin fase C og Drift (K-260): Fakturering, Tall, Drift og Innstillinger. Bare variabler fra den delte token-fila og aliasene i admin.css,
+   aldri fargeverdier, bare lys modus. Egen fil så den ikke kolliderer med fase B (K-259) i admin.css. */
+
+.med-panel { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+.med-panel > .panel { position: sticky; top: calc(var(--toppfelt-hoyde) + 16px); display: flex; flex-direction: column; gap: 16px; }
+.stabel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.to-like { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.bred-smal { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 1100px) { .med-panel, .to-like, .bred-smal { grid-template-columns: minmax(0, 1fr); } .med-panel > .panel { position: static; } }
+
+.kort.flat { padding: 0; overflow: hidden; }
+.korthode { display: flex; align-items: center; gap: 10px; padding: 14px 18px; box-shadow: inset 0 -1px 0 var(--linje); }
+.korthode h2 { margin: 0; font-size: var(--font-korttittel); flex: 1; }
+.korthode .meta { color: var(--tekst-dempet); font-size: var(--font-meta); }
+.rad-linje { display: flex; justify-content: space-between; gap: 12px; padding: 10px 18px; box-shadow: inset 0 1px 0 var(--linje); font-size: var(--font-tabell); }
+.rad-linje:first-child { box-shadow: none; }
+.rad-linje.rabatt { background: var(--aksent-svak); color: var(--aksent-tekst); }
+.rad-linje.dempet { color: var(--tekst-dempet); font-size: var(--font-meta); }
+.sumblokk { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 14px 18px; background: var(--flate-senket); box-shadow: inset 0 1px 0 var(--ramme); font-size: var(--font-tabell); }
+.sumblokk .stor { font-size: 17px; font-weight: 700; text-align: right; }
+.sumblokk .hoyre { text-align: right; }
+.sumblokk .dempet { color: var(--tekst-dempet); }
+.fakta { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; }
+.fakta > div { padding: 12px 18px; display: flex; flex-direction: column; gap: 2px; box-shadow: inset -1px 0 0 var(--linje); }
+.fakta > div:last-child { box-shadow: none; }
+.fakta dt { font-size: var(--font-meta); color: var(--tekst-dempet); }
+.fakta dd { margin: 0; font-weight: 600; }
+@media (max-width: 1100px) { .fakta { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* SC2: ett kort per faktura */
+.faktura .korthode b { font-size: 15px; flex: 1; }
+.faktura[data-status="feil"] { box-shadow: inset 0 0 0 2px var(--status-feil-kant), var(--skygge-kort); }
+.faktura .feillinje { display: flex; gap: 8px; align-items: center; padding: 9px 18px; background: var(--feil-flate); color: var(--feil-tekst); font-size: var(--font-meta); font-weight: 500; }
+.faktura .endret { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 9px 18px; box-shadow: inset 0 -1px 0 var(--linje); font-size: var(--font-meta); }
+.faktura .endret > span:first-child { color: var(--tekst-dempet); }
+.merkelapp { padding: 2px 9px; border-radius: 999px; background: var(--status-ny-bg); color: var(--status-ny-fg); box-shadow: inset 0 0 0 1px var(--status-ny-kant); font-weight: 600; font-size: var(--font-pille); }
+.fakturalinje { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 9px 18px; box-shadow: inset 0 1px 0 var(--linje); font-size: var(--font-tabell); }
+.fakturalinje .type { font-size: var(--font-pille); font-weight: 600; color: var(--tekst-dempet); }
+.fakturalinje .belop { text-align: right; font-variant-numeric: tabular-nums; }
+.fakturabunn { display: flex; gap: 18px; align-items: center; padding: 10px 18px; background: var(--flate-senket); box-shadow: inset 0 1px 0 var(--linje); font-size: var(--font-meta); color: var(--tekst-dempet); flex-wrap: wrap; }
+.fakturabunn b { color: var(--tekst); }
+.fakturabunn .fyll { flex: 1; }
+.pille[data-status="klar"] { background: var(--status-pagar-bg); color: var(--status-pagar-fg); box-shadow: inset 0 0 0 1px var(--status-pagar-kant); }
+.pille[data-status="feil"] { background: var(--feil-flate); color: var(--feil-tekst); box-shadow: inset 0 0 0 1px var(--status-feil-kant); }
+.pille[data-status="utkast_klart"] { background: var(--status-ferdig-bg); color: var(--status-ferdig-fg); box-shadow: inset 0 0 0 1px var(--status-ferdig-kant); }
+.pille[data-status="senere"], .pille[data-status="ikke_koblet"], .pille[data-status="mangler_prosent"] { background: var(--status-venter-bg); color: var(--status-venter-fg); box-shadow: inset 0 0 0 1px var(--status-venter-kant); }
+.pille[data-status="varslet"], .pille[data-status="none"] { background: var(--status-ferdig-bg); color: var(--status-ferdig-fg); box-shadow: inset 0 0 0 1px var(--status-ferdig-kant); }
+.pille[data-status="minor"], .pille[data-status="ukjent"] { background: var(--varsel-flate); color: var(--varsel-tekst); box-shadow: inset 0 0 0 1px var(--status-advarsel-kant); }
+.pille[data-status="major"], .pille[data-status="critical"] { background: var(--feil-flate); color: var(--feil-tekst); box-shadow: inset 0 0 0 1px var(--status-feil-kant); }
+
+.rod-tekst { color: var(--feil-tekst); font-weight: 600; }
+.gul-tekst { color: var(--varsel-tekst); font-weight: 600; }
+.gul-flate { background: var(--varsel-flate); }
+.knapp.primar:disabled { background: var(--flate-senket); color: var(--tekst-dempet); box-shadow: inset 0 0 0 1px var(--ramme); cursor: not-allowed; }
+.forklaring { display: flex; gap: 10px; align-items: center; padding: 10px 14px; border-radius: 12px; background: var(--flate-senket); box-shadow: inset 0 0 0 1px var(--ramme); font-size: var(--font-meta); color: var(--tekst-dempet); }
+
+/* SC3 KPI */
+.kpi-felt { display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap; padding: 16px 20px; }
+.kpi-felt .felt { margin: 0; }
+.kpi-felt input { width: 130px; font-size: 18px; font-weight: 700; }
+.epost { padding: 14px 18px; white-space: pre-wrap; font-size: var(--font-tabell); line-height: 1.5; }
+.epost-hode { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 6px 10px; padding: 12px 18px; box-shadow: inset 0 -1px 0 var(--linje); font-size: var(--font-meta); }
+.epost-hode span:nth-child(odd) { color: var(--tekst-dempet); }
+.tabell tr[aria-selected="true"] td { background: var(--aksent-svak); }
+
+/* ST1 Tall: søyler som SVG (ingen style-attributter) */
+.diagram { padding: 14px 18px 10px; }
+.diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
+.diagram .soyle { fill: var(--aksent); }
+.diagram .soyle.svak { fill: var(--aksent-valgt); }
+.diagram .soyle.denne { fill: var(--aksent-tekst); }
+.diagram text { fill: var(--tekst-dempet); font-size: 11px; font-family: inherit; }
+.diagram text.verdi { fill: var(--tekst); font-weight: 600; }
+.forklaring-farger { display: flex; gap: 14px; font-size: var(--font-meta); color: var(--tekst-dempet); padding: 0 18px 12px; }
+.forklaring-farger svg .soyle { fill: var(--aksent); }
+.forklaring-farger svg .soyle.svak { fill: var(--aksent-valgt); }
+.stolpe { width: 100%; height: 10px; display: block; }
+.stolpe .spor { fill: var(--flate-senket); }
+.stolpe .fyll { fill: var(--aksent); }
+.stolpe .fyll.over { fill: var(--status-sannsynlig-fg); }
+.stolpe .fyll.grense { fill: var(--varsel-tekst); }
+.stolpe .merke { stroke: var(--tekst); stroke-width: 2; }
+
+/* SD1/SD2 Drift */
+.lenkekort { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.lenkekort a { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: var(--radius-kort); background: var(--flate-kort); box-shadow: inset 0 0 0 1px var(--ramme), var(--skygge-kort); color: var(--tekst); text-decoration: none; }
+.lenkekort a:hover b { text-decoration: underline; }
+.lenkekort .meta { color: var(--tekst-dempet); font-size: var(--font-meta); }
+.lenkekort .adresse { color: var(--aksent-tekst); font-size: var(--font-meta); }
+.lenkekort a.uten { pointer-events: none; }
+.rutinegruppe .punkt { display: flex; gap: 12px; align-items: center; padding: 10px 18px; box-shadow: inset 0 1px 0 var(--linje); }
+.rutinegruppe .punkt input { width: 18px; height: 18px; accent-color: var(--aksent); }
+.rutinegruppe .punkt.ok span { color: var(--tekst-dempet); text-decoration: line-through; }
+.rutinegruppe .punkt .hvem { margin-left: auto; color: var(--tekst-dempet); font-size: var(--font-meta); text-decoration: none; }
+.bryter-rad { display: flex; align-items: center; gap: 16px; padding: 12px 18px; box-shadow: inset 0 1px 0 var(--linje); }
+.bryter-rad:first-child { box-shadow: none; }
+.bryter-rad .tekst { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.bryter-rad .tekst span { color: var(--tekst-dempet); font-size: var(--font-meta); }
+.bryter { appearance: none; width: 40px; height: 24px; border-radius: 999px; background: var(--ramme); position: relative; cursor: pointer; flex: none; margin: 0; }
+.bryter::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--flate-kort); transition: left .15s; }
+.bryter:checked { background: var(--aksent); }
+.bryter:checked::after { left: 19px; }
+.bryter:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+.undermeny { display: flex; gap: 6px; flex-wrap: wrap; }
+.undermeny a { padding: 6px 12px; border-radius: 999px; color: var(--tekst); text-decoration: none; font-size: var(--font-meta); font-weight: 600; box-shadow: inset 0 0 0 1px var(--ramme); background: var(--flate-kort); }
+.undermeny a[aria-current="page"] { background: var(--aksent-svak); color: var(--aksent-tekst); box-shadow: inset 0 0 0 1px var(--aksent-valgt); }
+.ikke-tilgang { max-width: 520px; margin: 48px auto; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.ikke-tilgang .handlinger { display: flex; gap: 8px; justify-content: center; }
+.tom.liten { padding: 24px; }
+.rad-flex .fyll { flex: 1; }
+.rad-flex { flex-wrap: wrap; }
+#side { display: flex; flex-direction: column; gap: 16px; }
+#side > .sidehode { margin-bottom: 0; }
+.tall > .kort { display: flex; flex-direction: column; gap: 6px; }
+#side .tabell td.hoyre, #side .tabell th.hoyre { white-space: nowrap; }
+.kpi-felt input[name="kilde"] { width: 240px; font-size: var(--font-grunn); font-weight: 400; }
+.ikke-tilgang h1 { font-size: 22px; margin: 0; }
+.rutinegruppe .punkt.ok .hvem { text-decoration: none; }
