@@ -1,0 +1,100 @@
+/* GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
+   K-220 (14.10.2026): plattformlag fra design_handoff_hengsel_furu_v2. K-222 (14.10.2026): STATUS BESLUTTET, på for alle.
+
+   Skallet (V4Skall, useFlateLag) setter data-flate="skrivebord nettleser" på html for alle brukere i CRM-et. Kundeportalen og nettsidene
+   har ikke attributtet og er uendret. Farger som ramme, overlegg, alltid-mork og paa-alltid-mork ligger i grunnpaletten (tokens.css).
+     data-flate~="skrivebord"  lag a: PC, fra 1024 px (flater, skygger, mål, skrift, tetthet)
+     data-flate~="nettleser"   lag b: under 1024 px (skuff, 16 px skrift, 44 px trykkflater, 56 px rader)
+     data-tetthet="tett|luftig" tabelltetthet (normal er standard), på html (lagres per bruker) eller på tabellen
+   Importeres ETTER tokens.css. Modus: lagene er bare lyse (CRM-et har ikke mørk modus, K-201). */
+
+/* ── Lag a: skrivebord (PC). STATUS: BESLUTTET ───────────────────── */
+html[data-flate~="skrivebord"] {
+  /* Flater, tekst, skygger, sidemeny, mål, skrift, avstand og form */
+  --flate-side: #ECEFF3;
+  --flate-kort: #FFFFFF;
+  --flate-senket: #F3F5F8;
+  --flate-hover: #F3F5F8;
+  --linje: #E3E6EA;
+  --tekst-svak: #62686F;
+  --skygge-kort: 0 1px 2px rgba(26,29,34,.06);
+  --skygge-flytende: 0 0 0 1px rgba(26,29,34,.08), 0 16px 40px -12px rgba(26,29,34,.28);
+  --sidemeny-flate: #FFFFFF;
+  --sidemeny-bredde: 248px;
+  --sidemeny-rad: 34px;
+  --sidemeny-aktiv-flate: var(--aksent-svak);
+  --sidemeny-aktiv-tekst: var(--aksent-tekst);
+  --sidemeny-ikon: var(--tekst-dempet);
+  --toppfelt-hoyde: 60px;
+  --toppfelt-flate: rgba(236, 239, 243, .9);
+  --kundelogo-maks: 28px;
+  --font-grunn: 15px;
+  --font-tabell: 14px;
+  --font-meta: 13px;
+  --font-pille: 12px;
+  --font-korttittel: 16px;
+  --font-sidetittel: 28px;
+  --linjehoyde: 1.45;
+  --rad: 44px;
+  --celle-pad-x: 16px;
+  --felt-hoyde: 36px;
+  --knapp-hoyde: 36px;
+  --trykk-min: 32px;
+  --rom-1: 4px;
+  --rom-2: 8px;
+  --rom-3: 12px;
+  --rom-4: 16px;
+  --rom-5: 20px;
+  --rom-6: 24px;
+  --rom-8: 32px;
+  --rom-side: 28px;
+  --rom-kort: 16px;
+  --kort-pad: 18px;
+  --innhold-maks: 1440px;
+  --radius-kort: 14px;
+  --radius-felt: 10px;
+  --radius-knapp: 10px;
+  --radius-pille: 999px;
+}
+html[data-flate~="skrivebord"] body {
+  font-size: var(--font-grunn);
+  line-height: var(--linjehoyde);
+}
+html[data-flate~="skrivebord"][data-tetthet="tett"], html[data-flate~="skrivebord"] [data-tetthet="tett"] {
+  --rad: 36px; --font-tabell: 13px; --celle-pad-x: 12px;
+}
+html[data-flate~="skrivebord"][data-tetthet="luftig"], html[data-flate~="skrivebord"] [data-tetthet="luftig"] {
+  --rad: 52px; --font-tabell: 15px; --celle-pad-x: 18px;
+}
+
+/* ── Lag b: nettbrett og mobil i nettleser, under 1024 px. STATUS: BESLUTTET ─── */
+@media (max-width: 1023.98px) {
+  html[data-flate~="nettleser"] {
+    --sidemeny-bredde: 0px;
+    --skuff-bredde: 300px;
+    --sidemeny-rad: 44px;
+    --toppfelt-hoyde: 56px;
+    --kundelogo-maks: 24px;
+    --font-grunn: 16px;
+    --font-tabell: 15px;
+    --font-meta: 14px;
+    --font-sidetittel: 24px;
+    --rad: 56px;
+    --felt-hoyde: 44px;
+    --knapp-hoyde: 44px;
+    --trykk-min: 44px;
+    --rom-side: 20px;
+    --rom-kort: 12px;
+    --kort-pad: 16px;
+    --radius-kort: 12px;
+  }
+  /* Tett visning finnes ikke under 1024 px */
+  html[data-flate~="nettleser"][data-tetthet="tett"], html[data-flate~="nettleser"] [data-tetthet="tett"] { --rad: 56px; --font-tabell: 15px; }
+}
+@media (max-width: 767.98px) {
+  html[data-flate~="nettleser"] {
+    --fanelinje-hoyde: calc(64px + env(safe-area-inset-bottom));
+    --rom-side: 16px;
+    --font-sidetittel: 22px;
+  }
+}

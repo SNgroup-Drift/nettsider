@@ -125,7 +125,8 @@ test("f) i nettleseren: /kunde/sigdal har ingen Hengsel-farger, og Hengsel-siden
   const blokk = deltCss.slice(deltCss.indexOf(":root {"), deltCss.indexOf("/* nettbrett */"));
   const hengselFarger = new Set(hex(blokk.replace(/--kunde-eksempel-[^;]+;/g, "")).map(tilRgb));
   const sigdalFarger = new Set(Object.values(PALETT).map(tilRgb));
-  for (const s of sigdalFarger) hengselFarger.delete(s);
+  // K-238: Off White #FBF9F6 er fra K-234 både Hengsels --paa-aksent og Sigdals bakgrunn; farger begge har, sier ingenting om hvilket tema som er i bruk
+  for (const s of [...sigdalFarger].filter((s) => hengselFarger.has(s))) { hengselFarger.delete(s); sigdalFarger.delete(s); }
   for (const h of hengselFarger) assert.ok(!sigdalFarger.has(h));
   const server = await startServer(dist);
   const base = `http://127.0.0.1:${server.address().port}`;

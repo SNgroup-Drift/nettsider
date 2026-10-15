@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.0.0, commit 256974ae). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.1.0, commit 7ff84e88). Ikke rediger for hånd.
  *
  * Mørke fargeprøver (--mork-*) til design.hengsel.no, som viser dem til appene og CRM-et. Bare under klassen .mork-prover, aldri på :root,
  * og ingen media-spørring mot maskinens fargevalg: ingen side blir mørk av denne fila. Alle andre Hengsel-sider importerer den ikke. Se docs/design/hengsel-regler.md. */
@@ -9,10 +9,10 @@
   --mork-flate-senket: #06080B;
   --mork-flate-valgt: #13332D;
   --mork-linje: #303439;
-  --mork-kant: #6A6F76;
+  --mork-kant: #767B82;
   --mork-tekst: #EAEDF0;
   --mork-tekst-dempet: #ADB1B7;
-  --mork-tekst-svak: #868B92;
+  --mork-tekst-svak: #90969D;
   --mork-tekst-invers: #0B0D11;
   --mork-aksent: #54B9A5;
   --mork-aksent-trykk: #63C8B3;
@@ -24,9 +24,10 @@
   --mork-varsel-tekst: #FCC959;
   --mork-feil-flate: #421C18;
   --mork-feil-tekst: #FFBFB6;
-  --mork-ramme: #000000;
-  --mork-overlegg: rgba(11, 13, 17, 0.48);
-  --mork-alltid-mork: #06080B;
+  --mork-ramme: #3D4248;
+  --mork-overlegg: rgba(0, 0, 0, 0.60);
+  --mork-alltid-mork: #0B0D11;
+  --mork-paa-alltid-mork: #EAEDF0;
   --mork-status-ny-fg: #B5D3FF;
   --mork-status-ny-bg: #152946;
   --mork-status-ny-kant: #37588A;
