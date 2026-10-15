@@ -46,6 +46,7 @@
   --flate-kort: var(--sigdal-beige-4);
   --flate-senket: var(--sigdal-beige-3);
   --flate-valgt: var(--sigdal-beige-3);
+  --flate-kolonne: var(--sigdal-beige-3); /* K-256: flaten bak tavlekolonner, kortene (Beige 4) oppå */
   --linje: var(--sigdal-beige-2);
   --kant: var(--sigdal-beige-1);
   --tekst: var(--sigdal-warm-black);
@@ -58,6 +59,7 @@
   --aksent-svak: var(--sigdal-blaa-flate);
   --aksent-valgt: var(--sigdal-blaa-valgt);
   --paa-aksent: var(--sigdal-off-white);
+  --aksent-paa-mork: var(--sigdal-dusty-blue); /* K-256: aksent på mørk flate (toasten), som --aksent-mork */
   --varsel-flate: var(--sigdal-beige-2);
   --varsel-tekst: var(--sigdal-warm-black);
   --feil-flate: var(--sigdal-beige-2);

@@ -73,6 +73,18 @@ export const roller = {
       "mork-okt-kontrast": "#1B322D"
     }
   },
+  "flate-kolonne": {
+    "lys": "#E3E6EA",
+    "mork": "#191B1F",
+    "lys-okt-kontrast": "#E3E6EA",
+    "mork-okt-kontrast": "#191B1F",
+    "p3": {
+      "lys": "#E4E6EA",
+      "mork": "#191B1F",
+      "lys-okt-kontrast": "#E4E6EA",
+      "mork-okt-kontrast": "#191B1F"
+    }
+  },
   "linje": {
     "lys": "#D7DADE",
     "mork": "#303439",
@@ -215,6 +227,18 @@ export const roller = {
       "mork": "#0D1013",
       "lys-okt-kontrast": "#FBF9F6",
       "mork-okt-kontrast": "#0D1013"
+    }
+  },
+  "aksent-paa-mork": {
+    "lys": "#54B9A5",
+    "mork": "#54B9A5",
+    "lys-okt-kontrast": "#54B9A5",
+    "mork-okt-kontrast": "#54B9A5",
+    "p3": {
+      "lys": "#6FB7A5",
+      "mork": "#6FB7A5",
+      "lys-okt-kontrast": "#6FB7A5",
+      "mork-okt-kontrast": "#6FB7A5"
     }
   },
   "varsel-flate": {

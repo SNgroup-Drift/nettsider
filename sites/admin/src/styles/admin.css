@@ -1,8 +1,7 @@
 /* admin.hengsel.no (K-184, K-192, K-240): Hengsel Admin fase A. Bare variablene fra @sngroup/hengsel-tokens (tokens.css), bare lys modus.
    PC-laget [data-plattform="pc"] fra furu v2 er ikke tatt inn i den delte token-fila ennå (hengsel-regler 5b); de lokale navnene under er
-   aliaser av delte tokens, aldri egne farger. --flate-kolonne (foreslått token, 60-213 k.7) er --linje som flate til det finnes i designsystemet. */
+   aliaser av delte tokens, aldri egne farger. K-256: --flate-kolonne (60-213 k.7) og --aksent-paa-mork (k.12) er tokens i designsystemet. */
 html:root {
-  --flate-kolonne: var(--linje);
   --flate-hover: var(--flate-senket);
   --sidemeny-flate: var(--flate-kort);
   --sidemeny-aktiv-flate: var(--aksent-svak);
@@ -288,7 +287,7 @@ dialog .valg label { display: flex; align-items: center; gap: 10px; min-height: 
 dialog .valg label:has(input:checked) { background: var(--aksent-svak); border-color: var(--aksent); border-width: 2px; }
 dialog .valg input { accent-color: var(--aksent); }
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: var(--tekst); color: var(--tekst-invers); font-size: var(--font-tabell); font-weight: 500; box-shadow: var(--skygge-flytende); max-width: calc(100vw - 32px); }
-.toast .ikon { color: var(--paa-aksent); }
+.toast .ikon { color: var(--aksent-paa-mork); }
 .toast a { color: var(--tekst-invers); font-weight: 700; }
 @media (max-width: 767px) { .toast { bottom: 76px; } }
 

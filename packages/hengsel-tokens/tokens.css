@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.1.0, commit 7ff84e88). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.1.0, commit 82490f41). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
  * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
@@ -24,6 +24,7 @@
   --flate-kort: #FBFDFF;
   --flate-senket: #EFF1F4;
   --flate-valgt: #E0F4EE;
+  --flate-kolonne: #E3E6EA;
   --linje: #D7DADE;
   --kant: #7B8188;
   --tekst: #1A1D22;
@@ -36,6 +37,7 @@
   --aksent-svak: #E0F4EE;
   --aksent-valgt: #BCE6DB;
   --paa-aksent: #FBF9F6;
+  --aksent-paa-mork: #54B9A5;
   --varsel-flate: #FFE9BC;
   --varsel-tekst: #6D5000;
   --feil-flate: #FFEBE8;
@@ -151,6 +153,7 @@
   :root {
     --flate-side: color(display-p3 0.9686 0.9725 0.9843);
     --flate-valgt: color(display-p3 0.8941 0.9529 0.9333);
+    --flate-kolonne: color(display-p3 0.8941 0.9020 0.9176);
     --kant: color(display-p3 0.4863 0.5059 0.5294);
     --tekst: color(display-p3 0.1020 0.1137 0.1294);
     --tekst-dempet: color(display-p3 0.3216 0.3373 0.3608);
@@ -160,6 +163,7 @@
     --aksent-tekst: color(display-p3 0.1804 0.4235 0.3686);
     --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
     --aksent-valgt: color(display-p3 0.7686 0.8980 0.8627);
+    --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
     --varsel-flate: color(display-p3 0.9961 0.9137 0.7333);
     --varsel-tekst: color(display-p3 0.4235 0.3137 0.0000);
     --feil-flate: color(display-p3 0.9922 0.9216 0.9098);

@@ -1,7 +1,7 @@
 {
   "repo": "SNgroup-Drift/hengsel-crm",
   "sti": "_ds/hengsel-designsystem",
-  "commit": "7ff84e888a92a999900ca7a654746eec79a0018d",
+  "commit": "82490f4171baa7232e1eb65a20a3014560680f9c",
   "versjon": "2.1.0",
   "palettpakke": {
     "navn": "design_handoff_hengsel_furu_v2",
@@ -578,9 +578,9 @@
     "assets/pwa/vis-maskable-512.svg": "ab990aef1d8a187d41631fa284531ec69f6ff3be88b1750a0fa9bf6d22f1026c",
     "tokens/fonts-fri-liste.css": "f5ad14c53364da6884ac675ebf1909201ff44aa3c6408092669c6ae215cbcd6d",
     "tokens/fonts.css": "e7bbb03233d07725cc86efb7098a37e4d0b0028744c68de7264969e7832a5a3e",
-    "tokens/hengsel.tokens.json": "69551ab0045a1cb7c8f9cfe130fe0a764392be51c96f469df05fb189c603d767",
+    "tokens/hengsel.tokens.json": "81b6ebd889d29c33e55fd4f9d70b0c1969ece15ce65986f9e85a36081661d5bc",
     "tokens/plattform.css": "9a743c39062873e25178078e8a780bf48a8e05d970b45eb63934e627b3795daf",
-    "tokens/tokens.css": "30999cfecc3e267ac9a7a74a5d078e83f741fb147962c721850f7348749ca1a0",
-    "tokens/tokens.ts": "6e87c53ad6c6a15a6ef81c508efa065d4ad87720e3fb9de77613d90ec83a4e80"
+    "tokens/tokens.css": "bf4c503959705f8936d46d63d8f40af5a2e368167840b52446758d2dcc1c3458",
+    "tokens/tokens.ts": "8e39680c1052ee4655327194344ca66d6f5382a933515825ecb1c13e9a24146f"
   }
 }

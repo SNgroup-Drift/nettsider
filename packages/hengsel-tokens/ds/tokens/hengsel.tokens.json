@@ -80,6 +80,15 @@
       },
       "bruk": "valgt menypunkt og rad, chips, info-flate (furutonet)"
     },
+    "flate-kolonne": {
+      "lys": "#E3E6EA",
+      "mork": "#191B1F",
+      "p3": {
+        "lys": "#E4E6EA",
+        "mork": "#191B1F"
+      },
+      "bruk": "flaten bak tavlekolonner (Admin fase A, 60-213 punkt k.7). Kortene (flate-kort) ligger oppå. K-256 (15.10.2026): lys #E3E6EA; mørk #191B1F ligger like langt fra flate-side som i lys (ΔL* 6,1 mot 6,3), bare lysere, siden mørk sideflate er mørkest"
+    },
     "linje": {
       "lys": "#D7DADE",
       "mork": "#303439",
@@ -235,6 +244,15 @@
         "mork-okt-kontrast": "#0D1013"
       },
       "bruk": "tekst og ikoner på aksentflate: Off White #FBF9F6 i lys (K-234, aldri #FFFFFF), mørk i mørk"
+    },
+    "aksent-paa-mork": {
+      "lys": "#54B9A5",
+      "mork": "#54B9A5",
+      "p3": {
+        "lys": "#6FB7A5",
+        "mork": "#6FB7A5"
+      },
+      "bruk": "aksentfargen for ikoner og tekst på mørk flate, for eksempel toasten (blekk, tekst som flate) i lys modus (Admin fase A, 60-213 punkt k.12). Lik aksent-mork i paletten i begge utgaver. K-256 (15.10.2026). paa-aksent er fortsatt tekst og ikoner PÅ aksentflate, ikke aksent på mørk flate"
     },
     "varsel-flate": {
       "lys": "#FFE9BC",
