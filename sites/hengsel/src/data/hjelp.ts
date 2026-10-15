@@ -9,8 +9,8 @@
  * - menyvei:  der man finner det i løsningen, for eksempel «Salg › Innkommende» (valgfri)
  * - tekst / steg: løpende tekst, eller nummererte steg (begge kan stå sammen: tekst først)
  * - tips:     fremhevet merknad under oppgaven
- * - skjermbilde: navnet på skjermbildet. Skjermbildene kommer senere fra demo.hengsel.no; til da vises plassholderen «Skjermbilde kommer».
- *   Når bildet finnes, legges stien i `fil` (under /img/hjelp/) og siden viser bildet i stedet for plassholderen.
+ * - skjermbilde: navnet på skjermbildet og id-en i biblioteket (K-233: bilder.hengsel.no, hjelp/<id>.webp, tatt fra demo.hengsel.no av K-228 i hengsel-crm;
+ *   id-ene er de samme som «hjelp» i scripts/skjermbilder/liste.json der). Står bildet ikke i manifestet, viser siden plassholderen «Skjermbilde kommer».
  */
 
 export type RolleId = "kom-i-gang" | "selger" | "prosjektleder" | "montasjeleder" | "leder" | "montor" | "kunde";
@@ -18,8 +18,8 @@ export type RolleId = "kom-i-gang" | "selger" | "prosjektleder" | "montasjeleder
 export interface Skjermbilde {
   /** Hva bildet viser, for eksempel «Min dag». Brukes i plassholderen og som alt-tekst når bildet er på plass. */
   navn: string;
-  /** Sti til bildet, for eksempel «/img/hjelp/min-dag.webp». Tom = «Skjermbilde kommer». */
-  fil?: string;
+  /** Id-en i biblioteket: hjelp/<id>.webp (2×) og hjelp/<id>@1x.webp */
+  id: string;
 }
 
 export interface Oppgave {
@@ -51,10 +51,10 @@ export const HJELP = {
   tittel: "Hengsel brukerveiledning",
   overskrift: "Hengsel brukerveiledning",
   ingress: "Slik bruker du Hengsel CRM, Hengsel Ute og Min side i det daglige. Velg rollen din, så finner du de vanligste oppgavene steg for steg.",
-  status: "Utkast 0.1 · 14.10.2026 · skjermbilder kommer når ny meny er i demo",
+  status: "Utkast 0.1 · 14.10.2026 · skjermbildene tas fra demoen",
   plassholder: "Skjermbilde kommer",
   fotnote:
-    "Utkast skrevet fra løsningen slik den er i demo 14.10.2026. Skjermbildene tas fra demo.hengsel.no med fiktive data når den nye menyen er i demo. Kunder med eget tema (for eksempel Sigdal) får en egen utgave med sitt utseende.",
+    "Utkast skrevet fra løsningen slik den er i demo 14.10.2026. Skjermbildene tas automatisk fra demo.hengsel.no med fiktive data. Kunder med eget tema (for eksempel Sigdal) får en egen utgave med sitt utseende.",
   copyright:
     "© 2026 ES-Holding AS. Alle rettigheter forbeholdt. Hengsel og innholdet i denne veiledningen (tekst, skjermbilder og oppbygging) kan ikke kopieres, deles eller brukes utenfor egen virksomhet uten skriftlig samtykke.",
 } as const;
@@ -140,13 +140,13 @@ export const HJELP_OPPGAVER: Oppgave[] = [
     tittel: "Min dag",
     tekst:
       "Startsiden din. Øverst ligger det som trenger handling (avvik, oppfølging, svar fra kunder), og til høyre det du har i kalenderen i dag. Tallet ved Min dag i menyen viser hvor mange oppgaver som venter.",
-    skjermbilde: { navn: "Min dag" },
+    skjermbilde: { navn: "Min dag", id: "min-dag" },
   }),
   oppgave("kom-i-gang", {
     tittel: "Menyen",
     tekst:
       "På PC står menyen til venstre, gruppert i Salg, Leveranse, Tall og (for ledere) Ledelse. På mobil ligger Min dag, Kunder, Ordre og Saker nederst, og resten under «Mer». Hengsel CRM og versjonsnummeret står nederst i menyen.",
-    skjermbilde: { navn: "Meny på PC og mobil" },
+    skjermbilde: { navn: "Meny på PC og mobil", id: "meny-pc-og-mobil" },
   }),
   oppgave("kom-i-gang", {
     tittel: "Innstillinger",
@@ -163,7 +163,7 @@ export const HJELP_OPPGAVER: Oppgave[] = [
       "Åpne henvendelsen og velg «Opprett kunde», eller koble den til en kunde som finnes.",
       "Sett neste steg (befaring, tegnemøte eller ring tilbake). Det havner på Min dag.",
     ],
-    skjermbilde: { navn: "Innkommende" },
+    skjermbilde: { navn: "Innkommende", id: "innkommende" },
   }),
   oppgave("selger", {
     tittel: "2. Lag et tilbud",
@@ -174,7 +174,7 @@ export const HJELP_OPPGAVER: Oppgave[] = [
       "Legg til montering og frakt. Sjekk dekningsgraden før du sender.",
       "«Lag PDF og send». Kunden får tilbudet på e-post og på Min side.",
     ],
-    skjermbilde: { navn: "Tilbud" },
+    skjermbilde: { navn: "Tilbud", id: "tilbud" },
   }),
   oppgave("selger", {
     tittel: "3. Følg opp på Salgstavla",
@@ -190,7 +190,7 @@ export const HJELP_OPPGAVER: Oppgave[] = [
       "Send ordrebekreftelsen fra ordren.",
       "Bestill varene under Bestilling, eller gi beskjed til den som bestiller.",
     ],
-    skjermbilde: { navn: "Ordre" },
+    skjermbilde: { navn: "Ordre", id: "ordre" },
   }),
   oppgave("selger", {
     tittel: "5. Snakk med kunden",
@@ -246,7 +246,7 @@ export const HJELP_OPPGAVER: Oppgave[] = [
       "Velg montør eller montørfirma og dato. Forespørselen går til Ute-appen.",
       "Følg status: akseptert, i gang, ferdig montert.",
     ],
-    skjermbilde: { navn: "Montasje, oversikt" },
+    skjermbilde: { navn: "Montasje, oversikt", id: "montasje-oversikt" },
   }),
   oppgave("montasjeleder", {
     tittel: "2. KS og montørfaktura",
@@ -277,7 +277,7 @@ export const HJELP_OPPGAVER: Oppgave[] = [
     tittel: "1. Dagen din",
     menyvei: "I dag",
     tekst: "Jobbene for dagen med adresse og tid. Trykk på en jobb for tegninger, mål og kontaktinfo. «Naviger» åpner kartet.",
-    skjermbilde: { navn: "I dag" },
+    skjermbilde: { navn: "I dag", id: "i-dag" },
   }),
   oppgave("montor", {
     tittel: "2. Under jobben",

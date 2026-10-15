@@ -1,7 +1,7 @@
-# Sikkerhetshoder for Cloudflare Workers (statiske filer). Ingen inline-skript og ingen eksterne kilder.
+# Sikkerhetshoder for Cloudflare Workers (statiske filer). Ingen inline-skript. Eneste eksterne kilde er skjermbildebiblioteket bilder.hengsel.no (img-src, K-233).
 # CSS-en ligger inline; scripts/csp-hasher.mjs legger sha256-hashene til style-src i dist/_headers ved bygging.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://bilder.hengsel.no; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY

@@ -1,7 +1,7 @@
 {
-  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke.",
-  "versjon": "2.0.0",
-  "dato": "2026-10-13",
+  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1.",
+  "versjon": "2.1.0",
+  "dato": "2026-10-14",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
     "blekk": "#1D2430",
@@ -95,16 +95,16 @@
     },
     "kant": {
       "lys": "#7B8188",
-      "mork": "#6A6F76",
+      "mork": "#767B82",
       "lys-okt-kontrast": "#494E54",
       "mork-okt-kontrast": "#A6ABB1",
       "p3": {
         "lys": "#7C8187",
-        "mork": "#6B6F75",
+        "mork": "#777B81",
         "lys-okt-kontrast": "#4A4D53",
         "mork-okt-kontrast": "#A7ABB1"
       },
-      "bruk": "feltkanter, sekundærknapp og chips uten fokus (minst 3:1)"
+      "bruk": "feltkanter, sekundærknapp og chips uten fokus (minst 3:1). K-222: mørk #767B82 gir 3,20:1 på valgt flate #13332D (#6A6F76 ga 2,70:1)"
     },
     "tekst": {
       "lys": "#1A1D22",
@@ -134,12 +134,12 @@
     },
     "tekst-svak": {
       "lys": "#686E75",
-      "mork": "#868B92",
+      "mork": "#90969D",
       "lys-okt-kontrast": "#43484E",
       "mork-okt-kontrast": "#C0C4CA",
       "p3": {
         "lys": "#696E74",
-        "mork": "#878B91",
+        "mork": "#91969C",
         "lys-okt-kontrast": "#44484E",
         "mork-okt-kontrast": "#C1C4C9"
       },
@@ -159,17 +159,17 @@
       "bruk": "tekst på blekk-flate (primærknapp med blekk, valgt chip)"
     },
     "aksent": {
-      "lys": "#068472",
+      "lys": "#05806F",
       "mork": "#54B9A5",
       "lys-okt-kontrast": "#006a5b",
       "mork-okt-kontrast": "#68CDB7",
       "p3": {
-        "lys": "#3A8272",
+        "lys": "#387E6F",
         "mork": "#6FB7A5",
         "lys-okt-kontrast": "#206A5B",
         "mork-okt-kontrast": "#82CAB8"
       },
-      "bruk": "primærknapp, fremdrift, fokusring, ett element per visning (furu)"
+      "bruk": "primærknapp, fremdrift, fokusring, ett element per visning (furu). K-234 (14.10.2026, Eirik): lys er #05806F, ett hakk mørkere enn furu #068472, så Off White-teksten holder 4,5:1 (4,62:1; furu ga 4,39:1)"
     },
     "aksent-trykk": {
       "lys": "#007665",
@@ -224,17 +224,17 @@
       "bruk": "valgt og «i dag»: furutonet flate, fremdriftsspor"
     },
     "paa-aksent": {
-      "lys": "#FFFFFF",
+      "lys": "#FBF9F6",
       "mork": "#0D1013",
-      "lys-okt-kontrast": "#FFFFFF",
+      "lys-okt-kontrast": "#FBF9F6",
       "mork-okt-kontrast": "#0D1013",
       "p3": {
-        "lys": "#FFFFFF",
+        "lys": "#FBF9F6",
         "mork": "#0D1013",
-        "lys-okt-kontrast": "#FFFFFF",
+        "lys-okt-kontrast": "#FBF9F6",
         "mork-okt-kontrast": "#0D1013"
       },
-      "bruk": "tekst og ikoner på aksentflate (hvit i lys, mørk i mørk)"
+      "bruk": "tekst og ikoner på aksentflate: Off White #FBF9F6 i lys (K-234, aldri #FFFFFF), mørk i mørk"
     },
     "varsel-flate": {
       "lys": "#FFE9BC",
@@ -290,18 +290,23 @@
     },
     "ramme": {
       "lys": "#CBCFD4",
-      "mork": "#000000",
-      "bruk": "ytterkant på PC-skjermen og sterk strek i rutenett (skala nøytral trinn 7 i lys; mørk er svart som før)"
+      "mork": "#3D4248",
+      "bruk": "ytterkant på PC-skjermen, kant rundt kort, sidemeny og tabeller, og sterk strek i rutenett (K-222: #CBCFD4 overalt, også i PC-laget; mørk #3D4248)"
     },
     "overlegg": {
-      "lys": "rgba(11, 13, 17, 0.48)",
-      "mork": "rgba(11, 13, 17, 0.48)",
-      "bruk": "bak dialoger (flate-side mørk #0B0D11 med 48 %)"
+      "lys": "rgba(26, 29, 34, 0.40)",
+      "mork": "rgba(0, 0, 0, 0.60)",
+      "bruk": "bak dialoger og ark (K-222: tatt inn fra K-206-forslaget)"
     },
     "alltid-mork": {
-      "lys": "#06080B",
-      "mork": "#06080B",
-      "bruk": "bildeeditor og kamera (flate-senket mørk)"
+      "lys": "#0B0D11",
+      "mork": "#0B0D11",
+      "bruk": "bildeeditor og kamera, flaten er mørk også i lys modus (K-222)"
+    },
+    "paa-alltid-mork": {
+      "lys": "#EAEDF0",
+      "mork": "#EAEDF0",
+      "bruk": "tekst og ikoner på alltid-mork (bildeeditor og kamera). Holder 4,5:1 på #0B0D11 (K-222)"
     }
   },
   "status": {
@@ -734,16 +739,16 @@
     "varianter": {
       "lys": {
         "aksent": {
-          "srgb": "#068472",
-          "p3": "#3A8272"
+          "srgb": "#05806F",
+          "p3": "#387E6F"
         },
         "aksent-valgt": {
           "srgb": "#BCE6DB",
           "p3": "#C4E5DC"
         },
         "paa-aksent": {
-          "srgb": "#FFFFFF",
-          "p3": "#FFFFFF"
+          "srgb": "#FBF9F6",
+          "p3": "#FBF9F6"
         },
         "status": {
           "ny": {
@@ -970,8 +975,8 @@
           "p3": "#B4DBD1"
         },
         "paa-aksent": {
-          "srgb": "#FFFFFF",
-          "p3": "#FFFFFF"
+          "srgb": "#FBF9F6",
+          "p3": "#FBF9F6"
         },
         "status": {
           "ny": {
@@ -1669,6 +1674,176 @@
     "stift": {
       "lys": "#068472",
       "mork": "#54B9A5"
+    }
+  },
+  "plattform": {
+    "$merknad": "K-222 (14.10.2026): plattformlagene a og b er BESLUTTET (Eirik 14.10) og står på for alle i CRM-et (data-flate=\"skrivebord nettleser\" settes av skallet). Rollene ramme (#CBCFD4 overalt), overlegg, alltid-mork og paa-alltid-mork og de mørke verdiene tekst-svak #90969D og kant #767B82 er flyttet til grunnpaletten (farge). Tetthet (tett, normal, luftig) lagres per bruker i databasen (bruker_utseende). Genereres til tokens/plattform.css. Kilde: kilde/OVERLEVERING-v2-README.md.",
+    "status": "besluttet",
+    "skrivebord": {
+      "status": "besluttet",
+      "velger": "[data-flate~=\"skrivebord\"]",
+      "bruk": "PC: CRM og admin i nettleser, fra 1024 px. Bare lys.",
+      "vars": {
+        "flate-side": "#ECEFF3",
+        "flate-kort": "#FFFFFF",
+        "flate-senket": "#F3F5F8",
+        "flate-hover": "#F3F5F8",
+        "linje": "#E3E6EA",
+        "tekst-svak": "#62686F",
+        "skygge-kort": "0 1px 2px rgba(26,29,34,.06)",
+        "skygge-flytende": "0 0 0 1px rgba(26,29,34,.08), 0 16px 40px -12px rgba(26,29,34,.28)",
+        "sidemeny-flate": "#FFFFFF",
+        "sidemeny-bredde": "248px",
+        "sidemeny-rad": "34px",
+        "sidemeny-aktiv-flate": "var(--aksent-svak)",
+        "sidemeny-aktiv-tekst": "var(--aksent-tekst)",
+        "sidemeny-ikon": "var(--tekst-dempet)",
+        "toppfelt-hoyde": "60px",
+        "toppfelt-flate": "rgba(236, 239, 243, .9)",
+        "kundelogo-maks": "28px",
+        "font-grunn": "15px",
+        "font-tabell": "14px",
+        "font-meta": "13px",
+        "font-pille": "12px",
+        "font-korttittel": "16px",
+        "font-sidetittel": "28px",
+        "linjehoyde": "1.45",
+        "rad": "44px",
+        "celle-pad-x": "16px",
+        "felt-hoyde": "36px",
+        "knapp-hoyde": "36px",
+        "trykk-min": "32px",
+        "rom-1": "4px",
+        "rom-2": "8px",
+        "rom-3": "12px",
+        "rom-4": "16px",
+        "rom-5": "20px",
+        "rom-6": "24px",
+        "rom-8": "32px",
+        "rom-side": "28px",
+        "rom-kort": "16px",
+        "kort-pad": "18px",
+        "innhold-maks": "1440px",
+        "radius-kort": "14px",
+        "radius-felt": "10px",
+        "radius-knapp": "10px",
+        "radius-pille": "999px"
+      },
+      "tetthet": {
+        "tett": {
+          "rad": "36px",
+          "font-tabell": "13px",
+          "celle-pad-x": "12px"
+        },
+        "luftig": {
+          "rad": "52px",
+          "font-tabell": "15px",
+          "celle-pad-x": "18px"
+        }
+      }
+    },
+    "nettleser": {
+      "status": "besluttet",
+      "velger": "[data-flate~=\"nettleser\"]",
+      "media": "(max-width: 1023.98px)",
+      "bruk": "Nettbrett og mobil i nettleser, under 1024 px. Farger som lag a.",
+      "vars": {
+        "sidemeny-bredde": "0px",
+        "skuff-bredde": "300px",
+        "sidemeny-rad": "44px",
+        "toppfelt-hoyde": "56px",
+        "kundelogo-maks": "24px",
+        "font-grunn": "16px",
+        "font-tabell": "15px",
+        "font-meta": "14px",
+        "font-sidetittel": "24px",
+        "rad": "56px",
+        "felt-hoyde": "44px",
+        "knapp-hoyde": "44px",
+        "trykk-min": "44px",
+        "rom-side": "20px",
+        "rom-kort": "12px",
+        "kort-pad": "16px",
+        "radius-kort": "12px"
+      },
+      "tett": {
+        "rad": "56px",
+        "font-tabell": "15px"
+      },
+      "mobil": {
+        "media": "(max-width: 767.98px)",
+        "vars": {
+          "fanelinje-hoyde": "calc(64px + env(safe-area-inset-bottom))",
+          "rom-side": "16px",
+          "font-sidetittel": "22px"
+        }
+      }
+    },
+    "montorapp": {
+      "status": "besluttet",
+      "bruk": "Montørappen (Expo / React Native, iPhone og Android): som iPhone og iPad (lag c) uten Liquid Glass. Hele flater med hårstrek i linje, ikke glass. Systemets grupperte flater.",
+      "som": "ios uten Liquid Glass",
+      "lys": {
+        "flate-side": "#F2F2F7",
+        "flate-kort": "#FFFFFF",
+        "flate-senket": "#E9E9EE",
+        "linje": "#D1D1D6",
+        "fanelinje": {
+          "flate": "#FFFFFF",
+          "linje": "#D1D1D6",
+          "aktiv": "#016D5E",
+          "inaktiv": "#51565C"
+        },
+        "tekst": "#1A1D22",
+        "tekst-dempet": "#51565C",
+        "aksent": "#068472",
+        "aksent-tekst": "#016D5E",
+        "paa-aksent": "#FFFFFF",
+        "kant": "#7B8188"
+      },
+      "mork": {
+        "flate-side": "#000000",
+        "flate-kort": "#1C1C1E",
+        "flate-senket": "#2C2C2E",
+        "linje": "#38383A",
+        "fanelinje": {
+          "flate": "#1C1C1E",
+          "linje": "#38383A",
+          "aktiv": "#54B9A5",
+          "inaktiv": "#ADB1B7"
+        },
+        "tekst": "#EAEDF0",
+        "tekst-dempet": "#ADB1B7",
+        "aksent": "#54B9A5",
+        "aksent-tekst": "#8ACDBE",
+        "paa-aksent": "#0D1013",
+        "kant": "#767B82"
+      },
+      "mal": {
+        "radius-kort": 20,
+        "radius-knapp-stor": 28,
+        "radius-felt": 12,
+        "trykk-min": 44,
+        "fanelinje-hoyde": 49
+      },
+      "skrift": {
+        "stor": 34,
+        "tittel": 22,
+        "celle": 17,
+        "sekundar": 15,
+        "meta": 13,
+        "pille": 12
+      },
+      "rom": {
+        "1": 4,
+        "2": 8,
+        "3": 12,
+        "4": 16,
+        "5": 20,
+        "6": 24,
+        "8": 32
+      },
+      "merknad": "K-222 (Eirik 14.10, punkt 9): besluttet. kant mørk er #767B82 (3,27:1 på flate-senket #2C2C2E). Grunnens #6A6F76 har 2,75:1 der. Kant i mørk er #767B82 også i grunnpaletten nå (K-222)."
     }
   }
 }

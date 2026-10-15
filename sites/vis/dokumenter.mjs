@@ -10,15 +10,25 @@ import { DOKUMENTER, LAGES_STEG } from "../../packages/hengsel-dokumenter/src/da
 import { ETTERPA_TYPE, LAGES } from "../../packages/hengsel-dokumenter/src/lages.js";
 import { a4DynamiskCss } from "../../packages/hengsel-dokumenter/src/a4-stil.js";
 import { esc, renderA4Side } from "../../packages/hengsel-dokumenter/src/render.js";
+import { PLASSHOLDER, lokalUrl, skjermbilde as fraBibliotek, skjermbildeNokkel } from "../../packages/hengsel-tokens/skjermbilder.mjs";
 
-/** <picture> med 1× og 2× (bare lys utgave) */
-const skjermbilde = (navn, alt) =>
-  `<picture><img class="sk" src="/skjermbilder/${navn}.webp" srcset="/skjermbilder/${navn}@1x.webp 1x, /skjermbilder/${navn}.webp 2x" alt="${alt}" width="${BILDE.bredde}" height="${BILDE.hoyde}" loading="lazy" decoding="async"></picture>`;
+// K-233: skjermbildene i «Slik lages det» og forsidebildet på arkene kommer fra biblioteket på bilder.hengsel.no i temaet VIS_TEMA (bygg.mjs);
+// det som ikke står i manifestet, blir plassholderen «Skjermbilde kommer» (data-skjermbilde).
+const tema = process.env.VIS_TEMA ?? "hengsel";
+const plassholder = (sti, navn) =>
+  `<figure class="sk plassholder" data-skjermbilde="${esc(skjermbildeNokkel(sti))}" role="img" aria-label="${esc(PLASSHOLDER)}: ${esc(navn)}"><b>${PLASSHOLDER}</b><span>${esc(navn)}</span></figure>`;
+/** <picture> med 1× og 2× (bare lys utgave), eller plassholderen */
+function skjermbilde(navn, alt) {
+  const b = fraBibliotek(tema, `vis/skjermbilder/${navn}.webp`, { hd: true });
+  if (!b) return plassholder(`vis/skjermbilder/${navn}`, alt);
+  const x = b.x1 ?? b;
+  return `<picture><img class="sk" src="${x.url}"${b.srcset ? ` srcset="${b.srcset}"` : ""} alt="${alt}" width="${x.bredde}" height="${x.hoyde}" loading="lazy" decoding="async"></picture>`;
+}
+/** Forsidebildet på arkene (dok-forside.webp, 1200 × 768): nettsidenes eget (LOKALE_BILDER, /img/dok-forside.webp fra hengsel.no) i Hengsel-utgaven; i Sigdal-utgaven plassholder (render.js) */
+const forsideBilde = () => (tema === "hengsel" ? lokalUrl("dok-forside.webp") : null);
 
 /** Hengsel-logoen i bunnlinjen på arkene (hengsel-lys.svg, 3 mm) */
 const LOGO_STI = "/assets/logo/hengsel-lys.svg";
-
-const BILDE = { bredde: 2880, hoyde: 1620 };
 
 export const a4Stil = () => `<style>${a4DynamiskCss(DOKUMENTER)}</style>`;
 
@@ -59,7 +69,7 @@ ${steg}
 function panelHtml(dok, forst) {
   const total = dok.sider.length;
   const sider = dok.sider
-    .map((side, i) => `<div class="dv-side" data-side${i > 0 ? " hidden" : ""}>${renderA4Side(side, { fot: dok.fot, nr: i + 1, total, ligg: dok.ligg, forst: forst && i === 0, logoSti: LOGO_STI })}</div>`)
+    .map((side, i) => `<div class="dv-side" data-side${i > 0 ? " hidden" : ""}>${renderA4Side(side, { fot: dok.fot, nr: i + 1, total, ligg: dok.ligg, forst: forst && i === 0, bildeSti: forsideBilde(), logoSti: LOGO_STI })}</div>`)
     .join("");
   const innhold = dok.sider
     .map((s, i) => `<li><button type="button" data-gaa="${i}"${i === 0 ? ' aria-current="page"' : ""}><span class="nr">Side ${i + 1}</span><span>${esc(s.navn)}</span></button></li>`)
@@ -109,7 +119,7 @@ ${paneler}
 export function a4Ark(id, side, tittel) {
   const dok = DOKUMENTER.find((d) => d.id === id);
   if (!dok) throw new Error(`Ukjent dokument i a4-ark: ${id}`);
-  const html = renderA4Side(dok.sider[side], { fot: dok.fot, nr: side + 1, total: dok.sider.length, ligg: dok.ligg, logoSti: LOGO_STI })
+  const html = renderA4Side(dok.sider[side], { fot: dok.fot, nr: side + 1, total: dok.sider.length, ligg: dok.ligg, bildeSti: forsideBilde(), logoSti: LOGO_STI })
     .replace(/ role="group" aria-label="[^"]*"/, ' aria-hidden="true"');
   return `<a class="ark-lenke" href="/dokumenter/#${esc(id)}" aria-label="${esc(tittel)}, åpne dokumentet"><span class="ark${dok.ligg ? " ligg" : ""}">${html}</span><span>${esc(tittel)}</span></a>`;
 }

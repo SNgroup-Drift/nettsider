@@ -26,6 +26,7 @@ h2{font:var(--skrift-vekt-fet) 1.875rem/1.15 var(--skrift-familie-hengsel-oversk
 .hero h1{font-size:clamp(2.6rem,5vw,4rem)}
 .hero .bilde-hero{display:block;width:100%;height:auto}
 .hero .bilde-enkel{display:none}
+.hero figure.plassholder{aspect-ratio:1500/1227}
 .velg{display:grid;gap:10px;margin-top:8px}
 .velg .label{font:500 14px/1.4 var(--skrift-familie-hengsel-tekst);color:var(--tekst-dempet)}
 .roles{display:flex;gap:8px;flex-wrap:wrap}
@@ -58,6 +59,7 @@ h2{font:var(--skrift-vekt-fet) 1.875rem/1.15 var(--skrift-familie-hengsel-oversk
 .forsta .bilde img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .prov .bilde{aspect-ratio:auto;height:220px;align-items:flex-end;background:transparent;padding:0}
 .prov .bilde img{max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain}
+.prov .bilde figure.plassholder{border-radius:var(--radius-bilde)}
 .gruppe-kort.valgt{border-color:var(--aksent)}
 
 /* Dokumenter: fem ark, uten ramme */

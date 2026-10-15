@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 /**
- * Bygger Visningsrommet: kopierer src/ til dist/, legger de delte Hengsel-variablene og de pinnede skriftene i dist/assets/, skjermbildene
- * (fra sites/hengsel/public/img) og SN-logoen (fra sites/sngroup/public) i dist/img/, og setter inn Hengsel-logoen
- * (src/assets/logo) der det står <!--logo-hengsel N-->.
+ * Bygger Visningsrommet: kopierer src/ til dist/, legger de delte Hengsel-variablene og de pinnede skriftene i dist/assets/ og SN-logoen
+ * (fra sites/sngroup/public) i dist/img/, setter inn Hengsel-logoen (src/assets/logo) der det står <!--logo-hengsel N-->, og lenker alle
+ * app-skjermbildene fra biblioteket på bilder.hengsel.no (K-233): <img data-bibliotek="vis/hero.webp"> i HTML, b:'rom-reise' i assets/rom.js og
+ * data-bilder="navn,…" i rommene får adresse og mål (width/height) fra manifest.json; bilder som ikke står i manifestet, blir plassholderen
+ * «Skjermbilde kommer» (data-skjermbilde="<nøkkel>"). Unntaket er nettsidenes egne bilder (LOKALE_BILDER: romkortene for rom uten app-skjermbilde i
+ * src/img og dokumentforsiden), som lenkes lokalt som /img/<fil>. VIS_TEMA=sigdal gir Sigdal-utgaven (scripts/bygg-sigdal-vis.mjs); SKJERMBILDER_MANIFEST=kopi
+ * hopper over hentingen av manifest.json og bruker kopien i repoet.
  *
  * Variabler og skrifter kommer fra packages/hengsel-tokens (tokens.css, fonts.css og ds/assets/fonts/*.woff2): Schibsted Grotesk, selvhostet
  * (CSP: font-src 'self'). Ingen @fontsource, ingen Google Fonts.
@@ -13,6 +17,7 @@ import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promi
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { a4Ark, a4Stil, dokumentvisningHtml } from "./dokumenter.mjs";
+import { PLASSHOLDER, TEMAER, erLokal, lesManifest, lokalUrl, oppdaterManifest, skjermbilde, skjermbildeNokkel } from "../../packages/hengsel-tokens/skjermbilder.mjs";
 import sharp from "sharp";
 
 const her = import.meta.dirname;
@@ -38,28 +43,36 @@ for (const f of await readdir(join(tokens, "ds", "assets", "fonts"))) {
   antall++;
 }
 
-// Romkortbildene (src/img/rom-*.webp, lages av scripts/skjermbilder-vis.mjs) ligger i src/img og er alt kopiert.
-// Andre skjermbilder hentes fra hengsel.no og SN-logoen fra sngroup.no, så de ikke ligger dobbelt i repoet.
+// K-233: app-skjermbildene lenkes fra biblioteket (packages/hengsel-tokens/skjermbilder.mjs) i temaet VIS_TEMA. Ingen bilder lastes ned ved bygging;
+// bare manifest.json leses, og bygget feiler ikke om biblioteket er nede (kopien i repoet brukes). SN-logoen hentes fra sngroup.no som før.
+const tema = process.env.VIS_TEMA ?? "hengsel";
+if (!TEMAER.includes(tema)) throw new Error(`VIS_TEMA må være ${TEMAER.join(" eller ")}, ikke «${tema}»`);
+const manifest = process.env.SKJERMBILDER_MANIFEST === "kopi" ? lesManifest() : await oppdaterManifest();
+// Nettsidenes egne bilder (LOKALE_BILDER: romkortene for rom uten app-skjermbilde i src/img, dokumentforsiden fra sites/hengsel/public/img) lenkes lokalt
+// som /img/<fil> i Hengsel-utgaven, med mål lest fra fila; i Sigdal-utgaven finnes de ikke (plassholder, som i K-223).
+const lokaleMal = {};
+async function lokalt(sti) {
+  if (tema !== "hengsel") return null;
+  const fil = sti === "dok-forside.webp" ? join(her, "..", "hengsel", "public", "img", "dok-forside.webp") : join(src, "img", sti.split("/").pop());
+  if (!(await stat(fil).catch(() => null))) throw new Error(`${sti} står i LOKALE_BILDER, men ${fil} finnes ikke`);
+  if (!lokaleMal[sti]) { const m = await sharp(fil).metadata(); lokaleMal[sti] = { url: lokalUrl(sti), bredde: m.width, hoyde: m.height }; }
+  return lokaleMal[sti];
+}
+const bilde = async (sti, hd = false) => (erLokal(sti) ? lokalt(sti) : skjermbilde(tema, sti, { hd, manifest }));
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const plassholder = (sti, navn, klasse = "") =>
+  `<figure class="${[klasse, "plassholder"].filter(Boolean).join(" ")}" data-skjermbilde="${esc(skjermbildeNokkel(sti))}" role="img" aria-label="${esc(PLASSHOLDER)}: ${esc(navn)}"><b>${PLASSHOLDER}</b><span>${esc(navn)}</span></figure>`;
 const sites = join(her, "..");
-// Dokumentene (K-161): CSS og skript deles med hengsel.no fra packages/hengsel-dokumenter/src. Forsidebildet på A4-arkene (1200 × 768) hentes
-// fra hengsel.no, og selve arkene lages av de felles dataene (dokumenter.mjs), så det ikke finnes dokumentbilder å holde i synk.
+// Dokumentene (K-161): CSS og skript deles med hengsel.no fra packages/hengsel-dokumenter/src. Forsidebildet på A4-arkene (1200 × 768) kommer fra
+// biblioteket (dokumenter.mjs), og selve arkene lages av de felles dataene, så det ikke finnes dokumentbilder å holde i synk.
 const dokKilde = join(her, "..", "..", "packages", "hengsel-dokumenter", "src");
 await mkdir(join(dist, "assets", "dokumenter"), { recursive: true });
 for (const fil of ["a4.css", "dokumentvisning.css", "dokumentvisning.js"]) await cp(join(dokKilde, fil), join(dist, "assets", "dokumenter", fil));
 const img = join(dist, "img");
 await mkdir(img, { recursive: true });
-// Bildene som brukes av forsiden og de tre menysidene (forsta, prov, presenter), og av rom.js (romkortene)
-let forside = await readFile(join(src, "assets", "rom.js"), "utf8");
-for (const side of ["index.html", "forsta/index.html", "prov/index.html", "presenter/index.html"]) forside += await readFile(join(src, side), "utf8");
-const bilder = [...new Set([...forside.matchAll(/\/img\/([a-z0-9-]+\.(?:webp|svg))/g)].map((m) => m[1]))];
-for (const navn of bilder) {
-  if (navn.startsWith("sn-logo") || navn.startsWith("rom-")) continue;
-  if (await stat(join(src, "img", navn)).catch(() => null)) continue;
-  await cp(join(sites, "hengsel", "public", "img", navn), join(img, navn));
-}
-await mkdir(img, { recursive: true });
-await cp(join(sites, "hengsel", "public", "img", "dok-forside.webp"), join(img, "dok-forside.webp"));
 await cp(join(sites, "sngroup", "public", "logo.svg"), join(img, "sn-logo.svg"));
+// Dokumentforsiden (nettsidenes egen, 1200 × 768) hentes fra hengsel.no som før, så den ikke ligger dobbelt i repoet. Romkortene i src/img er alt kopiert.
+if (tema === "hengsel") await cp(join(sites, "hengsel", "public", "img", "dok-forside.webp"), join(img, "dok-forside.webp"));
 
 // Merket (palettpakke v2 og merkepakke v2) der det står <!--logo-hengsel 28--> (tallet er høyden i px). Skjemaet kan stå etter tallet:
 // <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent, lys utgave (levert-av: levert-av-hengsel-lys fra merkepakke v2) (bare lys modus). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
@@ -116,39 +129,62 @@ async function settInnLogo(dir) {
 }
 await settInnLogo(dist);
 
-// Mål på bildene (width og height, så ingenting hopper): img/*.webp (romkort, flater, hero) og skjermbilder/<navn>.webp (2×).
-// Settes inn i HTML (<img src="/img/…"> uten mål), i rom.js (kortene lages av skript) og i bilder.js (skjermene byttes av skript).
-async function maal(mappe, filtrer) {
-  const kart = {};
-  for (const f of await readdir(join(dist, mappe))) {
-    if (!f.endsWith(".webp") || !filtrer(f)) continue;
-    const m = await sharp(join(dist, mappe, f)).metadata();
-    kart[f.replace(/\.webp$/, "")] = [m.width, m.height];
-  }
-  return kart;
-}
-const imgMal = await maal("img", () => true);
-const skjermMal = await maal("skjermbilder", (f) => !/(@1x|-mork)\.webp$/.test(f));
+// Bildene fra biblioteket, med mål fra manifest.json (width og height, så ingenting hopper):
+//  - <img data-bibliotek="vis/<navn>.webp"> i HTML (hero, flater, Forstå-kortene) får src, width og height, eller blir plassholderen
+//  - rom.js: kortene lages av skript; BILDER får adresse og mål per b:'rom-<navn>' (null = plassholder)
+//  - bilder.js: skjermene i rammene (data-bilder) byttes av skript; SKJERM får 2×- og 1×-adresse og mål per navn (null = plassholder), og HTML-en får
+//    en skjult plassholder per navn som mangler, så den bygde siden viser hvilke bilder som venter (scripts/skjermbilder-bibliotek.test.mjs)
 async function fyll(fil, markor, kart) {
   const sti = join(dist, fil);
   const tekst = await readFile(sti, "utf8");
-  await writeFile(sti, tekst.replace(new RegExp(`/\\*${markor}\\*/\\{\\}/\\*${markor}-slutt\\*/`), `/*${markor}*/${JSON.stringify(kart)}/*${markor}-slutt*/`));
+  const re = new RegExp(`/\\*${markor}\\*/\\{\\}/\\*${markor}-slutt\\*/`);
+  if (!re.test(tekst)) throw new Error(`${fil}: fant ikke markøren /*${markor}*/{}/*${markor}-slutt*/`);
+  await writeFile(sti, tekst.replace(re, `/*${markor}*/${JSON.stringify(kart)}/*${markor}-slutt*/`));
 }
-await fyll("assets/rom.js", "IMGMAL", imgMal);
-await fyll("assets/bilder.js", "SKJERMMAL", skjermMal);
-async function malIHtml(dir) {
+const romJs = await readFile(join(dist, "assets", "rom.js"), "utf8");
+const romBilder = {};
+for (const m of romJs.matchAll(/\bb:'([a-z0-9-]+)'/g)) {
+  const b = await bilde(`vis/${m[1]}.webp`);
+  romBilder[m[1]] = b ? { u: b.url, b: b.bredde, h: b.hoyde } : null;
+}
+await fyll("assets/rom.js", "BILDER", romBilder);
+const skjermer = {};
+let plassholdere = 0;
+let lenket = 0;
+async function bilderIHtml(dir) {
   for (const e of await readdir(dir, { withFileTypes: true })) {
     const sti = join(dir, e.name);
-    if (e.isDirectory()) await malIHtml(sti);
+    if (e.isDirectory()) await bilderIHtml(sti);
     else if (e.name.endsWith(".html")) {
       const tekst = await readFile(sti, "utf8");
-      const ny = tekst.replace(/<img ([^>]*?)src="\/img\/([\w-]+)\.webp"([^>]*?)>/g, (m, a, navn, b) => {
-        if (/\bwidth=/.test(m) || !imgMal[navn]) return m;
-        return `<img ${a}src="/img/${navn}.webp" width="${imgMal[navn][0]}" height="${imgMal[navn][1]}"${b}>`;
+      let ny = tekst;
+      for (const m of [...tekst.matchAll(/<img\b([^>]*?)\sdata-bibliotek="([^"]+)"([^>]*?)>/g)]) {
+        const [hele, a, navn, c] = m;
+        const alt = /\balt="([^"]*)"/.exec(hele)?.[1] ?? "";
+        const b = await bilde(navn);
+        let ut;
+        if (!b) { plassholdere++; ut = plassholder(navn, alt, /\bclass="([^"]*)"/.exec(hele)?.[1] ?? ""); }
+        else { lenket++; ut = `<img${a} src="${b.url}" width="${b.bredde}" height="${b.hoyde}"${c}>`; }
+        ny = ny.replace(hele, () => ut);
+      }
+      // Rammene: data-bilder="navn,…" med <div class="skjerm"> inni; en skjult plassholder per navn som mangler
+      for (const m of [...ny.matchAll(/data-bilder="([^"]+)"/g)]) for (const navn of m[1].split(",").map((s) => s.trim()).filter(Boolean)) {
+        if (!(navn in skjermer)) {
+          const b = await bilde(`vis/skjermbilder/${navn}.webp`, true);
+          skjermer[navn] = b ? { u: b.url, u1: b.x1?.url, b: b.bredde, h: b.hoyde } : null;
+        }
+      }
+      ny = ny.replace(/(<[a-z]+\b[^>]*\sdata-bilder="([^"]+)"[^>]*>)([\s\S]*?<div class="(?:[^"]*\s)?skjerm(?:\s[^"]*)?">)/g, (m, start, liste, resten) => {
+        const mangler = liste.split(",").map((s) => s.trim()).filter((navn) => navn && !skjermer[navn]);
+        plassholdere += mangler.length;
+        lenket += liste.split(",").length - mangler.length;
+        return start + resten + mangler.map((navn) => plassholder(`vis/skjermbilder/${navn}`, navn).replace("<figure ", "<figure hidden ")).join("");
       });
       if (ny !== tekst) await writeFile(sti, ny);
     }
   }
 }
-await malIHtml(dist);
-console.log(`vis: src/ kopiert til dist/, ${antall} skriftfiler i dist/assets/ds/assets/fonts/, ${bilder.length} bilder i dist/img/, Hengsel-logoen på ${sider} sider`);
+await bilderIHtml(dist);
+await fyll("assets/bilder.js", "SKJERM", skjermer);
+const lokale = Object.keys(lokaleMal).length;
+console.log(`vis (${tema}): src/ kopiert til dist/, ${antall} skriftfiler i dist/assets/ds/assets/fonts/, Hengsel-logoen på ${sider} sider, ${lenket + Object.values(romBilder).filter(Boolean).length - lokale} bilder lenket fra biblioteket, ${lokale} egne bilder lokalt, ${plassholdere + Object.values(romBilder).filter((b) => !b).length} plassholdere`);

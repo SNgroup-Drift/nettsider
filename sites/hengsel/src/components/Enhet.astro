@@ -2,7 +2,7 @@
 /**
  * Enhetsramme (Enhet.dc.html): Studio Display (type="display"), iPad (type="ipad") og iPhone (type="iphone") med iOS-statuslinje.
  *
- * Innholdet er enten et bilde (src) eller HTML i sporet (slot),
+ * Innholdet er enten et app-skjermbilde fra biblioteket (bilde="app/idag-lys.webp", K-233, se Skjermbilde.astro), et lokalt bilde (src) eller HTML i sporet (slot),
  * tegnet i naturlig størrelse (nw × nh: display 1440 × 810, iPad 1180 × 820, iPhone 402 × 874) og skalert til skjermen av scripts/skala.ts.
  * Bredden på rammen er 100 % av plassen; sett maks bredde på omslaget. Ingen style-attributter (CSP style-src 'self').
  *
@@ -16,6 +16,9 @@ import Skjermbilde from "./Skjermbilde.astro";
 
 interface Props {
   type: "display" | "ipad" | "iphone";
+  /** Sti i biblioteket uten tema (bilder.hengsel.no): «app/idag-lys.webp», «apptest/ruten-lys.webp». Målene kommer fra manifestet. */
+  bilde?: string;
+  /** Lokal fil som ikke er et app-skjermbilde */
   src?: string;
   /** Naturlig størrelse på bildet (px), for width/height */
   w?: number;
@@ -38,19 +41,20 @@ interface Props {
   hd?: boolean;
 }
 const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874] } as const;
-const { type, src, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false } = Astro.props;
+const { type, bilde, src, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false } = Astro.props;
 const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
 const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
 const sb = statusFarge === "hvit" ? "sb-hvit" : "sb-svart";
-const visLogo = !!src && !utenLogo && !utenStatus && /\/(ipad-)?idag-/.test(src) && type !== "display";
-const inset = type === "ipad" && !src ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
+const kilde = bilde ?? src;
+const visLogo = !!kilde && !utenLogo && !utenStatus && /\/(ipad-)?idag-/.test(kilde) && type !== "display";
+const inset = type === "ipad" && !kilde ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
 const lasting = forst ? "eager" : "lazy";
 ---
 <div class:list={["enhet", type, sb, klasse]} data-enhet>
   {type === "display" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {kilde ? <Skjermbilde bilde={bilde} src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
       </div>
       <img class="bezel" src="/img/ramme-studio-display.webp" alt="" width="2160" height="1664" loading={lasting} decoding="async" aria-hidden="true" />
     </div>
@@ -58,7 +62,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "ipad" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {kilde ? <Skjermbilde bilde={bilde} src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
         {visLogo && <span class="dinlogo"><span class="boks">Din logo</span></span>}
         <svg class="status" viewBox="0 0 1180 24" aria-hidden="true">
           <text x="22" y="17" class="klokke">9:41</text><text x="68" y="17" class="klokke dato">man. 12. okt.</text>
@@ -70,7 +74,7 @@ const lasting = forst ? "eager" : "lazy";
   {type === "iphone" && (
     <div class="ramme">
       <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
-        {src ? <Skjermbilde src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
+        {kilde ? <Skjermbilde bilde={bilde} src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone"} hd={hd} /> : <div class="skala"><slot /></div>}
         {visLogo && <span class="dinlogo"><span class="boks">Din logo</span></span>}
         {!utenStatus && <svg class="status" viewBox="0 0 402 54" aria-hidden="true">
           <text x="68" y="35" text-anchor="middle" class="klokke">9:41</text>
@@ -99,6 +103,7 @@ const lasting = forst ? "eager" : "lazy";
   .ramme { position: relative; width: 100%; }
   .skjerm { position: absolute; overflow: hidden; background: var(--app-flate); container-type: inline-size; }
   .skjerm :global(img.innhold) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .skjerm :global(figure.innhold) { width: 100%; height: 100%; }
   .skala { position: absolute; left: 0; top: 0; width: calc(var(--nw) * 1px); height: calc(var(--nh) * 1px); transform-origin: 0 0; transform: scale(var(--k, 0.0001)); }
   .bezel { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 

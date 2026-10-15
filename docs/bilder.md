@@ -1,5 +1,17 @@
 # Skjermbilder og Apple-rammer på hengsel.no
 
+> **K-233 (14.10):** alle app-skjermbilder på Hengsel-sidene (hengsel.no, /kunde/sigdal, vis.hengsel.no og Sigdal-utgaven, design.hengsel.no) hentes fra
+> skjermbildebiblioteket på `https://bilder.hengsel.no/skjermbilder/v1/<tema>/<sti>` (K-228 i hengsel-crm tar dem automatisk fra demoen i Hengsel- og
+> Sigdal-tema). Oppskriften er `packages/hengsel-tokens/skjermbilder.mjs` (`BILDEDOMENE`, manifestet, plassholderen); ingen app-skjermbilder ligger i
+> repoet lenger, og bygget laster ingen ned: bare `manifest.json` leses (med fallback til `skjermbilder-manifest.json` i repoet, som bygget oppdaterer).
+> Bilder som ikke står i manifestet, vises som plassholderen «Skjermbilde kommer» med `data-skjermbilde="<nøkkel>"`; `scripts/skjermbilder-bibliotek.test.mjs`
+> godtar bare nøklene i `KJENTE_MANGLER` (`scripts/lib/bildedomene.mjs`). Stiene: `app/<navn>-lys.webp` (iOS), `apptest/<navn>-lys[@1x].webp`, `hjelp/<id>[@1x].webp`,
+> `vis/skjermbilder/<navn>[-mork][@1x].webp` og `vis/<rom|flate|forsta|hero>*.webp`. CSP-ene har `img-src … https://bilder.hengsel.no`.
+> **Nettsidenes egne bilder** (`LOKALE_BILDER`, K-228 punkt 6) kommer aldri i biblioteket og ligger i repoet som før: romkortene for de 13 rommene uten
+> app-skjermbilde (`sites/vis/src/img/rom-*.webp`, rommet selv i Studio Display, `npm run skjermbilder:vis`) og dokumentforsiden (`sites/hengsel/public/img/dok-forside.webp`).
+> I Sigdal-utgavene (/kunde/sigdal) finnes de ikke og vises som plassholder (K-223).
+> Resten av dette dokumentet beskriver rammene (som fortsatt ligger lokalt) og historikken for bildene.
+
 > K-177 (12.10): skjermbildene i `public/img/app/` (Hengsel Ute, iOS-designet) og `public/img/apptest/` (CRM-designet, bare lys) er fiktive demo-skjermer fra designfasiten. Statuslinje og Dynamic Island tegnes av rammen (`Enhet.astro`), ikke av bildet. De gamle `crm-*`, `ute-*`, `portal-tilbud` og `ramme-ipad/-iphone/-macbook` er fjernet. Se `claude/k177-rapport.md`.
 
 Struktur, tekst og rekkefølge følger fil 60 (`delt/pakke-v8/fasit/60 hengsel.no.dc.html`, W1 forside og W2 /apptest). Bildene i den fila (webp-forhåndsvisninger med

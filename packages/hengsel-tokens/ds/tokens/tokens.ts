@@ -1,7 +1,7 @@
 // GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
-// Hengsel-designsystemet, versjon 2.0.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
+// Hengsel-designsystemet, versjon 2.1.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
 
-export const versjon = "2.0.0" as const;
+export const versjon = "2.1.0" as const;
 
 /** Merkefargene (råfarger): blekk, furu og produktfargene. Bruk rollene under i komponenter. */
 export const palett = {
@@ -87,12 +87,12 @@ export const roller = {
   },
   "kant": {
     "lys": "#7B8188",
-    "mork": "#6A6F76",
+    "mork": "#767B82",
     "lys-okt-kontrast": "#494E54",
     "mork-okt-kontrast": "#A6ABB1",
     "p3": {
       "lys": "#7C8187",
-      "mork": "#6B6F75",
+      "mork": "#777B81",
       "lys-okt-kontrast": "#4A4D53",
       "mork-okt-kontrast": "#A7ABB1"
     }
@@ -123,12 +123,12 @@ export const roller = {
   },
   "tekst-svak": {
     "lys": "#686E75",
-    "mork": "#868B92",
+    "mork": "#90969D",
     "lys-okt-kontrast": "#43484E",
     "mork-okt-kontrast": "#C0C4CA",
     "p3": {
       "lys": "#696E74",
-      "mork": "#878B91",
+      "mork": "#91969C",
       "lys-okt-kontrast": "#44484E",
       "mork-okt-kontrast": "#C1C4C9"
     }
@@ -146,12 +146,12 @@ export const roller = {
     }
   },
   "aksent": {
-    "lys": "#068472",
+    "lys": "#05806F",
     "mork": "#54B9A5",
     "lys-okt-kontrast": "#006a5b",
     "mork-okt-kontrast": "#68CDB7",
     "p3": {
-      "lys": "#3A8272",
+      "lys": "#387E6F",
       "mork": "#6FB7A5",
       "lys-okt-kontrast": "#206A5B",
       "mork-okt-kontrast": "#82CAB8"
@@ -206,14 +206,14 @@ export const roller = {
     }
   },
   "paa-aksent": {
-    "lys": "#FFFFFF",
+    "lys": "#FBF9F6",
     "mork": "#0D1013",
-    "lys-okt-kontrast": "#FFFFFF",
+    "lys-okt-kontrast": "#FBF9F6",
     "mork-okt-kontrast": "#0D1013",
     "p3": {
-      "lys": "#FFFFFF",
+      "lys": "#FBF9F6",
       "mork": "#0D1013",
-      "lys-okt-kontrast": "#FFFFFF",
+      "lys-okt-kontrast": "#FBF9F6",
       "mork-okt-kontrast": "#0D1013"
     }
   },
@@ -267,21 +267,27 @@ export const roller = {
   },
   "ramme": {
     "lys": "#CBCFD4",
-    "mork": "#000000",
+    "mork": "#3D4248",
     "lys-okt-kontrast": "#CBCFD4",
-    "mork-okt-kontrast": "#000000"
+    "mork-okt-kontrast": "#3D4248"
   },
   "overlegg": {
-    "lys": "rgba(11, 13, 17, 0.48)",
-    "mork": "rgba(11, 13, 17, 0.48)",
-    "lys-okt-kontrast": "rgba(11, 13, 17, 0.48)",
-    "mork-okt-kontrast": "rgba(11, 13, 17, 0.48)"
+    "lys": "rgba(26, 29, 34, 0.40)",
+    "mork": "rgba(0, 0, 0, 0.60)",
+    "lys-okt-kontrast": "rgba(26, 29, 34, 0.40)",
+    "mork-okt-kontrast": "rgba(0, 0, 0, 0.60)"
   },
   "alltid-mork": {
-    "lys": "#06080B",
-    "mork": "#06080B",
-    "lys-okt-kontrast": "#06080B",
-    "mork-okt-kontrast": "#06080B"
+    "lys": "#0B0D11",
+    "mork": "#0B0D11",
+    "lys-okt-kontrast": "#0B0D11",
+    "mork-okt-kontrast": "#0B0D11"
+  },
+  "paa-alltid-mork": {
+    "lys": "#EAEDF0",
+    "mork": "#EAEDF0",
+    "lys-okt-kontrast": "#EAEDF0",
+    "mork-okt-kontrast": "#EAEDF0"
   }
 } as const;
 
@@ -791,16 +797,16 @@ export const ios = {
 export const iosVarianter = {
   "lys": {
     "aksent": {
-      "srgb": "#068472",
-      "p3": "#3A8272"
+      "srgb": "#05806F",
+      "p3": "#387E6F"
     },
     "aksent-valgt": {
       "srgb": "#BCE6DB",
       "p3": "#C4E5DC"
     },
     "paa-aksent": {
-      "srgb": "#FFFFFF",
-      "p3": "#FFFFFF"
+      "srgb": "#FBF9F6",
+      "p3": "#FBF9F6"
     },
     "status": {
       "ny": {
@@ -1027,8 +1033,8 @@ export const iosVarianter = {
       "p3": "#B4DBD1"
     },
     "paa-aksent": {
-      "srgb": "#FFFFFF",
-      "p3": "#FFFFFF"
+      "srgb": "#FBF9F6",
+      "p3": "#FBF9F6"
     },
     "status": {
       "ny": {

@@ -100,7 +100,7 @@ export interface Rolle {
   punkter: string[];
   /** Demobrukerens adresse i appen (som i listen fra K-114). Passordet står aldri her: Workeren setter det inn. */
   bruker: string;
-  /** Skjermbildet i telefonrammen: public/img/app/<bilde>-lys.webp (iOS-skjermene) eller public/img/apptest/<bilde>-lys.webp (rollene uten iOS-skjerm) */
+  /** Skjermbildet i telefonrammen, fra biblioteket på bilder.hengsel.no (K-233): app/<bilde>-lys.webp (iOS-skjermene) eller apptest/<bilde>-lys.webp (rollene uten iOS-skjerm) */
   bilde: string;
   alt: string;
   /** Merknad under demobrukeren */

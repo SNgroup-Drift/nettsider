@@ -1,11 +1,25 @@
 ---
-/** Skjermbilde i lys utgave (siden er bare lys). 2× brukes på skarpe skjermer. De mørke utgavene av appene vises ikke som skjermbilder; de mørke tokenene står som fargeprøver på /farger. */
+/**
+ * Skjermbilde i lys utgave (siden er bare lys). 2× brukes på skarpe skjermer. De mørke utgavene av appene vises ikke som skjermbilder; de mørke tokenene står som fargeprøver på /farger.
+ * K-233: app-skjermbildene hentes fra biblioteket på bilder.hengsel.no (vis/skjermbilder/<fil>.webp i Hengsel-tema, mål fra manifestet); det som ikke står i
+ * manifestet, vises som plassholderen «Skjermbilde kommer» (data-skjermbilde). Skjermbildet av hengsel.no (kilde «nettside») er ikke en app og ligger lokalt i public/nettsider.
+ */
+import { PLASSHOLDER, skjermbilde, skjermbildeNokkel } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
 import type { Skjerm } from "../lib/skjermer";
 interface Props { s: Skjerm; }
 const { s } = Astro.props;
-const src = { x1: `/skjermer/${s.fil}@1x.webp`, x2: `/skjermer/${s.fil}.webp` };
+const sti = `vis/skjermbilder/${s.fil}.webp`;
+const b = s.kilde === "nettside"
+  ? { x1: `/nettsider/${s.fil}@1x.webp`, x2: `/nettsider/${s.fil}.webp`, bredde: s.b, hoyde: s.h }
+  : (() => { const f = skjermbilde("hengsel", sti, { hd: true }); return f ? { x1: f.x1?.url ?? f.url, x2: f.url, bredde: f.x1?.bredde ?? f.bredde, hoyde: f.x1?.hoyde ?? f.hoyde } : null; })();
 ---
 <figure class="enhet" data-skjerm={s.fil}>
-  <img src={src.x1} srcset={`${src.x1} 1x, ${src.x2} 2x`} width={s.b} height={s.h} alt={s.alt} loading="lazy" />
+  {b
+    ? <img src={b.x1} srcset={`${b.x1} 1x, ${b.x2} 2x`} width={b.bredde} height={b.hoyde} alt={s.alt} loading="lazy" />
+    : <figure class="plassholder" data-skjermbilde={skjermbildeNokkel(sti)} role="img" aria-label={`${PLASSHOLDER}: ${s.tittel}`}><b>{PLASSHOLDER}</b><span>{s.tittel}</span></figure>}
   <figcaption>{s.tittel}{s.mork ? "" : " · alltid lys"}</figcaption>
 </figure>
+<style>
+  .plassholder { display: grid; align-content: center; justify-items: center; gap: 4px; margin: 0; padding: 24px; box-sizing: border-box; width: 100%; aspect-ratio: 16 / 10; background: var(--flate-senket); color: var(--tekst-dempet); font: 500 0.9rem / 1.4 var(--skrift-familie-hengsel-tekst); text-align: center; }
+  .plassholder b { color: var(--tekst); }
+</style>

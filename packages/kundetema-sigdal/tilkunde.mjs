@@ -2,10 +2,13 @@
  * K-223: gjør HTML fra en Hengsel-side (hengsel.no eller Visningsrommet) om til kundens utgave. Brukes av sites/hengsel/src/kunde.ts (Side.astro, ved
  * bygging av sidene under /kunde/sigdal) og scripts/bygg-sigdal-vis.mjs (Visningsrommet i Sigdal-utgave). Profilen er profil.json.
  *  - lenker til sidene i utgaven får kunderoten, demo og priser blir e-post, personvern peker til hengsel.no, innloggingen til Visningsrommet til kundens vis
- *  - skjermbilder på Hengsel-sidene (/img/app, /img/apptest, /img/dok-forside) hentes fra kundens plassholdermappe (<rot>/img/…)
+ *  - app-skjermbilder fra biblioteket (bilder.hengsel.no, K-233) hentes i kundens tema: …/v1/hengsel/<sti> → …/v1/sigdal/<sti> (biblioteket har samme stier
+ *    i begge temaer). Komponentene velger temaet selv under /kunde/sigdal (Skjermbilde.astro, A4Side.astro, bygg.mjs med VIS_TEMA); dette er sikkerhetsnettet.
  *  - Hengsel-logoene (SVG med Hengsel-farger) byttes mot tekstmerke, så ingen Hengsel-farger står på kundens sider
  *  - tekstene i profilen (tekst: [fra, til])
  */
+import { BILDEDOMENE } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const LOGO_TEKST = [
@@ -41,9 +44,7 @@ export function tilKunde(html, p, { rot = p.sti, kunTekstOgLogo = false } = {}) 
   ut = ut.replace(/href="\/personvern"/g, 'href="https://hengsel.no/personvern"');
   ut = ut.replace(/href="https:\/\/hengsel\.no\/apptest"/g, `href="${p.sti}/apptest"`);
   ut = ut.replace(/href="https:\/\/vis\.hengsel\.no"/g, `href="${p.vis}"`);
-  ut = ut.replace(/(src|srcset|poster)="\/img\/(app|apptest)\//g, `$1="${p.sti}/img/$2/`);
-  ut = ut.replace(/(src|srcset)="\/img\/dok-forside\.webp"/g, `$1="${p.sti}/img/dok-forside.webp"`);
-  ut = ut.replace(/(\d+x), \/img\/(app|apptest)\//g, `$1, ${p.sti}/img/$2/`);
+  ut = ut.replace(new RegExp(`${esc(BILDEDOMENE)}/hengsel/`, "g"), `${BILDEDOMENE}/${p.kunde}/`);
   ut = ut.replace(/href="\/apptest\/Logg_inn_i_demoen\.pdf"/g, `href="${p.sti}/apptest/Logg_inn_i_demoen.pdf"`);
   for (const [fra, til] of p.tekst) ut = ut.split(fra).join(til);
   return ut;

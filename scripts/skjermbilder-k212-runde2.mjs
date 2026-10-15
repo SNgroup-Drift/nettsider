@@ -25,7 +25,7 @@ const SIDER = [
   ["vis", "/", "vis-forside"], ["vis", "/crm/", "vis-crm"], ["vis", "/montoren/", "vis-montoren"],
 ];
 const BREDDER = [390, 1280];
-const AKSENT_P3 = "color(display-p3 0.2275 0.5098 0.4471)";
+const AKSENT_P3 = "color(display-p3 0.2196 0.4941 0.4353)"; // K-238: K-234-aksenten #387E6F i P3 (var furu 0.2275 0.5098 0.4471)
 /** Bygget CSS er minifisert (.2275 i stedet for 0.2275): sammenlikn tallene, ikke teksten. */
 const p3tall = (v) => (v.match(/[\d.]+/g) ?? []).map(Number).join(" ");
 
@@ -84,7 +84,7 @@ await nettleser.close();
 for (const t of Object.values(tjenere)) t.close();
 await writeFile(join(ut, "sjekker.json"), JSON.stringify({ aksentP3Forventet: AKSENT_P3, rapport }, null, 2) + "\n");
 const feil = rapport.flatMap((r) => [
-  ...(r.aksent !== "#068472" ? [`${r.side}${r.sti} ${r.bredde}: --aksent er «${r.aksent}»`] : []),
+  ...(r.aksent !== "#05806F" ? [`${r.side}${r.sti} ${r.bredde}: --aksent er «${r.aksent}»`] : []),
   ...(p3tall(r.p3.aksent) !== p3tall(AKSENT_P3) || !r.p3.aksent.startsWith("color(display-p3") ? [`${r.side}${r.sti} ${r.bredde}: P3-aksent er «${r.p3.aksent}» (ma=${r.p3.ma})`] : []),
   ...(r.bredde === 390 && r.overflow > 0 ? [`${r.side}${r.sti}: horisontal overflow ${r.overflow} px på 390`] : []),
   ...r.bilderUtenInnhold.map((b) => `${r.side}${r.sti} ${r.bredde}: bildet ${b} lastet ikke`),
@@ -92,4 +92,4 @@ const feil = rapport.flatMap((r) => [
 ]);
 console.log(`✓ ${rapport.length} skjermbilder i claude/k212-runde2-skjermbilder/`);
 if (feil.length) { console.error(feil.map((f) => "✗ " + f).join("\n")); process.exit(1); }
-console.log("✓ aksent #068472 og P3-aksent furu på alle sider, ingen overflow på 390, alle bilder lastet, ingen konsollfeil");
+console.log("✓ aksent #05806F (K-234) og P3-aksent på alle sider, ingen overflow på 390, alle bilder lastet, ingen konsollfeil");

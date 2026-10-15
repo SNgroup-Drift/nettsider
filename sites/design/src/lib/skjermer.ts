@@ -1,5 +1,6 @@
-/** Fiktive skjermer (lages av scripts/fiktive-skjermer.mjs fra designfilene, og scripts/skjermer-hengsel-no.mjs for hengsel.no). Navn, tall og bilder er oppdiktet. Bredde × høyde er for 1×-filen. */
-export type Skjerm = { fil: string; tittel: string; alt: string; b: number; h: number; mork: boolean };
+/** Skjermene: app-skjermbildene kommer fra biblioteket på bilder.hengsel.no (K-233: tatt fra demoen med fiktive data, vis/skjermbilder/<fil>.webp, målene fra manifestet);
+ *  hengsel.no-forsiden (kilde «nettside») lages av scripts/skjermer-hengsel-no.mjs til public/nettsider. Navn, tall og bilder er oppdiktet. Bredde × høyde (1×) brukes bare for kilde «nettside». */
+export type Skjerm = { fil: string; tittel: string; alt: string; b: number; h: number; mork: boolean; kilde?: "nettside" };
 export const CRM: Skjerm[] = [
   { fil: "crm-min-dag", tittel: "Min dag", alt: "CRM, Min dag: dagens oppgaver og samtaler for en selger", b: 1440, h: 810, mork: true },
   { fil: "crm-tilbud", tittel: "Tilbud", alt: "CRM, Tilbud: lista over tilbud med status", b: 1440, h: 810, mork: true },
@@ -16,5 +17,5 @@ export const UTE: Skjerm[] = [
   { fil: "ute-ks", tittel: "Hengsel Ute, KS", alt: "Hengsel Ute på iPhone: KS-sjekklisten", b: 388, h: 842, mork: true },
 ];
 export const NETT: Skjerm[] = [
-  { fil: "hengsel-no-forside", tittel: "hengsel.no, forsiden", alt: "hengsel.no: forsiden med merket v3 og fiktive skjermer", b: 1440, h: 900, mork: true },
+  { fil: "hengsel-no-forside", tittel: "hengsel.no, forsiden", alt: "hengsel.no: forsiden med merket v3 og fiktive skjermer", b: 1440, h: 900, mork: true, kilde: "nettside" },
 ];

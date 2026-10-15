@@ -8,8 +8,9 @@
  *  - /dokumenter/ (K-161): skjermbilder av oversikten og tre dokumenter (tilbud, kjøpsavtale, monteringsrapport) på 390 og 1280 px, lys og mørk,
  *    til claude/k161-skjermbilder/. Sjekker i tillegg bla med piler og sveip, lazy-lasting av sidene, bredde og høyde på bilder, alt-tekster,
  *    CLS og kontrast (minst 4,5:1, 3:1 for stor tekst) på selve siden.
- *  - Romkortbildene på forsiden for rom uten skjermbilde fra designfilene: rommet på 1920 × 1080 (lys, øverst) i Studio Display-rammen
- *    som webp til sites/vis/src/img/rom-*.webp. Bildene ligger i repoet og følger med i neste bygg (ingen bilder fra hengsel.no).
+ *  - Romkortbildene for rom uten app-skjermbilde: rommet på 1920 × 1080 (lys, øverst) i Studio Display-rammen som webp til sites/vis/src/img/rom-*.webp.
+ *    Dette er nettsidenes egne bilder (K-233: LOKALE_BILDER i packages/hengsel-tokens/skjermbilder.mjs); de ligger i repoet, lenkes lokalt og kommer
+ *    aldri i biblioteket på bilder.hengsel.no. Alle andre skjermbilder i vis kommer derfra.
  *
  * Kjør etter `npm run build`: node scripts/skjermbilder-vis.mjs
  * Chromium: PLAYWRIGHT_BROWSERS_PATH, eller CHROMIUM_PATH for en bestemt fil.
@@ -21,6 +22,7 @@ import { join, resolve } from "node:path";
 import { startServer } from "./statisk-server.mjs";
 import { enhet, tilWebp } from "./lib/rammer.mjs";
 import { ERSTATT } from "./lib/design.mjs";
+import { LOKALE_BILDER } from "./lib/bildedomene.mjs";
 
 const rot = resolve(import.meta.dirname, "..");
 const dist = join(rot, "sites", "vis", "dist");
@@ -86,9 +88,9 @@ for (const v of visninger) {
     await ctx.close();
   }
 }
-// Romkortbildene for rom uten skjermbilde fra designfilene: rommet selv på 1920 × 1080 (lys, øverst) i Studio Display-rammen
-// (scripts/lib/rammer.mjs), webp med gjennomsiktig bunn i src/img. Rommene med skjermbilder lages av scripts/rammer-vis.mjs.
-const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "hvitevarer", "gevinst", "leverandor", "leder", "veikart", "sv", "system"];
+// Romkortbildene for rom uten app-skjermbilde: rommet selv på 1920 × 1080 (lys, øverst) i Studio Display-rammen (scripts/lib/rammer.mjs), webp med
+// gjennomsiktig bunn i src/img (LOKALE_BILDER, nettsidenes egne). Rommene med app-skjermbilder komponeres av K-228 i hengsel-crm og ligger i biblioteket.
+const rom = Object.keys(LOKALE_BILDER).filter((k) => k.startsWith("vis/rom-")).map((k) => k.slice(8));
 {
   const img = join(rot, "sites", "vis", "src", "img");
   await mkdir(img, { recursive: true });
@@ -109,7 +111,7 @@ const rom = ["opplaering", "levprov", "kontroll", "montasjeplan", "prosjekt", "h
     await page.close();
   }
   await ctx.close();
-  console.log(`\n${rom.length} romkortbilder i sites/vis/src/img/`);
+  console.log(`\n${rom.length} romkortbilder i sites/vis/src/img/ (nettsidenes egne, LOKALE_BILDER)`);
 }
 
 // /dokumenter/ (K-161): skjermbilder, bla med tastatur og sveip, lazy-lasting, CLS, alt-tekster og kontrast

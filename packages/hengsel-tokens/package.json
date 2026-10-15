@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "K-192: den delte Hengsel-fila. tokens.css og fonts.css genereres fra hengsel.tokens.json i Hengsel-designsystemet (pinnet commit, se designsystem.pin.json). hengsel.no, vis., design. og admin. importerer herfra.",
+  "description": "K-192: den delte Hengsel-fila. tokens.css og fonts.css genereres fra hengsel.tokens.json i Hengsel-designsystemet (pinnet commit, se designsystem.pin.json). hengsel.no, vis., design. og admin. importerer herfra. K-233: skjermbilder.mjs (BILDEDOMENE, manifestet) er oppskriften for skjermbildebiblioteket på bilder.hengsel.no.",
   "exports": {
     "./tokens.css": "./tokens.css",
     "./tokens-mork-prover.css": "./tokens-mork-prover.css",
@@ -11,6 +11,8 @@
     "./grunn.css": "./src/grunn.css",
     "./tokens.json": "./ds/tokens/hengsel.tokens.json",
     "./pin.json": "./designsystem.pin.json",
+    "./skjermbilder.mjs": "./skjermbilder.mjs",
+    "./skjermbilder-manifest.json": "./skjermbilder-manifest.json",
     "./Hode.astro": "./src/Hode.astro",
     "./ds/*": "./ds/*"
   },

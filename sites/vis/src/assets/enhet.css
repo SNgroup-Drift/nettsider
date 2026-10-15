@@ -1,6 +1,6 @@
 /* Enhetsrammer: Apples Product Bezels (pakke 10.10, assets/rammer/*.webp, gjennomsiktig skjermhull). Bildet ligger under rammen og
    klippes med skjermens hjørner; rammen tegnes oppå som ::after og brukes som den er (ikke beskåret, vippet eller speilvendt, ingen
-   skygge ut av skjermen). Innholdet er alltid et skjermbilde fra src/skjermbilder (lagt inn av assets/bilder.js), object-fit cover fra toppen.
+   skygge ut av skjermen). Innholdet er alltid et skjermbilde fra biblioteket på bilder.hengsel.no (lagt inn av assets/bilder.js), object-fit cover fra toppen.
    Skjermhull i prosent av rammens bredde/høyde (left, top, width, height) og hjørneradius:
    - Studio Display (.pc-ramme)  2160 × 1664: 2.59 · 3.37 · 94.81 · 69.23, radius 1.2 % / 1.6 %, skjermen er 1920 × 1080
    - iPhone 18 (.tlf)            1174 × 2400: 5.37 · 2.50 · 89.27 · 95.00, radius 14 % / 6.1 %, skjermen er 1206 × 2622, ingen statuslinje (rammen har island)
@@ -43,6 +43,8 @@
 .skjerm{position:relative;display:block}
 .skjerm>picture{display:block;width:100%;height:100%}
 .skjerm>img.sk,.skjerm>picture>img.sk{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.skjerm>figure.plassholder{position:absolute;inset:0;width:100%;height:100%}
+.skjerm>figure.plassholder[hidden],.skjerm>img.sk[hidden]{display:none}
 
 /* ‹ › og teller under rammen, og enhetsvelgeren (PC · iPad · Telefon) over */
 .sk-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:14px;color:var(--tekst-dempet);font-variant-numeric:tabular-nums}
@@ -51,6 +53,6 @@
 .enhet{min-width:0}
 .enhet[hidden]{display:none}
 
-/* Romkort og flater på forsiden: ferdig sammensatte bilder av enhet + skjerm på gjennomsiktig bunn (lages av scripts/skjermbilder-vis.mjs), vist hele */
+/* Romkort og flater på forsiden: ferdig sammensatte bilder av enhet + skjerm på gjennomsiktig bunn (fra biblioteket, K-228/K-233), vist hele */
 .bilde.enhet-bilde{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;padding:14px 12px;background:var(--flate-senket)}
 .bilde.enhet-bilde>img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:0;border-radius:0}

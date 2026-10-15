@@ -1,6 +1,6 @@
 /* GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
  *
- * Hengsel-designsystemet, versjon 2.0.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
+ * Hengsel-designsystemet, versjon 2.1.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
  *   <html data-theme="light"> eller data-theme="dark"   fast utgave (design., admin., forhåndsvisning)
  *   <html class="dark">                                  CRM (src/tema/lysMork.ts)
  *   <html data-alltid-lys>                               kundeportal og offentlige sider: aldri mørk
@@ -51,9 +51,9 @@
   --tekst-invers: #FBFDFF;
   --tekst-invers-hsl: 210 100% 99.2%;
   --tekst-invers-rgb: 251 253 255;
-  --aksent: #068472;
-  --aksent-hsl: 171.4 91.3% 27.1%;
-  --aksent-rgb: 6 132 114;
+  --aksent: #05806F;
+  --aksent-hsl: 171.7 92.5% 26.1%;
+  --aksent-rgb: 5 128 111;
   --aksent-trykk: #007665;
   --aksent-trykk-hsl: 171.4 100% 23.1%;
   --aksent-trykk-rgb: 0 118 101;
@@ -66,9 +66,9 @@
   --aksent-valgt: #BCE6DB;
   --aksent-valgt-hsl: 164.3 45.7% 82%;
   --aksent-valgt-rgb: 188 230 219;
-  --paa-aksent: #FFFFFF;
-  --paa-aksent-hsl: 0 0% 100%;
-  --paa-aksent-rgb: 255 255 255;
+  --paa-aksent: #FBF9F6;
+  --paa-aksent-hsl: 36 38.5% 97.5%;
+  --paa-aksent-rgb: 251 249 246;
   --varsel-flate: #FFE9BC;
   --varsel-flate-hsl: 40.3 100% 86.9%;
   --varsel-flate-rgb: 255 233 188;
@@ -84,10 +84,13 @@
   --ramme: #CBCFD4;
   --ramme-hsl: 213.3 9.5% 81.4%;
   --ramme-rgb: 203 207 212;
-  --overlegg: rgba(11, 13, 17, 0.48);
-  --alltid-mork: #06080B;
-  --alltid-mork-hsl: 216 29.4% 3.3%;
-  --alltid-mork-rgb: 6 8 11;
+  --overlegg: rgba(26, 29, 34, 0.40);
+  --alltid-mork: #0B0D11;
+  --alltid-mork-hsl: 220 21.4% 5.5%;
+  --alltid-mork-rgb: 11 13 17;
+  --paa-alltid-mork: #EAEDF0;
+  --paa-alltid-mork-hsl: 210 16.7% 92.9%;
+  --paa-alltid-mork-rgb: 234 237 240;
   --status-ny-fg: #1A57AD;
   --status-ny-bg: #E7F1FF;
   --status-ny-kant: #A0C6FF;
@@ -239,18 +242,18 @@
     --linje: #303439;
     --linje-hsl: 213.3 8.6% 20.6%;
     --linje-rgb: 48 52 57;
-    --kant: #6A6F76;
-    --kant-hsl: 215 5.4% 43.9%;
-    --kant-rgb: 106 111 118;
+    --kant: #767B82;
+    --kant-hsl: 215 4.8% 48.6%;
+    --kant-rgb: 118 123 130;
     --tekst: #EAEDF0;
     --tekst-hsl: 210 16.7% 92.9%;
     --tekst-rgb: 234 237 240;
     --tekst-dempet: #ADB1B7;
     --tekst-dempet-hsl: 216 6.5% 69.8%;
     --tekst-dempet-rgb: 173 177 183;
-    --tekst-svak: #868B92;
-    --tekst-svak-hsl: 215 5.2% 54.9%;
-    --tekst-svak-rgb: 134 139 146;
+    --tekst-svak: #90969D;
+    --tekst-svak-hsl: 212.3 6.2% 59%;
+    --tekst-svak-rgb: 144 150 157;
     --tekst-invers: #0B0D11;
     --tekst-invers-hsl: 220 21.4% 5.5%;
     --tekst-invers-rgb: 11 13 17;
@@ -284,9 +287,10 @@
     --feil-tekst: #FFBFB6;
     --feil-tekst-hsl: 7.4 100% 85.7%;
     --feil-tekst-rgb: 255 191 182;
-    --ramme: #000000;
-    --ramme-hsl: 0 0% 0%;
-    --ramme-rgb: 0 0 0;
+    --ramme: #3D4248;
+    --ramme-hsl: 212.7 8.3% 26.1%;
+    --ramme-rgb: 61 66 72;
+    --overlegg: rgba(0, 0, 0, 0.60);
     --status-ny-fg: #B5D3FF;
     --status-ny-bg: #152946;
     --status-ny-kant: #37588A;
@@ -376,18 +380,18 @@
   --linje: #303439;
   --linje-hsl: 213.3 8.6% 20.6%;
   --linje-rgb: 48 52 57;
-  --kant: #6A6F76;
-  --kant-hsl: 215 5.4% 43.9%;
-  --kant-rgb: 106 111 118;
+  --kant: #767B82;
+  --kant-hsl: 215 4.8% 48.6%;
+  --kant-rgb: 118 123 130;
   --tekst: #EAEDF0;
   --tekst-hsl: 210 16.7% 92.9%;
   --tekst-rgb: 234 237 240;
   --tekst-dempet: #ADB1B7;
   --tekst-dempet-hsl: 216 6.5% 69.8%;
   --tekst-dempet-rgb: 173 177 183;
-  --tekst-svak: #868B92;
-  --tekst-svak-hsl: 215 5.2% 54.9%;
-  --tekst-svak-rgb: 134 139 146;
+  --tekst-svak: #90969D;
+  --tekst-svak-hsl: 212.3 6.2% 59%;
+  --tekst-svak-rgb: 144 150 157;
   --tekst-invers: #0B0D11;
   --tekst-invers-hsl: 220 21.4% 5.5%;
   --tekst-invers-rgb: 11 13 17;
@@ -421,9 +425,10 @@
   --feil-tekst: #FFBFB6;
   --feil-tekst-hsl: 7.4 100% 85.7%;
   --feil-tekst-rgb: 255 191 182;
-  --ramme: #000000;
-  --ramme-hsl: 0 0% 0%;
-  --ramme-rgb: 0 0 0;
+  --ramme: #3D4248;
+  --ramme-hsl: 212.7 8.3% 26.1%;
+  --ramme-rgb: 61 66 72;
+  --overlegg: rgba(0, 0, 0, 0.60);
   --status-ny-fg: #B5D3FF;
   --status-ny-bg: #152946;
   --status-ny-kant: #37588A;
@@ -1026,12 +1031,12 @@
     --tekst-dempet: color(display-p3 0.3216 0.3373 0.3608);
     --tekst-svak: color(display-p3 0.4118 0.4314 0.4549);
     --tekst-invers: color(display-p3 0.9843 0.9922 1.0000);
-    --aksent: color(display-p3 0.2275 0.5098 0.4471);
+    --aksent: color(display-p3 0.2196 0.4941 0.4353);
     --aksent-trykk: color(display-p3 0.1725 0.4588 0.3961);
     --aksent-tekst: color(display-p3 0.1804 0.4235 0.3686);
     --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
     --aksent-valgt: color(display-p3 0.7686 0.8980 0.8627);
-    --paa-aksent: color(display-p3 1.0000 1.0000 1.0000);
+    --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
     --varsel-flate: color(display-p3 0.9961 0.9137 0.7333);
     --varsel-tekst: color(display-p3 0.4235 0.3137 0.0000);
     --feil-flate: color(display-p3 0.9922 0.9216 0.9098);
@@ -1067,10 +1072,10 @@
       --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
       --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
       --linje: color(display-p3 0.1882 0.2039 0.2235);
-      --kant: color(display-p3 0.4196 0.4353 0.4588);
+      --kant: color(display-p3 0.4667 0.4824 0.5059);
       --tekst: color(display-p3 0.9216 0.9294 0.9412);
       --tekst-dempet: color(display-p3 0.6824 0.6941 0.7176);
-      --tekst-svak: color(display-p3 0.5294 0.5451 0.5686);
+      --tekst-svak: color(display-p3 0.5686 0.5882 0.6118);
       --tekst-invers: color(display-p3 0.0431 0.0510 0.0667);
       --aksent: color(display-p3 0.4353 0.7176 0.6471);
       --aksent-trykk: color(display-p3 0.4902 0.7725 0.7020);
@@ -1112,10 +1117,10 @@
     --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
     --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
     --linje: color(display-p3 0.1882 0.2039 0.2235);
-    --kant: color(display-p3 0.4196 0.4353 0.4588);
+    --kant: color(display-p3 0.4667 0.4824 0.5059);
     --tekst: color(display-p3 0.9216 0.9294 0.9412);
     --tekst-dempet: color(display-p3 0.6824 0.6941 0.7176);
-    --tekst-svak: color(display-p3 0.5294 0.5451 0.5686);
+    --tekst-svak: color(display-p3 0.5686 0.5882 0.6118);
     --tekst-invers: color(display-p3 0.0431 0.0510 0.0667);
     --aksent: color(display-p3 0.4353 0.7176 0.6471);
     --aksent-trykk: color(display-p3 0.4902 0.7725 0.7020);
@@ -1168,7 +1173,7 @@
       --aksent-tekst: color(display-p3 0.0824 0.3059 0.2627);
       --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
       --aksent-valgt: color(display-p3 0.7059 0.8588 0.8196);
-      --paa-aksent: color(display-p3 1.0000 1.0000 1.0000);
+      --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
       --varsel-flate: color(display-p3 0.9961 0.9647 0.8902);
       --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
       --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
@@ -1212,7 +1217,7 @@
     --aksent-tekst: color(display-p3 0.0824 0.3059 0.2627);
     --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
     --aksent-valgt: color(display-p3 0.7059 0.8588 0.8196);
-    --paa-aksent: color(display-p3 1.0000 1.0000 1.0000);
+    --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
     --varsel-flate: color(display-p3 0.9961 0.9647 0.8902);
     --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
     --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
