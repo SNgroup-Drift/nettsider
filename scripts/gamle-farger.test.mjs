@@ -44,6 +44,8 @@ test("selvtest: mønstrene finner det de skal", () => {
 /** K-234 (designsystem 2.1.0, K-238): aksent lys er #05806F og P3-aksenten #387E6F; alt annet i P3-blokken er som i palettpakke v2 */
 const AKSENT_P3_K234 = "color(display-p3 0.2196 0.4941 0.4353)";
 const AKSENT_P3_FURU = "color(display-p3 0.2275 0.5098 0.4471)";
+/** K-256 (designsystem, 15.10.2026): to nye roller som ikke finnes i palettpakke v2, flate-kolonne (#E3E6EA, P3 #E4E6EA) og aksent-paa-mork (#54B9A5, P3 #6FB7A5) */
+const NYE_P3_K256 = { "--flate-kolonne": "color(display-p3 0.8941 0.9020 0.9176)", "--aksent-paa-mork": "color(display-p3 0.4353 0.7176 0.6471)" };
 
 test("P3-blokken i den delte token-fila har K-234-aksenten (color(display-p3 0.2196 0.4941 0.4353)) og er ellers lik pakkens besluttede P3-blokk", () => {
   const css = readFileSync(join(rot, "packages", "hengsel-tokens", "tokens.css"), "utf8");
@@ -57,7 +59,7 @@ test("P3-blokken i den delte token-fila har K-234-aksenten (color(display-p3 0.2
   const start = kilde.indexOf("@media (color-gamut: p3) {");
   const p3 = vars(kilde.slice(start, kilde.indexOf("/* ── Grunnpalett, mørk", start)));
   assert.equal(p3["--aksent"], AKSENT_P3_FURU, "pakkens P3-blokk har ikke furu-aksenten (er pakken byttet ut?)");
-  assert.deepEqual(vars(blokk[1]), { ...p3, "--aksent": AKSENT_P3_K234 }, "P3-blokken avviker fra pakkens (BESLUTTET) blokk med K-234-aksenten");
+  assert.deepEqual(vars(blokk[1]), { ...p3, "--aksent": AKSENT_P3_K234, ...NYE_P3_K256 }, "P3-blokken avviker fra pakkens (BESLUTTET) blokk med K-234-aksenten og K-256-rollene");
 });
 
 // ── K-231: gamle logoer, favicon og blå merkefiler ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

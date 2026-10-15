@@ -33,6 +33,9 @@
   --flate-valgt: #E0F4EE;
   --flate-valgt-hsl: 162 47.6% 91.8%;
   --flate-valgt-rgb: 224 244 238;
+  --flate-kolonne: #E3E6EA;
+  --flate-kolonne-hsl: 214.3 14.3% 90.4%;
+  --flate-kolonne-rgb: 227 230 234;
   --linje: #D7DADE;
   --linje-hsl: 214.3 9.6% 85.7%;
   --linje-rgb: 215 218 222;
@@ -69,6 +72,9 @@
   --paa-aksent: #FBF9F6;
   --paa-aksent-hsl: 36 38.5% 97.5%;
   --paa-aksent-rgb: 251 249 246;
+  --aksent-paa-mork: #54B9A5;
+  --aksent-paa-mork-hsl: 168.1 41.9% 52.7%;
+  --aksent-paa-mork-rgb: 84 185 165;
   --varsel-flate: #FFE9BC;
   --varsel-flate-hsl: 40.3 100% 86.9%;
   --varsel-flate-rgb: 255 233 188;
@@ -239,6 +245,9 @@
     --flate-valgt: #13332D;
     --flate-valgt-hsl: 168.8 45.7% 13.7%;
     --flate-valgt-rgb: 19 51 45;
+    --flate-kolonne: #191B1F;
+    --flate-kolonne-hsl: 220 10.7% 11%;
+    --flate-kolonne-rgb: 25 27 31;
     --linje: #303439;
     --linje-hsl: 213.3 8.6% 20.6%;
     --linje-rgb: 48 52 57;
@@ -377,6 +386,9 @@
   --flate-valgt: #13332D;
   --flate-valgt-hsl: 168.8 45.7% 13.7%;
   --flate-valgt-rgb: 19 51 45;
+  --flate-kolonne: #191B1F;
+  --flate-kolonne-hsl: 220 10.7% 11%;
+  --flate-kolonne-rgb: 25 27 31;
   --linje: #303439;
   --linje-hsl: 213.3 8.6% 20.6%;
   --linje-rgb: 48 52 57;
@@ -1025,6 +1037,7 @@
     --flate-kort: color(display-p3 0.9843 0.9922 1.0000);
     --flate-senket: color(display-p3 0.9373 0.9451 0.9569);
     --flate-valgt: color(display-p3 0.8941 0.9529 0.9333);
+    --flate-kolonne: color(display-p3 0.8941 0.9020 0.9176);
     --linje: color(display-p3 0.8431 0.8549 0.8706);
     --kant: color(display-p3 0.4863 0.5059 0.5294);
     --tekst: color(display-p3 0.1020 0.1137 0.1294);
@@ -1037,6 +1050,7 @@
     --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
     --aksent-valgt: color(display-p3 0.7686 0.8980 0.8627);
     --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
+    --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
     --varsel-flate: color(display-p3 0.9961 0.9137 0.7333);
     --varsel-tekst: color(display-p3 0.4235 0.3137 0.0000);
     --feil-flate: color(display-p3 0.9922 0.9216 0.9098);
@@ -1071,6 +1085,7 @@
       --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
       --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
       --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+      --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
       --linje: color(display-p3 0.1882 0.2039 0.2235);
       --kant: color(display-p3 0.4667 0.4824 0.5059);
       --tekst: color(display-p3 0.9216 0.9294 0.9412);
@@ -1083,6 +1098,7 @@
       --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
       --aksent-valgt: color(display-p3 0.1294 0.2431 0.2157);
       --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+      --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
       --varsel-flate: color(display-p3 0.2314 0.1686 0.0039);
       --varsel-tekst: color(display-p3 0.9569 0.7961 0.4235);
       --feil-flate: color(display-p3 0.2392 0.1176 0.1020);
@@ -1116,6 +1132,7 @@
     --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
     --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
     --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+    --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
     --linje: color(display-p3 0.1882 0.2039 0.2235);
     --kant: color(display-p3 0.4667 0.4824 0.5059);
     --tekst: color(display-p3 0.9216 0.9294 0.9412);
@@ -1128,6 +1145,7 @@
     --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
     --aksent-valgt: color(display-p3 0.1294 0.2431 0.2157);
     --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+    --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
     --varsel-flate: color(display-p3 0.2314 0.1686 0.0039);
     --varsel-tekst: color(display-p3 0.9569 0.7961 0.4235);
     --feil-flate: color(display-p3 0.2392 0.1176 0.1020);
@@ -1162,6 +1180,7 @@
       --flate-kort: color(display-p3 0.9843 0.9922 1.0000);
       --flate-senket: color(display-p3 0.9373 0.9451 0.9569);
       --flate-valgt: color(display-p3 0.8941 0.9529 0.9333);
+      --flate-kolonne: color(display-p3 0.8941 0.9020 0.9176);
       --linje: color(display-p3 0.6078 0.6235 0.6471);
       --kant: color(display-p3 0.2902 0.3020 0.3255);
       --tekst: color(display-p3 0.0196 0.0235 0.0314);
@@ -1174,6 +1193,7 @@
       --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
       --aksent-valgt: color(display-p3 0.7059 0.8588 0.8196);
       --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
+      --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
       --varsel-flate: color(display-p3 0.9961 0.9647 0.8902);
       --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
       --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
@@ -1206,6 +1226,7 @@
     --flate-kort: color(display-p3 0.9843 0.9922 1.0000);
     --flate-senket: color(display-p3 0.9373 0.9451 0.9569);
     --flate-valgt: color(display-p3 0.8941 0.9529 0.9333);
+    --flate-kolonne: color(display-p3 0.8941 0.9020 0.9176);
     --linje: color(display-p3 0.6078 0.6235 0.6471);
     --kant: color(display-p3 0.2902 0.3020 0.3255);
     --tekst: color(display-p3 0.0196 0.0235 0.0314);
@@ -1218,6 +1239,7 @@
     --aksent-svak: color(display-p3 0.8941 0.9529 0.9333);
     --aksent-valgt: color(display-p3 0.7059 0.8588 0.8196);
     --paa-aksent: color(display-p3 0.9843 0.9765 0.9647);
+    --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
     --varsel-flate: color(display-p3 0.9961 0.9647 0.8902);
     --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
     --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
@@ -1252,6 +1274,7 @@
       --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
       --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
       --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+      --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
       --linje: color(display-p3 0.3529 0.3686 0.3922);
       --kant: color(display-p3 0.6549 0.6706 0.6941);
       --tekst: color(display-p3 0.9882 0.9922 1.0000);
@@ -1264,6 +1287,7 @@
       --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
       --aksent-valgt: color(display-p3 0.1529 0.2902 0.2549);
       --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+      --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
       --varsel-flate: color(display-p3 0.1412 0.0941 0.0000);
       --varsel-tekst: color(display-p3 0.9961 0.9137 0.7333);
       --feil-flate: color(display-p3 0.1765 0.0588 0.0471);
@@ -1297,6 +1321,7 @@
       --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
       --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
       --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+      --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
       --linje: color(display-p3 0.3529 0.3686 0.3922);
       --kant: color(display-p3 0.6549 0.6706 0.6941);
       --tekst: color(display-p3 0.9882 0.9922 1.0000);
@@ -1309,6 +1334,7 @@
       --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
       --aksent-valgt: color(display-p3 0.1529 0.2902 0.2549);
       --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+      --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
       --varsel-flate: color(display-p3 0.1412 0.0941 0.0000);
       --varsel-tekst: color(display-p3 0.9961 0.9137 0.7333);
       --feil-flate: color(display-p3 0.1765 0.0588 0.0471);
@@ -1343,6 +1369,7 @@
       --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
       --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
       --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+      --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
       --linje: color(display-p3 0.3529 0.3686 0.3922);
       --kant: color(display-p3 0.6549 0.6706 0.6941);
       --tekst: color(display-p3 0.9882 0.9922 1.0000);
@@ -1355,6 +1382,7 @@
       --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
       --aksent-valgt: color(display-p3 0.1529 0.2902 0.2549);
       --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+      --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
       --varsel-flate: color(display-p3 0.1412 0.0941 0.0000);
       --varsel-tekst: color(display-p3 0.9961 0.9137 0.7333);
       --feil-flate: color(display-p3 0.1765 0.0588 0.0471);
@@ -1388,6 +1416,7 @@
     --flate-kort: color(display-p3 0.0706 0.0784 0.0902);
     --flate-senket: color(display-p3 0.0275 0.0314 0.0431);
     --flate-valgt: color(display-p3 0.1059 0.1961 0.1765);
+    --flate-kolonne: color(display-p3 0.0980 0.1059 0.1216);
     --linje: color(display-p3 0.3529 0.3686 0.3922);
     --kant: color(display-p3 0.6549 0.6706 0.6941);
     --tekst: color(display-p3 0.9882 0.9922 1.0000);
@@ -1400,6 +1429,7 @@
     --aksent-svak: color(display-p3 0.0902 0.1529 0.1373);
     --aksent-valgt: color(display-p3 0.1529 0.2902 0.2549);
     --paa-aksent: color(display-p3 0.0510 0.0627 0.0745);
+    --aksent-paa-mork: color(display-p3 0.4353 0.7176 0.6471);
     --varsel-flate: color(display-p3 0.1412 0.0941 0.0000);
     --varsel-tekst: color(display-p3 0.9961 0.9137 0.7333);
     --feil-flate: color(display-p3 0.1765 0.0588 0.0471);
