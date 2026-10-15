@@ -82,7 +82,7 @@ for (const [v, [farge, modus]] of visninger.flatMap((v) => modi.map((m) => [v, m
   await page.fill("#passord", "feil-passord");
   await Promise.all([page.waitForLoadState("networkidle"), page.click("button[type=submit]")]);
   meld(await page.isVisible("[data-feil]"), `feil passord viser feilmeldingen (${sfx})`);
-  meld((await page.textContent("[data-feil]")).trim() === "Feil passord. Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.", `feilmeldingen har riktig tekst (${sfx})`);
+  meld((await page.textContent("[data-feil]")).trim() === "Feil passord. Prøv igjen, eller spør Eirik.", `feilmeldingen har riktig tekst (${sfx})`);
   if (v.navn === "mobil") await page.screenshot({ path: join(ut, `apptest-passord-feil-${sfx}.png`), fullPage: true });
   await sjekkAxe(page, `passordsiden med feil (${sfx})`);
 
@@ -110,7 +110,7 @@ for (const [v, [farge, modus]] of visninger.flatMap((v) => modi.map((m) => [v, m
   if (DEMO) {
     meld((await synlig.textContent()) === DEMO, `demopassordet står på siden etter innlogging (${sfx})`);
     const alle = await page.locator("[data-demopassord]").evaluateAll((l) => l.map((e) => e.textContent));
-    meld(alle.length === 4 && alle.every((t) => t === DEMO), `alle fire rollene viser demopassordet (${sfx})`);
+    meld(alle.length === 5 && alle.every((t) => t === DEMO), `de fire rollene og «Prøv med demobrukerne» viser demopassordet (${sfx})`);
     meld(!(await page.locator("[data-uten-demopassord]").count()), `«Passordet får du av den som inviterte deg» er fjernet (${sfx})`);
     const knapp = page.locator("[data-demopassord-knapp]:visible").first();
     await knapp.click();

@@ -177,3 +177,21 @@ export const SPORSMAL: { q: string; a: string }[] = [
   { q: "Hvordan logger jeg ut?", a: "Gå til Meg og trykk «Logg ut»." },
   { q: "Hvordan får jeg tilbake ekte data?", a: "Logg ut av demobrukeren og logg inn med din egen bruker." },
 ];
+
+/** «Prøv med demobrukerne» (K-114): brukerne i appen (velg «Demo») og i CRM-et. Passordet er felles og står aldri her: Workeren setter det inn. */
+export const DEMO_APP: [string, string, string][] = [
+  ["montor1", "Montør", "I dag, jobbsiden, mål og skisse, KS, avvik og Ferdig montert."],
+  ["montor2", "Montør, polsk", "Appen på polsk."],
+  ["firmaleder1", "Firmaleder med team", "Forespørsler, svar og fordeling av jobber."],
+  ["firmaleder2", "Firmaleder uten ansatte", "Egne jobber og forespørsler."],
+  ["firmaleder3", "Firmaleder", "Garderobe, skyvedører og bad."],
+  ["utkjorer", "Utkjører", "Ruten, mottak på lager, levering og skade."],
+  ["selger1", "Selger", "Selgermodus i appen."],
+];
+export const DEMO_CRM: [string, string][] = [
+  ["selger1 – selger6", "Selgere i tre butikker (selger2 og selger6 er prosjektselgere)"],
+  ["leder", "Leder og admin"],
+  ["montasjeleder", "Montasjeleder og bestilling"],
+  ["bestilling", "Bestilling"],
+  ["superadmin", "Superadmin"],
+];

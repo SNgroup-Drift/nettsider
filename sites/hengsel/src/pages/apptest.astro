@@ -15,7 +15,7 @@ import Enhet from "../components/Enhet.astro";
 import ApptestHode from "../components/ApptestHode.astro";
 import UteMotion from "../components/UteMotion.astro";
 import { APPTEST, erTodo } from "../apptest-lenker";
-import { BYGG, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
+import { BYGG, DEMO_APP, DEMO_CRM, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
 import { lagQr } from "../apptest-qr";
 import { kundeFra } from "../kunde";
 import { EPOST } from "../content/forside";
@@ -116,6 +116,44 @@ const harFeil = KJENTE_FEIL.length > 0;
             </div>
           ))}
           <button type="button" class="andre" data-andre aria-expanded="false">Andre telefoner</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="demobrukere" class="band demo" aria-labelledby="demo-tittel">
+      <div class="h-innhold seksjon demo-rutenett">
+        <div class="demotekst">
+          <div class="hode">
+            <span class="eyebrow">Demobrukerne</span>
+            <h2 id="demo-tittel">Prøv med demobrukerne</h2>
+          </div>
+          <p class="dempet">I demoen er alt oppdiktet, og ingenting sendes ut. Velg «Demo» nederst på innloggingen i appen, og logg inn med brukernavnet og demopassordet. Alle brukerne har samme passord.</p>
+          <div class="demoflate">
+            <div>
+              <span class="liten dempet">Demopassord</span>
+              <code class="verdi passord" id="demopassord-alle" data-demopassord="alle" data-demopassord-verdi>••••••••</code>
+              <span class="liten dempet" data-uten-demopassord>Passordet får du av den som inviterte deg.</span>
+            </div>
+            <button type="button" class="btn liten-knapp kopier" data-kopier="#demopassord-alle" data-demopassord-knapp hidden>Kopier</button>
+          </div>
+          <p class="liten dempet merknad">Foreløpig skriver du hele adressen: brukernavnet med <b>@demo.invalid</b> bak, for eksempel <b>montor1@demo.invalid</b>. Snart holder det med <b>montor1</b>.</p>
+          <a class="btn primary" href={`${kundeUtgave ? kundeUtgave.sti : ""}/apptest/Logg_inn_i_demoen.pdf`} download>Last ned oversikten (PDF)</a>
+        </div>
+        <div class="brukerkort kort">
+          <div class="korthode"><h3>I appen</h3><span class="liten dempet">velg «Demo»</span></div>
+          <dl class="brukere">
+            {DEMO_APP.map(([b, rolle, hva]) => (
+              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span><span class="liten dempet">{hva}</span></dd></div>
+            ))}
+          </dl>
+        </div>
+        <div class="brukerkort kort">
+          <div class="korthode"><h3>I CRM-et</h3><span class="liten dempet">nettleseren</span></div>
+          <dl class="brukere">
+            {DEMO_CRM.map(([b, rolle]) => (
+              <div><dt><code>{b}</code></dt><dd><span>{rolle}</span></dd></div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>
@@ -401,6 +439,22 @@ const harFeil = KJENTE_FEIL.length > 0;
   .kopier { visibility: hidden; }
   :global(html.js) .kopier { visibility: visible; }
   .pdf { min-height: 44px; display: flex; align-items: center; }
+  /* Prøv med demobrukerne: tekst og passord til venstre, brukerlistene i hvert sitt kort */
+  .demo-rutenett { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: start; }
+  .demotekst { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  .demotekst p { margin: 0; }
+  .demoflate { align-self: stretch; background: var(--a-flate); border-radius: var(--r-field); padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .demoflate > div { display: flex; flex-direction: column; min-width: 0; }
+  .brukerkort { padding: clamp(18px, 3vw, 28px); display: flex; flex-direction: column; gap: 14px; }
+  .korthode { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .korthode h3 { font-size: 1.2rem; }
+  .brukere { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .brukere > div { display: grid; grid-template-columns: minmax(96px, 8.5rem) 1fr; gap: 12px; align-items: baseline; }
+  .brukere dt, .brukere dd { margin: 0; }
+  .brukere dd { display: flex; flex-direction: column; gap: 2px; }
+  .brukere code { font-weight: var(--w-medium); overflow-wrap: anywhere; }
+  @media (min-width: 960px) { .demo-rutenett { grid-template-columns: 1.1fr 1fr 1fr; gap: 28px; } }
+
   .rolle-bilde { width: 100%; max-width: 260px; justify-self: center; }
 
   /* Sjekkliste og hva er nytt */

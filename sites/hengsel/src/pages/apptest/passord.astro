@@ -22,13 +22,13 @@ import { EPOST } from "../../content/forside";
       <ApptestIkon />
       <div class="tekst">
         <h1>Test Hengsel</h1>
-        <p class="dempet">Siden er for dem som er invitert til å teste appen. Skriv inn passordet du har fått.</p>
+        <p class="dempet">Skriv passordet du fikk sammen med lenken.</p>
       </div>
       <div class="felt">
         <label for="passord">Passord</label>
         <input class="input" id="passord" name="passord" type="password" autocomplete="current-password" required aria-describedby="passord-feil" />
       </div>
-      <div class="feil" id="passord-feil" role="alert" data-feil hidden><b>Feil passord.</b> Sjekk e-posten eller SMS-en med invitasjonen og prøv igjen.</div>
+      <div class="feil" id="passord-feil" role="alert" data-feil hidden><b>Feil passord.</b> Prøv igjen, eller spør Eirik.</div>
       <button class="btn primary stor" type="submit">Åpne</button>
       <p class="dempet liten">Har du ikke fått passord? Skriv til <a href={`mailto:${EPOST}`}>{EPOST}</a>.</p>
     </form>
