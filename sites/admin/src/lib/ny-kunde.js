@@ -121,14 +121,14 @@ export function sjekkliste(jobb) {
       ? { tittel: `Legg inn DNS-posten for ${k.domene.hoveddomene}`, tekst: `Opprett en CNAME-post: navn ${k.domene.hoveddomene} (hos de fleste leverandører bare «${k.domene.hoveddomene.split(".")[0]}»), verdi ${k.pages_adresse}. Bruk et underdomene (f.eks. crm.), ikke selve rotdomenet. Sertifikatet kommer av seg selv, vanligvis innen 15 minutter etter at DNS-posten er synlig.`, kopi: `CNAME ${k.domene.hoveddomene} → ${k.pages_adresse}` }
       : { tittel: `DNS for ${k.domene.hoveddomene}`, tekst: `Domenet ligger hos oss. Posten settes automatisk når Cloudflare-tokenet for DNS er lagt inn; ellers legger Eirik inn CNAME ${k.domene.hoveddomene} → ${k.pages_adresse}.`, kopi: `CNAME ${k.domene.hoveddomene} → ${k.pages_adresse}` },
     { tittel: "Koble e-posten", tekst: "Kunden kobler avsenderadressen sin til Microsoft 365 slik at e-post fra systemet går fra deres eget domene. Se K-273 for oppskriften.", lenke: null },
-    { tittel: "Første innlogging", tekst: `${k.admin.navn} (${k.admin.epost}) får en e-post med invitasjonslenke. Lenken åpner ${k.app_url}, der administratoren velger passord (minst 12 tegn med store og små bokstaver og tall) og slår på tofaktor (MFA).` },
+    { tittel: "Første innlogging", tekst: `${k.admin.navn} (${k.admin.epost}) får en e-post med invitasjonslenke. Lenken åpner ${k.app_url}, der administratoren velger passord (minst 12 tegn med store og små bokstaver og tall). Tofaktor (TOTP) er slått på i databasen; innrulleringen i appen kommer med eget oppdrag.` },
     { tittel: "Etter første innlogging", tekst: `Kontroller at butikkene (${k.butikker.map((b) => b.navn).join(", ")}) og merkene (${k.merker.map((m) => m.navn).join(", ")}) stemmer, og legg inn de øvrige brukerne og rollene.` },
   ];
   const intern = [
     { tittel: "Sjekk domenet", tekst: `Kjør Actions › Domenesjekk i hengsel-crm med kunde = ${k.id} når DNS er på plass.` },
     ...(k.test ? [{ tittel: "Testkunde", tekst: "Denne kunden er merket test. Riv den ned igjen med «Fjern testkunde» når du er ferdig; PR-en med kundelista flettes ikke." }]
       : [{ tittel: "Flett kundelista", tekst: `Pull requesten i hengsel-crm${jobb.pr_url ? ` (${jobb.pr_url})` : ""} legger ${k.id} i kunder/kunder.json. Flett den etter «ja, main», så tar neste Prod-utrulling kunden med.` }]),
-    { tittel: "Hvis invitasjonen ikke kom fram", tekst: "Send den på nytt fra Supabase › Authentication › Users, eller kjør «Prøv igjen fra steg 8»." },
+    { tittel: "Hvis invitasjonen ikke kom fram", tekst: "E-posten sendes av funksjonen auth-epost og trenger e-postkoblingen (K-273). Når den er på plass: send invitasjonen på nytt fra Supabase › Authentication › Users." },
   ];
   return { kunde, intern };
 }
