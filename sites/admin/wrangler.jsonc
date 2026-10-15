@@ -26,10 +26,8 @@
     {
       "binding": "DB",
       "database_name": "hengsel-admin",
-      // PLASSHOLDER: Oversikt lager databasen «hengsel-admin» (region weur) i Cloudflare-dashbordet eller med
-      //   npx wrangler d1 create hengsel-admin --location weur
-      // og setter inn database_id her før fletting. Med plassholderen virker bare `wrangler dev --local` og migreringene lokalt.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Databasen «hengsel-admin» (weur) ble laget 15.10.2026 av Oversikt; 0001_fase_a.sql er kjørt mot den.
+      "database_id": "1fc32fd1-3d0c-4eae-b6ca-88e45d71c4bd",
       "migrations_dir": "migrations"
     }
   ]
