@@ -69,15 +69,19 @@ jobs:
         run: npm run build
 
       - name: Bibliotekstesten og lenkesjekken mot ekte adresser
+        id: test
         env:
           SKJERMBILDER_NETT: "1"
         run: npm test
 
-      - name: Rapport per side og skjermbilder uten stand-in
+      # K-238: skjermbildene først (skriptet fjerner bare egne filer i claude/k233), så rapporten; begge kjøres også når testen feiler
+      - name: Skjermbilder uten stand-in
         if: always()
-        run: |
-          node scripts/bibliotek-rapport.mjs claude/k233/bibliotek-rapport.md
-          node scripts/skjermbilder-k233.mjs --ekte
+        run: node scripts/skjermbilder-k233.mjs --ekte
+
+      - name: Rapport per side (bilder fra biblioteket, egne bilder og plassholdere)
+        if: always()
+        run: node scripts/bibliotek-rapport.mjs claude/k233/bibliotek-rapport.md
 
       - name: Artefakt (manifest-kopi, sjekk, rapport, skjermbilder)
         if: always()
@@ -93,12 +97,21 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+      # K-238: sjekken, rapporten og skjermbildenotatet i jobbsammendraget, også når et steg feilet; mangler en fil, står det
       - name: Sammendrag
         if: always()
+        env:
+          SJEKK_KODE: ${{ steps.bibliotek.outputs.kode }}
+          TEST_UTFALL: ${{ steps.test.outcome }}
         run: |
-          for f in claude/k233/bibliotek-sjekk.md claude/k233/bibliotek-rapport.md claude/k233/LES-MEG.md; do
-            if [ -f "$f" ]; then cat "$f" >> "$GITHUB_STEP_SUMMARY"; echo >> "$GITHUB_STEP_SUMMARY"; fi
-          done
+          {
+            echo "Bibliotek-sjekken ga exit $SJEKK_KODE (0 = ingen avvik, 1 = avvik eller bilder som ikke svarer, 2 = manifestet nås ikke); npm test: $TEST_UTFALL."
+            echo
+            for f in claude/k233/bibliotek-sjekk.md claude/k233/bibliotek-rapport.md claude/k233/LES-MEG.md; do
+              if [ -s "$f" ]; then cat "$f"; else echo "**$f mangler** (steget som skriver fila stoppet før den ble skrevet; se loggen)."; fi
+              echo
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit den oppdaterte manifest-kopien til grenen («oppdater kopi»)
         if: github.event_name == 'workflow_dispatch' && inputs.oppdater_kopi

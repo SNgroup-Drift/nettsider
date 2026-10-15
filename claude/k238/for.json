@@ -1,0 +1,41 @@
+{
+  "runde": "for",
+  "dato": "2026-10-15",
+  "verdier": {
+    "hengsel-no-forside-390": {
+      "sw": 390,
+      "cw": 390,
+      "aksent": "#068472",
+      "paaAksent": "#fff",
+      "knapp": {
+        "bakgrunn": "rgb(6, 132, 114)",
+        "tekst": "rgb(255, 255, 255)"
+      }
+    },
+    "hengsel-no-forside-1280": {
+      "sw": 1280,
+      "cw": 1280,
+      "aksent": "#068472",
+      "paaAksent": "#fff",
+      "knapp": {
+        "bakgrunn": "rgb(6, 132, 114)",
+        "tekst": "rgb(255, 255, 255)"
+      }
+    },
+    "sngroup-no-design-390": {
+      "sw": 390,
+      "cw": 390,
+      "aksent": "#5074a9",
+      "paaAksent": "#fbf9f6",
+      "knapp": null
+    },
+    "sngroup-no-design-1280": {
+      "sw": 1280,
+      "cw": 1280,
+      "aksent": "#5074a9",
+      "paaAksent": "#fbf9f6",
+      "knapp": null
+    }
+  },
+  "feil": []
+}

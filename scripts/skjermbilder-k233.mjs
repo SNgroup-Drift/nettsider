@@ -11,7 +11,7 @@
  * Sjekker også: ingen konsollfeil (utenom 404 fra biblioteket), ingen horisontal rulling på 390 px.
  */
 import { execFileSync } from "node:child_process";
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { chromium } from "playwright";
 import sharp from "sharp";
@@ -51,8 +51,9 @@ function gammelFil(tema, sti) {
   return standIn.get(nokkel);
 }
 
-await rm(ut, { recursive: true, force: true });
+// K-238: bare egne filer fjernes (skjermbildene og LES-MEG.md); bibliotek-sjekk.md og bibliotek-rapport.md fra de andre skriptene blir liggende
 await mkdir(ut, { recursive: true });
+for (const f of await readdir(ut)) if (/\.webp$/.test(f) || f === "LES-MEG.md") await rm(join(ut, f), { force: true });
 const tjenere = {};
 for (const s of new Set(SIDER.map((x) => x[0]))) tjenere[s] = await startServer(join(rot, "sites", s, "dist"));
 const nettleser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});

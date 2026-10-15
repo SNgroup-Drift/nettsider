@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 /**
- * K-182/K-192: henter Hengsel-designsystemet (SNgroup-Drift/innlandet-crm-sync, _ds/hengsel-designsystem) inn i packages/hengsel-tokens/ds
+ * K-182/K-192: henter Hengsel-designsystemet (SNgroup-Drift/hengsel-crm, før innlandet-crm-sync; _ds/hengsel-designsystem) inn i packages/hengsel-tokens/ds
  * fra en PINNET commit, så bygget er reproduserbart og Workers Builds ikke trenger tilgang til det private repoet.
  *
- *   node scripts/hent-designsystem.mjs --kilde /sti/til/innlandet-crm-sync [--commit <sha>]
+ *   node scripts/hent-designsystem.mjs --kilde /sti/til/hengsel-crm [--commit <sha>]
  *
  * Uten --commit brukes commiten som står i packages/hengsel-tokens/designsystem.pin.json (verifiserer at filene er uendret).
  * Med --commit pinnes en ny commit: filene leses med `git show <sha>:<sti>` (ikke fra arbeidsmappa), kopieres, og pin-fila skrives på nytt
  * med sha256 for hver fil. tokens/hengsel.tokens.json er ENESTE kilde; tokens.css, tokens.ts og fonts.css er generert av designsystemet.
+ * Palettpakke v2 (K-212) og merkepakke v2 (K-231) i design/handoff legges inn igjen etterpå (blokkene palettpakke og merkepakke i pin-fila).
  * Det finnes ÉN pin, og den gjelder alle Hengsel-sidene (hengsel.no, vis., design., admin.). Etter henting genereres den delte token-fila (packages/hengsel-tokens/tokens.css og fonts.css)
  * med scripts/lag-hengsel-tokens.mjs. Testene scripts/design-fasit.test.mjs og scripts/hengsel-regler.test.mjs feiler hvis en fil ikke samsvarer med pin-fila,
  * eller hvis den delte fila avviker fra hengsel.tokens.json.
@@ -42,7 +43,7 @@ for (const f of filer) {
   await writeFile(join(MAL, rel), data);
   ut[rel] = createHash("sha256").update(data).digest("hex");
 }
-const nyPin = { repo: "SNgroup-Drift/innlandet-crm-sync", sti: DS, commit: full, versjon: JSON.parse(await readFile(join(MAL, "tokens", "hengsel.tokens.json"), "utf8")).versjon, filer: ut };
+const nyPin = { repo: "SNgroup-Drift/hengsel-crm", sti: DS, commit: full, versjon: JSON.parse(await readFile(join(MAL, "tokens", "hengsel.tokens.json"), "utf8")).versjon, filer: ut };
 // Med palettpakke (K-212 runde 2) er logo, ikoner, favicon og app-ikon i pin-fila fra pakken, ikke fra commiten: bare tokens og fonter sammenliknes.
 const fraCommit = (f) => (pin.palettpakke ? Object.fromEntries(Object.entries(f).filter(([k]) => /^(tokens|assets\/fonts)\//.test(k))) : f);
 if (!arg("--commit") && pin.filer && JSON.stringify(fraCommit(pin.filer)) !== JSON.stringify(fraCommit(ut))) throw new Error("Filene på pinnet commit avviker fra pin-fila (pin-fila er redigert for hånd?).");
@@ -53,4 +54,10 @@ execFileSync(process.execPath, [join(rot, "scripts", "lag-hengsel-tokens.mjs")],
 if (pin.palettpakke) {
   console.log(`→ legger palettpakken ${pin.palettpakke.navn} inn igjen (${pin.palettpakke.kilde})`);
   execFileSync(process.execPath, [join(rot, "scripts", "hent-palettpakke.mjs"), "--pakke", join(rot, pin.palettpakke.kilde)], { stdio: "inherit" });
+}
+// K-231/K-238: merkepakke v2 (levert av, sendt med, favicon med flis, ikoner, motion, deling, butikk, PWA, app-ikon) ligger også i ds fra pakken i design/handoff.
+// Uten dette steget forsvant den fra ds og pin-fila ved ny pin (K-238).
+if (pin.merkepakke) {
+  console.log(`→ legger merkepakken ${pin.merkepakke.navn} inn igjen (${pin.merkepakke.kilde})`);
+  execFileSync(process.execPath, [join(rot, "scripts", "hent-merkepakke.mjs"), "--pakke", join(rot, pin.merkepakke.kilde)], { stdio: "inherit" });
 }

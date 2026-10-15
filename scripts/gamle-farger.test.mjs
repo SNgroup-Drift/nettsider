@@ -2,7 +2,8 @@
  * K-231 (nederst): gamle logoer og merkefiler kommer ikke tilbake: gammel favicon (avrundet flis fra runde 1), gammelt «levert av» (det blå, og «Hengsel Levering» som erstatning),
  * det blå merket fra merkepakke v3 (brand/hengsel-merke), gammel motion og gammelt delingsbilde. Se kommentaren over den siste delen.
  * K-212 runde 2: søket i design/handoff/…/MIGRERING.md («Søk etter») som test. Ingen av de 31 gamle fargekodene (brevann-paletten), de gamle P3-verdiene, den gamle stiftfargen,
- * rgba(0, 126, 146, …) eller ordet «brevann» skal finnes i kode, CSS, SVG eller fargesett under sites/ og packages/ (kilde, ikke bygd). Og P3-blokken i den delte token-fila skal være furu.
+ * rgba(0, 126, 146, …) eller ordet «brevann» skal finnes i kode, CSS, SVG eller fargesett under sites/ og packages/ (kilde, ikke bygd). Og P3-blokken i den delte token-fila skal være
+ * pakkens besluttede blokk med K-234-aksenten (K-238: aksent lys #05806F, P3 #387E6F; pakkens furu-aksent #068472/#3A8272 gjelder ikke lenger).
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -40,17 +41,23 @@ test("selvtest: mønstrene finner det de skal", () => {
   for (const t of ["a{color:#068472}", "#54B9A5", "color(display-p3 0.2275 0.5098 0.4471)", "#007E9211x"]) assert.ok(!MONSTRE.some(([, re]) => re.test(t)), t);
 });
 
-test("P3-blokken i den delte token-fila er furu (aksent color(display-p3 0.2275 0.5098 0.4471)) og stemmer med pakkens besluttede P3-blokk", () => {
+/** K-234 (designsystem 2.1.0, K-238): aksent lys er #05806F og P3-aksenten #387E6F; alt annet i P3-blokken er som i palettpakke v2 */
+const AKSENT_P3_K234 = "color(display-p3 0.2196 0.4941 0.4353)";
+const AKSENT_P3_FURU = "color(display-p3 0.2275 0.5098 0.4471)";
+
+test("P3-blokken i den delte token-fila har K-234-aksenten (color(display-p3 0.2196 0.4941 0.4353)) og er ellers lik pakkens besluttede P3-blokk", () => {
   const css = readFileSync(join(rot, "packages", "hengsel-tokens", "tokens.css"), "utf8");
   const blokk = /@media \(color-gamut: p3\) \{\s*:root \{([^}]*)\}/.exec(css);
   assert.ok(blokk, "tokens.css mangler @media (color-gamut: p3)");
-  assert.match(blokk[1], /--aksent: color\(display-p3 0\.2275 0\.5098 0\.4471\);/);
+  assert.match(blokk[1], new RegExp(`--aksent: ${AKSENT_P3_K234.replace(/[().]/g, "\\$&")};`));
+  assert.doesNotMatch(blokk[1], new RegExp(AKSENT_P3_FURU.replace(/[().]/g, "\\$&")), "furu-aksenten fra før K-234 er tilbake i P3-blokken");
   const vars = (t) => Object.fromEntries([...t.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim().replace(/\s+/g, " ")]));
   const pakke = join(rot, "design", "handoff", "design_handoff_hengsel_furu_v2", "tokens", "hengsel-palett.css");
   const kilde = readFileSync(pakke, "utf8");
   const start = kilde.indexOf("@media (color-gamut: p3) {");
   const p3 = vars(kilde.slice(start, kilde.indexOf("/* ── Grunnpalett, mørk", start)));
-  assert.deepEqual(vars(blokk[1]), p3, "P3-blokken avviker fra pakkens (BESLUTTET) blokk");
+  assert.equal(p3["--aksent"], AKSENT_P3_FURU, "pakkens P3-blokk har ikke furu-aksenten (er pakken byttet ut?)");
+  assert.deepEqual(vars(blokk[1]), { ...p3, "--aksent": AKSENT_P3_K234 }, "P3-blokken avviker fra pakkens (BESLUTTET) blokk med K-234-aksenten");
 });
 
 // ── K-231: gamle logoer, favicon og blå merkefiler ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

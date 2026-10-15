@@ -70,7 +70,7 @@ npm run build          # bygger alle nettstedene til sites/*/dist
 npm test               # sjekker interne lenker (etter build); app-skjermbildene lenkes fra bilder.hengsel.no og sjekkes mot manifestet, ikke hentet
 npm run skjermbilder   # skjermbilder til docs/skjermbilder + nettlesersjekker (krever Chromium)
 npm run dev:sngroup    # utviklingsserver (også dev:hengsel, dev:byggem og dev:design)
-npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til packages/hengsel-tokens (pinnet)
+npm run design:hent -- --kilde <hengsel-crm> --commit <sha>     # henter designsystemet til packages/hengsel-tokens (pinnet)
 npm run design:skjermbilder   # skjermbilder og axe for design.hengsel.no (krever Chromium)
 ```
 

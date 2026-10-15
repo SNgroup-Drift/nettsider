@@ -2,7 +2,7 @@
  * hver farge-rolle og skriften. Velgeren :root[data-kunde="sigdal"] er mer spesifikk enn :root i den delte fila, også i dens
  * @media-blokker (Display P3, økt kontrast), så Hengsel-fargene slår aldri gjennom på /kunde/sigdal.
  *
- * Profilen (Sigdal, 14.10.2026): Warm Black #31261D (tekst), Off White #FBF9F6 (bakgrunn, aldri #FFFFFF), Beige 4/3/2/1 (flater),
+ * Profilen (Sigdal, 14.10.2026): Warm Black #31261D (tekst), Off White #FBF9F6 (bakgrunn, aldri rent hvitt), Beige 4/3/2/1 (flater),
  * Deep Blue og Dusty Blue (sparsomt). Ikke den rosa/magenta fargen. Newsreader til overskrifter (aldri små størrelser, aldri bare versaler),
  * Inter til brødtekst, knapper og underoverskrifter (Inter 650 bare til underoverskrifter). Bare lys modus.
  *
@@ -65,6 +65,7 @@
   --ramme: var(--sigdal-beige-1);
   --overlegg: color-mix(in srgb, var(--sigdal-warm-black) 48%, transparent);
   --alltid-mork: var(--sigdal-warm-black);
+  --paa-alltid-mork: var(--sigdal-off-white);
 
   /* Statustoner: fg = tekst og prikk, bg = flate, kant = ramme */
   --status-ny-fg: var(--sigdal-blaa-tekst);
