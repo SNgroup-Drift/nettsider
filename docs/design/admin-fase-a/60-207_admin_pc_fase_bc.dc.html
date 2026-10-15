@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<script src="./assets/admin-data.js"></script>
+<script src="./assets/admin-data-bc.js"></script>
+<style>body{margin:0;background:#ECEFF3} a{color:#016D5E;text-decoration:none} a:hover{color:#007665;text-decoration:underline} input,button,select,textarea{font:inherit;color:inherit}</style>
+</helmet>
+<div data-plattform="pc" data-screen-label="Hengsel Admin PC fase B og C" style="min-height:100vh;background:#ECEFF3;color:#1A1D22;font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;display:grid;grid-template-columns:248px minmax(0,1fr)">
+
+  <aside style="position:sticky;top:0;height:100vh;box-sizing:border-box;background:#FFFFFF;box-shadow:inset -1px 0 0 #CDD1D6;display:flex;flex-direction:column">
+    <div style="height:60px;flex:none;display:flex;align-items:center;padding:0 16px;box-shadow:inset 0 -1px 0 #E3E6EA"><img src="./assets/logo-admin-lys.svg" alt="Hengsel Admin" style="height:22px;display:block"></div>
+    <nav style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding:10px;display:flex;flex-direction:column;gap:1px">
+      <sc-for list="{{ meny }}" as="m" hint-placeholder-count="24">
+        <div style="display:flex;flex-direction:column">
+          <sc-if value="{{ m.erGruppe }}" hint-placeholder-val="{{ false }}"><span style="padding:14px 10px 4px;font-size:12px;font-weight:600;color:#62686F;letter-spacing:.2px">{{ m.navn }}</span></sc-if>
+          <sc-if value="{{ m.erPunkt }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ m.klikk }}" aria-current="{{ m.aria }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:8px;font-size:14px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.vekt }}" style-hover="background:#F3F5F8">
+              <span style="display:flex;color:{{ m.ikonFg }}">{{ m.ikon }}</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.navn }}</span>
+              <span style="font-size:12px;color:{{ m.tallFg }};font-weight:500">{{ m.tall }}</span>
+            </button>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px;box-shadow:inset 0 1px 0 #E3E6EA">
+      <div style="width:32px;height:32px;border-radius:50%;background:#BCE6DB;color:#016D5E;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ rolleInit }}</div>
+      <div style="display:flex;flex-direction:column;line-height:1.3"><span style="font-weight:600;font-size:14px">{{ rolleNavn }}</span><span style="font-size:12px;color:#62686F">{{ rolleUnder }}</span></div>
+    </div>
+    <div style="flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px 14px;box-shadow:inset 0 1px 0 #E3E6EA"><img src="./assets/logo-hengsel-lys.svg" alt="Hengsel" style="height:16px"><span style="font-size:12px;color:#62686F">Admin 2.2.0</span></div>
+  </aside>
+
+  <main style="min-width:0;display:flex;flex-direction:column">
+    <header style="position:sticky;top:0;z-index:5;height:60px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 28px;background:rgba(236,239,243,.9);backdrop-filter:blur(8px);box-shadow:inset 0 -1px 0 #CDD1D6">
+      <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-size:14px;color:#51565C">
+        <sc-for list="{{ sti }}" as="s" hint-placeholder-count="2"><span style="display:flex;align-items:center;gap:6px"><span style="color:{{ s.fg }};font-weight:{{ s.vekt }};white-space:nowrap">{{ s.navn }}</span><span style="display:{{ s.pil }};color:#62686F">{{ ik16.pil_hoyre }}</span></span></sc-for>
+      </div>
+      <div style="height:36px;width:320px;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 10px;color:#62686F;font-size:14px">{{ ik.sok }}<span style="flex:1;white-space:nowrap;overflow:hidden">Søk etter sak, kunde eller kontakt</span><span style="font-size:12px;padding:1px 6px;border-radius:5px;box-shadow:inset 0 0 0 1px #CDD1D6">⌘K</span></div>
+      <button onClick="{{ nySak }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny sak</button>
+    </header>
+
+    <div style="padding:26px 28px 64px;display:flex;flex-direction:column;gap:20px;max-width:1440px;width:100%;box-sizing:border-box">
+
+<!-- SB1 Saker -->
+<sc-if value="{{ v.saker }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Saker</h1><span style="font-size:14px;color:#51565C">{{ antApne }} åpne · <b style="color:#9E2D28">{{ antForfalt }} forfalt</b> · svarfrist etter supportnivå (eksempel)</span></div>
+    <label style="height:36px;box-sizing:border-box;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;padding:0 6px 0 10px;font-size:14px"><span style="color:#51565C">Kunde</span><select value="{{ fKunde }}" onChange="{{ settKunde }}" style="border:0;outline:0;background:transparent;height:34px;font-weight:600"><sc-for list="{{ kundeValg }}" as="k" hint-placeholder-count="5"><option value="{{ k.id }}">{{ k.navn }}</option></sc-for></select></label>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ sakFilter }}" as="g" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-size:13px;color:#51565C;width:64px">{{ g.navn }}</span>
+        <sc-for list="{{ g.valg }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}<span style="color:#62686F">{{ f.antall }}</span></button></sc-for>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke hente nye saker</b><span style="font-size:14px">Innboksen support@hengsel.no svarte ikke. Sist hentet 14.10 kl. 10:05. Saker fra «Hjelp» kommer inn som vanlig.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1100px;font-size:14px">
+      <div style="display:grid;grid-template-columns:96px minmax(0,1.7fr) minmax(0,1.2fr) 140px 140px 190px 96px;gap:12px;align-items:center;height:36px;padding:0 16px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Prioritet</span><span>Sak</span><span>Kunde og butikk</span><span>Kilde</span><span>Status</span><span>Svarfrist</span><span>Sist</span></div>
+      <sc-for list="{{ sakRader }}" as="s" hint-placeholder-count="8">
+        <div onClick="{{ s.klikk }}" style="display:grid;grid-template-columns:96px minmax(0,1.7fr) minmax(0,1.2fr) 140px 140px 190px 96px;gap:12px;align-items:center;min-height:56px;padding:6px 16px;box-sizing:border-box;box-shadow:{{ s.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <span style="display:flex;align-items:center;gap:8px;color:{{ s.p.fg }};font-weight:{{ s.p.vekt }}"><span style="display:flex;align-items:flex-end;gap:2px;height:16px"><sc-for list="{{ s.p.stolper }}" as="b" hint-placeholder-count="4"><span style="width:3px;height:{{ b.h }};border-radius:1px;background:{{ b.bg }}"></span></sc-for></span>{{ s.p.navn }}</span>
+          <div style="min-width:0;display:flex;flex-direction:column"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.emne }}</span><span style="font-size:12px;color:#62686F">{{ s.nr }} · {{ s.kontakt }}</span></div>
+          <div style="min-width:0;display:flex;flex-direction:column"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.kunde }}</span><span style="font-size:12px;color:#62686F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.butikk }}</span></div>
+          <span style="display:flex;align-items:center;gap:6px;color:#51565C;font-size:13px">{{ s.kildeIkon }}{{ s.kilde }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ s.s.bg }};color:{{ s.s.fg }};box-shadow:inset 0 0 0 1px {{ s.s.kant }};white-space:nowrap">{{ s.s.navn }}</span></span>
+          <span><span style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border-radius:8px;font-size:13px;white-space:nowrap;color:{{ s.f.fg }};font-weight:{{ s.f.vekt }};background:{{ s.f.bg }};box-shadow:{{ s.f.ring }}">{{ s.f.ikon }}{{ s.f.tekst }}</span></span>
+          <span style="font-size:13px;color:#62686F">{{ s.sist }}</span>
+        </div>
+      </sc-for>
+      <sc-for list="{{ sakSkjelett }}" as="s" hint-placeholder-count="0"><div style="height:56px;padding:0 16px;display:flex;align-items:center;gap:16px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="height:12px;width:60px;border-radius:6px;background:#E3E6EA"></span><span style="height:12px;width:{{ s.b }};border-radius:6px;background:#E3E6EA"></span><span style="flex:1"></span><span style="height:20px;width:90px;border-radius:10px;background:#E3E6EA"></span><span style="height:20px;width:120px;border-radius:8px;background:#E3E6EA"></span></div></sc-for>
+      <sc-if value="{{ sakerTom }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:48px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.saker }}</span><b style="font-size:16px">Ingen saker</b><span style="color:#51565C;max-width:460px;text-wrap:pretty">Saker kommer inn fra «Hjelp» i Hengsel CRM og Hengsel Ute, og fra e-post til support@hengsel.no.</span></div>
+      </sc-if>
+      <sc-if value="{{ sakerIngenTreff }}" hint-placeholder-val="{{ false }}"><div style="padding:28px 16px;text-align:center;color:#51565C">Ingen saker med dette filteret.</div></sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SB2 Sak -->
+<sc-if value="{{ v.sak }}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{ t.laster }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px"><div style="height:28px;width:420px;border-radius:8px;background:#E3E6EA"></div><div style="height:14px;width:300px;border-radius:7px;background:#E3E6EA"></div><div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px"><div style="height:420px;border-radius:14px;background:#E3E6EA"></div><div style="height:420px;border-radius:14px;background:#E3E6EA"></div></div><span style="font-size:13px;color:#51565C">Henter saken …</span></div>
+  </sc-if>
+  <sc-if value="{{ t.ikkeLaster }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:320px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:#51565C"><button onClick="{{ tilSaker }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:4px;color:#016D5E;font-weight:600">{{ ik16.pil_venstre }}Saker</button><span>{{ sak.nr }}</span><span style="display:flex;align-items:center;gap:6px;color:{{ sak.p.fg }};font-weight:{{ sak.p.vekt }}"><span style="display:flex;align-items:flex-end;gap:2px;height:16px"><sc-for list="{{ sak.p.stolper }}" as="b" hint-placeholder-count="4"><span style="width:3px;height:{{ b.h }};border-radius:1px;background:{{ b.bg }}"></span></sc-for></span>{{ sak.p.navn }}</span><span style="display:flex;align-items:center;gap:6px">{{ sak.kildeIkon }}{{ sak.kilde }}</span><span>Opprettet {{ sak.opprettet }}</span></div>
+      <h1 style="margin:0;font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-0.8px">{{ sak.emne }}</h1>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;font-size:13px;color:{{ sak.f.fg }};font-weight:{{ sak.f.vekt }};background:{{ sak.f.bg }};box-shadow:{{ sak.f.ring }}">{{ sak.f.ikon }}{{ sak.f.tekst }}</span><span style="font-size:13px;color:#62686F">Svarfrist for {{ sak.priLiten }}: {{ sak.svarfrist }} (eksempel)</span></div>
+    </div>
+    <div role="group" aria-label="Status" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6">
+      <sc-for list="{{ statusValg }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};font-weight:{{ f.vekt }}">{{ f.navn }}</button></sc-for>
+    </div>
+  </div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke sende svaret</b><span style="font-size:14px">E-posttjenesten svarte ikke. Svaret er lagret som utkast og sendes når du prøver igjen.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:minmax(0,1.55fr) minmax(340px,1fr);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Tråd</h2><span style="font-size:13px;color:#62686F">Interne notater ser bare du</span></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ traad }}" as="m" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px">
+              <span style="width:32px;height:32px;border-radius:50%;background:{{ m.avBg }};color:{{ m.avFg }};box-shadow:{{ m.ring }};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ m.init }}</span>
+              <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="font-size:14px">{{ m.hvem }}</b><span style="display:{{ m.visEtikett }};font-size:12px;font-weight:600;color:{{ m.etFg }}">{{ m.etikett }}</span><span style="display:{{ m.visKanal }};font-size:12px;color:#62686F">{{ m.kanal }}</span><span style="flex:1"></span><span style="font-size:12px;color:#62686F">{{ m.tid }}</span></div>
+                <div style="padding:12px 14px;border-radius:12px;background:{{ m.bg }};box-shadow:{{ m.ring }};text-wrap:pretty;font-size:14px">{{ m.tekst }}</div>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ traadTom }}" hint-placeholder-val="{{ false }}"><div style="padding:24px 0;text-align:center;color:#51565C;display:flex;flex-direction:column;gap:4px"><b style="color:#1A1D22">Ingen meldinger ennå</b><span style="font-size:14px">Saken er opprettet av Eirik. Skriv det første svaret nedenfor.</span></div></sc-if>
+        </div>
+        <div style="padding:14px 18px 18px;box-shadow:inset 0 1px 0 #E3E6EA;display:flex;flex-direction:column;gap:10px;background:#F3F5F8">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div style="display:flex;padding:2px;border-radius:10px;background:#E3E6EA"><sc-for list="{{ komp.faner }}" as="f" hint-placeholder-count="2"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }};box-shadow:{{ f.ring }}">{{ f.navn }}</button></sc-for></div>
+            <span style="flex:1"></span>
+            <button onClick="{{ komp.veiledning }}" style="all:unset;cursor:pointer;height:30px;padding:0 10px;border-radius:8px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#016D5E">{{ ik16.lenke }}Lenke til brukerveiledningen</button>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span style="font-size:12px;color:#51565C">Svarmaler</span><sc-for list="{{ komp.maler }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.klikk }}" style="all:unset;cursor:pointer;height:28px;padding:0 10px;border-radius:999px;font-size:13px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6" style-hover="box-shadow:inset 0 0 0 1px #7B8188">{{ m.navn }}</button></sc-for></div>
+          <textarea rows="4" value="{{ komp.tekst }}" onChange="{{ komp.sett }}" placeholder="{{ komp.plass }}" style="border:0;border-radius:10px;padding:10px 12px;box-shadow:{{ komp.ring }};background:#FFFFFF;resize:vertical;outline-color:#05806F;font-size:14px"></textarea>
+          <div style="display:flex;align-items:center;gap:10px"><span style="flex:1;font-size:13px;color:{{ komp.hintFg }}">{{ komp.hint }}</span><button onClick="{{ komp.send }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:{{ komp.knappBg }};color:{{ komp.knappFg }};display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.sendt }}{{ komp.knapp }}</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Tidsføring</h2><span style="font-size:13px;color:#62686F">Denne saken: {{ tid.sum }}</span></div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:14px;box-shadow:inset 0 -1px 0 #E3E6EA">
+          <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;color:#62686F">{{ tid.status }}</span><span style="font-size:28px;font-weight:700;letter-spacing:-0.5px;font-variant-numeric:tabular-nums">{{ tid.klokke }}</span></div>
+          <button onClick="{{ tid.toggle }}" style="all:unset;cursor:pointer;height:40px;padding:0 18px;border-radius:10px;background:{{ tid.knappBg }};color:{{ tid.knappFg }};box-shadow:{{ tid.knappRing }};display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px"><span style="width:10px;height:10px;border-radius:{{ tid.formR }};background:currentColor"></span>{{ tid.knapp }}</button>
+        </div>
+        <sc-for list="{{ tid.rader }}" as="r" hint-placeholder-count="2"><div style="display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 18px;box-shadow:{{ r.skille }};font-size:14px"><span style="color:#62686F;font-size:13px">{{ r.dato }}</span><div style="display:flex;flex-direction:column;min-width:0"><span>{{ r.tekst }}</span><span style="font-size:12px;color:#62686F">{{ r.fra }}–{{ r.til }} · {{ r.hvem }}</span></div><b>{{ r.varighet }}</b></div></sc-for>
+        <div style="padding:12px 18px;display:grid;grid-template-columns:80px minmax(0,1fr) auto;gap:8px;box-shadow:inset 0 1px 0 #E3E6EA;background:#F3F5F8">
+          <label style="display:flex;align-items:center;gap:4px;height:34px;padding:0 8px;border-radius:8px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #7B8188;font-size:14px"><input value="{{ tid.man }}" onChange="{{ tid.settMan }}" inputmode="numeric" style="border:0;outline:0;width:30px;background:transparent;text-align:right"><span style="color:#62686F">min</span></label>
+          <input value="{{ tid.manTekst }}" onChange="{{ tid.settManTekst }}" placeholder="Hva ble gjort" style="height:34px;box-sizing:border-box;border:0;border-radius:8px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF;font-size:14px;min-width:0">
+          <button onClick="{{ tid.fore }}" style="all:unset;cursor:pointer;height:34px;padding:0 12px;border-radius:8px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF;font-weight:600;font-size:14px;display:flex;align-items:center">Før tid</button>
+        </div>
+        <div style="padding:12px 18px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 1px 0 #E3E6EA">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#51565C">Inkluderte timer, {{ sak.kundeKort }}</span><b>{{ tid.kunde }}</b></div>
+          <div style="height:8px;border-radius:4px;background:#E3E6EA;overflow:hidden"><div style="height:100%;width:{{ tid.bar }};background:{{ tid.barBg }};border-radius:4px"></div></div>
+          <span style="font-size:13px;color:{{ tid.hintFg }}">{{ tid.kundeHint }}</span>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Kontakt og kunde</h2><a href="./60-201_admin_pc.dc.html#kunder" style="font-size:14px;font-weight:600">Åpne kunden</a></div>
+        <div style="padding:12px 18px;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center"><span style="width:36px;height:36px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ sak.init }}</span><div style="display:flex;flex-direction:column;min-width:0"><b>{{ sak.kontakt }}</b><span style="font-size:13px;color:#51565C">{{ sak.rolle }}</span><span style="font-size:13px;color:#51565C">{{ sak.tlf }} · {{ sak.epost }}</span></div></div>
+        <div style="padding:10px 18px 14px;display:grid;grid-template-columns:90px minmax(0,1fr);gap:4px 12px;font-size:14px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="color:#62686F">Butikk</span><span>{{ sak.butikk }}</span><span style="color:#62686F">Kunde</span><span>{{ sak.kunde }}</span><span style="color:#62686F">Pakker</span><span>{{ sak.pakker }}</span></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><span style="display:flex;color:#51565C">{{ ik.hjelp }}</span><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">{{ hjelp.tittel }}</h2></div>
+        <sc-if value="{{ hjelp.vis }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:12px 18px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 12px;font-size:14px"><sc-for list="{{ hjelp.felt }}" as="f" hint-placeholder-count="4"><span style="color:#62686F">{{ f.navn }}</span><span style="min-width:0;overflow-wrap:anywhere">{{ f.verdi }}</span></sc-for></div>
+          <sc-if value="{{ hjelp.harBilde }}" hint-placeholder-val="{{ true }}">
+            <div style="margin:0 18px 16px;border-radius:10px;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden">
+              <div style="height:150px;background:repeating-linear-gradient(135deg,#F3F5F8 0 10px,#E9ECF0 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#51565C">skjermbilde fra brukeren</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;box-shadow:inset 0 1px 0 #E3E6EA">{{ ik16.kamera }}<span style="flex:1">{{ hjelp.skjermbilde }}</span><a href="#" style="font-weight:600">Åpne</a></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hjelp.ingenBilde }}" hint-placeholder-val="{{ false }}"><div style="padding:0 18px 14px;font-size:13px;color:#62686F">Brukeren la ikke ved skjermbilde.</div></sc-if>
+        </sc-if>
+        <sc-if value="{{ hjelp.ikkeVis }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 18px;font-size:14px;color:#51565C">Kom på e-post til support@hengsel.no. E-post har ikke med side, versjon eller nettleser.</div></sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</sc-if>
+
+<!-- SB3 Timer -->
+<sc-if value="{{ v.timer }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Timer</h1><span style="font-size:14px;color:#51565C">Inkluderte timer per måned: 1, 2 eller 3 per butikk etter pakke, første år. {{ timeprisTekst }}</span></div>
+    <div style="display:flex;align-items:center;gap:4px;height:36px;padding:0 4px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"><span style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik16.pil_venstre }}</span><b style="font-size:14px;padding:0 6px">Oktober 2026</b><span style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#62686F">{{ ik16.pil_hoyre }}</span></div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1040px;font-size:14px">
+      <div style="display:grid;grid-template-columns:minmax(0,1.3fr) 90px 90px minmax(260px,1.6fr) 140px;gap:16px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Kunde</span><span style="text-align:right">Inkludert</span><span style="text-align:right">Brukt</span><span>Forbruk</span><span>Status</span></div>
+      <sc-for list="{{ timerRader }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,1.3fr) 90px 90px minmax(260px,1.6fr) 140px;gap:16px;align-items:center;padding:14px 18px;box-shadow:{{ r.skille }}">
+          <div style="display:flex;flex-direction:column;min-width:0"><b>{{ r.kunde }}</b><span style="font-size:13px;color:#51565C">{{ r.butikker }} · {{ r.saker }}</span><span style="font-size:12px;color:#62686F">{{ r.aar }}</span></div>
+          <span style="text-align:right">{{ r.inkl }}</span><b style="text-align:right">{{ r.brukt }}</b>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="position:relative;height:10px;border-radius:5px;background:#E3E6EA;display:flex;overflow:hidden"><span style="height:100%;width:{{ r.fyll }};background:#05806F"></span><span style="height:100%;width:{{ r.overB }};background:#80378C"></span></div>
+            <div style="position:relative;height:0"><span style="position:absolute;left:{{ r.merke }};top:-20px;width:2px;height:14px;background:#1A1D22;transform:translateX(-1px)"></span></div>
+            <span style="font-size:13px;color:{{ r.linjeFg }};font-weight:500">{{ r.linje }} <a href="#" onClick="{{ r.klikkFaktura }}" style="display:{{ r.visLenke }};font-weight:600;margin-left:4px">Se fakturakjøringen</a></span>
+          </div>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ r.s.bg }};color:{{ r.s.fg }};box-shadow:inset 0 0 0 1px {{ r.s.kant }};white-space:nowrap">{{ r.s.navn }}</span></span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#51565C"><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:8px;border-radius:2px;background:#05806F"></span>Brukt innenfor inkludert</span><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:8px;border-radius:2px;background:#80378C"></span>Ut over inkludert</span><span style="display:flex;align-items:center;gap:6px"><span style="width:2px;height:12px;background:#1A1D22"></span>Inkluderte timer</span><span>På grensen = 90 % eller mer brukt.</span></div>
+</sc-if>
+
+<!-- SO2 Oppstarter i gang -->
+<sc-if value="{{ v.oppstart }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Oppstart</h1><span style="font-size:14px;color:#51565C">Ni punkter fra signert avtale til første faktura. Oppstarten åpnes når avtalen sendes til signering.</span></div><button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.pluss }}Ny oppstart</button></div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1040px;font-size:14px">
+      <div style="display:grid;grid-template-columns:minmax(0,1.3fr) 110px 200px minmax(0,1.5fr) 150px;gap:16px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>I gang</span><span>Oppstart</span><span>Fremdrift</span><span>Neste punkt</span><span>Status</span></div>
+      <sc-for list="{{ oppIGang }}" as="o" hint-placeholder-count="2">
+        <div onClick="{{ o.klikk }}" style="display:grid;grid-template-columns:minmax(0,1.3fr) 110px 200px minmax(0,1.5fr) 150px;gap:16px;align-items:center;padding:14px 18px;box-shadow:{{ o.skille }};cursor:pointer" style-hover="background:#F3F5F8">
+          <div style="display:flex;flex-direction:column"><b>{{ o.kunde }}</b><span style="font-size:13px;color:#62686F">Avtale {{ o.avtale }}</span></div>
+          <span>{{ o.start }}</span>
+          <div style="display:flex;flex-direction:column;gap:5px"><div style="height:8px;border-radius:4px;background:#E3E6EA;overflow:hidden"><div style="height:100%;width:{{ o.bar }};background:#05806F;border-radius:4px"></div></div><span style="font-size:13px;color:#51565C">{{ o.fremdrift }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="display:flex;align-items:center;gap:8px">{{ o.neste }}<span style="display:{{ o.visHvem }};font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:{{ o.hv.bg }};color:{{ o.hv.fg }};box-shadow:inset 0 0 0 1px {{ o.hv.kant }}">{{ o.hv.navn }}</span></span><span style="display:{{ o.visStopper }};align-items:center;gap:6px;font-size:13px;font-weight:600;color:#9E2D28">{{ ik16.stoppet }}Stopper: {{ o.stopper }}</span></div>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ o.s.bg }};color:{{ o.s.fg }};box-shadow:inset 0 0 0 1px {{ o.s.kant }}">{{ o.s.navn }}</span></span>
+        </div>
+      </sc-for>
+      <div style="display:flex;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 1px 0 #E3E6EA,inset 0 -1px 0 #E3E6EA">Fullført</div>
+      <sc-for list="{{ oppFerdig }}" as="o" hint-placeholder-count="2">
+        <div onClick="{{ o.klikk }}" style="display:grid;grid-template-columns:minmax(0,1.3fr) 110px 200px minmax(0,1.5fr) 150px;gap:16px;align-items:center;padding:10px 18px;box-shadow:{{ o.skille }};cursor:pointer;color:#51565C" style-hover="background:#F3F5F8">
+          <span style="font-weight:600;color:#1A1D22">{{ o.kunde }}</span><span>{{ o.start }}</span><span style="font-size:13px">{{ o.fremdrift }}</span><span style="font-size:13px">{{ o.neste }}</span>
+          <span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ o.s.bg }};color:{{ o.s.fg }};box-shadow:inset 0 0 0 1px {{ o.s.kant }}">{{ o.s.navn }}</span></span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SO1 Oppstart per kunde -->
+<sc-if value="{{ v.oppstart_kunde }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <button onClick="{{ tilOppstarter }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:4px;color:#016D5E;font-weight:600;font-size:13px">{{ ik16.pil_venstre }}Oppstarter</button>
+    <span style="flex:1"></span>
+    <div role="group" aria-label="Kunde" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"><sc-for list="{{ oppValg }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 10px;border-radius:8px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};font-weight:{{ f.vekt }}">{{ f.navn }}</button></sc-for></div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr) 280px;gap:24px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:2px;padding-right:24px;box-shadow:inset -1px 0 0 #E3E6EA"><span style="font-size:13px;color:#51565C">Oppstartsdato</span><span style="font-size:32px;line-height:1.1;font-weight:700;letter-spacing:-1px">{{ opp.start }}</span><span style="font-size:13px;font-weight:600;color:#016D5E">{{ opp.igjen }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><h1 style="margin:0;font-size:24px;line-height:1.15;font-weight:700;letter-spacing:-0.6px">{{ opp.kunde }}</h1><span style="color:#51565C;font-size:14px">Avtale {{ opp.avtale }} · Ansvarlig: Eirik</span></div>
+    <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#51565C">Fremdrift</span><b>{{ opp.fremdrift }}</b></div><div style="height:10px;border-radius:5px;background:#E3E6EA;overflow:hidden"><div style="height:100%;width:{{ opp.bar }};background:#05806F;border-radius:5px"></div></div></div>
+  </div>
+  <sc-if value="{{ opp.harStopp }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:14px;align-items:flex-start;padding:14px 18px;border-radius:14px;background:#FFFFFF;box-shadow:inset 0 0 0 2px #9E2D28">
+      <span style="width:36px;height:36px;flex:none;border-radius:10px;background:#FFEBE8;color:#9E2D28;display:flex;align-items:center;justify-content:center">{{ ik.stoppet }}</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:3px"><b style="color:#9E2D28;font-size:16px">{{ opp.stoppTittel }}</b><span style="text-wrap:pretty">{{ opp.stoppTekst }} {{ opp.stoppEtter }}</span><span style="display:{{ opp.visVenter }};font-size:13px;color:#51565C">{{ opp.venter }}</span></div>
+      <button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;white-space:nowrap">{{ ik.sendt }}Send påminnelse</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke lagre endringen</b><span style="font-size:14px">Status for «Brukere opprettet» ble ikke lagret. Sjekklisten under viser det som sist ble lagret.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Sjekkliste</h2><span style="font-size:13px;color:#62686F">Klikk på status for å endre</span></div>
+    <div style="display:grid;grid-template-columns:40px minmax(0,1fr) 100px 150px 150px;gap:14px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span></span><span>Punkt</span><span>Ansvarlig</span><span>Dato</span><span>Status</span></div>
+    <sc-for list="{{ sjekk }}" as="p" hint-placeholder-count="9">
+      <div style="display:grid;grid-template-columns:40px minmax(0,1fr) 100px 150px 150px;gap:14px;align-items:start;padding:12px 18px;box-shadow:inset 0 1px 0 #E3E6EA">
+        <span style="width:28px;height:28px;border-radius:50%;background:{{ p.iBg }};color:{{ p.iFg }};box-shadow:{{ p.iRing }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ p.ikon }}</span>
+        <div style="display:flex;flex-direction:column;gap:3px;min-width:0;padding-top:3px">
+          <b style="color:{{ p.punktFg }}">{{ p.nr }}. {{ p.punkt }}</b>
+          <span style="display:{{ p.visDetalj }};font-size:13px;color:#51565C;text-wrap:pretty">{{ p.detalj }}</span>
+          <div style="display:{{ p.visOkter }};grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+            <sc-for list="{{ p.okter }}" as="k" hint-placeholder-count="0"><div style="padding:10px 12px;border-radius:10px;background:#F3F5F8;display:flex;flex-direction:column;gap:2px;font-size:13px"><b style="font-size:14px">{{ k.navn }}</b><span>{{ k.dato }} · {{ k.sted }}</span><span style="color:#51565C">Deltakere: {{ k.deltakere }}</span></div></sc-for>
+          </div>
+        </div>
+        <span style="padding-top:4px"><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ p.hv.bg }};color:{{ p.hv.fg }};box-shadow:inset 0 0 0 1px {{ p.hv.kant }}">{{ p.hv.navn }}</span></span>
+        <span style="font-size:14px;color:#51565C;padding-top:3px">{{ p.dato }}</span>
+        <span style="padding-top:2px"><button onClick="{{ p.bytt }}" style="all:unset;cursor:pointer;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ p.s.bg }};color:{{ p.s.fg }};box-shadow:inset 0 0 0 1px {{ p.s.kant }};white-space:nowrap">{{ p.s.navn }}</button></span>
+      </div>
+    </sc-for>
+    <sc-if value="{{ t.laster }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px"><div style="height:40px;border-radius:8px;background:#E3E6EA"></div><div style="height:40px;border-radius:8px;background:#E3E6EA"></div><div style="height:40px;border-radius:8px;background:#E3E6EA"></div><span style="font-size:13px;color:#51565C">Henter sjekklisten …</span></div></sc-if>
+    <sc-if value="{{ opp.tom }}" hint-placeholder-val="{{ false }}"><div style="padding:40px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.prosjektplan }}</span><b style="font-size:16px">Ingen sjekkliste ennå</b><span style="color:#51565C;max-width:440px">Sjekklisten lages fra malen med de ni punktene når avtalen sendes til signering.</span><button style="all:unset;cursor:pointer;margin-top:6px;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600;font-size:14px">Lag sjekkliste fra mal</button></div></sc-if>
+  </div>
+</sc-if>
+
+<!-- SC1 Abonnement -->
+<sc-if value="{{ v.abonnement }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">Abonnement</h1>
+    <div role="group" aria-label="Kunde" style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"><sc-for list="{{ abValg }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:30px;padding:0 10px;border-radius:8px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};font-weight:{{ f.vekt }}">{{ f.navn }}</button></sc-for></div>
+    <button onClick="{{ aapneEndring }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px" style-hover="background:#007665">{{ ik.pluss }}Ny endring</button>
+  </div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke regne ut abonnementet</b><span style="font-size:14px">Prislisten 2026.2 kunne ikke hentes. Beløpene under er fra 13.10 kl. 22:00 og kan være utdatert.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <sc-if value="{{ t.laster }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:16px"><div style="height:86px;border-radius:14px;background:#E3E6EA"></div><div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px"><div style="height:380px;border-radius:14px;background:#E3E6EA"></div><div style="height:380px;border-radius:14px;background:#E3E6EA"></div></div><span style="font-size:13px;color:#51565C">Henter abonnementet …</span></div></sc-if>
+  <sc-if value="{{ ab.tom }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.ordre }}</span><b style="font-size:16px">Ingen abonnement ennå</b><span style="color:#51565C;max-width:460px">Abonnementet lages fra avtalen når begge har signert. Linjene hentes fra tilbudet og prislisten.</span></div></sc-if>
+  <sc-if value="{{ ab.vis }}" hint-placeholder-val="{{ true }}">
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px 20px;align-items:center">
+    <div style="display:flex;flex-direction:column;grid-column:span 2"><b style="font-size:18px">{{ ab.kunde }}</b><span style="font-size:13px;color:#51565C">{{ ab.linje }}</span></div>
+    <sc-for list="{{ ab.fakta }}" as="f" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;color:#62686F">{{ f.navn }}</span><span style="font-weight:600;white-space:nowrap">{{ f.verdi }}</span></div></sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,2.2fr) minmax(300px,1fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto;font-size:14px">
+      <div style="min-width:720px">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Linjer per butikk</h2><span style="font-size:13px;color:#62686F">Per måned uten mva</span></div>
+      <div style="display:grid;grid-template-columns:minmax(170px,1.6fr) 76px 64px 104px 70px 86px 90px;gap:10px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Butikk</span><span>Pakke</span><span style="text-align:right">Brukere</span><span style="text-align:right">Ekstra brukere</span><span style="text-align:right">Montører</span><span style="text-align:right">Pakke</span><span style="text-align:right">Sum</span></div>
+      <sc-for list="{{ ab.rader }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(170px,1.6fr) 76px 64px 104px 70px 86px 90px;gap:10px;align-items:center;height:42px;padding:0 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.butikk }}</span><span>{{ r.pakke }}</span><span style="text-align:right">{{ r.brukere }}</span><span style="text-align:right;color:#51565C">{{ r.ekstra }}</span><span style="text-align:right">{{ r.montorer }}</span><span style="text-align:right">{{ r.pakkeKr }}</span><span style="text-align:right;font-weight:600">{{ r.sum }}</span></div></sc-for>
+      <div style="display:flex;justify-content:space-between;padding:11px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span>{{ ab.ute }}</span><span style="font-weight:600">{{ ab.uteKr }}</span></div>
+      <sc-if value="{{ ab.harRabatt }}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:space-between;padding:11px 18px;box-shadow:inset 0 1px 0 #E3E6EA;background:#E0F4EE;color:#016D5E"><span>{{ ab.rabattTekst }}</span><b>{{ ab.rabatt }}</b></div></sc-if>
+      <sc-if value="{{ ab.ingenRabatt }}" hint-placeholder-val="{{ false }}"><div style="padding:11px 18px;box-shadow:inset 0 1px 0 #E3E6EA;color:#51565C;font-size:13px">{{ ab.rabattMangler }}</div></sc-if>
+      <sc-for list="{{ ab.tillegg }}" as="x" hint-placeholder-count="1"><div style="display:flex;justify-content:space-between;padding:11px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span>{{ x.navn }} <span style="font-size:12px;color:#62686F">tillegg, uten rabatt</span></span><span style="font-weight:600">{{ x.belop }}</span></div></sc-for>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:14px 18px;box-shadow:inset 0 1px 0 #CDD1D6;background:#F3F5F8"><b>Per måned uten mva</b><b style="text-align:right;font-size:17px">{{ ab.netto }}</b><span style="color:#51565C">Mva 25 %</span><span style="text-align:right;color:#51565C">{{ ab.mva }}</span><span style="color:#51565C">Per måned med mva</span><span style="text-align:right;color:#51565C">{{ ab.inkl }}</span></div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Endringer</h2><span style="font-size:13px;color:#62686F">Nyeste først</span></div>
+      <div style="padding:6px 18px 14px">
+        <sc-for list="{{ ab.historikk }}" as="h" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;padding:10px 0;box-shadow:{{ h.skille }};font-size:14px"><span style="color:#51565C;font-variant-numeric:tabular-nums">{{ h.dato }}</span><div style="display:flex;flex-direction:column;gap:2px"><span>{{ h.tekst }} <span style="display:{{ h.ny }};font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF">Ny</span></span><span style="font-size:12px;color:#62686F">{{ h.endring }} · {{ h.hvem }}</span></div></div></sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</sc-if>
+
+<!-- SC2 Fakturakjøring -->
+<sc-if value="{{ v.kjoring }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Fakturakjøring {{ kj.mnd }}</h1><span style="font-size:14px;color:#51565C">Faktureres forskuddsvis {{ kj.dato }}. Endringer er markert mot {{ kj.forrige }}.</span></div>
+    <div style="display:flex;gap:6px"><sc-for list="{{ kj.statuser }}" as="s" hint-placeholder-count="3"><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ s.bg }};color:{{ s.fg }};box-shadow:inset 0 0 0 1px {{ s.kant }}">{{ s.navn }}</span></sc-for></div>
+    <button onClick="{{ kj.send }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:{{ kj.knappBg }};color:{{ kj.knappFg }};display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.sendt }}{{ kj.knapp }}</button>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:#F3F5F8;box-shadow:inset 0 0 0 1px #CDD1D6;font-size:13px;color:#51565C"><span style="display:flex">{{ ik16.hjelp }}</span>Hvordan PowerOffice kobles til er ikke avklart. Knappen og statusene Klar, Sendt og Feil er tegnet, ikke koblingen.</div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>PowerOffice svarte ikke</b><span style="font-size:14px">Ingen fakturaer ble sendt. Forhåndsvisningen under er riktig. Prøv å sende igjen om litt.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <sc-if value="{{ kj.vis }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+      <sc-for list="{{ fakturaer }}" as="f" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px {{ f.kant }},0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="font-size:15px;flex:1">{{ f.kunde }}</b><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ f.s.bg }};color:{{ f.s.fg }};box-shadow:inset 0 0 0 1px {{ f.s.kant }}">{{ f.s.navn }}</span></div>
+          <div style="display:{{ f.visFeil }};gap:8px;align-items:center;padding:9px 18px;background:#FFEBE8;color:#9E2D28;font-size:13px;font-weight:500">{{ ik16.stoppet }}{{ f.feil }}</div>
+          <div style="display:{{ f.visEndret }};gap:6px;flex-wrap:wrap;align-items:center;padding:9px 18px;box-shadow:inset 0 -1px 0 #E3E6EA;font-size:13px"><span style="color:#51565C">Endret:</span><sc-for list="{{ f.endret }}" as="e" hint-placeholder-count="1"><span style="padding:2px 9px;border-radius:999px;background:#E7F1FF;color:#1A57AD;box-shadow:inset 0 0 0 1px #A0C6FF;font-weight:600;font-size:12px">{{ e.t }}</span></sc-for></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 18px"><span>Abonnement, se Abonnement for linjene</span><span>{{ f.fast }}</span></div>
+          <sc-for list="{{ f.engang }}" as="x" hint-placeholder-count="1"><div style="display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:12px;padding:9px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="font-size:12px;font-weight:600;color:#51565C;padding-top:2px">{{ x.type }}</span><span>{{ x.tekst }}</span><span>{{ x.belop }}</span></div></sc-for>
+          <div style="display:flex;gap:18px;justify-content:flex-end;padding:10px 18px;background:#F3F5F8;box-shadow:inset 0 1px 0 #E3E6EA;font-size:13px;color:#51565C"><span style="display:{{ f.visIngen }}">Ingen endring siden oktober</span><span style="flex:1"></span><span>Uten mva <b style="color:#1A1D22">{{ f.uten }}</b></span><span>Mva {{ f.mva }}</span><span>Med mva <b style="color:#1A1D22">{{ f.med }}</b></span></div>
+        </div>
+      </sc-for>
+      <sc-for list="{{ kj.skjelett }}" as="s" hint-placeholder-count="0"><div style="height:120px;border-radius:14px;background:#E3E6EA"></div></sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:80px">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+        <div style="padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700">Sum for kjøringen</h2></div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:14px 18px"><span style="color:#51565C">Fakturaer</span><span style="text-align:right">{{ kj.antall }}</span><b>Sum uten mva</b><b style="text-align:right;font-size:17px">{{ kj.uten }}</b><span style="color:#51565C">Mva 25 %</span><span style="text-align:right;color:#51565C">{{ kj.mva }}</span><b>Sum med mva</b><b style="text-align:right">{{ kj.med }}</b></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+        <div style="padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700">Engangslinjer</h2></div>
+        <sc-for list="{{ kj.engang }}" as="e" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:12px;padding:10px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><span>{{ e.navn }}</span><b>{{ e.verdi }}</b></div></sc-for>
+        <div style="padding:10px 18px 14px;font-size:13px;color:#51565C;text-wrap:pretty;box-shadow:inset 0 1px 0 #E3E6EA">Viderefakturering er kostpris + 15 %, uten kjederabatt. Etablering har ikke rabatt.</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ kj.tom }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.fakturaer }}</span><b style="font-size:16px">Ingen fakturaer i november ennå</b><span style="color:#51565C;max-width:460px">Kjøringen fylles fra abonnementene, ført tid og viderefakturering 3 dager før den 1.</span></div></sc-if>
+</sc-if>
+
+<!-- SC3 KPI -->
+<sc-if value="{{ v.kpi }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">KPI-justering 2026</h1><span style="font-size:14px;color:#51565C">Årlig, på avtalens årsdag. Prosenten legges inn for hånd. E-posten til kunden sendes ikke automatisk.</span></div>
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 20px;display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap">
+    <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:14px">KPI siste 12 måneder</span><span style="display:flex;align-items:center;gap:6px;height:40px;width:130px;box-sizing:border-box;padding:0 12px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188"><input value="{{ kpi.prosent }}" onChange="{{ kpi.sett }}" inputmode="decimal" style="border:0;outline:0;width:100%;font-size:18px;font-weight:700;background:transparent"><span style="color:#51565C">%</span></span></label>
+    <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:14px;display:flex;gap:6px;align-items:center">Varsel til kunden <span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></span><span style="display:flex;align-items:center;gap:6px;height:40px;width:170px;box-sizing:border-box;padding:0 12px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188"><input value="{{ kpi.dager }}" onChange="{{ kpi.settDager }}" inputmode="numeric" style="border:0;outline:0;width:40px;font-size:16px;font-weight:600;background:transparent"><span style="color:#51565C">dager før</span></span></label>
+    <span style="font-size:13px;color:#51565C;max-width:420px;text-wrap:pretty">Ny pris = pris i dag × (1 + KPI). Avrundes til hele kroner. Gjelder pakker, brukere, Ute og tillegg. Viderefakturering justeres ikke.</span>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.9fr) minmax(340px,1fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto;font-size:14px">
+      <div style="min-width:700px">
+      <div style="padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700">Nye priser per kunde</h2></div>
+      <div style="display:grid;grid-template-columns:minmax(160px,1.4fr) 92px 92px 90px 90px 70px 104px;gap:10px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Kunde</span><span>KPI-dato</span><span>Varsles</span><span style="text-align:right">I dag</span><span style="text-align:right">Ny pris</span><span style="text-align:right">Endring</span><span>Status</span></div>
+      <sc-for list="{{ kpi.rader }}" as="r" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:minmax(160px,1.4fr) 92px 92px 90px 90px 70px 104px;gap:10px;align-items:center;height:46px;padding:0 18px;box-shadow:inset 0 1px 0 #E3E6EA"><b style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.kunde }}</b><span>{{ r.dato }}</span><span style="color:#51565C">{{ r.varsel }}</span><span style="text-align:right;color:#51565C">{{ r.naa }}</span><b style="text-align:right">{{ r.ny }}</b><span style="text-align:right;color:#51565C">{{ r.diff }}</span><span><span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.s.bg }};color:{{ r.s.fg }};box-shadow:inset 0 0 0 1px {{ r.s.kant }};white-space:nowrap">{{ r.s.navn }}</span></span></div></sc-for>
+      <div style="padding:10px 18px;font-size:13px;color:#51565C;box-shadow:inset 0 1px 0 #E3E6EA">Per måned uten mva. Aune Kjøkken skal varsles innen 16.10.</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Utkast til e-post</h2><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Sendes ikke automatisk</span></div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:6px 10px;padding:12px 18px;box-shadow:inset 0 -1px 0 #E3E6EA;font-size:13px"><span style="color:#62686F">Til</span><span>{{ kpi.epost.til }}</span><span style="color:#62686F">Emne</span><b>{{ kpi.epost.emne }}</b></div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px;text-wrap:pretty"><sc-for list="{{ kpi.epost.linjer }}" as="l" hint-placeholder-count="5"><span>{{ l.t }}</span></sc-for></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><button onClick="{{ kpi.epost.merk }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600;font-size:14px">Merk som varslet</button><button onClick="{{ kpi.epost.kopier }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">Kopier e-posten</button></div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SC4 Utestående -->
+<sc-if value="{{ v.utestaende }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Utestående</h1><span style="font-size:14px;color:#51565C">Lest fra PowerOffice {{ ute.hentet }}. Bare til å lese. Purring gjøres i PowerOffice.</span></div><div style="display:flex;gap:20px;font-size:14px"><span style="color:#51565C">Utestående <b style="color:#1A1D22">{{ ute.sum }}</b></span><span style="color:#51565C">Forfalt <b style="color:#9E2D28">{{ ute.forfalt }}</b></span></div></div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:980px;font-size:14px">
+      <div style="display:grid;grid-template-columns:90px minmax(0,1.4fr) 110px 110px 130px 120px minmax(0,1fr);gap:12px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Faktura</span><span>Kunde</span><span>Fakturadato</span><span>Forfall</span><span style="text-align:right">Beløp med mva</span><span style="text-align:right">Over forfall</span><span>Purring</span></div>
+      <sc-for list="{{ ute.rader }}" as="r" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:90px minmax(0,1.4fr) 110px 110px 130px 120px minmax(0,1fr);gap:12px;align-items:center;height:46px;padding:0 18px;box-shadow:{{ r.skille }}"><span style="color:#51565C">{{ r.nr }}</span><b style="font-weight:600">{{ r.kunde }}</b><span style="color:#51565C">{{ r.fakturadato }}</span><span>{{ r.forfall }}</span><span style="text-align:right;font-weight:600">{{ r.belop }}</span><span style="text-align:right;color:{{ r.dagerFg }};font-weight:{{ r.dagerVekt }}">{{ r.dager }}</span><span style="color:#51565C">{{ r.purring }}</span></div></sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ST1 Tall -->
+<sc-if value="{{ v.tall }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Tall</h1><span style="font-size:14px;color:#51565C">Alle beløp er eksempler, uten mva. Inntekt er fra fakturakjøringene.</span></div><div style="display:flex;padding:2px;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6"><span style="height:30px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:600;background:#E0F4EE;color:#016D5E;display:flex;align-items:center">Siste 12 måneder</span><span style="height:30px;padding:0 12px;font-size:13px;font-weight:600;display:flex;align-items:center">I år</span><span style="height:30px;padding:0 12px;font-size:13px;font-weight:600;display:flex;align-items:center">Alt</span></div></div>
+  <sc-if value="{{ t.feil }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:#FFEBE8;color:#9E2D28;box-shadow:inset 0 0 0 1px #F9AEA5"><span style="display:flex">{{ ik.stoppet }}</span><div style="flex:1;display:flex;flex-direction:column"><b>Kunne ikke hente tall fra alle kundemiljøene</b><span style="font-size:14px">Supporttimer og inntekt er oppdatert. Brukere og innlogging er fra 13.10 kl. 22:00.</span></div><button style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:8px;font-weight:600;font-size:14px;box-shadow:inset 0 0 0 1px #9E2D28">Prøv igjen</button></div>
+  </sc-if>
+  <sc-if value="{{ t.laster }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:16px"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px"><div style="height:96px;border-radius:14px;background:#E3E6EA"></div><div style="height:96px;border-radius:14px;background:#E3E6EA"></div><div style="height:96px;border-radius:14px;background:#E3E6EA"></div><div style="height:96px;border-radius:14px;background:#E3E6EA"></div></div><div style="height:280px;border-radius:14px;background:#E3E6EA"></div><span style="font-size:13px;color:#51565C">Regner ut tallene …</span></div></sc-if>
+  <sc-if value="{{ st.tom }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><span style="width:52px;height:52px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.rapporter }}</span><b style="font-size:16px">Ingen tall ennå</b><span style="color:#51565C;max-width:460px">Tallene fylles inn etter den første fakturakjøringen. Salgstrakten fylles fra tavla.</span></div></sc-if>
+  <sc-if value="{{ st.vis }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+    <sc-for list="{{ st.kort }}" as="k" hint-placeholder-count="4"><div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:16px 18px;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;color:#51565C">{{ k.navn }}</span><span style="font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;white-space:nowrap">{{ k.verdi }}</span><span style="font-size:13px;color:#62686F">{{ k.under }}</span></div></sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;align-items:stretch">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Inntekt per måned</h2><span style="font-size:13px;color:#62686F">Tusen kr, uten mva</span></div>
+      <div style="padding:18px 18px 12px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px;align-items:end;height:200px">
+        <sc-for list="{{ st.inntekt }}" as="b" hint-placeholder-count="12"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%"><span style="font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">{{ b.verdi }}</span><span style="width:100%;max-width:44px;height:{{ b.h }};border-radius:6px 6px 2px 2px;background:{{ b.bg }}"></span><span style="font-size:12px;color:#62686F">{{ b.mnd }}</span></div></sc-for>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700">Inntekt per år</h2></div>
+      <sc-for list="{{ st.aar }}" as="a" hint-placeholder-count="3"><div style="display:flex;align-items:baseline;gap:12px;padding:14px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><b>{{ a.aar }}</b><span style="font-size:13px;color:#62686F">{{ a.merknad }}</span></div><span style="font-size:20px;font-weight:700;letter-spacing:-0.4px">{{ a.verdi }}</span></div></sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Kunder og butikker</h2><span style="display:flex;align-items:center;gap:6px;font-size:13px;color:#51565C"><span style="width:10px;height:10px;border-radius:2px;background:#05806F"></span>Kunder</span><span style="display:flex;align-items:center;gap:6px;font-size:13px;color:#51565C"><span style="width:10px;height:10px;border-radius:2px;background:#BCE6DB"></span>Butikker</span></div>
+      <div style="padding:16px 18px 12px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:170px">
+        <sc-for list="{{ st.vekst }}" as="b" hint-placeholder-count="12"><div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%"><div style="display:flex;gap:2px;align-items:flex-end;width:100%;justify-content:center"><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:11px;font-weight:600">{{ b.k }}</span><span style="width:12px;height:{{ b.hk }};border-radius:3px 3px 1px 1px;background:#05806F"></span></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:11px;color:#51565C">{{ b.b }}</span><span style="width:12px;height:{{ b.hb }};border-radius:3px 3px 1px 1px;background:#BCE6DB"></span></div></div><span style="font-size:12px;color:#62686F">{{ b.mnd }}</span></div></sc-for>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Supporttimer mot inkludert</h2><span style="font-size:13px;color:#62686F">Oktober</span></div>
+      <sc-for list="{{ st.timer }}" as="r" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:12px;align-items:center;padding:12px 18px;box-shadow:{{ r.skille }};font-size:14px"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.kunde }}</span><div style="display:flex;flex-direction:column;gap:0"><div style="height:10px;border-radius:5px;background:#E3E6EA;display:flex;overflow:hidden"><span style="height:100%;width:{{ r.fyll }};background:#05806F"></span><span style="height:100%;width:{{ r.overB }};background:#80378C"></span></div><div style="position:relative;height:0"><span style="position:absolute;left:{{ r.merke }};top:-12px;width:2px;height:14px;background:#1A1D22;transform:translateX(-1px)"></span></div></div><span style="text-align:right;font-variant-numeric:tabular-nums">{{ r.brukt }} / {{ r.inkl }}</span></div></sc-for>
+    </div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Driftskost og bidrag per kunde</h2><span style="font-size:13px;color:#62686F">Oktober · supporttime regnet som {{ st.timepris }} i kost (eksempel)</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.3fr) 110px 100px 130px 100px 110px 70px minmax(120px,1fr);gap:12px;align-items:center;height:34px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Kunde</span><span style="text-align:right">Inntekt</span><span style="text-align:right">Database</span><span style="text-align:right">Supporttimer</span><span style="text-align:right">Kost</span><span style="text-align:right">Bidrag</span><span style="text-align:right">Andel</span><span></span></div>
+    <sc-for list="{{ st.drift }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(0,1.3fr) 110px 100px 130px 100px 110px 70px minmax(120px,1fr);gap:12px;align-items:center;height:44px;padding:0 18px;box-shadow:inset 0 1px 0 #E3E6EA"><b style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.kunde }}</b><span style="text-align:right">{{ r.inntekt }}</span><span style="text-align:right;color:#51565C">{{ r.db }}</span><span style="text-align:right;color:#51565C">{{ r.timer }} · {{ r.sk }}</span><span style="text-align:right;color:#51565C">{{ r.kost }}</span><b style="text-align:right">{{ r.bidrag }}</b><span style="text-align:right;color:#51565C">{{ r.pst }}</span><div style="height:8px;border-radius:4px;background:#F3F5F8;overflow:hidden"><div style="height:100%;width:{{ r.bar }};background:#05806F;border-radius:4px"></div></div></div></sc-for>
+    <div style="display:flex;justify-content:space-between;padding:12px 18px;box-shadow:inset 0 1px 0 #CDD1D6;background:#F3F5F8"><b>Sum bidrag per måned</b><b>{{ st.driftSum }}</b></div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start">
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">Salgstrakt</h2><span style="font-size:13px;color:#62686F">Fra Ny til Signert: <b style="color:#1A1D22">{{ st.trakt0 }}</b></span></div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ st.trakt }}" as="s" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:110px minmax(0,1fr) 110px;gap:12px;align-items:center;font-size:14px"><span>{{ s.steg }}</span><div style="height:30px;display:flex"><span style="height:100%;width:{{ s.w }};min-width:36px;border-radius:6px;background:{{ s.bg }};color:{{ s.fg }};display:flex;align-items:center;padding:0 10px;box-sizing:border-box;font-weight:700">{{ s.antall }}</span></div><span style="font-size:13px;color:#51565C;text-align:right">{{ s.overgang }}</span></div></sc-for>
+      </div>
+      <div style="padding:12px 18px 16px;box-shadow:inset 0 1px 0 #E3E6EA;display:flex;flex-direction:column;gap:8px"><b style="font-size:14px">Årsaker til tapt</b>
+        <sc-for list="{{ st.tapt }}" as="x" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:minmax(0,1fr) 120px 24px;gap:12px;align-items:center;font-size:14px"><span>{{ x.grunn }}</span><div style="height:8px;border-radius:4px;background:#F3F5F8;overflow:hidden"><div style="height:100%;width:{{ x.w }};background:#7B8188;border-radius:4px"></div></div><b style="text-align:right">{{ x.antall }}</b></div></sc-for>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+      <div style="padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700">Fornyes de neste 90 dagene</h2></div>
+      <sc-for list="{{ st.fornyes }}" as="f" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:4px;padding:12px 18px;box-shadow:{{ f.skille }};font-size:14px"><div style="display:flex;align-items:center;gap:8px"><b style="flex:1">{{ f.kunde }}</b><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ f.s.bg }};color:{{ f.s.fg }};box-shadow:inset 0 0 0 1px {{ f.s.kant }}">{{ f.s.navn }}</span></div><span style="color:#51565C;font-size:13px">{{ f.dato }} · om {{ f.dager }} · {{ f.perMnd }} per mnd</span><span style="color:#62686F;font-size:13px">{{ f.merknad }}</span></div></sc-for>
+    </div>
+  </div>
+  </sc-if>
+</sc-if>
+
+<!-- SD1 Status -->
+<sc-if value="{{ v.d_status }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Status</h1><span style="font-size:14px;color:#51565C">Leses fra kundemiljøene hvert 5. minutt, sist 10:15. Bare til å lese. Utrulling og fletting skjer ikke herfra.</span></div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1080px;font-size:14px">
+      <div style="display:grid;grid-template-columns:minmax(0,1.5fr) 100px 130px 110px 130px 80px minmax(0,1.1fr);gap:12px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Kundemiljø</span><span>Versjon</span><span>Siste utrulling</span><span style="text-align:right">Feil siste 24 t</span><span>Siste innlogging</span><span style="text-align:right">Brukere</span><span>Sikkerhetskopi</span></div>
+      <sc-for list="{{ miljoer }}" as="m" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:minmax(0,1.5fr) 100px 130px 110px 130px 80px minmax(0,1.1fr);gap:12px;align-items:center;min-height:52px;padding:6px 18px;box-sizing:border-box;box-shadow:{{ m.skille }}"><div style="display:flex;flex-direction:column;min-width:0"><b style="font-weight:600">{{ m.kunde }}</b><span style="font-size:12px;color:#62686F">{{ m.adresse }}</span></div><span style="display:flex;align-items:center;gap:6px">{{ m.versjon }}<span style="display:{{ m.gammel }};font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#E9F1FB;color:#555B64;box-shadow:inset 0 0 0 1px #BDC5CF">Eldre</span></span><span style="color:#51565C">{{ m.utrulling }}</span><span style="text-align:right;color:{{ m.feilFg }};font-weight:{{ m.feilVekt }}">{{ m.feil }}</span><span style="color:#51565C">{{ m.innlogget }}</span><span style="text-align:right">{{ m.brukere }}</span><span style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ m.b.bg }};color:{{ m.b.fg }};box-shadow:inset 0 0 0 1px {{ m.b.kant }}">{{ m.b.navn }}</span><span style="font-size:13px;color:#51565C">{{ m.backupTekst }}</span></span></div></sc-for>
+    </div>
+  </div>
+  <span style="font-size:13px;color:#51565C">Admin leser bare tall: brukere, siste innlogging, versjon og feil. Ordre og sluttkunder ligger i kundemiljøet og kopieres aldri hit.</span>
+</sc-if>
+
+<!-- SD2 Lenker -->
+<sc-if value="{{ v.d_lenker }}" hint-placeholder-val="{{ false }}">
+  <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Lenker</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px">
+    <sc-for list="{{ lenker }}" as="l" hint-placeholder-count="8"><a href="{{ l.href }}" target="_blank" style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);padding:14px 16px;display:grid;grid-template-columns:36px minmax(0,1fr) 16px;gap:12px;align-items:center;color:#1A1D22;text-decoration:none" style-hover="box-shadow:inset 0 0 0 1px #7B8188"><span style="width:36px;height:36px;border-radius:10px;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik.lenke }}</span><div style="display:flex;flex-direction:column;min-width:0"><b>{{ l.navn }}</b><span style="font-size:13px;color:#51565C">{{ l.tekst }}</span><span style="font-size:12px;color:#016D5E">{{ l.adresse }}</span></div><span style="color:#62686F">{{ ik16.pil_hoyre }}</span></a></sc-for>
+  </div>
+</sc-if>
+
+<!-- SD2 Kontoer -->
+<sc-if value="{{ v.d_kontoer }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Kontoer</h1><span style="font-size:14px;color:#51565C">Passord og nøkler ligger bare i 1Password og vises aldri her.</span></div><span style="font-size:14px;color:#51565C">Fast kost per måned <b style="color:#1A1D22">{{ kontoSum }}</b> (eksempel)</span></div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow-x:auto">
+    <div style="min-width:1080px;font-size:14px">
+      <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,1fr) 110px 110px 170px;gap:12px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Tjeneste</span><span>Eier</span><span>Plan</span><span style="text-align:right">Kost per mnd</span><span>Fornyes</span><span>Tilgang</span></div>
+      <sc-for list="{{ kontoer }}" as="k" hint-placeholder-count="9"><div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,1fr) 110px 110px 170px;gap:12px;align-items:center;min-height:46px;padding:6px 18px;box-sizing:border-box;box-shadow:{{ k.skille }}"><span style="display:flex;align-items:center;gap:8px;min-width:0"><b style="font-weight:600">{{ k.tjeneste }}</b><span style="display:{{ k.visMerknad }};font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;color:#51565C;box-shadow:inset 0 0 0 1px #CDD1D6;white-space:nowrap">{{ k.merknad }}</span></span><span style="color:#51565C">{{ k.eier }}</span><span style="color:#51565C">{{ k.plan }}</span><span style="text-align:right">{{ k.kost }}</span><span style="color:{{ k.fornyesFg }};font-weight:{{ k.fornyesVekt }}">{{ k.fornyes }}</span><a href="https://1password.com" target="_blank" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px">{{ ik16.lenke }}1Password · {{ k.hvelv }}</a></div></sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<!-- SD2 Frister -->
+<sc-if value="{{ v.d_frister }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:12px"><h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px;flex:1">Frister</h1><button style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px">{{ ik.pluss }}Ny frist</button></div>
+  <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+    <div style="display:grid;grid-template-columns:minmax(0,1.8fr) 130px 110px 150px 120px;gap:12px;align-items:center;height:36px;padding:0 18px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 -1px 0 #E3E6EA"><span>Frist</span><span>Kategori</span><span>Dato</span><span>Varsel</span><span>Igjen</span></div>
+    <sc-for list="{{ dfrister }}" as="f" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(0,1.8fr) 130px 110px 150px 120px;gap:12px;align-items:center;height:46px;padding:0 18px;box-shadow:{{ f.skille }}"><span style="display:flex;align-items:center;gap:10px"><span style="color:#51565C;display:flex">{{ ik.frist }}</span><b style="font-weight:500">{{ f.tekst }}</b></span><span style="color:#51565C">{{ f.kategori }}</span><span>{{ f.dato }}</span><span style="color:#51565C">{{ f.varsel }}</span><span><span style="display:inline-flex;height:24px;align-items:center;padding:0 8px;border-radius:8px;background:{{ f.bg }};color:{{ f.fg }};font-weight:{{ f.vekt }};font-size:13px">{{ f.igjen }}</span></span></div></sc-for>
+  </div>
+</sc-if>
+
+<!-- SD2 Rutiner -->
+<sc-if value="{{ v.d_rutiner }}" hint-placeholder-val="{{ false }}">
+  <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Rutiner</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px;align-items:start">
+    <sc-for list="{{ rutiner }}" as="g" hint-placeholder-count="3">
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:16px;font-weight:700;flex:1">{{ g.navn }}</h2><span style="font-size:13px;color:#62686F">{{ g.telling }}</span></div>
+        <sc-for list="{{ g.punkter }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.klikk }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;padding:11px 18px;box-shadow:{{ p.skille }};width:100%;box-sizing:border-box" style-hover="background:#F3F5F8"><span style="width:20px;height:20px;border-radius:6px;background:{{ p.bg }};box-shadow:{{ p.ring }};color:#FFFFFF;display:flex;align-items:center;justify-content:center"><span style="display:{{ p.hake }}">{{ ik16.hake }}</span></span><span style="font-size:14px;color:{{ p.fg }};text-decoration:{{ p.strek }}">{{ p.t }}</span></button></sc-for>
+      </div>
+    </sc-for>
+  </div>
+</sc-if>
+
+<!-- Innstillinger -->
+<sc-if value="{{ v.innstillinger }}" hint-placeholder-val="{{ false }}">
+  <h1 style="margin:0;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-0.8px">Innstillinger</h1>
+  <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start">
+    <nav style="display:flex;flex-direction:column;gap:2px;position:sticky;top:80px"><sc-for list="{{ innFaner }}" as="f" hint-placeholder-count="8"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:36px;padding:0 12px;border-radius:8px;display:flex;align-items:center;font-size:14px;background:{{ f.bg }};color:{{ f.fg }};font-weight:{{ f.vekt }}" style-hover="background:#E3E6EA">{{ f.navn }}</button></sc-for></nav>
+    <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6,0 1px 2px rgba(26,29,34,.06);overflow:hidden;font-size:14px">
+      <sc-if value="{{ inn.leverandor }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700">Leverandør</h2><span style="color:#51565C">Selskapet som selger Hengsel. Brukes i tilbud, avtaler og fakturaer. Ikke besluttet.</span></div></div>
+        <div style="padding:16px 20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px">
+          <sc-for list="{{ lev }}" as="f" hint-placeholder-count="5"><label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;display:flex;align-items:center;gap:6px">{{ f.navn }}<span style="display:{{ f.visEks }};font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></span><input value="{{ f.verdi }}" readonly style="height:38px;box-sizing:border-box;border:0;border-radius:10px;padding:0 12px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF"></label></sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ inn.prisliste }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700">Prisliste</h2><span style="color:#51565C">Som SA9. Alle priser er eksempler.</span></div><button onClick="{{ tilPrisliste }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;gap:8px;font-weight:600">Åpne prislisten{{ ik16.pil_hoyre }}</button></div>
+        <sc-for list="{{ prisSammendrag }}" as="f" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px;padding:12px 20px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="color:#51565C">{{ f.navn }}</span><span style="font-weight:500">{{ f.verdi }}</span></div></sc-for>
+      </sc-if>
+      <sc-if value="{{ inn.avtalemaler }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700">Avtalemaler</h2><span style="color:#51565C">Avtaler husker hvilken versjon de ble laget med. Aktiv versjon er låst.</span></div><button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600">{{ ik.last_opp }}Last opp ny versjon</button></div>
+        <div style="display:grid;grid-template-columns:minmax(0,1.5fr) 80px 120px 110px 100px;gap:12px;height:34px;align-items:center;padding:0 20px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8"><span>Mal</span><span>Versjon</span><span>Gjelder fra</span><span>Brukt i</span><span>Status</span></div>
+        <sc-for list="{{ maler }}" as="m" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:minmax(0,1.5fr) 80px 120px 110px 100px;gap:12px;height:46px;align-items:center;padding:0 20px;box-shadow:inset 0 1px 0 #E3E6EA"><span style="display:flex;align-items:center;gap:10px"><span style="color:#51565C;display:flex">{{ ik.prosjekter }}</span><b style="font-weight:600">{{ m.navn }}</b></span><span>{{ m.versjon }}</span><span style="color:#51565C">{{ m.gjelderFra }}</span><span style="color:#51565C">{{ m.brukt }}</span><span><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ m.s.bg }};color:{{ m.s.fg }};box-shadow:inset 0 0 0 1px {{ m.s.kant }}">{{ m.s.navn }}</span></span></div></sc-for>
+      </sc-if>
+      <sc-if value="{{ inn.supportniva }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px">Supportnivå <span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></h2><span style="color:#51565C">Svarfrist per prioritet. Regnes i arbeidstid, hverdager 08–16. Klokka står når saken venter på kunden.</span></div></div>
+        <sc-for list="{{ niva }}" as="n" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:120px minmax(0,1fr) 170px;gap:16px;align-items:center;padding:12px 20px;box-shadow:{{ n.skille }}"><span style="display:flex;align-items:center;gap:8px;color:{{ n.p.fg }};font-weight:{{ n.p.vekt }}"><span style="display:flex;align-items:flex-end;gap:2px;height:16px"><sc-for list="{{ n.p.stolper }}" as="b" hint-placeholder-count="4"><span style="width:3px;height:{{ b.h }};border-radius:1px;background:{{ b.bg }}"></span></sc-for></span>{{ n.p.navn }}</span><span style="color:#51565C">{{ n.eks }}</span><input value="{{ n.frist }}" readonly style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 12px;box-shadow:inset 0 0 0 1px #7B8188;background:#FFFFFF;font-weight:600"></div></sc-for>
+        <div style="padding:14px 20px;box-shadow:inset 0 1px 0 #E3E6EA;background:#F3F5F8;display:flex;flex-direction:column;gap:6px"><b>Inkluderte timer, første år</b><div style="display:flex;gap:20px;flex-wrap:wrap;color:#51565C"><sc-for list="{{ inkl }}" as="k" hint-placeholder-count="3"><span><b style="color:#1A1D22">{{ k.navn }}</b> {{ k.timer }}</span></sc-for></div><span style="font-size:13px;color:#51565C">Hentes fra prislisten. Hva som gjelder fra år 2 er ikke avklart.</span></div>
+      </sc-if>
+      <sc-if value="{{ inn.timepris }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px">Timepris for support <span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></h2><span style="color:#51565C">Brukes for timer ut over de inkluderte. Blir en linje i fakturakjøringen, uten kjederabatt.</span></div>
+        <div style="padding:16px 20px;display:grid;grid-template-columns:repeat(2,minmax(0,280px));gap:14px 20px">
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Pris per time uten mva</span><input value="{{ timepris }}" readonly style="height:38px;box-sizing:border-box;border:0;border-radius:10px;padding:0 12px;box-shadow:inset 0 0 0 1px #7B8188;font-weight:600"></label>
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Føres i</span><input value="Påbegynte 15 minutter" readonly style="height:38px;box-sizing:border-box;border:0;border-radius:10px;padding:0 12px;box-shadow:inset 0 0 0 1px #7B8188"></label>
+        </div>
+      </sc-if>
+      <sc-if value="{{ inn.svarmaler }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700">Svarmaler</h2><span style="color:#51565C">Feltene {fornavn}, {svarfrist} og {lenke} fylles ut i saken.</span></div><button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600">{{ ik.pluss }}Ny mal</button></div>
+        <sc-for list="{{ svarmalerL }}" as="m" hint-placeholder-count="4"><div style="padding:12px 20px;display:flex;flex-direction:column;gap:4px;box-shadow:{{ m.skille }}"><b>{{ m.navn }}</b><span style="color:#51565C;font-family:ui-monospace,Menlo,monospace;font-size:13px">{{ m.tekst }}</span></div></sc-for>
+      </sc-if>
+      <sc-if value="{{ inn.roller }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><div style="flex:1;display:flex;flex-direction:column"><h2 style="margin:0;font-size:18px;font-weight:700">Brukere og roller</h2><span style="color:#51565C">Admin er for Eirik. En supportperson kan få rollen Support senere.</span></div><button style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;gap:8px;font-weight:600">{{ ik.pluss }}Inviter</button></div>
+        <sc-for list="{{ brukere }}" as="b" hint-placeholder-count="2"><div style="display:grid;grid-template-columns:36px minmax(0,1fr) 100px 120px;gap:12px;align-items:center;padding:12px 20px;box-shadow:{{ b.skille }}"><span style="width:36px;height:36px;border-radius:50%;background:#BCE6DB;color:#016D5E;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ b.init }}</span><div style="display:flex;flex-direction:column"><span style="display:flex;gap:6px;align-items:center"><b>{{ b.navn }}</b><span style="display:{{ b.visEks }};font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#FFE9BC;color:#6D5000;box-shadow:inset 0 0 0 1px #E0C07F">Eksempel</span></span><span style="font-size:13px;color:#51565C">{{ b.epost }} · {{ b.tilgang }}</span></div><b>{{ b.rolle }}</b><span style="font-size:13px;color:#62686F">{{ b.sist }}</span></div></sc-for>
+        <div style="display:grid;grid-template-columns:minmax(0,1.6fr) 120px minmax(0,1fr);gap:12px;height:34px;align-items:center;padding:0 20px;font-size:12px;font-weight:600;color:#51565C;background:#F3F5F8;box-shadow:inset 0 1px 0 #E3E6EA"><span>Område</span><span>Eier</span><span>Support</span></div>
+        <sc-for list="{{ tilgang }}" as="r" hint-placeholder-count="11"><div style="display:grid;grid-template-columns:minmax(0,1.6fr) 120px minmax(0,1fr);gap:12px;height:38px;align-items:center;padding:0 20px;box-shadow:inset 0 1px 0 #E3E6EA"><span>{{ r.omr }}</span><span>{{ r.e }}</span><span style="color:{{ r.sFg }};font-weight:{{ r.sVekt }}">{{ r.s }}</span></div></sc-for>
+      </sc-if>
+      <sc-if value="{{ inn.varsler }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px 20px;box-shadow:inset 0 -1px 0 #E3E6EA"><h2 style="margin:0;font-size:18px;font-weight:700">Varsler</h2><span style="color:#51565C">Til eirik@hengsel.no og i Admin.</span></div>
+        <sc-for list="{{ varsler }}" as="n" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:16px;align-items:center;padding:12px 20px;box-shadow:{{ n.skille }}"><div style="display:flex;flex-direction:column"><b>{{ n.navn }}</b><span style="color:#51565C;font-size:13px">{{ n.tekst }}</span></div><button role="switch" aria-checked="{{ n.aria }}" onClick="{{ n.klikk }}" style="all:unset;cursor:pointer;position:relative;width:40px;height:24px;border-radius:12px;background:{{ n.bg }}"><span style="position:absolute;top:2px;left:{{ n.knott }};width:20px;height:20px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,29,34,.25)"></span></button></div></sc-for>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ v.ingen }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#FFFFFF;border-radius:14px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:48px 32px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:640px;margin:32px auto">
+    <span style="width:56px;height:56px;border-radius:50%;background:#F3F5F8;color:#51565C;display:flex;align-items:center;justify-content:center">{{ ik24.stoppet }}</span>
+    <h1 style="margin:4px 0 0;font-size:24px;font-weight:700">Du har ikke tilgang til {{ omrade }}</h1>
+    <span style="color:#51565C;max-width:480px;text-wrap:pretty">Rollen Support gir tilgang til Kunder og Support (saker og timer, uten beløp). Fakturering, Tall, Oppstart, Drift og Innstillinger er bare for Eirik.</span>
+    <div style="display:flex;gap:8px;margin-top:8px"><button onClick="{{ tilSaker }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600;font-size:14px">Til saker</button><a href="mailto:eirik@hengsel.no" style="height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600;font-size:14px;color:#1A1D22">Spør Eirik om tilgang</a></div>
+    <span style="font-size:12px;color:#62686F;margin-top:6px">Feilkode ADM-403</span>
+  </div>
+</sc-if>
+
+    </div>
+  </main>
+
+  <sc-if value="{{ dlgEndring }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:30;background:rgba(26,29,34,.40);display:flex;align-items:flex-start;justify-content:center;padding-top:96px">
+      <div role="dialog" aria-label="Ny endring" style="width:520px;max-width:calc(100vw - 32px);background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px rgba(26,29,34,.08),0 16px 40px -12px rgba(26,29,34,.28);display:flex;flex-direction:column;font-size:14px">
+        <div style="display:flex;align-items:center;padding:16px 18px;box-shadow:inset 0 -1px 0 #E3E6EA"><b style="font-size:17px;flex:1">Ny endring i abonnementet</b><button onClick="{{ lukk }}" aria-label="Lukk" style="all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik.lukk }}</button></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ end.valg }}" as="f" hint-placeholder-count="6"><button onClick="{{ f.klikk }}" style="all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:999px;font-size:13px;background:{{ f.bg }};color:{{ f.fg }};box-shadow:inset 0 0 0 1px {{ f.kant }};font-weight:{{ f.vekt }}">{{ f.navn }}</button></sc-for></div>
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Gjelder fra</span><input type="date" value="{{ end.dato }}" onChange="{{ end.settDato }}" style="height:36px;width:180px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188"></label>
+          <label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600">Hva endres</span><input value="{{ end.tekst }}" onChange="{{ end.settTekst }}" placeholder="F.eks. Granlund Kongsberg: 2 ekstra brukere" style="height:36px;box-sizing:border-box;border:0;border-radius:10px;padding:0 10px;box-shadow:inset 0 0 0 1px #7B8188;outline-color:#05806F"></label>
+          <span style="font-size:13px;color:#51565C">Endringen kommer med i første fakturakjøring etter datoen. Kjederabatten regnes på nytt hvis antall butikker endres.</span>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;padding:14px 18px;box-shadow:inset 0 1px 0 #E3E6EA"><button onClick="{{ lukk }}" style="all:unset;cursor:pointer;height:36px;padding:0 14px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;display:flex;align-items:center;font-weight:600">Avbryt</button><button onClick="{{ end.lagre }}" style="all:unset;cursor:pointer;height:36px;padding:0 16px;border-radius:10px;background:#05806F;color:#FBF9F6;display:flex;align-items:center;font-weight:600">Lagre endring</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:40;background:#1A1D22;color:#FBFDFF;padding:12px 18px;border-radius:12px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 40px -12px rgba(26,29,34,.28);font-weight:500;font-size:14px"><span style="color:#54B9A5;display:flex">{{ ik.hake }}</span>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;rolle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;eirik&quot;,&quot;support&quot;],&quot;default&quot;:&quot;eirik&quot;,&quot;tsType&quot;:&quot;'eirik'|'support'&quot;,&quot;section&quot;:&quot;Rolle&quot;},&quot;startside&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;saker&quot;,&quot;sak&quot;,&quot;timer&quot;,&quot;oppstart&quot;,&quot;oppstart-kunde&quot;,&quot;abonnement&quot;,&quot;kjoring&quot;,&quot;kpi&quot;,&quot;utestaende&quot;,&quot;tall&quot;,&quot;d-status&quot;,&quot;d-lenker&quot;,&quot;d-kontoer&quot;,&quot;d-frister&quot;,&quot;d-rutiner&quot;,&quot;innstillinger&quot;],&quot;default&quot;:&quot;saker&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Rolle&quot;},&quot;tilstand&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;tom&quot;,&quot;laster&quot;,&quot;feil&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;'normal'|'tom'|'laster'|'feil'&quot;,&quot;section&quot;:&quot;Tilstand for Saker, Sak, Oppstart per kunde, Abonnement, Fakturakjøring og Tall&quot;}}">
+class Component extends DCLogic {
+  state = { side: null, sakNr: 'H-1047', oppEier: 'nordli', abEier: 'granlund', fStatus: 'aapne', fPri: 'alle', fKilde: 'alle', fKunde: 'alle', sakStatus: {}, fane: 'svar', svar: '', nye: [], loper: true, sek: 1104, manMin: '15', manTekst: '', nyeTid: [],
+    kpi: '3,1', kpiDager: '30', sendt: false, innst: 'leverandor', rutine: {}, sjekk: {}, abEndringer: [], dlg: null, endHva: 'Ekstra brukere', endDato: '2026-11-01', endTekst: '', varsel: {}, toast: '' };
+  ikon(n, px) {
+    const I = window.HengselIkoner; if (!n || !I || !I[n]) return null;
+    const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } });
+  }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() {
+    this._v = setInterval(() => { if (window.HengselIkoner && window.AdminData && window.AdminBC) { clearInterval(this._v); this.forceUpdate(); } }, 50);
+    this._h = () => { const h = decodeURIComponent(location.hash.slice(1)); if (h) this.setState({ side: h }); };
+    this._h(); window.addEventListener('hashchange', this._h);
+    this._k = setInterval(() => { if (this.state.loper && this.side() === 'sak') this.setState(s => ({ sek: s.sek + 1 })); }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._v); clearInterval(this._k); clearTimeout(this._t); window.removeEventListener('hashchange', this._h); }
+  side() { return this.state.side || this.props.startside || 'saker'; }
+  vis(t) { clearTimeout(this._t); this.setState({ toast: t }); this._t = setTimeout(() => this.setState({ toast: '' }), 3200); }
+  renderVals() {
+    const D = window.AdminData, B = window.AdminBC;
+    if (!D || !B || !window.HengselIkoner) return { meny: [], v: {}, t: {}, ik: {}, ik16: {}, ik24: {} };
+    const st = this.state, kr = D.kr, side = this.side();
+    const rolleId = this.props.rolle === 'support' ? 'support' : 'eirik', R = B.roller[rolleId], erSupport = rolleId === 'support';
+    const tilstand = this.props.tilstand || 'normal';
+    const gaa = (s, ekstra) => () => { this.setState({ side: s, dlg: null, ...(ekstra || {}) }); try { history.replaceState(null, '', '#' + s); } catch (e) {} window.scrollTo(0, 0); };
+    const ut = id => () => { location.href = './' + B.filer.a + '#' + id; };
+    const P = { ny: ['#E7F1FF', '#1A57AD', '#A0C6FF'], pagar: ['#EFEEFF', '#5C46A7', '#C3BBFB'], venter: ['#E9F1FB', '#555B64', '#BDC5CF'], ferdig: ['#E3F7DE', '#1F6D02', '#A5D39B'], varsel: ['#FFE9BC', '#6D5000', '#E0C07F'], feil: ['#FFEBE8', '#9E2D28', '#F9AEA5'], noytral: ['#F3F5F8', '#1A1D22', '#CDD1D6'], sannsynlig: ['#FCE9FF', '#80378C', '#E0B1E7'], furu: ['#E0F4EE', '#016D5E', '#BCE6DB'] };
+    const pill = (navn, p) => ({ navn, bg: p[0], fg: p[1], kant: p[2] });
+    const navnPaa = id => (D.eiere.find(e => e.id === id) || {}).navn || (id === 'hovde' ? 'Hovde Interiør AS' : id);
+    const fT = n => (Math.round(n * 100) / 100).toLocaleString('nb-NO', { maximumFractionDigits: 2 }) + ' t';
+    const skille = i => i ? 'inset 0 1px 0 #E3E6EA' : 'none';
+    const chip = (felt, id, navn, ant) => { const a = st[felt] === id; return { navn, antall: ant == null ? '' : String(ant), klikk: () => this.setState({ [felt]: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; };
+    const seg = (a) => ({ bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#1A1D22', vekt: a ? 600 : 500 });
+
+    // meny og tilgang
+    const aktivId = { sak: 'saker', 'oppstart-kunde': 'oppstart' }[side] || side;
+    const tallFor = { saker: String(B.saker.filter(s => (st.sakStatus[s.nr] || s.status) !== 'lost').length), oppstart: String(B.oppstarter.filter(o => o.status !== 'ferdig').length), kjoring: st.sendt ? '1 feil' : '1 feil', 'd-frister': '2' };
+    const meny = B.meny.filter(m => m[5].includes(R.kode)).map(m => {
+      const [type, id, navn, ik, fil] = m;
+      if (type === 'g') return { erGruppe: true, erPunkt: false, navn: id };
+      const a = id === aktivId;
+      return { erGruppe: false, erPunkt: true, navn, ikon: this.ikon(ik, 20), klikk: fil === 'a' ? ut(id) : gaa(id), bg: a ? '#E0F4EE' : 'transparent', fg: a ? '#016D5E' : '#1A1D22', ikonFg: a ? '#016D5E' : '#51565C', vekt: a ? 600 : 500, aria: a ? 'page' : 'false', tall: tallFor[id] || '', tallFg: id === 'kjoring' ? '#9E2D28' : '#62686F' };
+    });
+    const ingen = erSupport && !['saker', 'sak', 'timer'].includes(side);
+    const omrade = { abonnement: 'Fakturering', kjoring: 'Fakturering', kpi: 'Fakturering', utestaende: 'Fakturering', tall: 'Tall', oppstart: 'Oppstart', 'oppstart-kunde': 'Oppstart', innstillinger: 'Innstillinger' }[side] || (side.startsWith('d-') ? 'Drift' : 'denne siden');
+    const sak = B.saker.find(s => s.nr === st.sakNr) || B.saker[1];
+    const stiMap = { saker: ['Support', 'Saker'], sak: ['Support', 'Saker', sak.nr], timer: ['Support', 'Timer'], oppstart: ['Oppstart'], 'oppstart-kunde': ['Oppstart', navnPaa(st.oppEier)], abonnement: ['Fakturering', 'Abonnement'], kjoring: ['Fakturering', 'Fakturakjøring'], kpi: ['Fakturering', 'KPI-justering'], utestaende: ['Fakturering', 'Utestående'], tall: ['Tall'], 'd-status': ['Drift', 'Status'], 'd-lenker': ['Drift', 'Lenker'], 'd-kontoer': ['Drift', 'Kontoer'], 'd-frister': ['Drift', 'Frister'], 'd-rutiner': ['Drift', 'Rutiner'], innstillinger: ['Innstillinger'] };
+    const sti = (stiMap[side] || [side]).map((navn, i, a) => ({ navn, fg: i === a.length - 1 ? '#1A1D22' : '#51565C', vekt: i === a.length - 1 ? 600 : 400, pil: i === a.length - 1 ? 'none' : 'flex' }));
+    const brukT = ['saker', 'sak', 'oppstart-kunde', 'abonnement', 'kjoring', 'tall'].includes(side) ? tilstand : 'normal';
+    const t = { tom: brukT === 'tom', laster: brukT === 'laster', feil: brukT === 'feil', ikkeLaster: brukT !== 'laster', innhold: brukT === 'normal' || brukT === 'feil' };
+    const v = { ingen };
+    ['saker', 'sak', 'timer', 'oppstart', 'oppstart-kunde', 'abonnement', 'kjoring', 'kpi', 'utestaende', 'tall', 'd-status', 'd-lenker', 'd-kontoer', 'd-frister', 'd-rutiner', 'innstillinger'].forEach(k => { v[k.replace('-', '_')] = !ingen && side === k; });
+    const out = { ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), meny, sti, v, t, rolleNavn: R.navn, rolleUnder: R.under, rolleInit: R.init, toast: st.toast, omrade,
+      tilSaker: gaa('saker'), nySak: () => this.vis('Ny sak åpnes i et eget vindu (ikke tegnet)'), lukk: () => this.setState({ dlg: null }) };
+
+    // SB1 Saker
+    const sakSt = s => st.sakStatus[s.nr] || s.status;
+    const ST = { ny: ['Ny', P.ny], aapen: ['Åpen', P.pagar], venter: ['Venter på kunde', P.venter], lost: ['Løst', P.ferdig] };
+    const PRI = { kritisk: [4, 'Kritisk'], hoy: [3, 'Høy'], normal: [2, 'Normal'], lav: [1, 'Lav'] };
+    const priInfo = p => { const [n, navn] = PRI[p]; const farge = p === 'kritisk' ? '#9E2D28' : '#1A1D22'; return { navn, fg: farge, vekt: p === 'kritisk' ? 700 : 500, stolper: [1, 2, 3, 4].map(i => ({ h: (4 + i * 3) + 'px', bg: i <= n ? farge : '#CDD1D6' })) }; };
+    const FR = { ok: ['#51565C', 400, 'transparent', 'none', 'frist'], snart: ['#6D5000', 600, '#FFE9BC', 'none', 'frist'], forfalt: ['#9E2D28', 600, '#FFFFFF', 'inset 0 0 0 1.5px #9E2D28', 'frist'], pause: ['#62686F', 400, 'transparent', 'none', 'kalender'], lost: ['#1F6D02', 500, 'transparent', 'none', 'hake'] };
+    const fristInfo = (tilst, tekst) => { const f = FR[tilst]; return { tekst, fg: f[0], vekt: f[1], bg: f[2], ring: f[3], ikon: this.ikon(f[4], 16) }; };
+    const sakFrist = s => sakSt(s) === 'lost' && s.fristTilstand !== 'lost' ? fristInfo('lost', 'Løst nå') : sakSt(s) === 'venter' && s.fristTilstand !== 'pause' ? fristInfo('pause', 'Pause, venter på kunden') : fristInfo(s.fristTilstand, s.frist);
+    const KI = { crm: 'oversikt', ute: 'montering', epost: 'sendt' };
+    const orden = { forfalt: 0, snart: 1, ok: 2, pause: 3, lost: 4 };
+    const fSak = (s, u) => (u === 's' || (st.fStatus === 'aapne' ? sakSt(s) !== 'lost' : sakSt(s) === st.fStatus)) && (u === 'p' || st.fPri === 'alle' || s.prioritet === st.fPri) && (u === 'k' || st.fKilde === 'alle' || s.kilde === st.fKilde) && (st.fKunde === 'alle' || s.eier === st.fKunde);
+    const alleSaker = t.tom && side === 'saker' ? [] : B.saker;
+    const ant = (u, f) => alleSaker.filter(s => fSak(s, u) && f(s)).length;
+    out.sakFilter = [
+      { navn: 'Status', valg: [chip('fStatus', 'aapne', 'Alle åpne', ant('s', s => sakSt(s) !== 'lost')), ...Object.keys(ST).map(k => chip('fStatus', k, ST[k][0], ant('s', s => sakSt(s) === k)))] },
+      { navn: 'Prioritet', valg: [chip('fPri', 'alle', 'Alle'), ...Object.keys(PRI).map(k => chip('fPri', k, PRI[k][1], ant('p', s => s.prioritet === k)))] },
+      { navn: 'Kilde', valg: [chip('fKilde', 'alle', 'Alle'), ...Object.keys(B.kilder).map(k => chip('fKilde', k, B.kilder[k], ant('k', s => s.kilde === k)))] }
+    ];
+    out.kundeValg = [{ id: 'alle', navn: 'Alle kunder' }, ...[...new Set(B.saker.map(s => s.eier))].map(id => ({ id, navn: navnPaa(id) }))];
+    out.fKunde = st.fKunde; out.settKunde = ev => this.setState({ fKunde: ev.target.value });
+    const liste = alleSaker.filter(s => fSak(s)).sort((a, b) => orden[a.fristTilstand] - orden[b.fristTilstand]);
+    out.sakRader = t.laster ? [] : liste.map((s, i) => { const ss = sakSt(s); return { nr: s.nr, emne: s.emne, kunde: navnPaa(s.eier), butikk: s.butikk, kontakt: s.kontakt, kilde: B.kilder[s.kilde], kildeIkon: this.ikon(KI[s.kilde], 16), s: pill(ST[ss][0], ST[ss][1]), p: priInfo(s.prioritet), f: sakFrist(s), sist: s.sist, skille: skille(i), klikk: gaa('sak', { sakNr: s.nr, nye: [], nyeTid: [], svar: '' }) }; });
+    out.sakSkjelett = t.laster ? [1, 2, 3, 4, 5, 6].map(i => ({ b: (180 + (i * 47) % 140) + 'px' })) : [];
+    out.sakerTom = t.tom && side === 'saker'; out.sakerIngenTreff = !t.tom && !t.laster && liste.length === 0;
+    out.antApne = String(alleSaker.filter(s => sakSt(s) !== 'lost').length);
+    out.antForfalt = String(alleSaker.filter(s => s.fristTilstand === 'forfalt' && !['lost', 'venter'].includes(sakSt(s))).length);
+
+    // SB2 Sak
+    const eS = D.eiere.find(e => e.id === sak.eier) || { kontakter: [], butikker: [] };
+    const kontakt = eS.kontakter.find(k => k.navn === sak.kontakt) || eS.kontakter[0] || {};
+    const fornavn = (sak.kontakt || '').split(' ')[0];
+    const erEks = sak.nr === B.sak.nr;
+    const tm = B.timer.find(x => x.eier === sak.eier);
+    const grunn = t.tom && side === 'sak' ? [] : erEks ? B.sak.traad : [{ type: 'kunde', hvem: sak.kontakt, tid: sak.opprettet, kanal: sak.kilde === 'epost' ? 'E-post til support@hengsel.no' : 'Sendt med ' + B.kilder[sak.kilde], tekst: sak.emne + '. (Hele eksempeltråden ligger på H-1047.)' }];
+    const MT = { kunde: ['#FFFFFF', 'inset 0 0 0 1px #CDD1D6', '', '#62686F', '#F3F5F8', '#51565C'], svar: ['#E0F4EE', 'inset 0 0 0 1px #BCE6DB', 'Svar til kunden', '#016D5E', '#BCE6DB', '#016D5E'], intern: ['#FFE9BC', 'inset 0 0 0 1px #E0C07F', 'Internt notat · kunden ser ikke dette', '#6D5000', '#FFE9BC', '#6D5000'] };
+    out.traad = [...grunn, ...st.nye].map(m => { const x = MT[m.type]; return { hvem: m.hvem, tid: m.tid, tekst: m.tekst, kanal: m.kanal || '', bg: x[0], ring: x[1], etikett: x[2], etFg: x[3], avBg: x[4], avFg: x[5], init: m.hvem[0], visEtikett: x[2] ? 'inline' : 'none', visKanal: m.kanal ? 'inline' : 'none' }; });
+    out.traadTom = out.traad.length === 0;
+    const intern = st.fane === 'intern', harTekst = !!st.svar.trim();
+    out.komp = {
+      faner: [['svar', 'Svar til kunden'], ['intern', 'Internt notat']].map(([id, navn]) => { const a = st.fane === id; return { navn, klikk: () => this.setState({ fane: id }), bg: a ? '#FFFFFF' : 'transparent', fg: a ? '#1A1D22' : '#51565C', ring: a ? '0 1px 2px rgba(26,29,34,.12)' : 'none' }; }),
+      tekst: st.svar, sett: ev => this.setState({ svar: ev.target.value }), ring: intern ? 'inset 0 0 0 1.5px #E0C07F' : 'inset 0 0 0 1px #7B8188',
+      plass: intern ? 'Skriv et internt notat. Kunden ser det ikke.' : 'Skriv til ' + fornavn + ' …',
+      knapp: intern ? 'Lagre notat' : 'Send svar', knappBg: harTekst ? (intern ? '#1A1D22' : '#05806F') : '#E3E6EA', knappFg: harTekst ? '#FBF9F6' : '#62686F',
+      hint: intern ? 'Notatet lagres bare i Admin. Kunden ser det ikke.' : 'Sendes til ' + sak.kontakt + ' på e-post og vises under «Mine saker» i ' + (sak.kilde === 'ute' ? 'Hengsel Ute' : 'Hengsel CRM') + '.', hintFg: intern ? '#6D5000' : '#51565C',
+      maler: B.svarmaler.map(m => ({ navn: m.navn, klikk: () => this.setState({ svar: m.tekst.replace('{fornavn}', fornavn).replace('{svarfrist}', B.eksempel.svarfrist[sak.prioritet]).replace('{lenke}', 'hjelp.hengsel.no/tilbud/pdf') }) })),
+      veiledning: () => this.setState(s => ({ svar: (s.svar ? s.svar.trim() + ' ' : '') + 'Se brukerveiledningen: hjelp.hengsel.no/tilbud/pdf' })),
+      send: () => { if (!harTekst) return; const nyM = { type: intern ? 'intern' : 'svar', hvem: R.navn, tid: '14.10 10:21', tekst: st.svar.trim() }; this.setState(s => ({ nye: [...s.nye, nyM], svar: '' })); this.vis(intern ? 'Notatet er lagret' : 'Svaret er sendt til ' + sak.kontakt); }
+    };
+    out.statusValg = Object.keys(ST).map(k => { const a = sakSt(sak) === k; return { navn: ST[k][0], klikk: () => this.setState(s => ({ sakStatus: { ...s.sakStatus, [sak.nr]: k } })), ...seg(a) }; });
+    out.sak = { nr: sak.nr, emne: sak.emne, p: priInfo(sak.prioritet), priLiten: PRI[sak.prioritet][1].toLowerCase(), f: sakFrist(sak), kilde: B.kilder[sak.kilde], kildeIkon: this.ikon(KI[sak.kilde], 16), opprettet: sak.opprettet, svarfrist: B.eksempel.svarfrist[sak.prioritet],
+      kontakt: sak.kontakt, init: (sak.kontakt || '?').split(' ').map(x => x[0]).join(''), rolle: kontakt.rolle || '', tlf: kontakt.tlf || '', epost: kontakt.epost || '', butikk: sak.butikk, kunde: navnPaa(sak.eier), pakker: tm ? tm.butikker : '', kundeKort: navnPaa(sak.eier).replace(' AS', '') };
+    const harHjelp = sak.kilde !== 'epost';
+    const hf = erEks ? [['Side i appen', B.sak.hjelp.side], ['Adresse', B.sak.hjelp.adresse], ['Versjon', B.sak.hjelp.versjon], ['Nettleser', B.sak.hjelp.nettleser], ['Innlogget som', B.sak.hjelp.bruker]] : sak.kilde === 'ute' ? [['Side i appen', 'Ute › I dag › Oppdrag'], ['Versjon', 'Hengsel Ute 2.0.4'], ['Enhet', 'iOS 18 · iPhone'], ['Innlogget som', sak.kontakt]] : [['Side i appen', 'Rapporter › Oktober'], ['Versjon', 'Hengsel CRM 2.0.4'], ['Nettleser', 'Edge 129 · Windows 11'], ['Innlogget som', sak.kontakt]];
+    out.hjelp = { tittel: harHjelp ? 'Sendt med «Hjelp»' : 'Kom på e-post', vis: harHjelp, ikkeVis: !harHjelp, felt: hf.map(([navn, verdi]) => ({ navn, verdi })), skjermbilde: B.sak.hjelp.skjermbilde, harBilde: erEks, ingenBilde: !erEks };
+    const tidListe = (erEks ? B.sak.tid : []).concat(st.nyeTid);
+    const sumMin = tidListe.reduce((a, x) => a + x.min, 0);
+    const pad = n => String(n).padStart(2, '0'), sek = st.sek;
+    const ekstraT = st.nyeTid.reduce((a, x) => a + x.min, 0) / 60;
+    const bruktN = tm ? tm.brukt + ekstraT : 0;
+    out.tid = { klokke: pad(Math.floor(sek / 3600)) + ':' + pad(Math.floor(sek / 60) % 60) + ':' + pad(sek % 60), status: st.loper ? 'Tidtakeren går · startet 10:02' : 'Tidtakeren står', knapp: st.loper ? 'Stopp og før' : 'Start', knappBg: st.loper ? '#FFFFFF' : '#05806F', knappFg: st.loper ? '#1A1D22' : '#FBF9F6', knappRing: st.loper ? 'inset 0 0 0 1px #7B8188' : 'none', formR: st.loper ? '2px' : '50%',
+      toggle: () => { if (this.state.loper) { const m = Math.max(1, Math.round(this.state.sek / 60)); this.setState(s => ({ loper: false, sek: 0, nyeTid: [...s.nyeTid, { dato: '14.10', fra: '10:02', til: '10:21', min: m, hvem: R.navn, tekst: 'Tidtaker' }] })); this.vis(m + ' min er ført på saken'); } else this.setState({ loper: true }); },
+      rader: tidListe.map((x, i) => ({ ...x, varighet: x.min + ' min', skille: skille(i) })), sum: sumMin + ' min',
+      man: st.manMin, settMan: ev => this.setState({ manMin: ev.target.value }), manTekst: st.manTekst, settManTekst: ev => this.setState({ manTekst: ev.target.value }),
+      fore: () => { const m = parseInt(this.state.manMin, 10); if (!m) return; this.setState(s => ({ nyeTid: [...s.nyeTid, { dato: '14.10', fra: '–', til: '–', min: m, hvem: R.navn, tekst: s.manTekst || 'Manuell føring' }], manTekst: '' })); this.vis(m + ' min er ført'); },
+      kunde: tm ? fT(bruktN) + ' av ' + fT(tm.inkl) : 'Ingen avtale om timer', bar: tm ? Math.min(100, bruktN / tm.inkl * 100) + '%' : '0%', barBg: tm && bruktN > tm.inkl ? '#80378C' : '#05806F',
+      kundeHint: tm ? (bruktN > tm.inkl ? fT(bruktN - tm.inkl) + ' over i oktober. Blir en linje i fakturakjøringen.' : fT(tm.inkl - bruktN) + ' igjen i oktober. Tid ut over inkludert faktureres.') : '', hintFg: tm && bruktN > tm.inkl ? '#80378C' : '#51565C' };
+
+    // SB3 Timer
+    const timerRad = (x, i) => { const over = Math.max(0, x.brukt - x.inkl), til = over > 0 ? 'over' : x.brukt >= x.inkl * .9 ? 'grense' : 'under', skala = Math.max(x.inkl, x.brukt) * 1.15;
+      return { kunde: navnPaa(x.eier), butikker: x.butikker, aar: x.aar, saker: x.saker + ' saker', inkl: fT(x.inkl), brukt: fT(x.brukt), s: til === 'over' ? pill('Over inkludert', P.sannsynlig) : til === 'grense' ? pill('På grensen', P.varsel) : pill('Under', P.ferdig),
+        fyll: Math.min(x.brukt, x.inkl) / skala * 100 + '%', overB: over / skala * 100 + '%', merke: x.inkl / skala * 100 + '%',
+        linje: over ? (erSupport ? fT(over) + ' ut over inkludert går til fakturering' : fT(over) + ' × ' + kr(B.eksempel.timepris) + ' = ' + kr(over * B.eksempel.timepris) + ' blir en fakturalinje i november') : fT(x.inkl - x.brukt) + ' igjen i oktober',
+        linjeFg: over ? '#80378C' : til === 'grense' ? '#6D5000' : '#51565C', visLenke: over && !erSupport ? 'inline' : 'none', skille: skille(i), klikkFaktura: ev => { ev.preventDefault(); gaa('kjoring')(); } }; };
+    out.timerRader = B.timer.map(timerRad);
+    out.timeprisTekst = erSupport ? 'Timer ut over inkludert går til fakturering.' : 'Timer ut over faktureres med ' + kr(B.eksempel.timepris) + ' per time (eksempel, Innstillinger).';
+
+    // SO2 og SO1 Oppstart
+    const OS = { ikke: ['Ikke startet', P.venter], igang: ['I gang', P.pagar], venter: ['Venter på kunden', P.varsel], stopper: ['Stopper', P.feil], ferdig: ['Ferdig', P.ferdig] };
+    const HV = { Eirik: P.furu, Code: P.pagar, Kunden: P.noytral };
+    const rekke = ['ikke', 'igang', 'venter', 'stopper', 'ferdig'];
+    const sjFor = o => (o.eier === 'nordli' ? B.sjekkliste : B.sjekkliste.map(p => ({ ...p, status: o.status === 'ferdig' ? 'ferdig' : 'ikke', detalj: '', dato: o.status === 'ferdig' ? o.fullfort : '–', okter: null }))).map((p, i) => ({ ...p, status: st.sjekk[o.eier + i] || p.status }));
+    const oRad = (o, i) => { const sj = sjFor(o), f = sj.filter(p => p.status === 'ferdig').length, stopp = sj.find(p => p.status === 'stopper'), neste = sj.find(p => p.status !== 'ferdig');
+      const status = stopp ? 'stopper' : f === sj.length ? 'ferdig' : f === 0 && !sj.some(p => p.status !== 'ikke') ? 'ikke' : 'igang';
+      return { kunde: navnPaa(o.eier), avtale: o.avtale, start: o.start, fremdrift: f + ' av ' + sj.length, bar: f / sj.length * 100 + '%', neste: neste ? neste.punkt : 'Fullført ' + o.fullfort, hv: neste ? pill(neste.hvem, HV[neste.hvem]) : pill('', P.noytral), visHvem: neste ? 'inline' : 'none',
+        stopper: stopp ? stopp.punkt : '', visStopper: stopp ? 'flex' : 'none', s: pill(OS[status][0], OS[status][1]), skille: skille(i), klikk: gaa('oppstart-kunde', { oppEier: o.eier }) }; };
+    out.oppIGang = B.oppstarter.filter(o => o.status !== 'ferdig').map(oRad);
+    out.oppFerdig = B.oppstarter.filter(o => o.status === 'ferdig').map(oRad);
+    const o = B.oppstarter.find(x => x.eier === st.oppEier) || B.oppstarter[0];
+    const sj = sjFor(o);
+    const SI = { ferdig: ['hake', '#1F6D02', '#FFFFFF', 'none'], stopper: ['stoppet', '#FFFFFF', '#9E2D28', 'inset 0 0 0 1.5px #9E2D28'], venter: ['kalender', '#FFE9BC', '#6D5000', 'none'], igang: ['pil-hoyre', '#EFEEFF', '#5C46A7', 'none'], ikke: [null, '#FFFFFF', '#62686F', 'inset 0 0 0 1.5px #CDD1D6'] };
+    out.sjekk = t.laster || (t.tom && side === 'oppstart-kunde') ? [] : sj.map((p, i) => { const s = SI[p.status]; return { nr: String(i + 1), punkt: p.punkt, detalj: p.detalj, visDetalj: p.detalj ? 'block' : 'none', hv: pill(p.hvem, HV[p.hvem]), dato: p.dato, s: pill(OS[p.status][0], OS[p.status][1]), ikon: this.ikon(s[0], 16), iBg: s[1], iFg: s[2], iRing: s[3], punktFg: p.status === 'stopper' ? '#9E2D28' : '#1A1D22', okter: p.okter || [], visOkter: p.okter ? 'grid' : 'none', skille: skille(i),
+      bytt: () => this.setState(s2 => ({ sjekk: { ...s2.sjekk, [o.eier + i]: rekke[(rekke.indexOf(p.status) + 1) % rekke.length] } })) }; });
+    const fN = sj.filter(p => p.status === 'ferdig').length, stopp = sj.filter(p => p.status === 'stopper'), venterK = sj.filter(p => p.status === 'venter');
+    out.opp = { kunde: navnPaa(o.eier), avtale: o.avtale, start: o.start, igjen: o.status === 'ferdig' ? 'Fullført ' + o.fullfort : o.eier === 'nordli' ? '18 dager igjen' : '48 dager igjen', fremdrift: fN + ' av ' + sj.length + ' ferdig', bar: fN / sj.length * 100 + '%',
+      harStopp: stopp.length > 0 && !t.laster && !(t.tom && side === 'oppstart-kunde'), stoppTittel: stopp.length === 1 ? 'Stopper: ' + stopp[0].punkt : stopp.length + ' punkter stopper', stoppTekst: stopp.map(p => p.detalj).join(' '), stoppEtter: 'Import av åpne tilbud og ordre kan ikke starte før dette er løst.',
+      venter: venterK.length ? 'Venter også på kunden: ' + venterK.map(p => p.punkt.toLowerCase()).join(', ') + '.' : '', visVenter: venterK.length ? 'block' : 'none', tom: t.tom && side === 'oppstart-kunde' };
+    out.oppValg = B.oppstarter.map(x => ({ navn: navnPaa(x.eier).replace(' AS', ''), klikk: () => this.setState({ oppEier: x.eier }), ...seg(x.eier === st.oppEier) }));
+    out.tilOppstarter = gaa('oppstart');
+
+    // SC1 Abonnement
+    const ab = B.abonnementer.find(a => a.eier === st.abEier) || B.abonnementer[0];
+    const eA = D.eiere.find(e => e.id === ab.eier), r = D.beregn(eA.linje, D.oppsett(eA), { tillegg: eA.oppsett.tillegg });
+    const mangler = 3 - r.rader.length;
+    out.abValg = B.abonnementer.map(a => ({ navn: navnPaa(a.eier).replace(' AS', ''), klikk: () => this.setState({ abEier: a.eier }), ...seg(a.eier === st.abEier) }));
+    out.ab = { kunde: eA.navn, linje: D.pris.linjer[eA.linje].navn,
+      fakta: [['Gjelder fra', ab.fra], ['Binding til', ab.binding], ['Neste KPI-dato', ab.kpi], ['Neste faktura', ab.neste], ['Avtale', ab.avtale], ['Prisliste', r.versjon]].map(([navn, verdi]) => ({ navn, verdi })),
+      rader: r.rader.map(x => ({ butikk: x.navn, pakke: x.pakkeNavn, brukere: String(x.inkludert + x.antallBrukere), ekstra: x.antallBrukere ? x.antallBrukere + ' × ' + kr(D.pris.pakker[x.pakkeId].ekstraBruker) : '–', montorer: String(x.montorer), pakkeKr: kr(x.pakke), sum: kr(x.sum) })),
+      ute: r.ute.antall ? (r.ute.modell === 'firma' ? 'Hengsel Ute, firmapris (' + r.ute.antall + ' montører)' : 'Hengsel Ute, ' + r.ute.antall + ' montører × ' + kr(D.pris.ute.montor)) : 'Hengsel Ute: ingen montører', uteKr: kr(r.ute.pris),
+      harRabatt: r.prosent > 0, rabattTekst: 'Kjederabatt ' + r.prosent + ' % (' + r.rader.length + ' butikker) av ' + kr(r.grunnlag), rabatt: '−' + kr(r.rabatt),
+      ingenRabatt: r.prosent === 0, rabattMangler: mangler > 0 ? 'Ingen kjederabatt. ' + mangler + (mangler === 1 ? ' butikk' : ' butikker') + ' til 15 %.' : '',
+      tillegg: r.tillegg.filter(x => x.valgt).map(x => ({ navn: x.navn, belop: x.inkludert ? 'Inkludert' : kr(x.belop) })), netto: kr(r.netto), mva: kr(r.mva), inkl: kr(r.inkl),
+      historikk: [...st.abEndringer.filter(x => x.eier === ab.eier), ...(ab.eier === 'granlund' ? B.abonnementHistorikk : [{ dato: ab.fra, tekst: 'Abonnement startet fra avtale ' + ab.avtale, endring: 'Start', hvem: 'Eirik' }])].map((h, i) => ({ ...h, skille: skille(i), ny: h.ny ? 'inline' : 'none' })),
+      vis: !t.laster && !(t.tom && side === 'abonnement'), tom: t.tom && side === 'abonnement' };
+    out.dlgEndring = st.dlg === 'endring';
+    out.aapneEndring = () => this.setState({ dlg: 'endring' });
+    out.end = { dato: st.endDato, settDato: ev => this.setState({ endDato: ev.target.value }), tekst: st.endTekst, settTekst: ev => this.setState({ endTekst: ev.target.value }),
+      valg: ['Pakke', 'Ekstra brukere', 'Montører', 'Butikk lagt til', 'Butikk fjernet', 'Tillegg'].map(n => chip('endHva', n, n)),
+      lagre: () => { const [y, m, d] = st.endDato.split('-'), dt = d + '.' + m + '.' + y; this.setState(s => ({ dlg: null, endTekst: '', abEndringer: [{ eier: ab.eier, dato: dt, tekst: s.endTekst || s.endHva, endring: s.endHva, hvem: R.navn, ny: true }, ...s.abEndringer] })); this.vis('Endringen er lagret. Gjelder fra ' + dt); } };
+
+    // SC2 Fakturakjøring
+    const KS = { klar: ['Klar', P.ny], sendt: ['Sendt', P.ferdig], feil: ['Feil', P.feil] };
+    const TT = { etablering: 'Etablering', timer: 'Timer ut over inkludert', videre: 'Viderefakturert' };
+    const fakt = t.tom && side === 'kjoring' ? [] : B.kjoring.fakturaer.map(f => ({ ...f, status: st.sendt && f.status === 'klar' ? 'sendt' : f.status }));
+    const sumF = f => f.fast + f.engang.reduce((a, x) => a + x.belop, 0);
+    const tot = fakt.reduce((a, f) => a + sumF(f), 0), nKlar = fakt.filter(f => f.status === 'klar').length;
+    out.fakturaer = t.laster ? [] : fakt.map(f => { const u = sumF(f); return { kunde: navnPaa(f.eier), s: pill(KS[f.status][0], KS[f.status][1]), fast: kr(f.fast), engang: f.engang.map(x => ({ tekst: x.tekst, belop: kr(x.belop), type: TT[x.type] })),
+      endret: f.endret.map(e => ({ t: e })), visEndret: f.endret.length ? 'flex' : 'none', visIngen: f.endret.length ? 'none' : 'flex', uten: kr(u), mva: kr(u * .25), med: kr(u * 1.25), visFeil: f.status === 'feil' ? 'flex' : 'none', feil: f.feil || '', kant: f.status === 'feil' ? '#F9AEA5' : '#CDD1D6' }; });
+    const engT = k => kr(fakt.reduce((a, f) => a + f.engang.filter(x => x.type === k).reduce((b, x) => b + x.belop, 0), 0));
+    out.kj = { mnd: B.kjoring.mnd, dato: B.kjoring.dato, forrige: B.kjoring.forrige.toLowerCase(), antall: String(fakt.length), uten: kr(tot), mva: kr(tot * .25), med: kr(tot * 1.25),
+      statuser: ['klar', 'sendt', 'feil'].map(k => pill(KS[k][0] + ' ' + fakt.filter(f => f.status === k).length, KS[k][1])),
+      engang: [['Etablering', engT('etablering')], ['Timer ut over inkludert', engT('timer')], ['Viderefakturert SMS, Penneo og AI', engT('videre')]].map(([navn, verdi]) => ({ navn, verdi })),
+      knapp: nKlar ? 'Send ' + nKlar + ' til PowerOffice' : 'Ingen klare å sende', knappBg: nKlar ? '#05806F' : '#E3E6EA', knappFg: nKlar ? '#FBF9F6' : '#62686F',
+      send: () => { if (!nKlar) return; this.setState({ sendt: true }); this.vis(nKlar + ' fakturaer er sendt til PowerOffice'); }, vis: !t.laster && !(t.tom && side === 'kjoring'), tom: t.tom && side === 'kjoring', skjelett: t.laster ? [1, 2, 3] : [] };
+
+    // SC3 KPI
+    const p = parseFloat(String(st.kpi).replace(',', '.')) || 0;
+    out.kpi = { prosent: st.kpi, sett: ev => this.setState({ kpi: ev.target.value }), dager: st.kpiDager, settDager: ev => this.setState({ kpiDager: ev.target.value }),
+      rader: B.kpi.rader.map((x, i) => { const ny = Math.round(x.naa * (1 + p / 100)); return { kunde: navnPaa(x.eier), dato: x.dato, varsel: x.varsel, naa: kr(x.naa), ny: kr(ny), diff: '+' + kr(ny - x.naa), s: x.utkast ? pill('Utkast klart', P.varsel) : pill('Senere', P.venter), skille: skille(i) }; }) };
+    const a0 = B.kpi.rader[0], ea = D.eiere.find(e => e.id === a0.eier), ny0 = Math.round(a0.naa * (1 + p / 100));
+    out.kpi.epost = { til: ea.kontakter[0].navn + ' <' + ea.kontakter[0].epost + '>', emne: 'Prisjustering fra ' + a0.dato, kunde: ea.navn,
+      linjer: ['Hei ' + ea.kontakter[0].navn.split(' ')[0] + '.', 'Etter kundeavtalen justeres prisen for Hengsel én gang i året etter konsumprisindeksen (KPI). Endringen i KPI de siste tolv månedene er ' + st.kpi + ' %.', 'Fra ' + a0.dato + ' blir prisen ' + kr(ny0) + ' per måned uten mva. I dag er den ' + kr(a0.naa) + '.', 'Ta kontakt hvis du har spørsmål.', 'Hilsen Eirik', D.leverandor.navn].map(x => ({ t: x })),
+      kopier: () => this.vis('E-posten er kopiert. Den sendes ikke automatisk'), merk: () => this.vis('Aune Kjøkken er merket som varslet 14.10.2026') };
+
+    // SC4 Utestående
+    out.ute = { hentet: B.utestaende.hentet, rader: B.utestaende.rader.map((x, i) => ({ nr: x.nr, kunde: navnPaa(x.eier), fakturadato: x.fakturadato, forfall: x.forfall, belop: kr(x.belop), dager: x.dager ? x.dager + ' dager' : '–', dagerFg: x.dager ? '#9E2D28' : '#51565C', dagerVekt: x.dager ? 600 : 400, purring: x.purring, skille: skille(i) })),
+      sum: kr(B.utestaende.rader.reduce((a, x) => a + x.belop, 0)), forfalt: kr(B.utestaende.rader.filter(x => x.dager).reduce((a, x) => a + x.belop, 0)) };
+
+    // ST1 Tall
+    const T = B.tall, maxI = Math.max(...T.inntekt), tusen = n => String(Math.round(n / 1000));
+    const drift = T.drift.map(x => { const sk = x.timer * T.driftPerTime, kost = x.database + sk; return { ...x, sk, kost, bid: x.inntekt - kost }; }), maxB = Math.max(...drift.map(x => x.bid));
+    out.st = { vis: !t.laster && !(t.tom && side === 'tall'), tom: t.tom && side === 'tall',
+      kort: [['Inntekt i oktober', kr(T.inntekt[11]), 'per måned uten mva'], ['Inntekt hittil i år', kr(T.aar[1].inntekt), 'januar–oktober 2026'], ['Kunder', String(T.kunder[11]), '+2 siste 12 måneder'], ['Butikker hos kunder', String(T.butikker[11]), '+7 siste 12 måneder']].map(([navn, verdi, under]) => ({ navn, verdi, under })),
+      inntekt: T.mnd.map((m, i) => ({ mnd: m, verdi: tusen(T.inntekt[i]), h: Math.round(T.inntekt[i] / maxI * 150) + 'px', bg: i === 11 ? '#05806F' : '#BCE6DB' })),
+      aar: T.aar.map(x => ({ aar: x.aar, verdi: kr(x.inntekt), merknad: x.merknad })),
+      vekst: T.mnd.map((m, i) => ({ mnd: m, k: String(T.kunder[i]), b: String(T.butikker[i]), hk: T.kunder[i] / 12 * 110 + 'px', hb: T.butikker[i] / 12 * 110 + 'px' })),
+      drift: drift.map((x, i) => ({ kunde: navnPaa(x.eier), inntekt: kr(x.inntekt), db: kr(x.database), timer: fT(x.timer), sk: kr(x.sk), kost: kr(x.kost), bidrag: kr(x.bid), pst: Math.round(x.bid / x.inntekt * 100) + ' %', bar: x.bid / maxB * 100 + '%', skille: skille(i) })),
+      driftSum: kr(drift.reduce((a, x) => a + x.bid, 0)), timepris: kr(T.driftPerTime),
+      timer: B.timer.map(timerRad),
+      trakt: T.trakt.map((x, i, a) => ({ steg: x.steg, antall: String(x.antall), w: x.antall / a[0].antall * 100 + '%', overgang: i ? Math.round(x.antall / a[i - 1].antall * 100) + ' % videre' : 'Siste 12 måneder', bg: i === a.length - 1 ? '#05806F' : '#BCE6DB', fg: i === a.length - 1 ? '#FBF9F6' : '#016D5E' })),
+      trakt0: Math.round(T.trakt[T.trakt.length - 1].antall / T.trakt[0].antall * 100) + ' %',
+      tapt: T.tapt.map(x => ({ grunn: x.grunn, antall: String(x.antall), w: x.antall / 4 * 100 + '%' })),
+      fornyes: T.fornyes.map((x, i) => ({ kunde: navnPaa(x.eier), dato: x.dato, dager: x.dager + ' dager', perMnd: kr(x.perMnd), merknad: x.merknad, skille: skille(i), s: x.merknad === 'Sagt opp' ? pill('Sagt opp', P.feil) : pill('Fornyes', P.varsel) })) };
+
+    // SD Drift
+    out.miljoer = B.miljoer.map((x, i) => ({ kunde: navnPaa(x.eier), adresse: x.adresse, versjon: x.versjon, gammel: x.versjon !== '2.0.4' ? 'inline' : 'none', utrulling: x.utrulling, feil: String(x.feil), feilFg: x.feil >= 5 ? '#6D5000' : x.feil ? '#1A1D22' : '#62686F', feilVekt: x.feil >= 5 ? 700 : 500, innlogget: x.innlogget, brukere: String(x.brukere),
+      b: x.backup === 'På' ? pill('På', P.ferdig) : pill('Av', P.venter), backupTekst: x.backupTekst, skille: skille(i) }));
+    out.lenker = B.lenker.map(x => ({ ...x, href: 'https://' + x.adresse }));
+    out.kontoer = B.kontoer.map((x, i) => ({ ...x, kost: x.kost ? kr(x.kost) : 'Etter bruk', merknad: x.merknad || '', visMerknad: x.merknad ? 'inline' : 'none', fornyesFg: x.snart ? '#9E2D28' : '#1A1D22', fornyesVekt: x.snart ? 600 : 400, skille: skille(i) }));
+    out.kontoSum = kr(B.kontoer.reduce((a, x) => a + x.kost, 0));
+    out.dfrister = B.frister.map((x, i) => ({ ...x, igjen: x.dager + ' dager', fg: x.dager <= 7 ? '#6D5000' : '#51565C', vekt: x.dager <= 7 ? 600 : 400, bg: x.dager <= 7 ? '#FFE9BC' : 'transparent', skille: skille(i) }));
+    out.rutiner = B.rutiner.map((g, gi) => ({ navn: g.navn, punkter: g.punkter.map((x, pi) => { const k = gi + '-' + pi, ok = st.rutine[k] != null ? st.rutine[k] : x.ok; return { t: x.t, bg: ok ? '#05806F' : '#FFFFFF', ring: ok ? 'none' : 'inset 0 0 0 1.5px #7B8188', hake: ok ? 'flex' : 'none', fg: ok ? '#51565C' : '#1A1D22', strek: ok ? 'line-through' : 'none', klikk: () => this.setState(s => ({ rutine: { ...s.rutine, [k]: !ok } })), skille: skille(pi) }; }),
+      telling: g.punkter.filter((x, pi) => st.rutine[gi + '-' + pi] != null ? st.rutine[gi + '-' + pi] : x.ok).length + ' av ' + g.punkter.length }));
+
+    // Innstillinger
+    const IF = [['leverandor', 'Leverandør'], ['prisliste', 'Prisliste'], ['avtalemaler', 'Avtalemaler'], ['supportniva', 'Supportnivå'], ['timepris', 'Timepris for support'], ['svarmaler', 'Svarmaler'], ['roller', 'Brukere og roller'], ['varsler', 'Varsler']];
+    out.innFaner = IF.map(([id, navn]) => ({ navn, klikk: () => this.setState({ innst: id }), ...seg(st.innst === id) }));
+    out.inn = {}; IF.forEach(([id]) => { out.inn[id] = st.innst === id; });
+    out.lev = [['Selskap', D.leverandor.navn, 1], ['Org.nr.', D.leverandor.orgnr, 1], ['Adresse', D.leverandor.adresse, 1], ['E-post', D.leverandor.epost, 0], ['Signatar', 'Eirik, daglig leder', 0]].map(([navn, verdi, eks]) => ({ navn, verdi, visEks: eks ? 'inline' : 'none' }));
+    out.tilPrisliste = ut('prisliste');
+    out.prisSammendrag = [['Aktiv versjon', '2026.2, fra 01.09.2026'], ['Utkast', '2027.1, fra 01.01.2027'], ['Kjederabatt', '15 % fra 3 butikker, 25 % fra 10'], ['Viderefakturering', 'Kostpris + 15 %, uten rabatt']].map(([navn, verdi]) => ({ navn, verdi }));
+    out.maler = B.avtalemaler.map((x, i) => ({ ...x, brukt: x.brukt + ' avtaler', s: x.status === 'Aktiv' ? pill('Aktiv', P.ferdig) : pill('Utkast', P.venter), skille: skille(i) }));
+    out.niva = Object.keys(B.prioriteter).map((k, i) => ({ p: priInfo(k), frist: B.eksempel.svarfrist[k], skille: skille(i), eks: { kritisk: 'Noe stopper hele butikken, f.eks. ingen kan logge inn', hoy: 'En viktig funksjon virker ikke, og det finnes ingen omvei', normal: 'Feil med omvei, eller spørsmål om bruk', lav: 'Ønsker og små feil' }[k] }));
+    out.inkl = Object.values(D.pris.pakker).map(pk => ({ navn: pk.navn, timer: pk.support + ' t per butikk per måned' }));
+    out.timepris = kr(B.eksempel.timepris);
+    out.svarmalerL = B.svarmaler.map((x, i) => ({ ...x, skille: skille(i) }));
+    out.brukere = B.brukere.map((x, i) => ({ ...x, init: x.navn[0], visEks: x.eksempel ? 'inline' : 'none', skille: skille(i) }));
+    out.tilgang = [['Oversikt', 'Full', 'Ingen'], ['Salg: Tavle, Eiere og butikker, Prisberegner', 'Full', 'Ingen'], ['Kunder', 'Full', 'Lese, uten beløp'], ['Avtaler', 'Full', 'Ingen'], ['Support: Saker', 'Full', 'Full'], ['Support: Timer', 'Full', 'Lese og føre, uten beløp'], ['Oppstart', 'Full', 'Ingen'], ['Fakturering', 'Full', 'Ingen'], ['Tall', 'Full', 'Ingen'], ['Drift', 'Full', 'Ingen'], ['Innstillinger', 'Full', 'Ingen']].map(([omr, e, s], i) => ({ omr, e, s, sFg: s === 'Ingen' ? '#62686F' : '#1A1D22', sVekt: s === 'Ingen' ? 400 : 600, skille: skille(i) }));
+    out.varsler = B.varsler.map((x, i) => { const paa = st.varsel[i] != null ? st.varsel[i] : x.paa; return { navn: x.navn, tekst: x.tekst, bg: paa ? '#05806F' : '#CDD1D6', knott: paa ? '18px' : '2px', klikk: () => this.setState(s => ({ varsel: { ...s.varsel, [i]: !paa } })), skille: skille(i), aria: paa ? 'true' : 'false' }; });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

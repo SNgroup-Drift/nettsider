@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&amp;display=swap" rel="stylesheet">
+<script src="./assets/hengsel-ikoner.js"></script>
+<script src="./assets/admin-data.js"></script>
+<script src="./assets/admin-data-bc.js"></script>
+<style>body{margin:0;background:#DDE1E6} a{color:#016D5E;text-decoration:none} a:hover{color:#007665} input,button,textarea{font:inherit;color:inherit}</style>
+</helmet>
+<div style="min-height:100vh;background:#DDE1E6;font-family:'Schibsted Grotesk',system-ui,sans-serif;color:#1A1D22;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px;width:max-content">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <h1 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.5px">Hengsel Admin på telefon, fase B, 390 px</h1>
+    <p style="margin:0;font-size:15px;color:#51565C;text-wrap:pretty">Saker som liste, en sak med tråd og svar, og oppstarter i gang. Bunnfaner: Oversikt, Tavle, Saker, Eiere og Mer (Avtaler flyttes til Mer). Grunnskrift 16 px, trykkflater 44 px.</p>
+  </div>
+  <div style="display:flex;gap:40px;align-items:flex-start">
+
+    <div data-screen-label="Telefon Saker" style="display:flex;flex-direction:column;gap:10px"><span style="font-size:13px;font-weight:600;color:#51565C">SB1 Saker</span>
+      <div style="width:390px;height:844px;border-radius:28px;overflow:hidden;background:#ECEFF3;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.45;display:flex;flex-direction:column">
+        <div style="height:56px;flex:none;display:flex;align-items:center;gap:8px;padding:0 6px 0 16px;background:rgba(236,239,243,.92);box-shadow:inset 0 -1px 0 #CDD1D6"><span style="font-size:17px;font-weight:700;flex:1">Saker</span><span style="font-size:14px;color:#9E2D28;font-weight:600">{{ antForfalt }} forfalt</span><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik24.filter }}</span></div>
+        <div style="flex:none;display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none"><sc-for list="{{ chips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.klikk }}" style="all:unset;cursor:pointer;flex:none;height:36px;padding:0 14px;border-radius:999px;font-size:14px;display:flex;align-items:center;gap:6px;background:{{ c.bg }};color:{{ c.fg }};box-shadow:inset 0 0 0 1px {{ c.kant }};font-weight:{{ c.vekt }}">{{ c.navn }}<span style="color:#62686F">{{ c.antall }}</span></button></sc-for></div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:0 16px 16px;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ saker }}" as="s" hint-placeholder-count="6">
+            <div onClick="{{ s.klikk }}" style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:12px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="display:flex;align-items:flex-end;gap:2px;height:14px"><sc-for list="{{ s.stolper }}" as="b" hint-placeholder-count="4"><span style="width:3px;height:{{ b.h }};border-radius:1px;background:{{ b.bg }}"></span></sc-for></span><span style="color:{{ s.priFg }};font-weight:{{ s.priVekt }}">{{ s.pri }}</span><span style="color:#62686F">· {{ s.nr }}</span><span style="flex:1"></span><span style="font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:{{ s.s.bg }};color:{{ s.s.fg }};box-shadow:inset 0 0 0 1px {{ s.s.kant }}">{{ s.s.navn }}</span></div>
+              <b style="line-height:1.3">{{ s.emne }}</b>
+              <div style="display:flex;align-items:center;gap:8px"><span style="flex:1;min-width:0;font-size:14px;color:#51565C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.kunde }}</span><span style="display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 8px;border-radius:8px;font-size:13px;white-space:nowrap;color:{{ s.f.fg }};font-weight:{{ s.f.vekt }};background:{{ s.f.bg }};box-shadow:{{ s.f.ring }}">{{ s.f.ikon }}{{ s.f.tekst }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+        <nav style="flex:none;height:64px;padding-bottom:20px;display:grid;grid-template-columns:repeat(5,1fr);background:#FFFFFF;box-shadow:inset 0 1px 0 #CDD1D6"><sc-for list="{{ faner }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:{{ f.fg }};font-size:12px;font-weight:{{ f.vekt }}">{{ f.ikon }}<span>{{ f.navn }}</span></div></sc-for></nav>
+      </div>
+    </div>
+
+    <div data-screen-label="Telefon Sak" style="display:flex;flex-direction:column;gap:10px"><span style="font-size:13px;font-weight:600;color:#51565C">SB2 Sak: les og svar</span>
+      <div style="width:390px;height:844px;border-radius:28px;overflow:hidden;background:#ECEFF3;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.45;display:flex;flex-direction:column">
+        <div style="height:56px;flex:none;display:flex;align-items:center;gap:4px;padding:0 6px;background:rgba(236,239,243,.92);box-shadow:inset 0 -1px 0 #CDD1D6"><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#016D5E">{{ ik24.pil_venstre }}</span><div style="flex:1;display:flex;flex-direction:column;line-height:1.2;min-width:0"><span style="font-size:13px;color:#51565C">{{ sak.nr }} · {{ sak.kunde }}</span><b style="font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ sak.emne }}</b></div><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#51565C">{{ ik24.mer }}</span></div>
+        <div style="flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px;background:#FFFFFF;box-shadow:inset 0 -1px 0 #E3E6EA;font-size:14px"><span style="display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 9px;border-radius:8px;color:{{ sak.f.fg }};font-weight:{{ sak.f.vekt }};background:{{ sak.f.bg }};box-shadow:{{ sak.f.ring }}">{{ sak.f.ikon }}{{ sak.f.tekst }}</span><span style="flex:1"></span><span style="display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:10px;box-shadow:inset 0 0 0 1px #7B8188;font-weight:600;font-variant-numeric:tabular-nums"><span style="width:8px;height:8px;border-radius:2px;background:#1A1D22"></span>{{ klokke }}</span></div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+          <div style="padding:10px 12px;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #CDD1D6;font-size:13px;color:#51565C;display:flex;flex-direction:column;gap:2px"><span style="display:flex;align-items:center;gap:6px;font-weight:600;color:#1A1D22">{{ ik16.hjelp }}Sendt med «Hjelp» i CRM</span><span>{{ sak.side }}</span><span>{{ sak.versjon }} · Chrome 129 · med skjermbilde</span></div>
+          <sc-for list="{{ traad }}" as="m" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;align-items:baseline;gap:6px;font-size:13px"><b>{{ m.hvem }}</b><span style="display:{{ m.visEt }};font-weight:600;color:{{ m.etFg }}">{{ m.et }}</span><span style="flex:1"></span><span style="color:#62686F">{{ m.tid }}</span></div>
+              <div style="padding:10px 12px;border-radius:12px;background:{{ m.bg }};box-shadow:{{ m.ring }};font-size:15px;text-wrap:pretty">{{ m.tekst }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:none;padding:10px 12px 28px;background:#FFFFFF;box-shadow:inset 0 1px 0 #CDD1D6;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none"><span style="flex:none;display:flex;padding:2px;border-radius:10px;background:#E3E6EA"><span style="height:32px;padding:0 10px;border-radius:8px;background:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;box-shadow:0 1px 2px rgba(26,29,34,.12)">Svar</span><span style="height:32px;padding:0 10px;font-size:13px;font-weight:600;color:#51565C;display:flex;align-items:center">Internt</span></span><sc-for list="{{ maler }}" as="m" hint-placeholder-count="3"><button onClick="{{ m.klikk }}" style="all:unset;cursor:pointer;flex:none;height:36px;padding:0 12px;border-radius:999px;font-size:13px;box-shadow:inset 0 0 0 1px #CDD1D6;display:flex;align-items:center">{{ m.navn }}</button></sc-for></div>
+          <div style="display:flex;gap:8px;align-items:flex-end"><textarea rows="2" value="{{ svar }}" onChange="{{ settSvar }}" placeholder="Skriv til Eva …" style="flex:1;border:0;border-radius:12px;padding:10px 12px;box-shadow:inset 0 0 0 1px #7B8188;resize:none;font-size:16px;outline-color:#05806F"></textarea><button onClick="{{ send }}" aria-label="Send" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:12px;background:{{ sendBg }};color:{{ sendFg }};display:flex;align-items:center;justify-content:center">{{ ik24.sendt }}</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-screen-label="Telefon Oppstarter" style="display:flex;flex-direction:column;gap:10px"><span style="font-size:13px;font-weight:600;color:#51565C">SO2 Oppstarter i gang</span>
+      <div style="width:390px;height:844px;border-radius:28px;overflow:hidden;background:#ECEFF3;box-shadow:0 0 0 1px #B9BEC4,0 20px 50px -20px rgba(26,29,34,.35);font-size:16px;line-height:1.45;display:flex;flex-direction:column">
+        <div style="height:56px;flex:none;display:flex;align-items:center;gap:4px;padding:0 6px;background:rgba(236,239,243,.92);box-shadow:inset 0 -1px 0 #CDD1D6"><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#016D5E">{{ ik24.pil_venstre }}</span><span style="font-size:17px;font-weight:700;flex:1">Oppstart</span></div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:#51565C">I gang</span>
+          <sc-for list="{{ opp }}" as="o" hint-placeholder-count="2">
+            <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6;padding:14px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:baseline;gap:8px"><b style="flex:1">{{ o.kunde }}</b><span style="font-size:14px;color:#51565C">{{ o.start }}</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:8px;border-radius:4px;background:#E3E6EA;overflow:hidden"><div style="height:100%;width:{{ o.bar }};background:#05806F"></div></div><span style="font-size:14px;color:#51565C">{{ o.fremdrift }}</span></div>
+              <span style="font-size:14px">Neste: {{ o.neste }} <span style="font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:{{ o.hv.bg }};color:{{ o.hv.fg }};box-shadow:inset 0 0 0 1px {{ o.hv.kant }}">{{ o.hv.navn }}</span></span>
+              <span style="display:{{ o.visStopp }};align-items:center;gap:6px;font-size:14px;font-weight:600;color:#9E2D28">{{ ik16.stoppet }}Stopper: {{ o.stopper }}</span>
+            </div>
+          </sc-for>
+          <span style="font-size:13px;font-weight:600;color:#51565C;margin-top:8px">Fullført</span>
+          <div style="background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #CDD1D6;overflow:hidden"><sc-for list="{{ ferdig }}" as="o" hint-placeholder-count="2"><div style="display:flex;align-items:center;gap:10px;min-height:52px;padding:0 14px;box-shadow:{{ o.skille }}"><span style="width:24px;height:24px;border-radius:50%;background:#1F6D02;color:#FFFFFF;display:flex;align-items:center;justify-content:center">{{ ik16.hake }}</span><span style="flex:1;font-weight:600">{{ o.kunde }}</span><span style="font-size:14px;color:#51565C">{{ o.fullfort }}</span></div></sc-for></div>
+        </div>
+        <nav style="flex:none;height:64px;padding-bottom:20px;display:grid;grid-template-columns:repeat(5,1fr);background:#FFFFFF;box-shadow:inset 0 1px 0 #CDD1D6"><sc-for list="{{ fanerMer }}" as="f" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:{{ f.fg }};font-size:12px;font-weight:{{ f.vekt }}">{{ f.ikon }}<span>{{ f.navn }}</span></div></sc-for></nav>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { f: 'aapne', svar: '', nye: [] };
+  ikon(n, px) { const I = window.HengselIkoner; if (!n || !I || !I[n]) return null; const sw = px <= 16 ? 1.875 : px >= 24 ? 1.458 : 1.6;
+    return React.createElement('svg', { width: px, height: px, viewBox: '0 0 20 20', fill: 'none', stroke: 'currentColor', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' }, 'aria-hidden': true, dangerouslySetInnerHTML: { __html: I[n] } }); }
+  sett(px) { const o = {}; for (const n of Object.keys(window.HengselIkoner || {})) o[n.replace(/-/g, '_')] = this.ikon(n, px); return o; }
+  componentDidMount() { this._v = setInterval(() => { if (window.HengselIkoner && window.AdminData && window.AdminBC) { clearInterval(this._v); this.forceUpdate(); } }, 50); }
+  componentWillUnmount() { clearInterval(this._v); }
+  renderVals() {
+    const D = window.AdminData, B = window.AdminBC; if (!D || !B || !window.HengselIkoner) return { ik: {}, ik16: {}, ik24: {} };
+    const st = this.state, navn = id => ((D.eiere.find(e => e.id === id) || {}).navn || '').replace(' AS', '');
+    const ST = { ny: ['Ny', '#E7F1FF', '#1A57AD', '#A0C6FF'], aapen: ['Åpen', '#EFEEFF', '#5C46A7', '#C3BBFB'], venter: ['Venter på kunde', '#E9F1FB', '#555B64', '#BDC5CF'], lost: ['Løst', '#E3F7DE', '#1F6D02', '#A5D39B'] };
+    const PRI = { kritisk: [4, 'Kritisk'], hoy: [3, 'Høy'], normal: [2, 'Normal'], lav: [1, 'Lav'] };
+    const FR = { ok: ['#51565C', 400, 'transparent', 'none', 'frist'], snart: ['#6D5000', 600, '#FFE9BC', 'none', 'frist'], forfalt: ['#9E2D28', 600, '#FFFFFF', 'inset 0 0 0 1.5px #9E2D28', 'frist'], pause: ['#62686F', 400, 'transparent', 'none', 'kalender'], lost: ['#1F6D02', 500, 'transparent', 'none', 'hake'] };
+    const fi = s => { const f = FR[s.fristTilstand]; return { tekst: s.frist.replace(' igjen', '').replace('Pause, venter på kunden', 'Pause'), fg: f[0], vekt: f[1], bg: f[2], ring: f[3], ikon: this.ikon(f[4], 16) }; };
+    const pill = (a) => ({ navn: a[0], bg: a[1], fg: a[2], kant: a[3] });
+    const ord = { forfalt: 0, snart: 1, ok: 2, pause: 3, lost: 4 };
+    const filt = { aapne: s => s.status !== 'lost', forfalt: s => s.fristTilstand === 'forfalt', ny: s => s.status === 'ny', lost: s => s.status === 'lost' };
+    const chips = [['aapne', 'Åpne'], ['forfalt', 'Forfalt'], ['ny', 'Ny'], ['lost', 'Løst']].map(([id, n]) => { const a = st.f === id; return { navn: n, antall: String(B.saker.filter(filt[id]).length), klikk: () => this.setState({ f: id }), bg: a ? '#E0F4EE' : '#FFFFFF', fg: a ? '#016D5E' : '#1A1D22', kant: a ? '#05806F' : '#CDD1D6', vekt: a ? 600 : 500 }; });
+    const saker = B.saker.filter(filt[st.f]).sort((a, b) => ord[a.fristTilstand] - ord[b.fristTilstand]).map(s => { const [n, pn] = PRI[s.prioritet], farge = s.prioritet === 'kritisk' ? '#9E2D28' : '#1A1D22';
+      return { nr: s.nr, emne: s.emne, kunde: navn(s.eier) + ' · ' + s.kontakt, pri: pn, priFg: farge, priVekt: s.prioritet === 'kritisk' ? 700 : 500, stolper: [1, 2, 3, 4].map(i => ({ h: (3 + i * 2.5) + 'px', bg: i <= n ? farge : '#CDD1D6' })), s: pill(ST[s.status]), f: fi(s), klikk: () => {} }; });
+    const s0 = B.saker.find(s => s.nr === B.sak.nr);
+    const MT = { kunde: ['#FFFFFF', 'inset 0 0 0 1px #CDD1D6', '', '#62686F'], svar: ['#E0F4EE', 'inset 0 0 0 1px #BCE6DB', 'Svar', '#016D5E'], intern: ['#FFE9BC', 'inset 0 0 0 1px #E0C07F', 'Internt notat', '#6D5000'] };
+    const traad = [...B.sak.traad, ...st.nye].map(m => { const x = MT[m.type]; return { hvem: m.hvem, tid: m.tid.replace('14.10 ', ''), tekst: m.tekst, bg: x[0], ring: x[1], et: x[2], etFg: x[3], visEt: x[2] ? 'inline' : 'none' }; });
+    const fane = (navn, ik, a) => ({ navn, ikon: this.ikon(ik, 24), fg: a ? '#016D5E' : '#51565C', vekt: a ? 600 : 500 });
+    const HV = { Eirik: ['Eirik', '#E0F4EE', '#016D5E', '#BCE6DB'], Code: ['Code', '#EFEEFF', '#5C46A7', '#C3BBFB'], Kunden: ['Kunden', '#F3F5F8', '#1A1D22', '#CDD1D6'] };
+    const harSvar = !!st.svar.trim();
+    return { ik: this.sett(20), ik16: this.sett(16), ik24: this.sett(24), chips, saker, antForfalt: String(B.saker.filter(s => s.fristTilstand === 'forfalt').length),
+      faner: [fane('Oversikt', 'oversikt'), fane('Tavle', 'salgstavle'), fane('Saker', 'saker', true), fane('Eiere', 'utstillinger'), fane('Mer', 'mer')],
+      fanerMer: [fane('Oversikt', 'oversikt'), fane('Tavle', 'salgstavle'), fane('Saker', 'saker'), fane('Eiere', 'utstillinger'), fane('Mer', 'mer', true)],
+      sak: { nr: s0.nr, kunde: navn(s0.eier), emne: s0.emne, f: fi(s0), side: B.sak.hjelp.side, versjon: B.sak.hjelp.versjon }, klokke: B.sak.lopende, traad,
+      maler: B.svarmaler.slice(0, 3).map(m => ({ navn: m.navn, klikk: () => this.setState({ svar: m.tekst.replace('{fornavn}', 'Eva').replace('{svarfrist}', '4 timer') }) })),
+      svar: st.svar, settSvar: ev => this.setState({ svar: ev.target.value }), sendBg: harSvar ? '#05806F' : '#E3E6EA', sendFg: harSvar ? '#FBF9F6' : '#62686F',
+      send: () => { if (!harSvar) return; this.setState(s => ({ nye: [...s.nye, { type: 'svar', hvem: 'Eirik', tid: '10:21', tekst: s.svar.trim() }], svar: '' })); },
+      opp: B.oppstarter.filter(o => o.status !== 'ferdig').map(o => { const f = o.eier === 'nordli' ? 2 : 0; return { kunde: navn(o.eier), start: o.start, fremdrift: f + ' av 9', bar: f / 9 * 100 + '%', neste: o.neste, hv: pill(HV[o.nesteHvem]), stopper: o.stopper || '', visStopp: o.stopper ? 'flex' : 'none' }; }),
+      ferdig: B.oppstarter.filter(o => o.status === 'ferdig').map((o, i) => ({ kunde: navn(o.eier), fullfort: o.fullfort, skille: i ? 'inset 0 1px 0 #E3E6EA' : 'none' })) };
+  }
+}
+</script>
+</body>
+</html>
