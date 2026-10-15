@@ -1,7 +1,7 @@
-# Sikkerhetshoder for admin.hengsel.no (K-184). Ingen inline-skript, ingen tredjepart, ingen indeksering.
+# Sikkerhetshoder for admin.hengsel.no (K-184, K-240). Ingen inline-skript, ingen tredjepart, ingen indeksering. connect-src 'self' er API-et (/api) i samme Worker.
 # CSS-en ligger inline; scripts/csp-hasher.mjs legger sha256-hashene til style-src i dist/_headers ved bygging.
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Robots-Tag: noindex, nofollow, noarchive
   Cache-Control: private, no-store
   Strict-Transport-Security: max-age=31536000

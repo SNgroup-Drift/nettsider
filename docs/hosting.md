@@ -413,6 +413,15 @@ Variablene `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD` settes i dashbordet (ikke hemmel
 utrulling overskriver dem). Mangler de, svarer Workeren 503. Build command `npm run build -w sites/admin`, Deploy command og
 Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Access-app og policy: se `claude/k184-rapport.md`.
 
+**K-240 (fase A, S-62):** Workeren har et JSON-API under `/api` (`worker/api.js`) mot Cloudflare D1 (binding `DB`, database `hengsel-admin`, region weur;
+`database_id` i `wrangler.jsonc` settes inn av Oversikt før fletting). Migreringene ligger i `sites/admin/migrations/` og kjøres med
+`npx wrangler d1 migrations apply hengsel-admin --remote -c sites/admin/wrangler.jsonc` etter utrulling. Sider med id i adressen (`/salg/eiere/:id`,
+`/kunder/:id`, `/avtaler/:nr`) serveres fra én fil hver (`worker/ruter.js`); tilbudet som PDF lages i Workeren (`/salg/tilbud/:nr/:versjon.pdf`).
+`POST /api/lead` tar imot «Be om demo» fra hengsel.no og er unntatt Access-sjekken i Workeren; **Access-appen må ha en bypass-policy for stien
+`/api/lead`** (ellers stopper Access forespørselen før Workeren). Hemmeligheter (aldri i repoet): `PENNEO_API_KEY` (Penneo er av uten den) og
+`LEAD_NOKKEL` (valgfritt, samme verdi i hengsel-Workeren). Variabler: `LEAD_ORIGIN` (standard `https://hengsel.no`), `PENNEO_API_URL`.
+hengsel-Workeren sender leaden bare når variabelen `LEAD_URL` (`https://admin.hengsel.no/api/lead`) er satt; den er av som standard. Se `claude/k240-rapport.md`.
+
 
 ## hengsel.no/kunde/sigdal (K-223; før K-229 lå den på /sigdal)
 

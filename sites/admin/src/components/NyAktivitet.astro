@@ -1,0 +1,35 @@
+---
+/** SA8 Ny aktivitet: type, eier, kontakt, «Hva skjedde» (påkrevd), notat, neste steg med dato. «Lagre» er av til tittelen er fylt ut. */
+import { ikon } from "../lib/ikoner";
+const typer = [["samtale", "Samtale"], ["mote", "Møte"], ["demo", "Demo"], ["epost", "E-post"], ["notat", "Notat"]];
+---
+<dialog id="dlg-aktivitet" aria-labelledby="dlg-aktivitet-tittel">
+  <form method="dialog" novalidate>
+    <h2 id="dlg-aktivitet-tittel">Ny aktivitet <button class="lukk" type="button" data-lukk aria-label="Lukk"><Fragment set:html={ikon("lukk", 20)} /></button></h2>
+    <div class="chips" role="radiogroup" aria-label="Type">
+      {typer.map(([id, navn]) => (
+        <label class="chip"><input class="visuelt-skjult" type="radio" name="type" value={id} checked={id === "samtale"} /><span data-type-ikon={id}></span>{navn}</label>
+      ))}
+    </div>
+    <div class="felt-rad">
+      <label class="felt"><span>Eier</span><select name="eier_id" required></select></label>
+      <label class="felt"><span>Kontakt</span><select name="kontakt_id"><option value="">Ingen</option></select></label>
+    </div>
+    <label class="felt"><span>Hva skjedde</span><input name="tittel" type="text" maxlength="200" required autocomplete="off" /></label>
+    <label class="felt"><span>Notat</span><textarea name="tekst" maxlength="4000" rows="3"></textarea></label>
+    <div class="felt-rad">
+      <label class="felt"><span>Dato</span><input name="dato" type="date" /></label>
+      <label class="felt"><span>Neste steg</span><input name="neste_tekst" type="text" maxlength="200" autocomplete="off" /></label>
+      <label class="felt"><span>Dato for neste steg</span><input name="neste_dato" type="date" /></label>
+    </div>
+    <p class="meta">Alle åpne muligheter skal ha et neste steg med dato.</p>
+    <div class="knapper">
+      <button class="knapp" type="button" data-lukk>Avbryt</button>
+      <button class="knapp primar" type="submit" data-lagre disabled>Lagre</button>
+    </div>
+  </form>
+</dialog>
+<style>
+  .chip:has(input:checked) { background: var(--aksent-svak); color: var(--aksent-tekst); border-color: var(--aksent); font-weight: 600; }
+  .chip:has(input:focus-visible) { outline: 2px solid var(--aksent); outline-offset: 2px; }
+</style>

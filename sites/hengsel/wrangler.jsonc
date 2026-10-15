@@ -7,6 +7,8 @@
 // `npx wrangler secret put … -c sites/hengsel/wrangler.jsonc`, aldri i repoet.
 // Access (K-226): variablene ACCESS_TEAM_DOMAIN («<team>.cloudflareaccess.com») og ACCESS_AUD (AUD-taggen til Access-appen; flere skilles med komma) er ikke
 // hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her. keep_vars sørger for at utrulling ikke overskriver dem.
+// K-240: leaden fra /api/demo sendes også til Hengsel Admin når variabelen LEAD_URL (https://admin.hengsel.no/api/lead) er satt i dashbordet; AV som standard.
+// Hemmeligheten LEAD_NOKKEL (valgfri, samme verdi i begge Workerne) settes med `npx wrangler secret put LEAD_NOKKEL -c sites/hengsel/wrangler.jsonc`.
 // Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/hengsel/wrangler.jsonc`.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",

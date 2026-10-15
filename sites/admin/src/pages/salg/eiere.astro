@@ -1,0 +1,10 @@
+---
+/** SA3 Eiere og butikker (K-240): tabell med søk og filter, «Importer fra Excel» med forhåndsvisning (?import=1) og «Ny eier». */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Eiere og butikker" description="Alle eiere: prospekter, kunder og tapte, med butikker, kjede, fylke og verdi" aktiv="eiere">
+  <div id="side" data-kunder="0"></div>
+  <script>
+    import "../../scripts/eiere";
+  </script>
+</Side>

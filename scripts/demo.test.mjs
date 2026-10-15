@@ -203,3 +203,31 @@ test("wrangler.jsonc har /api/demo i run_worker_first og ingen aktiv send_email-
   assert.equal(w.send_email, undefined);
   assert.ok(w.assets.run_worker_first.includes("/api/demo"));
 });
+
+// ── K-240: leaden til Hengsel Admin (/api/lead), bak variabelen LEAD_URL som er av som standard ───────────────────────────────────────
+test("K-240: uten LEAD_URL sendes ingen lead; med LEAD_URL sendes feltene server til server med Origin og valgfri Bearer-nøkkel, og feil der stopper ikke svaret", async () => {
+  const kall = [];
+  const hent = async (url, init) => { kall.push({ url, init }); return new Response(JSON.stringify({ ok: true }), { status: 200 }); };
+  // Av som standard
+  let svar = await handterDemo(be(), binding(), NA, lag, hent);
+  assert.equal(svar.status, 200); assert.equal(kall.length, 0);
+  // Ugyldig adresse (ikke https, ikke /api/lead) sendes heller ikke
+  svar = await handterDemo(be(), { ...binding(), LEAD_URL: "http://admin.hengsel.no/api/lead" }, NA, lag, hent);
+  assert.equal(kall.length, 0);
+  // På: samme felt som skjemaet, Origin = nettstedets egen adresse, ingen nøkkel uten LEAD_NOKKEL
+  svar = await handterDemo(be(), { ...binding(), LEAD_URL: "https://admin.hengsel.no/api/lead" }, NA, lag, hent);
+  assert.equal(svar.status, 200); assert.equal(kall.length, 1);
+  assert.equal(kall[0].url, "https://admin.hengsel.no/api/lead"); assert.equal(kall[0].init.method, "POST");
+  assert.equal(kall[0].init.headers.Origin, ORIGIN); assert.equal(kall[0].init.headers.Authorization, undefined);
+  const kropp = JSON.parse(kall[0].init.body);
+  assert.deepEqual(kropp, { navn: gyldig.navn, butikk: gyldig.butikk, epost: gyldig.epost, tlf: "", avdelinger: "2-3", melding: gyldig.melding, nettsted: "", t: gyldig.t });
+  // Med LEAD_NOKKEL: Bearer
+  await handterDemo(be(), { ...binding(), LEAD_URL: "https://admin.hengsel.no/api/lead", LEAD_NOKKEL: "x" }, NA, lag, hent);
+  assert.equal(kall[1].init.headers.Authorization, "Bearer x");
+  // Ugyldig skjema sendes ikke videre; nettverksfeil hos Admin påvirker ikke svaret til nettleseren
+  await handterDemo(be({ ...gyldig, navn: "" }), { ...binding(), LEAD_URL: "https://admin.hengsel.no/api/lead" }, NA, lag, hent);
+  assert.equal(kall.length, 2);
+  const feilende = async () => { throw new Error("nede"); };
+  const { svar: s2, data, env } = await (async () => { const e = { ...binding(), LEAD_URL: "https://admin.hengsel.no/api/lead" }; const r = await handterDemo(be(), e, NA, lag, feilende); return { svar: r, data: await r.json(), env: e }; })();
+  assert.equal(s2.status, 200); assert.deepEqual(data, { ok: true }); assert.equal(env.sendt.length, 1, "e-posten går som før");
+});

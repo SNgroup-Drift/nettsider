@@ -13,12 +13,19 @@
  *   og siden viser mailto-lenken til hei@hengsel.no uten feilmelding. Slås e-posten på senere (send_email-blokken tilbake i wrangler.jsonc,
  *   se docs/k160-cloudflare-skjema.md), sendes e-posten uten kodeendring. Kastes det en feil ved sending, svarer ruten 503 {reserve:"mailto"}.
  * - Ingenting lagres, og det logges ingen persondata (bare feilkoden fra Cloudflare).
+ * - Lead til Hengsel Admin (K-240): er variabelen LEAD_URL satt (f.eks. https://admin.hengsel.no/api/lead; AV som standard), sendes de samme
+ *   feltene server til server dit etter at de er validert, med Origin = nettstedets egen adresse og, når hemmeligheten LEAD_NOKKEL er satt,
+ *   «Authorization: Bearer …». Feiler leveringen, logges bare statuskoden; svaret til nettleseren påvirkes ikke.
  *
  * Importerer ingenting fra cloudflare:email på toppnivå, så filen kan testes i Node (scripts/demo.test.mjs).
  */
 
 export interface DemoEnv {
   DEMO_EPOST?: { send(melding: unknown): Promise<unknown> };
+  /** K-240: adressen til POST /api/lead i Hengsel Admin. Tom eller uten verdi = leaden sendes ikke (standard). */
+  LEAD_URL?: string;
+  /** K-240: valgfri delt hemmelighet (wrangler secret), sendes som Bearer når den er satt. */
+  LEAD_NOKKEL?: string;
 }
 
 export const AVSENDER = "demo@hengsel.no";
@@ -49,6 +56,7 @@ export async function handterDemo(
   env: DemoEnv,
   na: number = Date.now(),
   lagMelding: (fra: string, til: string, raw: string) => Promise<unknown> = standardMelding,
+  hent: typeof fetch = fetch,
 ): Promise<Response> {
   if (req.method.toUpperCase() !== "POST") {
     return json(405, { ok: false, feil: { skjema: "Metoden er ikke tillatt." } }, { Allow: "POST" });
@@ -82,6 +90,9 @@ export async function handterDemo(
   const { felt, feil } = valider(rå);
   if (!felt) return json(400, { ok: false, feil });
 
+  // K-240: leaden til Hengsel Admin, bare når LEAD_URL er satt. Feil her stopper aldri svaret til nettleseren.
+  await sendLead(env, felt, rå.t, url.origin, hent);
+
   const bind = env.DEMO_EPOST;
   // Uten e-postbinding (ikke slått på ennå): ingen feil, siden viser mailto-lenken
   if (!bind) return json(200, { ok: true, levert: false, reserve: "mailto" });
@@ -94,6 +105,22 @@ export async function handterDemo(
     return json(503, { ok: false, reserve: "mailto" });
   }
   return json(200, { ok: true });
+}
+
+/** K-240: POST til Hengsel Admin (/api/lead) med de validerte feltene. Returnerer true når Admin svarte ok. */
+export async function sendLead(env: DemoEnv, f: Felt, t: string, origin: string, hent: typeof fetch = fetch): Promise<boolean> {
+  const adresse = (env.LEAD_URL ?? "").trim();
+  if (!/^https:\/\/[^\s/]+\/api\/lead$/.test(adresse)) return false;
+  const hoder: Record<string, string> = { "Content-Type": "application/json", Origin: origin, Accept: "application/json" };
+  if (env.LEAD_NOKKEL) hoder.Authorization = `Bearer ${env.LEAD_NOKKEL}`;
+  try {
+    const r = await hent(adresse, { method: "POST", headers: hoder, body: JSON.stringify({ navn: f.navn, butikk: f.butikk, epost: f.epost, tlf: f.tlf, avdelinger: f.avdelinger, melding: f.melding, nettsted: "", t }) });
+    if (!r.ok) console.error("demo: lead ikke levert", r.status);
+    return r.ok;
+  } catch (e) {
+    console.error("demo: lead feilet", (e as Error)?.name ?? "ukjent");
+    return false;
+  }
 }
 
 async function standardMelding(fra: string, til: string, raw: string): Promise<unknown> {

@@ -7,13 +7,14 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | sngroup.no | `sites/sngroup` | Forsiden med plantegningen, virksomhetene, Hengsel, kontakt, `/personvern` (montørappen Hengsel) og `/design` |
 | hengsel.no | `sites/hengsel` | hengsel.no 2.0 (K-160), kortet ned i K-229: forside med «Prøv selv» til demo.hengsel.no, /crm, /ute, /kundeportal, /integrasjoner, /priser-og-demo (skjema til /api/demo), personvern, /apptest (passord til Access står foran /kunde) og 404. Kundeområdet `/kunde` (hjelp, test appen, dokumenter og kundens egen utgave) ligger bak én Cloudflare Access-innlogging |
 | byggem.no | `sites/byggem` | Forside, prosjekter, kontakt, personvern og 404 (K-87 del 5) |
+| admin.hengsel.no | `sites/admin` | Hengsel Admin (K-184, K-240): salg, kunder, avtaler, prisberegner og prisliste (fase A, S-62) med JSON-API i Workeren mot Cloudflare D1, pluss Drift-sidene under `/drift`. Bak Cloudflare Access. Se `claude/k240-rapport.md` |
 | design.hengsel.no | `sites/design` | Designfasiten for Hengsel (K-182): merket v3, farger i lys og mørk, skrift, komponenter og fiktive skjermer. Astro, generert fra Hengsel-designsystemets tokens (pinnet commit), åpen men noindex, egen Worker `design` (se `docs/hosting.md`) |
 | hengsel.no/kunde/sigdal | `sites/hengsel` (`src/pages/kunde/sigdal*`) + `packages/kundetema-sigdal` | K-223: Sigdal-utgave av Hengsel-sidene og Visningsrommet (`/kunde/sigdal/vis/`), bak Cloudflare Access, noindex. Se `claude/k223-rapport.md` |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
 **Hengsel-sidene** (hengsel.no, vis., design., admin.) har én delt token-fil og bare lys modus; reglene står i [docs/design/hengsel-regler.md](docs/design/hengsel-regler.md).
 
-Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md).
+Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md). Unntaket admin.hengsel.no (K-240): Workeren har et JSON-API under /api mot Cloudflare D1 (migreringer i `sites/admin/migrations`), bak Cloudflare Access.
 
 ## Oppsett
 
@@ -48,6 +49,9 @@ scripts/
   lag-hengsel-tokens.mjs  Genererer packages/hengsel-tokens/tokens.css og fonts.css fra hengsel.tokens.json (--sjekk)
   hengsel-regler.mjs      Skanner Hengsel-sidene for fargeverdier og mørk modus; hengsel-regler.test.mjs er testen (K-192)
   design-fasit.test.mjs   npm test: design.hengsel.no og tokens er like (pin, tokens.css/ts, roller, status, skrift, logoer, komponenter, ingen ekte navn eller gammel logo)
+  admin-fase-a.test.mjs   npm test: Hengsel Admin fase A (K-240): prisberegningen (de tre regneeksemplene), migreringene (node:sqlite og wrangler --local),
+                          API-tilgang, lead-vernet, Excel-import og tilbud-PDF. lib/d1-node.mjs etterligner D1, lib/admin-eksempeldata.mjs legger inn eksempeldata via API-et
+  skjermbilder-k240.mjs   Skjermbilder av Hengsel Admin fase A (1440 og 390) med eksempeldata, lokalt uten Cloudflare (lib/admin-lokal.mjs), til claude/k240/
   csp-hasher.mjs          Legger hashen for inline-CSS inn i CSP-en i dist/_headers
   statisk-server.mjs      Liten server som løser stier og 404 som Cloudflare Workers
 ```
@@ -64,6 +68,8 @@ npm run skjermbilder   # skjermbilder til docs/skjermbilder + nettlesersjekker (
 npm run dev:sngroup    # utviklingsserver (også dev:hengsel, dev:byggem og dev:design)
 npm run design:hent -- --kilde <innlandet-crm-sync> --commit <sha>   # henter designsystemet til packages/hengsel-tokens (pinnet)
 npm run design:skjermbilder   # skjermbilder og axe for design.hengsel.no (krever Chromium)
+npm run skjermbilder:k240     # skjermbilder av Hengsel Admin fase A med eksempeldata (krever Chromium og build av sites/admin)
+npx wrangler d1 migrations apply hengsel-admin --local -c sites/admin/wrangler.jsonc   # D1-migreringene lokalt (--remote i Cloudflare)
 ```
 
 ## Legge til et nytt nettsted

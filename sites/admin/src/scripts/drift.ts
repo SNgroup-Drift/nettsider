@@ -1,5 +1,5 @@
 /**
- * Søk og fristfarger for admin.hengsel.no (K-184). Ingen nettverkskall, ingen lagring, ingen tredjepart.
+ * Søk og fristfarger for Drift-sidene i admin.hengsel.no (K-184, flyttet til /drift i K-240). Ingen nettverkskall, ingen lagring, ingen tredjepart.
  * - Søkefeltet filtrerer alle [data-sok]-elementer (lenker, kontoer, frister, kunder) og skjuler tomme seksjoner.
  * - Fristfargene regnes på nytt i nettleseren (siden kan være bygget for lenge siden).
  */
