@@ -288,7 +288,7 @@ const harFeil = KJENTE_FEIL.length > 0;
 </script>
 
 <style>
-  /* Flatene er --flate-senket, båndene --flate-side og kortene --flate-kort. furu bare på hovedknapper og lenker. Stegnummer, avkrysning, prikker og tidslinje er blekk. */
+  /* Flatene er --flate-senket, båndene --flate-side og kortene --flate-kort. furu bare på hovedknapper og lenker. Stegnummer, avkrysning og tidslinje er blekk; karusellprikkene er --kant og --aksent. */
   .a-side { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); background: var(--a-flate); color: var(--ink); }
   :global(header.sidehode) { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); }
 
@@ -315,11 +315,16 @@ const harFeil = KJENTE_FEIL.length > 0;
   .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 700ms var(--ease); }
   .slide:first-child { position: relative; }
   .slide.on { opacity: 1; pointer-events: auto; }
-  .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
+  .prikker { display: flex; gap: 0; align-items: center; visibility: hidden; }
   :global(html.js) .prikker { visibility: visible; }
-  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
-  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); transition: background var(--dur); }
-  .prikk.on span { background: var(--ink); }
+  /* Trykkflaten er 28 × 44 px (minst 24 × 24, WCAG 2.5.8); prikken selv er 8 × 8. Ikke valgt: --kant (3,5:1 mot flaten). Valgt: --aksent, 20 × 8, så den skiller seg ut også uten farge. */
+  .prikk { width: 28px; height: 44px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; border-radius: var(--radius-felt); }
+  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--kant); transition: background var(--dur), width var(--dur) var(--ease); }
+  .prikk:hover span { background: var(--tekst-svak); }
+  .prikk[aria-selected="true"] span { width: 20px; background: var(--aksent); }
+  .prikk:focus-visible { outline: 2px solid var(--aksent); outline-offset: 0; box-shadow: none; }
+  .prikk:focus-visible span { background: var(--tekst-svak); }
+  .prikk[aria-selected="true"]:focus-visible span, .prikk[aria-selected="true"]:hover span { background: var(--aksent); }
   .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
   @media (max-width: 759px) { .slides { max-width: 250px; } }
 
