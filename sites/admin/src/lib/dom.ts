@@ -39,8 +39,8 @@ export function neste(tekst: string | null, datoIso: string | null, idag: string
 
 export class ApiFeil extends Error { constructor(public status: number, public kode: string, melding: string, public felt: Record<string, string> = {}) { super(melding); } }
 /** Kall mot API-et. Kaster ApiFeil med kode (ADM-401, ADM-403, ADM-404, ADM-504 …). ?tilstand=feil i adressen tvinger en feil (til skjermbilder). */
-export async function api<T = any>(metode: string, sti: string, kropp?: unknown, { fil }: { fil?: File } = {}): Promise<T> {
-  const t = tilstand();
+export async function api<T = any>(metode: string, sti: string, kropp?: unknown, { fil, utenTilstand = false }: { fil?: File; utenTilstand?: boolean } = {}): Promise<T> {
+  const t = utenTilstand ? "" : tilstand();
   if (t === "feil") throw new ApiFeil(503, "ADM-504", "Databasen svarte ikke.");
   if (t === "laster") await new Promise(() => {});
   const hoder: Record<string, string> = { Accept: "application/json" };

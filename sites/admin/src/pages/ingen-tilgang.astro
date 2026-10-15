@@ -1,0 +1,17 @@
+---
+/** «Ingen tilgang» (K-259, 60-207): vises for rollen Support når den åpner en side utenfor Support, med feilkode ADM-403. Workeren serverer fila med status 403. */
+import Side from "../layouts/Side.astro";
+import { ikon } from "../lib/ikoner";
+---
+<Side title="Ingen tilgang" description="Rollen har ikke tilgang til denne siden" aktiv="ingen-tilgang" toppknapp="sak" sokplassholder="Søk etter sak, kunde eller kontakt" sokModus="saker">
+  <section class="ingen-tilgang" aria-labelledby="h-ingen">
+    <span class="stor-ikon"><Fragment set:html={ikon("stoppet", 24)} /></span>
+    <h1 id="h-ingen">Du har ikke tilgang til <span id="omrade">denne siden</span></h1>
+    <p>Rollen Support gir tilgang til Support (saker og timer, uten beløp). Oversikt, Salg, Kunder, Avtaler, Oppstart, Fakturering, Tall, Drift og Innstillinger er bare for Eirik.</p>
+    <div class="knapper-rad"><a class="knapp primar" href="/support/saker">Til saker</a><a class="knapp" href="mailto:es@sngroup.no?subject=Tilgang%20i%20Hengsel%20Admin">Spør Eirik om tilgang</a></div>
+    <p class="feilkode">Feilkode ADM-403</p>
+  </section>
+  <script>
+    import "../scripts/ingen-tilgang";
+  </script>
+</Side>

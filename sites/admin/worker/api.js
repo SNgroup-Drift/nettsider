@@ -817,4 +817,7 @@ rute("POST", "/api/import", async ({ req, db, bruker }) => {
   return importer(db, rader, bruker.navn);
 });
 
+import { monter as monterSupport } from "./api-support.js"; monterSupport(rute); // K-259 Support (saker, timer)
+import { monter as monterOppstart } from "./api-oppstart.js"; monterOppstart(rute); // K-259 Oppstart
+
 export { RUTER };

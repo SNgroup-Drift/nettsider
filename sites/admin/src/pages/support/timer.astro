@@ -1,0 +1,10 @@
+---
+/** SB3 Timer (K-259, 60-211): dataene hentes fra /api i nettleseren (scripts/timer.ts). */
+import Side from "../../layouts/Side.astro";
+---
+<Side title="Timer" description="Supporttimer per kunde og måned mot inkludert" aktiv="timer" toppknapp="sak" sokplassholder="Søk etter sak, kunde eller kontakt" sokModus="saker">
+  <div id="side" class="timer-side"></div>
+  <script>
+    import "../../scripts/timer";
+  </script>
+</Side>

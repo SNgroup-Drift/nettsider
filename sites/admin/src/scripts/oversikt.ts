@@ -1,5 +1,10 @@
-/** SA1 Oversikt: fem tall, neste steg (forfalt og i dag), nye leads fra «Be om demo» og frister fra Drift. Tilstander: tom, laster, feil. */
+/**
+ * SA1 Oversikt: fem tall, tre kort fra fase B/C (K-259: «Åpne saker og frister», «Oppstarter i gang», «Neste fakturakjøring»), neste steg
+ * (forfalt og i dag), nye leads fra «Be om demo» og frister fra Drift. Tilstander: tom, laster, feil.
+ * «Neste fakturakjøring» leses fra GET /api/fakturakjoring/neste, som K-260 (fase C) fyller; til det finnes, står kortet som «Kommer».
+ */
 import { api, html, raw, kr, dato, datoKort, flertall, ikon, neste, sett, q, feilbanner, skjelett, tilstand, tid } from "../lib/dom";
+import { frist, fremdrift, settBredder } from "../lib/support-ui";
 
 const rot = q("#side")!;
 const frister: { tekst: string; kategori: string; dato: string; horer: string }[] = JSON.parse(rot.dataset.frister ?? "[]");
@@ -23,6 +28,7 @@ function vis(d: any, tom = false) {
   sett(rot, html`${raw(hode())}
     ${d.prisliste && d.prisliste.status !== "aktiv" ? raw(`<div class="banner varsel">${ikon("innstillinger", 18)}<div><b>Prislisten ${d.prisliste.versjon} er et utkast.</b> Tavla og prisberegneren bruker den som eksempel til den er publisert under Innstillinger › Prisliste.</div></div>`) : ""}
     <section class="tall" aria-label="Tallene">${tall.map(([navn, verdi, under, href]) => html`<a class="kort" href="${href}"><span class="navn">${navn}</span><span class="verdi">${verdi}</span><span class="under">${under}</span></a>`)}</section>
+    <div class="tre-kort" id="fase-bc">${raw(skjelett(3))}</div>
     <div class="to-kolonner">
       <div class="rutenett en-kolonne" >
         <section class="kort" aria-labelledby="h-neste"><h2 id="h-neste">Neste steg <span class="mer">I dag og forfalt</span></h2>
@@ -34,6 +40,27 @@ function vis(d: any, tom = false) {
       ${raw(fristKort())}
     </div>`);
   void tom;
+  void visFaseBC(tom);
+}
+
+// ── K-259: kortene for saker, oppstarter og neste fakturakjøring ──
+const sakerKort = (d: any | null) => html`<section class="kort uten-pad" aria-labelledby="h-saker"><h2 id="h-saker" class="korthode"><a href="/support/saker">Åpne saker og frister</a><span class="mer">${d ? `${d.apne} åpne · ${d.forfalt} forfalt` : ""}</span></h2>
+  ${!d ? raw(`<p class="meta innrykk">Kunne ikke hente sakene.</p>`) : d.saker.length ? html`<ul class="liste innrykk">${d.saker.map((s: any) => html`<li><a class="rad" href="/support/saker/${s.nr}"><div class="tekst"><b>${s.emne}</b><span>${s.nr} · ${s.eier_navn ?? "Ukjent kunde"}</span></div>${frist(s.frist)}</a></li>`)}</ul>` : raw(`<p class="meta innrykk">Ingen åpne saker.</p>`)}</section>`;
+const oppstartKort = (d: any | null) => html`<section class="kort uten-pad" aria-labelledby="h-oppstart"><h2 id="h-oppstart" class="korthode"><a href="/oppstart">Oppstarter i gang</a></h2>
+  ${!d ? raw(`<p class="meta innrykk">Kunne ikke hente oppstartene.</p>`) : d.i_gang.length ? html`<ul class="liste innrykk">${d.i_gang.map((o: any) => html`<li class="oppstart-li"><a class="rad blokk" href="/oppstart/${o.id}"><span class="topp"><b>${o.eier_navn}</b><span class="meta">Start ${dato(o.oppstartsdato)}</span></span>
+    <span class="fremdrift-rad">${fremdrift(o.ferdig, o.av)}<span class="meta">${o.ferdig} av ${o.av}</span></span>${o.stopper.map((x: any) => html`<span class="stopper-tekst">${raw(ikon("stoppet", 16))}<b>Stopper:</b> ${x.punkt}</span>`)}</a></li>`)}</ul>` : raw(`<p class="meta innrykk">Ingen oppstarter i gang.</p>`)}</section>`;
+const fakturaKort = (k: any | null) => html`<section class="kort uten-pad" aria-labelledby="h-faktura"><h2 id="h-faktura" class="korthode"><a href="/fakturering/kjoring">Neste fakturakjøring</a></h2>
+  ${!k ? raw(`<div class="innrykk kommer"><span class="merke kommer">Kommer</span><p class="meta">Fakturakjøringen bygges i fase C. Kortet viser dato, antall, sum og feil når den er på plass.</p></div>`) : html`<div class="innrykk"><b class="stor-dato">${dato(k.dato)}</b><p class="meta">${k.mnd_navn ?? ""}${k.dager_til != null ? `, om ${k.dager_til} dager` : ""}</p>
+    <dl class="dl mt-10"><dt>Fakturaer</dt><dd class="hoyre-tall">${k.antall ?? 0}</dd><dt>Sum uten mva</dt><dd class="hoyre-tall"><b>${kr(k.sum_uten_mva_ore)}</b></dd><dt>Klar</dt><dd class="hoyre-tall">${k.klar ?? 0}</dd><dt>Sendt</dt><dd class="hoyre-tall">${k.sendt ?? 0}</dd></dl></div>
+    ${k.feil ? html`<p class="feil-linje">${raw(ikon("stoppet", 16))}${k.feil} feil${k.feilmeldinger?.[0] ? `: ${k.feilmeldinger[0]}` : ""}</p>` : ""}`}</section>`;
+
+async function visFaseBC(tom: boolean) {
+  const boks = q("#fase-bc");
+  if (!boks) return;
+  if (tom) { sett(boks, html`${sakerKort({ apne: 0, forfalt: 0, saker: [] })}${oppstartKort({ i_gang: [] })}${fakturaKort(null)}`); return; }
+  const [s, o, k] = await Promise.allSettled([api("GET", "/api/oversikt/saker"), api("GET", "/api/oversikt/oppstart"), api("GET", "/api/fakturakjoring/neste")]);
+  sett(boks, html`${sakerKort(s.status === "fulfilled" ? s.value : null)}${oppstartKort(o.status === "fulfilled" ? o.value : null)}${fakturaKort(k.status === "fulfilled" && k.value?.dato ? k.value : null)}`);
+  settBredder(boks);
 }
 
 async function last() {
