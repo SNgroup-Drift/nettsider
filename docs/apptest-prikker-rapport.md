@@ -8,7 +8,7 @@ Repoet i oppdraget het `sngroup-nettsider`. Pakken heter det, men GitHub-repoet 
 I `sites/hengsel/src/pages/apptest.astro` (samme side som `/apptest`; `/kunde/apptest` importerer den) var prikken en `span` inni `button.prikk`:
 
 - Ikke valgt prikk: `background: var(--surface-highlight-strong)`, som er `--flate-valgt` (lys mint) og ligger nesten oppå sideflaten. Kontrast ca. 1,1:1.
-- Valgt prikk: `--ink` (= `--tekst`), samme størrelse som de andre. Forskjellen ssto bare i farge.
+- Valgt prikk: `--ink` (= `--tekst`), samme størrelse som de andre. Forskjellen sto bare i farge.
 - Ingen hover, ingen egen fokusring.
 
 Trykkflaten var allerede 44 × 44 px (`min-width/min-height: 44px` på knappen). Det som er 8 × 8 px er selve prikken (`span`), ikke knappen. Jeg beholdt den store trykkflaten og målte den (se under).
