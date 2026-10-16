@@ -317,9 +317,13 @@ const harFeil = KJENTE_FEIL.length > 0;
   .slide.on { opacity: 1; pointer-events: auto; }
   .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
   :global(html.js) .prikker { visibility: visible; }
-  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
-  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); transition: background var(--dur); }
-  .prikk.on span { background: var(--ink); }
+  /* Trykkflaten er 44 × 44 px (minst 24 × 24, WCAG 2.5.8); selve prikken er 8 × 8. Ikke valgt: --kant (minst 3:1 mot flaten). Valgt: --aksent og bredere, så den skiller seg ut uten farge. */
+  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; border-radius: var(--radius-pille); }
+  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--kant); transition: background var(--dur), width var(--dur); }
+  .prikk:hover span, .prikk:focus-visible span { background: var(--tekst-svak); }
+  .prikk:focus-visible { outline: 2px solid var(--aksent); outline-offset: -4px; box-shadow: none; }
+  .prikk[aria-selected="true"] span, .prikk[aria-selected="true"]:hover span, .prikk[aria-selected="true"]:focus-visible span { width: 20px; background: var(--aksent); }
+  @media (prefers-reduced-motion: reduce) { .prikk span { transition: none; } }
   .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
   @media (max-width: 759px) { .slides { max-width: 250px; } }
 

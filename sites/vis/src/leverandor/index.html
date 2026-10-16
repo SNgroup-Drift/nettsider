@@ -80,10 +80,11 @@ tr:not(:first-child):hover{background:var(--flate-senket)}
 .bar{max-width:1180px;width:100%;margin:0 auto 16px;padding:0 24px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .count{font-size:13px;color:var(--tekst-dempet);min-width:56px;font-variant-numeric:tabular-nums}
 .dots{display:flex;flex-wrap:wrap;margin-left:auto}
-.dots button{width:28px;height:40px;border:0;background:transparent;padding:0;cursor:pointer;display:grid;place-items:center}
-.dots button::before{content:"";width:8px;height:8px;border-radius:var(--radius-pille);background:var(--linje);transition:background var(--dur) var(--ease),width var(--dur) var(--ease)}
-.dots button:hover::before{background:var(--ramme)}
-.dots button.on::before{background:var(--aksent);width:20px}
+.dots button{width:28px;height:40px;border:0;background:transparent;padding:0;cursor:pointer;display:grid;place-items:center;border-radius:var(--radius-pille)}
+.dots button::before{content:"";width:8px;height:8px;border-radius:var(--radius-pille);background:var(--kant);transition:background var(--dur) var(--ease),width var(--dur) var(--ease)}
+.dots button:hover::before,.dots button:focus-visible::before{background:var(--tekst-svak)}
+.dots button:focus-visible{outline:2px solid var(--aksent);outline-offset:-2px;box-shadow:none}
+.dots button.on::before,.dots button.on:hover::before,.dots button.on:focus-visible::before{background:var(--aksent);width:20px}
 @media (max-width:820px){
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .levels,.prio,.phases{grid-template-columns:minmax(0,1fr)}
