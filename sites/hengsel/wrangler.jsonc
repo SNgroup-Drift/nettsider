@@ -3,7 +3,7 @@
 // kundens egen utgave), for /api/demo (demoskjemaet, K-160, worker/demo.ts) og for /apptest og alt under (passordet, K-107, worker/apptest.ts, til Access står
 // foran /kunde; se APPTEST_VIDERE i worker/index.ts). /kunde/* deler Access-sjekken i worker/access.ts (403 uten gyldig token, også når ACCESS_TEAM_DOMAIN
 // og ACCESS_AUD mangler). Resten av hengsel.no serveres som statiske filer uten kode; gamle adresser (/hjelp, /dokumenter, /sigdal) videresendes av
-// public/_redirects. Hemmelighetene APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD (K-114, vises på /kunde/apptest for innloggede) settes med
+// public/_redirects. Hemmelighetene APPTEST_PASSORD, APPTEST_NOKKEL og DEMO_PASSORD (K-114, settes bare inn på /apptest bak eget passord, aldri på /kunde/*) settes med
 // `npx wrangler secret put … -c sites/hengsel/wrangler.jsonc`, aldri i repoet.
 // Access (K-226): variablene ACCESS_TEAM_DOMAIN («<team>.cloudflareaccess.com») og ACCESS_AUD (AUD-taggen til Access-appen; flere skilles med komma) er ikke
 // hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her. keep_vars sørger for at utrulling ikke overskriver dem.

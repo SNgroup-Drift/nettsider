@@ -5,23 +5,20 @@
  * ACCESS_AUD. Uten gyldig Cf-Access-Jwt-Assertion, eller når variablene mangler, svarer alle stier under /kunde 403. Ingen testmodus og ingen omgåelse.
  *
  * - Alle svar: X-Robots-Tag noindex, nofollow og Cache-Control private, no-store (også 403).
- * - /kunde/apptest og /kunde/sigdal/apptest: innholdet fra /apptest uten eget passord (Access er innloggingen). Innloggede får demopassordet satt inn som på /apptest.
+ * - /kunde/apptest og /kunde/sigdal/apptest: innholdet fra /apptest uten eget passord (Access er innloggingen). Demopassordet settes IKKE inn her: siden står med «••••••••» og
+ *   «Passordet får du av den som inviterte deg», og passordet står aldri i HTML-en (bare /apptest bak eget passord setter det inn, K-114).
  *   PDF-en med demobrukerne er kopiert til begge ved bygging (scripts/bygg-sigdal-vis.mjs).
  * - /kunde/sigdal/vis/*: Visningsrommet i Sigdal-utgave. Rommene har inline stil, så HTML-sidene får en egen CSP (som vis.hengsel.no).
  * Gamle adresser (/hjelp, /dokumenter, /sigdal og under) videresendes med 301 av public/_redirects, før noe kode kjører og uten å vise innhold.
  */
 import { merkBeskyttet, vakt, type AccessEnv } from "./access.ts";
-import { SIKKERHET, medDemopassord } from "./apptest.ts";
+import { SIKKERHET } from "./apptest.ts";
 
 export type KundeEnv = AccessEnv & {
   ASSETS: { fetch(req: Request | string | URL, init?: RequestInit): Promise<Response> };
-  DEMO_PASSORD?: string;
 };
 
 export const ER_KUNDE = (sti: string) => sti === "/kunde" || sti.startsWith("/kunde/");
-
-/** Sidene som viser demopassordet (bare for innloggede) */
-const MED_DEMOPASSORD = new Set(["/kunde/apptest", "/kunde/sigdal/apptest"]);
 
 /** Samme CSP som vis.hengsel.no (sites/vis/src/_headers): rommene bruker inline stil, men ingen inline-skript; skjermbildene kommer fra bilder.hengsel.no (K-233). */
 const VIS_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://bilder.hengsel.no; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'";
@@ -31,7 +28,7 @@ export async function handterKunde(req: Request, env: KundeEnv, valg: { hent?: t
   if (avvist) return avvist;
   const { pathname } = new URL(req.url);
   const svar = await env.ASSETS.fetch(req);
-  const ny = merkBeskyttet(MED_DEMOPASSORD.has(pathname.replace(/\/$/, "")) ? medDemopassord(svar, env.DEMO_PASSORD) : svar);
+  const ny = merkBeskyttet(svar);
   for (const [navn, verdi] of Object.entries(SIKKERHET)) if (!ny.headers.has(navn)) ny.headers.set(navn, verdi);
   if (pathname.startsWith("/kunde/sigdal/vis/") && (ny.headers.get("Content-Type") ?? "").startsWith("text/html")) ny.headers.set("Content-Security-Policy", VIS_CSP);
   return ny;
