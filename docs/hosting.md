@@ -282,7 +282,7 @@ Fra 14.10.2026 bor alt som krever innlogging under `hengsel.no/kunde`, bak **én
 |---|---|---|
 | `/kunde` | (ny) | Forside med fire kort |
 | `/kunde/hjelp` | `/hjelp` | Brukerveiledningen (K-226) |
-| `/kunde/apptest` | `/apptest` (passord) | Test appen, uten eget passord; demopassordet settes inn for innloggede |
+| `/kunde/apptest` | `/apptest` (passord) | Test appen, uten eget passord; demopassordet står ikke i HTML-en her (siden viser «Passordet får du av den som inviterte deg») |
 | `/kunde/dokumenter` | `/dokumenter` | De ni dokumentene (var åpen) |
 | `/kunde/sigdal` og `/kunde/sigdal/vis/` | `/sigdal`, `/sigdal/vis/` | Sigdal-utgaven og Visningsrommet i Sigdal-utgave (K-223) |
 

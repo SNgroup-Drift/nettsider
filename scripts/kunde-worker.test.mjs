@@ -104,13 +104,16 @@ test("gyldig token: 200 med noindex og no-store; ETag fjernes; vis har egen CSP,
   assert.equal(post.status, 405);
 });
 
-test("/kunde/apptest og /kunde/sigdal/apptest: demopassordet settes inn bare med gyldig token og når hemmeligheten finnes", async () => {
-  // HTMLRewriter finnes bare i Workers; uten hemmelighet returneres siden som den er
+test("/kunde/apptest og /kunde/sigdal/apptest: demopassordet står aldri i HTML-en, heller ikke med gyldig token og hemmelighet", async () => {
   for (const sti of ["/kunde/apptest", "/kunde/sigdal/apptest"]) {
-    const r = await kjor(be(sti, await token()), env({ DEMO_PASSORD: undefined }));
-    assert.equal(r.status, 200, sti);
-    assert.match(await r.text(), /••••/);
-    assert.equal((await kjor(be(sti, null), env({ DEMO_PASSORD: "hemmelig" }))).status, 403, `${sti} uten token`);
+    for (const DEMO_PASSORD of [undefined, "hemmelig-demopassord"]) {
+      const r = await kjor(be(sti, await token()), env({ DEMO_PASSORD }));
+      assert.equal(r.status, 200, sti);
+      const tekst = await r.text();
+      assert.match(tekst, /••••/, `${sti}: plassholderen står igjen`);
+      assert.doesNotMatch(tekst, /hemmelig-demopassord/, `${sti}: passordet er satt inn i HTML-en`);
+    }
+    assert.equal((await kjor(be(sti, null), env({ DEMO_PASSORD: "hemmelig-demopassord" }))).status, 403, `${sti} uten token`);
   }
 });
 
