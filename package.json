@@ -28,7 +28,8 @@
     "design:skjermbilder": "node scripts/skjermbilder-design.mjs",
     "skjermbilder:sigdal": "node scripts/skjermbilder-sigdal.mjs",
     "bibliotek:sjekk": "node scripts/sjekk-bibliotek.mjs",
-    "skjermbilder:k260": "node scripts/skjermbilder-k260.mjs"
+    "skjermbilder:k260": "node scripts/skjermbilder-k260.mjs",
+    "prikker:sjekk": "node scripts/skjermbilder-prikker.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",
