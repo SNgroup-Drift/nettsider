@@ -1,6 +1,6 @@
 # Prikkene under telefonen på /kunde/apptest (funn 15.10)
 
-Gren: `claude/apptest-prikker` (fra `main`). Bare Hengsel-sidene; ingen database, ingen deploy, ikke pushet til `main`.
+Gren: `claude/apptest-prikker-2` (fra `main`; `claude/apptest-prikker` på origin har en tidligere versjon av samme oppgave og er ikke rørt). Bare Hengsel-sidene; ingen database, ingen deploy, ikke pushet til `main`.
 Repoet i oppdraget het `sngroup-nettsider`. Pakken heter det, men GitHub-repoet er `SNgroup-Drift/nettsider`, og det er der grenen ligger.
 
 ## Årsak
