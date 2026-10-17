@@ -68,3 +68,16 @@ kontorfaner med lysboks, ingen eksterne forespørsler, ingen informasjonskapsler
 og /apptest. Ingen kuttede kanter, ingen dobbel statuslinje, ingen merkenavn, bildene fyller skjermhullet.
 
 /apptest er gjennomgått på 1440 og 390: ingen dobbel statuslinje (bildene har ingen statuslinje, rammen har island), og ingen kundenavn eller Sigdal/Nobia. Appskjermen `ute-laser` viser lasermålernes produktnavn (Bosch GLM, Leica DISTO, Hilti PD-S); de er en del av bildet fra pakken.
+
+
+## Nøkler i bruk i simuleringene (N-6, 18.10)
+
+Alle fra `vis/skjermbilder/` (Hengsel- og Sigdal-tema) unntatt «uten nett». Kilden er `sites/hengsel/src/content/simuleringer.ts`; `scripts/simuleringer.test.mjs` feiler hvis en nøkkel mangler i manifestet.
+
+- **Forsiden:** crm-tilbud, crm-ordre-kontrollmal, crm-bestilling, crm-montasje, crm-etterkalkyle. Tre enheter: crm-min-dag, crm-ordre-kontrollmal, crm-montasje (PC); crm-ipad-min-dag, crm-ipad-kontrollmal, crm-ipad-belastninger (iPad); crm-tlf-min-dag, crm-tlf-ordre, crm-tlf-kontrollmal (iPhone).
+- **/crm:** crm-min-dag, crm-salgstavla, crm-tilbud-kunde, crm-saker, crm-resultater; crm-ipad-min-dag, crm-ipad-leder, crm-ipad-kontrollmal, crm-ipad-belastninger; crm-tlf-min-dag, crm-tlf-kundekort, crm-tlf-ordre, crm-tlf-kontrollmal.
+- **/ute:** ute-i-dag, ute-jobb-under, ute-ks, ute-ks-kamera, ute-avvik, ute-ferdig; ute-ipad-bildeverktoy, ipad-bildeverktoy-laser; uten nett: `app/uten-nett-lys`.
+- **/kundeportal:** kundeportal-k03, kundeportal-k06, kundeportal-k08, portal-montering, portal-fdv (iPhone); kundeportal-pc, d2a-signer-med-bankid, d2b-signert, d10-sendt-til-kunden, d11-min-side-nytt (PC).
+- **/for-butikkleder:** crm-resultater, crm-salgstavla, crm-moduler, crm-samtaler; crm-ipad-leder, crm-ipad-innstillinger.
+- **Slik virker det (Sigdal):** d1-lag-pdf-og-send, d3-send-ordrebekreftelse, d5-lag-monteringsrapport, d7-lag-leveringspakke-fdv, d9-lag-faktura + Tre enheter.
+- **Stillrammer:** /priser-og-demo crm-tilbud + crm-tlf-ordre; /kunder crm-salgstavla + crm-tlf-min-dag.
