@@ -1,9 +1,11 @@
 ---
-/** SA9 Leverandør (K-240): selskapet som selger Hengsel. Kopieres inn i tilbud og avtaler når de lages. Merket «Eksempel» til det er besluttet. */
+/** 26-010 Innstillinger (leverandør), N-4: Skjema 1/2 ×2 (Leverandør, Signatar) og Tekst «Brukes i». Skript: scripts/leverandor.ts. */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
 ---
 <Side title="Leverandør" description="Leverandøren på tilbud og avtaler: navn, org.nr., adresse, e-post og signatar" aktiv="leverandor">
-  <div id="side"></div>
+  <Fragment slot="handlinger"></Fragment>
+  <Innhold id="side" />
   <script>
     import "../../scripts/leverandor";
   </script>

@@ -174,11 +174,31 @@ test("Workeren er låst (503) uten Access-oppsett, og viser ingenting", async ()
 });
 
 test("uten Cf-Access-Jwt-Assertion: 401, og alle svar er noindex og no-store", medNokler(async () => {
-  const r = await worker.fetch(be("/"), env());
+  const r = await worker.fetch(be("/"), env({ ASSETS: { fetch: async (req) => new Response(new URL(req.url).pathname === "/logg-inn" ? "<h1>Logg inn</h1>" : "<h1>admin</h1>", { headers: { "Content-Type": "text/html" } }) } }));
   assert.equal(r.status, 401);
   assert.match(r.headers.get("X-Robots-Tag"), /noindex/);
   assert.match(r.headers.get("Cache-Control"), /no-store/);
   assert.doesNotMatch(await r.text(), /admin<\/h1>/);
+}));
+
+test("N-4 (26-001): uten innlogging får sider bare innloggingskortet /logg-inn (401), aldri siden som ble bedt om", medNokler(async () => {
+  const hentet = [];
+  const assets = { fetch: async (req) => { const sti = new URL(req.url).pathname; hentet.push(sti); return new Response(sti === "/logg-inn" ? "<h1>Hengsel Admin</h1><a>Logg inn med Access</a>" : "<h1>admin</h1>", { headers: { "Content-Type": "text/html" } }); } };
+  for (const sti of ["/", "/salg/eiere", "/avtaler/A-2026-001"]) {
+    const r = await worker.fetch(be(sti), env({ ASSETS: assets }));
+    assert.equal(r.status, 401, sti);
+    const tekst = await r.text();
+    assert.match(tekst, /Logg inn med Access/);
+    assert.doesNotMatch(tekst, /admin<\/h1>/);
+    assert.match(r.headers.get("Cache-Control"), /no-store/);
+  }
+  assert.deepEqual([...new Set(hentet)], ["/logg-inn"]);
+  const api = await worker.fetch(be("/api/eiere"), env({ ASSETS: assets }));
+  assert.equal(api.status, 401);
+  assert.equal((await api.json()).kode, "ADM-401");
+  assert.equal((await worker.fetch(be("/", null, "POST"), env({ ASSETS: assets }))).status, 401);
+  // Med gyldig token serveres innloggingssiden ikke i stedet for den ekte siden
+  assert.equal(await (await worker.fetch(be("/", await lagToken()), env())).text(), "<h1>admin</h1>");
 }));
 
 test("gyldig token for es@sngroup.no: siden serveres", medNokler(async () => {

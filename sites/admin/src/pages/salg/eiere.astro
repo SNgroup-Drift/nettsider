@@ -1,9 +1,15 @@
 ---
-/** SA3 Eiere og butikker (K-240): tabell med søk og filter, «Importer fra Excel» med forhåndsvisning (?import=1) og «Ny eier». */
+/** 26-002 Kunder, eiere og butikker (N-4): faner med antall og Tabell 1/1 med søk, filter, sumrad og sidevelger. Skript: scripts/eiere.ts. */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+import { ikon } from "../../lib/ikoner";
 ---
-<Side title="Eiere og butikker" description="Alle eiere: prospekter, kunder og tapte, med butikker, kjede, fylke og verdi" aktiv="eiere">
-  <div id="side" data-kunder="0"></div>
+<Side title="Eiere og butikker" description="Alle eiere: prospekter, kunder og tapte, med butikker, kjede, fylke og verdi" aktiv="eiere" eksempel>
+  <Fragment slot="handlinger">
+    <button class="knapp" type="button" data-ny-aktivitet>Ny aktivitet</button>
+    <button class="knapp primar" type="button" id="ny-eier"><Fragment set:html={ikon("pluss", 18)} />Ny eier</button>
+  </Fragment>
+  <Innhold id="side" data-kunder="0" />
   <script>
     import "../../scripts/eiere";
   </script>

@@ -1,9 +1,13 @@
 ---
-/** SA3 Kunder (K-240): samme tabell som Eiere og butikker, filtrert på kunder. */
+/** 26-002 (N-4): /kunder er samme side som Eiere og butikker, med fanen «Aktive kunder» valgt (sidekartet: samme tabell filtrert på kunder). */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
 ---
-<Side title="Kunder" description="Kundene: eiere med signert avtale" aktiv="kunder">
-  <div id="side" data-kunder="1"></div>
+<Side title="Kunder" tittel="Eiere og butikker" description="Kundene: eiere med signert avtale" aktiv="kunder" eksempel>
+  <Fragment slot="handlinger">
+    <button class="knapp" type="button" data-ny-aktivitet>Ny aktivitet</button>
+  </Fragment>
+  <Innhold id="side" data-kunder="1" />
   <script>
     import "../../scripts/eiere";
   </script>

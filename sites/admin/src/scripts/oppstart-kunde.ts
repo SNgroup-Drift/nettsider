@@ -102,7 +102,7 @@ async function last() {
     if (!ny?.oppstart) throw new ApiFeil(404, "ADM-404", "Oppstarten finnes ikke.");
     if (tilstand() === "tom") ny.punkter = [];
     d = ny;
-    const sb = q("#brodsmule-sist"); if (sb) sb.textContent = d.oppstart.eier_navn;
+    const sb = q("#sidetittel"); if (sb) sb.textContent = d.oppstart.eier_navn;
     document.title = `Oppstart ${d.oppstart.eier_navn} · Hengsel Admin`;
     vis();
     if (tilstand() === "feil") visFeil(new ApiFeil(503, "ADM-504", "Serveren svarte ikke. Statusen står som før."));

@@ -1,0 +1,14 @@
+---
+/**
+ * Flis-kitet (fra N-3): søket i tittelfeltet på Tabell kompakt (regel 2c). PC: feltet (200 px). Telefon: bare søkeikonet; trykk åpner feltet over
+ * tittelen. Filtreringen kobles av kobleKit() i src/lib/kit.ts. Stil: src/styles/kit.css.
+ */
+import { ikon } from "../../lib/ikoner";
+interface Props { hva: string; id?: string }
+const { hva, id } = Astro.props;
+const etikett = `Søk i ${hva}`;
+---
+<div class="k-sok" data-k-sok>
+  <button type="button" class="k-sok-knapp" aria-label={etikett} aria-expanded="false" data-k-sok-knapp><Fragment set:html={ikon("sok", 18)} /></button>
+  <label class="k-sok-felt"><Fragment set:html={ikon("sok", 16)} /><input type="search" placeholder="Søk" aria-label={etikett} autocomplete="off" id={id} data-k-sok-felt={id ? undefined : ""} /></label>
+</div>

@@ -1,0 +1,10 @@
+---
+/**
+ * Flis-kitet (fra N-3): én rad med fliser. 12 kolonner med 24 px mellomrom, raden fyller alltid hele bredden, og hele raden har én høyde fra
+ * skalaen 120/320/480/640 (regel 2b og 2d). Telefon (under 960 px): alle fliser 1/1 i samme rekkefølge, 16 px mellomrom. Stil: src/styles/kit.css.
+ */
+export type Hoyde = 120 | 320 | 480 | 640 | "auto";
+interface Props { hoyde: Hoyde; id?: string }
+const { hoyde, id } = Astro.props;
+---
+<div class="k-rad" data-hoyde={hoyde} id={id}><slot /></div>

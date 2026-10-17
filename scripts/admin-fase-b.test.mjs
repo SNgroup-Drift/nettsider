@@ -91,7 +91,7 @@ test("tilgang (ren funksjon): support ser bare Support og skriver bare saker og 
   assert.deepEqual(menyNaa("support").flatMap((g) => g.punkter.map((p) => p.id)), ["saker", "timer"]);
   const alle = menyNaa("eier").flatMap((g) => g.punkter.map((p) => p.id));
   for (const id of ["saker", "timer", "oppstart", "abonnement", "kjoring", "kpi", "utestaende", "tall", "drift", "drift-lenker", "drift-kontoer", "drift-frister", "drift-rutiner"]) assert.ok(alle.includes(id), id);
-  assert.equal(omradeFor("/fakturering/kjoring"), "Fakturering"); assert.equal(omradeFor("/oppstart/01K7JX0000000000000000ABCD"), "Oppstart"); assert.equal(omradeFor("/"), "Oversikt");
+  assert.equal(omradeFor("/fakturering/kjoring"), "Fakturering"); assert.equal(omradeFor("/oppstart/01K7JX0000000000000000ABCD"), "Oppstart"); assert.equal(omradeFor("/"), "Salg"); // N-4: Oversikt er slått sammen med tavla i Salg (26-009)
   assert.equal(stiTilFil("/support/saker/H-1047"), "/support/sak"); assert.equal(stiTilFil("/oppstart/01K7JX0000000000000000ABCD"), "/oppstart/kunde");
 });
 

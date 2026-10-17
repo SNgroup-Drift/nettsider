@@ -1,10 +1,5 @@
 ---
-/** SA4 Eierkort (K-240): én fil for /salg/eiere/:id (Workeren serverer den, worker/ruter.js). Id-en leses fra adressen. */
-import Side from "../../layouts/Side.astro";
+/** 26-013 Eierkort (N-4): /salg/eiere/:id. Se components/sider/Eierkort.astro. */
+import Eierkort from "../../components/sider/Eierkort.astro";
 ---
-<Side title="Eierkort" description="Eierkortet: butikker, kontakter, muligheter, tilbud, avtaler og tidslinje" aktiv="eierkort">
-  <div id="side" data-tilbake="/salg/eiere" data-tilbake-navn="Tilbake til listen"></div>
-  <script>
-    import "../../scripts/eierkort";
-  </script>
-</Side>
+<Eierkort aktiv="eierkort" tilbake="/salg/eiere" tilbakeNavn="Tilbake til listen" />

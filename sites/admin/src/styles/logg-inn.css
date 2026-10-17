@@ -1,0 +1,10 @@
+/* 26-001 Innlogging (N-4): kortet midt på siden. Bare variabler fra den delte token-fila, bare lys modus. */
+body { background: var(--flate-side); }
+.innlogging-flate { min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 120px 16px 48px; box-sizing: border-box; }
+.innlogging-flate .kort { width: min(400px, 100%); display: flex; flex-direction: column; gap: 16px; padding: 32px; background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); color: var(--tekst); }
+.innlogging-flate img { height: 22px; width: auto; align-self: flex-start; }
+.innlogging-flate h1 { font-family: var(--skrift-familie-hengsel-tekst); font-size: 24px; line-height: 30px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; margin: 0; }
+.innlogging-flate p { margin: 0; font-size: 14px; line-height: 20px; color: var(--tekst-dempet); }
+.innlogging-flate .knapp { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--radius-kort-lite); background: var(--aksent); color: var(--paa-aksent); font-size: 15px; font-weight: var(--skrift-vekt-sterk); text-decoration: none; }
+.innlogging-flate .knapp:hover { background: var(--aksent-trykk); }
+@media (max-width: 767px) { .innlogging-flate { padding-top: 48px; } .innlogging-flate .kort { padding: 24px; } }

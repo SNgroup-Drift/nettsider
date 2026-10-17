@@ -1,9 +1,14 @@
 ---
-/** SA7 Avtaler (K-240): liste med filter på status, «Fornyes snart» innen N dager (innstilling), «Ny avtale fra tilbud». */
+/** 26-004 Avtale og Penneo (N-4): faner med antall, Tabell «Avtaler», «Ny avtale fra tilbud» i topplinja. Skript: scripts/avtaler.ts. */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+import { ikon } from "../../lib/ikoner";
 ---
-<Side title="Avtaler" description="Avtalene: utkast, til signering, signert, fornyes snart og sagt opp" aktiv="avtaler">
-  <div id="side"></div>
+<Side title="Avtaler" description="Avtalene: utkast, til signering, signert, fornyes snart og sagt opp" aktiv="avtaler" eksempel>
+  <Fragment slot="handlinger">
+    <button class="knapp primar" type="button" id="ny-avtale"><Fragment set:html={ikon("pluss", 18)} />Ny avtale fra tilbud</button>
+  </Fragment>
+  <Innhold id="side" />
   <script>
     import "../../scripts/avtaler";
   </script>

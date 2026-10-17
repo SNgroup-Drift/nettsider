@@ -1,0 +1,12 @@
+---
+/** 26-008 Tilbakemeldinger (N-4): «Hjelp» fra Hengsel CRM og Ute, med faner og Tabell kompakt. Skript: scripts/tilbakemeldinger.ts. */
+import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+---
+<Side title="Tilbakemeldinger" description="Tilbakemeldinger sendt med «Hjelp» i Hengsel CRM og Hengsel Ute" aktiv="tilbakemeldinger">
+  <Fragment slot="handlinger"></Fragment>
+  <Innhold id="side" />
+  <script>
+    import "../../scripts/tilbakemeldinger";
+  </script>
+</Side>

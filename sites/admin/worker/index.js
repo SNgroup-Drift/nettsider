@@ -4,7 +4,7 @@
  * - /api/lead (POST fra hengsel.no) og /api/hjelp («Hjelp» fra Hengsel CRM og Ute, K-259): unntatt Access, eget vern i worker/lead.js og
  *   worker/hjelp.js. Alt annet:
  * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 503, ingenting vises (Access er ikke koblet til).
- * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401 (ADM-401).
+ * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401 (ADM-401). Sider (GET/HEAD) får innloggingskortet /logg-inn (26-001, N-4).
  * - Gyldig token, men e-postadressen står ikke i worker/tilgang.js (eller som aktiv supportperson i D1), eller stien er utenfor rollen: 403
  *   (ADM-403). Rollen support får siden «Ingen tilgang» (60-207) med status 403 når den åpner en side utenfor Support.
  * - /api/*: JSON-API-et i worker/api.js mot D1 (binding DB). POST/PATCH/PUT/DELETE bare for rollen eier (ADM-403 ellers).
@@ -61,7 +61,15 @@ export default {
     if (!team || !aud) return erApi ? merk(json(503, { ok: false, kode: "ADM-503", melding: "Cloudflare Access er ikke koblet til." })) : avvis(503, "Siden er låst. Cloudflare Access er ikke koblet til ennå.");
 
     const sjekk = await sjekkAccess(req.headers.get("Cf-Access-Jwt-Assertion"), { team, aud });
-    if (!sjekk.ok) return erApi ? merk(json(401, { ok: false, kode: "ADM-401", melding: "Ikke innlogget." })) : avvis(401, "Ikke innlogget via Cloudflare Access.");
+    if (!sjekk.ok) {
+      if (erApi) return merk(json(401, { ok: false, kode: "ADM-401", melding: "Ikke innlogget." }));
+      // N-4 (26-001): HTML-forespørsler får innloggingskortet (bare den ene statiske fila, aldri andre sider), fortsatt med status 401
+      if (req.method === "GET" || req.method === "HEAD") {
+        const side = await env.ASSETS.fetch(new Request(`${url.origin}/logg-inn`, { method: req.method }));
+        if (side.ok) return merk(new Response(side.body, { status: 401, headers: side.headers }));
+      }
+      return avvis(401, "Ikke innlogget via Cloudflare Access.");
+    }
 
     const rolle = rolleFor(sjekk.epost) ?? (await supportFraDb(env.DB, sjekk.epost));
     if (!kanSe(rolle, sti)) {

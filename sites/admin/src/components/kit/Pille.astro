@@ -1,0 +1,10 @@
+---
+/**
+ * Flis-kitet (fra N-3): statuspillen fra CRM-flisene (S-68). Tonene er statusrollene i den delte token-fila. I Admin brukes også rød (feil)
+ * for «må gjøres nå» (regel 9) og aksent. Stil: src/styles/kit.css.
+ */
+export type Tone = "ny" | "pagar" | "sannsynlig" | "ferdig" | "advarsel" | "feil" | "venter" | "aksent";
+interface Props { tone?: Tone; id?: string; skjult?: boolean }
+const { tone = "venter", id, skjult = false } = Astro.props;
+---
+<span class="k-pille" data-tone={tone} id={id} hidden={skjult}><slot /></span>
