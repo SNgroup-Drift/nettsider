@@ -17,7 +17,7 @@ if (skjema) {
   const takk = q<HTMLElement>("[data-takk]");
   const takkTekst = takk.querySelector<HTMLElement>("[data-takk-tekst]")!;
   const takkStandard = takkTekst.dataset.ufullstendig ?? "";
-  const felter = (n: string) => skjema.elements.namedItem(n) as HTMLInputElement | HTMLTextAreaElement;
+  const felter = (n: string) => skjema.elements.namedItem(n) as HTMLInputElement | HTMLTextAreaElement | null;
   const reserveTittel = reserve.querySelector<HTMLElement>("[data-reserve-tittel]")!;
   const feilTittel = reserveTittel.textContent ?? "";
   const feilLenke = mailto.textContent ?? "";
@@ -35,9 +35,10 @@ if (skjema) {
   markerTid();
   send.disabled = false;
 
-  const verdi = (n: string) => felter(n).value.trim();
+  const verdi = (n: string) => (felter(n)?.value ?? "").trim();
   const ugyldig = (n: string, ja: boolean) => {
     const el = felter(n);
+    if (!el) return;
     if (ja) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid");
     const m = feltFeil(n);
     if (m) m.hidden = !ja;
@@ -51,12 +52,14 @@ if (skjema) {
 
   // E-postreserven: emne og innhold URL-kodet
   const lagMailto = () => {
+    const emne = `${emne0} – ${verdi("butikk") || verdi("navn")}`;
+    // Skjemaet har fire felt (sidekartet 25-007); «Hva vil dere se?» og antall avdelinger tas med bare hvis de finnes
     const avd = skjema.querySelector<HTMLInputElement>('input[name="avdelinger"]:checked');
     const avdTekst = avd ? skjema.querySelector(`label[for="${avd.id}"]`)?.textContent ?? "" : "";
-    const emne = `${emne0} – ${verdi("butikk") || verdi("navn")}`;
+    const melding = (felter("melding")?.value ?? "").trim();
     const tekst = [
-      `Navn: ${verdi("navn")}`, `Butikk: ${verdi("butikk")}`, `E-post: ${verdi("epost")}`, `Telefon: ${verdi("tlf")}`,
-      `Antall avdelinger: ${avdTekst}`, "", "Hva vil dere se?", felter("melding").value.trim(),
+      `Navn: ${verdi("navn")}`, `Firma: ${verdi("butikk")}`, `E-post: ${verdi("epost")}`, `Telefon: ${verdi("tlf")}`,
+      ...(avdTekst ? [`Antall avdelinger: ${avdTekst}`] : []), ...(melding ? ["", "Hva vil dere se?", melding] : []),
     ].join("\n");
     mailto.href = `mailto:${adresse}?subject=${encodeURIComponent(emne)}&body=${encodeURIComponent(tekst)}`;
   };
@@ -122,7 +125,7 @@ if (skjema) {
   });
 
   // Rydd feilmarkeringen når brukeren retter feltet
-  for (const n of ["navn", "epost", "tlf"]) felter(n).addEventListener("input", () => { ugyldig(n, false); if (!skjema.querySelector('[aria-invalid="true"]')) feilboks.hidden = true; });
+  for (const n of ["navn", "epost", "tlf"]) felter(n)?.addEventListener("input", () => { ugyldig(n, false); if (!skjema.querySelector('[aria-invalid="true"]')) feilboks.hidden = true; });
 
   takk.querySelector<HTMLButtonElement>("[data-ny]")!.addEventListener("click", () => {
     skjema.reset();
@@ -130,6 +133,6 @@ if (skjema) {
     markerTid();
     takk.hidden = true;
     skjema.hidden = false;
-    felter("navn").focus();
+    felter("navn")?.focus();
   });
 }

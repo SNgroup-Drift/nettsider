@@ -1,0 +1,41 @@
+---
+/**
+ * Nettside-kitet: Kortliste 1/3 og Liste 1/2 (regel 2c): tittel med antall til høyre, maks 5 rader på 40 px (én linje med …) og «Vis alle (n)»
+ * nederst til høyre. «Vis alle» åpner hele lista i en dialog (scripts/kit.ts); uten skript er knappen skjult og de fem første står.
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+interface Props { id: string; tittel: string; rader: string[]; bredde?: Bredde; maks?: number }
+const { id, tittel, rader, bredde = "1/2", maks = 5 } = Astro.props;
+const dialogId = `${id}-alle`;
+---
+<Flis id={id} bredde={bredde} tittel={tittel} teller={rader.length} tellerHoyre klasse="listeflis">
+  <ul class="liste">
+    {rader.slice(0, maks).map((r) => <li><span class="celle" title={r}>{r}</span></li>)}
+  </ul>
+  <button slot="handling" type="button" class="vis-alle" aria-haspopup="dialog" aria-controls={dialogId} data-dialog-apne={dialogId}>Vis alle ({rader.length})</button>
+</Flis>
+<dialog class="alle" id={dialogId} aria-labelledby={`${dialogId}-t`} data-dialog>
+  <div class="d-topp">
+    <h2 id={`${dialogId}-t`}>{tittel}</h2>
+    <button type="button" class="lukk" aria-label="Lukk" data-dialog-lukk>
+      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
+    </button>
+  </div>
+  <ul class="liste hele">{rader.map((r) => <li>{r}</li>)}</ul>
+</dialog>
+
+<style>
+  .liste { list-style: none; margin: 4px 0 0; padding: 0; }
+  .liste li { height: 40px; display: flex; align-items: center; border-top: 1px solid var(--linje); font-weight: var(--skrift-vekt-sterk); }
+  .celle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vis-alle { min-height: 20px; padding: 0; border: 0; background: none; color: var(--aksent-tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; }
+  .vis-alle:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media (scripting: none) { .vis-alle { display: none; } }
+  .alle { width: min(480px, calc(100vw - 32px)); padding: 24px; box-sizing: border-box; border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); background: var(--flate-kort); color: var(--tekst); box-shadow: var(--skygge-dialog); font-size: 14px; }
+  .alle::backdrop { background: var(--overlegg); }
+  .d-topp { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .d-topp h2 { font-family: var(--skrift-familie-hengsel-tekst); font-size: 16px; line-height: 22px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; }
+  .lukk { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+  .lukk svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .hele { margin-top: 12px; }
+</style>

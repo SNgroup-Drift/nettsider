@@ -1,10 +1,10 @@
-// /priser-og-demo: tekst og data. Fasit: docs/design/hengsel/Priser-og-demo.dc.html og LES-MEG.md, ordrett.
+// /priser-og-demo: tekst og data. Fasit: sidekartet 25-006 (Priser) og 25-007 (Demo, skjema) fra S-68; tekstene fra LES-MEG.md der sidekartet ikke sier noe annet.
 // Ingen priser noe sted (Eirik): «Pris etter antall butikker og brukere. Be om tilbud.»
 import { TEL, EPOST } from "./forside";
 
 export const SIDE = {
   tittel: "Priser og demo – Hengsel",
-  beskrivelse: "Hele løsningen, fra første dag. Pris etter antall butikker og brukere. Be om tilbud.",
+  beskrivelse: "Hva som inngår, hvordan oppstarten går, og hvordan dere får en demo.",
   eyebrow: "Priser og demo",
   h1: "Hele løsningen, fra første dag.",
   lede: "Pris etter antall butikker og brukere. Be om tilbud.",
@@ -37,20 +37,14 @@ export const DEMO = {
   h2: "Be om demo",
   ingress: "Vi viser Hengsel med en ordre fra start til slutt, og svarer på det dere lurer på.",
   kontakt: { eyebrow: "Ring eller skriv", tel: TEL, epost: EPOST },
+  /** Fire felt i sidekartets rekkefølge (25-007: maks fire felt i et skjema på 480). «Hva vil dere se?» og antall avdelinger er tatt ut (N-3). */
   felt: {
     navn: { l: "Navn", ph: "Kari Nordmann" },
-    butikk: { l: "Butikk", ph: "Butikknavn" },
+    butikk: { l: "Firma", ph: "Butikknavn" },
     epost: { l: "E-post", ph: "kari@butikknavn.no" },
     tlf: { l: "Telefon", ph: "900 00 000" },
-    melding: { l: "Hva vil dere se?", ph: "For eksempel montasjeplan og kundeportal" },
   },
-  avdelinger: {
-    l: "Antall avdelinger",
-    /** verdi (sendes til /api/demo), tekst. Valget fra designet er «2–3». */
-    valg: [["1", "1"], ["2-3", "2–3"], ["4+", "4 eller flere"]] as [string, string][],
-    standard: "2-3",
-  },
-  send: "Send forespørsel",
+  send: "Be om demo",
   ring: `Du kan også ringe ${TEL}.`,
   feilTittel: "Mangler noe.",
   feilTekst: "Fyll inn navn og e-post eller telefon.",
@@ -66,5 +60,8 @@ export const DEMO = {
   utenSkript: "Skjemaet trenger JavaScript for å kunne sendes.",
   utenSkriptLenke: "Send e-post i stedet",
 } as const;
+
+/** 25-007: Tekst 1/2 «Kontakt» ved siden av skjemaet */
+export const KONTAKT = { tittel: "Kontakt", adresse: "Enromvegen 173, 7026 Trondheim.", demodata: "Skjermbildene viser demodata. Navn og tall er ikke ekte." } as const;
 
 export const MAILTO = `mailto:${EPOST}`;

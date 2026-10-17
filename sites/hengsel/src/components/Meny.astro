@@ -1,14 +1,15 @@
 ---
 /**
- * Fast meny (Meny.dc.html): logo, sju lenker, «Logg inn» til Visningsrommet og «Be om demo» som alltid er synlig.
- * Under 1180 px erstattes lenkene av ≡ (designet; ved 900–1180 px er det ikke plass til sju lenker). Menypanelet åpnes av scripts/meny.ts.
+ * Fast meny: logo, lenkene og «Be om demo» som alltid er synlig. Hengsel: lenkene fra sidekartet 25-001–25-012 (CRM, Hengsel Ute, Kundeportal,
+ * Integrasjoner, Priser) og KOMMER-sidene 25-008–25-010 (N-3); «Logg inn» til Visningsrommet står i bunnen. Kundeutgave: kundens lenker og Visningsrommet.
+ * Under 1180 px erstattes lenkene av ≡ (det er ikke plass til åtte lenker). Menypanelet åpnes av scripts/meny.ts.
  */
 import { LOGG_INN, MENY, type MenyNokkel } from "../content/nav";
 import KundeLogo from "./KundeLogo.astro";
 import { kundeHref, type Kunde } from "../kunde";
 interface Props { aktiv?: MenyNokkel | "" ; /** Kundeutgave (K-223): kundens logo, meny og Visningsrom i stedet for Hengsels logo, demo og innlogging */ kunde?: Kunde }
 const { aktiv = "", kunde } = Astro.props;
-// Hengsel: sju lenker, «Logg inn» og «Be om demo». Kundeutgave: kundens lenker og kundens Visningsrom, ingen demo.
+// Hengsel: åtte lenker og «Be om demo» (Logg inn bare i panelet og bunnen). Kundeutgave: kundens lenker og kundens Visningsrom, ingen demo.
 const lenker = kunde ? kunde.meny.map(([k, t, h]) => [k, t, kundeHref(kunde, h)] as const) : MENY;
 const logginn = kunde ? kunde.vis : LOGG_INN;
 ---
@@ -25,7 +26,7 @@ const logginn = kunde ? kunde.vis : LOGG_INN;
     )}
     <nav class="lenker" aria-label="Hovedmeny">
       {lenker.map(([k, t, h]) => <a href={h} aria-current={k === aktiv ? "page" : undefined}>{t}</a>)}
-      <a class="logginn" href={logginn}>{kunde ? "Visningsrommet" : "Logg inn"}</a>
+      {kunde && <a class="logginn" href={logginn}>Visningsrommet</a>}
     </nav>
     <div class="hoyre">
       {!kunde && <a class="btn primary demo" href="/priser-og-demo#demo">Be om demo</a>}
@@ -47,7 +48,7 @@ const logginn = kunde ? kunde.vis : LOGG_INN;
 
 <style>
   .meny { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
-  .rad { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding-inline: var(--pad); box-sizing: border-box; height: var(--topp); display: flex; align-items: center; gap: 20px; }
+  .rad { max-width: var(--ramme); margin: 0 auto; padding-inline: var(--marg); box-sizing: border-box; height: var(--topp); display: flex; align-items: center; gap: 20px; }
   .logo { display: flex; align-items: center; flex: none; min-height: 44px; }
   .logo img { display: block; height: 30px; width: auto; }
   .logo.kunde { padding-block: 8px; }
@@ -65,7 +66,7 @@ const logginn = kunde ? kunde.vis : LOGG_INN;
   .burger .lukk, .burger[aria-expanded="true"] .apen { display: none; }
   .burger[aria-expanded="true"] .lukk { display: block; }
   .panel { position: absolute; left: 0; right: 0; top: var(--topp); background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
-  .panel-inn { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; padding: 8px var(--pad) 20px; box-sizing: border-box; display: flex; flex-direction: column; }
+  .panel-inn { max-width: var(--ramme); margin: 0 auto; padding: 8px var(--marg) 20px; box-sizing: border-box; display: flex; flex-direction: column; }
   .panel-inn a { min-height: 52px; display: flex; align-items: center; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
   .panel-inn a[aria-current="page"] { font-weight: var(--w-strong); }
   .panel-inn .panel-logginn { border-bottom: 0; color: var(--accent); }

@@ -100,13 +100,24 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal
   }
 });
 
+/**
+ * N-3 (sidekartet 25-001 og 25-002, S-68): forsidens «Vil dere se Hengsel i bruk?»-blokk og CRM-demoen er tatt bort, så disse tre erstatningene treffer
+ * ikke lenger. N-3 får ikke røre packages/kundetema-sigdal; de fjernes fra profil.json i en egen sak, og da fra denne lista (testen under krever det).
+ */
+const UTGATT_N3 = ["Vil dere se Hengsel i bruk?", "Vi viser løsningen med en ordre fra start til slutt. Ring oss eller be om demo.", "Hengsel fant 1 avvik mot ordren"];
+
 test("e) hver tekstserstatning i profil.json treffer i de bygde Hengsel-sidene", () => {
   const kilde = [...profil.sider, "/priser-og-demo"].map((s) => (s === "/dokumenter" ? join(dist, "kunde", "dokumenter.html") : join(dist, s === "/" ? "index.html" : `${s.slice(1)}.html`))).filter(existsSync).map((f) => readFileSync(f, "utf8")).join("\n")
     // K-229: «Slik virker det» er ikke lenger en side på hengsel.no, bare kilden til Sigdal-utgaven
     + "\n" + les(rot, "sites", "hengsel", "src", "content", "slikvirker.ts");
   const visTekst = alle(join(rot, "sites", "vis", "src")).filter((f) => /\.(html|js)$/.test(f)).map((f) => readFileSync(f, "utf8")).join("\n") + les(rot, "packages", "hengsel-dokumenter", "src", "render.js");
-  const ingen = profil.tekst.map(([fra]) => fra).filter((fra) => !kilde.includes(fra) && !visTekst.includes(fra));
+  const ingen = profil.tekst.map(([fra]) => fra).filter((fra) => !kilde.includes(fra) && !visTekst.includes(fra) && !UTGATT_N3.includes(fra));
   assert.deepEqual(ingen, [], "erstatninger som ikke treffer noe (fjern dem eller rett teksten)");
+  // Lista over erstatninger som gikk ut med N-3 skal tømmes når profilen ryddes: hver av dem må fortsatt stå i profil.json og ikke treffe
+  for (const fra of UTGATT_N3) {
+    assert.ok(profil.tekst.some(([f]) => f === fra), `«${fra}» er fjernet fra profil.json: fjern den fra UTGATT_N3 også`);
+    assert.ok(!kilde.includes(fra) && !visTekst.includes(fra), `«${fra}» treffer igjen: fjern den fra UTGATT_N3`);
+  }
 });
 
 // f) nettleser

@@ -1,13 +1,18 @@
 ---
 /**
- * /integrasjoner: systemkart med valgbare koblinger og sikkerhet. Fasit: docs/design/hengsel/Integrasjoner.dc.html.
- * Kartet er en radiogruppe (knapper role="radio", piltaster, Home/End; scripts/integrasjoner.ts). Detaljpanelene for alle
- * koblinger ligger i HTML-en; uten skript står første kobling (CET) åpen. Fra 560 px og ned blir kartet en liste med Hengsel øverst.
+ * /integrasjoner, sidekartet 25-005 (S-68): toppen og to rader i nettside-kitet:
+ *  rad 1 (480) Tabell «Koblinger» (8 rader; raden åpner «om»-teksten, på telefon også kolonnene imellom) ·
+ *  rad 2 (320) Tabell «Kundens data, trygt lagret.» (4 rader fra sidekartet + eierlinja med databehandleravtalen, se N-3-rapporten).
+ * Tekster i content/integrasjoner.ts. Systemkartet (K-160) er erstattet av tabellen etter sidekartet.
  */
 import Side from "../layouts/Side.astro";
-import { HERO, PANEL, KART_ARIA, KOBLINGER, SIKKERHET } from "../content/integrasjoner";
-
-const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
+import { HERO, PANEL, KOBLINGER, SIKKERHET } from "../content/integrasjoner";
+const koblinger = KOBLINGER.filter((k) => !("midten" in k)).map((k) => ({ celler: [k.t, k.s, k.inn, k.ut, k.hvor], mer: k.om }));
+const sikkerhet = [...SIKKERHET.kort.map(([t, s]) => [t, s]), ["Eier", `${SIKKERHET.selskap} ${SIKKERHET.epost}`]];
 ---
 <Side
   title="Integrasjoner og sikkerhet – Hengsel"
@@ -15,111 +20,14 @@ const pos = (i: number) => [50 + (i % 3) * 100, 50 + Math.floor(i / 3) * 100];
   aktiv="int"
 >
   <main id="innhold">
-    <section class="sek kart-sek">
-      <div class="h-innhold kart-ytre">
-        <div class="hode">
-          <span class="eyebrow">{HERO.eyebrow}</span>
-          <h1>{HERO.tittel}</h1>
-          <p class="lede">{HERO.ingress}</p>
-        </div>
-        <div class="kart-rutenett">
-          <div class="kart" role="radiogroup" aria-label={KART_ARIA} data-kart>
-            <svg class="linjer" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true">
-              {KOBLINGER.map((k, i) => !("midten" in k) && <line class:list={{ valgt: i === 0 }} data-linje={i} x1="150" y1="150" x2={pos(i)[0]} y2={pos(i)[1]} vector-effect="non-scaling-stroke" />)}
-            </svg>
-            {KOBLINGER.map((k, i) => (
-              <button type="button" role="radio" lang="nb" id={`kobling-${i}`} aria-checked={i === 0 ? "true" : "false"} aria-controls={`kobling-panel-${i}`} tabindex={i === 0 ? 0 : -1} class:list={["node", { midten: "midten" in k }]} data-i={i}>
-                <span class="nt">{k.t}</span>
-                <span class="ns">{k.s}</span>
-              </button>
-            ))}
-          </div>
-          <div class="panel" aria-live="polite" data-paneler>
-            {KOBLINGER.map((k, i) => (
-              <div id={`kobling-panel-${i}`} role="group" aria-labelledby={`kobling-${i}`} class="panel-inn" hidden={i !== 0}>
-                <span class="eyebrow">{PANEL.valgt}</span>
-                <span class="pt">{k.t}</span>
-                <p class="dempet">{k.om}</p>
-                <div class="inn-ut">
-                  <div><span class="etikett">{PANEL.inn}</span><span>{k.inn}</span></div>
-                  <div><span class="etikett">{PANEL.ut}</span><span>{k.ut}</span></div>
-                </div>
-                <span class="hvor">{PANEL.brukes} {k.hvor}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek flate">
-      <div class="h-innhold sikker">
-        <div class="sek-hode">
-          <span class="eyebrow">{SIKKERHET.eyebrow}</span>
-          <h2>{SIKKERHET.tittel}</h2>
-        </div>
-        <div class="kort-rad">
-          {SIKKERHET.kort.map(([t, s]) => <div class="card kort"><span class="kt">{t}</span><span class="dempet">{s}</span></div>)}
-        </div>
-        <p class="dempet selskap">{SIKKERHET.selskap} <a href={`mailto:${SIKKERHET.epost}`}>{SIKKERHET.epost}</a></p>
-      </div>
-    </section>
+    <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress} />
+    <Innhold>
+      <Rad hoyde={tabellHoyde(koblinger.length)}>
+        <Tabellflis id="koblinger" tittel="Koblinger" kolonner={["Kobling", "Hva", PANEL.inn, PANEL.ut, "Brukes i"]} rader={koblinger} />
+      </Rad>
+      <Rad hoyde={tabellHoyde(sikkerhet.length)}>
+        <Tabellflis id="sikkerhet" tittel={SIKKERHET.tittel} kolonner={["Hva", "Hvordan"]} rader={sikkerhet} />
+      </Rad>
+    </Innhold>
   </main>
 </Side>
-
-<script>
-  import "../scripts/integrasjoner";
-</script>
-
-<style>
-  .dempet { color: var(--muted); margin: 0; }
-  .kart-sek { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); }
-  .kart-ytre { display: flex; flex-direction: column; gap: 36px; }
-  .hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
-  .hode h1 { font-size: clamp(2.5rem, 5.6vw, 4.6rem); }
-  .hode .lede { font-size: 1.18rem; }
-  .kart-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(24px, 4vw, 48px); align-items: start; }
-
-  /* Systemkartet: 3 × 3 med Hengsel i midten og linjer ut til hver kobling. Smal skjerm: liste med Hengsel øverst. */
-  .kart { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 28px; aspect-ratio: 1 / 1; width: 100%; }
-  .linjer { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .linjer line { stroke: var(--linje); stroke-width: 1; }
-  .linjer line.valgt { stroke: var(--accent); stroke-width: 2; }
-  .node {
-    position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4px;
-    padding: 12px 14px; min-height: 56px; border-radius: var(--radius-kort-stor); border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-    font: inherit; cursor: pointer; box-sizing: border-box; min-width: 0;
-  }
-  .node:hover { border-color: var(--ink); }
-  .node.midten { border-color: var(--ink); background: var(--ink); color: var(--bg); }
-  .node[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-  .node:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: var(--radius-kort-stor); }
-  .node[aria-checked="true"]:focus-visible { box-shadow: 0 0 0 2px var(--accent), 0 0 0 4px var(--bg), 0 0 0 6px var(--accent); }
-  .nt { font: 600 0.95rem/1.2 var(--f-body); overflow-wrap: anywhere; hyphens: auto; max-width: 100%; }
-  .ns { font-size: 0.78rem; line-height: 1.35; color: var(--muted); }
-  .midten .nt { font: var(--skrift-vekt-fet) 1.6rem/1.2 var(--f-display); }
-  .midten .ns { color: var(--bg); opacity: 0.82; }
-
-  .panel-inn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-kort-stor); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
-  .pt { font: var(--skrift-vekt-fet) 2rem/1.1 var(--f-display); }
-  .inn-ut { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
-  .inn-ut > div { background: var(--surface-soft); border-radius: var(--radius-kort-lite); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
-  .etikett { font-size: 0.82rem; color: var(--muted); }
-  .inn-ut span:last-child { font-size: 0.98rem; }
-  .hvor { font-size: 0.9rem; color: var(--muted); }
-
-  @media (max-width: 560px) {
-    .kart { display: flex; flex-direction: column; gap: 8px; aspect-ratio: auto; }
-    .linjer { display: none; }
-    .node { align-items: flex-start; text-align: left; }
-    .node.midten { order: -1; }
-  }
-
-  .sikker { display: flex; flex-direction: column; gap: 32px; }
-  .sikker .sek-hode { max-width: 680px; }
-  .kort-rad { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
-  .kort { padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; }
-  .kt { font: var(--skrift-vekt-fet) 1.6rem/1.2 var(--f-display); }
-  .selskap { font-size: 0.95rem; }
-  .selskap a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-</style>
