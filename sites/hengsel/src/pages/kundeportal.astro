@@ -2,9 +2,12 @@
 /**
  * /kundeportal, sidekartet 25-004 (S-68): toppen og to rader i nettside-kitet:
  *  rad 1 (320) Tabell «Fra tilbud til FDV» (5 steg) · rad 2 (320) Tabell «Det kunden gjør, ser selgeren med en gang.» (4 rader).
- * Tekster i content/kundeportal.ts (STEG og SELGER). Den klikkbare portalen (PortalSkjerm) står ikke på siden lenger.
+ * Tekster i content/kundeportal.ts (STEG og SELGER). N-3c: kundeportalen på iPhone (PortalSkjerm, steg 1 «Tilbud og aksept» som før N-3) til høyre
+ * i toppen, uten stegvelger og SMS (de var klikkbare deler av demoen som N-3 tok bort).
  */
 import Side from "../layouts/Side.astro";
+import Enhet from "../components/Enhet.astro";
+import PortalSkjerm from "../components/PortalSkjerm.astro";
 import Sidetopp from "../components/kit/Sidetopp.astro";
 import Innhold from "../components/kit/Innhold.astro";
 import Rad from "../components/kit/Rad.astro";
@@ -15,7 +18,9 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
 ---
 <Side title={SIDE.tittel} description={SIDE.beskrivelse} aktiv="portal">
   <main id="innhold">
-    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede} />
+    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede}>
+      <div class="topp-telefon" slot="komposisjon"><Enhet type="iphone" forst><PortalSkjerm enhet="telefon" /></Enhet></div>
+    </Sidetopp>
     <Innhold>
       <Rad hoyde={tabellHoyde(reise.length)}>
         <Tabellflis id="fra-tilbud-til-fdv" tittel="Fra tilbud til FDV" kolonner={["Steg", "Hva"]} rader={reise} />
@@ -26,3 +31,8 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
     </Innhold>
   </main>
 </Side>
+
+<style>
+  .topp-telefon { width: min(100%, 260px); margin-inline: auto; }
+  @media (max-width: 959px) { .topp-telefon { width: 220px; } }
+</style>

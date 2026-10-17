@@ -15,6 +15,8 @@ export const HERO = {
   demo: "Be om demo",
   /** Knappen til demoen (K-229): det finnes nå en ekte demo. Adressen står i PROV_SELV. */
   prov: "Prøv selv",
+  /** Komposisjonen øverst (N-3c): Studio Display med Min dag (CrmSkjerm) og iPhone med Hengsel Ute */
+  altIphone: "Hengsel Ute på iPhone: I dag med neste jobb",
 };
 
 /** Rad 1 (120): Status 1/3 ×3 – tittel, pille, tone, setning */

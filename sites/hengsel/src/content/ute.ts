@@ -8,6 +8,9 @@ export const APPTEST_URL = "https://hengsel.no/apptest";
 export const HERO = {
   tittel: "Montøren slipper papir.",
   ingress: "Montørappen for iPhone og iPad. Jobben, tegningene, målene og KS-sjekklista ligger i lomma.",
+  /** Rammen øverst (N-3c): I dag på iPhone, fra biblioteket */
+  bilde: "app/idag-lys.webp",
+  alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei",
 } as const;
 
 /** Rad 1 (120): Status 1/3 ×3 – tittel, pille, tone, setning (sidekartet 25-003) */

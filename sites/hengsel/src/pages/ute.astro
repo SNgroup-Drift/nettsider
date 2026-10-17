@@ -3,6 +3,7 @@
  * /ute, sidekartet 25-003 (S-68): toppen og tre rader i nettside-kitet:
  *  rad 1 (120) Status 1/3 ×3 (Uten dekning, KS, Punkter) · rad 2 (480) Tabell «Gjennom dagen» (6 steg) ·
  *  rad 3 (480) Tekst «Virker uten dekning» 1/2 + Tegning «Hengsel Ute, I dag» 1/2 (iPhone-ramme, skjermbildet fra biblioteket på bilder.hengsel.no).
+ * N-3c: I dag på iPhone (app/idag-lys.webp fra biblioteket, som første steg i toppen før N-3) til høyre i toppen.
  * Tekster i content/ute.ts.
  */
 import Side from "../layouts/Side.astro";
@@ -23,7 +24,9 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
   aktiv="ute"
 >
   <main id="innhold">
-    <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress} />
+    <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress}>
+      <div class="topp-telefon" slot="komposisjon"><Enhet type="iphone" bilde={HERO.bilde} alt={HERO.alt} forst /></div>
+    </Sidetopp>
     <Innhold>
       <Rad hoyde={120}>
         {STATUS.map(([t, p, tone, s]) => <Statusflis tittel={t} pille={p} tone={tone} tekst={s} />)}
@@ -37,7 +40,7 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
         </Tekstflis>
         <Flis bredde="1/2" tittel={TEGNING.tittel} klasse="tegningflis">
           <div class="tegning">
-            <div class="telefon"><Enhet type="iphone" bilde={TEGNING.bilde} alt={TEGNING.alt} /></div>
+            <div class="telefon"><Enhet type="iphone" bilde={TEGNING.bilde} alt={TEGNING.alt} symboler={false} /></div>
           </div>
         </Flis>
       </Rad>
@@ -48,4 +51,6 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
 <style>
   .tegning { flex: 1; min-height: 0; display: grid; place-items: center; padding: 16px; border-radius: var(--radius-kort-lite); background: var(--flate-side); overflow: hidden; }
   .telefon { width: 168px; }
+  .topp-telefon { width: min(100%, 260px); margin-inline: auto; }
+  @media (max-width: 959px) { .topp-telefon { width: 220px; } }
 </style>
