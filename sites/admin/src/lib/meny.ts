@@ -69,7 +69,7 @@ export function omradeFor(sti: string): string {
 
 export const BUNNFANER = [
   { id: "salg", navn: "Oversikt", sti: "/", ikon: "min-dag", roller: ["eier"] },
-  { id: "tavle", navn: "Tavle", sti: "/salg/tavle#salgstavle", ikon: "salgsbanken", roller: ["eier"] },
+  { id: "tavle", navn: "Tavle", sti: "/salg/tavle", ikon: "salgsbanken", roller: ["eier"] },
   { id: "eiere", navn: "Eiere", sti: "/salg/eiere", ikon: "kunder", roller: ["eier"] },
   { id: "avtaler", navn: "Avtaler", sti: "/avtaler", ikon: "signert", roller: ["eier"] },
   { id: "saker", navn: "Saker", sti: "/support/saker", ikon: "saker", roller: ["support"] },

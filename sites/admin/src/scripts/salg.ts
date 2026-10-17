@@ -18,7 +18,7 @@ const tallRad = (o: any | null) => {
   if (!o) return rad(120, ["Åpne muligheter", "Inntekt per måned", "Neste steg i dag", "Fornyes innen 90 dager"].map((e) => tallflis({ etikett: e, tall: "–" })));
   const t = o.tall, forfalt = o.neste_steg.filter((n: any) => n.forfalt).length;
   return rad(120, [
-    tallflis({ etikett: "Åpne muligheter", tall: String(t.apne_muligheter), under: `${kr(t.apen_verdi_ore)} per måned`, href: "/salg/tavle#salgstavle" }),
+    tallflis({ etikett: "Åpne muligheter", tall: String(t.apne_muligheter), under: `${kr(t.apen_verdi_ore)} per måned`, href: "/salg/tavle" }),
     tallflis({ etikett: "Inntekt per måned", tall: kr(t.inntekt_mnd_ore), under: "uten mva, signerte avtaler", href: "/avtaler" }),
     tallflis({ etikett: "Neste steg i dag", tall: String(o.neste_steg.length), under: forfalt ? `${forfalt} forfalt` : "ingen forfalt", tone: forfalt ? "feil" : o.neste_steg.length ? "advarsel" : undefined }),
     tallflis({ etikett: `Fornyes innen ${o.fornyes_snart_dager} dager`, tall: String(t.fornyes_snart), under: o.fornyes.map((a: any) => `${a.eier_navn.split(" ")[0]} ${datoKort(a.fornyes)}`).join(", ") || "ingen", tone: t.fornyes_snart ? "advarsel" : undefined, href: "/avtaler?status=fornyes_snart" }),
@@ -52,9 +52,9 @@ function listeFlis(t: any | null) {
 function nesteFlis(o: any | null) {
   const n = o?.neste_steg ?? [];
   const naar = (x: any) => (x.forfalt ? datoKort(x.dato) : "i dag");
-  const rader = n.map((x: any) => html`<tr data-lenke="/salg/eiere/${x.eier_id}"><th scope="row" class="tid">${naar(x)}</th><td class="midt"><a href="/salg/eiere/${x.eier_id}">${x.eier_navn}</a></td><td class="midt">${x.tekst}</td><td>${x.forfalt ? kpille("Forfalt", "feil") : kpille("I dag", "ny")}</td></tr>`);
+  const rader = n.map((x: any) => html`<tr data-lenke="/salg/eiere/${x.eier_id}"><th scope="row" class="tid">${naar(x)}</th><td><a href="/salg/eiere/${x.eier_id}">${x.eier_navn}</a></td><td class="midt">${x.tekst}</td><td>${x.forfalt ? kpille("Forfalt", "feil") : kpille("I dag", "ny")}</td></tr>`);
   return { hoyde: tabellHoyde(n.length), html: flis({ id: "neste-steg", tittel: "Neste steg: forfalt og i dag", teller: o ? n.length : "", verktoy: sokFelt("neste steg"),
-    innhold: o ? tabell({ kompakt: true, kolonner: [{ navn: "Når", klasse: "smal" }, { navn: "Eier", midt: true }, { navn: "Hva", midt: true }, { navn: "Status", klasse: "smal" }], rader, ingen: "Ingen steg i dag." }) : laster() }) };
+    innhold: o ? tabell({ kompakt: true, kolonner: [{ navn: "Når", klasse: "smal" }, { navn: "Eier" }, { navn: "Hva", midt: true }, { navn: "Status", klasse: "smal" }], rader, ingen: "Ingen steg i dag." }) : laster() }) };
 }
 
 function vis(feil?: unknown) {
@@ -111,7 +111,7 @@ async function last() {
     return vis();
   }
   if (!ov) vis();
-  try { [ov, tv] = await Promise.all([api("GET", "/api/oversikt"), api("GET", "/api/tavle")]); vis(); }
+  try { [ov, tv] = await Promise.all([api("GET", "/api/oversikt"), api("GET", "/api/tavle")]); vis(); if (location.pathname.startsWith("/salg/tavle") && matchMedia("(max-width: 959px)").matches) q("#salgstavle")?.scrollIntoView(); }
   catch (e) { vis(e); }
 }
 q("#ny-mulighet")?.addEventListener("click", async () => { const id = await nyEierDialog(); if (id) location.href = `/salg/eiere/${id}`; });

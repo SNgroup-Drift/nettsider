@@ -210,3 +210,9 @@ a.k-tallflis:hover { border-color: var(--kant); }
 .k-inline { display: inline-flex; }
 .k-tabell th.prisk { width: 140px; }
 .k-tittelverdi + .k-verktoy { margin-left: 16px; }
+@media (max-width: 959px) {
+  .k-tabell thead th:first-child { width: auto; }
+  .k-tabell th.statuskol { width: 120px; }
+  .k-topp:has(.k-tittelverdi) { flex-wrap: wrap; row-gap: 4px; }
+  .k-topp .k-tittelverdi { order: 3; flex-basis: 100%; margin-left: 0; }
+}

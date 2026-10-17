@@ -345,3 +345,15 @@ test("fristfarger: rød under 7 dager, gul under 30, grønn ellers, ukjent uten 
   assert.equal(niva(dagerIgjen(null, na)), "ukjent");
   assert.equal(tekstFor(null), "fyll inn");
 });
+
+test("N-4: menyen følger sidekartet 26-001–26-013, og Kommer-sidene (26-011, 26-012) finnes, men står ikke i menyen", async () => {
+  const { MENY } = await import("../sites/admin/src/lib/meny.ts");
+  assert.deepEqual(MENY[0].punkter.map((p) => p.navn), ["Salg", "Eiere og butikker", "Prisberegner", "Avtaler"]);
+  assert.equal(MENY[1].navn, "Innstillinger");
+  assert.deepEqual(MENY[1].punkter.map((p) => p.navn), ["Prisliste", "Leverandør", "Excel-import", "Tilbakemeldinger"]);
+  const stier = MENY.flatMap((g) => g.punkter.map((p) => p.sti));
+  for (const s of ["/stotte", "/fakturering"]) assert.ok(!stier.includes(s), `${s} står ikke i menyen`);
+  for (const f of ["stotte.astro", "fakturering/index.astro", "logg-inn.astro", "salg/import.astro", "innstillinger/tilbakemeldinger.astro"]) assert.ok(statSync(join(rot, "src", "pages", f)).isFile(), f);
+  // Kitet er kopiert inn (ikke importert på tvers av nettsteder)
+  for (const f of readdirSync(join(rot, "src"), { recursive: true }).filter((f) => /\.(astro|ts)$/.test(f))) assert.doesNotMatch(les(join("src", f)), /(?:from|import)\s*\(?\s*["'][^"']*(?:sites\/hengsel|\.\.\/\.\.\/\.\.\/hengsel)/, f);
+});
