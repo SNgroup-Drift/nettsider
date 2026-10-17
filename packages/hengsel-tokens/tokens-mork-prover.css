@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.1.0, commit 82490f41). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.2.0, commit 6003bc0b). Ikke rediger for hånd.
  *
  * Mørke fargeprøver (--mork-*) til design.hengsel.no, som viser dem til appene og CRM-et. Bare under klassen .mork-prover, aldri på :root,
  * og ingen media-spørring mot maskinens fargevalg: ingen side blir mørk av denne fila. Alle andre Hengsel-sider importerer den ikke. Se docs/design/hengsel-regler.md. */

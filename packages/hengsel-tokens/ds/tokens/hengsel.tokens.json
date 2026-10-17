@@ -1,7 +1,7 @@
 {
-  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1.",
-  "versjon": "2.1.0",
-  "dato": "2026-10-14",
+  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger.",
+  "versjon": "2.2.0",
+  "dato": "2026-10-17",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
     "blekk": "#1D2430",

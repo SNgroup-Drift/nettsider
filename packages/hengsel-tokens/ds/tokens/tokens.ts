@@ -1,7 +1,7 @@
 // GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
-// Hengsel-designsystemet, versjon 2.1.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
+// Hengsel-designsystemet, versjon 2.2.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
 
-export const versjon = "2.1.0" as const;
+export const versjon = "2.2.0" as const;
 
 /** Merkefargene (råfarger): blekk, furu og produktfargene. Bruk rollene under i komponenter. */
 export const palett = {

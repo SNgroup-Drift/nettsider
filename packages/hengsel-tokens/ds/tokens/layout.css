@@ -1,0 +1,38 @@
+/* Layout-regler 16.10.2026 (dokumentasjon/LAYOUT-REGLER.md). Rutenett, flisklasser og sidemeny. */
+:root {
+  --rute-kolonner: 12;
+  --rute-gap: 24px;
+  --rute-marg: 32px;
+  --rute-innhold-maks: 1280px;
+  --flis-pad: 16px 24px;
+  --rad-1: 120px;
+  --rad-2: 320px;
+  --rad-3: 480px;
+  --rad-4: 640px;
+  --flis-tittelfelt: 40px;
+  --flis-handlingsfelt: 48px;
+  --listerad: 40px;
+  --tabellrad: 44px;
+  --rad-topp: 24px;
+  --rad-bunn: 48px;
+  --flis-h-tall: 120px;
+  --flis-h-status: 120px;
+  --flis-h-kortliste: 320px;
+  --flis-h-diagram: 320px;
+  --flis-h-tavle: 480px;
+  --flis-h-uke: 480px;
+  --flis-h-tegning: 480px;
+  --flis-plan-rad: 44px;
+  --flis-plan-navn: 200px;
+  --flis-min: 320px;
+  --flis-tittel: 16px;
+  --flis-innhold: 14px;
+  --flis-under: 12px;
+  --flis-tall: 32px;
+  --tekst-maks: 720px;
+  --sidemeny-bred: 240px;
+  --sidemeny-smal: 64px;
+  --rom-12: 48px;
+}
+@media (max-width: 1439.98px) { :root { --rute-kolonner: 8; --rute-gap: 20px; --rute-marg: 24px; } }
+@media (max-width: 767.98px) { :root { --rute-kolonner: 4; --rute-gap: 16px; --rute-marg: 16px; --flis-pad: 16px; } }

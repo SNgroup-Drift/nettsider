@@ -1,0 +1,86 @@
+/* Hengsel designsystem 2.0 – plattformlag c (iOS, Hengsel Ute) og d (Android/Expo: samme Hengsel Ute-app, uten glass).
+   Generert fra hengsel-palett.tokens.json → plattform.ios og plattform.montorapp. STATUS: FORESLÅTT.
+   På iOS er flater og tekst systemfarger. Hengsel-farger bare i tint, statuspiller, valgt rad og merket.
+   Bruk: data-plattform="ios" (eller "expo") på et element, og data-tema="mork" for mørk. */
+[data-plattform="ios"] {
+  --flate-side: #F2F2F7;
+  --flate-kort: #FFFFFF;
+  --flate-senket: #F2F2F7;
+  --linje: #C6C6C8;
+  --tekst: #000000;
+  --tekst-dempet: #51565C;
+  --tekst-svak: #51565C;
+  --aksent: #068472;
+  --aksent-tekst: #016D5E;
+  --aksent-valgt: #BCE6DB;
+  --paa-aksent: #FFFFFF;
+  --sidefelt-valgt: #068472;
+  --paa-sidefelt-valgt: #FFFFFF;
+  --glass: rgba(255,255,255,.72);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", system-ui, sans-serif;
+  --glass-kant: rgba(255,255,255,.9);
+  --glass-skygge: 0 8px 24px -6px rgba(0,0,0,.14);
+  --tint-flate: rgba(6,132,114,.12);
+  --overlegg: rgba(26,29,34,.40);
+  --radius-kort: 20px;
+  --radius-knapp: 999px;
+  --radius-knapp-stor: 999px;
+  --trykk-min: 44px;
+  --sidefelt-bredde: 320px;
+}
+[data-plattform="ios"][data-tema="mork"], [data-plattform="ios"] [data-tema="mork"] {
+  --flate-side: #000000;
+  --flate-kort: #1C1C1E;
+  --flate-senket: #2C2C2E;
+  --linje: #38383A;
+  --tekst: #FFFFFF;
+  --tekst-dempet: #ADB1B7;
+  --tekst-svak: #ADB1B7;
+  --aksent: #54B9A5;
+  --aksent-tekst: #54B9A5;
+  --aksent-valgt: #163F37;
+  --paa-aksent: #0D1013;
+  --sidefelt-valgt: #163F37;
+  --paa-sidefelt-valgt: #FFFFFF;
+  --glass: rgba(44,44,46,.62);
+  --glass-kant: rgba(255,255,255,.14);
+  --glass-skygge: 0 8px 24px -6px rgba(0,0,0,.5);
+  --tint-flate: rgba(84,185,165,.16);
+  --overlegg: rgba(0,0,0,.60);
+}
+[data-plattform="expo"] {
+  --flate-side: #F2F2F7;
+  --flate-kort: #FFFFFF;
+  --flate-senket: #E9E9EE;
+  --linje: #D1D1D6;
+  --tekst: #1A1D22;
+  --tekst-dempet: #51565C;
+  --aksent: #068472;
+  --aksent-tekst: #016D5E;
+  --paa-aksent: #FFFFFF;
+  --kant: #7B8188;
+  --font: system-ui, -apple-system, "Roboto", sans-serif;
+  --fanelinje-flate: #FFFFFF;
+  --fanelinje-linje: #D1D1D6;
+  --fanelinje-aktiv: #016D5E;
+  --fanelinje-inaktiv: #51565C;
+  --radius-kort: 16px;
+  --radius-knapp: 12px;
+  --trykk-min: 56px;
+}
+[data-plattform="expo"][data-tema="mork"], [data-plattform="expo"] [data-tema="mork"] {
+  --flate-side: #000000;
+  --flate-kort: #1C1C1E;
+  --flate-senket: #2C2C2E;
+  --linje: #38383A;
+  --tekst: #EAEDF0;
+  --tekst-dempet: #ADB1B7;
+  --aksent: #54B9A5;
+  --aksent-tekst: #8ACDBE;
+  --paa-aksent: #0D1013;
+  --kant: #767B82;
+  --fanelinje-flate: #1C1C1E;
+  --fanelinje-linje: #38383A;
+  --fanelinje-aktiv: #54B9A5;
+  --fanelinje-inaktiv: #ADB1B7;
+}

@@ -1,0 +1,69 @@
+{
+  "navn": "Sigdal",
+  "versjon": "1.0",
+  "dato": "2026-10-17",
+  "status": "besluttet (Eirik 17.10)",
+  "bruk": "Kundetema for sluttkunden: kundeportal, prosjektportal, e-post og dokumenter (data-kundetema=\"sigdal\"). Bare lys. Aldri furu eller andre Hengsel-farger.",
+  "grunnfarger": {
+    "warm-black": "#31261D",
+    "off-white": "#FBF9F6",
+    "beige-1": "#C3B5A7",
+    "beige-2": "#E4D4C4",
+    "beige-3": "#F2E9DB",
+    "beige-4": "#F8F2EC",
+    "deep-blue": "#5074A9",
+    "dusty-blue": "#9CA9BD"
+  },
+  "tema": {
+    "flate.bakgrunn": "#F2E9DB",
+    "flate.flis": "#F8F2EC",
+    "flate.meny": "#F2E9DB",
+    "flate.aktiv": "#E4D4C4",
+    "flate.hover": "#F8F2EC",
+    "flate.felt": "#FBF9F6",
+    "flate.dokument": "#FBF9F6",
+    "kant.standard": "#E4D4C4",
+    "kant.felt": "#C3B5A7",
+    "tekst.standard": "#31261D",
+    "tekst.dempet": "#6E6258",
+    "knapp.primar.bg": "#31261D",
+    "knapp.primar.tekst": "#FBF9F6",
+    "knapp.sekundar.kant": "#C3B5A7",
+    "lenke": "#5074A9",
+    "lenke.hover": "#9CA9BD",
+    "fokus": "#5074A9",
+    "status.ok.tekst": "#3F6243",
+    "status.ok.bg": "#E6EEE8",
+    "status.varsel.tekst": "#8A5A1F",
+    "status.varsel.bg": "#F6EADB",
+    "status.feil.tekst": "#9E4A3C",
+    "status.feil.bg": "#F3E1DC",
+    "status.info.tekst": "#3F5F8F",
+    "status.info.bg": "#E9EEF6",
+    "status.noytral.tekst": "#31261D",
+    "status.noytral.bg": "#E4D4C4"
+  },
+  "diagram": [
+    "#31261D",
+    "#5074A9",
+    "#9CA9BD",
+    "#C3B5A7"
+  ],
+  "regler": [
+    "Off White bare i skrivefelt, søk, dialoger og skuffer, dokumenter og PDF (full bleed) og innloggingssiden.",
+    "Én hovedknapp (Warm Black) per flis eller side. Sekundærknapp gjennomsiktig med kant Beige 1.",
+    "Fokusring 2 px Deep Blue.",
+    "Status alltid med ord, aldri farge alene. Statuspiller bare i app og portal, aldri i PDF.",
+    "Diagram maks fire serier: Warm Black, Deep Blue, Dusty Blue, Beige 1."
+  ],
+  "hengsel-status-til-sigdal": {
+    "ny": "info",
+    "pagar": "info",
+    "venter": "varsel",
+    "sannsynlig": "noytral",
+    "ferdig": "ok",
+    "advarsel": "varsel",
+    "feil": "feil"
+  },
+  "status_kontrast": "Alle statuspiller når minst 4,5:1 (rettet 17.10). Lenker, fokus og valgt rad beholder Deep Blue #5074A9."
+}

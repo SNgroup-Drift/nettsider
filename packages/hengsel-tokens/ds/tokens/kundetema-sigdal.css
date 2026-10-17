@@ -1,0 +1,44 @@
+/* Kundetema «Sigdal» for sluttkunden: kundeportal, prosjektportal, e-post og dokumenter. Hengsel bare i bunnteksten («Levert av Hengsel»).
+   Fasit: tokens/sigdal.tokens.json. STATUS: BESLUTTET (Eirik 17.10). Bare lys. Aldri furu eller andre Hengsel-farger.
+   Setter de samme rolle-tokenene som Hengsel-paletten, så komponentene virker uendret. Bruk: data-kundetema="sigdal".
+   TWK Lausanne er en lisensiert font fra Sigdal-profilen; sjekk at lisensen dekker bruk i portalen. */
+@font-face { font-family: "TWK Lausanne"; font-weight: 350; font-style: normal; font-display: swap; src: url("../assets/fonts/kundetema-sigdal/TWKLausanne-350.woff2") format("woff2"); }
+@font-face { font-family: "TWK Lausanne"; font-weight: 650; font-style: normal; font-display: swap; src: url("../assets/fonts/kundetema-sigdal/TWKLausanne-650.woff2") format("woff2"); }
+[data-kundetema="sigdal"] {
+  --font: "TWK Lausanne", "Schibsted Grotesk", system-ui, sans-serif;
+  /* flate.* */
+  --flate-side: #F2E9DB;      /* flate.bakgrunn: side, meny og topplinje (Beige 3) */
+  --flate-meny: #F2E9DB;      /* flate.meny */
+  --flate-kort: #F8F2EC;      /* flate.flis (Beige 4) */
+  --flate-senket: #F2E9DB;
+  --flate-valgt: #E4D4C4;     /* flate.aktiv (Beige 2) */
+  --flate-hover: #F8F2EC;     /* flate.hover (Beige 4) */
+  --flate-felt: #FBF9F6;      /* flate.felt: skrivefelt, søk (Off White) */
+  --flate-dokument: #FBF9F6;  /* dialoger, skuffer, dokumenter, PDF, innlogging */
+  /* kant.* */
+  --linje: #E4D4C4; --ramme: #E4D4C4;   /* kant.standard (Beige 2) */
+  --kant: #C3B5A7;                      /* kant.felt, sekundærknapp, deaktivert (Beige 1) */
+  /* tekst.* */
+  --tekst: #31261D; --tekst-dempet: #6E6258; --tekst-svak: #6E6258; --tekst-invers: #FBF9F6;
+  /* knapp, lenke, fokus */
+  --aksent: #31261D; --aksent-trykk: #31261D; --paa-aksent: #FBF9F6;   /* knapp.primar */
+  --aksent-tekst: #5074A9;   /* lenke, valgt rad (Deep Blue) */
+  --lenke-hover: #9CA9BD;    /* lenke.hover (Dusty Blue) */
+  --fokus: #5074A9;
+  --aksent-svak: #E9EEF6; --aksent-valgt: #9CA9BD;
+  --varsel-flate: #F6EADB; --varsel-tekst: #8A5A1F; --feil-flate: #F3E1DC; --feil-tekst: #9E4A3C;
+  /* status.* (ok, varsel, feil, info, nøytral) på Hengsel-nøklene. Kant = bakgrunn: ingen egen kantfarge. */
+  --status-ny-fg: #3F5F8F; --status-ny-bg: #E9EEF6; --status-ny-kant: #E9EEF6;
+  --status-pagar-fg: #3F5F8F; --status-pagar-bg: #E9EEF6; --status-pagar-kant: #E9EEF6;
+  --status-venter-fg: #8A5A1F; --status-venter-bg: #F6EADB; --status-venter-kant: #F6EADB;
+  --status-sannsynlig-fg: #31261D; --status-sannsynlig-bg: #E4D4C4; --status-sannsynlig-kant: #E4D4C4;
+  --status-ferdig-fg: #3F6243; --status-ferdig-bg: #E6EEE8; --status-ferdig-kant: #E6EEE8;
+  --status-advarsel-fg: #8A5A1F; --status-advarsel-bg: #F6EADB; --status-advarsel-kant: #F6EADB;
+  --status-feil-fg: #9E4A3C; --status-feil-bg: #F3E1DC; --status-feil-kant: #F3E1DC;
+  --diagram-1: #31261D; --diagram-2: #5074A9; --diagram-3: #9CA9BD; --diagram-4: #C3B5A7;
+  --skygge-kort: none;
+  --radius-kort: 14px;
+  --radius-knapp: 999px;
+  --radius-felt: 10px;
+  color-scheme: light;
+}

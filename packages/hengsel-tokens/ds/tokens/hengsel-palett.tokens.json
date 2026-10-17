@@ -1,0 +1,1546 @@
+{
+  "navn": "Hengsel",
+  "versjon": "1.1",
+  "dato": "2026-10-14",
+  "status": {
+    "forklaring": "besluttet = skal ikke endres. foreslått = venter på bekreftelse (se README, «Venter på Eirik»).",
+    "grunnpalett": "besluttet",
+    "p3": "besluttet",
+    "okt-kontrast": "besluttet",
+    "merke": "besluttet",
+    "skrift": "besluttet",
+    "modus": "besluttet",
+    "k206": "foreslått",
+    "plattform.pc": "foreslått",
+    "plattform.nettleser-under-1024": "foreslått",
+    "plattform.ios": "foreslått (prinsippet systemflater + Liquid Glass er besluttet, verdiene er foreslått)",
+    "plattform.montorapp": "foreslått",
+    "logoplassering": "besluttet 14.10: Hengsel-logo med versjon nederst til venstre (sidemeny), kundens logo øverst til høyre (toppfelt)"
+  },
+  "format": "Rollene er sRGB-hex. Samme struktur i Display P3 under \"p3\". P3 er inntil 15 % mer mettet der sRGB klipper fargen, ellers lik.",
+  "bruk": {
+    "lys": "Alle flater",
+    "mork": "Bare montørappen og iOS-appen",
+    "okt-kontrast": "Når brukeren har slått på økt kontrast"
+  },
+  "nettsider": {
+    "flate-side": "#F6F8FB",
+    "gjelder": [
+      "hengsel.no",
+      "vis.hengsel.no",
+      "design.hengsel.no",
+      "admin.hengsel.no"
+    ]
+  },
+  "skrift": {
+    "nett": "Schibsted Grotesk",
+    "crm": "Schibsted Grotesk",
+    "admin": "Schibsted Grotesk",
+    "ios": "SF Pro (system)",
+    "montorapp": "Systemskrift",
+    "status": "besluttet"
+  },
+  "lys": {
+    "flate-side": "#F6F8FB",
+    "flate-kort": "#FBFDFF",
+    "flate-senket": "#EFF1F4",
+    "flate-valgt": "#E0F4EE",
+    "linje": "#D7DADE",
+    "kant": "#7B8188",
+    "tekst": "#1A1D22",
+    "tekst-dempet": "#51565C",
+    "tekst-svak": "#686E75",
+    "tekst-invers": "#FBFDFF",
+    "aksent": "#068472",
+    "aksent-trykk": "#007665",
+    "aksent-tekst": "#016d5e",
+    "aksent-svak": "#E0F4EE",
+    "aksent-valgt": "#BCE6DB",
+    "paa-aksent": "#FFFFFF",
+    "varsel-flate": "#FFE9BC",
+    "varsel-tekst": "#6D5000",
+    "feil-flate": "#FFEBE8",
+    "feil-tekst": "#9E2D28",
+    "status": {
+      "ny": {
+        "fg": "#1A57AD",
+        "bg": "#E7F1FF",
+        "kant": "#A0C6FF"
+      },
+      "pagar": {
+        "fg": "#5C46A7",
+        "bg": "#EFEEFF",
+        "kant": "#C3BBFB"
+      },
+      "venter": {
+        "fg": "#555B64",
+        "bg": "#E9F1FB",
+        "kant": "#BDC5CF"
+      },
+      "sannsynlig": {
+        "fg": "#80378C",
+        "bg": "#FCE9FF",
+        "kant": "#E0B1E7"
+      },
+      "ferdig": {
+        "fg": "#1F6D02",
+        "bg": "#E3F7DE",
+        "kant": "#A5D39B"
+      },
+      "advarsel": {
+        "fg": "#6D5000",
+        "bg": "#FFE9BC",
+        "kant": "#E0C07F"
+      },
+      "feil": {
+        "fg": "#9E2D28",
+        "bg": "#FFEBE8",
+        "kant": "#F9AEA5"
+      }
+    }
+  },
+  "mork": {
+    "flate-side": "#0B0D11",
+    "flate-kort": "#111418",
+    "flate-senket": "#06080B",
+    "flate-valgt": "#13332D",
+    "linje": "#303439",
+    "kant": "#6A6F76",
+    "tekst": "#EAEDF0",
+    "tekst-dempet": "#ADB1B7",
+    "tekst-svak": "#868B92",
+    "tekst-invers": "#0B0D11",
+    "aksent": "#54B9A5",
+    "aksent-trykk": "#63C8B3",
+    "aksent-tekst": "#8ACDBE",
+    "aksent-svak": "#112823",
+    "aksent-valgt": "#163F37",
+    "paa-aksent": "#0D1013",
+    "varsel-flate": "#3D2A00",
+    "varsel-tekst": "#FCC959",
+    "feil-flate": "#421C18",
+    "feil-tekst": "#FFBFB6",
+    "status": {
+      "ny": {
+        "fg": "#B5D3FF",
+        "bg": "#152946",
+        "kant": "#37588A"
+      },
+      "pagar": {
+        "fg": "#D0C9FF",
+        "bg": "#292344",
+        "kant": "#584E87"
+      },
+      "venter": {
+        "fg": "#CAD2DC",
+        "bg": "#242931",
+        "kant": "#525961"
+      },
+      "sannsynlig": {
+        "fg": "#F3B9FC",
+        "bg": "#361E3A",
+        "kant": "#6F4676"
+      },
+      "ferdig": {
+        "fg": "#AAE39E",
+        "bg": "#173012",
+        "kant": "#3B6432"
+      },
+      "advarsel": {
+        "fg": "#FCC959",
+        "bg": "#3D2A00",
+        "kant": "#70530B"
+      },
+      "feil": {
+        "fg": "#FFBFB6",
+        "bg": "#421C18",
+        "kant": "#83423C"
+      }
+    }
+  },
+  "lys-okt-kontrast": {
+    "flate-side": "#F6F8FB",
+    "flate-kort": "#FBFDFF",
+    "flate-senket": "#EFF1F4",
+    "flate-valgt": "#E0F4EE",
+    "linje": "#9A9FA5",
+    "kant": "#494E54",
+    "tekst": "#040608",
+    "tekst-dempet": "#2A2E33",
+    "tekst-svak": "#43484E",
+    "tekst-invers": "#FBFDFF",
+    "aksent": "#006a5b",
+    "aksent-trykk": "#005b4d",
+    "aksent-tekst": "#004E42",
+    "aksent-svak": "#E0F4EE",
+    "aksent-valgt": "#AADDD0",
+    "paa-aksent": "#FFFFFF",
+    "varsel-flate": "#FFF6E4",
+    "varsel-tekst": "#503900",
+    "feil-flate": "#FFF4F2",
+    "feil-tekst": "#780007",
+    "status": {
+      "ny": {
+        "fg": "#003882",
+        "bg": "#F2F7FF",
+        "kant": "#3E71BC"
+      },
+      "pagar": {
+        "fg": "#402584",
+        "bg": "#F6F6FF",
+        "kant": "#7262B7"
+      },
+      "venter": {
+        "fg": "#383E46",
+        "bg": "#F1F7FF",
+        "kant": "#6B727B"
+      },
+      "sannsynlig": {
+        "fg": "#5F136A",
+        "bg": "#FEF3FF",
+        "kant": "#94559E"
+      },
+      "ferdig": {
+        "fg": "#104B00",
+        "bg": "#E9FEE5",
+        "kant": "#448335"
+      },
+      "advarsel": {
+        "fg": "#503900",
+        "bg": "#FFF6E4",
+        "kant": "#916B00"
+      },
+      "feil": {
+        "fg": "#780007",
+        "bg": "#FFF4F2",
+        "kant": "#B14F46"
+      }
+    }
+  },
+  "mork-okt-kontrast": {
+    "flate-side": "#0B0D11",
+    "flate-kort": "#111418",
+    "flate-senket": "#06080B",
+    "flate-valgt": "#13332D",
+    "linje": "#595E65",
+    "kant": "#A6ABB1",
+    "tekst": "#FCFDFF",
+    "tekst-dempet": "#DBDEE2",
+    "tekst-svak": "#C0C4CA",
+    "tekst-invers": "#0B0D11",
+    "aksent": "#68CDB7",
+    "aksent-trykk": "#75DAC4",
+    "aksent-tekst": "#B4ECDE",
+    "aksent-svak": "#112823",
+    "aksent-valgt": "#194B41",
+    "paa-aksent": "#0D1013",
+    "varsel-flate": "#251800",
+    "varsel-tekst": "#FFE9BC",
+    "feil-flate": "#310D0A",
+    "feil-tekst": "#FFE4E0",
+    "status": {
+      "ny": {
+        "fg": "#E0ECFF",
+        "bg": "#071A36",
+        "kant": "#759AD0"
+      },
+      "pagar": {
+        "fg": "#EAE8FF",
+        "bg": "#1B1434",
+        "kant": "#978FCC"
+      },
+      "venter": {
+        "fg": "#E4ECF6",
+        "bg": "#161B22",
+        "kant": "#9299A2"
+      },
+      "sannsynlig": {
+        "fg": "#FBE1FF",
+        "bg": "#270F2B",
+        "kant": "#B386B9"
+      },
+      "ferdig": {
+        "fg": "#C4FEB7",
+        "bg": "#092104",
+        "kant": "#7AA671"
+      },
+      "advarsel": {
+        "fg": "#FFE9BC",
+        "bg": "#251800",
+        "kant": "#B39454"
+      },
+      "feil": {
+        "fg": "#FFE4E0",
+        "bg": "#310D0A",
+        "kant": "#CA837A"
+      }
+    }
+  },
+  "p3": {
+    "lys": {
+      "flate-side": "#F7F8FB",
+      "flate-kort": "#FBFDFF",
+      "flate-senket": "#EFF1F4",
+      "flate-valgt": "#E4F3EE",
+      "linje": "#D7DADE",
+      "kant": "#7C8187",
+      "tekst": "#1A1D21",
+      "tekst-dempet": "#52565C",
+      "tekst-svak": "#696E74",
+      "tekst-invers": "#FBFDFF",
+      "aksent": "#3A8272",
+      "aksent-trykk": "#2C7565",
+      "aksent-tekst": "#2E6C5E",
+      "aksent-svak": "#E4F3EE",
+      "aksent-valgt": "#C4E5DC",
+      "paa-aksent": "#FFFFFF",
+      "varsel-flate": "#FEE9BB",
+      "varsel-tekst": "#6C5000",
+      "feil-flate": "#FDEBE8",
+      "feil-tekst": "#91362E",
+      "status": {
+        "ny": {
+          "fg": "#2C56A7",
+          "bg": "#E8F1FF",
+          "kant": "#A8C5FA"
+        },
+        "pagar": {
+          "fg": "#5947A2",
+          "bg": "#EFEEFF",
+          "kant": "#C1BBF6"
+        },
+        "venter": {
+          "fg": "#565B63",
+          "bg": "#EBF1FA",
+          "kant": "#BFC5CE"
+        },
+        "sannsynlig": {
+          "fg": "#773B87",
+          "bg": "#FAE9FF",
+          "kant": "#D9B3E4"
+        },
+        "ferdig": {
+          "fg": "#376C1D",
+          "bg": "#E6F7E0",
+          "kant": "#AFD2A0"
+        },
+        "advarsel": {
+          "fg": "#6C5000",
+          "bg": "#FEE9BB",
+          "kant": "#DBC188"
+        },
+        "feil": {
+          "fg": "#91362E",
+          "bg": "#FDEBE8",
+          "kant": "#EEB1A7"
+        }
+      }
+    },
+    "mork": {
+      "flate-side": "#0B0D11",
+      "flate-kort": "#121417",
+      "flate-senket": "#07080B",
+      "flate-valgt": "#1B322D",
+      "linje": "#303439",
+      "kant": "#6B6F75",
+      "tekst": "#EBEDF0",
+      "tekst-dempet": "#AEB1B7",
+      "tekst-svak": "#878B91",
+      "tekst-invers": "#0B0D11",
+      "aksent": "#6FB7A5",
+      "aksent-trykk": "#7DC5B3",
+      "aksent-tekst": "#99CCBE",
+      "aksent-svak": "#172723",
+      "aksent-valgt": "#213E37",
+      "paa-aksent": "#0D1013",
+      "varsel-flate": "#3B2B01",
+      "varsel-tekst": "#F4CB6C",
+      "feil-flate": "#3D1E1A",
+      "feil-tekst": "#FABFB5",
+      "status": {
+        "ny": {
+          "fg": "#B9D2FF",
+          "bg": "#1A2844",
+          "kant": "#3E5786"
+        },
+        "pagar": {
+          "fg": "#CEC9FF",
+          "bg": "#282342",
+          "kant": "#564F83"
+        },
+        "venter": {
+          "fg": "#CCD1DB",
+          "bg": "#252930",
+          "kant": "#535860"
+        },
+        "sannsynlig": {
+          "fg": "#EABBF8",
+          "bg": "#331F39",
+          "kant": "#694873"
+        },
+        "ferdig": {
+          "fg": "#B6E2A5",
+          "bg": "#1D2F16",
+          "kant": "#456338"
+        },
+        "advarsel": {
+          "fg": "#F4CB6C",
+          "bg": "#3B2B01",
+          "kant": "#6B541D"
+        },
+        "feil": {
+          "fg": "#FABFB5",
+          "bg": "#3D1E1A",
+          "kant": "#7B463F"
+        }
+      }
+    },
+    "lys-okt-kontrast": {
+      "flate-side": "#F7F8FB",
+      "flate-kort": "#FBFDFF",
+      "flate-senket": "#EFF1F4",
+      "flate-valgt": "#E4F3EE",
+      "linje": "#9B9FA5",
+      "kant": "#4A4D53",
+      "tekst": "#050608",
+      "tekst-dempet": "#2B2E33",
+      "tekst-svak": "#44484E",
+      "tekst-invers": "#FBFDFF",
+      "aksent": "#206A5B",
+      "aksent-trykk": "#1a5b4e",
+      "aksent-tekst": "#154E43",
+      "aksent-svak": "#E4F3EE",
+      "aksent-valgt": "#B4DBD1",
+      "paa-aksent": "#FFFFFF",
+      "varsel-flate": "#FEF6E3",
+      "varsel-tekst": "#4E3900",
+      "feil-flate": "#FEF4F2",
+      "feil-tekst": "#6E100F",
+      "status": {
+        "ny": {
+          "fg": "#0C3584",
+          "bg": "#F2F7FF",
+          "kant": "#4A70B7"
+        },
+        "pagar": {
+          "fg": "#3C267F",
+          "bg": "#F6F5FF",
+          "kant": "#6F62B2"
+        },
+        "venter": {
+          "fg": "#393D45",
+          "bg": "#F2F7FF",
+          "kant": "#6D727A"
+        },
+        "sannsynlig": {
+          "fg": "#571A66",
+          "bg": "#FCF3FF",
+          "kant": "#8B589A"
+        },
+        "ferdig": {
+          "fg": "#1D4B01",
+          "bg": "#EDFDE7",
+          "kant": "#53823F"
+        },
+        "advarsel": {
+          "fg": "#4E3900",
+          "bg": "#FEF6E3",
+          "kant": "#8E6B00"
+        },
+        "feil": {
+          "fg": "#6E100F",
+          "bg": "#FEF4F2",
+          "kant": "#A5544B"
+        }
+      }
+    },
+    "mork-okt-kontrast": {
+      "flate-side": "#0B0D11",
+      "flate-kort": "#121417",
+      "flate-senket": "#07080B",
+      "flate-valgt": "#1B322D",
+      "linje": "#5A5E64",
+      "kant": "#A7ABB1",
+      "tekst": "#FCFDFF",
+      "tekst-dempet": "#DCDEE2",
+      "tekst-svak": "#C1C4C9",
+      "tekst-invers": "#0B0D11",
+      "aksent": "#82CAB8",
+      "aksent-trykk": "#8ED7C5",
+      "aksent-tekst": "#BFEADE",
+      "aksent-svak": "#172723",
+      "aksent-valgt": "#274a41",
+      "paa-aksent": "#0D1013",
+      "varsel-flate": "#241800",
+      "varsel-tekst": "#FEE9BB",
+      "feil-flate": "#2D0F0C",
+      "feil-tekst": "#FDE4E0",
+      "status": {
+        "ny": {
+          "fg": "#E1ECFF",
+          "bg": "#0C1A34",
+          "kant": "#7D99CB"
+        },
+        "pagar": {
+          "fg": "#EAE8FF",
+          "bg": "#1A1532",
+          "kant": "#968FC8"
+        },
+        "venter": {
+          "fg": "#E6ECF5",
+          "bg": "#171B21",
+          "kant": "#9399A1"
+        },
+        "sannsynlig": {
+          "fg": "#F8E1FF",
+          "bg": "#241129",
+          "kant": "#AC87B6"
+        },
+        "ferdig": {
+          "fg": "#D0FCBE",
+          "bg": "#0F2008",
+          "kant": "#84A576"
+        },
+        "advarsel": {
+          "fg": "#FEE9BB",
+          "bg": "#241800",
+          "kant": "#AE955D"
+        },
+        "feil": {
+          "fg": "#FDE4E0",
+          "bg": "#2D0F0C",
+          "kant": "#C0867D"
+        }
+      }
+    }
+  },
+  "ios": {
+    "lys": {
+      "aksent": {
+        "srgb": "#068472",
+        "p3": "#3A8272"
+      },
+      "aksent-valgt": {
+        "srgb": "#BCE6DB",
+        "p3": "#C4E5DC"
+      },
+      "paa-aksent": {
+        "srgb": "#FFFFFF",
+        "p3": "#FFFFFF"
+      },
+      "status": {
+        "ny": {
+          "fg": {
+            "srgb": "#1A57AD",
+            "p3": "#2C56A7"
+          },
+          "bg": {
+            "srgb": "#E7F1FF",
+            "p3": "#E8F1FF"
+          },
+          "kant": {
+            "srgb": "#A0C6FF",
+            "p3": "#A8C5FA"
+          }
+        },
+        "pagar": {
+          "fg": {
+            "srgb": "#5C46A7",
+            "p3": "#5947A2"
+          },
+          "bg": {
+            "srgb": "#EFEEFF",
+            "p3": "#EFEEFF"
+          },
+          "kant": {
+            "srgb": "#C3BBFB",
+            "p3": "#C1BBF6"
+          }
+        },
+        "venter": {
+          "fg": {
+            "srgb": "#555B64",
+            "p3": "#565B63"
+          },
+          "bg": {
+            "srgb": "#E9F1FB",
+            "p3": "#EBF1FA"
+          },
+          "kant": {
+            "srgb": "#BDC5CF",
+            "p3": "#BFC5CE"
+          }
+        },
+        "sannsynlig": {
+          "fg": {
+            "srgb": "#80378C",
+            "p3": "#773B87"
+          },
+          "bg": {
+            "srgb": "#FCE9FF",
+            "p3": "#FAE9FF"
+          },
+          "kant": {
+            "srgb": "#E0B1E7",
+            "p3": "#D9B3E4"
+          }
+        },
+        "ferdig": {
+          "fg": {
+            "srgb": "#1F6D02",
+            "p3": "#376C1D"
+          },
+          "bg": {
+            "srgb": "#E3F7DE",
+            "p3": "#E6F7E0"
+          },
+          "kant": {
+            "srgb": "#A5D39B",
+            "p3": "#AFD2A0"
+          }
+        },
+        "advarsel": {
+          "fg": {
+            "srgb": "#6D5000",
+            "p3": "#6C5000"
+          },
+          "bg": {
+            "srgb": "#FFE9BC",
+            "p3": "#FEE9BB"
+          },
+          "kant": {
+            "srgb": "#E0C07F",
+            "p3": "#DBC188"
+          }
+        },
+        "feil": {
+          "fg": {
+            "srgb": "#9E2D28",
+            "p3": "#91362E"
+          },
+          "bg": {
+            "srgb": "#FFEBE8",
+            "p3": "#FDEBE8"
+          },
+          "kant": {
+            "srgb": "#F9AEA5",
+            "p3": "#EEB1A7"
+          }
+        }
+      }
+    },
+    "mork": {
+      "aksent": {
+        "srgb": "#54B9A5",
+        "p3": "#6FB7A5"
+      },
+      "aksent-valgt": {
+        "srgb": "#163F37",
+        "p3": "#213E37"
+      },
+      "paa-aksent": {
+        "srgb": "#0D1013",
+        "p3": "#0D1013"
+      },
+      "status": {
+        "ny": {
+          "fg": {
+            "srgb": "#B5D3FF",
+            "p3": "#B9D2FF"
+          },
+          "bg": {
+            "srgb": "#152946",
+            "p3": "#1A2844"
+          },
+          "kant": {
+            "srgb": "#37588A",
+            "p3": "#3E5786"
+          }
+        },
+        "pagar": {
+          "fg": {
+            "srgb": "#D0C9FF",
+            "p3": "#CEC9FF"
+          },
+          "bg": {
+            "srgb": "#292344",
+            "p3": "#282342"
+          },
+          "kant": {
+            "srgb": "#584E87",
+            "p3": "#564F83"
+          }
+        },
+        "venter": {
+          "fg": {
+            "srgb": "#CAD2DC",
+            "p3": "#CCD1DB"
+          },
+          "bg": {
+            "srgb": "#242931",
+            "p3": "#252930"
+          },
+          "kant": {
+            "srgb": "#525961",
+            "p3": "#535860"
+          }
+        },
+        "sannsynlig": {
+          "fg": {
+            "srgb": "#F3B9FC",
+            "p3": "#EABBF8"
+          },
+          "bg": {
+            "srgb": "#361E3A",
+            "p3": "#331F39"
+          },
+          "kant": {
+            "srgb": "#6F4676",
+            "p3": "#694873"
+          }
+        },
+        "ferdig": {
+          "fg": {
+            "srgb": "#AAE39E",
+            "p3": "#B6E2A5"
+          },
+          "bg": {
+            "srgb": "#173012",
+            "p3": "#1D2F16"
+          },
+          "kant": {
+            "srgb": "#3B6432",
+            "p3": "#456338"
+          }
+        },
+        "advarsel": {
+          "fg": {
+            "srgb": "#FCC959",
+            "p3": "#F4CB6C"
+          },
+          "bg": {
+            "srgb": "#3D2A00",
+            "p3": "#3B2B01"
+          },
+          "kant": {
+            "srgb": "#70530B",
+            "p3": "#6B541D"
+          }
+        },
+        "feil": {
+          "fg": {
+            "srgb": "#FFBFB6",
+            "p3": "#FABFB5"
+          },
+          "bg": {
+            "srgb": "#421C18",
+            "p3": "#3D1E1A"
+          },
+          "kant": {
+            "srgb": "#83423C",
+            "p3": "#7B463F"
+          }
+        }
+      }
+    },
+    "lys-okt-kontrast": {
+      "aksent": {
+        "srgb": "#006a5b",
+        "p3": "#206A5B"
+      },
+      "aksent-valgt": {
+        "srgb": "#AADDD0",
+        "p3": "#B4DBD1"
+      },
+      "paa-aksent": {
+        "srgb": "#FFFFFF",
+        "p3": "#FFFFFF"
+      },
+      "status": {
+        "ny": {
+          "fg": {
+            "srgb": "#003882",
+            "p3": "#0C3584"
+          },
+          "bg": {
+            "srgb": "#F2F7FF",
+            "p3": "#F2F7FF"
+          },
+          "kant": {
+            "srgb": "#3E71BC",
+            "p3": "#4A70B7"
+          }
+        },
+        "pagar": {
+          "fg": {
+            "srgb": "#402584",
+            "p3": "#3C267F"
+          },
+          "bg": {
+            "srgb": "#F6F6FF",
+            "p3": "#F6F5FF"
+          },
+          "kant": {
+            "srgb": "#7262B7",
+            "p3": "#6F62B2"
+          }
+        },
+        "venter": {
+          "fg": {
+            "srgb": "#383E46",
+            "p3": "#393D45"
+          },
+          "bg": {
+            "srgb": "#F1F7FF",
+            "p3": "#F2F7FF"
+          },
+          "kant": {
+            "srgb": "#6B727B",
+            "p3": "#6D727A"
+          }
+        },
+        "sannsynlig": {
+          "fg": {
+            "srgb": "#5F136A",
+            "p3": "#571A66"
+          },
+          "bg": {
+            "srgb": "#FEF3FF",
+            "p3": "#FCF3FF"
+          },
+          "kant": {
+            "srgb": "#94559E",
+            "p3": "#8B589A"
+          }
+        },
+        "ferdig": {
+          "fg": {
+            "srgb": "#104B00",
+            "p3": "#1D4B01"
+          },
+          "bg": {
+            "srgb": "#E9FEE5",
+            "p3": "#EDFDE7"
+          },
+          "kant": {
+            "srgb": "#448335",
+            "p3": "#53823F"
+          }
+        },
+        "advarsel": {
+          "fg": {
+            "srgb": "#503900",
+            "p3": "#4E3900"
+          },
+          "bg": {
+            "srgb": "#FFF6E4",
+            "p3": "#FEF6E3"
+          },
+          "kant": {
+            "srgb": "#916B00",
+            "p3": "#8E6B00"
+          }
+        },
+        "feil": {
+          "fg": {
+            "srgb": "#780007",
+            "p3": "#6E100F"
+          },
+          "bg": {
+            "srgb": "#FFF4F2",
+            "p3": "#FEF4F2"
+          },
+          "kant": {
+            "srgb": "#B14F46",
+            "p3": "#A5544B"
+          }
+        }
+      }
+    },
+    "mork-okt-kontrast": {
+      "aksent": {
+        "srgb": "#68CDB7",
+        "p3": "#82CAB8"
+      },
+      "aksent-valgt": {
+        "srgb": "#194B41",
+        "p3": "#274a41"
+      },
+      "paa-aksent": {
+        "srgb": "#0D1013",
+        "p3": "#0D1013"
+      },
+      "status": {
+        "ny": {
+          "fg": {
+            "srgb": "#E0ECFF",
+            "p3": "#E1ECFF"
+          },
+          "bg": {
+            "srgb": "#071A36",
+            "p3": "#0C1A34"
+          },
+          "kant": {
+            "srgb": "#759AD0",
+            "p3": "#7D99CB"
+          }
+        },
+        "pagar": {
+          "fg": {
+            "srgb": "#EAE8FF",
+            "p3": "#EAE8FF"
+          },
+          "bg": {
+            "srgb": "#1B1434",
+            "p3": "#1A1532"
+          },
+          "kant": {
+            "srgb": "#978FCC",
+            "p3": "#968FC8"
+          }
+        },
+        "venter": {
+          "fg": {
+            "srgb": "#E4ECF6",
+            "p3": "#E6ECF5"
+          },
+          "bg": {
+            "srgb": "#161B22",
+            "p3": "#171B21"
+          },
+          "kant": {
+            "srgb": "#9299A2",
+            "p3": "#9399A1"
+          }
+        },
+        "sannsynlig": {
+          "fg": {
+            "srgb": "#FBE1FF",
+            "p3": "#F8E1FF"
+          },
+          "bg": {
+            "srgb": "#270F2B",
+            "p3": "#241129"
+          },
+          "kant": {
+            "srgb": "#B386B9",
+            "p3": "#AC87B6"
+          }
+        },
+        "ferdig": {
+          "fg": {
+            "srgb": "#C4FEB7",
+            "p3": "#D0FCBE"
+          },
+          "bg": {
+            "srgb": "#092104",
+            "p3": "#0F2008"
+          },
+          "kant": {
+            "srgb": "#7AA671",
+            "p3": "#84A576"
+          }
+        },
+        "advarsel": {
+          "fg": {
+            "srgb": "#FFE9BC",
+            "p3": "#FEE9BB"
+          },
+          "bg": {
+            "srgb": "#251800",
+            "p3": "#241800"
+          },
+          "kant": {
+            "srgb": "#B39454",
+            "p3": "#AE955D"
+          }
+        },
+        "feil": {
+          "fg": {
+            "srgb": "#FFE4E0",
+            "p3": "#FDE4E0"
+          },
+          "bg": {
+            "srgb": "#310D0A",
+            "p3": "#2D0F0C"
+          },
+          "kant": {
+            "srgb": "#CA837A",
+            "p3": "#C0867D"
+          }
+        }
+      }
+    }
+  },
+  "skala": {
+    "noytral": {
+      "lys": [
+        {
+          "trinn": 1,
+          "oklch": "oklch(99.3% 0.004 255)",
+          "srgb": "#FBFDFF",
+          "p3": "#FBFDFF"
+        },
+        {
+          "trinn": 2,
+          "oklch": "oklch(97.9% 0.004 255)",
+          "srgb": "#F6F8FB",
+          "p3": "#F7F8FB"
+        },
+        {
+          "trinn": 3,
+          "oklch": "oklch(95.7% 0.005 255)",
+          "srgb": "#EFF1F4",
+          "p3": "#EFF1F4"
+        },
+        {
+          "trinn": 4,
+          "oklch": "oklch(93.4% 0.006 255)",
+          "srgb": "#E7E9ED",
+          "p3": "#E7E9ED"
+        },
+        {
+          "trinn": 5,
+          "oklch": "oklch(91.2% 0.006 255)",
+          "srgb": "#DFE2E6",
+          "p3": "#E0E2E6"
+        },
+        {
+          "trinn": 6,
+          "oklch": "oklch(88.7% 0.007 255)",
+          "srgb": "#D7DADE",
+          "p3": "#D7DADE"
+        },
+        {
+          "trinn": 7,
+          "oklch": "oklch(85.3% 0.008 255)",
+          "srgb": "#CBCFD4",
+          "p3": "#CCCFD3"
+        },
+        {
+          "trinn": 8,
+          "oklch": "oklch(79.0% 0.009 255)",
+          "srgb": "#B7BBC1",
+          "p3": "#B7BBC0"
+        },
+        {
+          "trinn": 9,
+          "oklch": "oklch(60.0% 0.012 255)",
+          "srgb": "#7B8188",
+          "p3": "#7C8187"
+        },
+        {
+          "trinn": 10,
+          "oklch": "oklch(56.0% 0.012 255)",
+          "srgb": "#70757C",
+          "p3": "#71757B"
+        },
+        {
+          "trinn": 11,
+          "oklch": "oklch(45.0% 0.012 255)",
+          "srgb": "#51565C",
+          "p3": "#52565C"
+        },
+        {
+          "trinn": 12,
+          "oklch": "oklch(23.0% 0.010 255)",
+          "srgb": "#1A1D22",
+          "p3": "#1A1D21"
+        }
+      ],
+      "mork": [
+        {
+          "trinn": 1,
+          "oklch": "oklch(16.0% 0.008 255)",
+          "srgb": "#0B0D11",
+          "p3": "#0B0D11"
+        },
+        {
+          "trinn": 2,
+          "oklch": "oklch(19.0% 0.009 255)",
+          "srgb": "#111418",
+          "p3": "#121417"
+        },
+        {
+          "trinn": 3,
+          "oklch": "oklch(22.8% 0.010 255)",
+          "srgb": "#191D21",
+          "p3": "#1A1D21"
+        },
+        {
+          "trinn": 4,
+          "oklch": "oklch(25.8% 0.010 255)",
+          "srgb": "#202429",
+          "p3": "#212428"
+        },
+        {
+          "trinn": 5,
+          "oklch": "oklch(28.8% 0.011 255)",
+          "srgb": "#272B30",
+          "p3": "#282B30"
+        },
+        {
+          "trinn": 6,
+          "oklch": "oklch(32.2% 0.011 255)",
+          "srgb": "#303439",
+          "p3": "#303439"
+        },
+        {
+          "trinn": 7,
+          "oklch": "oklch(37.6% 0.012 255)",
+          "srgb": "#3D4248",
+          "p3": "#3E4247"
+        },
+        {
+          "trinn": 8,
+          "oklch": "oklch(45.5% 0.012 255)",
+          "srgb": "#52575E",
+          "p3": "#53575D"
+        },
+        {
+          "trinn": 9,
+          "oklch": "oklch(54.0% 0.012 255)",
+          "srgb": "#6A6F76",
+          "p3": "#6B6F75"
+        },
+        {
+          "trinn": 10,
+          "oklch": "oklch(58.5% 0.012 255)",
+          "srgb": "#777C83",
+          "p3": "#787C82"
+        },
+        {
+          "trinn": 11,
+          "oklch": "oklch(76.0% 0.010 255)",
+          "srgb": "#ADB1B7",
+          "p3": "#AEB1B7"
+        },
+        {
+          "trinn": 12,
+          "oklch": "oklch(94.5% 0.005 255)",
+          "srgb": "#EAEDF0",
+          "p3": "#EBEDF0"
+        }
+      ]
+    },
+    "aksent": {
+      "lys": [
+        {
+          "trinn": 1,
+          "oklch": "oklch(99.2% 0.005 178)",
+          "srgb": "#F9FEFC",
+          "p3": "#FAFDFC"
+        },
+        {
+          "trinn": 2,
+          "oklch": "oklch(97.7% 0.011 178)",
+          "srgb": "#F0FAF7",
+          "p3": "#F2FAF7"
+        },
+        {
+          "trinn": 3,
+          "oklch": "oklch(95.0% 0.022 178)",
+          "srgb": "#E0F4EE",
+          "p3": "#E4F3EE"
+        },
+        {
+          "trinn": 4,
+          "oklch": "oklch(92.2% 0.034 178)",
+          "srgb": "#CEEDE5",
+          "p3": "#D4ECE5"
+        },
+        {
+          "trinn": 5,
+          "oklch": "oklch(89.2% 0.046 178)",
+          "srgb": "#BCE6DB",
+          "p3": "#C4E5DC"
+        },
+        {
+          "trinn": 6,
+          "oklch": "oklch(85.8% 0.056 178)",
+          "srgb": "#AADDD0",
+          "p3": "#B4DBD1"
+        },
+        {
+          "trinn": 7,
+          "oklch": "oklch(81.0% 0.066 178)",
+          "srgb": "#92CFC1",
+          "p3": "#9FCEC1"
+        },
+        {
+          "trinn": 8,
+          "oklch": "oklch(74.5% 0.080 178)",
+          "srgb": "#71BDAC",
+          "p3": "#83BBAD"
+        },
+        {
+          "trinn": 9,
+          "oklch": "oklch(55.0% 0.100 178)",
+          "srgb": "#068472",
+          "p3": "#3A8272"
+        },
+        {
+          "trinn": 10,
+          "oklch": "oklch(50.5% 0.100 178)",
+          "srgb": "#007665",
+          "p3": "#2C7565"
+        },
+        {
+          "trinn": 11,
+          "oklch": "oklch(48.0% 0.088 178)",
+          "srgb": "#016d5e",
+          "p3": "#2E6C5E"
+        },
+        {
+          "trinn": 12,
+          "oklch": "oklch(29.0% 0.045 178)",
+          "srgb": "#0C332B",
+          "p3": "#17322B"
+        }
+      ],
+      "mork": [
+        {
+          "trinn": 1,
+          "oklch": "oklch(17.5% 0.012 178)",
+          "srgb": "#0b1210",
+          "p3": "#0C1210"
+        },
+        {
+          "trinn": 2,
+          "oklch": "oklch(20.5% 0.017 178)",
+          "srgb": "#0F1A17",
+          "p3": "#111917"
+        },
+        {
+          "trinn": 3,
+          "oklch": "oklch(25.5% 0.030 178)",
+          "srgb": "#112823",
+          "p3": "#172723"
+        },
+        {
+          "trinn": 4,
+          "oklch": "oklch(29.5% 0.040 178)",
+          "srgb": "#13332D",
+          "p3": "#1B322D"
+        },
+        {
+          "trinn": 5,
+          "oklch": "oklch(33.5% 0.048 178)",
+          "srgb": "#163F37",
+          "p3": "#213E37"
+        },
+        {
+          "trinn": 6,
+          "oklch": "oklch(37.5% 0.056 178)",
+          "srgb": "#194B41",
+          "p3": "#274a41"
+        },
+        {
+          "trinn": 7,
+          "oklch": "oklch(43.5% 0.064 178)",
+          "srgb": "#225D51",
+          "p3": "#325B51"
+        },
+        {
+          "trinn": 8,
+          "oklch": "oklch(51.5% 0.076 178)",
+          "srgb": "#2d7667",
+          "p3": "#417468"
+        },
+        {
+          "trinn": 9,
+          "oklch": "oklch(72.0% 0.100 178)",
+          "srgb": "#54B9A5",
+          "p3": "#6FB7A5"
+        },
+        {
+          "trinn": 10,
+          "oklch": "oklch(76.5% 0.100 178)",
+          "srgb": "#63C8B3",
+          "p3": "#7DC5B3"
+        },
+        {
+          "trinn": 11,
+          "oklch": "oklch(80.0% 0.072 178)",
+          "srgb": "#8ACDBE",
+          "p3": "#99CCBE"
+        },
+        {
+          "trinn": 12,
+          "oklch": "oklch(94.0% 0.030 178)",
+          "srgb": "#D7F2EB",
+          "p3": "#DCF1EB"
+        }
+      ]
+    }
+  },
+  "merke": {
+    "blekk": {
+      "lys": "#1D2430",
+      "mork": "#E8EBF1"
+    },
+    "stift": {
+      "lys": "#068472",
+      "mork": "#54B9A5"
+    }
+  },
+  "k206": {
+    "status": "foreslått",
+    "lys": {
+      "ramme": "#CBCFD4",
+      "overlegg": "rgba(26,29,34,.40)",
+      "alltid-mork": "#0B0D11",
+      "paa-alltid-mork": "#EAEDF0"
+    },
+    "mork": {
+      "ramme": "#3D4248",
+      "overlegg": "rgba(0,0,0,.60)",
+      "alltid-mork": "#0B0D11",
+      "paa-alltid-mork": "#EAEDF0"
+    },
+    "mork-tekst-svak": {
+      "fra": "#868B92",
+      "til": "#90969D",
+      "grunn": "3,98:1 på flate-valgt, krav 4,5:1"
+    }
+  },
+  "plattform": {
+    "pc": {
+      "status": "foreslått",
+      "velger": "[data-plattform=\"pc\"]",
+      "fra": "1024px",
+      "modus": "bare lys",
+      "overstyrer": {
+        "flate-side": "#ECEFF3",
+        "flate-kort": "#FFFFFF",
+        "flate-senket": "#F3F5F8",
+        "linje": "#E3E6EA",
+        "tekst-svak": "#62686F"
+      },
+      "nye": {
+        "flate-hover": "#F3F5F8",
+        "ramme": "#CBCFD4",
+        "skygge-kort": "0 1px 2px rgba(26,29,34,.06)",
+        "skygge-flytende": "0 0 0 1px rgba(26,29,34,.08), 0 16px 40px -12px rgba(26,29,34,.28)",
+        "sidemeny-flate": "#FFFFFF",
+        "sidemeny-bredde": "248px",
+        "sidemeny-rad": "34px",
+        "toppfelt-hoyde": "60px",
+        "kundelogo-maks": "28px",
+        "font-grunn": "15px",
+        "font-tabell": "14px",
+        "font-meta": "13px",
+        "font-pille": "12px",
+        "font-korttittel": "16px",
+        "font-sidetittel": "28px",
+        "rad": "44px",
+        "felt-hoyde": "36px",
+        "knapp-hoyde": "36px",
+        "trykk-min": "32px",
+        "rom-side": "28px",
+        "rom-kort": "16px",
+        "kort-pad": "18px",
+        "innhold-maks": "1440px",
+        "radius-kort": "14px",
+        "radius-felt": "10px",
+        "radius-knapp": "10px",
+        "flate-kolonne": "#E3E6EA"
+      },
+      "tetthet": {
+        "tett": {
+          "rad": "36px",
+          "font-tabell": "13px",
+          "celle-pad-x": "12px"
+        },
+        "normal": {
+          "rad": "44px",
+          "font-tabell": "14px",
+          "celle-pad-x": "16px"
+        },
+        "luftig": {
+          "rad": "52px",
+          "font-tabell": "15px",
+          "celle-pad-x": "18px"
+        }
+      },
+      "logo": {
+        "hengsel": "Sidemenyen nederst til venstre, logo-crm-lys.svg 16 px høy, med versjonsnummer i tekst-svak 12 px",
+        "kunde": "Toppfeltet øverst til høyre, etter varsler, med skillelinje. Maks 28 px høy, bredde auto",
+        "status": "besluttet"
+      },
+      "flate-kolonne-merknad": "Kolonner på salgstavla bak hvite kort. Besluttet 15.10 (S-62). Kontrast mot kort 1,26:1, bare visuell"
+    },
+    "nettleser-under-1024": {
+      "status": "foreslått",
+      "media": "(max-width: 1023.98px)",
+      "overstyrer": {
+        "sidemeny-bredde": "0px (skuff 300px)",
+        "sidemeny-rad": "44px",
+        "toppfelt-hoyde": "56px",
+        "kundelogo-maks": "24px",
+        "font-grunn": "16px",
+        "font-tabell": "15px",
+        "font-meta": "14px",
+        "font-sidetittel": "24px",
+        "rad": "56px",
+        "felt-hoyde": "44px",
+        "knapp-hoyde": "44px",
+        "trykk-min": "44px",
+        "rom-side": "20px",
+        "rom-kort": "12px",
+        "kort-pad": "16px",
+        "radius-kort": "12px"
+      },
+      "mobil_under_768": {
+        "fanelinje-hoyde": "64px + safe area",
+        "rom-side": "16px",
+        "font-sidetittel": "22px"
+      },
+      "logo": {
+        "hengsel": "Nederst i «Mer»-arket (mobil) eller skuffen (nettbrett), med versjon",
+        "kunde": "Toppfeltet øverst til høyre, maks 24 px",
+        "status": "foreslått"
+      }
+    },
+    "ios": {
+      "status": "foreslått",
+      "prinsipp": {
+        "fil": "ios/HengselPlattform.swift",
+        "flater": {
+          "flate-side": "systemGroupedBackground (#F2F2F7 / #000000)",
+          "flate-kort": "secondarySystemGroupedBackground (#FFFFFF / #1C1C1E)",
+          "flate-senket": "tertiarySystemGroupedBackground (#F2F2F7 / #2C2C2E)",
+          "linje": "separator",
+          "tekst": "label",
+          "tekst-dempet": "Hengsel TekstDempet (#51565C / #ADB1B7), se Venter på Eirik",
+          "tekst-svak": "samme som tekst-dempet",
+          "glass": "Liquid Glass (.glassEffect, systemets fanelinje, verktøylinje og sidefelt)"
+        },
+        "hengsel": {
+          "aksent": "tint: #068472 / #54B9A5",
+          "aksent-tekst": "tekstknapper rett på grouped background eller glass i lys: #016D5E",
+          "aksent-valgt": "valgt rad i iPad-sidefelt i mørk: #163F37 med label",
+          "paa-aksent": "#FFFFFF / #0D1013",
+          "status": "statuspiller, se HengselFarger.swift"
+        }
+      },
+      "lys": {
+        "flate-side": "#F2F2F7",
+        "flate-kort": "#FFFFFF",
+        "flate-senket": "#F2F2F7",
+        "linje": "#C6C6C8",
+        "tekst": "#000000",
+        "tekst-dempet": "#51565C",
+        "tekst-svak": "#51565C",
+        "aksent": "#068472",
+        "aksent-tekst": "#016D5E",
+        "aksent-valgt": "#BCE6DB",
+        "paa-aksent": "#FFFFFF",
+        "sidefelt-valgt": "#068472",
+        "paa-sidefelt-valgt": "#FFFFFF",
+        "glass": "rgba(255,255,255,.72)"
+      },
+      "mork": {
+        "flate-side": "#000000",
+        "flate-kort": "#1C1C1E",
+        "flate-senket": "#2C2C2E",
+        "linje": "#38383A",
+        "tekst": "#FFFFFF",
+        "tekst-dempet": "#ADB1B7",
+        "tekst-svak": "#ADB1B7",
+        "aksent": "#54B9A5",
+        "aksent-tekst": "#54B9A5",
+        "aksent-valgt": "#163F37",
+        "paa-aksent": "#0D1013",
+        "sidefelt-valgt": "#163F37",
+        "paa-sidefelt-valgt": "#FFFFFF",
+        "glass": "rgba(44,44,46,.62)"
+      },
+      "system": {
+        "flate-side": "systemGroupedBackground",
+        "flate-kort": "secondarySystemGroupedBackground",
+        "flate-senket": "tertiarySystemGroupedBackground",
+        "linje": "separator",
+        "tekst": "label",
+        "glass": "Liquid Glass"
+      },
+      "mal": {
+        "radius-kort": 20,
+        "radius-knapp-stor": 28,
+        "trykk-min": 44,
+        "sidefelt-bredde": 320
+      }
+    },
+    "montorapp": {
+      "status": "foreslått",
+      "som": "ios uten Liquid Glass",
+      "lys": {
+        "flate-side": "#F2F2F7",
+        "flate-kort": "#FFFFFF",
+        "flate-senket": "#E9E9EE",
+        "linje": "#D1D1D6",
+        "fanelinje": {
+          "flate": "#FFFFFF",
+          "linje": "#D1D1D6",
+          "aktiv": "#016D5E",
+          "inaktiv": "#51565C"
+        },
+        "tekst": "#1A1D22",
+        "tekst-dempet": "#51565C",
+        "aksent": "#068472",
+        "aksent-tekst": "#016D5E",
+        "paa-aksent": "#FFFFFF",
+        "kant": "#7B8188"
+      },
+      "mork": {
+        "flate-side": "#000000",
+        "flate-kort": "#1C1C1E",
+        "flate-senket": "#2C2C2E",
+        "linje": "#38383A",
+        "fanelinje": {
+          "flate": "#1C1C1E",
+          "linje": "#38383A",
+          "aktiv": "#54B9A5",
+          "inaktiv": "#ADB1B7"
+        },
+        "tekst": "#EAEDF0",
+        "tekst-dempet": "#ADB1B7",
+        "aksent": "#54B9A5",
+        "aksent-tekst": "#8ACDBE",
+        "paa-aksent": "#0D1013",
+        "kant": "#767B82"
+      },
+      "merknad": "kant mørk er #767B82 (3,27:1 på flate-senket #2C2C2E). Grunnens #6A6F76 har 2,75:1 der."
+    }
+  },
+  "tema": {
+    "forklaring": "Semantiske nøkler (17.10). Samme nøkler i sigdal.tokens.json, så Code kan bytte tema uten kodeendring. Verdiene peker på rollene over.",
+    "flate.bakgrunn": "#F6F8FB",
+    "flate.flis": "#FBFDFF",
+    "flate.meny": "#FBFDFF",
+    "flate.aktiv": "#E0F4EE",
+    "flate.hover": "#EFF1F4",
+    "flate.felt": "#FBFDFF",
+    "flate.dokument": "#FBFDFF",
+    "kant.standard": "#D7DADE",
+    "kant.felt": "#7B8188",
+    "tekst.standard": "#1A1D22",
+    "tekst.dempet": "#51565C",
+    "knapp.primar.bg": "#068472",
+    "knapp.primar.tekst": "#FFFFFF",
+    "knapp.sekundar.kant": "#7B8188",
+    "lenke": "#016d5e",
+    "lenke.hover": "#007665",
+    "fokus": "#068472",
+    "status.ok.tekst": "#1F6D02",
+    "status.ok.bg": "#E3F7DE",
+    "status.varsel.tekst": "#6D5000",
+    "status.varsel.bg": "#FFE9BC",
+    "status.feil.tekst": "#9E2D28",
+    "status.feil.bg": "#FFEBE8",
+    "status.info.tekst": "#1A57AD",
+    "status.info.bg": "#E7F1FF",
+    "status.noytral.tekst": "#555B64",
+    "status.noytral.bg": "#E9F1FB"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "repo": "SNgroup-Drift/hengsel-crm",
   "sti": "_ds/hengsel-designsystem",
-  "commit": "82490f4171baa7232e1eb65a20a3014560680f9c",
-  "versjon": "2.1.0",
+  "commit": "6003bc0bf5a78b6bc56119beb65c5d3b5d3b8f01",
+  "versjon": "2.2.0",
   "palettpakke": {
     "navn": "design_handoff_hengsel_furu_v2",
     "dato": "2026-10-14",
@@ -316,6 +316,10 @@
     "assets/fonts/LICENSE-Inter.txt": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
     "assets/fonts/LICENSE-Newsreader.txt": "26028ec4e13b650065fa525a09532176f8a668b76ff849ea01c564a7480f91e7",
     "assets/fonts/LICENSE-Schibsted-Grotesk.txt": "15222412a95d70042e66e79bfb3b985653e0693e4d41703bc131bee9c5aa1aa7",
+    "assets/fonts/SchibstedGrotesk-Kursiv-latin-ext.woff2": "28d82a0a178716d49ee40ec535831b8f5f3aee0fb320e86969f3dc45538e8892",
+    "assets/fonts/SchibstedGrotesk-Kursiv-latin.woff2": "c0aab3a5acaeb1f04246c8131f6840862aebe8048cd8015f578c149db0d873d4",
+    "assets/fonts/SchibstedGrotesk-Normal-latin-ext.woff2": "f5df746dbc2eccec6d22fdaaa2d253cd6915a30ce9f6ba86138bb6151c7254db",
+    "assets/fonts/SchibstedGrotesk-Normal-latin.woff2": "e3b56e90510a84ac0ed465b822e112983eaf58e37436bf769681c31f77b1f3a7",
     "assets/fonts/fri-liste/LICENSE-DM-Sans.txt": "6fbd040a29c2037a765dfb9f2561e9965b5c95c6dcb5dce516089d63d5f17af7",
     "assets/fonts/fri-liste/LICENSE-Lora.txt": "948aed765160f7b974105606c21994715a171f89fca48e57bf1e0a23aca0bef1",
     "assets/fonts/fri-liste/LICENSE-Source-Sans-3.txt": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3",
@@ -332,6 +336,8 @@
     "assets/fonts/inter-latin-400-normal.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
     "assets/fonts/inter-latin-500-normal.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
     "assets/fonts/inter-latin-600-normal.woff2": "f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a",
+    "assets/fonts/kundetema-sigdal/TWKLausanne-350.woff2": "e8765134c4b4e465a73dbb7ddcf50da11ae95c596293bf86caa5c21d42d67381",
+    "assets/fonts/kundetema-sigdal/TWKLausanne-650.woff2": "9df76945a7bcb434b6fff31ca10e980843da51c5aa4466cd0c2dbce4ed9bdef9",
     "assets/fonts/newsreader-latin-400-normal.woff2": "e66067814f1c672d33a457e4f4d102c818b481420e2234cf685ebdbf2f443904",
     "assets/fonts/newsreader-latin-500-normal.woff2": "5613e2fc8377392c02e8ac9d55014689fb5320a5f2a7be55e8088a314728ac2c",
     "assets/fonts/schibsted-grotesk-latin-wght-normal.woff2": "4c8b93f431d462c696e12b9d6a033feb3394d36e66e781357c496b95d8a75e05",
@@ -578,9 +584,16 @@
     "assets/pwa/vis-maskable-512.svg": "ab990aef1d8a187d41631fa284531ec69f6ff3be88b1750a0fa9bf6d22f1026c",
     "tokens/fonts-fri-liste.css": "f5ad14c53364da6884ac675ebf1909201ff44aa3c6408092669c6ae215cbcd6d",
     "tokens/fonts.css": "e7bbb03233d07725cc86efb7098a37e4d0b0028744c68de7264969e7832a5a3e",
-    "tokens/hengsel.tokens.json": "81b6ebd889d29c33e55fd4f9d70b0c1969ece15ce65986f9e85a36081661d5bc",
+    "tokens/grunn.css": "a758872ef9b59eff9bb40f555b2e911e60a6bf16955903b4aa6a41186e1f179a",
+    "tokens/hengsel-palett.css": "29cce3dc1ca2f11188b96bbdd11ebf9b2049ba15c9f7d6a0f76244a4bf0f1f7f",
+    "tokens/hengsel-palett.tokens.json": "4e4eddfa516c1ddefac686c4041663087c7dd0a7c72e8bdce89dc829b2915dea",
+    "tokens/hengsel.tokens.json": "29333789b2a57e9648d2c610d08a4fd01d7be20cca05547dd92898e1855fa411",
+    "tokens/ios.css": "b8cbd2f8c86ff1d5506039ea6ecec70852b672db294c6f324185115631b52b35",
+    "tokens/kundetema-sigdal.css": "8a49e02f9611a889045a85b4a22201b36265062ec56b872eca36663d0e795841",
+    "tokens/layout.css": "69dfce85cec30c8de7319617c449cfcbf155af96a155237a8e0ac1f108328579",
     "tokens/plattform.css": "9a743c39062873e25178078e8a780bf48a8e05d970b45eb63934e627b3795daf",
-    "tokens/tokens.css": "bf4c503959705f8936d46d63d8f40af5a2e368167840b52446758d2dcc1c3458",
-    "tokens/tokens.ts": "8e39680c1052ee4655327194344ca66d6f5382a933515825ecb1c13e9a24146f"
+    "tokens/sigdal.tokens.json": "9e8beb320826221cd26a23bd0efea6e8d9e6fee844efcd513d153af72de32f27",
+    "tokens/tokens.css": "dd5dd73b17e71bb8d3db7ed0e94a3238836074bed137c4a69087b88f1b51add1",
+    "tokens/tokens.ts": "e135edcfe3802534777bdb7dc136e6a71c151705e2ca28144d430184d1c88b70"
   }
 }
