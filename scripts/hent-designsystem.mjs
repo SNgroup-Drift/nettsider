@@ -23,6 +23,17 @@ const MAL = join(rot, "packages", "hengsel-tokens", "ds");
 const PIN = join(rot, "packages", "hengsel-tokens", "designsystem.pin.json");
 const DS = "_ds/hengsel-designsystem";
 
+// N-1: Hengsel-sidene henter bare Hengsel-delen av designsystemet. Kundetemaet (Sigdal: sigdal.tokens.json, kundetema-sigdal.css, assets/logo/kunde,
+// assets/fonts/kundetema-sigdal og TWK Lausanne) og alt i tokens/ som er kundetema, plattform eller layout (hengsel-palett.*, grunn.css, layout.css,
+// ios.css) hører ikke hjemme her, og heller ikke components/, ui_kits/, plattform/, templates/, dokumentasjon/ og guidelines/.
+// Lista er hele "hva hentes": ny fil i designsystemet kommer ikke med før den står her.
+const HENTES = [
+  "tokens/hengsel.tokens.json", "tokens/tokens.css", "tokens/fonts.css", "tokens/plattform.css", "tokens/tokens.ts",
+  "tokens/fonts-fri-liste.css", // unntak fra N-1-lista: OFL-skriftene design.hengsel.no viser på /skrift og /last-ned; ingen Sigdal eller TWK
+  "assets/logo", "assets/fonts", "assets/favicon", "assets/ikoner",
+];
+const UTE = ["assets/logo/kunde/", "assets/fonts/kundetema-sigdal/"];
+
 const arg = (navn) => { const i = process.argv.indexOf(navn); return i > 0 ? process.argv[i + 1] : undefined; };
 const kilde = resolve(arg("--kilde") ?? process.env.DESIGNSYSTEM_KILDE ?? "/home/user/innlandet-crm-sync");
 const pin = JSON.parse(await readFile(PIN, "utf8").catch(() => "{}"));
@@ -31,8 +42,8 @@ if (!commit) throw new Error("Ingen commit: gi --commit <sha> (første gang) ell
 
 const git = (...a) => execFileSync("git", ["-C", kilde, ...a], { maxBuffer: 64 * 1024 * 1024 });
 const full = git("rev-parse", "--verify", `${commit}^{commit}`).toString().trim();
-const filer = git("ls-tree", "-r", "--name-only", full, "--", `${DS}/tokens`, `${DS}/assets/logo`, `${DS}/assets/fonts`).toString().trim().split("\n")
-  .filter((f) => !/\.(swift|md)$/.test(f) && !f.includes("/arkiv/"));
+const filer = git("ls-tree", "-r", "--name-only", full, "--", ...HENTES.map((m) => `${DS}/${m}`)).toString().trim().split("\n")
+  .filter((f) => !/\.(swift|md)$/.test(f) && !f.includes("/arkiv/") && !UTE.some((u) => f.slice(DS.length + 1).startsWith(u)) && !/lausanne/i.test(f));
 // tokens.ts og tokens.css hører med (nedlasting); Swift-filen gjør ikke det
 const ut = {};
 await rm(MAL, { recursive: true, force: true });

@@ -1,7 +1,7 @@
 {
-  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1.",
-  "versjon": "2.1.0",
-  "dato": "2026-10-14",
+  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger.",
+  "versjon": "2.2.0",
+  "dato": "2026-10-17",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
     "blekk": "#1D2430",
@@ -661,6 +661,27 @@
         "navn": "Schibsted Grotesk",
         "fil": "schibsted-grotesk-latin-wght-normal.woff2",
         "vekt": "400 800"
+      },
+      {
+        "navn": "Schibsted Grotesk",
+        "fil": "SchibstedGrotesk-Normal-latin-ext.woff2",
+        "vekt": "400 800",
+        "stil": "normal",
+        "unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+      },
+      {
+        "navn": "Schibsted Grotesk",
+        "fil": "SchibstedGrotesk-Kursiv-latin.woff2",
+        "vekt": "400 800",
+        "stil": "italic",
+        "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+      },
+      {
+        "navn": "Schibsted Grotesk",
+        "fil": "SchibstedGrotesk-Kursiv-latin-ext.woff2",
+        "vekt": "400 800",
+        "stil": "italic",
+        "unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
       }
     ],
     "vekt": {

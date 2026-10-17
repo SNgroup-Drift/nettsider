@@ -1,8 +1,8 @@
 {
   "repo": "SNgroup-Drift/hengsel-crm",
   "sti": "_ds/hengsel-designsystem",
-  "commit": "82490f4171baa7232e1eb65a20a3014560680f9c",
-  "versjon": "2.1.0",
+  "commit": "b1841be768052d8828b8543df2b948497b8712f9",
+  "versjon": "2.2.0",
   "palettpakke": {
     "navn": "design_handoff_hengsel_furu_v2",
     "dato": "2026-10-14",
@@ -316,6 +316,10 @@
     "assets/fonts/LICENSE-Inter.txt": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
     "assets/fonts/LICENSE-Newsreader.txt": "26028ec4e13b650065fa525a09532176f8a668b76ff849ea01c564a7480f91e7",
     "assets/fonts/LICENSE-Schibsted-Grotesk.txt": "15222412a95d70042e66e79bfb3b985653e0693e4d41703bc131bee9c5aa1aa7",
+    "assets/fonts/SchibstedGrotesk-Kursiv-latin-ext.woff2": "28d82a0a178716d49ee40ec535831b8f5f3aee0fb320e86969f3dc45538e8892",
+    "assets/fonts/SchibstedGrotesk-Kursiv-latin.woff2": "c0aab3a5acaeb1f04246c8131f6840862aebe8048cd8015f578c149db0d873d4",
+    "assets/fonts/SchibstedGrotesk-Normal-latin-ext.woff2": "f5df746dbc2eccec6d22fdaaa2d253cd6915a30ce9f6ba86138bb6151c7254db",
+    "assets/fonts/SchibstedGrotesk-Normal-latin.woff2": "e3b56e90510a84ac0ed465b822e112983eaf58e37436bf769681c31f77b1f3a7",
     "assets/fonts/fri-liste/LICENSE-DM-Sans.txt": "6fbd040a29c2037a765dfb9f2561e9965b5c95c6dcb5dce516089d63d5f17af7",
     "assets/fonts/fri-liste/LICENSE-Lora.txt": "948aed765160f7b974105606c21994715a171f89fca48e57bf1e0a23aca0bef1",
     "assets/fonts/fri-liste/LICENSE-Source-Sans-3.txt": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3",
@@ -577,10 +581,10 @@
     "assets/pwa/vis-maskable-512.png": "870ff45aa7ac9f5ec8376a9fe522b7563afbd501bfa2359c7193ffe5d2303218",
     "assets/pwa/vis-maskable-512.svg": "ab990aef1d8a187d41631fa284531ec69f6ff3be88b1750a0fa9bf6d22f1026c",
     "tokens/fonts-fri-liste.css": "f5ad14c53364da6884ac675ebf1909201ff44aa3c6408092669c6ae215cbcd6d",
-    "tokens/fonts.css": "e7bbb03233d07725cc86efb7098a37e4d0b0028744c68de7264969e7832a5a3e",
-    "tokens/hengsel.tokens.json": "81b6ebd889d29c33e55fd4f9d70b0c1969ece15ce65986f9e85a36081661d5bc",
+    "tokens/fonts.css": "57b40c7a81871d8ef89b47fcf9ebb2bf79bd69aeb01f2b9f4a4344b48c778156",
+    "tokens/hengsel.tokens.json": "8a26a5a116585ae0f8d622027c069b5f2f4c9e06ecdc600055be0d9c7d33bddc",
     "tokens/plattform.css": "9a743c39062873e25178078e8a780bf48a8e05d970b45eb63934e627b3795daf",
-    "tokens/tokens.css": "bf4c503959705f8936d46d63d8f40af5a2e368167840b52446758d2dcc1c3458",
-    "tokens/tokens.ts": "8e39680c1052ee4655327194344ca66d6f5382a933515825ecb1c13e9a24146f"
+    "tokens/tokens.css": "dd5dd73b17e71bb8d3db7ed0e94a3238836074bed137c4a69087b88f1b51add1",
+    "tokens/tokens.ts": "6887f6283f31a79f885d1481c6b36cba1e27036a72dc6745f727ea54eb2f109d"
   }
 }

@@ -33,6 +33,8 @@ En kundeutgave er ikke en Hengsel-side: den har kundens tema i `packages/kundete
 2. Pin ny commit her: `npm run design:hent -- --kilde <sti til innlandet-crm-sync> --commit <sha>`. Skriptet henter filene fra commiten, oppdaterer `packages/hengsel-tokens/designsystem.pin.json` (sha256 per fil) og genererer `tokens.css` og `fonts.css` på nytt.
 3. `npm run build` og `npm test`. Alle fire sidene og design.hengsel.no følger med, siden de bruker de samme variablene.
 
+`npm run design:hent` henter bare Hengsel-delen (N-1): `tokens/` med `hengsel.tokens.json`, `tokens.css`, `fonts.css`, `fonts-fri-liste.css`, `plattform.css` og `tokens.ts`, og `assets/` med logo, fonter, favicon og ikoner; kundetemaet (Sigdal-tokens og -CSS, `assets/logo/kunde`, `assets/fonts/kundetema-sigdal`, TWK Lausanne), resten av `tokens/` og `components/`, `ui_kits/`, `plattform/`, `templates/`, `dokumentasjon/` og `guidelines/` holdes utenfor (lista er konstanten `HENTES` i `scripts/hent-designsystem.mjs`).
+
 Aldri rediger `tokens.css`, `fonts.css` eller filene i `packages/hengsel-tokens/ds/` for hånd.
 
 ## Testene (`npm test`)
