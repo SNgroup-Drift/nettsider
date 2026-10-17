@@ -357,3 +357,9 @@ test("N-4: menyen følger sidekartet 26-001–26-013, og Kommer-sidene (26-011, 
   // Kitet er kopiert inn (ikke importert på tvers av nettsteder)
   for (const f of readdirSync(join(rot, "src"), { recursive: true }).filter((f) => /\.(astro|ts)$/.test(f))) assert.doesNotMatch(les(join("src", f)), /(?:from|import)\s*\(?\s*["'][^"']*(?:sites\/hengsel|\.\.\/\.\.\/\.\.\/hengsel)/, f);
 });
+
+test("N-4b: prislisten har ikke fasitteksten «Support etter første år (forslag)»; vilkårene i tilbud-PDF-en gjelder (Eirik 17.10)", () => {
+  const kode = les("src/scripts/prisliste.ts").replace(/^\s*(\/\*\*|\*).*$/gm, "");
+  assert.doesNotMatch(kode, /Support etter første år/);
+  assert.doesNotMatch(kode, /halveres fra år 2/);
+});
