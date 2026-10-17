@@ -1,0 +1,21 @@
+---
+/**
+ * Kitet (kopi fra N-3): Tekst-flisen (regel 2c): tittel og brødtekst 14/22 i maks 720 px bredde. 1/1 normalt; 1/2 som hjelpetekst ved siden av
+ * et Skjema (får skjemaets høyde). Teksten kommer som `tekst` eller i sporet.
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+interface Props { tittel: string; tekst?: string; bredde?: Bredde; id?: string }
+const { tittel, tekst, bredde = "1/1", id } = Astro.props;
+---
+<Flis bredde={bredde} tittel={tittel} klasse="k-tekstflis" id={id}>
+  <div class="k-brod">
+    {tekst ? <p>{tekst}</p> : <slot />}
+  </div>
+</Flis>
+
+<style>
+  .k-brod { max-width: 720px; line-height: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .k-brod :global(p) { margin: 0; }
+  .k-brod :global(ul) { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .k-brod :global(a) { color: var(--aksent-tekst); }
+</style>

@@ -1,0 +1,33 @@
+---
+/**
+ * Kitet (N-5): Diagram-flisen (regel 2c, flisklasser.md «Diagram»): 1/2, 320, tittel, én graf og én forklaringslinje.
+ * Søylene tegnes som SVG (høyden er data, ikke stil), fargen kommer fra tokens via CSS. Stiplet linje = budsjettet.
+ */
+import Flis from "./Flis.astro";
+interface Props { tittel: string; verdier: { navn: string; verdi: number }[]; linje?: number; forklaring: string; enhet?: string }
+const { tittel, verdier, linje, forklaring, enhet = "" } = Astro.props;
+const maks = Math.max(...verdier.map((v) => v.verdi), linje ?? 0) * 1.05;
+const B = 100 / verdier.length;
+const y = (v: number) => 100 - (v / maks) * 100;
+const beskrivelse = verdier.map((v) => `${v.navn} ${v.verdi}${enhet}`).join(", ") + (linje ? `. Budsjett ${linje}${enhet}.` : "");
+---
+<Flis bredde="1/2" tittel={tittel} klasse="k-diagramflis">
+  <figure class="k-diagram">
+    <div class="k-graf"><svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={beskrivelse}>
+      {verdier.map((v, i) => <rect class="k-soyle" x={i * B + B * 0.08} y={y(v.verdi)} width={B * 0.84} height={100 - y(v.verdi)} rx="0.8" />)}
+      {linje && <line class="k-budsjett" x1="0" x2="100" y1={y(linje)} y2={y(linje)} vector-effect="non-scaling-stroke" />}
+    </svg></div>
+    <div class="k-akse" aria-hidden="true">{verdier.map((v) => <span>{v.navn}</span>)}</div>
+    <figcaption>{forklaring}</figcaption>
+  </figure>
+</Flis>
+
+<style>
+  .k-diagram { flex: 1; min-height: 0; margin: 4px 0 0; display: flex; flex-direction: column; }
+  .k-graf { flex: 1; min-height: 0; position: relative; border-bottom: 1px solid var(--linje); }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .k-soyle { fill: color-mix(in srgb, var(--aksent) 28%, var(--flate-kort)); }
+  .k-budsjett { stroke: var(--tekst-dempet); stroke-width: 1.2; stroke-dasharray: 5 4; }
+  .k-akse { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; text-align: center; color: var(--tekst-dempet); font-size: 14px; line-height: 20px; }
+  figcaption { font-size: 14px; line-height: 20px; color: var(--tekst); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>

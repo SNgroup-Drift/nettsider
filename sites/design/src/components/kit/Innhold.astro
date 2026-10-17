@@ -1,0 +1,25 @@
+---
+/**
+ * Kitet (kopi fra N-3): flaten med radene under toppen. Første rad 24 px under toppen, siste 48 px over bunnen (regel 2d), 24 px mellom
+ * radene (20 på iPad, 16 på telefon). Rammen er 1440 px med 32 px marg (24 på iPad, 16 på telefon), innholdet maks 1280 px og venstrestilt (regel 1).
+ */
+interface Props { klasse?: string }
+const { klasse } = Astro.props;
+---
+<div class:list={["k-innhold", klasse]}>
+  <div class="k-ramme">
+    <div class="k-rader"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .k-innhold { padding-block: 24px 48px; }
+  .k-ramme { max-width: 1440px; margin: 0 auto; padding-inline: 32px; box-sizing: border-box; }
+  .k-rader { max-width: 1280px; display: flex; flex-direction: column; gap: 24px; }
+  @media (min-width: 768px) and (max-width: 1199.98px) { .k-ramme { padding-inline: 24px; } .k-rader { gap: 20px; } }
+  @media (max-width: 767.98px) { .k-innhold { padding-block: 16px 48px; } .k-ramme { padding-inline: 16px; } .k-rader { gap: 16px; } }
+</style>
+
+<script>
+  import "./kit";
+</script>

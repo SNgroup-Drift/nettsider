@@ -1,0 +1,37 @@
+---
+/**
+ * Kitet: toppen på en mønsterside, etter «Rammen» i sidekartet 29-001–29-006 (29 Felles): tittel 32 px med undertekst, på sideflaten,
+ * innholdet maks 1280 px i rammen. Sporet «pille» står rett etter tittelen (regel 3). Sporet «faner» er raden under (regel 8).
+ * N-3s Sidetopp (hengsel.no, 48 px på kortflaten) er tilpasset 29-rammen her.
+ */
+interface Props { tittel: string; undertekst?: string; nummer?: string }
+const { tittel, undertekst, nummer } = Astro.props;
+---
+<div class="k-sidetopp">
+  <div class="k-ramme">
+    <div class="k-inn">
+      {nummer && <p class="k-nummer">{nummer}</p>}
+      <div class="k-tittelrad">
+        <h1 class="k-tittel">{tittel}</h1>
+        <slot name="pille" />
+      </div>
+      {undertekst && <p class="k-undertekst">{undertekst}</p>}
+    </div>
+    <slot name="faner" />
+  </div>
+</div>
+
+<style>
+  .k-ramme { max-width: 1440px; margin: 0 auto; padding-inline: 32px; box-sizing: border-box; }
+  .k-inn { max-width: 1280px; padding-top: 32px; display: flex; flex-direction: column; gap: 4px; }
+  .k-nummer { font-size: 12px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst-dempet); font-variant-numeric: tabular-nums; }
+  .k-tittelrad { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+  .k-tittel { font-size: 32px; line-height: 40px; font-weight: var(--skrift-vekt-fet); letter-spacing: -0.02em; text-wrap: balance; }
+  .k-undertekst { max-width: 720px; font-size: 14px; line-height: 22px; color: var(--tekst-dempet); }
+  @media (min-width: 768px) and (max-width: 1199.98px) { .k-ramme { padding-inline: 24px; } }
+  @media (max-width: 767.98px) {
+    .k-ramme { padding-inline: 16px; }
+    .k-inn { padding-top: 20px; }
+    .k-tittel { font-size: 28px; line-height: 34px; }
+  }
+</style>

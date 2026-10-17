@@ -1,0 +1,23 @@
+---
+/**
+ * Kitet (N-5): Tegning-flisen (regel 2c, flisklasser.md «Tegning»): 1/1, 480 (også på telefon), bildeflaten fyller flisen og én linje 14 under.
+ * Stripemønsteret er plassholderen for tegninger og bilder (designsystemets README, «Bakgrunner»), laget av tokens.
+ */
+import Flis from "./Flis.astro";
+interface Props { tittel: string; linje: string; plassholder?: string }
+const { tittel, linje, plassholder = "tegning" } = Astro.props;
+---
+<Flis bredde="1/1" tittel={tittel} klasse="k-tegningflis">
+  <figure class="k-tegning">
+    <div class="k-flate" role="img" aria-label={`Plassholder: ${plassholder}`}><code>{plassholder}</code></div>
+    <figcaption title={linje}>{linje}</figcaption>
+  </figure>
+</Flis>
+
+<style>
+  .k-tegning { flex: 1; min-height: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 4px; }
+  .k-flate { flex: 1; min-height: 0; display: grid; place-items: center; border: 1px solid var(--linje); border-radius: var(--radius-kort-lite);
+    background: repeating-linear-gradient(-45deg, var(--flate-senket) 0 12px, var(--flate-kort) 12px 24px); }
+  code { padding: 2px 8px; background: var(--flate-kort); color: var(--tekst-dempet); font-size: 12px; }
+  figcaption { font-size: 14px; line-height: 20px; color: var(--tekst); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>

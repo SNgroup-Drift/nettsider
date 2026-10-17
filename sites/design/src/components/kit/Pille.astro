@@ -1,0 +1,22 @@
+---
+/**
+ * Kitet (kopi fra N-3): statuspillen fra CRM-flisene. Tonene er de sju statusrollene i den delte token-fila (designsystemets nøkler):
+ * ny, pagar, venter, sannsynlig, ferdig, advarsel og feil. N-3 hadde fem (rød brukes ikke på hengsel.no); mønstersidene viser alle.
+ * Fargen betyr det samme overalt (regel 9): feil = må gjøres nå, advarsel = snart, ferdig = ok. Alltid med tekst.
+ */
+export type Tone = "ny" | "pagar" | "venter" | "sannsynlig" | "ferdig" | "advarsel" | "feil";
+interface Props { tone?: Tone }
+const { tone = "venter" } = Astro.props;
+---
+<span class:list={["k-pille", tone]} data-tone={tone}><slot /></span>
+
+<style>
+  .k-pille { display: inline-flex; align-items: center; align-self: flex-start; height: 20px; padding: 0 8px; border-radius: var(--radius-pille); border: 1px solid; box-sizing: border-box; font-size: 12px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .ny { color: var(--status-ny-fg); background: var(--status-ny-bg); border-color: var(--status-ny-kant); }
+  .pagar { color: var(--status-pagar-fg); background: var(--status-pagar-bg); border-color: var(--status-pagar-kant); }
+  .venter { color: var(--status-venter-fg); background: var(--status-venter-bg); border-color: var(--status-venter-kant); }
+  .sannsynlig { color: var(--status-sannsynlig-fg); background: var(--status-sannsynlig-bg); border-color: var(--status-sannsynlig-kant); }
+  .ferdig { color: var(--status-ferdig-fg); background: var(--status-ferdig-bg); border-color: var(--status-ferdig-kant); }
+  .advarsel { color: var(--status-advarsel-fg); background: var(--status-advarsel-bg); border-color: var(--status-advarsel-kant); }
+  .feil { color: var(--status-feil-fg); background: var(--status-feil-bg); border-color: var(--status-feil-kant); }
+</style>

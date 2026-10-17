@@ -1,0 +1,23 @@
+---
+/**
+ * Kitet (kopi fra N-3): én rad med fliser. Regel 2b og 2d: 12 kolonner med 24 px mellomrom, raden fyller alltid hele bredden, og hele raden
+ * har én høyde fra skalaen 120/320/480/640. Fliser i raden får samme høyde (grid-auto-rows). «auto» bare der rapporten sier hvorfor
+ * (N-5: regelflisene med sitater fra designsystemet). iPad: 20 px mellomrom. Telefon (under 768 px): alt 1/1, 16 px mellomrom.
+ */
+export type Hoyde = 120 | 320 | 480 | 640 | "auto";
+interface Props { hoyde: Hoyde }
+const { hoyde } = Astro.props;
+---
+<div class="k-rad" data-hoyde={hoyde}><slot /></div>
+
+<style>
+  .k-rad { --h: auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: minmax(var(--h), auto); gap: 24px; }
+  .k-rad[data-hoyde="120"] { --h: 120px; }
+  .k-rad[data-hoyde="320"] { --h: 320px; }
+  .k-rad[data-hoyde="480"] { --h: 480px; }
+  .k-rad[data-hoyde="640"] { --h: 640px; }
+  /* 120-raden (Tall, Status, Steg): litt mindre luft over og under, så tittel, pille og setning går opp i 120 */
+  .k-rad[data-hoyde="120"] > :global(.k-flis) { padding-block: 18px; }
+  @media (min-width: 768px) and (max-width: 1199.98px) { .k-rad { gap: 20px; } }
+  @media (max-width: 767.98px) { .k-rad { grid-template-columns: minmax(0, 1fr); gap: 16px; } }
+</style>
