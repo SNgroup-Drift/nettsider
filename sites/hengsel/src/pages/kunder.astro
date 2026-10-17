@@ -1,6 +1,15 @@
 ---
 /** Sidekartet 25-009 Kunder og referanser (S-68, KOMMER): plassholder til teksten kommer. Innholdet i content/kommer.ts. */
 import KommerSide from "../components/kit/KommerSide.astro";
+import Enhet from "../components/Enhet.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import { KUNDER } from "../content/kommer";
+import { STILL_KUNDER as S } from "../content/simuleringer";
 ---
-<KommerSide side={KUNDER} aktiv="kunder" />
+<!-- N-6: stillramme, PC og iPhone side om side (content/simuleringer.ts) -->
+<KommerSide side={KUNDER} aktiv="kunder">
+  <Simuleringsflis id="i-bruk" tittel="Hengsel i bruk">
+    <Enhet type="display" bilde={S.display.bilde} alt={S.display.alt} />
+    <Enhet type="iphone" bilde={S.iphone.bilde} alt={S.iphone.alt} utenStatus symboler={false} />
+  </Simuleringsflis>
+</KommerSide>

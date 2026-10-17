@@ -1,0 +1,29 @@
+---
+/**
+ * N-6: «Tre enheter». Studio Display bak, iPad foran til venstre og iPhone foran til høyre, med samme flyt på alle tre (Min dag → Ordre → Kontrollmål).
+ * De tre bytter i takt (scripts/simulering.ts, data-sim-gruppe) og deler ett sett stegmerker under komposisjonen. Bildene kommer fra biblioteket.
+ */
+import Simulering from "./Simulering.astro";
+import Stegmerker from "./Stegmerker.astro";
+import { TRE_ENHETER, TRE_STEG } from "../content/simuleringer";
+interface Props { forst?: boolean; class?: string }
+const { forst = false, class: klasse } = Astro.props;
+---
+<div class:list={["tre", klasse]} data-sim-gruppe>
+  <div class="scene">
+    <div class="pc"><Simulering type="display" steg={TRE_ENHETER.display} forst={forst} merker={false} etikett="Studio Display" /></div>
+    <div class="ipad"><Simulering type="ipad" steg={TRE_ENHETER.ipad} merker={false} etikett="iPad" /></div>
+    <div class="iphone"><Simulering type="iphone" steg={TRE_ENHETER.iphone} merker={false} etikett="iPhone" /></div>
+  </div>
+  <Stegmerker navn={TRE_STEG} etikett="Steg: samme flyt på Studio Display, iPad og iPhone" />
+</div>
+
+<style>
+  .tre { width: 100%; max-width: 960px; margin-inline: auto; }
+  /* Studio Display bak, iPad foran til venstre og iPhone foran til høyre; begge henger litt under skjermen */
+  .scene { position: relative; width: 100%; padding-bottom: 9%; }
+  .pc { width: 84%; margin-inline: auto; }
+  .ipad { position: absolute; left: 0; bottom: 0; width: 38%; }
+  .iphone { position: absolute; right: 0; bottom: 0; width: 16%; }
+  @media (max-width: 959px) { .scene { padding-bottom: 12%; } .ipad { width: 40%; } .iphone { width: 19%; } }
+</style>

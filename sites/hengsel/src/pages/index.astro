@@ -4,6 +4,7 @@
  * (N-3c: Studio Display med Min dag som HTML i CrmSkjerm, iPhone med I dag fra biblioteket nede til høyre), og tre rader i nettside-kitet:
  *  rad 1 (120) Status 1/3 ×3 · rad 2 (480) Tabell «En dag i butikken» (6 rader) · rad 3 (320) Liste «Bygget for» 1/2 + Tekst «Film» 1/2.
  * Tekster og data i content/forside.ts.
+ * N-6: «Fra tilbud til ferdig montert» (simulering på Studio Display, content/simuleringer.ts) og «Tre enheter» under raden «En dag i butikken».
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -15,6 +16,10 @@ import Statusflis from "../components/kit/Statusflis.astro";
 import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
 import Listeflis from "../components/kit/Listeflis.astro";
 import Tekstflis from "../components/kit/Tekstflis.astro";
+import Simulering from "../components/Simulering.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
+import TreEnheter from "../components/TreEnheter.astro";
+import { FORSIDE_FLYT } from "../content/simuleringer";
 import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/forside";
 ---
 <Side title="Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker" description={HERO.lede} aktiv="">
@@ -34,6 +39,12 @@ import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/fo
       <Rad hoyde={tabellHoyde(EN_DAG.rader.length)}>
         <Tabellflis id="en-dag" tittel={EN_DAG.tittel} kolonner={EN_DAG.kolonner} rader={EN_DAG.rader} tall />
       </Rad>
+      <Simuleringsflis id="fra-tilbud-til-montert" tittel="Fra tilbud til ferdig montert" tekst="Slik går en jobb gjennom Hengsel CRM, fra tilbud til etterkalkyle.">
+        <Simulering type="display" steg={FORSIDE_FLYT} etikett="Fra tilbud til ferdig montert" />
+      </Simuleringsflis>
+      <Simuleringsflis id="tre-enheter" tittel="Samme ordre på alle enheter" tekst="Kontoret på Studio Display, butikken på iPad og selgeren på iPhone ser den samme ordren.">
+        <TreEnheter />
+      </Simuleringsflis>
       <Rad hoyde={320}>
         <Listeflis id="bygget-for" tittel={BYGGET_FOR.tittel} rader={BYGGET_FOR.rader} />
         <Tekstflis bredde="1/2" tittel={FILM.tittel} tekst={FILM.tekst} />

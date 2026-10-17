@@ -4,7 +4,7 @@
  *  rad 1 (120) Status 1/3 ×3 (Uten dekning, KS, Punkter) · rad 2 (480) Tabell «Gjennom dagen» (6 steg) ·
  *  rad 3 (480) Tekst «Virker uten dekning» 1/2 + Tegning «Hengsel Ute, I dag» 1/2 (iPhone-ramme, skjermbildet fra biblioteket på bilder.hengsel.no).
  * N-3c: I dag på iPhone (app/idag-lys.webp fra biblioteket, som første steg i toppen før N-3) til høyre i toppen.
- * Tekster i content/ute.ts.
+ * N-6: simuleringer (iPhone, iPad) og «uten nett» (stillramme) etter tegningen, content/simuleringer.ts. Tekster i content/ute.ts.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -15,6 +15,9 @@ import Flis from "../components/kit/Flis.astro";
 import Statusflis from "../components/kit/Statusflis.astro";
 import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
 import Tekstflis from "../components/kit/Tekstflis.astro";
+import Simulering from "../components/Simulering.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
+import { UTE_IPAD, UTE_IPHONE, UTE_UTEN_NETT } from "../content/simuleringer";
 import { GJENNOM_DAGEN, HERO, STATUS, STEG, TEGNING, UTEN_NETT } from "../content/ute";
 const rader = STEG.map((s) => [s.tittel, s.tekst]);
 ---
@@ -44,6 +47,13 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
           </div>
         </Flis>
       </Rad>
+      <Simuleringsflis id="se-ute" tittel="Se Hengsel Ute i bruk" tekst="En dag på jobb: fra I dag, via egenkontroll og avvik, til ferdigmelding. Bildeverktøyet på iPad.">
+        <Simulering type="iphone" steg={UTE_IPHONE} etikett="Hengsel Ute på iPhone" />
+        <Simulering type="ipad" steg={UTE_IPAD} etikett="Bildeverktøyet i Hengsel Ute på iPad" />
+      </Simuleringsflis>
+      <Simuleringsflis id="uten-nett" tittel={UTEN_NETT.eyebrow} tekst="Jobben virker uten dekning. Det montøren sender inn, ligger i køen på telefonen og går av seg selv når nettet er tilbake.">
+        <Enhet type="iphone" bilde={UTE_UTEN_NETT.bilde} alt={UTE_UTEN_NETT.alt} symboler={false} />
+      </Simuleringsflis>
     </Innhold>
   </main>
 </Side>

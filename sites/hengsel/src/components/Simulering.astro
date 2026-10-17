@@ -1,0 +1,63 @@
+---
+/**
+ * N-6 (Eirik 18.10): en «simulering» – en kort, automatisk bildeserie i en enhetsramme (Enhet.astro: Studio Display, iPad eller iPhone) som viser en flyt
+ * steg for steg, som en stille demo. Bildene hentes fra biblioteket på bilder.hengsel.no (K-233, Skjermbilde.astro); aldri lokale app-bilder.
+ *
+ *  - Myk overgang (crossfade) mellom bildene, ca. 3,5 s per bilde, og stegmerker under rammen som kan trykkes (scripts/simulering.ts).
+ *  - Går bare når rammen er synlig. prefers-reduced-motion: første bilde står, merkene bytter for hånd. Uten skript står første bilde.
+ *  - Alle bildene har bredde og høyde fra manifestet (ingen CLS). Bare første bilde kan lastes med en gang (forst); resten er lazy
+ *    og hentes når rammen kommer til syne.
+ *  - Et steg uten bilde i manifestet hoppes over. Mangler alle, vises «Skjermbilde kommer» (K-233).
+ *  - Ingen style-attributter (CSP style-src 'self'); bare tokens fra tokens.css, lys modus.
+ */
+import Enhet from "./Enhet.astro";
+import Skjermbilde from "./Skjermbilde.astro";
+import Stegmerker from "./Stegmerker.astro";
+import { finnes } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+import { kundeFra } from "../kunde";
+import type { Steg } from "../content/simuleringer";
+
+interface Props {
+  type: "display" | "ipad" | "iphone";
+  steg: readonly Steg[];
+  /** Det øverste bildet på siden: første steg lastes med en gang */
+  forst?: boolean;
+  /** false: stegmerkene tegnes ikke her (TreEnheter har ett felles sett) */
+  merker?: boolean;
+  /** Beskrivelse av flyten, for skjermlesere */
+  etikett?: string;
+  class?: string;
+}
+const { type, steg, forst = false, merker = true, etikett, class: klasse } = Astro.props;
+const tema = kundeFra(Astro.url.pathname)?.nokkel ?? "hengsel";
+const med = steg.filter(([bilde]) => finnes(tema, bilde));
+---
+<figure class:list={["sim", type, klasse]} data-simulering aria-label={etikett}>
+  {med.length === 0 && steg.length > 0 ? (
+    <Enhet type={type} bilde={steg[0][0]} alt={steg[0][2]} utenStatus symboler={false} />
+  ) : (
+    <Enhet type={type} serie symboler={false}>
+      <div class="serie">
+        {med.map(([bilde, , alt], i) => (
+          <div class:list={["steg", { aktiv: i === 0 }]} data-steg aria-hidden={i === 0 ? "false" : "true"}>
+            <Skjermbilde bilde={bilde} alt={alt} forst={forst && i === 0} topp={type !== "iphone"} />
+          </div>
+        ))}
+      </div>
+    </Enhet>
+  )}
+  {merker && <Stegmerker navn={med.map(([, navn]) => navn)} etikett={etikett ? `Steg: ${etikett}` : undefined} />}
+</figure>
+
+<script>
+  import "../scripts/simulering";
+</script>
+
+<style>
+  .sim { margin: 0; min-width: 0; width: 100%; }
+  .serie { position: absolute; inset: 0; }
+  .steg { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+  .steg.aktiv { opacity: 1; }
+  .steg :global(picture) { display: block; width: 100%; height: 100%; }
+  @media (prefers-reduced-motion: reduce) { .steg { transition: none; } }
+</style>
