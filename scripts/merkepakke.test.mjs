@@ -2,7 +2,8 @@
  * K-231: merkepakke v2 (design/handoff/hengsel_merke_v2) er pinnet med sha256 og brukt riktig på sidene.
  *  a) hver utplassert fil (favicon, motion, delingsbilder, «levert av», Sigdal-merket) er byte-lik kilden i pakken og pinnen, og hver fil i ds fra pakken er lik pakkefila
  *  b) og:image: hver bygd side på hengsel.no, vis og design peker på et delingsbilde som finnes, er PNG, 1200 × 630, under 1 MB, med riktig bilde for riktig side
- *  c) favicon med hvit flis (ico og SVG) på alle fire Hengsel-sidene, motion i 1080 × 1080 og 1080 × 1920 på hengsel.no, «Levert av Hengsel» i kundeportal-mock og vis-rom
+ *  c) favicon med hvit flis (ico og SVG) på alle fire Hengsel-sidene, motion i 1080 × 1080 og 1080 × 1920 på hengsel.no, «Levert av Hengsel» i vis-rommene
+ *     (N-3: /ute, /apptest og /kundeportal følger sidekartet 25-003, 25-012 og 25-004 og har ikke lenger motion eller portal-mocken; sider som bruker dem, sjekkes)
  *  d) /kunde/sigdal har «Sigdal CRM · levert av Hengsel» i toppen (Warm Black), og Off White-utgaven finnes for mørke flater
  * Kjør npm run build først (manglende dist er feil).
  */
@@ -122,22 +123,28 @@ test("c) motion i 1080 × 1080 og 1080 × 1920 (MP4, WebM og plakat) fra pakken 
     assert.deepEqual(png(readFileSync(join(d, `media/ute-motion-${s}-plakat.png`))), { b, h });
   }
   assert.ok(!existsSync(join(d, "media", "ute-motion-1080x1080-plakat.webp")), "gammel webp-plakat");
-  for (const side of ["ute.html", "apptest.html"]) {
-    const t = readFileSync(join(d, side), "utf8");
-    assert.match(t, /poster="\/media\/ute-motion-1080x1080-plakat\.png"/, `${side}: plakat`);
-    assert.match(t, /data-webm="\/media\/ute-motion-1080x1080\.webm" data-mp4="\/media\/ute-motion-1080x1080\.mp4"/, `${side}: kilder`);
+  // N-3: sidekartet (25-003, 25-012) har ikke motion på /ute og /apptest; sider som bruker UteMotion, peker på filene fra pakken
+  for (const f of alle(d).filter((x) => x.endsWith(".html"))) {
+    const t = readFileSync(f, "utf8");
+    for (const m of t.matchAll(/<video[^>]*data-webm="[^"]*"[^>]*>/g)) {
+      assert.match(m[0], /poster="\/media\/ute-motion-(1080x1080|1080x1920)-plakat\.png"/, `${relative(d, f)}: plakat`);
+      assert.match(m[0], /data-webm="\/media\/ute-motion-(1080x1080|1080x1920)\.webm" data-mp4="\/media\/ute-motion-\1\.mp4"/, `${relative(d, f)}: kilder`);
+    }
   }
   const komp = readFileSync(join(rot, "sites", "hengsel", "src", "components", "UteMotion.astro"), "utf8");
   assert.ok(/1080x1920/.test(komp) && /staende/.test(komp), "UteMotion skal støtte det stående formatet (1080 × 1920)");
 });
 
-test("c) «Levert av Hengsel» (lys) i kundeportal-mocken og i alle vis-rommene, ikke «Hengsel Levering»", () => {
+test("c) «Levert av Hengsel» (lys) i alle vis-rommene og der hengsel.no bruker det, ikke «Hengsel Levering»", () => {
   const lys = sha(readFileSync(join(pakke, "5-logoer-ikoner", "levert-av-hengsel-lys.svg")));
   assert.equal(sha(readFileSync(join(dist("hengsel"), "logo", "levert-av-hengsel-lys.svg"))), lys);
   assert.equal(sha(readFileSync(join(dist("vis"), "assets", "logo", "levert-av-hengsel-lys.svg"))), lys);
-  const portal = readFileSync(join(dist("hengsel"), "kundeportal.html"), "utf8");
-  assert.match(portal, /src="\/logo\/levert-av-hengsel-lys\.svg" alt="Levert av Hengsel"/);
-  assert.ok(!/Hengsel Levering|hengsel-levering/.test(portal), "kundeportal-mocken har erstatningen «Hengsel Levering» fra K-212 runde 2");
+  // N-3: /kundeportal følger sidekartet 25-004 (to tabeller) og har ikke portal-mocken lenger; der hengsel.no viser merket, er det riktig fil og tekst
+  for (const f of alle(dist("hengsel")).filter((x) => x.endsWith(".html"))) {
+    const t = readFileSync(f, "utf8");
+    assert.ok(!/Hengsel Levering|hengsel-levering/.test(t), `${relative(dist("hengsel"), f)}: erstatningen «Hengsel Levering» fra K-212 runde 2`);
+    for (const m of t.matchAll(/<img[^>]*src="\/logo\/levert-av-hengsel[^>]*>/g)) assert.match(m[0], /src="\/logo\/levert-av-hengsel-lys\.svg" alt="Levert av Hengsel"/, relative(dist("hengsel"), f));
+  }
   const vis = dist("vis");
   let rom = 0;
   for (const f of alle(vis).filter((x) => x.endsWith(".html"))) {

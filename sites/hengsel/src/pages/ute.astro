@@ -1,15 +1,21 @@
 ---
 /**
- * /ute: montørappen. Fasit: docs/design/hengsel/Ute.dc.html, tekstene ordrett fra LES-MEG.md.
- * Seks steg (faner med ARIA, piltaster og Forrige/Neste, scripts/ute.ts). Uten skript står første steg åpent.
- * Alle steg ligger i samme ramme (like store), så stegbytte gir ingen layoutskift.
+ * /ute, sidekartet 25-003 (S-68): toppen og tre rader i nettside-kitet:
+ *  rad 1 (120) Status 1/3 ×3 (Uten dekning, KS, Punkter) · rad 2 (480) Tabell «Gjennom dagen» (6 steg) ·
+ *  rad 3 (480) Tekst «Virker uten dekning» 1/2 + Tegning «Hengsel Ute, I dag» 1/2 (iPhone-ramme, skjermbildet fra biblioteket på bilder.hengsel.no).
+ * Tekster i content/ute.ts.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
-import UteMotion from "../components/UteMotion.astro";
-import { HERO, STEG, STEG_ARIA, FORRIGE, NESTE, UTEN_NETT, BLI_TESTER, APPTEST_URL } from "../content/ute";
-
-const n = STEG.length;
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Flis from "../components/kit/Flis.astro";
+import Statusflis from "../components/kit/Statusflis.astro";
+import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
+import Tekstflis from "../components/kit/Tekstflis.astro";
+import { GJENNOM_DAGEN, HERO, STATUS, STEG, TEGNING, UTEN_NETT } from "../content/ute";
+const rader = STEG.map((s) => [s.tittel, s.tekst]);
 ---
 <Side
   title="Hengsel Ute – montørappen for iPhone og iPad"
@@ -17,137 +23,29 @@ const n = STEG.length;
   aktiv="ute"
 >
   <main id="innhold">
-    <section class="sek ute-hero">
-      <div class="h-innhold ute-rutenett">
-        <div class="ute-venstre">
-          <div class="ute-hode">
-            <picture>
-              <img class="ute-logo" src="/logo/hengsel-ute-aksent-lys.svg" alt={HERO.logoAlt} width="570" height="100" fetchpriority="high" />
-            </picture>
-            <h1>{HERO.tittel}</h1>
-            <p class="lede">{HERO.ingress}</p>
+    <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress} />
+    <Innhold>
+      <Rad hoyde={120}>
+        {STATUS.map(([t, p, tone, s]) => <Statusflis tittel={t} pille={p} tone={tone} tekst={s} />)}
+      </Rad>
+      <Rad hoyde={tabellHoyde(rader.length)}>
+        <Tabellflis id="gjennom-dagen" tittel={GJENNOM_DAGEN.tittel} kolonner={GJENNOM_DAGEN.kolonner} rader={rader} />
+      </Rad>
+      <Rad hoyde={480}>
+        <Tekstflis bredde="1/2" tittel={UTEN_NETT.eyebrow}>
+          <p>{UTEN_NETT.tittel} {UTEN_NETT.tekst}</p>
+        </Tekstflis>
+        <Flis bredde="1/2" tittel={TEGNING.tittel} klasse="tegningflis">
+          <div class="tegning">
+            <div class="telefon"><Enhet type="iphone" bilde={TEGNING.bilde} alt={TEGNING.alt} /></div>
           </div>
-          <div class="steg" role="tablist" aria-label={STEG_ARIA} aria-orientation="vertical" data-ute>
-            {STEG.map((s, i) => (
-              <button type="button" role="tab" id={`ute-fane-${s.nokkel}`} aria-controls={`ute-panel-${s.nokkel}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} class="steg-knapp">
-                <span class="nr">{i + 1}</span>
-                <span class="tekst"><b>{s.tittel}</b><span>{s.tekst}</span></span>
-              </button>
-            ))}
-          </div>
-        </div>
-        <div class="ute-hoyre">
-          <div class="telefon" data-ute-paneler>
-            {STEG.map((s, i) => (
-              <div role="tabpanel" id={`ute-panel-${s.nokkel}`} aria-labelledby={`ute-fane-${s.nokkel}`} hidden={i !== 0} data-panel>
-                <Enhet type="iphone" bilde={`app/${s.nokkel}-lys.webp`} alt={s.alt} forst={i === 0} symboler={i === 0} />
-              </div>
-            ))}
-          </div>
-          <div class="bla" data-ute-bla>
-            <button type="button" class="rund" data-forrige aria-label={FORRIGE} disabled>‹</button>
-            <span class="teller" aria-live="polite" data-teller>{`1 av ${n}`}</span>
-            <button type="button" class="rund" data-neste aria-label={NESTE}>›</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek">
-      <div class="h-innhold nett">
-        <div class="nett-bilde">
-          <Enhet type="iphone" bilde={UTEN_NETT.bilde} alt={UTEN_NETT.alt} symboler={false} />
-        </div>
-        <div class="nett-tekst">
-          <span class="eyebrow">{UTEN_NETT.eyebrow}</span>
-          <h2>{UTEN_NETT.tittel}</h2>
-          <p class="dempet">{UTEN_NETT.tekst}</p>
-          <div class="card fra-appen">
-            <span class="eyebrow">{UTEN_NETT.fraAppen}</span>
-            <b>{UTEN_NETT.venter}</b>
-            <span class="dempet">{UTEN_NETT.sitat}</span>
-          </div>
-          <ul class="piler">
-            {UTEN_NETT.punkter.map((t) => <li><span class="pil" aria-hidden="true">→</span><span>{t}</span></li>)}
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek flate bli-tester">
-      <div class="h-innhold tester">
-        <div class="tester-tekst">
-          <UteMotion class="tester-motion" />
-          <div class="tester-ord">
-            <h2>{BLI_TESTER.tittel}</h2>
-            <p class="dempet">{BLI_TESTER.tekst}</p>
-          </div>
-        </div>
-        <div class="tester-knapper">
-          <a class="btn primary" href={APPTEST_URL}>{BLI_TESTER.knapp}</a>
-          <a class="btn" href={APPTEST_URL}>{BLI_TESTER.appStore}</a>
-        </div>
-      </div>
-    </section>
+        </Flis>
+      </Rad>
+    </Innhold>
   </main>
 </Side>
 
-<script>
-  import "../scripts/ute";
-</script>
-
 <style>
-  .dempet { color: var(--muted); margin: 0; }
-  .ute-hero { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); }
-  .ute-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(32px, 6vw, 80px); align-items: start; }
-  .ute-venstre { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
-  .ute-hode { display: flex; flex-direction: column; gap: 16px; }
-  .ute-hode h1 { font-size: clamp(2.5rem, 5vw, 4.2rem); }
-  .ute-hode .lede { font-size: 1.18rem; max-width: 52ch; }
-  .ute-logo { height: 34px; width: auto; align-self: flex-start; display: block; }
-
-  .steg { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
-  .steg-knapp {
-    display: flex; gap: 16px; align-items: flex-start; width: 100%; padding: 14px 12px; min-height: 44px; border: 0; border-bottom: 1px solid var(--line);
-    background: transparent; color: var(--ink); font: inherit; text-align: left; cursor: pointer; border-radius: 0; box-sizing: border-box;
-  }
-  .steg-knapp:hover { background: var(--surface-soft); }
-  .steg-knapp[aria-selected="true"] { background: var(--surface-highlight); box-shadow: inset 3px 0 0 var(--accent); }
-  .steg-knapp:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 0; }
-  .steg-knapp[aria-selected="true"]:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--accent); }
-  .nr {
-    width: 28px; height: 28px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; margin-top: 1px;
-    background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box;
-  }
-  .steg-knapp[aria-selected="true"] .nr { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-  .tekst { display: flex; flex-direction: column; gap: 2px; }
-  .tekst b { font-weight: 600; font-size: 1.05rem; }
-  .tekst span { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
-
-  .ute-hoyre { display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0; }
-  .telefon { width: 100%; max-width: 400px; }
-  .bla { display: flex; gap: 8px; align-items: center; }
-  .rund { width: 44px; height: 44px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 18px; line-height: 1; cursor: pointer; padding: 0; }
-  .rund:hover:not(:disabled) { border-color: var(--ink); }
-  .rund:disabled { opacity: 0.45; cursor: not-allowed; }
-  .teller { font-size: 0.92rem; color: var(--muted); min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
-
-
-  .nett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
-  .nett-bilde { width: 100%; max-width: 340px; justify-self: center; }
-  .nett-tekst { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-  .nett-tekst p { font-size: 1.05rem; }
-  .fra-appen { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; }
-  .fra-appen b { font-size: 1.05rem; }
-  .piler { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .piler li { display: flex; gap: 12px; }
-  .pil { color: var(--accent); }
-
-  .bli-tester { padding-block: clamp(48px, 6vw, 80px); }
-  .tester { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 48px; }
-  .tester-tekst { display: flex; gap: 20px; align-items: center; max-width: 640px; }
-  .tester-tekst :global(.tester-motion) { width: 120px; flex: none; }
-  .tester-ord { display: flex; flex-direction: column; gap: 6px; }
-  .tester-ord h2 { font-size: clamp(1.75rem, 3vw, 2.4rem); line-height: 1.1; }
-  .tester-knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tegning { flex: 1; min-height: 0; display: grid; place-items: center; padding: 16px; border-radius: var(--radius-kort-lite); background: var(--flate-side); overflow: hidden; }
+  .telefon { width: 168px; }
 </style>

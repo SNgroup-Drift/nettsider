@@ -1,0 +1,19 @@
+---
+/**
+ * Nettside-kitet: statuspillen fra CRM-flisene (S-68). Tonene er statusrollene i den delte token-fila: ny (blå), pagar (lilla),
+ * ferdig (grønn), advarsel (oransje), venter (grå). Fargen betyr det samme overalt (regel 9); rød (feil) brukes ikke på nettsidene.
+ */
+export type Tone = "ny" | "pagar" | "ferdig" | "advarsel" | "venter";
+interface Props { tone?: Tone }
+const { tone = "venter" } = Astro.props;
+---
+<span class:list={["pille", tone]}><slot /></span>
+
+<style>
+  .pille { display: inline-flex; align-items: center; align-self: flex-start; height: 20px; padding: 0 8px; border-radius: var(--radius-pille); border: 1px solid; box-sizing: border-box; font-size: 12px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); white-space: nowrap; }
+  .ny { color: var(--status-ny-fg); background: var(--status-ny-bg); border-color: var(--status-ny-kant); }
+  .pagar { color: var(--status-pagar-fg); background: var(--status-pagar-bg); border-color: var(--status-pagar-kant); }
+  .ferdig { color: var(--status-ferdig-fg); background: var(--status-ferdig-bg); border-color: var(--status-ferdig-kant); }
+  .advarsel { color: var(--status-advarsel-fg); background: var(--status-advarsel-bg); border-color: var(--status-advarsel-kant); }
+  .venter { color: var(--status-venter-fg); background: var(--status-venter-bg); border-color: var(--status-venter-kant); }
+</style>

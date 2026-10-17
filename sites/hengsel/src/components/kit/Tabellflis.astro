@@ -1,0 +1,107 @@
+---
+/**
+ * Nettside-kitet: Tabell kompakt (regel 2c/2d): tittel med teller, søk i tittelfeltet, rader 40 px, uten bunnfelt. Høyden velges etter
+ * antall rader (≤5 = 320, ≤9 = 480; se tabellHoyde) og settes på raden (Rad.astro). Tekst som ikke får plass kuttes med … og står hel i tooltip.
+ * Telefon: første og siste kolonne; raden åpner resten (kolonnene imellom og eventuell `mer`-tekst) under seg. `mer` åpnes også på PC.
+ * Søket og radene som åpnes styres av scripts/kit.ts. Uten skript står det som åpnes, åpent på telefon.
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+import Sok from "./Sok.astro";
+
+export interface TabellRad { celler: string[]; /** Mer om raden: vises når raden åpnes */ mer?: string }
+/** Trinnet i høydeskalaen for en Tabell kompakt med n rader (regel 2d, Eirik 17.10 kl. 13.36) */
+export const tabellHoyde = (n: number) => (n <= 5 ? 320 : n <= 9 ? 480 : 640);
+
+interface Props {
+  id: string;
+  tittel: string;
+  kolonner: string[];
+  rader: (string[] | TabellRad)[];
+  bredde?: Bredde;
+  /** Første kolonne med tabelltall (klokkeslett) */
+  tall?: boolean;
+}
+const { id, tittel, kolonner, rader, bredde = "1/1", tall = false } = Astro.props;
+const n = kolonner.length;
+const liste: TabellRad[] = rader.map((r) => (Array.isArray(r) ? { celler: r } : r));
+const midt = (i: number) => i > 0 && i < n - 1;
+---
+<Flis id={id} bredde={bredde} tittel={tittel} teller={liste.length} klasse="tabellflis">
+  <Sok slot="verktoy" hva={tittel.replace(/\.$/, "")} />
+  <table class:list={["tabell", `n${n}`, { tall }]} data-tabell>
+    <thead>
+      <tr>{kolonner.map((k, i) => <th scope="col" class:list={{ midt: midt(i) }}>{k}</th>)}</tr>
+    </thead>
+    <tbody>
+      {liste.map((r, ri) => {
+        const harMidt = n > 2;
+        const apnes = harMidt || !!r.mer;
+        const detId = `${id}-rad-${ri}`;
+        return (
+          <Fragment>
+            <tr data-rad data-bare-tlf={apnes && !r.mer ? "" : undefined}>
+              {r.celler.map((c, i) => (i === 0
+                ? <th scope="row">{apnes
+                    ? <button type="button" class="apne" aria-expanded="false" aria-controls={detId} data-apne title={c}><span class="celle">{c}</span><svg class="pil" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M6 8l4 4 4-4" /></svg></button>
+                    : <span class="celle" title={c}>{c}</span>}</th>
+                : <td class:list={{ midt: midt(i) }}><span class="celle" title={c}>{c}</span></td>))}
+            </tr>
+            {apnes && (
+              <tr class:list={["detalj", { "bare-tlf": !r.mer }]} id={detId} data-detalj hidden>
+                <td colspan={n}>
+                  {harMidt && (
+                    <dl class="midtfelt">
+                      {kolonner.map((k, i) => midt(i) && <div><dt>{k}</dt><dd>{r.celler[i]}</dd></div>)}
+                    </dl>
+                  )}
+                  {r.mer && <p class="mer">{r.mer}</p>}
+                </td>
+              </tr>
+            )}
+          </Fragment>
+        );
+      })}
+      <tr class="ingen" data-ingen hidden><td colspan={n}>Ingen treff.</td></tr>
+    </tbody>
+  </table>
+</Flis>
+
+<style>
+  .tabell { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+  th, td { height: 40px; padding: 0 16px 0 0; box-sizing: border-box; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--linje); }
+  thead th { height: 36px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst); }
+  tbody th { font-weight: var(--skrift-vekt-sterk); }
+  td { font-weight: var(--skrift-vekt-normal); }
+  .tall tbody th { font-variant-numeric: tabular-nums; }
+  .celle { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Kolonnebredder etter tegningene: første kolonne bredest */
+  .n2 thead th:nth-child(1) { width: 59%; }
+  .n3 thead th:nth-child(1) { width: 41%; } .n3 thead th:nth-child(2) { width: 30%; }
+  .n5 thead th:nth-child(1) { width: 26%; } .n5 thead th:nth-child(2), .n5 thead th:nth-child(3), .n5 thead th:nth-child(4) { width: 19%; }
+  .apne { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 40px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .apne .celle { min-width: 0; }
+  .pil { flex: none; fill: none; stroke: var(--tekst-dempet); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur) var(--ease); }
+  .apne[aria-expanded="true"] .pil { transform: rotate(180deg); }
+  .apne:disabled { cursor: default; }
+  .apne:disabled .pil { display: none; }
+  .detalj td { height: auto; padding: 0 0 12px; color: var(--tekst); line-height: 22px; }
+  .midtfelt { display: none; margin: 0; }
+  .midtfelt div { display: flex; gap: 8px; }
+  .midtfelt dt { color: var(--tekst-dempet); }
+  .midtfelt dd { margin: 0; }
+  .mer { margin: 0; max-width: 720px; color: var(--tekst-dempet); }
+  .ingen td { color: var(--tekst-dempet); }
+  @media (max-width: 959px) {
+    .midt { display: none; }
+    thead th { width: auto !important; }
+    thead th:first-child { width: 50% !important; }
+    .midtfelt { display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px; }
+    .mer { color: var(--tekst); }
+  }
+  @media (min-width: 960px) {
+    .detalj.bare-tlf { display: none; }
+    tbody tr[data-bare-tlf] .pil { display: none; }
+  }
+  /* Uten skript: det som åpnes står åpent på telefon */
+  @media (scripting: none) and (max-width: 959px) { .detalj[hidden] { display: table-row !important; } .pil { display: none; } }
+</style>

@@ -1,0 +1,36 @@
+---
+/**
+ * Nettside-kitet: søket i tittelfeltet på Tabell kompakt (regel 2c: til 9 rader står søk og verktøy i tittelfeltet, uten bunnfelt).
+ * PC: feltet (200 px). Telefon: bare søkeikonet; trykk åpner feltet over tittelen (scripts/kit.ts). Søket filtrerer radene i flisen.
+ * Ikonet er luppen tegnet med samme strek som resten av ikonsettet (rutenett 20, strek 1,6).
+ */
+interface Props { hva: string }
+const { hva } = Astro.props;
+const etikett = `Søk i ${hva}`;
+---
+<div class="sok" data-sok>
+  <button type="button" class="knapp" aria-label={etikett} aria-expanded="false" data-sok-knapp>
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" /></svg>
+  </button>
+  <label class="felt">
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" /></svg>
+    <input type="search" placeholder="Søk" aria-label={etikett} autocomplete="off" data-sok-felt />
+  </label>
+</div>
+
+<style>
+  .sok { flex: none; display: flex; align-items: center; }
+  svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .knapp { display: none; width: 36px; height: 36px; padding: 0; place-items: center; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+  .felt { display: flex; align-items: center; gap: 8px; width: 200px; height: 36px; padding: 0 12px; box-sizing: border-box; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst-dempet); cursor: text; }
+  .felt:focus-within { border-color: var(--aksent); box-shadow: 0 0 0 3px var(--flate-valgt); }
+  input { flex: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; color: var(--tekst); font-size: 14px; outline: none; }
+  input::placeholder { color: var(--tekst-dempet); }
+  @media (max-width: 959px) {
+    .knapp { display: grid; }
+    .felt { display: none; }
+    /* Åpent søk på telefon: feltet legger seg over tittelfeltet */
+    .sok[data-apen] .felt { display: flex; position: absolute; inset: 2px 0 2px 0; width: auto; z-index: 1; }
+    .sok[data-apen] .knapp { visibility: hidden; }
+  }
+</style>

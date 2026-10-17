@@ -1,0 +1,24 @@
+---
+/**
+ * Nettside-kitet: Tekst-flisen (regel 2c): tittel og brødtekst 14/22 i maks 720 px bredde. 1/1 normalt; 1/2 som hjelpetekst ved siden av et
+ * skjema (får skjemaets høyde), og 1/3 og 1/2 på hengsel.no (avvik A11, godtatt 17.10). Teksten kommer som `tekst` eller i sporet.
+ * `kommer`: innholdet finnes ikke ennå (sidene merket KOMMER i sidekartet) – flisen viser «Kommer.» (N-3b).
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+interface Props { tittel: string; tekst?: string; bredde?: Bredde; kommer?: boolean; id?: string }
+const { tittel, tekst, bredde = "1/1", kommer = false, id } = Astro.props;
+---
+<Flis bredde={bredde} tittel={tittel} klasse="tekstflis" id={id}>
+  <div class:list={["brod", { kommer }]}>
+    {kommer ? <p>Kommer.</p> : tekst ? <p>{tekst}</p> : <slot />}
+  </div>
+  {Astro.slots.has("handling") && <slot name="handling" slot="handling" />}
+</Flis>
+
+<style>
+  .brod { max-width: 720px; line-height: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .brod :global(p) { margin: 0; }
+  .brod :global(ul) { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .brod :global(a) { color: var(--aksent-tekst); }
+  .kommer { color: var(--tekst-dempet); }
+</style>

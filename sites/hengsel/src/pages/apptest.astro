@@ -1,6 +1,8 @@
 ---
 /**
  * hengsel.no/apptest: slik tester du Hengsel Ute (K-172, etter Claude Design «apptest v3», docs/design/hengsel/apptest-v3/).
+ * N-3: toppen og første rad følger sidekartet 25-012 «Bli tester» (S-68) i nettside-kitet: vanlig meny, topp med testversjonen som pille, og rad 1 (120)
+ * Tekst 1/3 ×3 (iPhone og iPad, Android, Meld feil). Resten av siden (installering, roller, sjekkliste, bygg, spørsmål, meld feil) er som før.
  * Fasit: Apptest.dc.html og Apptest-valg.md. Komponentene og tokenene er hengsel.no 2.0 (Side, Enhet, Bunn, tokens.css).
  *
  * Ligger bak passord: Workeren (worker/apptest.ts) slipper bare inn med gyldig informasjonskapsel (K-107) og setter demopassordet
@@ -8,12 +10,16 @@
  * (scripts/sjekk-lenker.mjs passer på det).
  *
  * Innholdet som endres: lenker, versjon og dato i apptest-lenker.ts; byggene, kjente feil, sjekkliste, roller og spørsmål i apptest-innhold.ts.
- * Siden virker uten skript (scripts/apptest.ts): bildet står stille, alle tre installeringsveiene vises og rollene byttes med radioknapper.
+ * Siden virker uten skript (scripts/apptest.ts): alle tre installeringsveiene vises og rollene byttes med radioknapper.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
-import ApptestHode from "../components/ApptestHode.astro";
-import UteMotion from "../components/UteMotion.astro";
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Tekstflis from "../components/kit/Tekstflis.astro";
+import Pille from "../components/kit/Pille.astro";
+import { BLI_TESTER } from "../content/ute";
 import { APPTEST, erTodo } from "../apptest-lenker";
 import { BYGG, KJENTE_FEIL, ROLLER, SJEKKLISTE, SPORSMAL } from "../apptest-innhold";
 import { lagQr } from "../apptest-qr";
@@ -43,12 +49,6 @@ const VEIER = [
   },
 ];
 
-const SLIDES = [
-  { bilde: "idag", navn: "I dag", alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei" },
-  { bilde: "jobben", navn: "Jobben", alt: "Hengsel Ute: jobben med KS, På vei og tegning" },
-  { bilde: "ks", navn: "KS", alt: "Hengsel Ute: KS-sjekkliste punkt for punkt" },
-  { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel Ute: meld ferdig montert" },
-];
 
 // Skjermene hentes fra biblioteket på bilder.hengsel.no (K-233): iOS-skjermene under app/ (tas på Mac, kjent mangel til første opplasting) og rollene
 // uten iOS-skjerm under apptest/ (fra demoen, 2× med @1x). Stien er uten tema; under /kunde/sigdal hentes Sigdal-utgaven (Enhet → Skjermbilde).
@@ -61,35 +61,24 @@ const harFeil = KJENTE_FEIL.length > 0;
   title="Test Hengsel Ute – testversjon av montørappen"
   description="Slik installerer og tester du testversjonen av Hengsel Ute på iPhone, iPad eller Android."
   robots="noindex,nofollow"
-  utenMeny
 >
-  <ApptestHode slot="hode" meldFeil />
   <main id="innhold" class="a-side">
-    <section class="hero" aria-label="Test Hengsel Ute">
-      <div class="h-innhold hero-rutenett">
-        <div class="hero-tekst">
-          <span class="eyebrow">Testversjon {versjon} · sist oppdatert {dato(oppdatert)}</span>
-          <h1>Test Hengsel Ute</h1>
-          <p class="lede">Appen montørene bruker på jobben. Installer testversjonen, logg inn med demobrukerne og si fra om alt som ikke virker.</p>
-          <div class="ikon"><UteMotion class="ikon-motion" /></div>
-        </div>
-        <div class="hero-bilder">
-          <div class="slides">
-            {SLIDES.map((s, i) => (
-              <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
-                <Enhet type="iphone" bilde={bildeSti(s.bilde)} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
-              </div>
-            ))}
-          </div>
-          <div class="prikker" role="tablist" aria-label="Skjermbilder">
-            {SLIDES.map((s, i) => (
-              <button type="button" role="tab" class:list={["prikk", { on: i === 0 }]} aria-selected={i === 0 ? "true" : "false"} aria-label={s.navn} data-prikk><span></span></button>
-            ))}
-          </div>
-          <span class="slidenavn" aria-live="polite" data-slidenavn>{SLIDES[0].navn}</span>
-        </div>
-      </div>
-    </section>
+    <Sidetopp tittel={BLI_TESTER.tittel} ingress={BLI_TESTER.tekst}>
+      <Pille slot="pille" tone="ny">Testversjon {versjon} · {dato(oppdatert)}</Pille>
+    </Sidetopp>
+    <Innhold>
+      <Rad hoyde={120}>
+        <Tekstflis bredde="1/3" tittel="iPhone og iPad">
+          <p>{erTodo(APPTEST.testflight) ? "TestFlight-lenke kommer." : <Fragment><a href={APPTEST.testflight}>TestFlight-lenke</a>.</Fragment>}</p>
+        </Tekstflis>
+        <Tekstflis bredde="1/3" tittel="Android">
+          <p>{erTodo(APPTEST.play) ? "Google Play intern test kommer." : <Fragment><a href={APPTEST.play}>Google Play intern test</a>.</Fragment>}</p>
+        </Tekstflis>
+        <Tekstflis bredde="1/3" tittel="Meld feil">
+          <p>Rist telefonen i appen, eller skriv til <a href={`mailto:${EPOST}?subject=Feil%20i%20testversjonen`}>{EPOST}</a>.</p>
+        </Tekstflis>
+      </Rad>
+    </Innhold>
 
     <section id="installer" class="band installer" aria-labelledby="installer-tittel" data-install>
       <div class="h-innhold seksjon">
@@ -132,7 +121,7 @@ const harFeil = KJENTE_FEIL.length > 0;
         <div class="chips" role="group" aria-label="Roller">
           {ROLLER.map((r) => <label class="chip" for={`rolle-${r.id}`}>{r.chip}</label>)}
         </div>
-        {ROLLER.map((r) => (
+        {ROLLER.map((r, i) => (
           <div class="rollekort" data-rolle={r.id}>
             <div class="rolle-tekst">
               <div class="rolle-hode">
@@ -162,7 +151,7 @@ const harFeil = KJENTE_FEIL.length > 0;
               <a class="pdf" href={`${kundeUtgave ? kundeUtgave.sti : ""}/apptest/Logg_inn_i_demoen.pdf`} download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
-              <Enhet type="iphone" bilde={bildeSti(r.bilde)} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
+              <Enhet type="iphone" bilde={bildeSti(r.bilde)} hd={!APP.has(r.bilde)} alt={r.alt} symboler={i === 0} />
             </div>
           </div>
         ))}
@@ -302,26 +291,6 @@ const harFeil = KJENTE_FEIL.length > 0;
   .seksjon-luft { padding-block: clamp(48px, 6vw, 88px); }
   .kort { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-sizing: border-box; }
 
-  /* Hero */
-  .hero { padding-block: clamp(36px, 6vw, 80px) clamp(40px, 6vw, 88px); }
-  .hero-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(36px, 6vw, 80px); align-items: center; }
-  .hero-tekst { display: flex; flex-direction: column; gap: 20px; min-width: 0; align-items: flex-start; }
-  .hero h1 { font-size: clamp(2.75rem, 6vw, 4.6rem); line-height: 1; }
-  .hero .lede { font-size: 1.18rem; max-width: 44ch; }
-  .ikon { margin-top: 8px; }
-  .ikon :global(.ikon-motion) { width: 160px; }
-  .hero-bilder { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
-  .slides { position: relative; width: 100%; max-width: 320px; }
-  .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 700ms var(--ease); }
-  .slide:first-child { position: relative; }
-  .slide.on { opacity: 1; pointer-events: auto; }
-  .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
-  :global(html.js) .prikker { visibility: visible; }
-  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
-  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); transition: background var(--dur); }
-  .prikk.on span { background: var(--ink); }
-  .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
-  @media (max-width: 759px) { .slides { max-width: 250px; } }
 
   /* Installer: PC viser QR-koden og alle tre veiene i fire kort; telefonen én vei med tre steg og en stor knapp */
   .veier { display: flex; flex-direction: column; gap: 16px; max-width: 560px; }
@@ -476,7 +445,4 @@ const harFeil = KJENTE_FEIL.length > 0;
   .faq details[open] .pluss::after { transform: rotate(0deg); }
   .faq p { padding: 0 22px 18px; color: var(--muted); max-width: 58ch; }
 
-  @media (prefers-reduced-motion: reduce) {
-    .slide { transition: none; }
-  }
 </style>

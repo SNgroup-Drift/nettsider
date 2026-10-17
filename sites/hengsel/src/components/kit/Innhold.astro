@@ -1,0 +1,23 @@
+---
+/**
+ * Nettside-kitet: flaten med radene under toppen. Første rad 24 px under toppen, siste 48 px over bunnen (regel 2d), 24 px mellom radene
+ * (16 px på telefon). Innholdet er maks 1280 px bredt og venstrestilt i rammen (1440 px med 32 px marg, 16 px på telefon).
+ */
+interface Props { klasse?: string }
+const { klasse } = Astro.props;
+---
+<div class:list={["innhold", klasse]}>
+  <div class="k-ramme">
+    <div class="rader"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .innhold { padding-block: 24px 48px; }
+  .rader { max-width: 1280px; display: flex; flex-direction: column; gap: 24px; }
+  @media (max-width: 959px) { .innhold { padding-block: 16px 48px; } .rader { gap: 16px; } }
+</style>
+
+<script>
+  import "../../scripts/kit";
+</script>

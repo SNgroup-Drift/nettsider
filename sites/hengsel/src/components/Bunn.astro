@@ -48,7 +48,7 @@ const produkt = kunde ? kunde.bunnProdukt.map(([t, h]) => [t, kundeHref(kunde, h
 
 <style>
   .bunn { background: var(--bg); color: var(--ink); border-top: 1px solid var(--line); font-size: 0.95rem; }
-  .rutenett, .linje-inn { max-width: calc(var(--wrap) + 2 * var(--pad)); margin: 0 auto; box-sizing: border-box; padding-inline: var(--pad); }
+  .rutenett, .linje-inn { max-width: var(--ramme); margin: 0 auto; box-sizing: border-box; padding-inline: var(--marg); }
   .rutenett { padding-block: 48px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; }
   .merke { display: flex; flex-direction: column; gap: 12px; }
   .merke img { height: 30px; width: auto; align-self: flex-start; }
