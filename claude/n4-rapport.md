@@ -90,7 +90,7 @@ Deretter: «Retry build» på siste commit på `main` og på PR-en. Er bygget fo
 |---|---|---|
 | 26-001 Innlogging | `/logg-inn`: kortet 400 px med merket, «Hengsel Admin», teksten og «Logg inn med Access» (til https://admin.hengsel.no/). Workeren viser kortet med status 401 når en side bes om uten gyldig Access-token | Ruten er `/logg-inn`, ikke `/`, fordi `/` er startsiden etter innlogging. Med Access foran domenet viser Cloudflare sin egen innlogging; kortet ses når en forespørsel når Workeren uten token (workers.dev, feil policy) |
 | 26-002 Eiere og butikker | Faner Alle · Aktive kunder · Butikker hos kunder · Åpne muligheter. Tabell 1/1 (640): søk, «Status ▾», «Kjede ▾», «Fylke ▾», «Importer fra Excel», sumraden «Inntekt per måned», og «Inntekt per måned» til høyre i tittelen. Sidevelger med 10 per side. «Ny eier» og «Ny aktivitet» i topplinja. `/kunder` åpner fanen Aktive kunder | Fanen **«Alle»** er lagt til først, fordi siden ellers ikke viser tapte og prospekter samlet (fasiten har tre faner). «Butikker hos kunder» viser kundene sortert etter antall butikker; API-et har ikke én rad per butikk. Inntekten er summen av verdien hos kundene (samme kilde som kolonnen) |
-| 26-003 Prisliste | Versjonene som faner, status som pille, «Publiser utkastet» og «Ny versjon». Tabell «Produktlinjer og pakker» (480, rediger i utkast), Tabell «Hengsel Ute og tillegg», Tekst «Kjederabatt og vilkår» (feltene i teksten kan redigeres i utkast), Tekst «Support etter første år (forslag)» | Rad 5 er lagt til: «Moduler per pakke» og «Innstillinger» (fornyes snart, tilbud gyldig). De fantes før og har ikke noe annet sted. Teksten i «Support etter første år» er fasitens forslag (halvering fra år 2). **Den stemmer ikke med vilkårsteksten i tilbud-PDF-en** («samme timer så lenge avtalen løper», K-240 spørsmål 14) |
+| 26-003 Prisliste | Versjonene som faner, status som pille, «Publiser utkastet» og «Ny versjon». Tabell «Produktlinjer og pakker» (480, rediger i utkast), Tabell «Hengsel Ute og tillegg», Tekst «Kjederabatt og vilkår» (feltene i teksten kan redigeres i utkast) | Rad 4 er «Moduler per pakke» og «Innstillinger» (fornyes snart, tilbud gyldig). De fantes før og har ikke noe annet sted. **Fasitens Tekst «Support etter første år (forslag)» er tatt ut** (N-4b, Eirik 17.10): vilkårene i tilbud-PDF-en gjelder («samme timer så lenge avtalen løper», K-240 spørsmål 14). Se «Avvik fra sidekartet» |
 | 26-004 Avtaler | Faner Alle · Utkast · Til signering · Signert · Fornyes snart · Dokumenter og vilkår (+ Sagt opp når det finnes). Tabell «Avtaler» med «Eier ▾» og søk, Penneo-status i tittelen. «Ny avtale fra tilbud» i topplinja. Avtalesiden (`/avtaler/:nr`) har fått skallet, men flisene er som før | «Sagt opp» blir sjuende fane når det finnes oppsagte avtaler (data fra K-240). Verktøylinja «Signering i Penneo: Send påminnelse · Forhåndsvis PDF» ligger på avtalesiden, der den gjelder én avtale |
 | 26-005 Prisberegner | Faner Per butikk · Hele eieren · Sum per måned · Etablering. Tabell «Pakke per butikk» med «Produktlinje ▾» og «Legg til butikk»; pakke, ekstra brukere og montører endres i raden. «Lag tilbud» i topplinja. Brødsmule «Eiere og butikker › <eier>» | Kolonnen **«Montører»** er lagt til, fordi beregningen av Hengsel Ute bruker montører per butikk. «Fjern» er et kryss per rad. «Att.» (kontakten i tilbudet) står i fanen Hele eieren. Ruten er som før (`/salg/prisberegner?eier=…`) |
 | 26-006 Tilbud-PDF | Uendret: PDF-en lages i Workeren (`worker/pdf.js`, `GET /salg/tilbud/:nr/:v.pdf`) | **Ikke bygd om.** PDF-en er Worker-kode (utenfor Gjelder), og K-teksten sier at Workeren skal være som før. Den har alt innholdet i fasiten (leverandør, til, tilbud/dato/gyldig/prisliste, linjer per butikk, Ute, kjederabatt, tillegg, per måned og år, etablering, viderefakturert, vilkår, eksempel-merket, bunntekst med versjon og sidetall), men i oppsettet fra 60-203. Se «Hva Eirik bør se på» |
@@ -109,6 +109,25 @@ Fakturakjøring, KPI, Utestående), Tall og Drift. Sidekartet viser ikke disse, 
 Å ta dem bort ville fjernet funksjoner. Sidene deres har fått det nye skallet med topplinje og meny; innholdet er det samme.
 Rollen Support ser fortsatt bare Saker og Timer.
 
+## Avvik fra sidekartet (rettes i neste Design-runde)
+Eirik 17.10 kl. 20.57: appen beholdes slik, og sidekartet (`docs/sidekart/` i hengsel-crm) rettes etter lista under.
+
+| Side | Sidekartet sier | Appen har (gjelder) |
+|---|---|---|
+| 26-003 Prisliste | Tekst «Support etter første år (forslag)»: timene halveres fra år 2 | Flisen er tatt ut (N-4b). Vilkårene i tilbud-PDF-en gjelder: samme supporttimer så lenge avtalen løper (K-240 spørsmål 14) |
+| 26-009 Salg | `/salg` | `/` (og `/salg/tavle`) |
+| 26-002 Eiere og butikker | `/eiere` | `/salg/eiere` (`/kunder` for fanen Aktive kunder) |
+| 26-013 Eierkort | `/eiere/:id` | `/salg/eiere/:id` (`/kunder/:id` for kunder) |
+| 26-005 Prisberegner | `/eiere/:id/prisberegner` | `/salg/prisberegner?eier=:id` |
+| 26-007 Excel-import | `/eiere/import` | `/salg/import` (`/salg/eiere?import=1` sender dit) |
+| 26-006 Tilbud-PDF | `/tilbud/:id/pdf` | `/salg/tilbud/:nr/:v.pdf`. Oppsettet bygges om i egen sak **N-6** etter prod; Workeren røres ikke nå |
+| 26-008 Tilbakemeldinger | `/innstillinger/tilbakemeldinger` | Som sidekartet |
+| 26-011 Støtte, 26-012 Fakturering | Kommer | Kommer-sidene står utenfor menyen. Support (K-259) og Fakturering (K-260) er bygd og står under streken i menyen |
+
+**API-mangler** (kolonnene kommer når API-et har feltet):
+- 26-009 Salg, Tabell «Neste steg»: kolonnen **«Hvem»** mangler, fordi `neste_steg` i `GET /api/oversikt` ikke har hvem. Det samme gjelder «Filter: Produktlinje» på tavla.
+- 26-008 Tilbakemeldinger: kolonnen **«Side»** (21-302 osv.) mangler, fordi sakene fra `GET /api/saker` ikke har siden. Appen viser «Kanal» (CRM/Ute) i stedet.
+
 ## Utenfor «Gjelder», med grunn
 - `sites/admin/worker/index.js` (12 linjer): 401 på GET/HEAD av sider viser `/logg-inn` (26-001) i stedet for ren tekst. Workeren henter bare den ene fila;
   API-et svarer fortsatt ADM-401 i JSON. Testen er `admin.test.mjs` «N-4 (26-001)».
@@ -122,14 +141,19 @@ Rollen Support ser fortsatt bare Saker og Timer.
   Skriptet bruker nå N-4-sidene, legger også inn fase B-eksempeldataene (til Tilbakemeldinger) og skriver til `claude/n4-skjermbilder/`.
 - HawkScan (DAST) er ikke kjørt: `HAWK_API_KEY` er ikke satt i økta. Sikkerheten er dekket av testene (Access-sjekken, roller, 401/403/503, CSP uten inline-skript).
 
-## Hva Eirik bør se på
-1. **Cloudflare-lista over** (Preview command med `-c`). Etter «Retry»: er bygget fortsatt rødt, trengs `✘`-linja fra loggen.
-2. **Fase B/C i menyen:** sidekartet sier at Støtte og Fakturering «kommer», men de er bygd (K-259, K-260). Nå står de under sidekartets meny, og
-   Kommer-sidene står utenfor menyen. Vil du heller ha dem bak «Mer», eller ta Kommer-sidene bort?
-3. **26-006 Tilbud-PDF** har oppsettet fra 60-203, ikke nøkkel–verdi-oppsettet i 26-006. Det krever en endring i `worker/pdf.js` (egen K).
-4. **«Support etter første år (forslag)»** på prislisten (fasitens tekst) motsier vilkårene i PDF-en og K-240 spørsmål 14.
-5. **Ruter:** sidekartet har `/salg`, `/eiere`, `/eiere/:id`, `/eiere/:id/prisberegner`, `/eiere/import` og `/tilbud/:id/pdf`. Rutene er beholdt som i fase A
-   (`/`, `/salg/eiere`, `/salg/eiere/:id`, `/salg/prisberegner?eier=`, `/salg/import`, `/salg/tilbud/:nr/:v.pdf`), fordi Workeren, tilgangene og testene bruker dem.
-6. Bjella viser antall åpne saker og går til Support. Det finnes ingen egen varselkilde i Admin.
+## Hva Eirik bør se på – svar 17.10 kl. 20.57
+1. **Cloudflare-lista over** (Preview command med `-c`) står fortsatt hos Eirik. Er bygget rødt etter «Retry», trengs `✘`-linja fra loggen.
+2. **Fase B/C i menyen:** behold. Støtte og Fakturering står under streken, og Kommer-sidene står utenfor menyen.
+3. **26-006 Tilbud-PDF:** egen sak N-6 etter prod. Workeren røres ikke nå.
+4. **«Support etter første år (forslag)»:** vilkårene i PDF-en gjelder. Flisen er tatt ut av prislisten i N-4b (`sites/admin/src/scripts/prisliste.ts`, vakttest i
+   `scripts/admin.test.mjs`). Sidekartet rettes i neste Design-runde (se «Avvik fra sidekartet»).
+5. **Ruter:** rutene fra fase A beholdes. De står i «Avvik fra sidekartet», så sidekartet kan oppdateres.
+6. **«Hvem» og «Side»:** står som API-mangler i «Avvik fra sidekartet».
+7. Bjella viser antall åpne saker og går til Support. Det finnes ingen egen varselkilde i Admin.
+
+## N-4b (17.10)
+PR #84 er flettet til main (ba527a6), sammen med N-1 (#86), N-3 (#83) og N-5 (#85). N-4b er gjort på grenen `claude/n4b-prisliste-tekst` fra `origin/main`:
+flisen «Support etter første år (forslag)» er tatt ut av prislisten, det er lagt til en vakttest, og rapporten har fått «Avvik fra sidekartet» og svarene over.
+De kjente røde sjekkene (Bibliotek-sjekk og Workers Builds design/admin) er ikke rørt.
 
 N-4 KLAR

@@ -1,7 +1,8 @@
 /**
  * 26-003 Prisliste (versjonert), N-4: versjonene som faner («Versjon 2026.2 (utkast)»), statusen som pille i topplinja, «Publiser utkastet» og
  * «Ny versjon» i topplinja. Rad 1: Tabell «Produktlinjer og pakker (per butikk per måned)», rad 2: Tabell «Hengsel Ute og tillegg», rad 3: Tekst
- * «Kjederabatt og vilkår», rad 4: Tekst «Support etter første år (forslag)», rad 5: Moduler per pakke og Innstillingene (fornyes snart, tilbud gyldig).
+ * «Kjederabatt og vilkår», rad 4: Moduler per pakke og Innstillingene (fornyes snart, tilbud gyldig). Fasitens «Support etter første år (forslag)» er tatt ut
+ * (N-4b, Eirik 17.10): vilkårene i tilbud-PDF-en gjelder.
  * Bare utkast kan endres («Lagre utkast»); aktiv og arkivert er låst. Samme API som før (GET/POST/PATCH /api/prisliste, /api/innstillinger).
  */
 import { api, html, raw, kr, dato, sett, q, qa, feilbanner, toast, skjemaDialog, PRISLISTESTATUS, ikon } from "../lib/dom";
@@ -43,7 +44,6 @@ function vis() {
       handling: laast ? "" : raw(`<button class="knapp" type="button" id="lagre">${ikon("hake", 18)}Lagre utkast</button>`) })])}
     ${rad(tabellHoyde(uterader.length), [flis({ id: "ute", tittel: "Hengsel Ute og tillegg", teller: uterader.length, innhold: tabell({ kompakt: true, kolonner: [{ navn: "Hva" }, { navn: "Pris", h: true, klasse: "prisk" }, { navn: "Gjelder" }], rader: uterader }) })])}
     ${rad(320, [flis({ id: "vilkar", tittel: "Kjederabatt og vilkår", innhold: vilkar })])}
-    ${rad(120, [flis({ id: "support-ar2", tittel: "Support etter første år (forslag)", innhold: raw(`<div class="k-brod"><p>Timene halveres fra år 2: 0,5, 1 og 1,5 t per måned. Pris for ekstra supporttime kommer.</p></div>`) })])}
     ${rad(320, [flis({ id: "moduler", bredde: "1/2", tittel: "Moduler per pakke (Hengsel)", teller: moduler.length, tellerHoyre: true, innhold: ml.innhold, handling: ml.handling }),
       flis({ id: "innstillinger", bredde: "1/2", tittel: "Innstillinger", innhold: html`<div class="k-skjema"><label class="felt"><span>«Fornyes snart» vises når fornyelsesdatoen er innen (dager)</span><input type="number" min="0" max="365" name="innst:fornyes_snart_dager" value="${innst.fornyes_snart_dager}" /></label><label class="felt"><span>Tilbud er gyldig i (dager)</span><input type="number" min="1" max="365" name="innst:tilbud_gyldig_dager" value="${innst.tilbud_gyldig_dager}" /></label></div>`,
         handling: raw(`<button class="knapp primar" type="button" id="lagre-innst">Lagre innstillingene</button>`) })])}
