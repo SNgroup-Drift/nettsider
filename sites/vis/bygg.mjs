@@ -36,9 +36,11 @@ await cp(src, dist, { recursive: true });
 await mkdir(join(dist, "assets", "ds", "assets", "fonts"), { recursive: true });
 await cp(join(tokens, "tokens.css"), join(dist, "assets", "hengsel-tokens.css"));
 await cp(join(tokens, "fonts.css"), join(dist, "assets", "hengsel-fonts.css"));
+// Fillista leses fra fonts.css selv (alle url('./ds/assets/fonts/…')), så nye skriftfiler i en ny pin følger med uten endring her.
+const fontCss = await readFile(join(tokens, "fonts.css"), "utf8");
+const skriftfiler = [...new Set([...fontCss.matchAll(/url\(['"]?\.\/ds\/assets\/fonts\/([^'")]+)['"]?\)/g)].map((m) => m[1]))];
 let antall = 0;
-for (const f of await readdir(join(tokens, "ds", "assets", "fonts"))) {
-  if (f !== "schibsted-grotesk-latin-wght-normal.woff2") continue; // bare Hengsel-skriften (samme som fonts.css)
+for (const f of skriftfiler) {
   await cp(join(tokens, "ds", "assets", "fonts", f), join(dist, "assets", "ds", "assets", "fonts", f));
   antall++;
 }

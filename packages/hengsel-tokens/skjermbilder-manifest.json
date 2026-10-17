@@ -1,113 +1,113 @@
 {
   "versjon": 1,
-  "laget": "2026-10-15T06:42:56.263Z",
-  "antall": 368,
+  "laget": "2026-10-17T19:31:37.377Z",
+  "antall": 458,
   "filer": {
     "hengsel/app/avvik-lys.webp": {
-      "sha256": "9a56e204ce890b2da3e4996cd76a37ceba3dda17454af03e8f5745e9c26abe7c",
-      "bytes": 59048,
+      "sha256": "c86b48359f736bd360660d876b73f743da505233c391233c5b2b6a37991e317f",
+      "bytes": 59308,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/avvik-lys@1x.webp": {
-      "sha256": "58bd32f76659a77d8cae1ced03d7468990764062925c38532405f685161dd966",
-      "bytes": 26486,
+      "sha256": "f81d383e137be035175d233f9b2b64e57d4e2757ca2fe27b88f47f5fc2560bb5",
+      "bytes": 26670,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/ferdig-lys.webp": {
-      "sha256": "74580c2ad807311adc841f09fa8b4cef34d9f1803ce764c6748f97692d435bc3",
-      "bytes": 55664,
+      "sha256": "3229bba156731ec35f192fac1e652a3f4773a9aae47c74add79680c3085ac4a9",
+      "bytes": 55952,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/ferdig-lys@1x.webp": {
-      "sha256": "ffe981de04abcc3201a02fe6b6838f3f74f7b2feceebd1bc3686030e250f605e",
-      "bytes": 25734,
+      "sha256": "e412e8efa4eb0e13f48bfd9bc64d4d92267923c0f20efc1787878e5fbe4ba471",
+      "bytes": 25832,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/idag-lys.webp": {
-      "sha256": "a198be55afeb477309196383c319ce6ee617f48a4fd64a7f2e184cdaaea26474",
-      "bytes": 90230,
+      "sha256": "8de7fa0f06c5375917d6788fe414cef5a3952e08f9c2973a61455aaac094f163",
+      "bytes": 88920,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/idag-lys@1x.webp": {
-      "sha256": "e240f40e172ce05d93e2650aaa5f75b233e9543801003fad30d151103e4a8891",
-      "bytes": 41684,
+      "sha256": "a2d5b6a911ba9a5fe485df9ef2fece8723cd64e83ab6a70887713478aae2d5c1",
+      "bytes": 41456,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/ipad-bildeverktoy-laser.webp": {
-      "sha256": "4903e3b6293c93e61de472de8e5e77e60d73445e5f560be88d59bb90682624f7",
-      "bytes": 35084,
+      "sha256": "ce304bd0bce5bbe9d51775f9fd72b72765dcd882861aa203a2c472e2449f7199",
+      "bytes": 34578,
       "bredde": 2064,
       "hoyde": 2752
     },
     "hengsel/app/ipad-bildeverktoy-laser@1x.webp": {
-      "sha256": "99308a77e3b958c706904272e7a58a25786230ee0b79f416c25438a359eb78d1",
-      "bytes": 13736,
+      "sha256": "862af35812f88ecf3dd5a9388ed5d839c96d88cb2815ade5d06b102922c9fe75",
+      "bytes": 13644,
       "bredde": 1032,
       "hoyde": 1376
     },
     "hengsel/app/ipad-idag-lys.webp": {
-      "sha256": "3a19f3b66091d7988077efa7c22ca9786fe41d22976000fed32d7455a2909b1b",
-      "bytes": 74442,
+      "sha256": "b0304362e9fbc1e84a48d20a15af2635dc58a4f68faeed7f50ef0ad5870bea52",
+      "bytes": 72276,
       "bredde": 2064,
       "hoyde": 2752
     },
     "hengsel/app/ipad-idag-lys@1x.webp": {
-      "sha256": "d4804e51c38f6a6c88f475b57a323fd6692a3ecad366ef8eed7ea6da36eb3ee4",
-      "bytes": 32030,
+      "sha256": "c5c31a3e0b4316d17d6fa7c72d672ae9e3b0503b39c57d7e04c4f38333d51ede",
+      "bytes": 31128,
       "bredde": 1032,
       "hoyde": 1376
     },
     "hengsel/app/jobben-lys.webp": {
-      "sha256": "f6bdf0a84d73fa99e4dc6460495d1cf2e798f013a3e27ae4fa2091b2348c8324",
-      "bytes": 93222,
+      "sha256": "70075202bdb1d36243c37bb6f9f1d91df0a5f2a36623cb6dd2b0d8561622765e",
+      "bytes": 99038,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/jobben-lys@1x.webp": {
-      "sha256": "c6891f458f484bfd83acf264d0f9892c71e6d716dea6b5c7002cbf34959fb7e8",
-      "bytes": 42814,
+      "sha256": "dfbb30ae1e3ed7e4aba157672a472017efff6a1c997004d2845df57feb934a04",
+      "bytes": 45564,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/ks-lys.webp": {
-      "sha256": "685ac1f65bc364365c0b5da7d76ff325cb7f2f3b40c77886feeb80497223e7e2",
-      "bytes": 41654,
+      "sha256": "9e9e18969b85f54aaee060ff18a153f7fc06aa41cd1f08ffa810b3e863f9d4b7",
+      "bytes": 41056,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/ks-lys@1x.webp": {
-      "sha256": "aec15bc23ae9caeaecc6d556e4c57668d7badbe4f936447996bfd0f9b424a8ea",
-      "bytes": 18894,
+      "sha256": "1709d8c7b044326045e520455f00f7304d6e3420c3745ad9b7ba265c48ad0473",
+      "bytes": 18744,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/punkter-lys.webp": {
-      "sha256": "28276030594541ad21aa656de36aa19d4296312317e9b980b05065a69a155005",
-      "bytes": 39522,
+      "sha256": "ecbc54866276b42ba476a677ac36dd11ba113b4a989b7678b515ddf0ec39b515",
+      "bytes": 36000,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/punkter-lys@1x.webp": {
-      "sha256": "8b1bf064d901dafbdf046c47dcf223d4aedbbee54f7f909cde6c065f3066a6c2",
-      "bytes": 17216,
+      "sha256": "b8faa7e1fff1a07a280f6984b89f4ba0a7ca51e5d6bff26992fe7df89fa6709b",
+      "bytes": 15918,
       "bredde": 603,
       "hoyde": 1311
     },
     "hengsel/app/uten-nett-lys.webp": {
-      "sha256": "2619eea4b93f4adda18f0bb12472fb998b11b34a7fd81b2fa6a4843caa0d4699",
-      "bytes": 93710,
+      "sha256": "92985e57c89bb43651fb7b2eb55ce1e77f043f62b7512e1d3e0a88ceaae7b06b",
+      "bytes": 93356,
       "bredde": 1206,
       "hoyde": 2622
     },
     "hengsel/app/uten-nett-lys@1x.webp": {
-      "sha256": "e7c189f2a5e7a8b12bb7a99f2711d2d45fbeb8c66ca4e499e472528c1e8ee46c",
-      "bytes": 43594,
+      "sha256": "ea8cb1645be391dc2de257bbf3ad3cdd36fdea70a711b4a2bfb9f9d9ff4c0e19",
+      "bytes": 43124,
       "bredde": 603,
       "hoyde": 1311
     },
@@ -148,536 +148,92 @@
       "hoyde": 844
     },
     "hengsel/hjelp/i-dag.webp": {
-      "sha256": "00429986021cf3647202962e0b49244f07c2f75023dedfeb692273f691a6eaa5",
-      "bytes": 58592,
+      "sha256": "bbb25878530d626a9e994f75b564078713e39fb11d4e9a3bbe6ba23cbba3c309",
+      "bytes": 44098,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/hjelp/i-dag@1x.webp": {
-      "sha256": "a84a0eebc729a80826796aeb01f548f17d6e63a12920f558d34eeb700a581853",
-      "bytes": 26228,
+      "sha256": "a09a3f0ba06628e02e0041674405276737b4911f28ebc60829c5eb8c3ba43df8",
+      "bytes": 19196,
       "bredde": 390,
       "hoyde": 844
-    },
-    "hengsel/hjelp/innkommende.webp": {
-      "sha256": "d3b3b8fcdeeba0398f8ca8c4ed358490be5e821c8eb615f113693b2329d4b9b4",
-      "bytes": 133662,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/innkommende@1x.webp": {
-      "sha256": "f5038f1adc37afb565191845a97948c21657ed6d15e76eb227e19c52ac6f954b",
-      "bytes": 55134,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/hjelp/meny-pc-og-mobil.webp": {
-      "sha256": "6b50f2e62e32a97506446c18ddc114d48ceeeec8f370abd551f3825e56768b61",
-      "bytes": 164830,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/meny-pc-og-mobil@1x.webp": {
-      "sha256": "bf8f4eab93112f50eb07918ca9eeaa94517b1512a1fb5b2e6a483eb3099b29c1",
-      "bytes": 70858,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/hjelp/min-dag.webp": {
-      "sha256": "abe293cf04b239200b10bb7c4cd21728e1467f1e62dcd631e3428db1d49eb12c",
-      "bytes": 163492,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/min-dag@1x.webp": {
-      "sha256": "5da6242b27ce7667cb5589c5addb8ee975a8e8080d6f53628768b26ab1292875",
-      "bytes": 70202,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/hjelp/montasje-oversikt.webp": {
-      "sha256": "a5d750dba478ec245e2b92f7c8886c73938603ff69a8013a817e961a2bf1acea",
-      "bytes": 133406,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/montasje-oversikt@1x.webp": {
-      "sha256": "7a156b3890d667afe8fa14f5229ba60945fa9df7c32732bb75edab3865b42294",
-      "bytes": 54388,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/hjelp/ordre.webp": {
-      "sha256": "4d004cbb948631b63c92967229f7214bb8396e29ad5dd044e25d1ab6d514453e",
-      "bytes": 134288,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/ordre@1x.webp": {
-      "sha256": "a23b0568ca44ec36eaa752d42b0bf03d5fefe6efce9f0a0239d5827265b0149c",
-      "bytes": 54140,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/hjelp/tilbud.webp": {
-      "sha256": "8ab8bac11a69b0a6da776802007e60942334ba993cbd6fc3cb49a99fe3a413db",
-      "bytes": 132604,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/hjelp/tilbud@1x.webp": {
-      "sha256": "12a4ad9c4420a597d43fe0fb4f9e2e7d0f36bf1478822d0510f259a04b4527db",
-      "bytes": 54556,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/flate-butikken.webp": {
-      "sha256": "c193e662027900d73adcbde6226a604ff3e315b46df9b1dd8acf642a0e7183d5",
-      "bytes": 38882,
-      "bredde": 960,
-      "hoyde": 740
-    },
-    "hengsel/vis/flate-leverandoren.webp": {
-      "sha256": "221e1eaa20b40c4b1a8fcb0e15cc444864d1363eb6492ca341cd1c693234c0d9",
-      "bytes": 24306,
-      "bredde": 960,
-      "hoyde": 626
     },
     "hengsel/vis/flate-montoren.webp": {
-      "sha256": "d793d95ff444402f5e222c52a378e3f479d0c69a9c251b351691b0db4e229c33",
-      "bytes": 28170,
+      "sha256": "1c75718826b9d0de937e394ec764ee11543d91bb034c63259f57dcc477b0c387",
+      "bytes": 22974,
       "bredde": 372,
       "hoyde": 760
-    },
-    "hengsel/vis/forsta-reise.webp": {
-      "sha256": "6cb1927fb73b95ba9cdae6045818a6a0940fe9a40766ebfaa5df8f32a3fb7eaf",
-      "bytes": 30358,
-      "bredde": 960,
-      "hoyde": 626
-    },
-    "hengsel/vis/hero-enkel.webp": {
-      "sha256": "20ca7182f2fbeedc30aa62b12c0e30e5f32e7528097e99c446287c8780b1b51e",
-      "bytes": 48576,
-      "bredde": 1320,
-      "hoyde": 1017
-    },
-    "hengsel/vis/hero.webp": {
-      "sha256": "e7459f3176c6f4256694de068dce19afdff3c9db085eaabe089cd57308bfdefe",
-      "bytes": 96202,
-      "bredde": 1500,
-      "hoyde": 1227
-    },
-    "hengsel/vis/rom-crm.webp": {
-      "sha256": "929dbb46171b8902fbdc4cf61337754a4e2890357af972c164f2963f4b1029b1",
-      "bytes": 39946,
-      "bredde": 960,
-      "hoyde": 740
-    },
-    "hengsel/vis/rom-firmaleder.webp": {
-      "sha256": "40a6f0c771145249719b7b0930e9565e1baf71a5c213f8c2f6f76ad6df23db89",
-      "bytes": 36340,
-      "bredde": 960,
-      "hoyde": 696
     },
     "hengsel/vis/rom-montor.webp": {
-      "sha256": "d793d95ff444402f5e222c52a378e3f479d0c69a9c251b351691b0db4e229c33",
-      "bytes": 28170,
+      "sha256": "1c75718826b9d0de937e394ec764ee11543d91bb034c63259f57dcc477b0c387",
+      "bytes": 22974,
       "bredde": 372,
       "hoyde": 760
-    },
-    "hengsel/vis/rom-reise.webp": {
-      "sha256": "eacc8df939ce1f9eb1ef7e6895dcf0e5eaec9efae9e47ca89bed0147098c3ed5",
-      "bytes": 30942,
-      "bredde": 960,
-      "hoyde": 740
     },
     "hengsel/vis/rom-tegning.webp": {
-      "sha256": "da16e7192a8e0505cd105c7fce70881e5df25f981c1cd21d6b75f419db93de08",
-      "bytes": 18244,
+      "sha256": "5d9f0c4c42eea812793b879308441bf098421f19482a1301ca2ecd203020a578",
+      "bytes": 18272,
       "bredde": 372,
       "hoyde": 760
     },
-    "hengsel/vis/skjermbilder/crm-bestilling.webp": {
-      "sha256": "ab5506ac7a4bf53724b8fe560fbcc103a824f4c0969e63c9e3ecb3ce2248befe",
-      "bytes": 109292,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-bestilling@1x.webp": {
-      "sha256": "9c34920d11763f4b5653131c61756441e33b991b0a45e7fa03c25d3126aa238c",
-      "bytes": 44112,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-etterkalkyle.webp": {
-      "sha256": "5f3d939661b1760f3cc0beadd00ae6fbc803cc75569965587440b80e4c61a37a",
-      "bytes": 157364,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-etterkalkyle@1x.webp": {
-      "sha256": "b60edd7266cbc1ce5f53461029f22c6c88d2bf495b8a596605bc01fa05aa4204",
-      "bytes": 63374,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-belastninger.webp": {
-      "sha256": "a05307914c964049bb304ad923e52de275c49df3a3a96c7cd269eb66697939ae",
-      "bytes": 100806,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-belastninger@1x.webp": {
-      "sha256": "c3204ccc34f1d836f03584ed8c56e0444eaa13675379398a041454c9d0203249",
-      "bytes": 39814,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-innstillinger.webp": {
-      "sha256": "fb1c7f14877f7b4b7d3d34713ff595249f72fdfcc7d3247a751afcbb6a437cb3",
-      "bytes": 102184,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-innstillinger@1x.webp": {
-      "sha256": "8c6e8b63d382caa4d9d44e3ec206d8b73a207555c3d274b19747fe18eb906ddf",
-      "bytes": 41230,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-kontrollmal.webp": {
-      "sha256": "160eaa3b1244a6279c585575e3ab59170e2c6054f1c0e20a9188ff097f7b464f",
-      "bytes": 105178,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-kontrollmal@1x.webp": {
-      "sha256": "61d92139f83e76c60bd3bc8cd5d3a1b273d312b7a5aedc5d37ab857541f8d010",
-      "bytes": 44650,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-leder.webp": {
-      "sha256": "2d58f36db37cc164fb5892765c8d882c4ec523dbf076d467cdb4c63f1858017a",
-      "bytes": 106818,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-leder@1x.webp": {
-      "sha256": "e03fe408e5878d54855377a32e8119a40bfb159804cfbaa391a0bb922febe665",
-      "bytes": 46806,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-min-dag.webp": {
-      "sha256": "381abc94615df93abffaa4f6d066ac8c6bbaafd860b830dfb7051c39ca0bc022",
-      "bytes": 147238,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "hengsel/vis/skjermbilder/crm-ipad-min-dag@1x.webp": {
-      "sha256": "9037546475ecdbccfb16fa6b781585a76074d3ff9a0adcf8deb6cdd0929ed4c6",
-      "bytes": 64054,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/crm-meny-apen.webp": {
-      "sha256": "8b97ec46a1c457bd455c292dfdbc76f4539ac56bcad8c105db65ae3a5afbb15c",
-      "bytes": 38140,
+    "hengsel/vis/skjermbilder/d12-e-postvarsel.webp": {
+      "sha256": "f2e66166577903871d35c4ecb8533ae734a50ee8500c378b9f5f42d9b4f205e4",
+      "bytes": 72908,
       "bredde": 780,
       "hoyde": 1688
     },
-    "hengsel/vis/skjermbilder/crm-meny-apen@1x.webp": {
-      "sha256": "0f7be7e8e20c403cea0e93b39d15d724c56cdacf155caec17d1e376ac3053286",
-      "bytes": 15660,
+    "hengsel/vis/skjermbilder/d12-e-postvarsel@1x.webp": {
+      "sha256": "ecacb5526e0be50eca85bf36680ed01f78160ff735604677922944c0599f49ae",
+      "bytes": 29106,
       "bredde": 390,
       "hoyde": 844
     },
-    "hengsel/vis/skjermbilder/crm-min-dag.webp": {
-      "sha256": "8873be6aea79b6a2031968db8f5067f2972060927743f40edeaa29713f50c500",
-      "bytes": 165752,
+    "hengsel/vis/skjermbilder/dok-d1.webp": {
+      "sha256": "b700ea7a88a4838510d3f37381a932b096301423946e26be571c05131063390a",
+      "bytes": 21776,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "hengsel/vis/skjermbilder/crm-min-dag@1x.webp": {
-      "sha256": "fcbe865a03c69bf682cff710ec34626816f058bac11b7c512dae3b2470fa0412",
-      "bytes": 71194,
+    "hengsel/vis/skjermbilder/dok-d1@1x.webp": {
+      "sha256": "35d13d1c49e74b55c0d3313a0d1fe9a3f531aeef0f004929738843aa2d4fe08e",
+      "bytes": 7550,
       "bredde": 1440,
       "hoyde": 810
     },
-    "hengsel/vis/skjermbilder/crm-moduler.webp": {
-      "sha256": "0de165b261aba5d61d3e2f70dfdb016d3810783a2b60e8b759eab109dc0dfa27",
-      "bytes": 166030,
+    "hengsel/vis/skjermbilder/dok-d2a.webp": {
+      "sha256": "815bac06c9d91557629816da6d62c06b15fe7f1348583c8d8f08d5e147c9818b",
+      "bytes": 18974,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "hengsel/vis/skjermbilder/crm-moduler@1x.webp": {
-      "sha256": "8df7f2e5107b4d585a3a7e80b4b820b3faa90402f99182c24a355a3d6e813119",
-      "bytes": 70624,
+    "hengsel/vis/skjermbilder/dok-d2a@1x.webp": {
+      "sha256": "b0bb355f7e1fd1e5f11f59e6653a63ecf652f226ea392cd691802d8a13cea319",
+      "bytes": 6542,
       "bredde": 1440,
       "hoyde": 810
     },
-    "hengsel/vis/skjermbilder/crm-montasje.webp": {
-      "sha256": "a5d750dba478ec245e2b92f7c8886c73938603ff69a8013a817e961a2bf1acea",
-      "bytes": 133406,
+    "hengsel/vis/skjermbilder/dok-d3.webp": {
+      "sha256": "dde44456ce2ee4650b1a9db829d89be3518f1998a9aed0a15869d42450653dae",
+      "bytes": 21438,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "hengsel/vis/skjermbilder/crm-montasje@1x.webp": {
-      "sha256": "7a156b3890d667afe8fa14f5229ba60945fa9df7c32732bb75edab3865b42294",
-      "bytes": 54388,
+    "hengsel/vis/skjermbilder/dok-d3@1x.webp": {
+      "sha256": "4b0c5d211780d199ef4c4c12f873fc5449ff31375fce0432db207cc078828bab",
+      "bytes": 7418,
       "bredde": 1440,
       "hoyde": 810
     },
-    "hengsel/vis/skjermbilder/crm-ordre-kontrollmal.webp": {
-      "sha256": "9c51a7ddf65d8aaff232c3fb24da12fb58b1fbe0d5a1052be47f0b28cf3cf390",
-      "bytes": 110304,
+    "hengsel/vis/skjermbilder/dok-d4.webp": {
+      "sha256": "4805909bece7eaedba2b0f532ae95f1b3d494f2ed8f993de7d37d39d9b2e370f",
+      "bytes": 49464,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "hengsel/vis/skjermbilder/crm-ordre-kontrollmal@1x.webp": {
-      "sha256": "7eef4589a5cc571760dc38f9b59a4edc51dba2d5d340293b12281ba246e39b3e",
-      "bytes": 47258,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-resultater.webp": {
-      "sha256": "a995a2a01a978b65c715a71d00b7611907f301f6629aca91dbe0a633b7ebf85a",
-      "bytes": 106284,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-resultater@1x.webp": {
-      "sha256": "1985ccb5402e5ee91d1e6d9f1094ee73d008ecc299dff8b706e073a09d8ef296",
-      "bytes": 45174,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-saker.webp": {
-      "sha256": "5cbe45cc6ad2fceedb5a668f7fbee320491fdd9c3d052d0af7d060552c81c86e",
-      "bytes": 141388,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-saker@1x.webp": {
-      "sha256": "98dcebfe06de3476fed59028d626f74af8563a8e21ac5d2a65b91496ab3dfc4b",
-      "bytes": 59454,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-salgstavla.webp": {
-      "sha256": "0f658489b5c298d353e5c1ac6abea3a2359c63c2d7589f232e668462d5de7eb6",
-      "bytes": 185544,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-salgstavla@1x.webp": {
-      "sha256": "aca1b14f954283af6338b0e5e6b674a412577fc41a2ab07bbc996f14e23c599d",
-      "bytes": 73976,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-samtaler.webp": {
-      "sha256": "3181fe1c3487f9937ee5a3f9fdc68e8e42b40c1ae0ef8e70802ccfd4ad4a56a0",
-      "bytes": 110670,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-samtaler@1x.webp": {
-      "sha256": "c4a2c98697d794fc99b9e56b9f2ef5777af182f515b31958abfcf71b9a694c98",
-      "bytes": 44702,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-tilbud-kunde.webp": {
-      "sha256": "b819469e1ddbcdc01acb63166ea01d384f95c6d2e9e0e2842b12dd4905f4ec1f",
-      "bytes": 67318,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-tilbud-kunde@1x.webp": {
-      "sha256": "bbc8ea558777bd768431f41385e28d97d70ca9db5b67a51d48ef9d95c3517ffb",
-      "bytes": 27524,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-tilbud.webp": {
-      "sha256": "9a99d141178e8b453e3c6202c1e8b5417c988c9aeeefd4bc1a803b3aa74baa34",
-      "bytes": 132618,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/crm-tilbud@1x.webp": {
-      "sha256": "d5fc6cb1a9429e4d8088fb8783b9cd779e81944ee6c4edd6885182af0d2ffa7a",
-      "bytes": 54578,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-innstillinger.webp": {
-      "sha256": "788ea672a5659d353a4e0c1b10714d16ee95a5617885d8587fe0a57f35200744",
-      "bytes": 42742,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-innstillinger@1x.webp": {
-      "sha256": "7bbefd61d158bb12863b5f254a1a6f02a5f49ec941fd7816d2f185bbcbe6f103",
-      "bytes": 18676,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-kontrollmal.webp": {
-      "sha256": "e3bb56fb232fa920ce57d877d198717dc0377748eff256d2b93fd5b94204de35",
-      "bytes": 45416,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-kontrollmal@1x.webp": {
-      "sha256": "5711082c026a0b48ad73ed0f2084e7cfcde8d24a610adae67856083592b5b66d",
-      "bytes": 19998,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-kundekort.webp": {
-      "sha256": "8bb2614e29fea97dbe7d1d9af69b3a68df265923c401e7a052d4aecb4cee196c",
-      "bytes": 62450,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-kundekort@1x.webp": {
-      "sha256": "127136292f5e02553d407a9ef41d4f15deaa79637a28989165c1eee7d0286117",
-      "bytes": 28594,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-leder.webp": {
-      "sha256": "f61ef1f5f1b8146e115f37167cb2111aeecc1ac71484daf2e6256c4c8ba91242",
-      "bytes": 58356,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-leder@1x.webp": {
-      "sha256": "aa68e698d4a12c6b4625c2b7b2658a536745bc2806cc057af8eccc33f7d767a5",
-      "bytes": 25996,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-min-dag.webp": {
-      "sha256": "3a65f9c14126368f8cad6c74aeb084a6a0b23a1ea69ec17200a3b9b373b36a87",
-      "bytes": 63582,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-min-dag@1x.webp": {
-      "sha256": "3298567dba49b25c15c6a31afde07894a589805cc4791bcf25b0acc153e45ed5",
-      "bytes": 28702,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-ordre.webp": {
-      "sha256": "03f86df8c7939987f0fdffc985d49e7bb85344e3d3c8f59cd9d1fc7d896d45be",
-      "bytes": 55508,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "hengsel/vis/skjermbilder/crm-tlf-ordre@1x.webp": {
-      "sha256": "9f202859d870918696cfa44310070306be5ac68e2e0704bdd4384988c57d021e",
-      "bytes": 23494,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "hengsel/vis/skjermbilder/d10-sendt-til-kunden.webp": {
-      "sha256": "96492804b844c20b43c1bf55fb612dee5e4a178e325cd782bcea00dd2c5544de",
-      "bytes": 192920,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d10-sendt-til-kunden@1x.webp": {
-      "sha256": "755a845538a0a11f9891950776780f8fe0de5d4a89e5aa737ffc71e0b396239d",
-      "bytes": 74660,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d2b-signert.webp": {
-      "sha256": "831cd56a71311725c5d2bea938249fe9cb472e017ae198f5bf814d1ab8340a42",
-      "bytes": 149888,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d2b-signert@1x.webp": {
-      "sha256": "c83c55548514d32e76cdc88a2ef04735ed851c716f9ba20a1711313113440863",
-      "bytes": 61700,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d3-send-ordrebekreftelse.webp": {
-      "sha256": "07635b9c00b95eafdc19085eeaa66b4d5b6f5f3c798f86f73e79025080a873b6",
-      "bytes": 171772,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d3-send-ordrebekreftelse@1x.webp": {
-      "sha256": "2577b8c4cdc7ecf88485920f800278e74e82cd125ae4eed45f0713a478a57863",
-      "bytes": 71956,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d5-lag-monteringsrapport.webp": {
-      "sha256": "670f6dcb22024f419d181601fc68e2ccfd618a3232cee7faf236521b4b5579bb",
-      "bytes": 165282,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d5-lag-monteringsrapport@1x.webp": {
-      "sha256": "2082e3fe3da5e9b9e333d1328b310208effc24649f903edfc33ef28e5d97d438",
-      "bytes": 69026,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d6-lag-punktrapport.webp": {
-      "sha256": "670f6dcb22024f419d181601fc68e2ccfd618a3232cee7faf236521b4b5579bb",
-      "bytes": 165282,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d6-lag-punktrapport@1x.webp": {
-      "sha256": "2082e3fe3da5e9b9e333d1328b310208effc24649f903edfc33ef28e5d97d438",
-      "bytes": 69026,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d7-lag-leveringspakke-fdv.webp": {
-      "sha256": "d6cf145d6ed53f6d9adf35e487b1abc96637ecf4d03e0526a2903da69129d9ae",
-      "bytes": 166380,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d7-lag-leveringspakke-fdv@1x.webp": {
-      "sha256": "94f0d37da12ebe1a5932fac6ab191f5cf2e612f21c5cb68d4c34b688b28657ab",
-      "bytes": 69718,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d8-skriv-ut-plan.webp": {
-      "sha256": "a3c3b90b71bd729e9d30d0a6c16faa895abdb7ec854700540253a3e0ca2cbcd1",
-      "bytes": 170904,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d8-skriv-ut-plan@1x.webp": {
-      "sha256": "a7b5be4857d9caed981d4377bbed436bc64e9ac5fe4e01fc333700874ce9c7e8",
-      "bytes": 74392,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "hengsel/vis/skjermbilder/d9-lag-faktura.webp": {
-      "sha256": "a2d45010f3bacca38f16b739e06b6051cd9463fbd350e5572d206c30da3c6c20",
-      "bytes": 132886,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "hengsel/vis/skjermbilder/d9-lag-faktura@1x.webp": {
-      "sha256": "d5f005f0757ce120f2d874f2da059cbba5fbaec68a2299a9bc690de7cbf2721d",
-      "bytes": 54694,
+    "hengsel/vis/skjermbilder/dok-d4@1x.webp": {
+      "sha256": "b62477bb2670d72dec861b95bea81f102760e1fa45b1b0c19039b56451302577",
+      "bytes": 17898,
       "bredde": 1440,
       "hoyde": 810
     },
@@ -716,126 +272,6 @@
       "bytes": 48908,
       "bredde": 1180,
       "hoyde": 820
-    },
-    "hengsel/vis/skjermbilder/mb-crm-bestilling.webp": {
-      "sha256": "bb9b73968fe328ea662d5526401b8c6f5e84439a2416340a276eca38437c67ab",
-      "bytes": 106114,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-bestilling@1x.webp": {
-      "sha256": "dd4fb34e4dd9f82399288c7366db708430135911ba159a10a22eb7ac86d5bf37",
-      "bytes": 42754,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-etterkalkyle.webp": {
-      "sha256": "aa7bf774d2514f65cba0734f683c85c09669ebbb2c87d15aba79bc49cf878b50",
-      "bytes": 155164,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-etterkalkyle@1x.webp": {
-      "sha256": "87521b04002828c8651de328459876359843f2fba83c6dc5cd9e986375b37d8a",
-      "bytes": 62972,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-min-dag.webp": {
-      "sha256": "34cad944831efb0c862c8066ba278686d49f57ca474da6993a1e0a820465dc7a",
-      "bytes": 198424,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-min-dag@1x.webp": {
-      "sha256": "889977ee61c97763aab71b784f0454fb53a4729f3ea05533dba6fb31e3c34c69",
-      "bytes": 84790,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-moduler.webp": {
-      "sha256": "310c01d87325647322797669a61360ba3a6f86eebb733a65f8a8f156ae5e31ef",
-      "bytes": 176932,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-moduler@1x.webp": {
-      "sha256": "5b1b97b5cb5f62954c8f9b0593a1a3ed0357136c946567ec5698208e654c32bc",
-      "bytes": 75304,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-montasje.webp": {
-      "sha256": "ff45e5d0dd6f1aa247f86abcb08f95a0ce285d69d6a3be9a39e6a554b67a1f32",
-      "bytes": 134994,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-montasje@1x.webp": {
-      "sha256": "3c678496af5eb0e910350bdfcfa13fcec558db8ea44d576fb89762046c0083b2",
-      "bytes": 55060,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-ordre-kontrollmal.webp": {
-      "sha256": "28253cf57e04ab05db10c88fb64ce9d682f0e378593a887876fc0daca74366c4",
-      "bytes": 129368,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-ordre-kontrollmal@1x.webp": {
-      "sha256": "bd9d3fce32bf854fada961eba6146525c715f34f357f2cd2f6140c588d90329a",
-      "bytes": 52470,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-resultater.webp": {
-      "sha256": "97a391499c156953b518aac040fa73fd4d2de1e21bb4590a6b1f8cae5398ba5b",
-      "bytes": 106718,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-resultater@1x.webp": {
-      "sha256": "f3a78d07b9e3075112f6ab8161f56d5df50b41ea7ad44fbcd81d1a114afc7dc4",
-      "bytes": 45436,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-saker.webp": {
-      "sha256": "452d04717756d4f42e35a683d7dce19c3b077844bbd23537824453d849747cdd",
-      "bytes": 157586,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-saker@1x.webp": {
-      "sha256": "f77b3ff1614392f4eed8b257a79da1711d9324533d64f854aca24b25c841eebd",
-      "bytes": 66338,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-salgstavla.webp": {
-      "sha256": "131e2845dc2f7b0b70401afc3722408a916c487a975c3a8b963570b6bf361d42",
-      "bytes": 195422,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-salgstavla@1x.webp": {
-      "sha256": "897d6e65e61d919eba16b63889479f1773bbdf8a0b3a481ae154b3c3c0753abf",
-      "bytes": 77828,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "hengsel/vis/skjermbilder/mb-crm-tilbud-kunde.webp": {
-      "sha256": "95c79bcf24be6bcad6f3d465301e320533474509aa61e4ebfbf63ed7ec2d871e",
-      "bytes": 157908,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "hengsel/vis/skjermbilder/mb-crm-tilbud-kunde@1x.webp": {
-      "sha256": "c7dd9c0b2234a3ef88b7fcf468ffe90dd75e4897bb0e0d319d96e5b98c12aaf7",
-      "bytes": 65818,
-      "bredde": 1440,
-      "hoyde": 900
     },
     "hengsel/vis/skjermbilder/mottak-mork.webp": {
       "sha256": "534a3e3837f2132247f925759e0bc68eca141c4f93947e2f8a97dafe072291a7",
@@ -910,62 +346,62 @@
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-ferdig-mork.webp": {
-      "sha256": "b9069d0d751381bc860d7bc745eb97e2e69ee433e9cff2d53955102f736e02aa",
-      "bytes": 42340,
+      "sha256": "30be29019a7550babc024860a61fa4700c57c25a2afd5ed4d44cd1185f578887",
+      "bytes": 41750,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-ferdig-mork@1x.webp": {
-      "sha256": "79182314339700e9aabdff577de16c2adffee6f7751289a25c76626d17266ffd",
-      "bytes": 18618,
+      "sha256": "e2f9876acb5513473fa28dd1670dda5d41636c6378d38d2e26d9749a4197a70e",
+      "bytes": 18126,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-ferdig.webp": {
-      "sha256": "48b9b810f8377f921a898c0b96d32107acd366bbc8c6b1d17e15883c8c748b00",
-      "bytes": 41508,
+      "sha256": "608c8f47d15ceac3e2d4ec73e6f48609d3b8389b400e8a23aa05f3a2bfce2a3c",
+      "bytes": 43118,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-ferdig@1x.webp": {
-      "sha256": "ba3755a5d7f2d979ae9de68cd45c06a4738f7af708545d9dc15fc11ed060c399",
-      "bytes": 18670,
+      "sha256": "1b55d5ab287d59047437ac290653f23989fc654e526861ab77c53280d8b8bb7c",
+      "bytes": 18500,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-i-dag-mork.webp": {
-      "sha256": "4c75c7a8b80638131733ec29e6feeb482c1debeee450e8bfe77df7d57d416888",
-      "bytes": 55772,
+      "sha256": "5586863e79484380fb49447aa45123422929cd88d3eff861e36c71e39b26ebc6",
+      "bytes": 41856,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-i-dag-mork@1x.webp": {
-      "sha256": "627c003f058758336b888a19f640687df37d53d339ef32496e7793917822046d",
-      "bytes": 25968,
+      "sha256": "2558d62f6977945481e5d95b2897d23faf61865d90e0f6cfaab49001cc9736ef",
+      "bytes": 18782,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-i-dag.webp": {
-      "sha256": "00429986021cf3647202962e0b49244f07c2f75023dedfeb692273f691a6eaa5",
-      "bytes": 58592,
+      "sha256": "bbb25878530d626a9e994f75b564078713e39fb11d4e9a3bbe6ba23cbba3c309",
+      "bytes": 44098,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-i-dag@1x.webp": {
-      "sha256": "a84a0eebc729a80826796aeb01f548f17d6e63a12920f558d34eeb700a581853",
-      "bytes": 26228,
+      "sha256": "a09a3f0ba06628e02e0041674405276737b4911f28ebc60829c5eb8c3ba43df8",
+      "bytes": 19196,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-ipad-bildeverktoy-mork.webp": {
-      "sha256": "c315708dd7b69f1b01aa0a32d92e7f4f1551b9215a38abb283f071ae048cb4b3",
-      "bytes": 110688,
+      "sha256": "c62154dacc064b7cece9a4fa3e4fa96a3eacab84b46266b52cca803d6318506c",
+      "bytes": 112672,
       "bredde": 2360,
       "hoyde": 1640
     },
     "hengsel/vis/skjermbilder/ute-ipad-bildeverktoy-mork@1x.webp": {
-      "sha256": "d05e54dcb244a36461cb4e959626e7798f79f25ad1bd5f525be3061890d14541",
-      "bytes": 47518,
+      "sha256": "61ccc954f13b5c8ac1ca73657a006b9d642027c34fac355dae0abb3388b7a1ef",
+      "bytes": 49224,
       "bredde": 1180,
       "hoyde": 820
     },
@@ -982,26 +418,26 @@
       "hoyde": 820
     },
     "hengsel/vis/skjermbilder/ute-jobb-under-mork.webp": {
-      "sha256": "0c1ca657717aaa1e424e42b3bb36ee62c7a397cf8ac9472eba11218588a18705",
-      "bytes": 48118,
+      "sha256": "7f2f05352b7c8d85cda669759c2a1cc9c92a8866a308ddf2cb9fc976a3165069",
+      "bytes": 48848,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-jobb-under-mork@1x.webp": {
-      "sha256": "c49f3dd58c7ec04730ad471f51451c543ce13fbe4e1e2a9354439ad31cacd8c1",
-      "bytes": 21620,
+      "sha256": "c5417940473d9cea8599827b89e214d84fdddeeddd681e5b83f7be9409806ba1",
+      "bytes": 22378,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-jobb-under.webp": {
-      "sha256": "4d615a2333dd183588625e5ffa831781146bbf3c3bf79e61c4ae091699a3a110",
-      "bytes": 49456,
+      "sha256": "0573ef8e4e24f36c0334f3d6e860a9901e4ce39eb47613b356363bf81a27f8be",
+      "bytes": 51288,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-jobb-under@1x.webp": {
-      "sha256": "2b65117c55c3986ecadccd1a342c380cf2de4bdd749fb0a0a98c11b75fe8f1b4",
-      "bytes": 21904,
+      "sha256": "19659365a0b1e3ce7b9ee40aaab7177b8a6e7f6c6eb61147a9c4206f87f6d934",
+      "bytes": 22538,
       "bredde": 390,
       "hoyde": 844
     },
@@ -1054,50 +490,50 @@
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-laser-mork.webp": {
-      "sha256": "c4cfc364300b44f850ef93773c115d95eaee253d81d8bcfb0f963c13793ec57a",
-      "bytes": 30844,
+      "sha256": "acd084dbffb60c48cc9988c3351430a39b910ff4233afaa814c6ecbc24f89fdd",
+      "bytes": 35034,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-laser-mork@1x.webp": {
-      "sha256": "3b41a5b89beb12dc7e8a19a733892fdc30b684a16978b0802fe6523255398a41",
-      "bytes": 12944,
+      "sha256": "a680591ce6e7c3ed4fdbd0e635e62d67de7403ed554deb794bfb225584935bb1",
+      "bytes": 14930,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-laser.webp": {
-      "sha256": "6825f12e208f2789c45113b94127a124c263fa29634ca361ffe9fdc33faf7f77",
-      "bytes": 34780,
+      "sha256": "497f6ed2b39afd317677d5675161cf8e0f01cd454819e0c83fb832254d8cf5ed",
+      "bytes": 34870,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-laser@1x.webp": {
-      "sha256": "aae2edb8cabf33b6e6574a13b7804559b1d853c3cb5f6c0156105a69ba766e0b",
-      "bytes": 14620,
+      "sha256": "39fb4f1b8684677b57f1623cfe992fcf2ca6ce47ab6af422e42803f564e61b57",
+      "bytes": 14636,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-punkter-mork.webp": {
-      "sha256": "cb7e3d21a1dd89eed246bf466ddf79e518d12cf942f5c201d9ae7a50a22756b4",
-      "bytes": 53012,
+      "sha256": "87323e3b421b50608950aac355c046be7834c19c6a868bcbd4b4081798de20ae",
+      "bytes": 37432,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-punkter-mork@1x.webp": {
-      "sha256": "972bab856ce339cf7e175c92dd4cbb7e263b286a79cc2cff0ac632840121d974",
-      "bytes": 24510,
+      "sha256": "39e320b2e842705ba9043eaa2cd7d81e37639ea02927fd34a590512719954848",
+      "bytes": 17528,
       "bredde": 390,
       "hoyde": 844
     },
     "hengsel/vis/skjermbilder/ute-punkter.webp": {
-      "sha256": "782cf1cd21b80a3bd5fda504724c26fea3021a9d791d115d2832ce2c4f1ffba3",
-      "bytes": 50244,
+      "sha256": "aa596e7cbc0d2df84dc6f82a1280efd31317bbf9da4a85f6dadc41870df52787",
+      "bytes": 38664,
       "bredde": 780,
       "hoyde": 1688
     },
     "hengsel/vis/skjermbilder/ute-punkter@1x.webp": {
-      "sha256": "ea0ec2bd4cdf1f52f9aee6f3422090768e3e2a7d1bc6c1f576eefdb246742d76",
-      "bytes": 23096,
+      "sha256": "f0772dfa2f613708890d3c92d7cc57a9b858c1ab40091a1b081511f1ffd05a6f",
+      "bytes": 17442,
       "bredde": 390,
       "hoyde": 844
     },
@@ -1150,110 +586,110 @@
       "hoyde": 390
     },
     "sigdal/app/avvik-lys.webp": {
-      "sha256": "9a56e204ce890b2da3e4996cd76a37ceba3dda17454af03e8f5745e9c26abe7c",
-      "bytes": 59048,
+      "sha256": "c86b48359f736bd360660d876b73f743da505233c391233c5b2b6a37991e317f",
+      "bytes": 59308,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/avvik-lys@1x.webp": {
-      "sha256": "58bd32f76659a77d8cae1ced03d7468990764062925c38532405f685161dd966",
-      "bytes": 26486,
+      "sha256": "f81d383e137be035175d233f9b2b64e57d4e2757ca2fe27b88f47f5fc2560bb5",
+      "bytes": 26670,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/ferdig-lys.webp": {
-      "sha256": "74580c2ad807311adc841f09fa8b4cef34d9f1803ce764c6748f97692d435bc3",
-      "bytes": 55664,
+      "sha256": "3229bba156731ec35f192fac1e652a3f4773a9aae47c74add79680c3085ac4a9",
+      "bytes": 55952,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/ferdig-lys@1x.webp": {
-      "sha256": "ffe981de04abcc3201a02fe6b6838f3f74f7b2feceebd1bc3686030e250f605e",
-      "bytes": 25734,
+      "sha256": "e412e8efa4eb0e13f48bfd9bc64d4d92267923c0f20efc1787878e5fbe4ba471",
+      "bytes": 25832,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/idag-lys.webp": {
-      "sha256": "a198be55afeb477309196383c319ce6ee617f48a4fd64a7f2e184cdaaea26474",
-      "bytes": 90230,
+      "sha256": "8de7fa0f06c5375917d6788fe414cef5a3952e08f9c2973a61455aaac094f163",
+      "bytes": 88920,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/idag-lys@1x.webp": {
-      "sha256": "e240f40e172ce05d93e2650aaa5f75b233e9543801003fad30d151103e4a8891",
-      "bytes": 41684,
+      "sha256": "a2d5b6a911ba9a5fe485df9ef2fece8723cd64e83ab6a70887713478aae2d5c1",
+      "bytes": 41456,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/ipad-bildeverktoy-laser.webp": {
-      "sha256": "4903e3b6293c93e61de472de8e5e77e60d73445e5f560be88d59bb90682624f7",
-      "bytes": 35084,
+      "sha256": "ce304bd0bce5bbe9d51775f9fd72b72765dcd882861aa203a2c472e2449f7199",
+      "bytes": 34578,
       "bredde": 2064,
       "hoyde": 2752
     },
     "sigdal/app/ipad-bildeverktoy-laser@1x.webp": {
-      "sha256": "99308a77e3b958c706904272e7a58a25786230ee0b79f416c25438a359eb78d1",
-      "bytes": 13736,
+      "sha256": "862af35812f88ecf3dd5a9388ed5d839c96d88cb2815ade5d06b102922c9fe75",
+      "bytes": 13644,
       "bredde": 1032,
       "hoyde": 1376
     },
     "sigdal/app/ipad-idag-lys.webp": {
-      "sha256": "3a19f3b66091d7988077efa7c22ca9786fe41d22976000fed32d7455a2909b1b",
-      "bytes": 74442,
+      "sha256": "b0304362e9fbc1e84a48d20a15af2635dc58a4f68faeed7f50ef0ad5870bea52",
+      "bytes": 72276,
       "bredde": 2064,
       "hoyde": 2752
     },
     "sigdal/app/ipad-idag-lys@1x.webp": {
-      "sha256": "d4804e51c38f6a6c88f475b57a323fd6692a3ecad366ef8eed7ea6da36eb3ee4",
-      "bytes": 32030,
+      "sha256": "c5c31a3e0b4316d17d6fa7c72d672ae9e3b0503b39c57d7e04c4f38333d51ede",
+      "bytes": 31128,
       "bredde": 1032,
       "hoyde": 1376
     },
     "sigdal/app/jobben-lys.webp": {
-      "sha256": "f6bdf0a84d73fa99e4dc6460495d1cf2e798f013a3e27ae4fa2091b2348c8324",
-      "bytes": 93222,
+      "sha256": "70075202bdb1d36243c37bb6f9f1d91df0a5f2a36623cb6dd2b0d8561622765e",
+      "bytes": 99038,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/jobben-lys@1x.webp": {
-      "sha256": "c6891f458f484bfd83acf264d0f9892c71e6d716dea6b5c7002cbf34959fb7e8",
-      "bytes": 42814,
+      "sha256": "dfbb30ae1e3ed7e4aba157672a472017efff6a1c997004d2845df57feb934a04",
+      "bytes": 45564,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/ks-lys.webp": {
-      "sha256": "685ac1f65bc364365c0b5da7d76ff325cb7f2f3b40c77886feeb80497223e7e2",
-      "bytes": 41654,
+      "sha256": "9e9e18969b85f54aaee060ff18a153f7fc06aa41cd1f08ffa810b3e863f9d4b7",
+      "bytes": 41056,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/ks-lys@1x.webp": {
-      "sha256": "aec15bc23ae9caeaecc6d556e4c57668d7badbe4f936447996bfd0f9b424a8ea",
-      "bytes": 18894,
+      "sha256": "1709d8c7b044326045e520455f00f7304d6e3420c3745ad9b7ba265c48ad0473",
+      "bytes": 18744,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/punkter-lys.webp": {
-      "sha256": "28276030594541ad21aa656de36aa19d4296312317e9b980b05065a69a155005",
-      "bytes": 39522,
+      "sha256": "ecbc54866276b42ba476a677ac36dd11ba113b4a989b7678b515ddf0ec39b515",
+      "bytes": 36000,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/punkter-lys@1x.webp": {
-      "sha256": "8b1bf064d901dafbdf046c47dcf223d4aedbbee54f7f909cde6c065f3066a6c2",
-      "bytes": 17216,
+      "sha256": "b8faa7e1fff1a07a280f6984b89f4ba0a7ca51e5d6bff26992fe7df89fa6709b",
+      "bytes": 15918,
       "bredde": 603,
       "hoyde": 1311
     },
     "sigdal/app/uten-nett-lys.webp": {
-      "sha256": "2619eea4b93f4adda18f0bb12472fb998b11b34a7fd81b2fa6a4843caa0d4699",
-      "bytes": 93710,
+      "sha256": "92985e57c89bb43651fb7b2eb55ce1e77f043f62b7512e1d3e0a88ceaae7b06b",
+      "bytes": 93356,
       "bredde": 1206,
       "hoyde": 2622
     },
     "sigdal/app/uten-nett-lys@1x.webp": {
-      "sha256": "e7c189f2a5e7a8b12bb7a99f2711d2d45fbeb8c66ca4e499e472528c1e8ee46c",
-      "bytes": 43594,
+      "sha256": "ea8cb1645be391dc2de257bbf3ad3cdd36fdea70a711b4a2bfb9f9d9ff4c0e19",
+      "bytes": 43124,
       "bredde": 603,
       "hoyde": 1311
     },
@@ -1293,453 +729,81 @@
       "bredde": 390,
       "hoyde": 844
     },
-    "sigdal/vis/flate-butikken.webp": {
-      "sha256": "66a3ed3c07f8c106adec6498e9c5b93d08e750f461db5af134656299677fd7bc",
-      "bytes": 38878,
-      "bredde": 960,
-      "hoyde": 740
-    },
-    "sigdal/vis/flate-leverandoren.webp": {
-      "sha256": "15b440f3717bbb2aad58f81658af5474628bce7467bd18ecd793632499d39c8e",
-      "bytes": 25418,
-      "bredde": 960,
-      "hoyde": 626
-    },
     "sigdal/vis/flate-montoren.webp": {
-      "sha256": "d793d95ff444402f5e222c52a378e3f479d0c69a9c251b351691b0db4e229c33",
-      "bytes": 28170,
+      "sha256": "1c75718826b9d0de937e394ec764ee11543d91bb034c63259f57dcc477b0c387",
+      "bytes": 22974,
       "bredde": 372,
       "hoyde": 760
-    },
-    "sigdal/vis/forsta-reise.webp": {
-      "sha256": "8a38a863efd33ce5afb101566ccabc677062bccdc518bc9301278d7446acd9da",
-      "bytes": 31654,
-      "bredde": 960,
-      "hoyde": 626
-    },
-    "sigdal/vis/hero-enkel.webp": {
-      "sha256": "1a5994a12b37463bd97356425fed193e6ec9b33be8d48cf2e2614d627019cb6f",
-      "bytes": 48648,
-      "bredde": 1320,
-      "hoyde": 1017
-    },
-    "sigdal/vis/hero.webp": {
-      "sha256": "83bb5ac4d9b741a749d2db1c4481a4e3f71004c2e0cba84764e265a127f02ea7",
-      "bytes": 96468,
-      "bredde": 1500,
-      "hoyde": 1227
-    },
-    "sigdal/vis/rom-crm.webp": {
-      "sha256": "70f97feeadd2c1ed6a7a90c4300678f43502cae6f2c62586cebde69509fca208",
-      "bytes": 39712,
-      "bredde": 960,
-      "hoyde": 740
-    },
-    "sigdal/vis/rom-firmaleder.webp": {
-      "sha256": "256265b1e2cab7f5c6b07c59067a97dab024bb515c422e758b21e19c377e6beb",
-      "bytes": 36174,
-      "bredde": 960,
-      "hoyde": 696
     },
     "sigdal/vis/rom-montor.webp": {
-      "sha256": "d793d95ff444402f5e222c52a378e3f479d0c69a9c251b351691b0db4e229c33",
-      "bytes": 28170,
+      "sha256": "1c75718826b9d0de937e394ec764ee11543d91bb034c63259f57dcc477b0c387",
+      "bytes": 22974,
       "bredde": 372,
       "hoyde": 760
-    },
-    "sigdal/vis/rom-reise.webp": {
-      "sha256": "c4244985ded4c0222c4da2b4f7210ed636f28316d56f2fc6ac8bdd3f4e8db1f0",
-      "bytes": 31540,
-      "bredde": 960,
-      "hoyde": 740
     },
     "sigdal/vis/rom-tegning.webp": {
-      "sha256": "da16e7192a8e0505cd105c7fce70881e5df25f981c1cd21d6b75f419db93de08",
-      "bytes": 18244,
+      "sha256": "5d9f0c4c42eea812793b879308441bf098421f19482a1301ca2ecd203020a578",
+      "bytes": 18272,
       "bredde": 372,
       "hoyde": 760
     },
-    "sigdal/vis/skjermbilder/crm-bestilling.webp": {
-      "sha256": "d29c59cd3d0f9e1e8304354602be9895eab0673c2339594040f925df4df6267d",
-      "bytes": 105282,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-bestilling@1x.webp": {
-      "sha256": "b8d7bb933652fb86508ce64331c2b29d589da427bf68a48dd3ec33b78940b7dc",
-      "bytes": 42306,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-etterkalkyle.webp": {
-      "sha256": "feeb5973e5d8baa0c5449be7872fd584a99281d7ec54a15ff1974f0ff18457ff",
-      "bytes": 154028,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-etterkalkyle@1x.webp": {
-      "sha256": "212190c81cb7a12a198c04b9d8d88d11ded8f78b774c170e80f50a9c9cd312bb",
-      "bytes": 62188,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-belastninger.webp": {
-      "sha256": "85809151cf523f2a2581263cbe334da952ad8f13f96138db0cabd04bb5c6b90d",
-      "bytes": 102424,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-belastninger@1x.webp": {
-      "sha256": "dc78e7d4b781a4892f5f29f00f02dc8aa897ca2e6060917f72a4e9fdbf1c2604",
-      "bytes": 41838,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-innstillinger.webp": {
-      "sha256": "f744d641cb07cafab19d4c290556eea12e7ad8bd56efc0aa94403b5661d46c74",
-      "bytes": 100700,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-innstillinger@1x.webp": {
-      "sha256": "0c999057d64786b5c3b925820628e6473c06791f326c57507234e7979d9c1898",
-      "bytes": 42098,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-kontrollmal.webp": {
-      "sha256": "da40a2a9a9a5d906ed53c44575ab3f2f22473836aee0b4af8e4b071816c065b4",
-      "bytes": 104710,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-kontrollmal@1x.webp": {
-      "sha256": "ac467e487313645609946643e806e909f00bbda6427cfa3b26a610cbf2e53a47",
-      "bytes": 46062,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-leder.webp": {
-      "sha256": "8dcde4784755ab46e4dd50cd4132c525224de4c15a41ef959013e2ca6e2d570b",
-      "bytes": 104736,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-leder@1x.webp": {
-      "sha256": "54e6d26324b9de21d25977a3fc398bc58d0965dab0c7b949a82e0bb7ca0bb568",
-      "bytes": 46208,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-min-dag.webp": {
-      "sha256": "193d7213235799d88e776e3bf3ab0b3e28d09551b3c5ed0cd02a509431150c52",
-      "bytes": 145198,
-      "bredde": 2360,
-      "hoyde": 1640
-    },
-    "sigdal/vis/skjermbilder/crm-ipad-min-dag@1x.webp": {
-      "sha256": "ed0296c2735c019f4798a37ace5563649d0d5c3a10a3beaae38bd6434d7adc1c",
-      "bytes": 63560,
-      "bredde": 1180,
-      "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/crm-meny-apen.webp": {
-      "sha256": "9ed668e444487df15dd2bf6965c70098be134062a9841ce318e7214d356ca2a5",
-      "bytes": 36910,
+    "sigdal/vis/skjermbilder/d12-e-postvarsel.webp": {
+      "sha256": "5b3e7c2a3150c2a78cd8197f95421596562cec5bbf94ddf8b186304271338245",
+      "bytes": 71978,
       "bredde": 780,
       "hoyde": 1688
     },
-    "sigdal/vis/skjermbilder/crm-meny-apen@1x.webp": {
-      "sha256": "3802df7e590de8e2370b6e33e8baa7296381a59d5676eba7229d8ff62c8134eb",
-      "bytes": 16104,
+    "sigdal/vis/skjermbilder/d12-e-postvarsel@1x.webp": {
+      "sha256": "6b1334335e19f7b9c8f062fef8ca4a6c60626ba602f71b12c4382dcb203af137",
+      "bytes": 29900,
       "bredde": 390,
       "hoyde": 844
     },
-    "sigdal/vis/skjermbilder/crm-min-dag.webp": {
-      "sha256": "ccc3ab799bf5b3b2f6b3dc1d932acd08032121192a46d4ee9820024dc02c4d98",
-      "bytes": 158814,
+    "sigdal/vis/skjermbilder/dok-d1.webp": {
+      "sha256": "6b7068a6b4914a76f4b5a766a7bab08fe08d8026a676b9c2aa101c31fc1175a3",
+      "bytes": 23384,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "sigdal/vis/skjermbilder/crm-min-dag@1x.webp": {
-      "sha256": "24c29a95a8d8e386cd51d52b05cf79fee3389e91d2f5b2c878226b62190f481b",
-      "bytes": 69914,
+    "sigdal/vis/skjermbilder/dok-d1@1x.webp": {
+      "sha256": "83c209993666abf2807840acad479c638025317b49e8b675d9236e30b1069879",
+      "bytes": 7854,
       "bredde": 1440,
       "hoyde": 810
     },
-    "sigdal/vis/skjermbilder/crm-moduler.webp": {
-      "sha256": "33584e96fdb983eb6395e25a9238b8d9b281b62a7180ffe7c28c1b3b181a95e6",
-      "bytes": 161148,
+    "sigdal/vis/skjermbilder/dok-d2a.webp": {
+      "sha256": "1abf7077bbe9283c0a543f63db9f5fba3b65363ffa5ad8c14c6eef36358d3b55",
+      "bytes": 21636,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "sigdal/vis/skjermbilder/crm-moduler@1x.webp": {
-      "sha256": "f646a18a44b89fb0e23daa817f0b2a98df51e17a25297644b312e989fe68c6ca",
-      "bytes": 70492,
+    "sigdal/vis/skjermbilder/dok-d2a@1x.webp": {
+      "sha256": "30628f447db8433468ac9ca83b595a79e4825b9dd44f4bdff7fe80bbc7f33300",
+      "bytes": 7312,
       "bredde": 1440,
       "hoyde": 810
     },
-    "sigdal/vis/skjermbilder/crm-montasje.webp": {
-      "sha256": "13612014e9da52e6ab8621d24c66da868e6d6ebd2882b51b044cfa1171557885",
-      "bytes": 124100,
+    "sigdal/vis/skjermbilder/dok-d3.webp": {
+      "sha256": "240763b93c7798a2ecf9dd59f0ad957538b887e6725b15551cc889b5b5988f34",
+      "bytes": 22980,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "sigdal/vis/skjermbilder/crm-montasje@1x.webp": {
-      "sha256": "bf383e28ee4dac66f00e55bade26c50949654cf1294ab8f20461367f0da07b7a",
-      "bytes": 52502,
+    "sigdal/vis/skjermbilder/dok-d3@1x.webp": {
+      "sha256": "2fbb835615e73bc06b6ba5005b2bc90c29e97c7fc1300feeb02dbc5d5933d894",
+      "bytes": 7690,
       "bredde": 1440,
       "hoyde": 810
     },
-    "sigdal/vis/skjermbilder/crm-ordre-kontrollmal.webp": {
-      "sha256": "c9623a4a1bff98c2566b25d261d8209ce33644ec76896ec1e4ebdc59c8a1996b",
-      "bytes": 106360,
+    "sigdal/vis/skjermbilder/dok-d4.webp": {
+      "sha256": "6973f03eb13165d5507c920e8ab83475bfdf88e3b09195312fd3391e566a60f5",
+      "bytes": 53196,
       "bredde": 2880,
       "hoyde": 1620
     },
-    "sigdal/vis/skjermbilder/crm-ordre-kontrollmal@1x.webp": {
-      "sha256": "7644a3346fb82242b46b252ed3b28d2dbe7cb74f718d4edfebff16efebe6fc48",
-      "bytes": 45542,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-resultater.webp": {
-      "sha256": "0480d17fe3a69d1f62540c327132bcde168256b2a7cc6190a358a197dde6dfe2",
-      "bytes": 100282,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-resultater@1x.webp": {
-      "sha256": "09a0fa33c5336b8d50977e7fa260a2ea008268b3f11c4e685ebbc4d2f44d633c",
-      "bytes": 42828,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-saker.webp": {
-      "sha256": "8b8e3d551e122a47f6bd67d68d1d606e1020853fd506274f8276d49c96bc6f84",
-      "bytes": 133908,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-saker@1x.webp": {
-      "sha256": "0ec8d8ca635e12c1d1d42fec78bd73f7d23a94c4846e08c9c83b857a499d97b4",
-      "bytes": 55602,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-salgstavla.webp": {
-      "sha256": "929407561d0c897c95649a931e5c26cbdb5c16e210b91915a9b0465df2b15ae7",
-      "bytes": 179576,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-salgstavla@1x.webp": {
-      "sha256": "200225eac6525470cca6b3656c57f896516d1b4c7bbbe636a65c2b6fd3e30658",
-      "bytes": 71782,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-samtaler.webp": {
-      "sha256": "c002b936a6cf3ad290a7f91a6bded9e7b5faf6b08f2af68ab073d60c2c531720",
-      "bytes": 105360,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-samtaler@1x.webp": {
-      "sha256": "9b7cf5d4c8c415040668e124a2042b67d99a9875c7be5906aa35c8c00d350101",
-      "bytes": 44170,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-tilbud-kunde.webp": {
-      "sha256": "823adf9891649997ac82781f009ae2f48f576f47d0fefe4abd73e9a287e6b332",
-      "bytes": 147766,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-tilbud-kunde@1x.webp": {
-      "sha256": "4d5895baba196ced87af047c53b329871dfc5b580a0e8b7e3b610c6ae8ebaf3c",
-      "bytes": 63208,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-tilbud.webp": {
-      "sha256": "a86f4047b601003eb3e0159b8879619e1a4d614b1f81f84321ea36b6bc8f75a0",
-      "bytes": 128072,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/crm-tilbud@1x.webp": {
-      "sha256": "d8625113ee22c304a50ef51e85936093a875e52a09441d4058b825a9389cdbbd",
-      "bytes": 53762,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-innstillinger.webp": {
-      "sha256": "89cd6112400b2b72c661556bf2cecc264649d0a3a9f036bfeb1cc4ce9ee54fcb",
-      "bytes": 41840,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-innstillinger@1x.webp": {
-      "sha256": "033237756f4fb7aabed8adf2beeb36cbbf01632daf5c5b1a9c8e9933a739c1cc",
-      "bytes": 19334,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-kontrollmal.webp": {
-      "sha256": "1fb321b6ddb05545035ccc9a81a2e15cc5a979cc59f66c30f296d5b5d12e53bb",
-      "bytes": 49480,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-kontrollmal@1x.webp": {
-      "sha256": "c899c0331fdcc343bd756208d6afdf6e29cfeef16366d6d99965cceb6fdd8587",
-      "bytes": 21798,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-kundekort.webp": {
-      "sha256": "ddde342053f63b80cf2909bbfd2c75d132090fa153e876bc719389e9a03936e4",
-      "bytes": 62366,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-kundekort@1x.webp": {
-      "sha256": "bbf04f2318543a75575a8c023be51e62c3f790b496dcef8d69dc6c2e8f834579",
-      "bytes": 28168,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-leder.webp": {
-      "sha256": "11f599981dfb269fd4fb69722cb41f0546c418bbd009064667c1fdac012497f3",
-      "bytes": 55746,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-leder@1x.webp": {
-      "sha256": "58356cc98ac025bdb20f9db7ab19cea458d1903c8152565c029c12c0a0d418eb",
-      "bytes": 25022,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-min-dag.webp": {
-      "sha256": "1e406e2a72e0735ce4664286e6fcf8cfa580e709838f38dc8511fa09632b4082",
-      "bytes": 61478,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-min-dag@1x.webp": {
-      "sha256": "927120bc65914e84be44c817d3166642f56d3eceb73181c8e9d848e4634e2d00",
-      "bytes": 27998,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-ordre.webp": {
-      "sha256": "332f25cf40b03bd86fdf25c719a4a7c87523d4794a823ad3afc761fc032edd29",
-      "bytes": 57854,
-      "bredde": 780,
-      "hoyde": 1688
-    },
-    "sigdal/vis/skjermbilder/crm-tlf-ordre@1x.webp": {
-      "sha256": "218dfbfddb2bb3fe3e88457ffa1f1ad0cbd9c11dd7a408ce3505103f349b83f1",
-      "bytes": 24440,
-      "bredde": 390,
-      "hoyde": 844
-    },
-    "sigdal/vis/skjermbilder/d10-sendt-til-kunden.webp": {
-      "sha256": "f5e72add96285451c51301f6a5e9d65069d0558bacb0924c2b402e9187ca8f90",
-      "bytes": 194226,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d10-sendt-til-kunden@1x.webp": {
-      "sha256": "6c02bbc80ae0275aa1f4e0ff8a75c0f3ebec473965f1ae15c8ffb74822d0d2aa",
-      "bytes": 76360,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d2b-signert.webp": {
-      "sha256": "823adf9891649997ac82781f009ae2f48f576f47d0fefe4abd73e9a287e6b332",
-      "bytes": 147766,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d2b-signert@1x.webp": {
-      "sha256": "4d5895baba196ced87af047c53b329871dfc5b580a0e8b7e3b610c6ae8ebaf3c",
-      "bytes": 63208,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d3-send-ordrebekreftelse.webp": {
-      "sha256": "7c70c9b0e7816dfd84d2cf6a02487f4e0be3cd66cee3e8dd1f96b753ad49a59e",
-      "bytes": 158040,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d3-send-ordrebekreftelse@1x.webp": {
-      "sha256": "3c32b95695bf828eeb5f49ab96b0d402496ec8a7e7e7715fc5207779f21949a6",
-      "bytes": 68140,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d5-lag-monteringsrapport.webp": {
-      "sha256": "9cc5b3aefe99312e7704c346c27efb39e14ab6d5473d5d8b08920c5cd50a53e2",
-      "bytes": 156704,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d5-lag-monteringsrapport@1x.webp": {
-      "sha256": "aa26db2e15de1b2e90bbed38cc2fc7f444ad20ba0e8a71c80ea674cf390874ca",
-      "bytes": 67794,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d6-lag-punktrapport.webp": {
-      "sha256": "7d307dfce5d2c8ad37e3c8275af77ffbfb970dd4d6a4a4f5306bb1ca150cd8b7",
-      "bytes": 161858,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d6-lag-punktrapport@1x.webp": {
-      "sha256": "0e9de567dd5044a8e38ea573509fadb7f52e9af9520181520c4fa3d6c20cd997",
-      "bytes": 70228,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d7-lag-leveringspakke-fdv.webp": {
-      "sha256": "7c70c9b0e7816dfd84d2cf6a02487f4e0be3cd66cee3e8dd1f96b753ad49a59e",
-      "bytes": 158040,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d7-lag-leveringspakke-fdv@1x.webp": {
-      "sha256": "3c32b95695bf828eeb5f49ab96b0d402496ec8a7e7e7715fc5207779f21949a6",
-      "bytes": 68140,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d8-skriv-ut-plan.webp": {
-      "sha256": "99dbc8edc875eabb0cc071d8a24d4f3aa0751eb34302c8daacfe046ac76de1cc",
-      "bytes": 172498,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d8-skriv-ut-plan@1x.webp": {
-      "sha256": "88d4d75ae4f9d0d4c444fbe40002482dce59d2102379858b46213a608fe67861",
-      "bytes": 77968,
-      "bredde": 1440,
-      "hoyde": 810
-    },
-    "sigdal/vis/skjermbilder/d9-lag-faktura.webp": {
-      "sha256": "66e89bcca1227aa6d0bb04f97ef995e225557d37acda7a242fe68be6bc85677b",
-      "bytes": 130486,
-      "bredde": 2880,
-      "hoyde": 1620
-    },
-    "sigdal/vis/skjermbilder/d9-lag-faktura@1x.webp": {
-      "sha256": "050bef450863fa60712f61dc6653e6f37dca21a751d904a085385fc961d1c048",
-      "bytes": 55218,
+    "sigdal/vis/skjermbilder/dok-d4@1x.webp": {
+      "sha256": "c6815c6bcac574dab3106591352b2233881162678e4ef423a7b701b398b31fb2",
+      "bytes": 18960,
       "bredde": 1440,
       "hoyde": 810
     },
@@ -1778,126 +842,6 @@
       "bytes": 48908,
       "bredde": 1180,
       "hoyde": 820
-    },
-    "sigdal/vis/skjermbilder/mb-crm-bestilling.webp": {
-      "sha256": "a4fa6ad63e4c363d5953019fde51a7f7e0c8fc958f73c5c9063e4d4f2e3350e9",
-      "bytes": 105468,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-bestilling@1x.webp": {
-      "sha256": "c99314fe1c28e526cd88436da6929f4b760b248bc85ba002ee7dea6b55f2b926",
-      "bytes": 42594,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-etterkalkyle.webp": {
-      "sha256": "767e93ebe460a469fe1b702f82e9bcd5f57c2001d5935d94e02ca895d4d130e3",
-      "bytes": 152748,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-etterkalkyle@1x.webp": {
-      "sha256": "0568eaf900d95225eb207a10152f55f04c4146263ec621aebbb58094eb7e953f",
-      "bytes": 62712,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-min-dag.webp": {
-      "sha256": "14ecc27a86ee2c6ecfa3b65962d46f4f47e696d89d7560ff4d745ab297e26402",
-      "bytes": 192244,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-min-dag@1x.webp": {
-      "sha256": "4dd94db5421efdc6c51e65c487f0990109c47bd46cc87e2c6390aa6ee879fc27",
-      "bytes": 85772,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-moduler.webp": {
-      "sha256": "1f1c72b81f48fd1a0714ad538154a3743b1a0f5f5d214aa451829cfbd120837a",
-      "bytes": 176158,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-moduler@1x.webp": {
-      "sha256": "9262a19dc763592f436ccec8d06ea9e8ef4b56bef7ecd8a81c4b21b62e5c29c0",
-      "bytes": 77374,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-montasje.webp": {
-      "sha256": "ca6f14f374dd87ef3f732c4c435d96950ac8c8b9caa04899f0ddbea4bac4401d",
-      "bytes": 129606,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-montasje@1x.webp": {
-      "sha256": "e5ce088b4c82eece479fa6f8d7cb772099d37bd30cd54138442a13909c3160d8",
-      "bytes": 54698,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-ordre-kontrollmal.webp": {
-      "sha256": "22ab33ba79de53d753c388d90a18fcce4c21809a6a69356611a2e17298afe110",
-      "bytes": 128064,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-ordre-kontrollmal@1x.webp": {
-      "sha256": "077bcac475b0d124c81d9cc4b1988beed79883a983120c27ffb1883ca3d858ed",
-      "bytes": 51594,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-resultater.webp": {
-      "sha256": "4cfdfa73e9eb3bdebd6aca9b4e3c1d353e860d34df9067e448329c9c48987952",
-      "bytes": 106448,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-resultater@1x.webp": {
-      "sha256": "7c9141defef77dbc0e8a300f9da803ddfd120adff0079468128e42295b9f3668",
-      "bytes": 45500,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-saker.webp": {
-      "sha256": "0b98df5f62eac3d1c9f5ee3d40e36ed93d4cc50f2ec5a1a8ddb4c07062ba09fc",
-      "bytes": 148744,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-saker@1x.webp": {
-      "sha256": "7ca09352208bd00f324e911b85f3c41fe9eb27f042a260f3ddb6ea5ff2ee714b",
-      "bytes": 62306,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-salgstavla.webp": {
-      "sha256": "d602ba726ddddb95fbd29b7a26361c76a9f468d8b83e61721034ace01ff970c2",
-      "bytes": 194034,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-salgstavla@1x.webp": {
-      "sha256": "61420916dfe9d5e693051056022185c5780eab58461cef986d95b23c7aa696c4",
-      "bytes": 77072,
-      "bredde": 1440,
-      "hoyde": 900
-    },
-    "sigdal/vis/skjermbilder/mb-crm-tilbud-kunde.webp": {
-      "sha256": "4b598c917379594ad3d31217f3f17a9a3fe12d38944bed08d980ff114d095988",
-      "bytes": 159990,
-      "bredde": 2880,
-      "hoyde": 1800
-    },
-    "sigdal/vis/skjermbilder/mb-crm-tilbud-kunde@1x.webp": {
-      "sha256": "bdf7e2bfe3ced9a51c8f066f6a3243d3f6c5e6c8e7b2068f643f868315634302",
-      "bytes": 68732,
-      "bredde": 1440,
-      "hoyde": 900
     },
     "sigdal/vis/skjermbilder/mottak-mork.webp": {
       "sha256": "534a3e3837f2132247f925759e0bc68eca141c4f93947e2f8a97dafe072291a7",
@@ -1972,62 +916,62 @@
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-ferdig-mork.webp": {
-      "sha256": "b9069d0d751381bc860d7bc745eb97e2e69ee433e9cff2d53955102f736e02aa",
-      "bytes": 42340,
+      "sha256": "30be29019a7550babc024860a61fa4700c57c25a2afd5ed4d44cd1185f578887",
+      "bytes": 41750,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-ferdig-mork@1x.webp": {
-      "sha256": "79182314339700e9aabdff577de16c2adffee6f7751289a25c76626d17266ffd",
-      "bytes": 18618,
+      "sha256": "e2f9876acb5513473fa28dd1670dda5d41636c6378d38d2e26d9749a4197a70e",
+      "bytes": 18126,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-ferdig.webp": {
-      "sha256": "48b9b810f8377f921a898c0b96d32107acd366bbc8c6b1d17e15883c8c748b00",
-      "bytes": 41508,
+      "sha256": "608c8f47d15ceac3e2d4ec73e6f48609d3b8389b400e8a23aa05f3a2bfce2a3c",
+      "bytes": 43118,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-ferdig@1x.webp": {
-      "sha256": "ba3755a5d7f2d979ae9de68cd45c06a4738f7af708545d9dc15fc11ed060c399",
-      "bytes": 18670,
+      "sha256": "1b55d5ab287d59047437ac290653f23989fc654e526861ab77c53280d8b8bb7c",
+      "bytes": 18500,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-i-dag-mork.webp": {
-      "sha256": "4c75c7a8b80638131733ec29e6feeb482c1debeee450e8bfe77df7d57d416888",
-      "bytes": 55772,
+      "sha256": "5586863e79484380fb49447aa45123422929cd88d3eff861e36c71e39b26ebc6",
+      "bytes": 41856,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-i-dag-mork@1x.webp": {
-      "sha256": "627c003f058758336b888a19f640687df37d53d339ef32496e7793917822046d",
-      "bytes": 25968,
+      "sha256": "2558d62f6977945481e5d95b2897d23faf61865d90e0f6cfaab49001cc9736ef",
+      "bytes": 18782,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-i-dag.webp": {
-      "sha256": "00429986021cf3647202962e0b49244f07c2f75023dedfeb692273f691a6eaa5",
-      "bytes": 58592,
+      "sha256": "bbb25878530d626a9e994f75b564078713e39fb11d4e9a3bbe6ba23cbba3c309",
+      "bytes": 44098,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-i-dag@1x.webp": {
-      "sha256": "a84a0eebc729a80826796aeb01f548f17d6e63a12920f558d34eeb700a581853",
-      "bytes": 26228,
+      "sha256": "a09a3f0ba06628e02e0041674405276737b4911f28ebc60829c5eb8c3ba43df8",
+      "bytes": 19196,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-ipad-bildeverktoy-mork.webp": {
-      "sha256": "c315708dd7b69f1b01aa0a32d92e7f4f1551b9215a38abb283f071ae048cb4b3",
-      "bytes": 110688,
+      "sha256": "c62154dacc064b7cece9a4fa3e4fa96a3eacab84b46266b52cca803d6318506c",
+      "bytes": 112672,
       "bredde": 2360,
       "hoyde": 1640
     },
     "sigdal/vis/skjermbilder/ute-ipad-bildeverktoy-mork@1x.webp": {
-      "sha256": "d05e54dcb244a36461cb4e959626e7798f79f25ad1bd5f525be3061890d14541",
-      "bytes": 47518,
+      "sha256": "61ccc954f13b5c8ac1ca73657a006b9d642027c34fac355dae0abb3388b7a1ef",
+      "bytes": 49224,
       "bredde": 1180,
       "hoyde": 820
     },
@@ -2044,26 +988,26 @@
       "hoyde": 820
     },
     "sigdal/vis/skjermbilder/ute-jobb-under-mork.webp": {
-      "sha256": "0c1ca657717aaa1e424e42b3bb36ee62c7a397cf8ac9472eba11218588a18705",
-      "bytes": 48118,
+      "sha256": "7f2f05352b7c8d85cda669759c2a1cc9c92a8866a308ddf2cb9fc976a3165069",
+      "bytes": 48848,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-jobb-under-mork@1x.webp": {
-      "sha256": "c49f3dd58c7ec04730ad471f51451c543ce13fbe4e1e2a9354439ad31cacd8c1",
-      "bytes": 21620,
+      "sha256": "c5417940473d9cea8599827b89e214d84fdddeeddd681e5b83f7be9409806ba1",
+      "bytes": 22378,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-jobb-under.webp": {
-      "sha256": "4d615a2333dd183588625e5ffa831781146bbf3c3bf79e61c4ae091699a3a110",
-      "bytes": 49456,
+      "sha256": "0573ef8e4e24f36c0334f3d6e860a9901e4ce39eb47613b356363bf81a27f8be",
+      "bytes": 51288,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-jobb-under@1x.webp": {
-      "sha256": "2b65117c55c3986ecadccd1a342c380cf2de4bdd749fb0a0a98c11b75fe8f1b4",
-      "bytes": 21904,
+      "sha256": "19659365a0b1e3ce7b9ee40aaab7177b8a6e7f6c6eb61147a9c4206f87f6d934",
+      "bytes": 22538,
       "bredde": 390,
       "hoyde": 844
     },
@@ -2116,50 +1060,50 @@
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-laser-mork.webp": {
-      "sha256": "c4cfc364300b44f850ef93773c115d95eaee253d81d8bcfb0f963c13793ec57a",
-      "bytes": 30844,
+      "sha256": "acd084dbffb60c48cc9988c3351430a39b910ff4233afaa814c6ecbc24f89fdd",
+      "bytes": 35034,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-laser-mork@1x.webp": {
-      "sha256": "3b41a5b89beb12dc7e8a19a733892fdc30b684a16978b0802fe6523255398a41",
-      "bytes": 12944,
+      "sha256": "a680591ce6e7c3ed4fdbd0e635e62d67de7403ed554deb794bfb225584935bb1",
+      "bytes": 14930,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-laser.webp": {
-      "sha256": "6825f12e208f2789c45113b94127a124c263fa29634ca361ffe9fdc33faf7f77",
-      "bytes": 34780,
+      "sha256": "497f6ed2b39afd317677d5675161cf8e0f01cd454819e0c83fb832254d8cf5ed",
+      "bytes": 34870,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-laser@1x.webp": {
-      "sha256": "aae2edb8cabf33b6e6574a13b7804559b1d853c3cb5f6c0156105a69ba766e0b",
-      "bytes": 14620,
+      "sha256": "39fb4f1b8684677b57f1623cfe992fcf2ca6ce47ab6af422e42803f564e61b57",
+      "bytes": 14636,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-punkter-mork.webp": {
-      "sha256": "cb7e3d21a1dd89eed246bf466ddf79e518d12cf942f5c201d9ae7a50a22756b4",
-      "bytes": 53012,
+      "sha256": "87323e3b421b50608950aac355c046be7834c19c6a868bcbd4b4081798de20ae",
+      "bytes": 37432,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-punkter-mork@1x.webp": {
-      "sha256": "972bab856ce339cf7e175c92dd4cbb7e263b286a79cc2cff0ac632840121d974",
-      "bytes": 24510,
+      "sha256": "39e320b2e842705ba9043eaa2cd7d81e37639ea02927fd34a590512719954848",
+      "bytes": 17528,
       "bredde": 390,
       "hoyde": 844
     },
     "sigdal/vis/skjermbilder/ute-punkter.webp": {
-      "sha256": "782cf1cd21b80a3bd5fda504724c26fea3021a9d791d115d2832ce2c4f1ffba3",
-      "bytes": 50244,
+      "sha256": "aa596e7cbc0d2df84dc6f82a1280efd31317bbf9da4a85f6dadc41870df52787",
+      "bytes": 38664,
       "bredde": 780,
       "hoyde": 1688
     },
     "sigdal/vis/skjermbilder/ute-punkter@1x.webp": {
-      "sha256": "ea0ec2bd4cdf1f52f9aee6f3422090768e3e2a7d1bc6c1f576eefdb246742d76",
-      "bytes": 23096,
+      "sha256": "f0772dfa2f613708890d3c92d7cc57a9b858c1ab40091a1b081511f1ffd05a6f",
+      "bytes": 17442,
       "bredde": 390,
       "hoyde": 844
     },
@@ -2210,6 +1154,1602 @@
       "bytes": 6632,
       "bredde": 844,
       "hoyde": 390
+    },
+    "hengsel/hjelp/innkommende.webp": {
+      "sha256": "1c3280aa33c1e6b705063818cb84bdadaed70b1ba02d0f45c7043205ba5558a8",
+      "bytes": 153892,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/innkommende@1x.webp": {
+      "sha256": "c10eed38750c4e8ab2b4a468083356589933bf98508bcc0386e39623f88d548c",
+      "bytes": 60752,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/hjelp/meny-pc-og-mobil.webp": {
+      "sha256": "b395d27daf0d317256d0ffd5a306070c6ee2e520672128809ac018d86410ccee",
+      "bytes": 120274,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/meny-pc-og-mobil@1x.webp": {
+      "sha256": "6bcbae8c1032e7e8718952b76120368dd9e99bc2fb356be1453c617f39f6326a",
+      "bytes": 47622,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/hjelp/min-dag.webp": {
+      "sha256": "b395d27daf0d317256d0ffd5a306070c6ee2e520672128809ac018d86410ccee",
+      "bytes": 120274,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/min-dag@1x.webp": {
+      "sha256": "6bcbae8c1032e7e8718952b76120368dd9e99bc2fb356be1453c617f39f6326a",
+      "bytes": 47622,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/hjelp/montasje-oversikt.webp": {
+      "sha256": "d64975e9f40208c9d53e0cc7c614f479b76fcd02bb1d30699086794a5787d81b",
+      "bytes": 134046,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/montasje-oversikt@1x.webp": {
+      "sha256": "db1d2011ce8dcc7c9aae8cab1b097102a0636a01b29900ef05419cfc8ab52c3c",
+      "bytes": 54906,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/hjelp/ordre.webp": {
+      "sha256": "3f9876d8d137c63d3d4b3c25751f5575505d24e955c1acc554fcaa3f95023981",
+      "bytes": 91764,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/ordre@1x.webp": {
+      "sha256": "1d92c4674dfd8ca91030202519f163020b8d1e6b3a9b68b5899e6757baf42248",
+      "bytes": 36618,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/hjelp/tilbud.webp": {
+      "sha256": "724a17a4677847957ba14a81cff64ea2225be71b6dba4d434decc4bb6dd68f9d",
+      "bytes": 95968,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/hjelp/tilbud@1x.webp": {
+      "sha256": "facdebc56415a0514a6256de69476a24a5d972e2950fe8253a4d153e9b84ff2f",
+      "bytes": 38530,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/flate-butikken.webp": {
+      "sha256": "101ee04186613a66c931586dbfe8637e5f3ccd3c6219ae0a8e4c0aafd9d7e240",
+      "bytes": 20936,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "hengsel/vis/flate-leverandoren.webp": {
+      "sha256": "09fc858f3538c3dc08f889d983693eecec7281fc5989038d96dced4ea7793ec8",
+      "bytes": 25448,
+      "bredde": 960,
+      "hoyde": 626
+    },
+    "hengsel/vis/forsta-reise.webp": {
+      "sha256": "999ad5525e049f114d6d57ae5e98bbe2dc1c122b920013d335df204b77cf7931",
+      "bytes": 29256,
+      "bredde": 960,
+      "hoyde": 626
+    },
+    "hengsel/vis/hero-enkel.webp": {
+      "sha256": "17ff2d2e6514459a3f2591e97e3c642a9f7de70e8a2fe6c6c8837bbdc9c0ebd7",
+      "bytes": 35838,
+      "bredde": 1320,
+      "hoyde": 1017
+    },
+    "hengsel/vis/hero.webp": {
+      "sha256": "f3c666ab446cfe9ca82906d716ca1ce63bed59d3beb985c5cb1d59f328faff38",
+      "bytes": 80696,
+      "bredde": 1500,
+      "hoyde": 1227
+    },
+    "hengsel/vis/rom-crm.webp": {
+      "sha256": "8f6c60850690378dc43bc515b728d2e8cd60432fddfe8981062fed98a69fde55",
+      "bytes": 25958,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "hengsel/vis/rom-firmaleder.webp": {
+      "sha256": "e791ed04c9981cebf7a072bae648c0fbe0dda77a5a8eb91ea1d45a172c77dac4",
+      "bytes": 39126,
+      "bredde": 960,
+      "hoyde": 696
+    },
+    "hengsel/vis/rom-minside.webp": {
+      "sha256": "19d1de0b78dc0b8fe02b6d91b9d639b2f51af6cdbbe97541f6c1ce10cd151040",
+      "bytes": 49862,
+      "bredde": 801,
+      "hoyde": 760
+    },
+    "hengsel/vis/rom-reise.webp": {
+      "sha256": "19615f2f3814a83bcc0277d85f58d8bc4db234d2129424fd43b7dc3d6da89da3",
+      "bytes": 22856,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "hengsel/vis/skjermbilder/crm-bestilling.webp": {
+      "sha256": "35b9b1f80cce4be5a9dbd0a9a157fd5411c7f6108479bbafd5bd88899d0cb746",
+      "bytes": 77148,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-bestilling@1x.webp": {
+      "sha256": "dcc04581d1812e4534a989c0ac83f5a790c14e2092e83715b9f58532f4370c34",
+      "bytes": 30424,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-etterkalkyle.webp": {
+      "sha256": "9651a84292aca94b8da0ba1ec4b0edad694987cd082112229d698ff9b83a24ef",
+      "bytes": 122364,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-etterkalkyle@1x.webp": {
+      "sha256": "49b422f2bfae96fba0b13d5cc53bfb90fdb0bdff80028aa7dce30f9c486b3468",
+      "bytes": 47112,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-belastninger.webp": {
+      "sha256": "a1cf1dc9128bfaa05dc96e7cb39075055d9f6d7524b6a1ccc8420eb4bd8358ef",
+      "bytes": 97654,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-belastninger@1x.webp": {
+      "sha256": "dd673315b3f495163e1664b2f36497b1518e99f5fb830191d40ce562a7317803",
+      "bytes": 39218,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-innstillinger.webp": {
+      "sha256": "e4902661250807387ef7364d9e82126ee84233bd4c0a8cbd603155cfe41a8dc9",
+      "bytes": 100682,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-innstillinger@1x.webp": {
+      "sha256": "ce95b9cf34e2b3bb1cbf19a791341ecdf91cbfb273f6aadf340554a3d339c228",
+      "bytes": 40610,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-kontrollmal.webp": {
+      "sha256": "f8cea3170d3bb638a31dfbbf0c2ec515910639852996b8d4b8bbf5c88a32a252",
+      "bytes": 108734,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-kontrollmal@1x.webp": {
+      "sha256": "f0db9a36670e88cb7aac8ec1d759a0a962f22b169f8e1e4bb2d496663cce34b2",
+      "bytes": 46656,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-leder.webp": {
+      "sha256": "88caf573aadfcc13103f001a43d042cd4ceec9fcbd9fcc12b9a09c39a3893e88",
+      "bytes": 114726,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-leder@1x.webp": {
+      "sha256": "f62731981b7789fb353fa7af5fcda82283f2260eaf4022f9a45b7a7fd7256687",
+      "bytes": 50222,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-min-dag.webp": {
+      "sha256": "a8efc51fe75533ed9fd3642fc3f16570831539d0c35b050b86e619ab0f4f9fd0",
+      "bytes": 117256,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "hengsel/vis/skjermbilder/crm-ipad-min-dag@1x.webp": {
+      "sha256": "feeefcfa5511315041a86884460760f40afd484cd7224c22dc897620ac6329b1",
+      "bytes": 46882,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "hengsel/vis/skjermbilder/crm-meny-apen.webp": {
+      "sha256": "415a166ea92c06aca577c3798cf109e6022c9964a96264ab20cba9bc92f2ab4f",
+      "bytes": 42504,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-meny-apen@1x.webp": {
+      "sha256": "6d5eedf44d3ad59ac8c8f942deee3a5b426cf6855c72dddbf7e724ddec24c5b7",
+      "bytes": 17330,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-min-dag.webp": {
+      "sha256": "b395d27daf0d317256d0ffd5a306070c6ee2e520672128809ac018d86410ccee",
+      "bytes": 120274,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-min-dag@1x.webp": {
+      "sha256": "6bcbae8c1032e7e8718952b76120368dd9e99bc2fb356be1453c617f39f6326a",
+      "bytes": 47622,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-moduler.webp": {
+      "sha256": "6ad0aaeb6f1e40a5fc1503a9596fd29c296faf6b14354d37429ab30e0f178b0e",
+      "bytes": 165292,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-moduler@1x.webp": {
+      "sha256": "4d6058a670328c11b433c63e8e943616dba199895ee018d9ae0d4968efe2dbeb",
+      "bytes": 70492,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-montasje.webp": {
+      "sha256": "d64975e9f40208c9d53e0cc7c614f479b76fcd02bb1d30699086794a5787d81b",
+      "bytes": 134046,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-montasje@1x.webp": {
+      "sha256": "db1d2011ce8dcc7c9aae8cab1b097102a0636a01b29900ef05419cfc8ab52c3c",
+      "bytes": 54906,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-ordre-kontrollmal.webp": {
+      "sha256": "e69c1e241ddc6098b25cfd4197797a3d9c1233f11b06d068c634976954a40641",
+      "bytes": 112670,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-ordre-kontrollmal@1x.webp": {
+      "sha256": "8e13869646078c4a8987d5c1ffd68dc83300e814da8dcd47ecb7b9781a17cb1e",
+      "bytes": 48520,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-resultater.webp": {
+      "sha256": "4356bfa66010fdb23f51753be53f3a6ef20c4e081536fda8360f28f62dd81d93",
+      "bytes": 106638,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-resultater@1x.webp": {
+      "sha256": "82f7d811ec6a97f8b7e7a6c86644af86fd428aec652ae41aad1fadc759912f35",
+      "bytes": 45300,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-saker.webp": {
+      "sha256": "8d253b47a40c48cd0d74ae6253bd3a24ed442495cadd86d0fdb6c5d03b119c5e",
+      "bytes": 148434,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-saker@1x.webp": {
+      "sha256": "0c4155986ec03a3f11a16dfe6a7cad95c8a1d384537d624b4dd5a3c0e1f566f8",
+      "bytes": 62604,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-salgstavla.webp": {
+      "sha256": "629e80c4f70294715bafa2e72a402d53531edd8b2a5a99b89c48249a4f7b9048",
+      "bytes": 81704,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-salgstavla@1x.webp": {
+      "sha256": "3fb1fa507d5c712875febd3f5d165809c1f6ccaa2b704a352d249be25ffdfd7a",
+      "bytes": 33148,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-samtaler.webp": {
+      "sha256": "1d2c807e39cbb233846ebe0d275f4b972dcaa8768184d0b9f38dd635621b44a8",
+      "bytes": 93060,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-samtaler@1x.webp": {
+      "sha256": "efbf76f4c2673c1e2068ee98cdfb73e3085663b53a98eb9e162b8c7d67ff89f4",
+      "bytes": 38400,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-tilbud-kunde.webp": {
+      "sha256": "681105a1e20aaf316d3485318dc0369836f8d2ad2223bf5cbf5b4c5d958797f1",
+      "bytes": 134062,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-tilbud-kunde@1x.webp": {
+      "sha256": "8131e48e019bcfe06e661a601ce817a9f53faccc21c1037be91379da2a264dd3",
+      "bytes": 56502,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-tilbud.webp": {
+      "sha256": "724a17a4677847957ba14a81cff64ea2225be71b6dba4d434decc4bb6dd68f9d",
+      "bytes": 95968,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/crm-tilbud@1x.webp": {
+      "sha256": "facdebc56415a0514a6256de69476a24a5d972e2950fe8253a4d153e9b84ff2f",
+      "bytes": 38530,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-innstillinger.webp": {
+      "sha256": "a8c4152a85f392b90c36e509ccb59a20e0232597a187e85ca318b18cbfdf6f0d",
+      "bytes": 43530,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-innstillinger@1x.webp": {
+      "sha256": "1d57dd026074599f1093112b380d48d215c4225a1e95dcc04d9d7e086707e6c0",
+      "bytes": 18958,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-kontrollmal.webp": {
+      "sha256": "cd9dc4821b734acd1c6a5871718b0c2238f8b4be51db9b1b5b5d6d9d21d10e7d",
+      "bytes": 49916,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-kontrollmal@1x.webp": {
+      "sha256": "99eadd9202c45c8fd4aab745a9b70f89a1d5e719a8a28377ad1c216d2ac575fd",
+      "bytes": 21944,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-kundekort.webp": {
+      "sha256": "94cfb840a6ea1cb33c1afc46f8bf5b6db042cdb8b2104659d95574a5d4492d10",
+      "bytes": 70164,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-kundekort@1x.webp": {
+      "sha256": "b87e12c2b4ab77d301a5ec1e57be675babab968634600e43ea96cace3f1fd136",
+      "bytes": 31716,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-leder.webp": {
+      "sha256": "0f3f6aefe7bde0b19dd5e7bfd1d92966149cd2adb8a22ded21ea405899d2190d",
+      "bytes": 58984,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-leder@1x.webp": {
+      "sha256": "a2d07056721f7939d55506a3385e1b2cd6056c1af057bedda4b445a51a59dab6",
+      "bytes": 26638,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-min-dag.webp": {
+      "sha256": "aeeddb2622d6bac250886bd16ff868f8cf291da86f836c04c703d1a48dc920de",
+      "bytes": 62658,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-min-dag@1x.webp": {
+      "sha256": "ee31d70bbf2672d5cf13f2525e1ff0b1944779c37e950256a97e8e0cd36e901d",
+      "bytes": 26016,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-ordre.webp": {
+      "sha256": "b4c9bb36f862ff71155c7b1e9dedd07514e4a4c127d215d828d282830692bb75",
+      "bytes": 55642,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/crm-tlf-ordre@1x.webp": {
+      "sha256": "210b3ca53b1f7b6edfa2aba74bcee24a784d851d7b5b91a35d11a7562e26ea12",
+      "bytes": 22974,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/d1-lag-pdf-og-send.webp": {
+      "sha256": "cd35c140a50f005d91cf0fa5459a5d5310b19436f22170568dcc4bd0007d880f",
+      "bytes": 120504,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d1-lag-pdf-og-send@1x.webp": {
+      "sha256": "c8500492be7aa11de4b2e4a6beaae30dcd601a1d5acb38861d5a09f23106d3c9",
+      "bytes": 50502,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d10-sendt-til-kunden.webp": {
+      "sha256": "6833c1304c69dca2449f49709af81294a6b9ff9e285cfd8909c9c9ed25474b01",
+      "bytes": 117984,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d10-sendt-til-kunden@1x.webp": {
+      "sha256": "bd5a2b505f1d5fa4f7da46948fd7e88ece1efa9a682823d21c0858663c6a26ef",
+      "bytes": 46308,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d11-min-side-nytt.webp": {
+      "sha256": "65014ac72a3a1b05590f748c21628696e1c23184adeb08a6c32b1431bd37f388",
+      "bytes": 81688,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d11-min-side-nytt@1x.webp": {
+      "sha256": "6856c8621e0e572c76e133c4ed2ee67850b45d1b592f037d166206ec448af791",
+      "bytes": 32636,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d2a-signer-med-bankid.webp": {
+      "sha256": "2ce49d5d191a64c215dd5e242eeed33a4cb9bbaa3256778275386e429dc60c4d",
+      "bytes": 203168,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d2a-signer-med-bankid@1x.webp": {
+      "sha256": "eb368ceeab02096ae3ef8d76792ffb00c625de29fa72697edbfd09f04dbca2f6",
+      "bytes": 87258,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d2b-signert.webp": {
+      "sha256": "681105a1e20aaf316d3485318dc0369836f8d2ad2223bf5cbf5b4c5d958797f1",
+      "bytes": 134062,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d2b-signert@1x.webp": {
+      "sha256": "8131e48e019bcfe06e661a601ce817a9f53faccc21c1037be91379da2a264dd3",
+      "bytes": 56502,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d3-send-ordrebekreftelse.webp": {
+      "sha256": "cf6fcda2a94fd3e1d7c6675c85d79465fe789a6c847133c269b5dfbacb65df02",
+      "bytes": 164616,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d3-send-ordrebekreftelse@1x.webp": {
+      "sha256": "8902f5745c15b8db6e6e4580488b148a576a42418dbdab1e28465fd7bea2150e",
+      "bytes": 70694,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d5-lag-monteringsrapport.webp": {
+      "sha256": "2b05c86b8e65de67ab22756e597f8c6a1e2cc95c09e4dcc95bd8538ce05e89a8",
+      "bytes": 168448,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d5-lag-monteringsrapport@1x.webp": {
+      "sha256": "20f4e13882bdf7696467dcac87dfb185c9a77efd69e670d060ccb294c8950020",
+      "bytes": 72180,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d6-lag-punktrapport.webp": {
+      "sha256": "159c789604b4bb7f0483ddd80d97d21a1bf3543974c554da46e7d22c69992e14",
+      "bytes": 170216,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d6-lag-punktrapport@1x.webp": {
+      "sha256": "b8630d684386e8303c580b344330be536b855d77e3750a18b04d5157576c7c10",
+      "bytes": 72984,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d7-lag-leveringspakke-fdv.webp": {
+      "sha256": "105c1a179055eb0810206f5737684ed947995bf803486eef9a11cfda48501f5b",
+      "bytes": 166158,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d7-lag-leveringspakke-fdv@1x.webp": {
+      "sha256": "7b0c8109e9d16804b22626f161fd25bbad27e37a8a0d5b62a81b776999d48151",
+      "bytes": 71474,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d8-skriv-ut-plan.webp": {
+      "sha256": "899cf41d09b841f179c380f789e98a0bf4e285626d515c024d25822cf255d28c",
+      "bytes": 129604,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d8-skriv-ut-plan@1x.webp": {
+      "sha256": "b2d74f4c99ac879393a750b85ccfa9f46372401521308e88a24a0a8dc04e17de",
+      "bytes": 56028,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/d9-lag-faktura.webp": {
+      "sha256": "97453830de335fa784e432b264f1372103178b66a82ff835612b05f2acc85dee",
+      "bytes": 101534,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/d9-lag-faktura@1x.webp": {
+      "sha256": "6855f481b63528b2f35ac6423193e3ab6862a0069f2ad8895f52ae748e85a192",
+      "bytes": 41250,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d10.webp": {
+      "sha256": "6833c1304c69dca2449f49709af81294a6b9ff9e285cfd8909c9c9ed25474b01",
+      "bytes": 117984,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d10@1x.webp": {
+      "sha256": "bd5a2b505f1d5fa4f7da46948fd7e88ece1efa9a682823d21c0858663c6a26ef",
+      "bytes": 46308,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d11.webp": {
+      "sha256": "65014ac72a3a1b05590f748c21628696e1c23184adeb08a6c32b1431bd37f388",
+      "bytes": 81688,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d11@1x.webp": {
+      "sha256": "6856c8621e0e572c76e133c4ed2ee67850b45d1b592f037d166206ec448af791",
+      "bytes": 32636,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d2b.webp": {
+      "sha256": "681105a1e20aaf316d3485318dc0369836f8d2ad2223bf5cbf5b4c5d958797f1",
+      "bytes": 134062,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d2b@1x.webp": {
+      "sha256": "8131e48e019bcfe06e661a601ce817a9f53faccc21c1037be91379da2a264dd3",
+      "bytes": 56502,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d5.webp": {
+      "sha256": "2b05c86b8e65de67ab22756e597f8c6a1e2cc95c09e4dcc95bd8538ce05e89a8",
+      "bytes": 168448,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d5@1x.webp": {
+      "sha256": "20f4e13882bdf7696467dcac87dfb185c9a77efd69e670d060ccb294c8950020",
+      "bytes": 72180,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d6.webp": {
+      "sha256": "159c789604b4bb7f0483ddd80d97d21a1bf3543974c554da46e7d22c69992e14",
+      "bytes": 170216,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d6@1x.webp": {
+      "sha256": "b8630d684386e8303c580b344330be536b855d77e3750a18b04d5157576c7c10",
+      "bytes": 72984,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d7.webp": {
+      "sha256": "105c1a179055eb0810206f5737684ed947995bf803486eef9a11cfda48501f5b",
+      "bytes": 166158,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d7@1x.webp": {
+      "sha256": "7b0c8109e9d16804b22626f161fd25bbad27e37a8a0d5b62a81b776999d48151",
+      "bytes": 71474,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d8.webp": {
+      "sha256": "899cf41d09b841f179c380f789e98a0bf4e285626d515c024d25822cf255d28c",
+      "bytes": 129604,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d8@1x.webp": {
+      "sha256": "b2d74f4c99ac879393a750b85ccfa9f46372401521308e88a24a0a8dc04e17de",
+      "bytes": 56028,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/dok-d9.webp": {
+      "sha256": "97453830de335fa784e432b264f1372103178b66a82ff835612b05f2acc85dee",
+      "bytes": 101534,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/dok-d9@1x.webp": {
+      "sha256": "6855f481b63528b2f35ac6423193e3ab6862a0069f2ad8895f52ae748e85a192",
+      "bytes": 41250,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k03.webp": {
+      "sha256": "253aba7036dc372d6aad8cd6abdcb8f8dfc973a823bd1984bdec2f990bcda35a",
+      "bytes": 66220,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k03@1x.webp": {
+      "sha256": "6ce67519c59a28f2a6010b8a0f9d57060333ad3200991346020939aa3cb10691",
+      "bytes": 27992,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k06.webp": {
+      "sha256": "eacc1760dad9ae62f6c8f06bd30e9a8330037dc4a71e23989bcd087a3af647b0",
+      "bytes": 43178,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k06@1x.webp": {
+      "sha256": "576df87c97680fc4473fbd04517d2e4b4fecb98f5b7cb0f8b71bb1c16fc222d6",
+      "bytes": 17870,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k08.webp": {
+      "sha256": "3a5f9d50af64fe93ec670276050be9c4c801b5fee649b85a2633530cddaf7a2b",
+      "bytes": 68786,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/kundeportal-k08@1x.webp": {
+      "sha256": "661aa21eada614dd1c81992fc27e4fdb1be18193efa0313c11ba7434d0934477",
+      "bytes": 28490,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/kundeportal-pc.webp": {
+      "sha256": "65014ac72a3a1b05590f748c21628696e1c23184adeb08a6c32b1431bd37f388",
+      "bytes": 81688,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "hengsel/vis/skjermbilder/kundeportal-pc@1x.webp": {
+      "sha256": "6856c8621e0e572c76e133c4ed2ee67850b45d1b592f037d166206ec448af791",
+      "bytes": 32636,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "hengsel/vis/skjermbilder/mb-crm-bestilling.webp": {
+      "sha256": "62cc85510da396b9e52bd7f1241c5a5347a2cf80f766ee739f8780a0a760fa19",
+      "bytes": 76318,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-bestilling@1x.webp": {
+      "sha256": "4ec71f0f1bdb1ed92db84e841bb8188a49483b54b2d7a7cea2212003f350fb00",
+      "bytes": 30040,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-etterkalkyle.webp": {
+      "sha256": "e8a7cdc3c8755dce88a4c052c5b0c0116ed6a6dc6d6701a775103dbbfede05a3",
+      "bytes": 121494,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-etterkalkyle@1x.webp": {
+      "sha256": "ac546782b338e821b0ddd7379fc74fdc4bd2e06edf2950fabf68dd189fd8c2e2",
+      "bytes": 46706,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-min-dag.webp": {
+      "sha256": "7754cf9608c27ad272cb4649c04ae1ab72c3f8d6b82606b6f304faeed1f1117d",
+      "bytes": 118258,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-min-dag@1x.webp": {
+      "sha256": "593df3736c3af6b8c53f62bf43bf6e834eeafa2bc5f7639b34569757e05d44e8",
+      "bytes": 47192,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-moduler.webp": {
+      "sha256": "e96feadf312e0a006097e5ededb5ba93d76b32344456351c74b6e4ee8208132e",
+      "bytes": 177504,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-moduler@1x.webp": {
+      "sha256": "1ba125caa45b639008d88c856b0ab017b1e55bef66bd26719accd3572b446a1f",
+      "bytes": 75770,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-montasje.webp": {
+      "sha256": "f0a7e718aa94fa2a49cb16f7ed42c1bac53641bf67e8faf3767006a222715193",
+      "bytes": 152154,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-montasje@1x.webp": {
+      "sha256": "5f25a0d33c638cfe2d6a970f0d1e58ec6e854955ab23301b814509dea7791db1",
+      "bytes": 59434,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-ordre-kontrollmal.webp": {
+      "sha256": "6e63518ddc49b28c71a4c6ee440092e209c11c9aa2e57311dd575e95a9442fd0",
+      "bytes": 134350,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-ordre-kontrollmal@1x.webp": {
+      "sha256": "d6b53365944606c99d477d32ae05c8fd7fe123f02dc44dc9bfa431dfdc94acbd",
+      "bytes": 54036,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-resultater.webp": {
+      "sha256": "6e1762af3b89b80933cf5a932405b275b5f0724999a3e9c1f96437a6c688a050",
+      "bytes": 108344,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-resultater@1x.webp": {
+      "sha256": "1ae68bd893af19fc6b595aca12700bc39c2384c6b5ac12be693850af87ee7686",
+      "bytes": 46140,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-saker.webp": {
+      "sha256": "8db864ff65b83e04d7908c4a57c5891b7e9860b2ded287ec4d1a7073116b0a4f",
+      "bytes": 167106,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-saker@1x.webp": {
+      "sha256": "4f139eb339b2cf14113226d58e1f5feb09adb1ca15c1cd5e4fb6ade034427953",
+      "bytes": 70716,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-salgstavla.webp": {
+      "sha256": "5e1375fc6ffe4140cbbe41eb34c30be9d69ead4e40a622722201f3ef79841661",
+      "bytes": 80854,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-salgstavla@1x.webp": {
+      "sha256": "04fa85195e1bee5098a79121a55344089c85b04310955e780c7ae49b7a46cb00",
+      "bytes": 32674,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/mb-crm-tilbud-kunde.webp": {
+      "sha256": "d66ce3fddbefe831401e885cb3105120819011f2c7c39bdef79d1e1d2fce50a3",
+      "bytes": 145158,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "hengsel/vis/skjermbilder/mb-crm-tilbud-kunde@1x.webp": {
+      "sha256": "a1a347a8e737638f9531e8ef84590064a6c02ee8d6a1ffc9a44702b4cf7c486c",
+      "bytes": 61852,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "hengsel/vis/skjermbilder/portal-fdv.webp": {
+      "sha256": "f706929f15bec1912958595103f1f9689403536d4d6a332496cea81f7cc078eb",
+      "bytes": 42254,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/portal-fdv@1x.webp": {
+      "sha256": "a4f1949723947a254ada7ed9c65bba83b833b680c297330575cdb5a7cd5b84cf",
+      "bytes": 17476,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "hengsel/vis/skjermbilder/portal-montering.webp": {
+      "sha256": "1635bf49a0cf8f7195ee3855b778869f155583a92bdc4522f73c21bfad6f9bbb",
+      "bytes": 41434,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "hengsel/vis/skjermbilder/portal-montering@1x.webp": {
+      "sha256": "7607b884ca8d042573df4ad1df5885195061c31c97f1003162425ab749b74066",
+      "bytes": 17232,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/flate-butikken.webp": {
+      "sha256": "c2b5200a87560644d0e82a2349a8f166bd2c195d52256f5cdb035199a43d1a28",
+      "bytes": 21024,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "sigdal/vis/flate-leverandoren.webp": {
+      "sha256": "6c877dfcd45c1a28d9629df0e93e9498c23ebf46aa4506eaf54d9939871b9f1f",
+      "bytes": 26306,
+      "bredde": 960,
+      "hoyde": 626
+    },
+    "sigdal/vis/forsta-reise.webp": {
+      "sha256": "1168669a72ec39c1a7941b2e14ffa286f7d32b2009dd81f23fd0d3873acf6f8e",
+      "bytes": 29574,
+      "bredde": 960,
+      "hoyde": 626
+    },
+    "sigdal/vis/hero-enkel.webp": {
+      "sha256": "8bcae8a9876b2985ab2e5d71d26b9422267e772b19ce0b23738d19a966dcc088",
+      "bytes": 36830,
+      "bredde": 1320,
+      "hoyde": 1017
+    },
+    "sigdal/vis/hero.webp": {
+      "sha256": "4a111b376d37d7abd4d5393f3b22d459196fa033952349f950808aabbebd7762",
+      "bytes": 81724,
+      "bredde": 1500,
+      "hoyde": 1227
+    },
+    "sigdal/vis/rom-crm.webp": {
+      "sha256": "85a685348d72224167a02c560006882e50d38435a6bb8560805fa59243932b9c",
+      "bytes": 26180,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "sigdal/vis/rom-firmaleder.webp": {
+      "sha256": "06411cda2b75a43c75afcbc6494da68b28594d1b9c43292def69893930687c39",
+      "bytes": 38788,
+      "bredde": 960,
+      "hoyde": 696
+    },
+    "sigdal/vis/rom-minside.webp": {
+      "sha256": "b0903a169cc70da1a6f071a50fea45b1db8dec577dff5bdffc998286ea44c3b2",
+      "bytes": 49526,
+      "bredde": 801,
+      "hoyde": 760
+    },
+    "sigdal/vis/rom-reise.webp": {
+      "sha256": "c2be4254322ae3addbb07a24edd029df37931e46d0d18d63ecca41098360d120",
+      "bytes": 23122,
+      "bredde": 960,
+      "hoyde": 740
+    },
+    "sigdal/vis/skjermbilder/crm-bestilling.webp": {
+      "sha256": "d953ef11f9c561834bf1cc140c30e80f702d119d4f3d0666c336ff98bab728c4",
+      "bytes": 76818,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-bestilling@1x.webp": {
+      "sha256": "d0595eb59838dcb79a442551e62fe142c599fe521302835a70aaffecfac2ea8d",
+      "bytes": 30216,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-etterkalkyle.webp": {
+      "sha256": "cebe3961fbaee713d60116b8d2a1b95b6cf3a8532813f0f77ea980fcfeee4dd5",
+      "bytes": 123142,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-etterkalkyle@1x.webp": {
+      "sha256": "daf2e900ee7bdc72034d7f7bc7f1e5642eaec850ba4d13fa8698e9b37ccd37a2",
+      "bytes": 48278,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-belastninger.webp": {
+      "sha256": "067d7ca010c6707e67d15e22c66c391d1632930d1c28fd5919dd7b3af8ed5889",
+      "bytes": 99328,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-belastninger@1x.webp": {
+      "sha256": "21f2291f3fccdf6eb04902211a83e182d3d4a9225399aa7211c8da0184f1b1b8",
+      "bytes": 40176,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-innstillinger.webp": {
+      "sha256": "dea1aa2da6cab2ce2e3d4e641c466af95fca659308716befcc756c4ef0b2db7c",
+      "bytes": 99698,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-innstillinger@1x.webp": {
+      "sha256": "026d6cf59829f34d088eb5dc3555754677dc1df188e6f5ad1b9551a20ec218a6",
+      "bytes": 42230,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-kontrollmal.webp": {
+      "sha256": "eaa28d85cbcb43f14f8f7eeb159697434318791c39726e627a2a64c81492bb24",
+      "bytes": 109186,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-kontrollmal@1x.webp": {
+      "sha256": "11d54ddf26aae7a83a703bd6ee2328d2cf50545834b7b751879ba7c069333e36",
+      "bytes": 48106,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-leder.webp": {
+      "sha256": "04671f3e8434c258a4dbefdd3fcd8734a62d818149ec6c115322be71cccb3537",
+      "bytes": 112954,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-leder@1x.webp": {
+      "sha256": "1e941bb02eaa9de45062ceaf07b973b43cb75dc23fb3b6bed78d3b631fea35d6",
+      "bytes": 49378,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-min-dag.webp": {
+      "sha256": "5e4c9b4f1e7fe643b9aed4b52933856443739360df37944450271a84dea32ed5",
+      "bytes": 115796,
+      "bredde": 2360,
+      "hoyde": 1640
+    },
+    "sigdal/vis/skjermbilder/crm-ipad-min-dag@1x.webp": {
+      "sha256": "7e5672f28ea3d92fc39b155e345ea18688a0618ab9e04b9dbe82909aea6bb595",
+      "bytes": 47038,
+      "bredde": 1180,
+      "hoyde": 820
+    },
+    "sigdal/vis/skjermbilder/crm-meny-apen.webp": {
+      "sha256": "4e4cd17b93fa1bf3c8f77f7e8b4d06715fc9251dee7d9e88171d118a38d0347d",
+      "bytes": 41592,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-meny-apen@1x.webp": {
+      "sha256": "e11ecdd1ae06cbd679c20036e870420cf02e7898db6944c49c80104cd68aabab",
+      "bytes": 17512,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-min-dag.webp": {
+      "sha256": "f45b45a65315282eab64f76755dd1f39d6c1bdec49eb7d851e0b630049c969f9",
+      "bytes": 117302,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-min-dag@1x.webp": {
+      "sha256": "dbf52f4c0199ab1ef093eb0efc2ad5e69ddfbcf2a0d9311ed4ddea2cef245616",
+      "bytes": 47152,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-moduler.webp": {
+      "sha256": "60f19bbeeef23468fea02157b4dc2183755dc148dbc35e3035d3dce0ceb0cc87",
+      "bytes": 162268,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-moduler@1x.webp": {
+      "sha256": "37febe660647356ee3f04cc8f32389eee7a54150c5c7d7af406c49180b2e1d8f",
+      "bytes": 71054,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-montasje.webp": {
+      "sha256": "0f1dd570e714035f9449d37bb3de17a772df734c00ee4fc5cabb4075338bca9f",
+      "bytes": 127902,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-montasje@1x.webp": {
+      "sha256": "495805a04ecef843953bf280e9f24792b88f1585d761580a75e3e99fb474e288",
+      "bytes": 53552,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-ordre-kontrollmal.webp": {
+      "sha256": "41bc1f051384b3f91574864fa0dd30388fcc1228a9b940027d64100b0bb9d204",
+      "bytes": 111008,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-ordre-kontrollmal@1x.webp": {
+      "sha256": "a955ab8fa030b3c24ba718d167368fc80db0c8b508b0137e65e0993bb23445c0",
+      "bytes": 48090,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-resultater.webp": {
+      "sha256": "b705768acd72260c0186418fa36a17a614eb9ab5dbc670f1d7ed8f382497a4e9",
+      "bytes": 102258,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-resultater@1x.webp": {
+      "sha256": "262ea2cb2b44a8f05dd528d39026bcce07537ceb83ea661e339cc9053461b15e",
+      "bytes": 43560,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-saker.webp": {
+      "sha256": "80fd708ddf469c188ccb6e38113de87901da3bddfc0ab5301dea45d928e69f0f",
+      "bytes": 146466,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-saker@1x.webp": {
+      "sha256": "1daaaa8f5d289a7e7a7b84e29841ac1ca2d07601475b559f5c5aee8fdb3af6b9",
+      "bytes": 61790,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-salgstavla.webp": {
+      "sha256": "ed6c15a22552106a716589391970cf0d04d4221ea4d20eb727a005c34e94eec2",
+      "bytes": 79484,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-salgstavla@1x.webp": {
+      "sha256": "b3efbd1c689c7a9b336add3a5a44e8fd2a4e4c4e34c932f6856f069bf5a40d3f",
+      "bytes": 32846,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-samtaler.webp": {
+      "sha256": "0034c880bdd2a789b0e96028f94ab8283f670365377a0c11d3cbb99e15eec015",
+      "bytes": 89546,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-samtaler@1x.webp": {
+      "sha256": "d2ba4b9298a0af47fc594ec7ab4153529c28e751db097987e2e8b7843c48f841",
+      "bytes": 37024,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-tilbud-kunde.webp": {
+      "sha256": "af0e8e57865cf90f7d09eca44f0cb52ecd096c32c50fee8a1b55d307447cbfc0",
+      "bytes": 132052,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-tilbud-kunde@1x.webp": {
+      "sha256": "017f93d37432703546a2e23862db646df232da9cf995bb3d093039864b89d480",
+      "bytes": 56166,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-tilbud.webp": {
+      "sha256": "eaaddc43ccc7eb6c4ee0f15f3be9a29041ffc13dbea50134f91e11f4c84d9943",
+      "bytes": 95272,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/crm-tilbud@1x.webp": {
+      "sha256": "e69f0fb42489a97fe2eb5b5d044f1571a06b808b736e38d21cc9c79603eb184a",
+      "bytes": 38958,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-innstillinger.webp": {
+      "sha256": "d820cbddaa4a95570a84a14c8b60be644aaf423f5a302fb97500e5df9b7f0094",
+      "bytes": 43052,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-innstillinger@1x.webp": {
+      "sha256": "57aee430ed5ef97fca5b9f0659d253df0f91d8213b2e76c3d09d518a7ed7cf4e",
+      "bytes": 19548,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-kontrollmal.webp": {
+      "sha256": "045e41368f58451e92f1efaba35de529e69882f92f6afcf33024e8eb21667974",
+      "bytes": 54548,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-kontrollmal@1x.webp": {
+      "sha256": "ae7fa6875f12e62cedba09b29a058ceb7bd1fc59a7c17280a18c24744601bd03",
+      "bytes": 24266,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-kundekort.webp": {
+      "sha256": "f7fc8136db0ed071cd73d28cddac789501c3a76d5c3d89ccc35559d045596386",
+      "bytes": 70066,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-kundekort@1x.webp": {
+      "sha256": "1a04a59b80f406ca9957cdef21978d47b84562b25ccdd872263e007648743024",
+      "bytes": 31918,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-leder.webp": {
+      "sha256": "9584bee6ff757342984a083bf65db1cad9830f12f4a372c0e0d3c18e0fa24da2",
+      "bytes": 56646,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-leder@1x.webp": {
+      "sha256": "acc8e4256eee4d07b60587bca2acdd6f657a6c5d1545a873218abc2b81e3a944",
+      "bytes": 25368,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-min-dag.webp": {
+      "sha256": "3553af86d71e7c923dc2d446869a72be5052e8ce7066d096b120fa400d61b2cf",
+      "bytes": 62150,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-min-dag@1x.webp": {
+      "sha256": "feade196b31eee07dd6ef66e5737e5aa8488454f47e4bc3f566ce0491d0b4663",
+      "bytes": 25316,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-ordre.webp": {
+      "sha256": "f05ec2712e467bce30f1ed98b7d33ba741c888c5738692e9e093da0c79c769d0",
+      "bytes": 54100,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/crm-tlf-ordre@1x.webp": {
+      "sha256": "96217d787e1c42def17c57a06db6c0360d8fad265b930851f0b390743c079987",
+      "bytes": 22770,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/d1-lag-pdf-og-send.webp": {
+      "sha256": "1a2a70b0adfbe3fccb327c12278c176787bf793ad623b5d61be6920653a24612",
+      "bytes": 117278,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d1-lag-pdf-og-send@1x.webp": {
+      "sha256": "6bd0fc07e25c6916dbc62c5978c059fb80e64600e755c78a8abd57568bd63831",
+      "bytes": 50200,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d10-sendt-til-kunden.webp": {
+      "sha256": "81db50d3d92c7339e23c43c8ce2b5061b20c080d0b603b986b866c2f22178cb9",
+      "bytes": 118626,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d10-sendt-til-kunden@1x.webp": {
+      "sha256": "dd68a26a5b60003556c20f937a1e33f53d4d171e6b613a226b649db01f8c3d78",
+      "bytes": 46548,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d11-min-side-nytt.webp": {
+      "sha256": "af9f6dc550c9b1a4805c87ccc9ab2212e0cf956fc2f852a52b6c1924d6acce12",
+      "bytes": 79504,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d11-min-side-nytt@1x.webp": {
+      "sha256": "4680342b218123a24718f379f3d9819f01c8949490113670d0d239f088643f9d",
+      "bytes": 32548,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d2a-signer-med-bankid.webp": {
+      "sha256": "c2ebeeeb43c51062432efdff7cac621af4e45b6ea9370506835d214073401e57",
+      "bytes": 201104,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d2a-signer-med-bankid@1x.webp": {
+      "sha256": "bbf7102fc6d0b4f42d5103752738d02559d419be510d632ca7b6a885108fac29",
+      "bytes": 87838,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d2b-signert.webp": {
+      "sha256": "af0e8e57865cf90f7d09eca44f0cb52ecd096c32c50fee8a1b55d307447cbfc0",
+      "bytes": 132052,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d2b-signert@1x.webp": {
+      "sha256": "017f93d37432703546a2e23862db646df232da9cf995bb3d093039864b89d480",
+      "bytes": 56166,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d3-send-ordrebekreftelse.webp": {
+      "sha256": "8a9d64ad7621eb23adef46c54b60eac771e02db0a60ebf681d78ec08f6264d47",
+      "bytes": 163190,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d3-send-ordrebekreftelse@1x.webp": {
+      "sha256": "094f084fef01273f7465043536c6d13b617d14facb87022b231c02755c04cfcf",
+      "bytes": 70754,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d5-lag-monteringsrapport.webp": {
+      "sha256": "87b563e0becf728488ff94f8fb4e831f7648d3e0d5c978100c0bceb08e8d50b7",
+      "bytes": 168500,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d5-lag-monteringsrapport@1x.webp": {
+      "sha256": "901db1974429609680edc163fdfadea14152b517acb4834ddf73978612e62882",
+      "bytes": 73296,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d6-lag-punktrapport.webp": {
+      "sha256": "87b563e0becf728488ff94f8fb4e831f7648d3e0d5c978100c0bceb08e8d50b7",
+      "bytes": 168500,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d6-lag-punktrapport@1x.webp": {
+      "sha256": "901db1974429609680edc163fdfadea14152b517acb4834ddf73978612e62882",
+      "bytes": 73296,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d7-lag-leveringspakke-fdv.webp": {
+      "sha256": "9de378a6c58b1227eb36e7b1f33abe22ed2b47b1ddc135f4ed9efdbb09c69643",
+      "bytes": 164724,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d7-lag-leveringspakke-fdv@1x.webp": {
+      "sha256": "7c57bb1398dad9e3b15afa3ee41101602ec3eff1ad0e2f04c15e5e3e7539d21f",
+      "bytes": 71512,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d8-skriv-ut-plan.webp": {
+      "sha256": "8b65868c035e3c0f23ae3fc264f411844ddbf716f2b5917c9d1cde8f2c8a4336",
+      "bytes": 128994,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d8-skriv-ut-plan@1x.webp": {
+      "sha256": "b5dddf57826517b332f108fb6790c83bcad57d31ddddb83e72a813544169b498",
+      "bytes": 58300,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/d9-lag-faktura.webp": {
+      "sha256": "bbe90c29e452b8b3086657555ae5a5b5a01197edded3ed717f4265154db5336e",
+      "bytes": 101252,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/d9-lag-faktura@1x.webp": {
+      "sha256": "9cecc5978cb133450dbc20e2f6f9a13acd7667146d90d980d7ff582b0677cad5",
+      "bytes": 42550,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d10.webp": {
+      "sha256": "81db50d3d92c7339e23c43c8ce2b5061b20c080d0b603b986b866c2f22178cb9",
+      "bytes": 118626,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d10@1x.webp": {
+      "sha256": "dd68a26a5b60003556c20f937a1e33f53d4d171e6b613a226b649db01f8c3d78",
+      "bytes": 46548,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d11.webp": {
+      "sha256": "af9f6dc550c9b1a4805c87ccc9ab2212e0cf956fc2f852a52b6c1924d6acce12",
+      "bytes": 79504,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d11@1x.webp": {
+      "sha256": "4680342b218123a24718f379f3d9819f01c8949490113670d0d239f088643f9d",
+      "bytes": 32548,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d2b.webp": {
+      "sha256": "af0e8e57865cf90f7d09eca44f0cb52ecd096c32c50fee8a1b55d307447cbfc0",
+      "bytes": 132052,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d2b@1x.webp": {
+      "sha256": "017f93d37432703546a2e23862db646df232da9cf995bb3d093039864b89d480",
+      "bytes": 56166,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d5.webp": {
+      "sha256": "87b563e0becf728488ff94f8fb4e831f7648d3e0d5c978100c0bceb08e8d50b7",
+      "bytes": 168500,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d5@1x.webp": {
+      "sha256": "901db1974429609680edc163fdfadea14152b517acb4834ddf73978612e62882",
+      "bytes": 73296,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d6.webp": {
+      "sha256": "87b563e0becf728488ff94f8fb4e831f7648d3e0d5c978100c0bceb08e8d50b7",
+      "bytes": 168500,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d6@1x.webp": {
+      "sha256": "901db1974429609680edc163fdfadea14152b517acb4834ddf73978612e62882",
+      "bytes": 73296,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d7.webp": {
+      "sha256": "9de378a6c58b1227eb36e7b1f33abe22ed2b47b1ddc135f4ed9efdbb09c69643",
+      "bytes": 164724,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d7@1x.webp": {
+      "sha256": "7c57bb1398dad9e3b15afa3ee41101602ec3eff1ad0e2f04c15e5e3e7539d21f",
+      "bytes": 71512,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d8.webp": {
+      "sha256": "8b65868c035e3c0f23ae3fc264f411844ddbf716f2b5917c9d1cde8f2c8a4336",
+      "bytes": 128994,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d8@1x.webp": {
+      "sha256": "b5dddf57826517b332f108fb6790c83bcad57d31ddddb83e72a813544169b498",
+      "bytes": 58300,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/dok-d9.webp": {
+      "sha256": "bbe90c29e452b8b3086657555ae5a5b5a01197edded3ed717f4265154db5336e",
+      "bytes": 101252,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/dok-d9@1x.webp": {
+      "sha256": "9cecc5978cb133450dbc20e2f6f9a13acd7667146d90d980d7ff582b0677cad5",
+      "bytes": 42550,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k03.webp": {
+      "sha256": "82fd67c60e0015aadb1e545df1dcf931e78c886d6864ea4255dcb1aaadc8a3dd",
+      "bytes": 64364,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k03@1x.webp": {
+      "sha256": "8392175b349df836ee32fbe501660d0580fe4488757a148684188bcb09f4d810",
+      "bytes": 27750,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k06.webp": {
+      "sha256": "69fb762459b2d5553a2538293cf5429830cdcd535d1668b22c88e7251771b0a6",
+      "bytes": 41602,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k06@1x.webp": {
+      "sha256": "ac3f3aaa1aee4d9bb839d1a41f488e3925d10279f15b6b12e7d6476a8215b7af",
+      "bytes": 17476,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k08.webp": {
+      "sha256": "e6cf96b75cd6644ff74e72168e759e5a53e1a5524948c273ff710bee815c7874",
+      "bytes": 66614,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/kundeportal-k08@1x.webp": {
+      "sha256": "a0db01558d2ee1330c963248ee9882139c2916178b03cd860c3079704996ab67",
+      "bytes": 28230,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/kundeportal-pc.webp": {
+      "sha256": "af9f6dc550c9b1a4805c87ccc9ab2212e0cf956fc2f852a52b6c1924d6acce12",
+      "bytes": 79504,
+      "bredde": 2880,
+      "hoyde": 1620
+    },
+    "sigdal/vis/skjermbilder/kundeportal-pc@1x.webp": {
+      "sha256": "4680342b218123a24718f379f3d9819f01c8949490113670d0d239f088643f9d",
+      "bytes": 32548,
+      "bredde": 1440,
+      "hoyde": 810
+    },
+    "sigdal/vis/skjermbilder/mb-crm-bestilling.webp": {
+      "sha256": "da4a22c8288133116249e55995fc1f080fd1abc574dfc6d81645dd5750c5247b",
+      "bytes": 77754,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-bestilling@1x.webp": {
+      "sha256": "a8456ea3f5abf1da56a179f454c34553cad33fef566c5e4081260b0f6d8db8b1",
+      "bytes": 30452,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-etterkalkyle.webp": {
+      "sha256": "e12f872b48b92647e0640190e900ee8596b3e637e9f82f43ffd5814a73bc3470",
+      "bytes": 123988,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-etterkalkyle@1x.webp": {
+      "sha256": "b8023e7befe5f74ceaf729892f848961b4d461a5d9f80d07c360dad599529f16",
+      "bytes": 48604,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-min-dag.webp": {
+      "sha256": "d6e0a6eaa54b55b1cb5433123e1e811079f7d58fb0f031ecd828aa0f8e32ac0c",
+      "bytes": 118190,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-min-dag@1x.webp": {
+      "sha256": "03258ec5b835859362173a9a77e0b9123a9ec167cd79757b178a9df3be7d3165",
+      "bytes": 47384,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-moduler.webp": {
+      "sha256": "b7430751f643ca8af85b688389cccc9179298aa9ed2ab1e9e4b7640ad665afcd",
+      "bytes": 177156,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-moduler@1x.webp": {
+      "sha256": "6ae2b02a609588bb9a4d6cd1f74e59262d784f458e6b1e4d11df9be8266ada19",
+      "bytes": 77908,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-montasje.webp": {
+      "sha256": "4eedc5cf504a82fc2d14ec12f254a2a0bf47fa6ac192da224d08b761d5da2c3b",
+      "bytes": 151786,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-montasje@1x.webp": {
+      "sha256": "48092173b09a35b1461fee040662a2f581f4119512e458b98991307bf5a646da",
+      "bytes": 59258,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-ordre-kontrollmal.webp": {
+      "sha256": "39f6cf4922c81bee7b946de03c57589cd9e21e9f10129a730c5710d9ec520603",
+      "bytes": 133498,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-ordre-kontrollmal@1x.webp": {
+      "sha256": "bc6cbec67ae93d4be1a87d349c0e3ef014d1e85a0a33917a490e637725fd7305",
+      "bytes": 54412,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-resultater.webp": {
+      "sha256": "44479cb7187113ffffa6d7bf2e3ef445a71ea80e3ced4e3f5537e58a0fcb7558",
+      "bytes": 108362,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-resultater@1x.webp": {
+      "sha256": "59001e3fe51630cd2457f217cb9d66c40a0d3aa9dbb40e783ef5df4aab5e6340",
+      "bytes": 46238,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-saker.webp": {
+      "sha256": "a0de85c311bdec9cbfd5b97867a1e96abf157fd20bc5f6ec6f864f74d7d293b2",
+      "bytes": 163980,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-saker@1x.webp": {
+      "sha256": "fd8c1c31b07de11af9f750be666419b7215f1c53bed1f429e3c93eae4b27910a",
+      "bytes": 69396,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-salgstavla.webp": {
+      "sha256": "a439990713c264655b6a1542399202edbe74d292cb13b27ae3da3ec3447be68d",
+      "bytes": 80614,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-salgstavla@1x.webp": {
+      "sha256": "66b752bedfb8080bf8ce050fac0e667e8fcf7192257c0089ba1a7fd901fb3643",
+      "bytes": 33118,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/mb-crm-tilbud-kunde.webp": {
+      "sha256": "25230904224cc49b8ce5f927cbf881f7acb543d44078185b51c975648b2330df",
+      "bytes": 144844,
+      "bredde": 2880,
+      "hoyde": 1800
+    },
+    "sigdal/vis/skjermbilder/mb-crm-tilbud-kunde@1x.webp": {
+      "sha256": "6957e98dacd18bce0954c02913d9bd941eac2626d4dceee24e7ba834a2064068",
+      "bytes": 62096,
+      "bredde": 1440,
+      "hoyde": 900
+    },
+    "sigdal/vis/skjermbilder/portal-fdv.webp": {
+      "sha256": "d9d6e8dfb55ff73a9ccc503da73da14c33e6346b20eb5a98a66a0230e08ee1bf",
+      "bytes": 41360,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/portal-fdv@1x.webp": {
+      "sha256": "de8719475057a75ca6415953bcdcad055fd39f466049cf88bde998ec766cdfa1",
+      "bytes": 17358,
+      "bredde": 390,
+      "hoyde": 844
+    },
+    "sigdal/vis/skjermbilder/portal-montering.webp": {
+      "sha256": "6f5ee63ff751c01d54120ee6e9405abf9d1aaefb2643818819a22cff93399035",
+      "bytes": 40186,
+      "bredde": 780,
+      "hoyde": 1688
+    },
+    "sigdal/vis/skjermbilder/portal-montering@1x.webp": {
+      "sha256": "cb9a9f0651b521168f51f5985b96c96306d11bf7211393c999f66956b06c040f",
+      "bytes": 16956,
+      "bredde": 390,
+      "hoyde": 844
     }
   }
 }
