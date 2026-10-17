@@ -1,0 +1,70 @@
+---
+/**
+ * Kitet (N-5): Tavle og Uke (regel 2c, flisklasser.md «Tavle» og «Uke»): 1/1, 480, 2–7 like brede kolonner med navn 14/600 og antall,
+ * maks 5 kort à 44 px (én linje med …), så «Vis alle (n)» (Tavle) eller «+n» (Uke). Telefon: én kolonne om gangen med velger øverst (kit.ts);
+ * uten skript står kolonnene under hverandre.
+ */
+import Flis from "./Flis.astro";
+interface Props { id: string; tittel: string; kolonner: { navn: string; kort: string[] }[]; uke?: boolean; velger: string }
+const { id, tittel, kolonner, uke = false, velger } = Astro.props;
+const totalt = kolonner.reduce((s, k) => s + k.kort.length, 0);
+if (kolonner.length < 2 || kolonner.length > 7) throw new Error(`${tittel}: 2–7 kolonner`);
+---
+<Flis id={id} bredde="1/1" tittel={tittel} teller={totalt} tellerHoyre klasse={uke ? "k-tavleflis uke" : "k-tavleflis"}>
+  <label class="k-kolonnevelger"><span class="skjult">{velger}</span>
+    <select data-kolonnevelger aria-controls={`${id}-kol`}>{kolonner.map((k, i) => <option value={i}>{k.navn} ({k.kort.length})</option>)}</select>
+  </label>
+  <div class:list={["k-kolonner", `n${kolonner.length}`]} id={`${id}-kol`}>
+    {kolonner.map((k, i) => (
+      <section class="k-kolonne" data-kolonne={i} aria-label={k.navn}>
+        <h3 class="k-kolnavn"><span>{k.navn}</span><span class="k-antall">{k.kort.length}</span></h3>
+        <ul>{k.kort.slice(0, 5).map((t) => <li title={t}>{t}</li>)}</ul>
+        {k.kort.length > 5 && (uke
+          ? <p class="k-flere">+{k.kort.length - 5}</p>
+          : <p class="k-flere"><button type="button" class="k-vis-alle" aria-haspopup="dialog" aria-controls={`${id}-alle-${i}`} data-dialog-apne={`${id}-alle-${i}`}>Vis alle ({k.kort.length})</button></p>)}
+      </section>
+    ))}
+  </div>
+  {!uke && kolonner.map((k, i) => k.kort.length > 5 && (
+    <dialog class="k-alle" id={`${id}-alle-${i}`} aria-labelledby={`${id}-alle-${i}-t`} data-dialog>
+      <div class="k-d-topp">
+        <h2 id={`${id}-alle-${i}-t`}>{k.navn} ({k.kort.length})</h2>
+        <button type="button" class="k-lukk" aria-label="Lukk" data-dialog-lukk>
+          <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
+        </button>
+      </div>
+      <ul class="k-hele">{k.kort.map((t) => <li>{t}</li>)}</ul>
+    </dialog>
+  ))}
+</Flis>
+
+
+<style>
+  .k-kolonnevelger { display: none; }
+  .k-kolonnevelger select { height: 36px; width: 100%; padding: 0 8px; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: var(--flate-kort); color: var(--tekst); font: inherit; }
+  .k-kolonner { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 16px; }
+  .k-kolonne { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .k-kolnavn { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; line-height: 20px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; }
+  .k-antall { font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  li { height: 44px; padding: 0 12px; box-sizing: border-box; border-radius: var(--radius-felt); background: var(--flate-kolonne); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 44px; }
+  .k-flere { font-weight: var(--skrift-vekt-sterk); }
+  .k-vis-alle { padding: 0; border: 0; background: none; color: var(--aksent-tekst); font: inherit; font-weight: var(--skrift-vekt-sterk); cursor: pointer; }
+  .k-vis-alle:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media (scripting: none) { .k-vis-alle { display: none; } }
+  .k-alle { width: min(560px, calc(100vw - 32px)); padding: 24px; box-sizing: border-box; border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); background: var(--flate-kort); color: var(--tekst); box-shadow: var(--skygge-dialog); font-size: 14px; line-height: 20px; }
+  .k-alle::backdrop { background: var(--overlegg); }
+  .k-d-topp { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .k-d-topp h2 { font-family: var(--skrift-familie-hengsel-tekst); font-size: 16px; line-height: 22px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; }
+  .k-lukk { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+  .k-lukk svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .k-hele { margin-top: 12px; }
+  .uke .k-flere { color: var(--tekst-dempet); }
+  @media (max-width: 767.98px) {
+    .k-kolonnevelger { display: block; margin-bottom: 12px; }
+    .k-kolonner { grid-auto-flow: row; }
+    /* Én kolonne om gangen når skriptet går (kit.ts setter data-valgt) */
+    .k-kolonner[data-valgt] .k-kolonne:not([data-vis]) { display: none; }
+  }
+  @media (scripting: none) { .k-kolonnevelger { display: none; } }
+</style>

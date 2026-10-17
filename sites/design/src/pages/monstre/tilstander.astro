@@ -1,0 +1,44 @@
+---
+/**
+ * N-5 · 29-001 Tom-, laste- og feiltilstander, etter docs/sidekart/29-001.md i hengsel-crm (S-68): rad 1 Status 1/3 ×3 (Tom, Laster, Feil),
+ * rad 2 Tabell 1/1 (Tekstene, 4 rader = 320). Under står regelen ordrett fra designsystemet (Tilstand.prompt.md, README, LAYOUT-REGLER, flisklasser.md).
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Statusflis from "../../components/kit/Statusflis.astro";
+import Tabellflis, { tabellHoyde } from "../../components/kit/Tabellflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { flisklasser, siter } from "../../lib/ds-tekst";
+
+const tekstene = [
+  ["Tom", "Ingenting venter på deg", "Nye leads, møter, tilbud og ordre kommer hit.", "Ny kunde"],
+  ["Laster", "Henter Min dag for Hamar …", "–", "–"],
+  ["Feil", "Fikk ikke hentet Min dag", "Sjekk nettet og prøv igjen. Ingenting av det du har lagret er borte.", "Prøv igjen"],
+  ["Ingen tilgang", "Du har ikke tilgang til Lillehammer", "Du er selger i Hamar og Gjøvik.", "Bytt til Hamar"],
+];
+const regler = [
+  { gjelder: "Tom, Laster, Feil og Ingen tilgang", sitater: [
+    siter("components/status/Tilstand.prompt.md", /Tom, laster, feil og ingen tilgang\.[^\n]*/),
+    siter("components/status/Tilstand.prompt.md", /- Si hva som skjedde og hva brukeren kan gjøre\.[^\n]*/),
+  ] },
+  { gjelder: "Tekstene", sitater: [siter("README.md", /- \*\*Tilstander\*\* sier hva som skjedde[^\n]*/)] },
+  { gjelder: "Høyden", sitater: [siter("dokumentasjon/LAYOUT-REGLER.md", /- Tom, laster og feil har samme høyde som fylt flis, så raden ikke hopper\./)] },
+];
+---
+<Monsterside sti="tilstander" description="29-001 Tom-, laste- og feiltilstander: de fire tilstandene som fliser, tekstene i tabell og regelen fra designsystemet under.">
+  <Rad hoyde={120}>
+    <Statusflis tittel="Tom" pille="Ingenting venter" tone="venter" tekst="Nye leads, møter og ordre kommer hit." />
+    <Statusflis tittel="Laster" pille="Henter Min dag …" tone="pagar" tekst="Spinner og tekst. Ingen skjelett." />
+    <Statusflis tittel="Feil" pille="MD-503" tone="feil" tekst="Fikk ikke hentet Min dag." />
+  </Rad>
+  <Rad hoyde={tabellHoyde(tekstene.length)}>
+    <Tabellflis id="tekstene" tittel="Tekstene" kolonner={[{ navn: "Tilstand", bredde: 30 }, { navn: "Tittel", bredde: 25 }, { navn: "Tekst", bredde: 25 }, "Knapp"]} rader={tekstene} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Tabellflis id="per-klasse" tittel="Tom, laster og feil per flisklasse" bryt kolonner={[{ navn: "Klasse", bredde: 20 }, { navn: "Fast høyde (px)", bredde: 20 }, "Tom / laster / feil"]}
+      rader={flisklasser().map((k) => [k.klasse, k.hoyde, k.tilstand])} />
+  </Rad>
+</Monsterside>

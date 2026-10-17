@@ -1,0 +1,55 @@
+---
+/**
+ * N-5 · 29-006 Datoer, beløp og tall, etter docs/sidekart/29-006.md i hengsel-crm (S-68): rad 1 Tall 1/4 ×4, rad 2 Tabell 1/1 (Skrivemåte,
+ * 9 rader = 480), rad 3 Tabell 1/1 (Høyrejustert med tabulære tall, 4 rader = 320). Under står regelen ordrett fra designsystemet (README, LAYOUT-REGLER).
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Tallflis from "../../components/kit/Tallflis.astro";
+import Tabellflis, { tabellHoyde } from "../../components/kit/Tabellflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { siter } from "../../lib/ds-tekst";
+
+const skrivemate = [
+  ["Dato", "17.10.2026", "2026-10-17, 17/10/26"],
+  ["Kort dato i lister", "17.10", "17. okt."],
+  ["Dag og dato i tekst", "fredag 17. oktober", "Fredag 17.10.2026"],
+  ["Klokkeslett", "07.30", "7:30, 07:30"],
+  ["Tidsrom", "07.00–09.00", "7-9"],
+  ["Beløp", "1 234 kr", "kr 1234, 1234,-"],
+  ["Store beløp i tall-flis", "1,24 mill", "1 240 000,00"],
+  ["Negativt beløp", "−2 336 kr", "-2336"],
+  ["Prosent", "35 %", "35%"],
+];
+const fakturaer = [
+  ["20314", "23.10.2026", "07.30", "77 310 kr", "30 %"],
+  ["20587", "17.11.2026", "09.00", "154 620 kr", "60 %"],
+  ["20612", "19.11.2026", "14.40", "25 770 kr", "10 %"],
+  ["Sum", "–", "–", "257 700 kr", "100 %"],
+];
+const regler = [
+  { gjelder: "Skrivemåte", sitater: [siter("README.md", /- \*\*Tall:\*\* mellomrom som tusenskille[^\n]*/)] },
+  { gjelder: "I fliser og tabeller", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Tall høyrejustert, tekst venstre\. Dato dd\.mm\.åååå, klokkeslett 07\.30, beløp 1 234 kr\./),
+    siter("components/layout/Tabell.prompt.md", /- tabular-nums bare på beløp og antall, ikke på datoer eller hele rader\./),
+  ] },
+  { gjelder: "Tall-flisen", sitater: [siter("dokumentasjon/LAYOUT-REGLER.md", /- Tall: etikett 14 \+ ett tall 32 \(tabulære sifre\) \+ undertekst 12\. Fast høyde 120 px\./)] },
+];
+---
+<Monsterside sti="tall" description="29-006 Datoer, beløp og tall: norsk skrivemåte for dato, klokkeslett, beløp og prosent, høyrejustert med tabulære tall, og regelen fra designsystemet.">
+  <Rad hoyde={120}>
+    <Tallflis etikett="Dato" tall="17.10.2026" under="dd.mm.åååå" />
+    <Tallflis etikett="Klokkeslett" tall="07.30" under="tt.mm med punktum" />
+    <Tallflis etikett="Beløp" tall="1 234 kr" under="mellomrom, kr etter" />
+    <Tallflis etikett="Prosent" tall="35 %" under="mellomrom før %" />
+  </Rad>
+  <Rad hoyde={tabellHoyde(skrivemate.length)}>
+    <Tabellflis id="skrivemate" tittel="Skrivemåte" kolonner={[{ navn: "Hva", bredde: 40 }, { navn: "Skriv", bredde: 30 }, "Ikke"]} rader={skrivemate} />
+  </Rad>
+  <Rad hoyde={tabellHoyde(fakturaer.length)}>
+    <Tabellflis id="hoyrejustert" tittel="Høyrejustert med tabulære tall" kolonner={[{ navn: "Faktura", bredde: 30 }, { navn: "Dato", tall: true, bredde: 20 }, { navn: "Kl.", tall: true, bredde: 15 }, { navn: "Beløp", tall: true, bredde: 20 }, { navn: "Andel", tall: true }]} rader={fakturaer} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+</Monsterside>

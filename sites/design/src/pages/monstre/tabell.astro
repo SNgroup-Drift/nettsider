@@ -1,0 +1,55 @@
+---
+/**
+ * N-5 · 29-003 Tabell, etter docs/sidekart/29-003.md i hengsel-crm (S-68): rad 1 Tabell 1/1 (Kunder, 640) med verktøylinje (søk, filter,
+ * Butikk, Eksporter) og sidevelger (1–10 av 412, 10 per side), rad 2 Tekst 1/1 (Regler, 320). Under står regelen ordrett fra designsystemet
+ * (Tabell.prompt.md, LAYOUT-REGLER, flisklasser.md). Sidekartet har bare PC; telefonen følger regelen (første og siste kolonne, raden åpner resten).
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Tabellflis from "../../components/kit/Tabellflis.astro";
+import Tekstflis from "../../components/kit/Tekstflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { siter } from "../../lib/ds-tekst";
+import type { Tone } from "../../components/kit/Pille.astro";
+
+const TONE: Record<string, Tone> = { Ordre: "ferdig", Tilbud: "ferdig", Lead: "ferdig", Ferdig: "ferdig", Møte: "pagar" };
+const kunder: [string, string, string, string, string, string][] = [
+  ["Ingrid og Ola Haugen", "Hamar", "912 34 567", "17.10.2026", "257 700 kr", "Ordre"],
+  ["Marte Kolstad", "Hamar", "934 11 202", "09.10.2026", "189 400 kr", "Tilbud"],
+  ["Ola Bakken", "Gjøvik", "958 20 114", "17.10.2026", "–", "Lead"],
+  ["Familien Sæther", "Hamar", "984 10 220", "16.10.2026", "142 800 kr", "Ordre"],
+  ["Hege Lunde", "Gjøvik", "917 33 018", "16.10.2026", "142 000 kr", "Tilbud"],
+  ["Per og Liv Dahl", "Hamar", "922 41 870", "17.10.2026", "–", "Møte"],
+  ["Anne Berg", "Hamar", "976 02 113", "15.10.2026", "96 300 kr", "Ordre"],
+  ["Marit Holm", "Hamar", "948 76 290", "14.10.2026", "25 770 kr", "Ferdig"],
+  ["Even Rønning", "Gjøvik", "913 58 447", "13.10.2026", "211 900 kr", "Ordre"],
+  ["Silje Brenna", "Hamar", "981 22 604", "15.10.2026", "–", "Lead"],
+];
+const regler = [
+  { gjelder: "Tabell", sitater: [
+    siter("components/layout/Tabell.prompt.md", /Tabell på PC\. Under 1024 px brukes Listerad i stedet\./),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Tabell: tittel \+ verktøylinje \(søk, filter, handling\) \+ rader 14 px, maks 25, så sidevelger\./),
+  ] },
+  { gjelder: "Høyden", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", / {2}- 640: full Tabell \(til 10 rader\), full Plan \(til 10 rader\)\./),
+    siter("flisklasser.md", /Tittel, verktøylinje 36 \+ 8, overskrift 36, rader 44, sidevelger eller «n rader» 48/),
+  ] },
+  { gjelder: "Tall i tabellen", sitater: [siter("components/layout/Tabell.prompt.md", /- tabular-nums bare på beløp og antall, ikke på datoer eller hele rader\./)] },
+];
+---
+<Monsterside sti="tabell" description="29-003 Tabell: tabellen på PC med verktøylinje, rader på 44 px, tall høyrejustert, status som pille og sidevelger, med regelen fra designsystemet.">
+  <Rad hoyde={640}>
+    <Tabellflis id="kunder" tittel="Kunder" variant="full" antall={412}
+      filter={["Alle", "Lead", "Tilbud", "Ordre", "Ferdig"]} butikker={["Hamar", "Gjøvik"]} handlinger={["Eksporter"]} side={{ fra: 1, til: 10, sider: 42 }}
+      kolonner={[{ navn: "Navn", bredde: 20 }, { navn: "Butikk", bredde: 15 }, { navn: "Telefon", tall: true, bredde: 15 }, { navn: "Siste aktivitet", tall: true, bredde: 15 }, { navn: "Beløp", tall: true, bredde: 15 }, "Status"]}
+      rader={kunder.map((k) => ({ celler: [...k.slice(0, 5), { pille: k[5], tone: TONE[k[5]] }], status: k[5] }))} />
+  </Rad>
+  <Rad hoyde={320}>
+    <Tekstflis tittel="Regler">
+      <p>Søk 240 px til venstre i verktøylinja, filtre og handlinger til høyre for søket. Første kolonne i 600, resten i 400. Klikk på en rad åpner den. Sidevelgeren viser 10, 25 eller 50 per side. Telefon: første og siste kolonne (A12).</p>
+    </Tekstflis>
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+</Monsterside>

@@ -1,0 +1,43 @@
+---
+/**
+ * N-5: regelen under mønsteret, som en Tekst-flis 1/1 (regel 6: ingen tekst uten flis mellom fliser). Hvert punkt sier hvilken flis det gjelder
+ * og siterer designsystemet ordrett (siter() i lib/ds-tekst.ts), med fila og commiten det står i. Høyden følger innholdet («auto» i raden).
+ */
+import Flis from "./Flis.astro";
+import { dsKilde, mdLinje, type Sitat } from "../../lib/ds-tekst";
+export interface Regelpunkt { gjelder: string; sitater: Sitat[] }
+interface Props { punkter: Regelpunkt[]; tittel?: string }
+const { punkter, tittel = "Regelen i designsystemet" } = Astro.props;
+---
+<Flis bredde="1/1" tittel={tittel} klasse="k-regelflis">
+  <dl class="k-regler" data-regler>
+    {punkter.map((p) => (
+      <div class="k-regel">
+        <dt>{p.gjelder}</dt>
+        {p.sitater.map((s) => (
+          <dd>
+            <blockquote data-ds-fil={s.fil} data-ds-fra={s.fra}><p set:html={mdLinje(s.tekst)} /></blockquote>
+            <p class="k-kilde"><code>{s.fil}</code></p>
+          </dd>
+        ))}
+      </div>
+    ))}
+  </dl>
+  <p class="k-fot">Sitert ordrett fra Hengsel-designsystemet {dsKilde.versjon} (<code>{dsKilde.sti}</code>, commit <code>{dsKilde.kort}</code>). Endres bare i designsystemet.</p>
+</Flis>
+
+<style>
+  .k-regler { margin: 4px 0 0; display: flex; flex-direction: column; }
+  .k-regel { display: grid; grid-template-columns: 200px minmax(0, 720px); gap: 4px 24px; padding: 12px 0; border-top: 1px solid var(--linje); }
+  dt { grid-column: 1; font-weight: var(--skrift-vekt-sterk); }
+  dd { grid-column: 2; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+  dd + dd { margin-top: 4px; }
+  blockquote { margin: 0; padding-left: 12px; border-left: 2px solid var(--aksent); line-height: 22px; }
+  blockquote :global(code) { font-size: 13px; }
+  .k-kilde { padding-left: 14px; font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
+  .k-fot { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--linje); font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
+  @media (max-width: 767.98px) {
+    .k-regel { grid-template-columns: minmax(0, 1fr); }
+    dt, dd { grid-column: 1; grid-row: auto; }
+  }
+</style>

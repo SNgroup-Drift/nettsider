@@ -1,0 +1,27 @@
+---
+/**
+ * Kitet (N-5): Steg-flisen (regel 2c, flisklasser.md «Steg»): 1/1, 120, tittel og en vannrett rad av steg (strek 4, navn, status).
+ * Streken følger statusen: ferdig (grønn), nå (aksent), planlagt (pågår), venter og ikke startet (grå). Telefon: rada scroller vannrett.
+ */
+import Flis from "./Flis.astro";
+export type Stegstatus = "ferdig" | "na" | "venter" | "planlagt" | "ikke";
+interface Props { tittel: string; steg: { navn: string; status: Stegstatus; tekst: string }[] }
+const { tittel, steg } = Astro.props;
+---
+<Flis bredde="1/1" tittel={tittel} klasse="k-stegflis">
+  <ol class="k-steg" tabindex="0" aria-label={`${tittel}: stegene`}>
+    {steg.map((s) => <li class={s.status} aria-current={s.status === "na" ? "step" : undefined}><span class="k-stegnavn">{s.navn}</span><span class="k-stegstatus">{s.tekst}</span></li>)}
+  </ol>
+</Flis>
+
+<style>
+  .k-steg { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(96px, 1fr); gap: 8px; overflow-x: auto; }
+  li { display: flex; flex-direction: column; padding-top: 8px; border-top: 4px solid var(--linje); min-width: 0; }
+  .ferdig { border-top-color: var(--status-ferdig-fg); }
+  .na { border-top-color: var(--aksent); }
+  .venter { border-top-color: var(--status-venter-kant); }
+  .planlagt { border-top-color: var(--status-pagar-kant); }
+  .k-stegnavn { font-size: 14px; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .na .k-stegnavn { font-weight: var(--skrift-vekt-sterk); }
+  .k-stegstatus { font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
+</style>

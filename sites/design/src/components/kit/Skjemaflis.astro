@@ -1,0 +1,34 @@
+---
+/**
+ * Kitet (N-5): Skjema-flisen (regel 2c/2d, flisklasser.md «Skjema»): 1/2, 480, tittel og maks fire felt i én kolonne (etikett 12 over feltet,
+ * linja 16 + 8 + felt 40, 12 mellom feltene) og én hovedknapp nederst til høyre. Mønstersidene viser feltene; knappen sender ingenting.
+ */
+import Flis from "./Flis.astro";
+export interface Felt { etikett: string; verdi?: string; plassholder?: string; type?: "text" | "tel" | "velg"; valg?: string[] }
+interface Props { id: string; tittel: string; felt: Felt[]; knapp: string }
+const { id, tittel, felt, knapp } = Astro.props;
+if (felt.length > 4) throw new Error(`${tittel}: maks fire felt i et skjema på 480 (regel 2d)`);
+---
+<Flis id={id} bredde="1/2" tittel={tittel} klasse="k-skjemaflis">
+  <form class="k-skjema" action="#" data-skjema>
+    {felt.map((f, i) => (
+      <div class="k-felt">
+        <label for={`${id}-${i}`}>{f.etikett}</label>
+        {f.type === "velg"
+          ? <select id={`${id}-${i}`}>{f.plassholder && <option value="">{f.plassholder}</option>}{(f.valg ?? []).map((v) => <option selected={v === f.verdi}>{v}</option>)}</select>
+          : <input id={`${id}-${i}`} type={f.type ?? "text"} value={f.verdi} placeholder={f.plassholder} autocomplete="off" />}
+      </div>
+    ))}
+  </form>
+  <button slot="handling" type="button" class="k-hovedknapp">{knapp}</button>
+</Flis>
+
+<style>
+  .k-skjema { display: flex; flex-direction: column; gap: 12px; }
+  .k-felt { display: flex; flex-direction: column; gap: 8px; }
+  .k-felt label { font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
+  .k-felt input, .k-felt select { height: 40px; padding: 0 12px; box-sizing: border-box; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: var(--flate-kort); color: var(--tekst); font: inherit; font-size: 14px; }
+  .k-felt input:focus, .k-felt select:focus { outline: none; border-color: var(--aksent); box-shadow: 0 0 0 3px var(--flate-valgt); }
+  .k-hovedknapp { height: 36px; padding: 0 16px; border: 0; border-radius: var(--radius-felt); background: var(--aksent); color: var(--paa-aksent); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; }
+  .k-hovedknapp:hover { background: var(--aksent-trykk); }
+</style>

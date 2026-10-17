@@ -1,0 +1,49 @@
+---
+/**
+ * N-5 · 29-002 Dialoger og skuffer, etter docs/sidekart/29-002.md i hengsel-crm (S-68): rad 1 Skjema 1/2 (Dialog: Ny kunde) + Tekst 1/2
+ * (Når dialog), 480; rad 2 Tabell 1/1 (Dialog, skuff og ark, 4 rader = 320). Under står regelen ordrett fra designsystemet
+ * (Dialog.prompt.md, Ark.prompt.md, Skuff.prompt.md, LAYOUT-REGLER).
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Skjemaflis from "../../components/kit/Skjemaflis.astro";
+import Tekstflis from "../../components/kit/Tekstflis.astro";
+import Tabellflis, { tabellHoyde } from "../../components/kit/Tabellflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { siter } from "../../lib/ds-tekst";
+
+const komponenter = [
+  ["Dialog", "Korte skjema, bekreft sletting", "560 px", "Avbryt, Esc"],
+  ["Skuff", "Detalj ved siden av lista (produktkort)", "480 px fra høyre", "×, Esc"],
+  ["Ark", "Valg på telefon (butikkvalg)", "hele bredden, fra bunnen", "dra ned"],
+  ["Bekreft", "Handling som ikke kan angres", "400 px", "Avbryt"],
+];
+const regler = [
+  { gjelder: "Dialog", sitater: [siter("components/overlays/Dialog.prompt.md", /Dialog for bekreftelse og korte skjema\./)] },
+  { gjelder: "Skuff", sitater: [siter("components/overlays/Skuff.prompt.md", /Skuff fra høyre \(v4\)\. Handlingen skjer i skuffen, ikke på en ny side\./)] },
+  { gjelder: "Ark", sitater: [
+    siter("components/overlays/Ark.prompt.md", /Ark fra bunnen på telefon\./),
+    siter("components/overlays/Ark.prompt.md", /- Trykkflater minst 44 px \(56 px i rader\)\./),
+  ] },
+  { gjelder: "Skjema i dialogen", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Skjemaer: 1\/2 på PC \(venstre\), hjelpetekst\/forhåndsvisning til høyre\.[^\n]*/),
+    siter("flisklasser.md", /Tittel, maks 4 felt \(etikett 16 \+ 8 \+ felt 40, 12 mellom\), handling 48 nederst til høyre/),
+  ] },
+];
+---
+<Monsterside sti="dialoger" description="29-002 Dialoger og skuffer: dialog for korte skjema og bekreftelser, skuff for detaljer og ark for valg på telefon, med regelen fra designsystemet.">
+  <Rad hoyde={480}>
+    <Skjemaflis id="ny-kunde" tittel="Dialog: Ny kunde" knapp="Lagre kunde" felt={[
+      { etikett: "Navn" },
+      { etikett: "Telefon", type: "tel" },
+      { etikett: "Butikk", type: "velg", plassholder: "Velg butikk", valg: ["Hamar", "Gjøvik", "Lillehammer"] },
+    ]} />
+    <Tekstflis bredde="1/2" tittel="Når dialog" tekst="Maks 560 px bred med tittel, innhold, én hovedknapp og Avbryt. Esc og klikk utenfor lukker uten å lagre. Ingen dialog over en annen dialog." />
+  </Rad>
+  <Rad hoyde={tabellHoyde(komponenter.length)}>
+    <Tabellflis id="komponenter" tittel="Dialog, skuff og ark" kolonner={[{ navn: "Komponent", bredde: 30 }, { navn: "Brukes til", bredde: 25 }, { navn: "Bredde", bredde: 25 }, "Lukkes med"]} rader={komponenter} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+</Monsterside>
