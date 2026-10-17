@@ -1,6 +1,15 @@
 ---
 /** Sidekartet 25-008 For butikkleder (S-68, KOMMER): plassholder til teksten kommer. Innholdet i content/kommer.ts. */
 import KommerSide from "../components/kit/KommerSide.astro";
+import Simulering from "../components/Simulering.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import { FOR_BUTIKKLEDER } from "../content/kommer";
+import { LEDER_DISPLAY, LEDER_IPAD } from "../content/simuleringer";
 ---
-<KommerSide side={FOR_BUTIKKLEDER} aktiv="leder" />
+<!-- N-6: simuleringer av ledervisningen (content/simuleringer.ts) -->
+<KommerSide side={FOR_BUTIKKLEDER} aktiv="leder">
+  <Simuleringsflis id="se-leder" tittel="Se ledervisningen" tekst="Resultater, salgstavle, moduler og samtaler på Studio Display, og lederen på iPad.">
+    <Simulering type="display" steg={LEDER_DISPLAY} etikett="Ledervisningen på Studio Display" />
+    <Simulering type="ipad" steg={LEDER_IPAD} etikett="Ledervisningen på iPad" />
+  </Simuleringsflis>
+</KommerSide>

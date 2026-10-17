@@ -1,7 +1,11 @@
 ---
 /** Kilden til «Slik virker det» (ordrens reise). Ikke lenger en side på hengsel.no (K-229: historien hører hjemme i Visningsrommet; /slik-virker-det videresendes til forsiden). Brukes av Sigdal-utgaven, /kunde/sigdal/slik-virker-det. */
 import Side from "../layouts/Side.astro";
+import Simulering from "../components/Simulering.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
+import TreEnheter from "../components/TreEnheter.astro";
 import { SLIK, SCENER, VIDERE } from "../content/slikvirker";
+import { DOKUMENTFLYT } from "../content/simuleringer";
 const n = SCENER.length;
 ---
 <Side title={SLIK.tittel} description={SLIK.beskrivelse} aktiv="slik">
@@ -63,6 +67,17 @@ const n = SCENER.length;
       </div>
     </section>
 
+    <section class="sek sv-sim">
+      <div class="h-innhold">
+        <Simuleringsflis id="dokumentflyten" tittel="Dokumentene i ordrens reise" tekst="Fra tilbud til faktura: dokumentene Hengsel lager og sender underveis ">
+          <Simulering type="display" steg={DOKUMENTFLYT} etikett="Dokumentflyten på Studio Display" />
+        </Simuleringsflis>
+        <Simuleringsflis id="tre-enheter" tittel="Samme ordre på alle enheter">
+          <TreEnheter />
+        </Simuleringsflis>
+      </div>
+    </section>
+
     <section class="sek flate">
       <div class="h-innhold sv-videre">
         {VIDERE.map((v) => (
@@ -81,6 +96,8 @@ const n = SCENER.length;
 </script>
 
 <style>
+  .sv-sim { padding-block: 0 clamp(32px, 5vw, 64px); }
+  .sv-sim :global(.rad) { margin-bottom: 24px; }
   .sv { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); }
   .sv-in { display: flex; flex-direction: column; gap: 32px; }
   .sv-hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }

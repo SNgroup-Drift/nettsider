@@ -1,0 +1,25 @@
+---
+/**
+ * N-6: stegmerkene under en simulering («1 Tilbud · 2 Ordre · 3 Bestilling …»). Aktivt steg er markert; merkene kan trykkes (scripts/simulering.ts).
+ * Uten skript står første steg som aktivt og knappene gjør ingenting.
+ */
+interface Props { navn: readonly string[]; etikett?: string }
+const { navn, etikett = "Velg steg" } = Astro.props;
+---
+{navn.length > 1 && (
+  <div class="merker" role="group" aria-label={etikett}>
+    {navn.map((n, i) => (
+      <button type="button" class:list={["merke", { aktiv: i === 0 }]} data-merke aria-pressed={i === 0 ? "true" : "false"}><span class="nr">{i + 1}</span> {n}</button>
+    ))}
+  </div>
+)}
+
+<style>
+  .merker { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; margin-top: 12px; font-family: var(--f-body); }
+  .merke { appearance: none; margin: 0; padding: 6px 12px; min-height: 32px; border: 1px solid var(--linje); border-radius: var(--radius-felt); background: transparent; color: var(--tekst-dempet); font: inherit; font-size: 13px; line-height: 18px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .merke:hover { color: var(--tekst); border-color: var(--kant); }
+  .merke:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  .merke.aktiv { background: var(--aksent); border-color: var(--aksent); color: var(--tekst-invers); }
+  .nr { font-variant-numeric: tabular-nums; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .merke { transition: none; } }
+</style>

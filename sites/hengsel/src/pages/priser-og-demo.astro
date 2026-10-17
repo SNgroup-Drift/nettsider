@@ -16,6 +16,9 @@ import Rad from "../components/kit/Rad.astro";
 import Flis from "../components/kit/Flis.astro";
 import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
 import Tekstflis from "../components/kit/Tekstflis.astro";
+import Enhet from "../components/Enhet.astro";
+import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
+import { STILL_PRISER as S } from "../content/simuleringer";
 import { SIDE, INNGAR, OPPSTART, DEMO, KONTAKT, MAILTO } from "../content/priser";
 import { TEL_HREF } from "../content/forside";
 const f = DEMO.felt;
@@ -30,6 +33,10 @@ const f = DEMO.felt;
       <Rad hoyde={tabellHoyde(OPPSTART.steg.length)}>
         <Tabellflis id="oppstart" tittel={OPPSTART.eyebrow} kolonner={["Steg", "Hva"]} rader={OPPSTART.steg} />
       </Rad>
+      <Simuleringsflis id="i-bruk" tittel="Slik ser det ut">
+        <Enhet type="display" bilde={S.display.bilde} alt={S.display.alt} />
+        <Enhet type="iphone" bilde={S.iphone.bilde} alt={S.iphone.alt} utenStatus symboler={false} />
+      </Simuleringsflis>
     </Innhold>
 
     <Sidetopp id="demo" niva={2} tittel={DEMO.h2} ingress={DEMO.ingress} />

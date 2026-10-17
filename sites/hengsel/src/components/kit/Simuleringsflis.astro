@@ -1,0 +1,30 @@
+---
+/**
+ * N-6: en rad (høyde «auto», fordi bildene setter høyden) med én flis over hele bredden som holder simuleringer eller stillrammer (Simulering.astro,
+ * TreEnheter.astro, Enhet.astro). Enhetene står side om side og brytes til en kolonne på telefon. Størrelsene følger enhetstypen.
+ */
+import Rad from "./Rad.astro";
+import Flis from "./Flis.astro";
+interface Props { tittel: string; tekst?: string; id?: string }
+const { tittel, tekst, id } = Astro.props;
+---
+<Rad hoyde="auto">
+  <Flis bredde="1/1" tittel={tittel} id={id} klasse="simflis">
+    {tekst && <p class="tekst">{tekst}</p>}
+    <div class="enheter"><slot /></div>
+  </Flis>
+</Rad>
+
+<style>
+  .tekst { margin: 0 0 16px; max-width: 720px; line-height: 22px; color: var(--tekst-dempet); }
+  .enheter { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 24px 40px; padding-block: 8px; }
+  .enheter > :global(.sim.display), .enheter > :global(.enhet.display), .enheter > :global(.tre) { flex: 1 1 480px; max-width: 760px; }
+  .enheter > :global(.sim.ipad), .enheter > :global(.enhet.ipad) { flex: 0 1 320px; }
+  .enheter > :global(.sim.iphone), .enheter > :global(.enhet.iphone) { flex: 0 1 180px; }
+  @media (max-width: 959px) {
+    .enheter { gap: 24px; }
+    .enheter > :global(.sim.display), .enheter > :global(.enhet.display), .enheter > :global(.tre) { flex-basis: 100%; max-width: none; }
+    .enheter > :global(.sim.ipad), .enheter > :global(.enhet.ipad) { flex-basis: 100%; max-width: 420px; }
+    .enheter > :global(.sim.iphone), .enheter > :global(.enhet.iphone) { flex-basis: 200px; max-width: 200px; }
+  }
+</style>
