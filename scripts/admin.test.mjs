@@ -270,6 +270,18 @@ test("wrangler.jsonc: alle forespørsler går gjennom Workeren, variablene overs
   assert.deepEqual(finnHemmeligheter(les("wrangler.jsonc")), []);
 });
 
+test("wrangler.jsonc (N-4): tom previews-blokk, så `wrangler preview` i Workers Builds går, uten produksjons-D1 eller variabler i forhåndsvisningen", () => {
+  for (const sted of ["admin", "design"]) {
+    const w = JSON.parse(utenKommentarer(readFileSync(join(rot, "..", sted, "wrangler.jsonc"), "utf8")));
+    assert.deepEqual(w.previews, {}, `${sted}: previews må finnes og være tom`);
+  }
+  const hosting = readFileSync(join(rot, "..", "..", "docs", "hosting.md"), "utf8");
+  for (const sted of ["admin", "design"]) {
+    assert.ok(hosting.includes(`npx wrangler deploy -c sites/${sted}/wrangler.jsonc`), `hosting.md: Deploy command for ${sted}`);
+    assert.ok(hosting.includes(`npx wrangler preview -c sites/${sted}/wrangler.jsonc`), `hosting.md: Preview command for ${sted}`);
+  }
+});
+
 test("_headers: noindex, streng CSP uten inline-skript og uten tredjepart", () => {
   const h = les("public/_headers");
   assert.match(h, /X-Robots-Tag: noindex, nofollow/);

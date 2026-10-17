@@ -30,19 +30,28 @@ sngroup.drift-697.workers.dev før denne filen kom.
 Workers & Pages → Create → Workers → Import a repository → velg `SNgroup-Drift/sngroup-nettsider`. For en Worker som
 finnes: Worker → Settings → Build.
 
-| | sngroup | hengsel | byggem | design |
-|---|---|---|---|---|
-| Worker-navn | `sngroup` | `hengsel` | `byggem` | `design` |
-| Git-gren for produksjon | `main` | `main` | `main` | `main` |
-| Build command | `npm run build -w sites/sngroup` | `npm run build -w sites/hengsel` | `npm run build -w sites/byggem` | `npm run build -w sites/design` |
-| Deploy command | `npx wrangler deploy -c sites/sngroup/wrangler.jsonc` | `npx wrangler deploy -c sites/hengsel/wrangler.jsonc` | `npx wrangler deploy -c sites/byggem/wrangler.jsonc` | `npx wrangler deploy -c sites/design/wrangler.jsonc` |
-| Non-production branch deploy command (preview) | `npx wrangler versions upload -c sites/sngroup/wrangler.jsonc` | `npx wrangler versions upload -c sites/hengsel/wrangler.jsonc` | `npx wrangler versions upload -c sites/byggem/wrangler.jsonc` | `npx wrangler versions upload -c sites/design/wrangler.jsonc` |
-| Path (rotmappe) | `/` | `/` | `/` | `/` |
-| Build variables | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
-| API-token | Eget token for nettsidene | Samme nettside-token | Samme nettside-token | Samme nettside-token |
-| Build watch paths, include | `sites/sngroup/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/hengsel/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/byggem/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/design/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` |
-| Testadresse | https://sngroup.drift-697.workers.dev | https://hengsel.drift-697.workers.dev | https://byggem.drift-697.workers.dev | https://design.drift-697.workers.dev |
-| Egne domener | `sngroup.no`, `www.sngroup.no` | `hengsel.no`, `www.hengsel.no` | `byggem.no`, `www.byggem.no` | `design.hengsel.no` |
+| | sngroup | hengsel | byggem | design | admin |
+|---|---|---|---|---|---|
+| Worker-navn | `sngroup` | `hengsel` | `byggem` | `design` | `admin` |
+| Git-gren for produksjon | `main` | `main` | `main` | `main` | `main` |
+| Build command | `npm run build -w sites/sngroup` | `npm run build -w sites/hengsel` | `npm run build -w sites/byggem` | `npm run build -w sites/design` | `npm run build -w sites/admin` |
+| Deploy command | `npx wrangler deploy -c sites/sngroup/wrangler.jsonc` | `npx wrangler deploy -c sites/hengsel/wrangler.jsonc` | `npx wrangler deploy -c sites/byggem/wrangler.jsonc` | `npx wrangler deploy -c sites/design/wrangler.jsonc` | `npx wrangler deploy -c sites/admin/wrangler.jsonc` |
+| Grenbygg: feltet heter | Non-production branch deploy command | Non-production branch deploy command | Non-production branch deploy command | **Preview command** (Worker Previews) | **Preview command** (Worker Previews) |
+| Grenbygg: kommando | `npx wrangler versions upload -c sites/sngroup/wrangler.jsonc` | `npx wrangler versions upload -c sites/hengsel/wrangler.jsonc` | `npx wrangler versions upload -c sites/byggem/wrangler.jsonc` | `npx wrangler preview -c sites/design/wrangler.jsonc` | `npx wrangler preview -c sites/admin/wrangler.jsonc` |
+| Path (rotmappe) | `/` | `/` | `/` | `/` | `/` |
+| Build variables | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
+| API-token | Eget token for nettsidene | Samme nettside-token | Samme nettside-token | Samme nettside-token | Samme nettside-token |
+| Build watch paths, include | `sites/sngroup/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/hengsel/*`, `sites/vis/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/byggem/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/design/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` | `sites/admin/*`, `packages/*`, `scripts/*`, `package.json`, `package-lock.json` |
+| Testadresse | https://sngroup.drift-697.workers.dev | https://hengsel.drift-697.workers.dev | https://byggem.drift-697.workers.dev | https://design.drift-697.workers.dev | (bak Access) |
+| Egne domener | `sngroup.no`, `www.sngroup.no` | `hengsel.no`, `www.hengsel.no` | `byggem.no`, `www.byggem.no` | `design.hengsel.no` | `admin.hengsel.no` |
+
+**Grenbygg i nye Workers (N-4, 17.10.2026).** Workers som er koblet til Workers Builds etter at Worker Previews kom (design og admin), har
+ikke feltet «Non-production branch deploy command», men **Preview command**, med standardverdien `npx wrangler preview` (uten `-c`). Fra rotmappen
+finner den ikke `sites/<navn>/wrangler.jsonc`, og bygget blir rødt på hver gren og PR. Sett feltet til `npx wrangler preview -c sites/<navn>/wrangler.jsonc`.
+`wrangler preview` krever også en `previews`-blokk i wrangler-fila; begge har en tom blokk. En Preview arver ikke bindinger og variabler fra
+produksjon, så admin-forhåndsvisningen får verken D1-databasen eller `ACCESS_*` og svarer 503 (låst). sngroup, hengsel og byggem har den gamle
+modellen (`versions upload`) til noen trykker «Set up Worker Previews» i dashbordet (kan ikke angres); gjør det ikke uten å legge `"previews": {}` i
+wrangler-fila først. `scripts/admin.test.mjs` passer på at tabellen og blokkene står.
 
 **API-token:** bruk et eget token for nettsidene, ikke tokenet til CRM-demoen. Workers Builds lager det i
 dashbordet når Worker-en kobles til Git (eller velg et eksisterende nettside-token). Tokenet lagres bare hos Cloudflare,
@@ -417,7 +426,7 @@ Egen Worker `admin` (`sites/admin`), statiske filer bak Cloudflare Access. Til f
 gjennom `worker/index.js`, som avviser alt uten gyldig `Cf-Access-Jwt-Assertion` (signatur, utsteder, Access-app, utløp og e-postadresse).
 Variablene `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD` settes i dashbordet (ikke hemmeligheter, men heller ikke i repoet; `keep_vars` hindrer at
 utrulling overskriver dem). Mangler de, svarer Workeren 503. Build command `npm run build -w sites/admin`, Deploy command og
-Non-production branch deploy command `-c sites/admin/wrangler.jsonc`. Domene, Access-app og policy: se `claude/k184-rapport.md`.
+Preview command `-c sites/admin/wrangler.jsonc` (se tabellen øverst). Domene, Access-app og policy: se `claude/k184-rapport.md`.
 
 **K-240 (fase A, S-62):** Workeren har et JSON-API under `/api` (`worker/api.js`) mot Cloudflare D1 (binding `DB`, database `hengsel-admin`, region weur;
 `database_id` i `wrangler.jsonc` settes inn av Oversikt før fletting). Migreringene ligger i `sites/admin/migrations/` og kjøres med
