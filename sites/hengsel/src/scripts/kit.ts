@@ -42,6 +42,11 @@ for (const sok of document.querySelectorAll<HTMLElement>("[data-sok]")) {
 // Rader som åpnes: «mer» åpnes overalt; kolonnene imellom bare på telefon (på PC står de i raden, så knappen er av der).
 const apneKnapper = [...document.querySelectorAll<HTMLButtonElement>("[data-apne]")];
 const oppdaterKnapper = () => {
+  // Raden som åpnes spenner over de synlige kolonnene: alle på PC, første og siste på telefon (ellers lager den skjulte kolonnen et tomt felt)
+  for (const td of document.querySelectorAll<HTMLTableCellElement>("[data-detalj] > td")) {
+    const n = td.closest("table")?.querySelectorAll("thead th").length ?? 2;
+    td.colSpan = tlf.matches ? 2 : n;
+  }
   for (const k of apneKnapper) {
     const bareTlf = k.closest("tr")?.hasAttribute("data-bare-tlf") ?? false;
     k.disabled = bareTlf && !tlf.matches;
