@@ -11,17 +11,14 @@ export { BILDEDOMENE, LOKALE_BILDER, MANIFEST_FIL, PLASSHOLDER, TEMAER, bildeUrl
  * scripts/skjermbilder-bibliotek.test.mjs sier fra om en nøkkel her finnes. I Sigdal-utgavene godtas også LOKALE_BILDER som plassholder (K-223).
  */
 export const KJENTE_MANGLER = [
-  // Kundeportalen: inngang med engangskode på e-post/SMS (ikke automatisert ennå), og komposisjonene som bygger på den
-  "vis/skjermbilder/kundeportal-k03", "vis/skjermbilder/kundeportal-k06", "vis/skjermbilder/kundeportal-k08", "vis/skjermbilder/kundeportal-pc",
-  "vis/skjermbilder/portal-tilbud", "vis/skjermbilder/portal-levering", "vis/skjermbilder/portal-montering", "vis/skjermbilder/portal-fdv",
-  "vis/skjermbilder/d2a-signer-med-bankid", "vis/skjermbilder/d11-min-side-nytt",
-  "vis/rom-kunde", "vis/rom-minside", "vis/forsta-kunde", "vis/flate-kunden",
-  // PDF-sidene og A4-arkene: PDF-visningen tegnes ikke i headless Chromium, og arkene er PDF-er (dokumentforsiden er nettsidenes egen, LOKALE_BILDER)
-  "vis/skjermbilder/d1-lag-pdf-og-send", "vis/skjermbilder/d4-lag-tilvalgsliste",
-  ...["d1", "d2a", "d2b", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "d11"].map((d) => `vis/skjermbilder/dok-${d}`),
+  // Kundeportalen: tilbud og levering i portalen tas ikke i Visning ennå; rommene uten app-skjermbilde
+  "vis/skjermbilder/portal-tilbud", "vis/skjermbilder/portal-levering",
+  "vis/rom-kunde", "vis/forsta-kunde", "vis/flate-kunden",
+  // Tilvalgslista (d4) trenger et tilvalgstilbud på en leilighet i seed (K-316-funn)
+  "vis/skjermbilder/d4-lag-tilvalgsliste",
   // «Mål og skisser» er ikke en fane på ordresiden i CRM Demo (C01 avklares)
   "vis/skjermbilder/crm-mal-skisser", "vis/skjermbilder/mb-crm-mal-skisser",
-  // E-postvarselet er ikke en skjerm (gjengis fra emailTemplate.ts senere)
-  "vis/skjermbilder/d12-e-postvarsel",
+  // 17.10 (K-316 kjøring 18, 458 filer i biblioteket): kundeportal-k03/k06/k08/pc, portal-montering, portal-fdv, d2a-signer-med-bankid,
+  // d11-min-side-nytt, rom-minside, d1-lag-pdf-og-send, dok-d1…d11 og d12-e-postvarsel er i biblioteket og tatt ut av lista.
   // Rommene uten app-skjermbilde (rommet selv i Studio Display) og dokumentforsiden er nettsidenes egne bilder: LOKALE_BILDER, aldri i biblioteket
 ];
