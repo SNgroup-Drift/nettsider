@@ -2,15 +2,14 @@
 import { EPOST } from "./forside";
 
 export const HERO = {
-  eyebrow: "Integrasjoner",
   tittel: "Koblet til det dere bruker.",
   ingress: "Tegningen kommer fra CET, avtalen signeres i Penneo, og fakturaen går til PowerOffice. Velg en kobling for å se hva som går inn og ut.",
 } as const;
 
-export const PANEL = { valgt: "Valgt kobling", inn: "Inn i Hengsel", ut: "Ut fra Hengsel", brukes: "Brukes i:" } as const;
-export const KART_ARIA = "Koblinger";
+/** Kolonnene «Inn» og «Ut» i tabellen Koblinger (sidekartet 25-005) */
+export const PANEL = { inn: "Inn i Hengsel", ut: "Ut fra Hengsel" } as const;
 
-/** Rekkefølgen er plasseringen i systemkartet (3 × 3); Hengsel (indeks 4) ligger i midten. */
+/** Koblingene. «om» står når raden åpnes. Hengsel selv (midten) var midten i systemkartet (K-160) og er ikke en rad i tabellen. */
 export const KOBLINGER = [
   { t: "CET", s: "Tegning og artikler", om: "Tegneren lagrer i CET, og selgeren henter tegningen inn i tilbudet. Hengsel viser hva som er endret fra forrige versjon.", inn: "Tegninger, artikler og priser", ut: "–", hvor: "Tilbud" },
   { t: "Penneo", s: "E-signering", om: "Kjøpsavtalen signeres med BankID. Signert avtale kommer tilbake til ordren.", inn: "Signert avtale og tidspunkt", ut: "Kjøpsavtalen til signering", hvor: "Kundeportal og ordre" },
@@ -24,7 +23,6 @@ export const KOBLINGER = [
 ] as const;
 
 export const SIKKERHET = {
-  eyebrow: "Sikkerhet",
   tittel: "Kundens data, trygt lagret.",
   kort: [
     ["EU-lagring", "Data lagres i EU."],

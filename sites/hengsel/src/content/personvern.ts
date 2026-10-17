@@ -61,3 +61,10 @@ export const personvern = {
     },
   ] satisfies Avsnitt[],
 };
+
+/** Sidekartet 25-011 (S-68): toppen og rad 1 (120), Tekst 1/1 «Personvern». Personvernerklæringen for nettsiden (over) står under, én flis per avsnitt (N-3). */
+export const PERSONVERN_SIDE = {
+  tittel: "Personvern og vilkår",
+  ingress: "Hvordan vi behandler data i Hengsel.",
+  flis: { tittel: "Personvern", tekst: "Data lagres i EU. Logg på alle endringer. Daglig sikkerhetskopi. Spørsmål om databehandleravtale:", epost: "hei@hengsel.no" },
+} as const;

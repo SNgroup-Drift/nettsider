@@ -1,18 +1,48 @@
 ---
+/**
+ * /personvern, sidekartet 25-011 (S-68): toppen «Personvern og vilkår» og rad 1 (120) Tekst 1/1 «Personvern».
+ * Under står personvernerklæringen for nettsiden hengsel.no (content/personvern.ts, godkjent 07.10 og 09.10.2026) som Tekst 1/1-fliser med høyde
+ * etter innholdet: den er lengre enn 120 og skal stå hel (avvik i N-3-rapporten).
+ */
 import Side from "../layouts/Side.astro";
-import PrivacyPage from "../components/PrivacyPage.astro";
-import { personvern } from "../content/personvern";
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Tekstflis from "../components/kit/Tekstflis.astro";
+import { personvern as p, PERSONVERN_SIDE as S } from "../content/personvern";
 ---
 <Side title="Personvern · Hengsel" description="Personvernerklæring for nettsiden hengsel.no.">
   {/* Astro fjerner HTML-kommentarer fra malen; set:html legger den inn i kildekoden til siden, uten å vises */}
   <Fragment set:html="<!-- TODO: ny personverntekst kommer -->" />
-  <main id="innhold" class="personvern">
-    <PrivacyPage {...personvern} />
+  <main id="innhold">
+    <Sidetopp tittel={S.tittel} ingress={S.ingress} />
+    <Innhold>
+      <Rad hoyde={120}>
+        <Tekstflis tittel={S.flis.tittel}>
+          <p>{S.flis.tekst} <a href={`mailto:${S.flis.epost}`}>{S.flis.epost}</a>.</p>
+        </Tekstflis>
+      </Rad>
+      <Rad hoyde="auto">
+        <Tekstflis tittel={`${p.tittel} på ${p.etikett}`}>
+          <p>{p.ingress}</p>
+          <p class="dempet">{p.oppdatert} · Behandlingsansvarlig: {p.behandlingsansvarlig} · Kontakt: <a href={`mailto:${p.kontakt}`}>{p.kontakt}</a></p>
+        </Tekstflis>
+      </Rad>
+      {p.avsnitt.map((a) => (
+        <Rad hoyde="auto">
+          <Tekstflis tittel={a.overskrift}>
+            {a.tekst?.map((t) => <p set:html={t} />)}
+            {a.boks && <p class="boks" set:html={a.boks} />}
+            {a.punkter && <ul>{a.punkter.map((t) => <li set:html={t} />)}</ul>}
+            {a.etter?.map((t) => <p set:html={t} />)}
+          </Tekstflis>
+        </Rad>
+      ))}
+    </Innhold>
   </main>
 </Side>
 
 <style>
-  .personvern { flex: 1; }
-  .personvern :global(h2) { font-size: var(--t-h2); }
-  .personvern :global(.boks) { background: var(--flate-side); }
+  .dempet { color: var(--tekst-dempet); }
+  .boks { padding: 12px 16px; border-radius: var(--radius-kort-lite); background: var(--flate-side); }
 </style>

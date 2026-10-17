@@ -1,151 +1,28 @@
 ---
 /**
- * /kundeportal (Kundeportal.dc.html): kundens reise i fem steg på telefon og PC, bryter «Telefon · PC», «Vis SMS-en igjen»
- * og «På samme ordre». Tekst og data i content/kundeportal.ts (ordrett fra LES-MEG.md). Interaksjon i scripts/kundeportal.ts.
- * Uten JS vises steg 1 på telefon. Begge rammene har aspect-ratio (Enhet.astro), så bytte mellom telefon og PC flytter ingenting uventet.
+ * /kundeportal, sidekartet 25-004 (S-68): toppen og to rader i nettside-kitet:
+ *  rad 1 (320) Tabell «Fra tilbud til FDV» (5 steg) · rad 2 (320) Tabell «Det kunden gjør, ser selgeren med en gang.» (4 rader).
+ * Tekster i content/kundeportal.ts (STEG og SELGER). Den klikkbare portalen (PortalSkjerm) står ikke på siden lenger.
  */
 import Side from "../layouts/Side.astro";
-import Enhet from "../components/Enhet.astro";
-import PortalSkjerm from "../components/PortalSkjerm.astro";
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
 import { SIDE, STEG, SELGER } from "../content/kundeportal";
+const reise = STEG.map((s) => [s.t, s.s]);
+const selger = SELGER.kort.map((k) => [k.t, k.s]);
 ---
 <Side title={SIDE.tittel} description={SIDE.beskrivelse} aktiv="portal">
   <main id="innhold">
-    <section class="reise">
-      <div class="h-innhold">
-        <div class="hode">
-          <span class="eyebrow">{SIDE.eyebrow}</span>
-          <h1>{SIDE.h1}</h1>
-          <p class="lede">{SIDE.lede}</p>
-        </div>
-
-        <div class="visning" data-visning data-enhet="telefon">
-          <div class="faner" role="tablist" aria-label={SIDE.fanerEtikett} data-faner>
-            {STEG.map((s, n) => (
-              <button type="button" role="tab" class="fane" id={`portal-fane-${n}`} aria-selected={n === 0 ? "true" : "false"} aria-controls="portal-panel" tabindex={n === 0 ? 0 : -1}>
-                <span class="nr">{n + 1}</span>
-                <span class="tekst"><b>{s.t}</b><span class="beskr">{s.s}</span></span>
-              </button>
-            ))}
-          </div>
-
-          <div class="bryter" role="radiogroup" aria-label={SIDE.enhetEtikett} data-bryter>
-            {SIDE.enheter.map(([id, t], n) => (
-              <button type="button" role="radio" class="valg" data-enhet-valg={id} aria-checked={n === 0 ? "true" : "false"} tabindex={n === 0 ? 0 : -1}>{t}</button>
-            ))}
-          </div>
-
-          <div class="panel" role="tabpanel" id="portal-panel" aria-labelledby="portal-fane-0">
-            <div class="tlf" data-enhet-boks="telefon">
-              <Enhet type="iphone"><PortalSkjerm enhet="telefon" /></Enhet>
-            </div>
-            <div class="pc" data-enhet-boks="pc" hidden>
-              <Enhet type="display"><PortalSkjerm enhet="pc" /></Enhet>
-            </div>
-          </div>
-
-          <div class="cap" data-cap>
-            <b data-cap-t>{STEG[0].t}</b>
-            <p data-cap-s>{STEG[0].s}</p>
-          </div>
-          <button type="button" class="sms-knapp" data-vis-sms>{SIDE.visSms}</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek flate">
-      <div class="h-innhold selger">
-        <div class="sek-hode">
-          <span class="eyebrow">{SELGER.eyebrow}</span>
-          <h2>{SELGER.h2}</h2>
-        </div>
-        <div class="kort-rutenett">
-          {SELGER.kort.map((k) => (
-            <div class="card"><b>{k.t}</b><span>{k.s}</span></div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede} />
+    <Innhold>
+      <Rad hoyde={tabellHoyde(reise.length)}>
+        <Tabellflis id="fra-tilbud-til-fdv" tittel="Fra tilbud til FDV" kolonner={["Steg", "Hva"]} rader={reise} />
+      </Rad>
+      <Rad hoyde={tabellHoyde(selger.length)}>
+        <Tabellflis id="samme-ordre" tittel={SELGER.h2} kolonner={["Hva", "Hvor"]} rader={selger} />
+      </Rad>
+    </Innhold>
   </main>
 </Side>
-
-<script>
-  import "../scripts/kundeportal";
-</script>
-
-<style>
-  .reise { padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 6vw, 88px); }
-  .reise > .h-innhold { display: flex; flex-direction: column; gap: 32px; }
-  .hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
-
-  /* Rutenettet: samme områder for begge enheter, plassert etter data-enhet */
-  .visning { display: grid; gap: 16px 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
-  .visning[data-enhet="telefon"] { grid-template-areas: "bryter" "faner" "panel" "knapp"; }
-  .visning[data-enhet="pc"] { grid-template-areas: "faner" "bryter" "panel" "cap" "knapp"; }
-  .faner { grid-area: faner; }
-  .bryter { grid-area: bryter; }
-  .panel { grid-area: panel; min-width: 0; }
-  .cap { grid-area: cap; }
-  .sms-knapp { grid-area: knapp; }
-  .visning[data-enhet="telefon"] .cap { display: none; }
-  @media (min-width: 820px) {
-    .visning[data-enhet="telefon"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(32px, 6vw, 80px); grid-template-areas: "bryter bryter" "faner panel" "faner knapp"; grid-template-rows: auto auto 1fr; }
-    .visning[data-enhet="pc"] { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "faner bryter" "panel panel" "cap knapp"; }
-    .visning[data-enhet="pc"] .bryter { align-self: center; }
-    .visning[data-enhet="pc"] .cap { border-top: 1px solid var(--line); padding-top: 24px; max-width: 680px; }
-    .visning[data-enhet="pc"] .sms-knapp { border-top: 0; align-self: end; }
-  }
-  .visning[data-enhet="telefon"] .bryter { justify-self: end; }
-  .visning[data-enhet="telefon"] .sms-knapp { justify-self: center; }
-  .visning[data-enhet="pc"] .sms-knapp { justify-self: start; }
-  @media (min-width: 820px) { .visning[data-enhet="pc"] .sms-knapp { justify-self: end; } }
-
-  /* Uten JS er bryteren og «Vis SMS-en igjen» skjult (plassen er reservert) */
-  .bryter, .sms-knapp { visibility: hidden; }
-  .visning.js .bryter, .visning.js .sms-knapp { visibility: visible; }
-
-  /* Bryter Telefon · PC */
-  .bryter { display: flex; padding: 4px; gap: 2px; border-radius: var(--radius-pille); background: var(--surface-highlight); border: 1px solid var(--line); width: fit-content; box-sizing: border-box; }
-  .valg { min-height: 44px; min-width: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
-  .valg[aria-checked="true"] { background: var(--surface); font-weight: 600; box-shadow: 0 0 0 1px var(--line); }
-
-  /* Stegene: liste ved siden av telefonen, piller over PC-skjermen */
-  .faner { display: flex; }
-  .visning[data-enhet="telefon"] .faner { flex-direction: column; border-top: 1px solid var(--line); }
-  .visning[data-enhet="pc"] .faner { flex-wrap: wrap; gap: 8px; }
-  .fane { font: inherit; color: var(--ink); cursor: pointer; text-align: left; box-sizing: border-box; }
-  .visning[data-enhet="telefon"] .fane { width: 100%; display: flex; gap: 16px; align-items: flex-start; padding: 14px 12px; border: 0; border-bottom: 1px solid var(--line); background: transparent; border-radius: 0; min-height: 44px; }
-  .visning[data-enhet="telefon"] .fane:hover { background: var(--surface-soft); }
-  .visning[data-enhet="telefon"] .fane[aria-selected="true"] { background: var(--surface-highlight); box-shadow: inset 3px 0 0 var(--accent); }
-  .visning[data-enhet="telefon"] .fane:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
-  .visning[data-enhet="telefon"] .nr { width: 28px; height: 28px; border-radius: var(--radius-pille); flex: none; display: grid; place-items: center; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box; margin-top: 1px; }
-  .visning[data-enhet="telefon"] .fane[aria-selected="true"] .nr { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-  .visning[data-enhet="telefon"] .tekst { display: flex; flex-direction: column; gap: 2px; }
-  .visning[data-enhet="telefon"] .tekst b { font-size: 1.05rem; }
-  .beskr { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
-  .visning[data-enhet="pc"] .fane { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); font-size: 0.95rem; }
-  .visning[data-enhet="pc"] .fane:hover { border-color: var(--ink); }
-  .visning[data-enhet="pc"] .fane[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  .visning[data-enhet="pc"] .nr { margin-right: 8px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .visning[data-enhet="pc"] .fane[aria-selected="true"] .nr { color: var(--bg); opacity: 0.72; }
-  .visning[data-enhet="pc"] .tekst { display: inline; }
-  .visning[data-enhet="pc"] .tekst b { font-weight: 400; }
-  .visning[data-enhet="pc"] .beskr { display: none; }
-
-  /* Skjermene */
-  .tlf { width: 100%; max-width: 400px; margin: 0 auto; }
-  .pc { width: 100%; max-width: 1100px; margin: 0 auto; }
-  .tlf[hidden], .pc[hidden] { display: none; }
-  .cap { display: flex; flex-direction: column; gap: 6px; }
-  .cap b { font-size: 1.05rem; }
-  .cap p { color: var(--muted); }
-  .sms-knapp { min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
-  .sms-knapp:hover { border-color: var(--ink); }
-
-  /* På samme ordre */
-  .selger { display: flex; flex-direction: column; gap: 32px; }
-  .kort-rutenett { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
-  .kort-rutenett .card { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; }
-  .kort-rutenett b { font-size: 1.02rem; }
-  .kort-rutenett span { color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
-</style>

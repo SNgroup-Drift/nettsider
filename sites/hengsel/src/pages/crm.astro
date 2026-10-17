@@ -1,125 +1,26 @@
 ---
 /**
- * /crm (CRM.dc.html): klikkbar demo i fire steg (Min dag, Avvik, Import fra CET, Montasjeplan) på PC, iPad og telefon.
- * Alle fire skjermene ligger i HTML-en i hver enhetsramme; scripts/crm.ts viser den som hører til steget. Uten skript vises steg 1 på PC
- * og kontrollene skjules. De tre rammene ligger oppå hverandre i samme rutenettcelle, så scenen reserverer høyden til den høyeste
- * (ingen hopp når enheten byttes).
- * Tekster ordrett fra LES-MEG.md (/crm), data i content/crm.ts.
+ * /crm, sidekartet 25-002 (S-68): toppen og to rader i nettside-kitet:
+ *  rad 1 (320) Tabell «Før og med Hengsel» (5 rader) · rad 2 (480) Tabell «Samme kundekort for selger, kontor og leder.» (9 rader, CRM_MODULER).
+ * Tekster i content/crm.ts. Den klikkbare demoen (K-160) er erstattet av tabellene etter sidekartet; demoen finnes på demo.hengsel.no.
  */
 import Side from "../layouts/Side.astro";
-import Enhet from "../components/Enhet.astro";
-import CrmSkjerm from "../components/CrmSkjerm.astro";
-import { CRM_ENHETER, CRM_MODULER, CRM_SIDE as T, CRM_STEG } from "../content/crm";
-import type { CrmEnhet } from "../content/crm";
-
-const ENHET_TYPE = { pc: "display", ipad: "ipad", telefon: "iphone" } as const;
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
+import { CRM_MODULER, CRM_SIDE as T, FOR_OG_MED, MODULER_KOLONNER } from "../content/crm";
 ---
-<Side title="Hengsel CRM – Min dag, ordre og montasjeplan" description="Klikk deg gjennom en vanlig morgen i Hengsel CRM: et avvik i ordrebekreftelsen, en ny tegning fra CET og montasjeplanen etterpå." aktiv="crm">
+<Side title="Hengsel CRM – Min dag, ordre og montasjeplan" description="Hengsel CRM: Min dag, avvik, CET-tegninger og montasjeplan på samme kundekort. Se demoen på demo.hengsel.no." aktiv="crm">
   <main id="innhold">
-    <section class="sek demo" data-crm>
-      <div class="h-innhold stabel">
-        <div class="hode">
-          <picture>
-            <img class="crm-logo" src="/logo/hengsel-crm-aksent-lys.svg" alt={T.eyebrow} width="622" height="100" fetchpriority="high" />
-          </picture>
-          <h1>{T.h1}</h1>
-          <p class="lede">{T.lede}</p>
-        </div>
-
-        <div class="kontroller">
-          <div class="steg" role="tablist" aria-label={T.stegAria}>
-            {CRM_STEG.map(([, t], n) => (
-              <button type="button" class="tab" role="tab" id={`steg-${n}`} aria-controls="crm-scene" aria-selected={n === 0 ? "true" : "false"} tabindex={n === 0 ? 0 : -1} data-steg={n}>
-                <span class="nr">{n + 1}</span>{t}
-              </button>
-            ))}
-          </div>
-          <div class="enhet-valg" role="radiogroup" aria-label={T.enhetAria}>
-            {CRM_ENHETER.map(([k, t]) => (
-              <button type="button" role="radio" aria-checked={k === "pc" ? "true" : "false"} tabindex={k === "pc" ? 0 : -1} data-enhet-valg={k}>{t}</button>
-            ))}
-          </div>
-        </div>
-
-        <div class="scene" id="crm-scene" role="tabpanel" aria-labelledby="steg-0" data-scene data-vis="pc">
-          {(["pc", "ipad", "telefon"] as CrmEnhet[]).map((e) => (
-            <div class={`ramme-valg f-${e}`} data-ramme={e}>
-              <Enhet type={ENHET_TYPE[e]} forst={e === "pc"}>
-                {CRM_STEG.map(([k], n) => (
-                  <div data-panel={n} hidden={n !== 0}><CrmSkjerm skjerm={k} enhet={e} interaktiv /></div>
-                ))}
-              </Enhet>
-            </div>
-          ))}
-        </div>
-
-        <div class="bunnlinje">
-          <div class="bildetekst" aria-live="polite">
-            {CRM_STEG.map(([, , t, s], n) => (
-              <div class="bt" data-bt={n} data-aktiv={n === 0 ? "ja" : "nei"}>
-                <b>{t}</b>
-                <p>{s}</p>
-              </div>
-            ))}
-          </div>
-          <button type="button" class="btn neste" data-neste-knapp>{T.neste}{CRM_STEG[1][1]}</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="sek flate">
-      <div class="h-innhold stabel">
-        <div class="sek-hode">
-          <span class="eyebrow">{T.modulerEyebrow}</span>
-          <h2>{T.modulerH2}</h2>
-        </div>
-        <div class="moduler">
-          {CRM_MODULER.map(([t, s]) => (
-            <div class="card modul"><b>{t}</b><span>{s}</span></div>
-          ))}
-        </div>
-        <div class="knapper">
-          <a class="btn primary" href="/priser-og-demo#demo">{T.demo}</a>
-        </div>
-      </div>
-    </section>
+    <Sidetopp tittel={T.h1} ingress={T.lede} />
+    <Innhold>
+      <Rad hoyde={tabellHoyde(FOR_OG_MED.rader.length)}>
+        <Tabellflis id="for-og-med" tittel={FOR_OG_MED.tittel} kolonner={FOR_OG_MED.kolonner} rader={FOR_OG_MED.rader} />
+      </Rad>
+      <Rad hoyde={tabellHoyde(CRM_MODULER.length)}>
+        <Tabellflis id="moduler" tittel={T.modulerH2} kolonner={MODULER_KOLONNER} rader={CRM_MODULER} />
+      </Rad>
+    </Innhold>
   </main>
 </Side>
-
-<script>
-  import "../scripts/crm";
-</script>
-
-<style>
-  .demo { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); }
-  .stabel { display: flex; flex-direction: column; gap: 32px; }
-  .hode { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
-  .crm-logo { display: block; height: 34px; width: auto; align-self: flex-start; }
-  .kontroller { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
-  .steg { display: flex; flex-wrap: wrap; gap: 8px; }
-  .enhet-valg { display: flex; padding: 4px; gap: 2px; border-radius: var(--radius-pille); background: var(--surface-highlight); border: 1px solid var(--line); }
-  .enhet-valg button { min-height: 44px; padding: 0 18px; border-radius: var(--radius-pille); border: 0; background: transparent; color: var(--ink); font: 400 0.92rem var(--f-body); cursor: pointer; }
-  .enhet-valg button[aria-checked="true"] { background: var(--surface); font-weight: 600; box-shadow: 0 0 0 1px var(--line); }
-  @media (scripting: none) { .kontroller, .bunnlinje .neste { display: none; } }
-
-  /* Scenen: de tre rammene i samme celle, den høyeste bestemmer høyden. Bare den valgte er synlig. */
-  .scene { display: grid; justify-items: center; align-items: center; width: 100%; }
-  .ramme-valg { grid-area: 1 / 1; width: 100%; visibility: hidden; }
-  .f-pc { max-width: 1100px; } .f-ipad { max-width: 920px; } .f-telefon { max-width: 360px; }
-  .scene[data-vis="pc"] .f-pc, .scene[data-vis="ipad"] .f-ipad, .scene[data-vis="telefon"] .f-telefon { visibility: visible; }
-  @media (max-width: 699px) { .f-telefon { max-width: 300px; } }
-
-  .bunnlinje { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px 40px; border-top: 1px solid var(--line); padding-top: 24px; }
-  .bildetekst { display: grid; max-width: 680px; flex: 1 1 320px; }
-  .bt { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 6px; }
-  .bt[data-aktiv="nei"] { visibility: hidden; }
-  .bt b { font-weight: 600; font-size: 1.05rem; }
-  .bt p { color: var(--muted); }
-
-  .moduler { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
-  .modul { display: flex; flex-direction: column; gap: 6px; }
-  .modul b { font-weight: 600; font-size: 1.02rem; }
-  .modul span { color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
-  .knapper { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .reise { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; font-weight: 500; padding: 0 12px; min-height: 44px; display: inline-flex; align-items: center; }
-</style>
