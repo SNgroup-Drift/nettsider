@@ -1,6 +1,6 @@
 /* GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
  *
- * Hengsel-designsystemet, versjon 2.1.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
+ * Hengsel-designsystemet, versjon 2.2.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
  *   <html data-theme="light"> eller data-theme="dark"   fast utgave (design., admin., forhåndsvisning)
  *   <html class="dark">                                  CRM (src/tema/lysMork.ts)
  *   <html data-alltid-lys>                               kundeportal og offentlige sider: aldri mørk
