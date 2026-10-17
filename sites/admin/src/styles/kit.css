@@ -1,0 +1,218 @@
+/* N-4: flis-kitet for Hengsel Admin, kopiert fra nettside-kitet i N-3 (sites/hengsel/src/components/kit/) og gjort globalt, fordi sidene i Admin
+   tegnes i nettleseren fra /api (src/lib/kit.ts lager samme markup som komponentene i src/components/kit/). Klassene har prefikset k- så de ikke
+   kolliderer med de eldre klassene i admin.css (.tabell, .rad, .tall, .teller).
+   Regel-layout-hengsel.md: 12 kolonner, 24 px mellomrom, flisbredder 1/4 (bare tall), 1/3, 1/2, 2/3, 1/1, radhøyder 120/320/480/640, flistittel 16/600,
+   innhold 14/400, undertekst 12/400, stort tall 32/400. Bare variablene fra den delte token-fila, bare lys modus. */
+:root { --k-dur: 160ms; --k-ease: cubic-bezier(0.2, 0, 0, 1); }
+
+/* ── Flaten under topplinja: første rad 24 px under, siste 48 px over bunnen, 24 px mellom radene ── */
+.k-innhold { padding: 24px 32px 48px; }
+.k-rader { max-width: 1280px; display: flex; flex-direction: column; gap: 24px; }
+
+/* ── Rad: 12 kolonner, én høyde per rad ── */
+.k-rad { --h: auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: minmax(var(--h), auto); gap: 24px; }
+.k-rad[data-hoyde="120"] { --h: 120px; }
+.k-rad[data-hoyde="320"] { --h: 320px; }
+.k-rad[data-hoyde="480"] { --h: 480px; }
+.k-rad[data-hoyde="640"] { --h: 640px; }
+.k-rad[data-hoyde="120"] > .k-flis { padding-block: 20px; }
+
+/* ── Flis ── */
+.k-flis { min-width: 0; display: flex; flex-direction: column; padding: 24px; background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); color: var(--tekst); font-size: 14px; line-height: 20px; }
+.k-b14 { grid-column: span 3; }
+.k-b13 { grid-column: span 4; }
+.k-b12 { grid-column: span 6; }
+.k-b23 { grid-column: span 8; }
+.k-b11 { grid-column: span 12; }
+.k-topp { display: flex; align-items: center; gap: 12px; min-height: 22px; position: relative; }
+.k-topp.med-verktoy { min-height: 40px; margin-top: -4px; }
+.k-ftittel { margin: 0; min-width: 0; font-family: var(--skrift-familie-hengsel-tekst); font-size: 16px; line-height: 22px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-ftittel a { color: inherit; text-decoration: none; }
+.k-ftittel a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.k-teller { margin-left: 8px; font-size: 14px; font-weight: var(--skrift-vekt-normal); color: var(--tekst-dempet); font-variant-numeric: tabular-nums; }
+.k-teller.hoyre { margin-left: auto; }
+.k-tittelverdi { margin-left: auto; flex: none; white-space: nowrap; color: var(--tekst-dempet); }
+.k-tittelverdi b { color: var(--tekst); font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; }
+.k-verktoy { margin-left: auto; display: flex; align-items: center; gap: 12px; min-width: 0; color: var(--tekst-dempet); }
+.k-verktoy .k-hjelp { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.k-finnhold { flex: 1; min-height: 0; display: flex; flex-direction: column; margin-top: 8px; }
+.k-fhandling { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding-top: 12px; margin-top: auto; }
+
+/* ── Tall-flisen (1/4 eller 1/3, 120): etikett 14, tall 32 tabulært, undertekst 12 ── */
+.k-tallflis { text-decoration: none; }
+.k-tallflis .k-etikett { color: var(--tekst-dempet); font-size: 14px; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-tallflis .k-tall { margin-top: auto; text-align: right; font-size: 32px; line-height: 36px; font-weight: var(--skrift-vekt-normal); font-variant-numeric: tabular-nums; color: var(--tekst); }
+.k-tallflis .k-tall[data-tone="advarsel"] { color: var(--status-advarsel-fg); }
+.k-tallflis .k-tall[data-tone="feil"] { color: var(--status-feil-fg); }
+.k-tallflis .k-under { margin-top: 4px; text-align: right; font-size: 12px; line-height: 16px; color: var(--tekst-dempet); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+a.k-tallflis:hover { border-color: var(--kant); }
+
+/* ── Statuspillen (S-68): tonene fra den delte token-fila. Rød (feil) = må gjøres nå (regel 9) ── */
+.k-pille { display: inline-flex; align-items: center; align-self: center; height: 20px; padding: 0 8px; border-radius: var(--radius-pille); border: 1px solid var(--status-venter-kant); background: var(--status-venter-bg); color: var(--status-venter-fg); font-size: 12px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); white-space: nowrap; }
+.k-pille[data-tone="ny"] { color: var(--status-ny-fg); background: var(--status-ny-bg); border-color: var(--status-ny-kant); }
+.k-pille[data-tone="pagar"] { color: var(--status-pagar-fg); background: var(--status-pagar-bg); border-color: var(--status-pagar-kant); }
+.k-pille[data-tone="sannsynlig"] { color: var(--status-sannsynlig-fg); background: var(--status-sannsynlig-bg); border-color: var(--status-sannsynlig-kant); }
+.k-pille[data-tone="ferdig"] { color: var(--status-ferdig-fg); background: var(--status-ferdig-bg); border-color: var(--status-ferdig-kant); }
+.k-pille[data-tone="advarsel"] { color: var(--status-advarsel-fg); background: var(--status-advarsel-bg); border-color: var(--status-advarsel-kant); }
+.k-pille[data-tone="feil"] { color: var(--status-feil-fg); background: var(--status-feil-bg); border-color: var(--status-feil-kant); }
+.k-pille[data-tone="aksent"] { color: var(--aksent-tekst); background: var(--aksent-svak); border-color: var(--aksent-valgt); }
+
+/* ── Søk i tittelfeltet (Tabell kompakt): 200 px på PC, bare ikonet på telefon ── */
+.k-sok { flex: none; display: flex; align-items: center; }
+.k-sok svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.k-sok .k-sok-knapp { display: none; width: 36px; height: 36px; padding: 0; place-items: center; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+.k-sok .k-sok-felt { display: flex; align-items: center; gap: 8px; width: 200px; height: 36px; padding: 0 12px; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst-dempet); cursor: text; }
+.k-sok .k-sok-felt:focus-within { border-color: var(--aksent); box-shadow: 0 0 0 3px var(--flate-valgt); }
+.k-sok input { flex: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; color: var(--tekst); font: inherit; font-size: 14px; outline: none; }
+.k-sok input::placeholder { color: var(--tekst-dempet); opacity: 1; }
+
+/* ── Filter-nedtrekk i verktøylinja («Status ▾», «Eier ▾») ── */
+.k-velger { position: relative; display: inline-flex; align-items: center; color: var(--tekst-dempet); }
+.k-velger select { appearance: none; border: 0; background: transparent; color: var(--tekst-dempet); font: inherit; font-size: 14px; padding: 0 14px 0 0; cursor: pointer; max-width: 180px; }
+.k-velger::after { content: ""; position: absolute; right: 2px; top: 50%; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; transform: translateY(-1px); pointer-events: none; }
+.k-velger select:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; border-radius: 4px; }
+.k-lenkeknapp { border: 0; background: none; padding: 0; color: var(--aksent-tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; white-space: nowrap; text-decoration: none; }
+.k-lenkeknapp:hover { text-decoration: underline; text-underline-offset: 3px; }
+.k-lenkeknapp:disabled { color: var(--tekst-svak); cursor: default; text-decoration: none; }
+
+/* ── Tabell (1/1): rader 44 px; Tabell kompakt (≤9 rader) 40 px. Tall høyrejustert, tekst venstre ── */
+.k-tabellramme { min-width: 0; overflow-x: auto; }
+.k-tabell { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+.k-tabell th, .k-tabell td { height: 44px; padding: 0 12px 0 0; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--linje); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-tabell.kompakt th, .k-tabell.kompakt td { height: 40px; }
+.k-tabell thead th { height: 36px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst); background: none; font-size: 14px; }
+.k-tabell tbody th { font-weight: var(--skrift-vekt-sterk); }
+.k-tabell td { font-weight: var(--skrift-vekt-normal); }
+.k-tabell .h { text-align: right; font-variant-numeric: tabular-nums; }
+.k-tabell .tid { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.k-tabell .dempet { color: var(--tekst-dempet); }
+.k-tabell .smal { width: 120px; }
+.k-tabell a { color: inherit; text-decoration: none; }
+.k-tabell a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.k-tabell tr[data-lenke] { cursor: pointer; }
+.k-tabell tr[data-lenke]:hover > * { background: var(--flate-senket); }
+.k-tabell .k-sumrad > * { font-weight: var(--skrift-vekt-sterk); border-bottom: 1px solid var(--linje); border-top: 1px solid var(--kant); }
+.k-tabell input, .k-tabell select { font: inherit; font-size: 14px; }
+.k-tabell .k-pille { vertical-align: middle; }
+.k-tabell .ingen td { color: var(--tekst-dempet); }
+
+/* ── Bunnfeltet med sidevelger (Tabell full, 640) ── */
+.k-bunnfelt { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; margin-top: auto; color: var(--tekst-dempet); }
+.k-sidevelger { display: flex; align-items: center; gap: 8px; }
+.k-sidevelger button { min-width: 32px; height: 32px; padding: 0 8px; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); font: inherit; font-size: 14px; cursor: pointer; }
+.k-sidevelger button[aria-current="page"] { border-color: var(--aksent); background: var(--aksent-svak); color: var(--aksent-tekst); font-weight: var(--skrift-vekt-sterk); }
+.k-sidevelger button:disabled { color: var(--tekst-svak); cursor: default; }
+
+/* ── Kortliste (1/3) og Liste (1/2): rader 40 px, navn sterkt + dempet tekst, verdi/pille til høyre, «Vis alle (n)» ── */
+.k-liste { list-style: none; margin: 4px 0 0; padding: 0; }
+.k-liste > li { min-height: 40px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--linje); }
+.k-liste .k-celle { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-liste .k-celle b { font-weight: var(--skrift-vekt-sterk); }
+.k-liste .k-celle span { color: var(--tekst-dempet); }
+.k-liste .k-celle a { color: inherit; text-decoration: none; }
+.k-liste .k-celle a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.k-liste .k-hoyre { flex: none; display: flex; align-items: center; gap: 8px; }
+.k-liste .knapp { min-height: 28px; padding: 0 10px; font-size: 13px; }
+.k-vis-alle { min-height: 20px; padding: 0; border: 0; background: none; color: var(--aksent-tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; text-decoration: none; }
+.k-vis-alle:hover { text-decoration: underline; text-underline-offset: 3px; }
+.k-dialog-liste { list-style: none; margin: 0; padding: 0 20px 20px; }
+.k-dialog-liste li { min-height: 40px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--linje); }
+
+/* ── Tekst-flisen: brødtekst 14/22 i maks 720 px ── */
+.k-brod { max-width: 720px; line-height: 22px; display: flex; flex-direction: column; gap: 8px; }
+.k-brod p { margin: 0; }
+.k-brod a { color: var(--aksent-tekst); }
+.k-brod.kommer { color: var(--tekst-dempet); }
+
+/* ── Skjema (1/2): etikett 12 over felt 14, felt 40 px, 12 px mellom felt ── */
+.k-skjema { display: flex; flex-direction: column; gap: 12px; }
+.k-skjema .felt { gap: 8px; }
+.k-skjema .felt > span { font-size: 12px; line-height: 16px; font-weight: var(--skrift-vekt-normal); color: var(--tekst-dempet); }
+.k-skjema .felt input, .k-skjema .felt select { min-height: 40px; font-size: 14px; }
+
+/* ── Tom, laster, feil: inne i flisen, samme høyde som fylt flis ── */
+.k-tom { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; color: var(--tekst-dempet); padding: 16px; }
+.k-tom b { color: var(--tekst); font-size: 14px; }
+.k-tom .handlinger { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.k-skjelett { flex: 1; min-height: 72px; border-radius: var(--radius-kort-lite); background: var(--flate-senket); animation: k-puls 1.4s ease-in-out infinite; }
+@keyframes k-puls { 50% { opacity: 0.5; } }
+
+/* ── Tavla (flisklasse Tavle, S-68): fem kolonner i flisen ── */
+.k-tavle { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 4px; align-items: start; flex: 1; }
+.k-kolonne { min-width: 0; display: flex; flex-direction: column; gap: 8px; min-height: 100%; border-radius: var(--radius-kort-lite); padding-bottom: 8px; }
+.k-kolonne.slipp { background: var(--aksent-svak); box-shadow: inset 0 0 0 2px var(--aksent); }
+.k-kolonne-hode { display: flex; align-items: center; gap: 8px; height: 24px; font-weight: var(--skrift-vekt-sterk); white-space: nowrap; }
+.k-kolonne-hode .navn { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.k-kolonne-hode .antall { margin-left: auto; color: var(--tekst-dempet); font-weight: var(--skrift-vekt-normal); font-variant-numeric: tabular-nums; }
+.k-tavlekort { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: var(--radius-kort-lite); background: var(--flate-senket); color: var(--tekst); text-decoration: none; cursor: grab; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-tavlekort span { overflow: hidden; text-overflow: ellipsis; }
+.k-tavlekort:hover { box-shadow: inset 0 0 0 1px var(--kant); }
+.k-tavlekort.dras { opacity: 0.45; }
+.k-tavlekort[data-forfalt] { box-shadow: inset 3px 0 0 var(--status-feil-fg); }
+.k-kolonne .tomt { color: var(--tekst-svak); font-size: 12px; padding: 12px 0; }
+
+/* ── Faner under topplinja (regel 8): 40 px, venstrestilt, antall som dempet tall etter navnet ── */
+.k-faner { display: flex; align-items: stretch; gap: 4px; height: 40px; padding: 0 32px; background: var(--flate-kort); border-bottom: 1px solid var(--linje); overflow-x: auto; scrollbar-width: none; }
+.k-faner::-webkit-scrollbar { display: none; }
+.k-fane { display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; color: var(--tekst); font: inherit; font-size: 14px; white-space: nowrap; text-decoration: none; cursor: pointer; }
+.k-fane .antall { color: var(--tekst-dempet); font-variant-numeric: tabular-nums; }
+.k-fane[aria-selected="true"], .k-fane[aria-current="page"] { color: var(--aksent-tekst); border-bottom-color: var(--aksent); font-weight: var(--skrift-vekt-sterk); }
+.k-fane[aria-selected="true"] .antall, .k-fane[aria-current="page"] .antall { color: var(--aksent-tekst); }
+.k-fane:hover { color: var(--aksent-tekst); }
+
+/* ── Telefon: alt 1/1, 16 px luft og mellomrom, samme høyder ── */
+@media (max-width: 1279px) and (min-width: 960px) {
+  .k-b14 { grid-column: span 6; }
+  .k-b13 { grid-column: span 6; }
+  .k-b23 { grid-column: span 12; }
+}
+@media (max-width: 959px) {
+  .k-innhold { padding: 16px 16px 48px; }
+  .k-rader, .k-rad { gap: 16px; }
+  .k-rad { grid-template-columns: minmax(0, 1fr); }
+  .k-flis { padding: 16px; }
+  .k-b14, .k-b13, .k-b12, .k-b23, .k-b11 { grid-column: 1 / -1; }
+  .k-faner { padding: 0 16px; }
+  .k-sok .k-sok-knapp { display: grid; }
+  .k-sok .k-sok-felt { display: none; }
+  .k-sok[data-apen] .k-sok-felt { display: flex; position: absolute; inset: 2px 0; width: auto; z-index: 1; }
+  .k-sok[data-apen] .k-sok-knapp { visibility: hidden; }
+  .k-verktoy .k-hjelp, .k-verktoy .k-velger, .k-verktoy .k-lenkeknapp { display: none; }
+  /* Tabeller viser første og siste kolonne; raden åpner resten (lenken) */
+  .k-tabell .midt { display: none; }
+  .k-tavle { grid-template-columns: minmax(0, 1fr); }
+  .k-kolonne { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .k-skjelett { animation: none; } }
+.k-statusflis .k-setning { margin: 4px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Verktøylinja under tittelen i en full tabell (26-002): søk 240 px, filter-nedtrekk og handling ── */
+.k-verktoylinje { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 4px 0 4px; color: var(--tekst-dempet); }
+.k-verktoylinje .k-sok-felt { display: flex; align-items: center; gap: 8px; width: 240px; height: 36px; padding: 0 12px; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst-dempet); }
+.k-verktoylinje .k-sok-felt:focus-within { border-color: var(--aksent); box-shadow: 0 0 0 3px var(--flate-valgt); }
+.k-verktoylinje .k-sok-felt input { flex: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; color: var(--tekst); font: inherit; font-size: 14px; outline: none; }
+.k-tabell th.statuskol { width: 132px; }
+.k-tabell thead th:first-child { width: 26%; }
+.k-tabell thead .h { font-variant-numeric: normal; }
+@media (max-width: 959px) { .k-verktoylinje .k-sok-felt { width: 100%; } .k-verktoylinje .k-velger { display: none; } }
+.k-tabell th.pakkekol { width: 140px; }
+.k-tabell .smalest { width: 48px; }
+.k-tabell .tallfelt { width: 72px; min-height: 32px; text-align: right; }
+.k-navnfelt { width: 100%; min-height: 32px; padding: 0 6px; margin-left: -7px; border: 1px solid transparent; border-radius: var(--radius-kort-lite); background: transparent; color: var(--tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); }
+.k-navnfelt:hover, .k-navnfelt:focus { border-color: var(--kant); background: var(--flate-kort); }
+.k-avkryss { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.k-avkryss input { accent-color: var(--aksent); }
+.k-att { margin-top: 12px; }
+.k-att > span { font-size: 12px; font-weight: var(--skrift-vekt-normal); }
+.k-tabell .k-velger, .k-tabell .k-velger select { color: var(--tekst); }
+.k-vilkar .tallfelt, .k-vilkar .prisfelt { width: 64px; min-height: 28px; text-align: right; }
+.k-vilkar .datofelt { min-height: 28px; width: auto; display: inline-block; }
+.k-inline { display: inline-flex; }
+.k-tabell th.prisk { width: 140px; }
+.k-tittelverdi + .k-verktoy { margin-left: 16px; }
+@media (max-width: 959px) {
+  .k-tabell thead th:first-child { width: auto; }
+  .k-tabell th.statuskol { width: 120px; }
+  .k-topp:has(.k-tittelverdi) { flex-wrap: wrap; row-gap: 4px; }
+  .k-topp .k-tittelverdi { order: 3; flex-basis: 100%; margin-left: 0; }
+}

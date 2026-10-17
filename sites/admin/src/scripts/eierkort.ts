@@ -1,126 +1,181 @@
-/** SA4 Eierkort: topp med status og handlinger, lead-banner, kundemiljø, butikker, kontakter, muligheter, tilbud og avtaler, tidslinje med filter og neste steg. */
-import { api, html, raw, kr, orgnr, dato, tid, flertall, ikon, pille, kjede, neste, sett, q, qa, feilbanner, skjelett, tilstand, toast, taptDialog, skjemaDialog, idFraSti, KOLONNENAVN, KILDER, AKTIVITET, TILBUDSTATUS, AVTALESTATUS } from "../lib/dom";
+/**
+ * 26-013 Eierkort (N-4): topplinja med eierens navn, status-pillen, «Prisberegner» og «Ny aktivitet» (resten under «⋯»: Rediger, Endre status,
+ * Ikke aktuell / Åpne på nytt). Faner Oversikt · Prisberegner (26-005) · Tilbud · Avtaler · Tidslinje.
+ * Oversikt: rad 1 (320) Liste 1/2 ×2 Kontaktpersoner og Muligheter og tilbud, rad 2 (320) Liste 1/2 ×2 Butikker og Tidslinje; for kunder rad 3 med
+ * Kundemiljø og Avtaler. Lead fra «Be om demo» og tapt vises som banner øverst. Samme API og handlinger som før (SA4).
+ */
+import { api, html, raw, kr, orgnr, dato, datoKort, tid, flertall, ikon, sett, q, qa, feilbanner, tilstand, toast, taptDialog, skjemaDialog, idFraSti, KOLONNENAVN, KILDER, AKTIVITET, TILBUDSTATUS, AVTALESTATUS } from "../lib/dom";
+import { rad, flis, liste, kpille, tabell, tabellHoyde, velger, settFaner, settSidepille, settTittel, kobleKit, laster, tom, type ListeRad } from "../lib/kit";
 
 const rot = q("#side")!;
 const id = idFraSti();
 const tilbake = rot.dataset.tilbake ?? "/salg/eiere";
 let data: any = null;
+let fane = location.hash === "#tidslinje" ? "tidslinje" : "oversikt";
 let tlFilter = "alle";
+
+const linjeNavn = (l: string) => (l === "sigdal" ? "Sigdal CRM" : "Hengsel");
+const nesteTone = (d: any) => (d.forfalt ? "feil" : d.i_dag ? "ny" : "venter");
+const nesteTekst = (d: any, e: any) => (d.forfalt ? `Forfalt ${datoKort(e.neste_dato)}` : d.i_dag ? "I dag" : datoKort(e.neste_dato));
+
+function faner(d: any | null) {
+  settFaner([
+    { id: "oversikt", navn: "Oversikt" },
+    { id: "prisberegner", navn: "Prisberegner", href: `/salg/prisberegner?eier=${id}` },
+    { id: "tilbud", navn: "Tilbud", antall: d ? d.tilbud.length : undefined },
+    { id: "avtaler", navn: "Avtaler", antall: d ? d.avtaler.length : undefined },
+    { id: "tidslinje", navn: "Tidslinje", antall: d ? d.aktiviteter.length : undefined },
+  ], fane, (f) => { fane = f; history.replaceState(null, "", f === "tidslinje" ? "#tidslinje" : location.pathname); vis(data); });
+}
+
+function oversikt(d: any) {
+  const e = d.eier, erKunde = e.er_kunde;
+  const pakkeNavn = (k: string | null) => d.prisliste?.pakker?.[e.produktlinje]?.[k ?? ""]?.navn ?? d.prisliste?.pakker?.hengsel?.[k ?? ""]?.navn ?? (k ? k[0].toUpperCase() + k.slice(1) : "Pakke ikke valgt");
+  const perButikk = new Map((d.per_butikk ?? []).map((x: any) => [x.navn, x]));
+  const kontakter: ListeRad[] = d.kontakter.map((k: any) => ({
+    venstre: html`<b>${k.navn}</b> <span>${[k.rolle, k.signaturrett ? "signaturrett" : ""].filter(Boolean).join(", ")}${k.telefon ? ` · ${k.telefon}` : ""}${k.epost && !k.telefon ? ` · ${k.epost}` : ""}</span>`,
+    hoyre: html`<button class="knapp tekst" type="button" data-rediger-kontakt="${k.id}">Endre</button>`,
+  }));
+  const apne = d.muligheter.filter((m: any) => !m.lukket);
+  const mulTilbud: ListeRad[] = [
+    ...apne.map((m: any) => ({ venstre: html`<b>${linjeNavn(m.produktlinje)}, ${flertall(m.antall_butikker, "butikk", "butikker")}</b> <span>${m.verdi_mnd_ore ? `${kr(m.verdi_mnd_ore)} per mnd` : d.verdi_ore ? `${kr(d.verdi_ore)} per mnd` : ""}</span>`, hoyre: kpille(KOLONNENAVN[m.fase] ?? m.fase, m.fase) })),
+    ...d.tilbud.map((t: any) => ({ venstre: html`<b><a href="/salg/tilbud/${t.nr}/${t.versjon}.pdf" target="_blank" rel="noopener">${t.nr} v${t.versjon}</a></b> <span>${datoKort(t.dato)} · prisliste ${t.prisliste_versjon} · ${kr(t.sum_mnd_ore)}/mnd</span>`,
+      hoyre: html`${t.status === "utkast" ? html`<button class="knapp" type="button" data-send-tilbud="${t.id}">Merk som sendt</button>` : ""}${(t.status === "sendt" || t.status === "utkast") && !d.avtaler.length ? html`<button class="knapp" type="button" data-lag-avtale="${t.id}">Lag avtale</button>` : ""}${kpille(TILBUDSTATUS[t.status] ?? t.status, t.status)}` })),
+  ];
+  const butikker: ListeRad[] = d.butikker.map((b: any) => { const p: any = perButikk.get(b.navn); return { venstre: html`<b>${b.navn}</b> <span>${pakkeNavn(b.pakke)}${p ? ` · ${kr(p.sum_ore)}` : ""}${b.sted ? ` · ${b.sted}` : ""}</span>`, hoyre: html`<button class="knapp tekst" type="button" data-rediger-butikk="${b.id}">Endre</button>` }; });
+  const tl: ListeRad[] = [
+    ...(e.neste_tekst && e.neste_dato && e.status !== "tapt" ? [{ venstre: html`<b>${e.neste_tekst}</b> <span>neste steg · ${dato(e.neste_dato)}</span>`, hoyre: kpille(nesteTekst(d, e), nesteTone(d)) }] : []),
+    ...d.aktiviteter.map((a: any) => ({ venstre: html`<b>${a.tittel}</b> <span>${datoKort(a.dato)} · ${a.hvem}</span>` })),
+  ];
+  const L = (lid: string, tittel: string, rader: ListeRad[], tomTekst: string, ekstra: string = "") => { const l = liste(lid, tittel, rader, { tom: tomTekst }); return flis({ id: lid, bredde: "1/2", tittel, teller: rader.length, tellerHoyre: true, innhold: l.innhold, handling: html`${raw(ekstra)}${l.handling}` }); };
+  const rader = [
+    rad(320, [L("kontakter", "Kontaktpersoner", kontakter, "Ingen kontaktpersoner ennå.", `<button class="k-lenkeknapp" type="button" id="ny-kontakt">Legg til</button>`), L("muligheter", "Muligheter og tilbud", mulTilbud, "Ingen åpne muligheter eller tilbud.", `<a class="k-lenkeknapp" href="/salg/prisberegner?eier=${e.id}">Lag tilbud</a>`)]),
+    rad(320, [L("butikker", "Butikker", butikker, "Ingen butikker ennå.", `<button class="k-lenkeknapp" type="button" id="ny-butikk">Legg til</button>`), L("tidslinje-kort", "Tidslinje", tl, "Ingen aktiviteter ennå.", `<button class="k-lenkeknapp" type="button" id="ny-akt-2">Ny aktivitet</button>`)]),
+  ];
+  if (erKunde) {
+    const miljo: ListeRad[] = [
+      { venstre: html`<b>Adresse</b> <span>${e.miljo_adresse ?? "fyll inn"}</span>`, hoyre: e.miljo_adresse ? html`<a class="k-lenkeknapp" href="https://${encodeURI(e.miljo_adresse)}" rel="noopener">Åpne</a>` : "" },
+      { venstre: html`<b>Tema og database</b> <span>${[e.miljo_tema, e.miljo_database].filter(Boolean).join(" · ") || "fyll inn"}</span>` },
+      { venstre: html`<b>Versjon og siste innlogging</b> <span>leses fra kundemiljøet (ikke koblet til)</span>` },
+    ];
+    const avtaler: ListeRad[] = d.avtaler.map((a: any) => ({ venstre: html`<b><a href="/avtaler/${a.nr}">${a.nr}</a></b> <span>${kr(a.per_mnd_ore)}/mnd${a.fornyes ? ` · fornyes ${dato(a.fornyes)}` : ""}</span>`, hoyre: kpille(AVTALESTATUS[a.visning] ?? a.visning, a.visning) }));
+    rader.push(rad(320, [L("miljo", "Kundemiljø", miljo, ""), L("avtaler-kort", "Avtaler", avtaler, "Ingen avtaler.")]));
+  }
+  return rader;
+}
+
+function tilbudFane(d: any) {
+  const r = d.tilbud.map((t: any) => html`<tr><th scope="row"><a href="/salg/tilbud/${t.nr}/${t.versjon}.pdf" target="_blank" rel="noopener">${t.nr} v${t.versjon}</a></th><td class="midt">${dato(t.dato)}</td><td class="midt">${t.prisliste_versjon}</td><td class="h midt">${kr(t.sum_mnd_ore)}</td><td class="midt">${t.status === "utkast" ? html`<button class="knapp" type="button" data-send-tilbud="${t.id}">Merk som sendt</button>` : ""} ${(t.status === "sendt" || t.status === "utkast") && !d.avtaler.length ? html`<button class="knapp" type="button" data-lag-avtale="${t.id}">Lag avtale</button>` : ""}</td><td>${kpille(TILBUDSTATUS[t.status] ?? t.status, t.status)}</td></tr>`);
+  return rad(tabellHoyde(r.length), [flis({ id: "tilbud", tittel: "Tilbud", teller: r.length, handling: raw(`<a class="knapp primar" href="/salg/prisberegner?eier=${d.eier.id}">Lag tilbud</a>`),
+    innhold: tabell({ kompakt: true, kolonner: [{ navn: "Tilbud" }, { navn: "Dato", midt: true }, { navn: "Prisliste", midt: true }, { navn: "Per mnd", h: true, midt: true }, { navn: "", midt: true }, { navn: "Status", klasse: "statuskol" }], rader: r, ingen: "Ingen tilbud ennå." }) })]);
+}
+function avtaleFane(d: any) {
+  const r = d.avtaler.map((a: any) => html`<tr data-lenke="/avtaler/${a.nr}"><th scope="row"><a href="/avtaler/${a.nr}">${a.nr}</a></th><td class="h midt">${kr(a.per_mnd_ore)}</td><td class="midt">${a.start ? dato(a.start) : "–"}</td><td class="midt">${a.fornyes ? dato(a.fornyes) : "–"}</td><td>${kpille(AVTALESTATUS[a.visning] ?? a.visning, a.visning)}</td></tr>`);
+  return rad(tabellHoyde(r.length), [flis({ id: "avtaler", tittel: "Avtaler", teller: r.length, innhold: tabell({ kompakt: true, kolonner: [{ navn: "Avtale" }, { navn: "Per mnd", h: true, midt: true }, { navn: "Start", midt: true }, { navn: "Fornyes", midt: true }, { navn: "Status", klasse: "statuskol" }], rader: r, ingen: "Ingen avtaler ennå." }) })]);
+}
+function tidslinjeFane(d: any) {
+  const e = d.eier;
+  const akt = tlFilter === "alle" ? d.aktiviteter : d.aktiviteter.filter((a: any) => a.type === tlFilter);
+  const innhold = html`${e.neste_tekst && e.neste_dato && e.status !== "tapt" ? html`<div class="nesteboks">${raw(ikon(d.forfalt ? "frist" : "kalender", 20))}<div><span class="meta">Neste steg</span><br /><b>${e.neste_tekst}</b></div><span class="meta">${kpille(nesteTekst(d, e), nesteTone(d))}</span></div>` : ""}
+    ${akt.length ? html`<ul class="tidslinje">${akt.map((a: any) => html`<li><span class="prikk" data-type="${a.type}">${raw(ikon(AKTIVITET[a.type]?.[1] ?? "tilbud", 16))}</span><div class="innhold"><b>${a.tittel}<span>${dato(a.dato)}</span></b>${a.tekst ? html`<p>${a.tekst}</p>` : ""}${a.neste_tekst ? html`<p class="meta">Neste steg: ${a.neste_tekst} (${dato(a.neste_dato)})</p>` : ""}<div class="meta">${AKTIVITET[a.type]?.[0] ?? a.type} · ${a.hvem}${a.kontakt_navn ? ` · ${a.kontakt_navn}` : ""}</div></div></li>`)}</ul>`
+    : d.aktiviteter.length ? raw(`<p class="meta">Ingen aktiviteter av denne typen.</p>`) : tom("Ingen aktiviteter ennå", "Logg samtaler, møter og demoer her, og sett et neste steg.", raw(`<button class="knapp primar" type="button" id="forste-akt">Første aktivitet</button>`))}`;
+  return rad("auto", [flis({ id: "tidslinje", tittel: "Tidslinje", teller: akt.length, verktoy: velger("tl-filter", "Type", [["alle", "Type: Alle"], ...Object.entries(AKTIVITET).map(([k, v]) => [k, v[0]] as [string, string])], tlFilter), innhold, handling: raw(`<button class="knapp primar" type="button" id="ny-akt-3">Ny aktivitet</button>`) })]);
+}
 
 function vis(d: any) {
   data = d;
   const e = d.eier;
-  const erKunde = e.er_kunde;
   const erLead = e.kilde === "be_om_demo" && e.status === "ny" && (e.lead_melding || e.lead_tid);
-  q("#brodsmule-sist")!.textContent = e.navn;
-  document.title = `${e.navn} · Hengsel Admin`;
-  const akt = tlFilter === "alle" ? d.aktiviteter : d.aktiviteter.filter((a: any) => a.type === tlFilter);
-  const pakkeNavn = (k: string | null) => d.prisliste?.pakker?.[k ?? ""]?.navn ?? (k ? k : "–");
-  const perButikk = new Map((d.per_butikk ?? []).map((x: any) => [x.navn, x]));
-  const dok = [
-    ...d.tilbud.map((t: any) => ({ ikon: "tilbud", tittel: `${t.nr} v${t.versjon}`, tekst: `${dato(t.dato)} · prisliste ${t.prisliste_versjon} · ${kr(t.sum_mnd_ore)}/mnd`, status: t.status, statusTekst: TILBUDSTATUS[t.status], href: `/salg/tilbud/${t.nr}/${t.versjon}.pdf`, id: t.id, type: "tilbud" })),
-    ...d.avtaler.map((a: any) => ({ ikon: "signert", tittel: a.nr, tekst: `${kr(a.per_mnd_ore)}/mnd${a.fornyes ? ` · fornyes ${dato(a.fornyes)}` : ""}`, status: a.visning, statusTekst: AVTALESTATUS[a.visning], href: `/avtaler/${a.nr}`, type: "avtale" })),
-  ];
-  sett(rot, html`
-    <header class="eierhode">
-      <div class="merker">${pille(erKunde ? "kunde" : e.status)}${kjede(e.kjede)}<span class="kjede">${d.linje_navn}</span>${e.lead_ny ? pille("ny", "Ny lead") : ""}</div>
-      <div class="sidehode"><div><h1>${e.navn}</h1><p class="under">Org.nr. ${orgnr(e.orgnr)}${e.adresse ? ` · ${e.adresse}${e.postnr || e.sted ? `, ${[e.postnr, e.sted].filter(Boolean).join(" ")}` : ""}` : ""} · Kilde: ${KILDER[e.kilde] ?? "–"}</p></div>
-        <div class="handlinger">
-          <label class="min-160 felt bare-telefon" ><span>Status</span><select id="status-velger">${Object.entries(KOLONNENAVN).filter(([k]) => k !== "kunde").map(([k, n]) => html`<option value="${k}" ${k === e.status ? "selected" : ""}>${n}</option>`)}</select></label>
-          <button class="knapp" type="button" id="rediger">${raw(ikon("innstillinger", 18))}Rediger</button>
-          <button class="knapp" type="button" id="ny-akt">${raw(ikon("pluss", 18))}Ny aktivitet</button>
-          <a class="knapp primar" href="/salg/prisberegner?eier=${e.id}">${raw(ikon("etterkalkyler", 18))}${erKunde ? "Endre abonnement" : "Prisberegner"}</a>
-        </div></div>
-    </header>
-    ${erLead ? html`<div class="banner info">${raw(ikon("innboks", 20))}<div><b>Nytt lead fra «Be om demo» · ${tid(e.lead_tid)}</b>${e.lead_melding ? html`«${e.lead_melding}» ` : ""}<span class="meta">${e.lead_kanal ?? ""}${e.lead_butikker ? ` · ${e.lead_butikker} butikk` : ""} · Svar innen 24 timer</span>
-      <div class="mt-8 handlinger" ><button class="knapp primar liten" type="button" id="avtal-demo">${raw(ikon("kalender", 16))}Avtal demo</button><button class="knapp liten" type="button" id="ikke-aktuell">Ikke aktuell</button></div></div></div>` : ""}
-    ${e.status === "tapt" ? html`<div class="banner varsel">${raw(ikon("stoppet", 20))}<div><b>Tapt: ${e.tap_grunn ?? "uten grunn"}</b>${e.tap_merknad ?? ""} <button class="ml-8 knapp liten" type="button" id="gjenapne" >Åpne på nytt</button></div></div>` : ""}
-    <div class="to-kolonner">
-      <div class="rutenett en-kolonne" >
-        ${erKunde ? html`<section class="kort"><h2>Kundemiljø ${e.miljo_adresse ? raw(`<a class="mer" href="https://${encodeURI(e.miljo_adresse)}" rel="noopener">Åpne kundesiden ${ikon("pil-hoyre", 14)}</a>`) : ""}</h2>
-          <dl class="dl"><dt>Adresse</dt><dd>${e.miljo_adresse ?? raw(`<span class="dempet">fyll inn</span>`)}</dd><dt>Tema og database</dt><dd>${[e.miljo_tema, e.miljo_database].filter(Boolean).join(" · ") || raw(`<span class="dempet">fyll inn</span>`)}</dd><dt>Versjon og siste innlogging</dt><dd class="meta">Leses fra kundemiljøet (ikke koblet til i fase A)</dd></dl></section>` : ""}
-        <section class="kort tabellramme"><h2>Butikker <span class="mer">${flertall(d.butikker.length, "butikk", "butikker")} · pakke per butikk</span><button class="knapp liten" type="button" id="ny-butikk">Legg til</button></h2>
-          ${d.butikker.length ? html`<table class="tabell"><thead><tr><th>Butikk</th><th>Sted</th><th>Pakke</th>${erKunde ? raw(`<th>Moduler</th><th class="hoyre">Brukere</th><th class="hoyre">Montører</th>`) : raw(`<th class="hoyre">Montører</th>`)}<th class="hoyre">Pakke og brukere</th><th></th></tr></thead>
-            <tbody>${d.butikker.map((b: any) => { const p: any = perButikk.get(b.navn); return html`<tr><td><b>${b.navn}</b></td><td class="dempet">${b.sted ?? "–"}</td><td>${pakkeNavn(b.pakke)}${!b.pakke ? raw(` <span class="meta">(foreslått Butikk)</span>`) : ""}</td>${erKunde ? html`<td class="liten-tekst dempet" >${(p?.moduler ?? []).join(", ")}</td><td class="hoyre">${b.brukere ?? "–"}</td><td class="hoyre">${b.montorer ?? "–"}</td>` : html`<td class="hoyre">${b.montorer ?? "–"}</td>`}<td class="hoyre">${p ? kr(p.sum_ore) : "–"}</td><td class="hoyre"><button class="knapp tekst liten" type="button" data-rediger-butikk="${b.id}">Endre</button></td></tr>`; })}</tbody></table>` : raw(`<p class="meta">Ingen butikker ennå.</p>`)}</section>
-        <section class="kort"><h2>Kontaktpersoner <button class="knapp liten" type="button" id="ny-kontakt">Legg til</button></h2>
-          ${d.kontakter.length ? html`<ul class="liste kontaktliste">${d.kontakter.map((k: any) => html`<li><span class="init">${k.navn.split(" ").map((s: string) => s[0]).join("").slice(0, 2)}</span><div class="tekst"><b>${k.navn}${k.signaturrett ? raw(` <span class="kjede">signaturrett</span>`) : ""}</b><span>${k.rolle ?? ""}</span></div><span class="meta">${k.telefon ? html`<a href="tel:${k.telefon.replace(/\s/g, "")}">${k.telefon}</a>` : ""}${k.telefon && k.epost ? " · " : ""}${k.epost ? html`<a href="mailto:${k.epost}">${k.epost}</a>` : ""}</span><button class="knapp tekst liten" type="button" data-rediger-kontakt="${k.id}">Endre</button></li>`)}</ul>` : raw(`<p class="meta">Ingen kontaktpersoner ennå.</p>`)}</section>
-        <section class="kort"><h2>Muligheter</h2>
-          ${d.muligheter.filter((m: any) => !m.lukket).length ? html`<ul class="liste">${d.muligheter.filter((m: any) => !m.lukket).map((m: any) => html`<li><div class="tekst"><b>${m.produktlinje === "sigdal" ? "Sigdal CRM" : "Hengsel"}, ${flertall(m.antall_butikker, "butikk", "butikker")}</b><span>${m.verdi_mnd_ore ? `${kr(m.verdi_mnd_ore)} per mnd · ` : d.verdi_ore ? `${kr(d.verdi_ore)} per mnd (standard oppsett) · ` : ""}åpnet ${dato(m.aapnet)}</span></div>${pille(m.fase)}</li>`)}</ul>` : raw(`<p class="meta">Ingen åpne muligheter.</p>`)}</section>
-        <section class="kort"><h2>Tilbud og avtaler</h2>
-          ${dok.length ? html`<ul class="liste">${dok.map((x: any) => html`<li>${raw(ikon(x.ikon, 20))}<div class="tekst"><b><a href="${x.href}" ${x.type === "tilbud" ? 'target="_blank" rel="noopener"' : ""}>${x.tittel}</a></b><span>${x.tekst}</span></div>${pille(x.status, x.statusTekst)}${x.type === "tilbud" && x.status === "utkast" ? html`<button class="knapp liten" type="button" data-send-tilbud="${x.id}">Merk som sendt</button>` : ""}${x.type === "tilbud" && (x.status === "sendt" || x.status === "utkast") && !d.avtaler.length ? html`<button class="knapp liten" type="button" data-lag-avtale="${x.id}">Lag avtale</button>` : ""}</li>`)}</ul>` : raw(`<p class="meta">Ingen tilbud ennå. <a href="/salg/prisberegner?eier=${e.id}">Lag et i prisberegneren.</a></p>`)}</section>
-      </div>
-      <section class="kort"><h2>Tidslinje <button class="knapp tekst liten" type="button" id="ny-akt-2">Ny aktivitet</button></h2>
-        ${e.neste_tekst && e.neste_dato && e.status !== "tapt" ? html`<div class="nesteboks">${raw(ikon(d.forfalt ? "frist" : "kalender", 20))}<div><span class="meta">Neste steg</span><br /><b>${e.neste_tekst}</b></div>${neste("", e.neste_dato, d.idag)}${raw(`<span class="neste meta" data-naar="${d.forfalt ? "forfalt" : d.i_dag ? "i_dag" : "senere"}">${d.forfalt ? `Forfalt ${dato(e.neste_dato)}` : d.i_dag ? "I dag" : dato(e.neste_dato)}</span>`)}</div>` : ""}
-        <div class="mb-12 chips" >${[["alle", "Alle"], ...Object.entries(AKTIVITET).map(([k, v]) => [k, v[0]])].map(([k, n]) => html`<button class="chip" type="button" data-tl="${k}" aria-pressed="${tlFilter === k}">${n}</button>`)}</div>
-        ${akt.length ? html`<ul class="tidslinje">${akt.map((a: any) => html`<li><span class="prikk" data-type="${a.type}">${raw(ikon(AKTIVITET[a.type]?.[1] ?? "tilbud", 16))}</span><div class="innhold"><b>${a.tittel}<span>${dato(a.dato)}</span></b>${a.tekst ? html`<p>${a.tekst}</p>` : ""}${a.neste_tekst ? html`<p class="meta">Neste steg: ${a.neste_tekst} (${dato(a.neste_dato)})</p>` : ""}<div class="meta">${AKTIVITET[a.type]?.[0] ?? a.type} · ${a.hvem}${a.kontakt_navn ? ` · ${a.kontakt_navn}` : ""}</div></div></li>`)}</ul>`
-        : d.aktiviteter.length ? raw(`<p class="meta">Ingen aktiviteter av denne typen.</p>`) : raw(`<div class="tom">${ikon("samtaler", 28)}<b>Ingen aktiviteter ennå</b><span>Logg samtaler, møter og demoer her, og sett et neste steg.</span><div class="handlinger"><button class="knapp primar" type="button" id="forste-akt">${ikon("pluss", 18)}Første aktivitet</button></div></div>`)}
-      </section>
-    </div>`);
+  settTittel(e.navn);
+  settSidepille(e.er_kunde ? "Kunde" : KOLONNENAVN[e.status] ?? e.status, e.er_kunde ? "kunde" : e.status);
+  faner(d);
+  const varsler = html`${erLead ? html`<div class="banner info">${raw(ikon("innboks", 20))}<div><b>Nytt lead fra «Be om demo» · ${tid(e.lead_tid)}</b>${e.lead_melding ? html`«${e.lead_melding}» ` : ""}<span class="meta">${e.lead_kanal ?? ""}${e.lead_butikker ? ` · ${e.lead_butikker} butikk` : ""} · Svar innen 24 timer</span>
+      <div class="mt-8 knapper-rad"><button class="knapp primar liten" type="button" id="avtal-demo">${raw(ikon("kalender", 16))}Avtal demo</button><button class="knapp liten" type="button" id="ikke-aktuell">Ikke aktuell</button></div></div></div>` : ""}
+    ${e.status === "tapt" ? html`<div class="banner varsel">${raw(ikon("stoppet", 20))}<div><b>Tapt: ${e.tap_grunn ?? "uten grunn"}</b>${e.tap_merknad ?? ""} <button class="ml-8 knapp liten" type="button" id="gjenapne">Åpne på nytt</button></div></div>` : ""}`;
+  // Org.nr., adresse, kjede, linje og kilde står som tooltip på tittelen (regel 6: ingen tekst utenfor fliser); de endres under «⋯ › Rediger eier»
+  const t = q("#sidetittel"); if (t) t.title = `Org.nr. ${orgnr(e.orgnr)}${e.adresse ? ` · ${e.adresse}${e.postnr || e.sted ? `, ${[e.postnr, e.sted].filter(Boolean).join(" ")}` : ""}` : ""} · ${e.kjede === "sigdal" ? "Sigdal" : "Uavhengig"} · ${d.linje_navn} · Kilde: ${KILDER[e.kilde] ?? "–"}`;
+  const innhold = fane === "tilbud" ? [tilbudFane(d)] : fane === "avtaler" ? [avtaleFane(d)] : fane === "tidslinje" ? [tidslinjeFane(d)] : oversikt(d);
+  sett(rot, html`${varsler}${innhold}`);
   koble();
 }
 
 const nyAkt = (type?: string) => document.dispatchEvent(new CustomEvent("ny-aktivitet", { detail: { id: data.eier.id, navn: data.eier.navn, kontakter: data.kontakter, type } }));
 const tapt = async () => { const g = await taptDialog(data.eier.navn, data.tap_grunner); if (!g) return; await api("PATCH", `/api/eiere/${id}`, { status: "tapt", ...g }); toast(`${data.eier.navn} er markert som tapt`); last(); };
 
+async function rediger() {
+  const e = data.eier;
+  const f = (navn: string, label: string, verdi: string | null, type = "text") => `<label class="felt"><span>${label}</span><input name="${navn}" type="${type}" value="${(verdi ?? "").replace(/"/g, "&quot;")}" /></label>`;
+  await skjemaDialog({ tittel: "Rediger eier", bred: true, innhold: `${f("navn", "Eier", e.navn)}<div class="felt-rad">${f("orgnr", "Org.nr.", e.orgnr)}<label class="felt"><span>Kjede</span><select name="kjede"><option value="annen" ${e.kjede === "annen" ? "selected" : ""}>Uavhengig</option><option value="sigdal" ${e.kjede === "sigdal" ? "selected" : ""}>Sigdal</option></select></label><label class="felt"><span>Produktlinje</span><select name="produktlinje"><option value="hengsel" ${e.produktlinje === "hengsel" ? "selected" : ""}>Hengsel</option><option value="sigdal" ${e.produktlinje === "sigdal" ? "selected" : ""}>Sigdal CRM</option></select></label></div>
+    <div class="felt-rad">${f("adresse", "Adresse", e.adresse)}${f("postnr", "Postnr.", e.postnr)}${f("sted", "Sted", e.sted)}${f("fylke", "Fylke", e.fylke)}</div>
+    <div class="felt-rad">${f("neste_tekst", "Neste steg", e.neste_tekst)}${f("neste_dato", "Dato", e.neste_dato, "date")}</div>
+    ${e.er_kunde ? `<div class="felt-rad">${f("miljo_adresse", "Kundemiljø, adresse", e.miljo_adresse)}${f("miljo_tema", "Tema", e.miljo_tema)}${f("miljo_database", "Database", e.miljo_database)}</div>` : ""}`,
+    send: (dta) => api("PATCH", `/api/eiere/${id}`, dta) });
+  last();
+}
+async function endreStatus() {
+  const e = data.eier;
+  const r = await skjemaDialog({ tittel: "Endre status", knapp: "Lagre", innhold: `<label class="felt"><span>Status</span><select name="status">${Object.entries(KOLONNENAVN).filter(([k]) => k !== "kunde").map(([k, n]) => `<option value="${k}" ${k === e.status ? "selected" : ""}>${n}</option>`).join("")}</select></label>` });
+  if (!r || r.status === e.status) return;
+  if (r.status === "tapt") return tapt();
+  try { await api("PATCH", `/api/eiere/${id}`, { status: r.status }); toast(`Flyttet til ${KOLONNENAVN[r.status]}`); last(); } catch (err: any) { toast(err.message); last(); }
+}
+
 function koble() {
-  ["#ny-akt", "#ny-akt-2", "#forste-akt"].forEach((s) => q(s)?.addEventListener("click", () => nyAkt()));
+  kobleKit(rot);
+  ["#ny-akt-2", "#ny-akt-3", "#forste-akt"].forEach((s) => q(s)?.addEventListener("click", () => nyAkt()));
   q("#avtal-demo")?.addEventListener("click", () => nyAkt("demo"));
   q("#ikke-aktuell")?.addEventListener("click", tapt);
   q("#gjenapne")?.addEventListener("click", async () => { await api("PATCH", `/api/eiere/${id}`, { status: "ny" }); toast("Eieren er åpnet på nytt"); last(); });
-  qa<HTMLButtonElement>("[data-tl]").forEach((b) => b.addEventListener("click", () => { tlFilter = b.dataset.tl!; vis(data); }));
-  q<HTMLSelectElement>("#status-velger")?.addEventListener("change", async (ev) => {
-    const ny = (ev.target as HTMLSelectElement).value;
-    if (ny === "tapt") return tapt();
-    try { await api("PATCH", `/api/eiere/${id}`, { status: ny }); toast(`Flyttet til ${KOLONNENAVN[ny]}`); last(); } catch (e: any) { toast(e.message); last(); }
-  });
-  q("#rediger")?.addEventListener("click", async () => {
-    const e = data.eier;
-    const f = (navn: string, label: string, verdi: string | null, type = "text") => `<label class="felt"><span>${label}</span><input name="${navn}" type="${type}" value="${(verdi ?? "").replace(/"/g, "&quot;")}" /></label>`;
-    await skjemaDialog({ tittel: "Rediger eier", bred: true, innhold: `${f("navn", "Eier", e.navn)}<div class="felt-rad">${f("orgnr", "Org.nr.", e.orgnr)}<label class="felt"><span>Kjede</span><select name="kjede"><option value="annen" ${e.kjede === "annen" ? "selected" : ""}>Uavhengig</option><option value="sigdal" ${e.kjede === "sigdal" ? "selected" : ""}>Sigdal</option></select></label><label class="felt"><span>Produktlinje</span><select name="produktlinje"><option value="hengsel" ${e.produktlinje === "hengsel" ? "selected" : ""}>Hengsel</option><option value="sigdal" ${e.produktlinje === "sigdal" ? "selected" : ""}>Sigdal CRM</option></select></label></div>
-      <div class="felt-rad">${f("adresse", "Adresse", e.adresse)}${f("postnr", "Postnr.", e.postnr)}${f("sted", "Sted", e.sted)}${f("fylke", "Fylke", e.fylke)}</div>
-      <div class="felt-rad">${f("neste_tekst", "Neste steg", e.neste_tekst)}${f("neste_dato", "Dato", e.neste_dato, "date")}</div>
-      ${e.er_kunde ? `<div class="felt-rad">${f("miljo_adresse", "Kundemiljø, adresse", e.miljo_adresse)}${f("miljo_tema", "Tema", e.miljo_tema)}${f("miljo_database", "Database", e.miljo_database)}</div>` : ""}`,
-      send: (d) => api("PATCH", `/api/eiere/${id}`, d) });
-    last();
-  });
+  q<HTMLSelectElement>("#tl-filter")?.addEventListener("change", (ev) => { tlFilter = (ev.target as HTMLSelectElement).value; vis(data); });
   const butikkSkjema = (b: any = {}) => `<label class="felt"><span>Butikk</span><input name="navn" type="text" value="${(b.navn ?? "").replace(/"/g, "&quot;")}" required /></label><div class="felt-rad"><label class="felt"><span>Sted</span><input name="sted" type="text" value="${(b.sted ?? "").replace(/"/g, "&quot;")}" /></label><label class="felt"><span>Pakke</span><select name="pakke"><option value="">Ikke valgt</option>${["start", "butikk", "komplett"].map((p) => `<option value="${p}" ${b.pakke === p ? "selected" : ""}>${p[0].toUpperCase() + p.slice(1)}</option>`).join("")}</select></label><label class="felt"><span>Brukere (totalt)</span><input name="brukere" type="number" min="0" value="${b.brukere ?? ""}" /></label><label class="felt"><span>Montører</span><input name="montorer" type="number" min="0" value="${b.montorer ?? ""}" /></label></div>`;
-  q("#ny-butikk")?.addEventListener("click", async () => { await skjemaDialog({ tittel: "Ny butikk", innhold: butikkSkjema(), send: (d) => api("POST", `/api/eiere/${id}/butikker`, { ...d, pakke: d.pakke || undefined, brukere: d.brukere || undefined, montorer: d.montorer || undefined }) }); last(); });
+  q("#ny-butikk")?.addEventListener("click", async () => { await skjemaDialog({ tittel: "Ny butikk", innhold: butikkSkjema(), send: (dta) => api("POST", `/api/eiere/${id}/butikker`, { ...dta, pakke: dta.pakke || undefined, brukere: dta.brukere || undefined, montorer: dta.montorer || undefined }) }); last(); });
   /** Slett-knapp i en åpen redigeringsdialog: sletter og lukker dialogen (avbryt-hendelsen løser skjemaDialog-løftet) */
   const kobleSlett = (sti: string, tekst: string) => {
     const dlg = qa<HTMLDialogElement>("dialog").at(-1)!;
     q("[data-slett]", dlg)?.addEventListener("click", async () => {
       if (!confirm(tekst)) return;
-      try { await api("DELETE", sti); dlg.dispatchEvent(new Event("cancel", { cancelable: true })); last(); } catch (e: any) { toast(e.message); }
+      try { await api("DELETE", sti); dlg.dispatchEvent(new Event("cancel", { cancelable: true })); last(); } catch (err: any) { toast(err.message); }
     });
   };
+  const lukkAlle = () => qa<HTMLDialogElement>("dialog.k-alle[open]").forEach((dl) => dl.close());
   qa<HTMLButtonElement>("[data-rediger-butikk]").forEach((b) => b.addEventListener("click", async () => {
+    lukkAlle();
     const butikk = data.butikker.find((x: any) => x.id === b.dataset.redigerButikk);
-    const p = skjemaDialog({ tittel: "Endre butikk", innhold: `${butikkSkjema(butikk)}<button class="venstre knapp tekst liten" type="button" data-slett >Slett butikken</button>`, send: (d) => api("PATCH", `/api/butikker/${butikk.id}`, { navn: d.navn, sted: d.sted, pakke: d.pakke || null, brukere: d.brukere === "" ? null : d.brukere, montorer: d.montorer === "" ? null : d.montorer }) });
+    const p = skjemaDialog({ tittel: "Endre butikk", innhold: `${butikkSkjema(butikk)}<button class="venstre knapp tekst liten" type="button" data-slett>Slett butikken</button>`, send: (dta) => api("PATCH", `/api/butikker/${butikk.id}`, { navn: dta.navn, sted: dta.sted, pakke: dta.pakke || null, brukere: dta.brukere === "" ? null : dta.brukere, montorer: dta.montorer === "" ? null : dta.montorer }) });
     kobleSlett(`/api/butikker/${butikk.id}`, "Slette butikken?");
     await p; last();
   }));
   const kontaktSkjema = (k: any = {}) => `<label class="felt"><span>Navn</span><input name="navn" type="text" value="${(k.navn ?? "").replace(/"/g, "&quot;")}" required /></label><div class="felt-rad"><label class="felt"><span>Rolle</span><input name="rolle" type="text" value="${(k.rolle ?? "").replace(/"/g, "&quot;")}" /></label><label class="felt"><span>Telefon</span><input name="telefon" type="tel" value="${k.telefon ?? ""}" /></label><label class="felt"><span>E-post</span><input name="epost" type="email" value="${k.epost ?? ""}" /></label></div><div class="chips"><label class="avkryss"><input type="checkbox" name="signaturrett" value="1" ${k.signaturrett ? "checked" : ""} /> Signaturrett</label><label class="avkryss"><input type="checkbox" name="primaer" value="1" ${k.primaer ? "checked" : ""} /> Primærkontakt</label></div>`;
-  q("#ny-kontakt")?.addEventListener("click", async () => { await skjemaDialog({ tittel: "Ny kontaktperson", innhold: kontaktSkjema(), send: (d) => api("POST", `/api/eiere/${id}/kontakter`, { ...d, signaturrett: d.signaturrett ? 1 : 0, primaer: d.primaer ? 1 : 0 }) }); last(); });
+  q("#ny-kontakt")?.addEventListener("click", async () => { await skjemaDialog({ tittel: "Ny kontaktperson", innhold: kontaktSkjema(), send: (dta) => api("POST", `/api/eiere/${id}/kontakter`, { ...dta, signaturrett: dta.signaturrett ? 1 : 0, primaer: dta.primaer ? 1 : 0 }) }); last(); });
   qa<HTMLButtonElement>("[data-rediger-kontakt]").forEach((b) => b.addEventListener("click", async () => {
+    lukkAlle();
     const k = data.kontakter.find((x: any) => x.id === b.dataset.redigerKontakt);
-    const p = skjemaDialog({ tittel: "Endre kontaktperson", innhold: `${kontaktSkjema(k)}<button class="venstre knapp tekst liten" type="button" data-slett >Slett kontakten</button>`, send: (d) => api("PATCH", `/api/kontakter/${k.id}`, { ...d, signaturrett: d.signaturrett ? 1 : 0, primaer: d.primaer ? 1 : 0 }) });
+    const p = skjemaDialog({ tittel: "Endre kontaktperson", innhold: `${kontaktSkjema(k)}<button class="venstre knapp tekst liten" type="button" data-slett>Slett kontakten</button>`, send: (dta) => api("PATCH", `/api/kontakter/${k.id}`, { ...dta, signaturrett: dta.signaturrett ? 1 : 0, primaer: dta.primaer ? 1 : 0 }) });
     kobleSlett(`/api/kontakter/${k.id}`, "Slette kontakten?");
     await p; last();
   }));
   qa<HTMLButtonElement>("[data-send-tilbud]").forEach((b) => b.addEventListener("click", async () => { await api("PATCH", `/api/tilbud/${b.dataset.sendTilbud}`, { status: "sendt" }); toast("Tilbudet er merket som sendt"); last(); }));
-  qa<HTMLButtonElement>("[data-lag-avtale]").forEach((b) => b.addEventListener("click", async () => { try { const a = await api<{ nr: string }>("POST", "/api/avtaler", { tilbud_id: b.dataset.lagAvtale }); toast(`Avtale ${a.nr} er laget`, { href: `/avtaler/${a.nr}`, tekst: "Åpne" }); last(); } catch (e: any) { toast(e.message); } }));
+  qa<HTMLButtonElement>("[data-lag-avtale]").forEach((b) => b.addEventListener("click", async () => { try { const a = await api<{ nr: string }>("POST", "/api/avtaler", { tilbud_id: b.dataset.lagAvtale }); toast(`Avtale ${a.nr} er laget`, { href: `/avtaler/${a.nr}`, tekst: "Åpne" }); last(); } catch (err: any) { toast(err.message); } }));
   q("#prov-igjen")?.addEventListener("click", last);
 }
 
+// Topplinja: «Prisberegner», «Ny aktivitet» og «⋯» (Rediger, Endre status, Ikke aktuell / Åpne på nytt)
+q<HTMLAnchorElement>("#til-prisberegner")?.setAttribute("href", `/salg/prisberegner?eier=${id}`);
+q("#ny-akt")?.addEventListener("click", () => data && nyAkt());
+q("#rediger")?.addEventListener("click", () => data && rediger());
+q("#endre-status")?.addEventListener("click", () => data && endreStatus());
+q("#marker-tapt")?.addEventListener("click", () => data && (data.eier.status === "tapt" ? api("PATCH", `/api/eiere/${id}`, { status: "ny" }).then(() => { toast("Eieren er åpnet på nytt"); last(); }) : tapt()));
+
 async function last() {
   const t = tilstand();
-  if (!data) sett(rot, html`<p class="meta">Henter eierkortet …</p><div class="to-kolonner"><div class="rutenett en-kolonne" >${raw(skjelett(3))}</div>${raw(skjelett(1))}</div>`);
+  if (!data) { faner(null); sett(rot, html`${rad(320, [flis({ bredde: "1/2", tittel: "Kontaktpersoner", innhold: laster() }), flis({ bredde: "1/2", tittel: "Muligheter og tilbud", innhold: laster() })])}${rad(320, [flis({ bredde: "1/2", tittel: "Butikker", innhold: laster() }), flis({ bredde: "1/2", tittel: "Tidslinje", innhold: laster() })])}`); }
   if (t === "tom") { const d = await api("GET", `/api/eiere/${id}`).catch(() => null); if (d) { d.aktiviteter = []; d.muligheter = []; d.tilbud = []; d.avtaler = []; d.eier.neste_tekst = null; return vis(d); } }
   try { vis(await api("GET", `/api/eiere/${id}`)); }
   catch (e: any) {
-    sett(rot, html`<div class="kort tom">${raw(ikon("stoppet", 28))}<b>Kunne ikke åpne eierkortet</b><span>${e.kode === "ADM-404" ? "Eieren finnes ikke." : "Eieren finnes, men dataene kunne ikke hentes."} <span class="feilkode">Feilkode ${e.kode ?? "ADM-504"}.</span></span><div class="handlinger"><a class="knapp" href="${tilbake}">${rot.dataset.tilbakeNavn ?? "Tilbake til listen"}</a><button class="knapp primar" type="button" id="prov-igjen">Prøv igjen</button></div></div>`);
+    sett(rot, rad(320, [flis({ tittel: "Kunne ikke åpne eierkortet", innhold: tom(e.kode === "ADM-404" ? "Eieren finnes ikke." : "Eieren finnes, men dataene kunne ikke hentes.", `Feilkode ${e.kode ?? "ADM-504"}.`, html`<a class="knapp" href="${tilbake}">${rot.dataset.tilbakeNavn ?? "Tilbake til listen"}</a><button class="knapp primar" type="button" id="prov-igjen">Prøv igjen</button>`) })]));
     q("#prov-igjen")?.addEventListener("click", last);
   }
 }
 last();
 document.addEventListener("aktivitet-lagret", last);
+void feilbanner;

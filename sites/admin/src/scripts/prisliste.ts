@@ -1,54 +1,58 @@
-/** SA9 Prisliste: versjonskort, tabeller per produktlinje og pakke, Ute, tillegg, rabattrinn og vilkår. Utkast kan endres og publiseres; aktiv og arkivert er låst. Innstillingene fornyes_snart_dager og tilbud_gyldig_dager ligger nederst. */
-import { api, html, raw, kr, dato, ikon, pille, sett, q, qa, feilbanner, skjelett, toast, skjemaDialog, PRISLISTESTATUS } from "../lib/dom";
+/**
+ * 26-003 Prisliste (versjonert), N-4: versjonene som faner («Versjon 2026.2 (utkast)»), statusen som pille i topplinja, «Publiser utkastet» og
+ * «Ny versjon» i topplinja. Rad 1: Tabell «Produktlinjer og pakker (per butikk per måned)», rad 2: Tabell «Hengsel Ute og tillegg», rad 3: Tekst
+ * «Kjederabatt og vilkår», rad 4: Tekst «Support etter første år (forslag)», rad 5: Moduler per pakke og Innstillingene (fornyes snart, tilbud gyldig).
+ * Bare utkast kan endres («Lagre utkast»); aktiv og arkivert er låst. Samme API som før (GET/POST/PATCH /api/prisliste, /api/innstillinger).
+ */
+import { api, html, raw, kr, dato, sett, q, qa, feilbanner, toast, skjemaDialog, PRISLISTESTATUS, ikon } from "../lib/dom";
+import { rad, flis, tabell, tabellHoyde, settFaner, settSidepille, kobleKit, laster, tom, liste } from "../lib/kit";
 
 const rot = q("#side")!;
-let liste: any = null, valgtId = "", valgt: any = null, innst: any = null;
+let lst: any = null, valgtId = "", valgt: any = null, innst: any = null;
 const krInput = (ore: number) => (ore / 100).toString();
+const publiserKnapp = q<HTMLButtonElement>("#publiser");
 
 function vis() {
   const pl = valgt.prisliste, rader = valgt.rader, laast = pl.status !== "utkast";
+  settFaner(lst.versjoner.map((v: any) => ({ id: v.id, navn: `Versjon ${v.versjon} (${PRISLISTESTATUS[v.status].toLowerCase()})` })), valgtId, (id) => { valgtId = id; last(); });
+  settSidepille(PRISLISTESTATUS[pl.status], pl.status);
+  if (publiserKnapp) { publiserKnapp.hidden = laast; publiserKnapp.textContent = "Publiser utkastet"; }
   const radId = (type: string, linje: string | null, kode: string) => rader.find((r: any) => r.type === type && (linje === null || r.produktlinje === linje) && r.kode === kode)?.id ?? "";
-  const felt = (id: string, navn: string, verdi: number | string, { kr: erKr = true, klasse = "prisfelt" } = {}) => html`<input class="${klasse}" type="number" ${erKr ? 'step="1" min="0"' : 'min="0" step="0.5"'} name="${id}:${navn}" value="${verdi}" ${laast ? "disabled" : ""} aria-label="${navn}" />`;
-  sett(rot, html`
-    <header class="sidehode"><div><h1>Prisliste ${pl.eksempel ? raw(`<span class="eksempel-merke">Eksempel – prislisten er ikke låst</span>`) : ""}</h1><p class="under">Alle priser i tilbud og prisberegner kommer herfra. Bare utkast kan endres; «Publiser» tar utkastet i bruk og arkiverer den gamle.</p></div>
-      <div class="handlinger"><button class="knapp" type="button" id="ny-versjon">${raw(ikon("pluss", 18))}Ny versjon</button>${!laast ? html`<button class="knapp" type="button" id="lagre">Lagre utkast</button><button class="knapp primar" type="button" id="publiser">Publiser ${pl.versjon}</button>` : ""}</div></header>
-    <div class="versjoner">${liste.versjoner.map((v: any) => html`<button class="kort" type="button" data-versjon="${v.id}" aria-pressed="${v.id === valgtId}"><b>Versjon ${v.versjon} ${pille(v.status, PRISLISTESTATUS[v.status])}</b><span class="meta">Gjelder fra ${dato(v.gjelder_fra)}${v.publisert ? ` · publisert ${dato(v.publisert)}` : ""} · ${v.antall_tilbud} tilbud bruker den</span></button>`)}</div>
-    <form id="skjema" novalidate>
-    <div class="rutenett">
-      <section class="hel-rad kort tabellramme" ><h2>Produktlinjer og pakker per butikk</h2>
-        <table class="tabell"><thead><tr><th>Pakke</th><th class="hoyre">Pris per mnd</th><th class="hoyre">Brukere inkl.</th><th class="hoyre">Ekstra bruker</th><th class="hoyre">Support år 1</th><th class="hoyre">Etablering</th></tr></thead>
-          <tbody>${Object.entries(pl.pakker).map(([linje, pakker]: [string, any]) => html`<tr><td colspan="6"><b>${valgt.linjenavn[linje]}</b> <span class="meta">${Object.values(pakker)[0]?.merknad ?? ""}</span></td></tr>${Object.values(pakker).map((p: any) => { const id = radId("pakke", linje, p.kode); return html`<tr><td>${p.navn}</td><td class="hoyre">${felt(id, "pris_ore", krInput(p.pris_ore))} kr</td><td class="hoyre">${felt(id, "inkl_brukere", p.inkl_brukere, { kr: false, klasse: "tallfelt" })}</td><td class="hoyre">${felt(id, "ekstra_bruker_ore", krInput(p.ekstra_bruker_ore))} kr</td><td class="hoyre">${felt(id, "support_timer", p.support_timer, { kr: false, klasse: "tallfelt" })} t/mnd</td><td class="hoyre">${felt(id, "etablering_ore", krInput(p.etablering_ore))} kr</td></tr>`; })}`)}</tbody></table>
-        <p class="mt-8 meta" >Ekstra bruker per bruker per måned. Support er timer per måned, inkludert første år. Etablering er engangs per butikk, uten rabatt.</p></section>
-      <section class="kort tabellramme"><h2>Moduler per pakke</h2>
-        <table class="tabell"><thead><tr><th>Modul</th>${Object.values(pl.pakker.hengsel ?? {}).map((p: any) => html`<th>${p.navn}</th>`)}</tr></thead>
-          <tbody>${[...new Set(Object.values(pl.pakker.hengsel ?? {}).flatMap((p: any) => p.moduler))].map((m) => html`<tr><td>${m}</td>${Object.values(pl.pakker.hengsel ?? {}).map((p: any) => html`<td>${p.moduler.includes(m) ? raw(ikon("hake", 16)) : raw(`<span class="dempet">–</span>`)}</td>`)}</tr>`)}</tbody></table></section>
-      <section class="kort"><h2>Hengsel Ute <span class="mer">per eier</span></h2>
-        <div class="sumlinjer"><div><span>Per montør per måned</span><span class="belop">${felt(radId("ute", null, "montor"), "pris_ore", krInput(pl.ute.montor_ore))} kr</span></div><div><span>Firmapris per måned<span class="under">for opptil ${felt(radId("ute", null, "firma"), "maks_antall", pl.ute.firma_maks, { kr: false, klasse: "tallfelt" })} montører</span></span><span class="belop">${felt(radId("ute", null, "firma"), "pris_ore", krInput(pl.ute.firma_ore))} kr</span></div></div>
-        <p class="meta">Prisberegneren velger det billigste av montørpris × antall og firmapris. Rabatten gjelder.</p></section>
-      <section class="kort"><h2>Tillegg <span class="mer">per eier, uten rabatt</span></h2>
-        <div class="sumlinjer">${pl.tillegg.map((t: any) => html`<div><span>${t.navn}<span class="under">${t.merknad}</span></span><span class="belop">${felt(radId("tillegg", null, t.kode), "pris_ore", krInput(t.pris_ore))} kr</span></div>`)}</div></section>
-      <section class="kort"><h2>Kjederabatt</h2>
-        <div class="sumlinjer">${pl.rabattrinn.map((t: any) => html`<div><span>Fra ${felt(radId("rabattrinn", null, `trinn-${t.fra_butikker}`), "fra_butikker", t.fra_butikker, { kr: false, klasse: "tallfelt" })} butikker hos samme eier</span><span class="belop">${felt(radId("rabattrinn", null, `trinn-${t.fra_butikker}`), "prosent", t.prosent, { kr: false, klasse: "tallfelt" })} %</span></div>`)}</div>
-        <p class="meta">Gjelder pakker, ekstra brukere og Hengsel Ute. Gjelder ikke tillegg, etablering og viderefakturering. Rabatten avrundes til hele kroner.</p></section>
-      <section class="kort"><h2>Viderefakturering og vilkår</h2>
-        <div class="sumlinjer"><div><span>Påslag på SMS, Penneo og AI</span><span class="belop"><input class="tallfelt" type="number" min="0" max="100" step="0.5" name="pl:viderefakturering_prosent" value="${pl.viderefakturering_prosent}" ${laast ? "disabled" : ""} /> %</span></div>
-          <div><span>Binding</span><span class="belop"><input class="tallfelt" type="number" min="1" name="pl:binding_mnd" value="${pl.binding_mnd}" ${laast ? "disabled" : ""} /> måneder</span></div>
-          <div><span>Oppsigelsesfrist</span><span class="belop"><input class="tallfelt" type="number" min="0" name="pl:oppsigelse_mnd" value="${pl.oppsigelse_mnd}" ${laast ? "disabled" : ""} /> måneder</span></div>
-          <div><span>Mva</span><span class="belop"><input class="tallfelt" type="number" min="0" max="100" name="pl:mva_prosent" value="${pl.mva_prosent}" ${laast ? "disabled" : ""} /> %</span></div>
-          <div><span>Gjelder fra</span><span class="belop"><input type="date" name="pl:gjelder_fra" value="${pl.gjelder_fra}" ${laast ? "disabled" : ""} class="datofelt inntast" /></span></div>
-          <div><span>Prisjustering</span><span class="belop">Årlig etter KPI</span></div>
-          <div><span>Merket «Eksempel»</span><span class="belop"><label class="avkryss"><input type="checkbox" name="pl:eksempel" value="1" ${pl.eksempel ? "checked" : ""} ${laast ? "disabled" : ""} /> vises på tilbud</label></span></div></div></section>
-      <section class="kort"><h2>Leverandør på tilbud og avtaler <a class="mer" href="/innstillinger/leverandor">Innstillinger › Leverandør</a></h2><p class="meta">Navn, org.nr., adresse, e-post og signatar kopieres inn i tilbud og avtaler når de lages. Det er ikke besluttet hvilket selskap som selger Hengsel.</p></section>
-      <section class="kort"><h2>Innstillinger</h2>
-        <div class="sumlinjer"><div><span>«Fornyes snart» vises når fornyelsesdatoen er innen</span><span class="belop"><input class="tallfelt" type="number" min="0" max="365" name="innst:fornyes_snart_dager" value="${innst.fornyes_snart_dager}" /> dager</span></div><div><span>Tilbud er gyldig i</span><span class="belop"><input class="tallfelt" type="number" min="1" max="365" name="innst:tilbud_gyldig_dager" value="${innst.tilbud_gyldig_dager}" /> dager</span></div></div>
-        <button class="mt-10 knapp liten" type="button" id="lagre-innst" >Lagre innstillingene</button></section>
-    </div></form>`);
-  qa<HTMLButtonElement>("[data-versjon]").forEach((b) => b.addEventListener("click", () => { valgtId = b.dataset.versjon!; last(); }));
-  q("#ny-versjon")?.addEventListener("click", async () => {
-    const r = await skjemaDialog({ tittel: "Ny versjon", knapp: "Lag utkast", innhold: `<div class="felt-rad"><label class="felt"><span>Versjon (f.eks. 2027.1)</span><input name="versjon" type="text" required /></label><label class="felt"><span>Gjelder fra</span><input name="gjelder_fra" type="date" required /></label></div><p class="meta">Utkastet kopierer prisene fra versjon ${pl.versjon}. Endre dem, og publiser når de er bekreftet.</p>`,
-      send: async (d) => { valgtId = (await api<{ id: string }>("POST", "/api/prisliste", { versjon: d.versjon, gjelder_fra: d.gjelder_fra, kopier_fra: pl.id })).id; } });
-    if (r) { toast("Utkastet er laget"); last(); }
-  });
+  const felt = (id: string, navn: string, verdi: number | string, { erKr = true, klasse = "prisfelt" } = {}) => laast
+    ? (erKr ? kr(Number(verdi) * 100) : String(verdi))
+    : html`<input class="${klasse}" type="number" ${raw(erKr ? 'step="1" min="0"' : 'min="0" step="0.5"')} name="${id}:${navn}" value="${verdi}" aria-label="${navn}" />${erKr ? " kr" : ""}`;
+  const plFelt = (navn: string, verdi: number | string, ekstra = "") => laast ? String(verdi) : html`<input class="tallfelt" type="number" min="0" ${raw(ekstra)} name="pl:${navn}" value="${verdi}" aria-label="${navn}" />`;
+
+  const pakkerader = Object.entries(pl.pakker).flatMap(([linje, pakker]: [string, any]) => (Object.values(pakker) as any[]).sort((a, b) => a.pris_ore - b.pris_ore).map((p: any) => { const id = radId("pakke", linje, p.kode); return html`<tr><th scope="row">${valgt.linjenavn[linje]}</th><td class="midt">${p.navn}</td><td class="h">${felt(id, "pris_ore", krInput(p.pris_ore))}</td><td class="h midt">${felt(id, "inkl_brukere", p.inkl_brukere, { erKr: false, klasse: "tallfelt" })}</td><td class="h midt">${felt(id, "ekstra_bruker_ore", krInput(p.ekstra_bruker_ore))}</td><td class="h midt">${felt(id, "support_timer", p.support_timer, { erKr: false, klasse: "tallfelt" })} t</td><td class="h">${felt(id, "etablering_ore", krInput(p.etablering_ore))}</td></tr>`; }));
+  const uterader = [
+    html`<tr><th scope="row">Hengsel Ute, montørpris</th><td class="h">${felt(radId("ute", null, "montor"), "pris_ore", krInput(pl.ute.montor_ore))}</td><td>per montør per måned</td></tr>`,
+    html`<tr><th scope="row">Hengsel Ute, firmapris</th><td class="h">${felt(radId("ute", null, "firma"), "pris_ore", krInput(pl.ute.firma_ore))}</td><td>opptil ${felt(radId("ute", null, "firma"), "maks_antall", pl.ute.firma_maks, { erKr: false, klasse: "tallfelt" })} montører, per eier</td></tr>`,
+    ...pl.tillegg.map((t: any) => html`<tr><th scope="row">${t.navn}</th><td class="h">${felt(radId("tillegg", null, t.kode), "pris_ore", krInput(t.pris_ore))}</td><td>${t.merknad}</td></tr>`),
+  ];
+  const trinn = pl.rabattrinn.map((t: any) => html`${felt(radId("rabattrinn", null, `trinn-${t.fra_butikker}`), "prosent", t.prosent, { erKr: false, klasse: "tallfelt" })} % fra ${felt(radId("rabattrinn", null, `trinn-${t.fra_butikker}`), "fra_butikker", t.fra_butikker, { erKr: false, klasse: "tallfelt" })} butikker`);
+  const vilkar = html`<div class="k-brod k-vilkar">
+    <p>${trinn.map((t: any, i: number) => html`${i ? ", " : ""}${t}`)}. Gjelder pakker, ekstra brukere og montører; ikke etablering, tillegg eller viderefakturert SMS, Penneo og AI (kostpris + ${plFelt("viderefakturering_prosent", pl.viderefakturering_prosent, 'max="100" step="0.5"')} %).</p>
+    <p>Binding ${plFelt("binding_mnd", pl.binding_mnd, 'min="1"')} måneder, oppsigelse ${plFelt("oppsigelse_mnd", pl.oppsigelse_mnd)} måneder, KPI-justering årlig, mva ${plFelt("mva_prosent", pl.mva_prosent, 'max="100"')} %.</p>
+    <p>Gjelder fra ${laast ? dato(pl.gjelder_fra) : html`<input type="date" name="pl:gjelder_fra" value="${pl.gjelder_fra}" class="datofelt inntast" aria-label="Gjelder fra" />`}${pl.publisert ? ` · publisert ${dato(pl.publisert)}` : ""}. ${laast ? (pl.eksempel ? "Merket «Eksempel» på tilbud." : "") : html`<label class="k-avkryss k-inline"><input type="checkbox" name="pl:eksempel" value="1" ${raw(pl.eksempel ? "checked" : "")} /> Merket «Eksempel» på tilbud</label>`}</p></div>`;
+  const pakkeH = Object.values(pl.pakker.hengsel ?? {}) as any[];
+  const moduler = [...new Set(pakkeH.flatMap((p: any) => p.moduler))].map((m) => ({ venstre: html`<b>${m}</b> <span>${pakkeH.filter((p: any) => p.moduler.includes(m)).map((p: any) => p.navn).join(", ")}</span>` }));
+  const ml = liste("moduler", "Moduler per pakke (Hengsel)", moduler);
+  sett(rot, html`<form id="skjema" class="k-rader" novalidate>
+    ${rad(tabellHoyde(pakkerader.length), [flis({ id: "pakker", tittel: "Produktlinjer og pakker (per butikk per måned)", teller: pakkerader.length, verktoy: raw(`<span class="k-hjelp" title="Support er timer per måned, første år. Etablering er engangs per butikk. Hengsel-linjen har samme brukere, support og etablering.">Support er timer per måned, første år. Etablering er engangs per butikk.</span>`),
+      innhold: tabell({ kompakt: true, kolonner: [{ navn: "Linje" }, { navn: "Pakke", midt: true }, { navn: "Pris", h: true }, { navn: "Brukere inkl.", h: true, midt: true }, { navn: "Ekstra bruker", h: true, midt: true }, { navn: "Support", h: true, midt: true }, { navn: "Etablering", h: true }], rader: pakkerader }),
+      handling: laast ? "" : raw(`<button class="knapp" type="button" id="lagre">${ikon("hake", 18)}Lagre utkast</button>`) })])}
+    ${rad(tabellHoyde(uterader.length), [flis({ id: "ute", tittel: "Hengsel Ute og tillegg", teller: uterader.length, innhold: tabell({ kompakt: true, kolonner: [{ navn: "Hva" }, { navn: "Pris", h: true, klasse: "prisk" }, { navn: "Gjelder" }], rader: uterader }) })])}
+    ${rad(320, [flis({ id: "vilkar", tittel: "Kjederabatt og vilkår", innhold: vilkar })])}
+    ${rad(120, [flis({ id: "support-ar2", tittel: "Support etter første år (forslag)", innhold: raw(`<div class="k-brod"><p>Timene halveres fra år 2: 0,5, 1 og 1,5 t per måned. Pris for ekstra supporttime kommer.</p></div>`) })])}
+    ${rad(320, [flis({ id: "moduler", bredde: "1/2", tittel: "Moduler per pakke (Hengsel)", teller: moduler.length, tellerHoyre: true, innhold: ml.innhold, handling: ml.handling }),
+      flis({ id: "innstillinger", bredde: "1/2", tittel: "Innstillinger", innhold: html`<div class="k-skjema"><label class="felt"><span>«Fornyes snart» vises når fornyelsesdatoen er innen (dager)</span><input type="number" min="0" max="365" name="innst:fornyes_snart_dager" value="${innst.fornyes_snart_dager}" /></label><label class="felt"><span>Tilbud er gyldig i (dager)</span><input type="number" min="1" max="365" name="innst:tilbud_gyldig_dager" value="${innst.tilbud_gyldig_dager}" /></label></div>`,
+        handling: raw(`<button class="knapp primar" type="button" id="lagre-innst">Lagre innstillingene</button>`) })])}
+  </form>`);
+  koble(pl);
+}
+
+function koble(pl: any) {
+  kobleKit(rot);
   q("#lagre")?.addEventListener("click", async () => {
     const f = q<HTMLFormElement>("#skjema")!;
     const perRad: Record<string, Record<string, unknown>> = {};
@@ -62,20 +66,32 @@ function vis() {
     try { await api("PATCH", `/api/prisliste/${pl.id}`, { ...plFelt, rader: Object.entries(perRad).map(([id, felt]) => ({ id, ...felt })) }); toast("Utkastet er lagret"); last(); }
     catch (e: any) { toast(`Lagring av utkast feilet: ${e.message}`); }
   });
-  q("#publiser")?.addEventListener("click", async () => { if (!confirm(`Publisere ${pl.versjon}? Den aktive versjonen arkiveres, og eksempel-merket fjernes.`)) return; try { await api("POST", `/api/prisliste/${pl.id}/publiser`); toast(`Prisliste ${pl.versjon} er aktiv`); last(); } catch (e: any) { toast(e.message); } });
   q("#lagre-innst")?.addEventListener("click", async () => { const f = q<HTMLFormElement>("#skjema")!; try { await api("PATCH", "/api/innstillinger", { fornyes_snart_dager: (f.elements.namedItem("innst:fornyes_snart_dager") as HTMLInputElement).value, tilbud_gyldig_dager: (f.elements.namedItem("innst:tilbud_gyldig_dager") as HTMLInputElement).value }); toast("Innstillingene er lagret"); last(); } catch (e: any) { toast(e.message); } });
   q("#prov-igjen")?.addEventListener("click", last);
 }
 
+async function nyVersjon() {
+  const fra = valgt?.prisliste;
+  const r = await skjemaDialog({ tittel: "Ny versjon", knapp: "Lag utkast", innhold: `<div class="felt-rad"><label class="felt"><span>Versjon (f.eks. 2027.1)</span><input name="versjon" type="text" required /></label><label class="felt"><span>Gjelder fra</span><input name="gjelder_fra" type="date" required /></label></div>${fra ? `<p class="meta">Utkastet kopierer prisene fra versjon ${fra.versjon}. Endre dem, og publiser når de er bekreftet.</p>` : ""}`,
+    send: async (d) => { valgtId = (await api<{ id: string }>("POST", "/api/prisliste", { versjon: d.versjon, gjelder_fra: d.gjelder_fra, kopier_fra: fra?.id })).id; } });
+  if (r) { toast("Utkastet er laget"); last(); }
+}
+q("#ny-versjon")?.addEventListener("click", nyVersjon);
+publiserKnapp?.addEventListener("click", async () => {
+  const pl = valgt?.prisliste; if (!pl || pl.status !== "utkast") return;
+  if (!confirm(`Publisere ${pl.versjon}? Den aktive versjonen arkiveres, og eksempel-merket fjernes.`)) return;
+  try { await api("POST", `/api/prisliste/${pl.id}/publiser`); toast(`Prisliste ${pl.versjon} er aktiv`); last(); } catch (e: any) { toast(e.message); }
+});
+
 async function last() {
-  if (!liste) sett(rot, html`<header class="sidehode"><h1>Prisliste</h1></header>${raw(skjelett(3))}`);
+  if (!lst) sett(rot, rad(480, [flis({ tittel: "Produktlinjer og pakker (per butikk per måned)", innhold: laster() })]));
   try {
-    liste = await api("GET", "/api/prisliste");
+    lst = await api("GET", "/api/prisliste");
     innst = await api("GET", "/api/innstillinger");
-    if (!valgtId) valgtId = liste.gjeldende ? liste.versjoner.find((v: any) => v.versjon === liste.gjeldende.versjon)?.id ?? liste.versjoner[0]?.id : liste.versjoner[0]?.id;
-    if (!valgtId) { sett(rot, html`<header class="sidehode"><h1>Prisliste</h1></header><div class="kort tom"><b>Ingen prisliste</b><span>Lag den første versjonen.</span><div class="handlinger"><button class="knapp primar" type="button" id="ny-versjon">Ny versjon</button></div></div>`); q("#ny-versjon")?.addEventListener("click", async () => { await skjemaDialog({ tittel: "Ny versjon", knapp: "Lag utkast", innhold: `<div class="felt-rad"><label class="felt"><span>Versjon</span><input name="versjon" type="text" required /></label><label class="felt"><span>Gjelder fra</span><input name="gjelder_fra" type="date" required /></label></div>`, send: (d) => api("POST", "/api/prisliste", d) }); last(); }); return; }
+    if (!valgtId) valgtId = lst.versjoner.find((v: any) => v.status === "utkast")?.id ?? (lst.gjeldende ? lst.versjoner.find((v: any) => v.versjon === lst.gjeldende.versjon)?.id : undefined) ?? lst.versjoner[0]?.id;
+    if (!valgtId) { settFaner([], ""); sett(rot, rad(320, [flis({ tittel: "Prisliste", innhold: tom("Ingen prisliste", "Lag den første versjonen med «Ny versjon».") })])); return; }
     valgt = await api("GET", `/api/prisliste/${valgtId}`);
     vis();
-  } catch (e) { sett(rot, html`<header class="sidehode"><h1>Prisliste</h1></header>${raw(feilbanner(e, "Kunne ikke hente prislisten."))}`); q("#prov-igjen")?.addEventListener("click", last); }
+  } catch (e) { sett(rot, rad(320, [flis({ tittel: "Prisliste", innhold: raw(feilbanner(e, "Kunne ikke hente prislisten.")) })])); q("#prov-igjen")?.addEventListener("click", last); }
 }
 last();

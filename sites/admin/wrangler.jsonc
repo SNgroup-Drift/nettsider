@@ -10,13 +10,18 @@
 // LEAD_NOKKEL (valgfritt ekstra vern på /api/lead). Variabler: LEAD_ORIGIN (standard https://hengsel.no), PENNEO_API_URL.
 // K-259: Hemmelighet HJELP_NOKKEL (valgfri) for POST /api/hjelp. Skjermbilder fra «Hjelp» lagres i R2 med binding SKJERMBILDER; bøtta
 //   «hengsel-admin-skjermbilder» finnes ikke ennå, så bindingen står kommentert ut under. Uten den lagres saken uten bilde (claude/k259-rapport.md).
-// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/admin/wrangler.jsonc`. Se claude/k184-rapport.md og claude/k240-rapport.md.
+// Workers Builds: både Deploy command og Preview command (eldre Workers: Non-production branch deploy command) må ha `-c sites/admin/wrangler.jsonc`. Se claude/k184-rapport.md og claude/k240-rapport.md.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "admin",
   "main": "./worker/index.js",
   "compatibility_date": "2026-10-01",
   "keep_vars": true,
+  // N-4: «admin» er en ny Worker i Workers Builds, så grenbygg (forhåndsvisning) kjører Preview command `npx wrangler preview`, og den stopper
+  // uten en previews-blokk («Your Wrangler configuration is missing a `previews` block»). Blokken er tom med vilje: en Preview arver ikke
+  // D1, R2 eller variabler fra produksjon, så forhåndsvisningen får verken produksjonsdatabasen eller ACCESS_* og svarer 503 (låst), aldri åpent.
+  // Skal forhåndsvisningen vise sider, settes ACCESS_* som Preview-variabler i dashbordet og en egen D1 legges her (se claude/n4-rapport.md).
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

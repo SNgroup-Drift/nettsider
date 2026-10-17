@@ -204,7 +204,7 @@ async function last() {
   if (!d) sett(rot, html`<div class="skjelett sakhode-skjelett"></div><div class="sak-oppsett"><div>${raw(skjelett(3, "kortet"))}</div><div>${raw(skjelett(2, "kortet"))}</div></div>`);
   try {
     d = await hentSak();
-    const sb = q("#brodsmule-sist"); if (sb) sb.textContent = d.sak.nr;
+    const sb = q("#sidetittel"); if (sb) sb.textContent = d.sak.nr;
     document.title = `${d.sak.nr} ${d.sak.emne} · Hengsel Admin`;
     vis();
     if (tilstand() === "feil") { sett(q("#skriv-feil", rot), `<div class="banner" role="alert">${ikon("stoppet", 18)}<div><b>Svaret kunne ikke sendes.</b>Det er lagret som utkast. <span class="feilkode">Feilkode ADM-504.</span></div></div>`); q<HTMLTextAreaElement>("#skrivfelt", rot)!.value = "Hei Eva. Tilbud som allerede er sendt må lages på nytt for å få logoen med. Vi kan gjøre det for dere i dag."; oppdaterSend(); }
