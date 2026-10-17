@@ -1,0 +1,24 @@
+---
+/**
+ * Flis-kitet (kopiert fra N-3, sites/hengsel/src/components/kit/Flis.astro): flisen alle flisklassene bygger på. Tittel 16/600 med teller,
+ * innhold, handling nederst til høyre. Bredde 1/4 (bare tall), 1/3, 1/2, 2/3 eller 1/1. I Admin ligger stilen globalt i src/styles/kit.css
+ * (k-klassene), fordi de fleste flisene tegnes i nettleseren av src/lib/kit.ts med samme markup.
+ */
+export type Bredde = "1/4" | "1/3" | "1/2" | "2/3" | "1/1";
+interface Props { bredde?: Bredde; tittel?: string; teller?: number | string; tellerHoyre?: boolean; klasse?: string; id?: string }
+const { bredde = "1/1", tittel, teller, tellerHoyre = false, klasse, id } = Astro.props;
+const b = { "1/4": "k-b14", "1/3": "k-b13", "1/2": "k-b12", "2/3": "k-b23", "1/1": "k-b11" }[bredde];
+const tittelId = id ? `${id}-tittel` : undefined;
+const verktoy = Astro.slots.has("verktoy");
+---
+<section class:list={["k-flis", b, klasse]} id={id} aria-labelledby={tittelId}>
+  {tittel && (
+    <div class:list={["k-topp", { "med-verktoy": verktoy }]}>
+      <h2 class="k-ftittel" id={tittelId}>{tittel}{teller !== undefined && !tellerHoyre && <span class="k-teller">{teller}</span>}</h2>
+      {teller !== undefined && tellerHoyre && <span class="k-teller hoyre">{teller}</span>}
+      {verktoy && <div class="k-verktoy"><slot name="verktoy" /></div>}
+    </div>
+  )}
+  <div class="k-finnhold"><slot /></div>
+  {Astro.slots.has("handling") && <div class="k-fhandling"><slot name="handling" /></div>}
+</section>

@@ -1,0 +1,21 @@
+---
+/**
+ * Flis-kitet (fra N-3, tilpasset Admin): sidene merket KOMMER i sidekartet (26-011 Støtte, 26-012 Fakturering). Topplinja med statusen «Kommer» og
+ * én rad (320) med én Tekst-flis 1/1. Står ikke i menyen (N-4, samme valg som hengsel.no 17.10, svar A). Teksten er sidekartets, uten
+ * tegnenumre og notater til den som bygger.
+ */
+import Side from "../../layouts/Side.astro";
+import Innhold from "./Innhold.astro";
+import Rad from "./Rad.astro";
+import Tekstflis from "./Tekstflis.astro";
+interface Props { tittel: string; beskrivelse: string; aktiv: string; flistittel: string; tekst: string }
+const { tittel, beskrivelse, aktiv, flistittel, tekst } = Astro.props;
+---
+<Side title={tittel} description={beskrivelse} aktiv={aktiv} pille="Kommer" pilleTone="ny">
+  <Fragment slot="handlinger"></Fragment>
+  <Innhold>
+    <Rad hoyde={320}>
+      <Tekstflis tittel={flistittel} tekst={tekst} />
+    </Rad>
+  </Innhold>
+</Side>

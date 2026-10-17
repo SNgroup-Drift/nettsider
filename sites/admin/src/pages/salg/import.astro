@@ -1,0 +1,14 @@
+---
+/** 26-007 Excel-import (N-4): fil → forhåndsvisning med faner og tabell → «Importer N rader» i topplinja. Skript: scripts/import.ts. */
+import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+---
+<Side title="Excel-import" description="Importer eiere og butikker fra Excel med forhåndsvisning før noe lagres" aktiv="import">
+  <Fragment slot="handlinger">
+    <button class="knapp primar" type="button" id="importer" disabled>Importer</button>
+  </Fragment>
+  <Innhold id="side" />
+  <script>
+    import "../../scripts/import";
+  </script>
+</Side>

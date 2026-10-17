@@ -1,0 +1,13 @@
+---
+/**
+ * Flis-kitet (fra N-3): Status-flisen (regel 2c): tittel, verdi som pille og én setning på én linje, fast høyde 120. Finnes som 1/3, 1/2 og 1/1.
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+import Pille, { type Tone } from "./Pille.astro";
+interface Props { tittel: string; pille: string; tone?: Tone; tekst: string; bredde?: Bredde }
+const { tittel, pille, tone, tekst, bredde = "1/3" } = Astro.props;
+---
+<Flis bredde={bredde} tittel={tittel} klasse="k-statusflis">
+  <Pille tone={tone}>{pille}</Pille>
+  <p class="k-setning" title={tekst}>{tekst}</p>
+</Flis>

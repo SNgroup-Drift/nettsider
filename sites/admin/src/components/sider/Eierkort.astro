@@ -1,0 +1,29 @@
+---
+/**
+ * 26-013 Eierkort (N-4): én side for /salg/eiere/:id og /kunder/:id (Workeren serverer fila, worker/ruter.js; id-en leses fra adressen).
+ * Topplinja: brødsmule «Eiere og butikker», eierens navn og status (settes av scripts/eierkort.ts), «Prisberegner», «Ny aktivitet» og «⋯».
+ */
+import Side from "../../layouts/Side.astro";
+import Innhold from "../kit/Innhold.astro";
+import { ikon } from "../../lib/ikoner";
+interface Props { aktiv: "eierkort" | "kundekort"; tilbake: string; tilbakeNavn: string }
+const { aktiv, tilbake, tilbakeNavn } = Astro.props;
+---
+<Side title="Eierkort" tittel="Henter …" description="Eierkortet: kontaktpersoner, muligheter og tilbud, butikker, avtaler og tidslinje" aktiv={aktiv}>
+  <Fragment slot="handlinger">
+    <details class="flere" id="flere">
+      <summary class="knapp ikon-knapp" aria-label="Flere handlinger"><Fragment set:html={ikon("mer", 20)} /></summary>
+      <div class="flere-meny" role="menu">
+        <button type="button" role="menuitem" id="rediger">Rediger eier</button>
+        <button type="button" role="menuitem" id="endre-status">Endre status</button>
+        <button type="button" role="menuitem" id="marker-tapt">Ikke aktuell / åpne på nytt</button>
+      </div>
+    </details>
+    <a class="knapp" id="til-prisberegner" href="/salg/prisberegner">Prisberegner</a>
+    <button class="knapp primar" type="button" id="ny-akt"><Fragment set:html={ikon("pluss", 18)} />Ny aktivitet</button>
+  </Fragment>
+  <Innhold id="side" data-tilbake={tilbake} data-tilbake-navn={tilbakeNavn} />
+  <script>
+    import "../../scripts/eierkort";
+  </script>
+</Side>

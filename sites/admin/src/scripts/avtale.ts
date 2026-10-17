@@ -7,7 +7,7 @@ let d: any = null;
 
 function vis() {
   const a = d.avtale;
-  q("#brodsmule-sist")!.textContent = a.nr;
+  const st = q("#sidetittel"); if (st) st.textContent = a.nr;
   document.title = `${a.nr} · Hengsel Admin`;
   const SIGN: Record<string, string> = { ikke_sendt: "Ikke sendt", venter: "Venter", signert: "Signert" };
   const lev = a.leverandor ?? {};

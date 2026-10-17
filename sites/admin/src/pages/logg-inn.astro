@@ -1,0 +1,19 @@
+---
+/**
+ * 26-001 Innlogging (Access), N-4: ett kort (400 px) midt på siden med Hengsel-merket, tittel, tekst og «Logg inn med Access». Cloudflare Access
+ * står foran admin.hengsel.no og viser sin egen innlogging; denne siden er det Workeren viser (status 401) når en forespørsel kommer fram uten
+ * gyldig Access-token, f.eks. på workers.dev-adressen. Knappen går til admin.hengsel.no, der Access ber om jobbkontoen. Bare lys modus, ingen skript.
+ */
+import Hode from "@sngroup/hengsel-tokens/Hode.astro";
+import "../styles/logg-inn.css";
+---
+<Hode title="Logg inn · Hengsel Admin" description="Hengsel Admin: bare for Hengsel. Logg inn med Cloudflare Access." robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png">
+  <main class="innlogging-flate" id="innhold">
+    <section class="kort" aria-labelledby="logg-inn-tittel">
+      <img src="/logo/logo-hengsel-lys.svg" alt="Hengsel" width="92" height="22" />
+      <h1 id="logg-inn-tittel">Hengsel Admin</h1>
+      <p>Bare for Hengsel. Logg inn med Cloudflare Access og jobbkontoen din.</p>
+      <a class="knapp" href="https://admin.hengsel.no/">Logg inn med Access</a>
+    </section>
+  </main>
+</Hode>

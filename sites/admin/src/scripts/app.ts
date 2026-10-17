@@ -1,6 +1,7 @@
 /**
- * Felles skript for alle sidene i Hengsel Admin (K-240): skuffen under 1024 px, bunnfanen «Mer», søket i toppfeltet (går til Eiere og butikker),
- * dialogen «Ny aktivitet» (fra toppfeltet og eierkortet), og «/» som hopper til søkefeltet. Ingen lagring, ingen tredjepart.
+ * Felles skript for alle sidene i Hengsel Admin (K-240, N-4): skuffen under 1024 px, bunnfanen «Mer», bred/smal sidemeny (valget huskes i
+ * nettleseren, regel 7), søket i topplinja (⌘K / Ctrl+K eller «/», Enter går til Eiere og butikker), søkeikonet og «⋯» på telefon, eksempel-pillen,
+ * bjella og profilen, og dialogen «Ny aktivitet» (fra topplinja og eierkortet). Ingen tredjepart.
  */
 import { api, ApiFeil, esc, html, q, qa, toast, skjemaData, visFeltfeil, ikon, AKTIVITET } from "../lib/dom";
 import "./ny-sak";
@@ -18,6 +19,27 @@ q("#fane-mer")?.addEventListener("click", () => apne(true));
 overlegg?.addEventListener("click", () => apne(false));
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") apne(false); });
 
+// Bred/smal sidemeny (regel 7): knappen nederst i menyen. Valget huskes per enhet; uten valg styrer skjermbredden (bred fra 1440 px).
+const MENY_NOKKEL = "admin-meny";
+const settMeny = (v: string | null) => { if (v === "bred" || v === "smal") document.documentElement.dataset.meny = v; else delete document.documentElement.dataset.meny; q("#meny-bredde")?.setAttribute("aria-pressed", String(erSmal())); };
+const erSmal = () => document.documentElement.dataset.meny === "smal" || (!document.documentElement.dataset.meny && matchMedia("(min-width: 1024px) and (max-width: 1439px)").matches);
+try { settMeny(localStorage.getItem(MENY_NOKKEL)); } catch { settMeny(null); }
+q("#meny-bredde")?.addEventListener("click", () => { const ny = erSmal() ? "bred" : "smal"; settMeny(ny); try { localStorage.setItem(MENY_NOKKEL, ny); } catch { /* privat modus */ } });
+
+// Telefon: søkeikonet åpner søkefeltet over topplinja, «⋯» viser de sekundære handlingene
+const toppsok = q("#toppsok");
+q("#sok-ikon")?.addEventListener("click", () => { toppsok?.classList.add("apen"); q<HTMLInputElement>("#sok")?.focus(); });
+q<HTMLInputElement>("#sok")?.addEventListener("blur", () => toppsok?.classList.remove("apen"));
+q("#mer-handlinger")?.addEventListener("click", (e) => { const t = q("#toppfelt"); const apen = !t?.classList.contains("vis-mer"); t?.classList.toggle("vis-mer", apen); (e.currentTarget as HTMLElement).setAttribute("aria-expanded", String(apen)); });
+document.addEventListener("click", (e) => { if (!(e.target as HTMLElement).closest("#mer-handlinger")) q("#toppfelt")?.classList.remove("vis-mer"); });
+
+// Eksempel-pillen i topplinja: «Eksempel – prislisten er ikke låst» så lenge gjeldende prisliste er merket eksempel
+const eksPille = q("#sidepille[data-eksempel]");
+if (eksPille) api<{ prisliste: { eksempel: number | boolean } }>("GET", "/api/prisliste/gjeldende", undefined, { utenTilstand: true }).then((g) => {
+  if (!g.prisliste?.eksempel) return;
+  eksPille.textContent = "Eksempel – prislisten er ikke låst"; eksPille.dataset.tone = "advarsel"; eksPille.hidden = false;
+}).catch(() => {});
+
 // Søk: Enter går til Eiere og butikker med søkeordet. På Drift-sidene filtreres siden (drift.ts).
 const sok = q<HTMLInputElement>("#sok");
 if (sok && sok.dataset.modus !== "side") {
@@ -25,6 +47,7 @@ if (sok && sok.dataset.modus !== "side") {
   sok.addEventListener("keydown", (e) => { if (e.key === "Enter" && sok.value.trim()) location.href = `${mal}?sok=${encodeURIComponent(sok.value.trim())}`; });
 }
 document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); toppsok?.classList.add("apen"); sok?.focus(); return; }
   if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
   const t = e.target as HTMLElement;
   if (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable) return;
@@ -103,14 +126,17 @@ qa("[data-type-ikon]").forEach((el) => { el.innerHTML = ikon(AKTIVITET[el.datase
 api<{ navn: string; rolle: string; epost: string }>("GET", "/api/meg").then((m) => {
   settRolle(m.rolle === "support" ? "support" : "eier");
   document.dispatchEvent(new CustomEvent("rolle", { detail: m.rolle }));
-  const b = q("#bruker"); if (b) b.innerHTML = `<span class="init">${esc((m.navn || m.epost).slice(0, 1).toUpperCase())}</span><span><b>${esc(m.navn)}</b>${m.rolle === "eier" ? "Eier av Admin" : m.rolle === "support" ? "Rolle: Support" : esc(m.rolle)}</span>`;
+  const init = esc((m.navn || m.epost).slice(0, 1).toUpperCase());
+  const b = q("#bruker"); if (b) b.innerHTML = `<span class="init">${init}</span><span class="navn"><b>${esc(m.navn)}</b>${m.rolle === "eier" ? "Admin" : m.rolle === "support" ? "Support" : esc(m.rolle)}</span>`;
+  const p = q("#profil"); if (p) { p.textContent = (m.navn || m.epost).slice(0, 1).toUpperCase(); p.title = m.navn; }
   visMenytall(m.rolle);
 }).catch(() => {});
 
 // Tallene i menyen (60-211): åpne saker, oppstarter i gang, «N feil» på Fakturakjøring (fra K-260, når endepunktet finnes), frister innen 14 dager
 function settTall(id: string, tekst: string, feil = false) { const el = q(`[data-tall="${id}"]`); if (el) { el.textContent = tekst; el.classList.toggle("feil", feil); } }
 function visMenytall(rolle: string) {
-  api<{ saker: number; oppstart?: number }>("GET", "/api/meny-tall").then((t) => { settTall("saker", t.saker ? String(t.saker) : ""); if (t.oppstart !== undefined) settTall("oppstart", t.oppstart ? String(t.oppstart) : ""); }).catch(() => {});
+  api<{ saker: number; oppstart?: number }>("GET", "/api/meny-tall").then((t) => { settTall("saker", t.saker ? String(t.saker) : "");
+    const bj = q("#bjelle-tall"); if (bj) { bj.textContent = t.saker ? String(t.saker) : ""; bj.hidden = !t.saker; } if (t.oppstart !== undefined) settTall("oppstart", t.oppstart ? String(t.oppstart) : ""); }).catch(() => {});
   if (rolle !== "eier") return;
   api<{ feil?: number }>("GET", "/api/oversikt/fakturering").then((k) => { if (k && k.feil) settTall("kjoring", `${k.feil} feil`, true); }).catch(() => { /* kommer med K-260 */ });
 }

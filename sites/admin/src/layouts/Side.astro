@@ -1,45 +1,68 @@
 ---
 /**
- * Ramme for admin.hengsel.no (K-184, K-240, K-259): sidemeny fra én konfigurasjon (src/lib/meny.ts, alle punktene, merket med roller),
- * toppfelt med brødsmuler, søk og «Ny aktivitet» (eller «Ny sak» på Support-sidene), bunnfaner på telefon, og dialogene Ny aktivitet (SA8)
- * og Ny sak. Bare lys modus, delte Hengsel-tokens, PC-laget data-plattform="pc" på <html>. Aldri indeksert.
+ * Ramme for admin.hengsel.no (K-184, K-240, K-259; N-4 etter sidekartet 26-001–26-013 og regel-layout-hengsel.md):
+ *  - Sidemeny 240 px (regel 7): «Hengsel Admin», omfanget (admin.hengsel.no · Alle kunder), menyen fra src/lib/meny.ts, og profilen nederst med
+ *    knappen som veksler bred/smal (64 px). Automatisk: bred fra 1440 px, smal 1024–1439, skjult under 1024 (skuff). Valget huskes i nettleseren.
+ *  - Topplinja 56 px (regel 8): forelder (12 px) over tittelen (20/600), status-pillen rett etter, søk 320 px (⌘K), sidens handlinger (sporet
+ *    «handlinger»: maks én sekundær og én hovedknapp), varsler og profil. Telefon 48 px: tittel, pille, søkeikon og «⋯»; hovedknappen fast nederst.
+ *  - Faner 40 px under topplinja (#faner): statiske fra `faner`, eller tegnet av siden med settFaner() i src/lib/kit.ts.
+ *  - Bunnfaner på telefon (Oversikt, Tavle, Eiere, Avtaler, Mer) og dialogene Ny aktivitet (SA8) og Ny sak.
+ * Sider uten sporet «handlinger» (fase B/C og Drift) får knappen fra `toppknapp` som før. Bare lys modus, delte Hengsel-tokens. Aldri indeksert.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
 import "../styles/admin.css";
 import "../styles/support.css";
-import { menyNaa, BUNNFANER, STI, rollerFor } from "../lib/meny";
+import "../styles/kit.css";
+import "../styles/skall.css";
+import { menyNaa, BUNNFANER, FORELDER, AKTIVT_PUNKT, rollerFor } from "../lib/meny";
 import { alleFrister } from "../lib/data";
 import { ikon } from "../lib/ikoner";
 import NyAktivitet from "../components/NyAktivitet.astro";
+import type { Tone } from "../components/kit/Pille.astro";
 
-interface Props { title: string; description: string; aktiv?: string; sokplassholder?: string; sokModus?: "eiere" | "side" | "saker"; klasse?: string; toppknapp?: "aktivitet" | "sak" }
-const { title, description, aktiv = "", sokplassholder = "Søk etter eier, butikk eller kontakt", sokModus = "eiere", klasse = "", toppknapp = "aktivitet" } = Astro.props;
+export interface StatiskFane { id: string; navn: string; href?: string }
+interface Props {
+  title: string; description: string; aktiv?: string;
+  /** Tittelen i topplinja når den skal være annerledes enn dokumenttittelen */
+  tittel?: string;
+  /** Brødsmulen over tittelen (regel 8); standard fra FORELDER i meny.ts */
+  forelder?: string;
+  /** Status-pillen rett etter tittelen. `eksempel`: «Eksempel – prislisten er ikke låst» når gjeldende prisliste er et eksempel (app.ts) */
+  pille?: string; pilleTone?: Tone; eksempel?: boolean;
+  faner?: StatiskFane[]; aktivFane?: string;
+  sokplassholder?: string; sokModus?: "eiere" | "side" | "saker"; klasse?: string; toppknapp?: "aktivitet" | "sak";
+}
+const { title, description, aktiv = "", tittel = title, forelder = FORELDER[aktiv] ?? "", pille = "", pilleTone = "venter", eksempel = false, faner = [], aktivFane = "",
+  sokplassholder = "Søk", sokModus = "eiere", klasse = "", toppknapp = "aktivitet" } = Astro.props;
 const meny = menyNaa();
-// Tallet ved Frister i menyen: frister innen 14 dager (fra Drift; regnes på nytt i nettleseren av app.ts, så tallet følger dagen)
 const idag = new Date().toISOString().slice(0, 10);
 const om14 = new Date(Date.now() + 14 * 86_400_000).toISOString().slice(0, 10);
 const fristDatoer = alleFrister().map((f) => f.dato).filter(Boolean).join(",");
 const fristerSnart = alleFrister().filter((f) => f.dato && f.dato >= idag && f.dato <= om14).length;
-const sti = STI[aktiv] ?? [title];
-const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : aktiv === "sak" ? "saker" : aktiv === "oppstart-kunde" ? "oppstart" : aktiv;
+const punkt = AKTIVT_PUNKT[aktiv] ?? aktiv;
+const egneHandlinger = Astro.slots.has("handlinger");
 ---
-<Hode title={title} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
-  <div class={`app ${klasse}`.trim()}>
+<Hode title={`${title} · Hengsel Admin`} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
+  <div class={`app ${klasse}`.trim()} id="app">
     <aside class="sidemeny" id="sidemeny" aria-label="Hovedmeny">
-      <a class="merke" href="/" aria-label="Hengsel Admin, til oversikten">
-        <img src="/logo/merke-admin-lys.svg" alt="" width="28" height="28" />
-        <span>Hengsel Admin</span>
+      <a class="merke" href="/" aria-label="Hengsel Admin, til Salg">
+        <span class="init merke-init" aria-hidden="true">H</span><span class="navn">Hengsel Admin</span>
       </a>
+      <div class="omfang" title="admin.hengsel.no · Alle kunder">
+        <span class="init" aria-hidden="true">H</span>
+        <span class="tekst"><span class="domene">admin.hengsel.no</span><b>Alle kunder</b></span>
+      </div>
       <nav>
         <ul class="meny">
           {meny.map((g) => (
             <>
-              {g.navn && <li class="gruppe" aria-hidden="true" data-roller={[...new Set(g.punkter.flatMap((p) => rollerFor(p)))].join(" ")}>{g.navn}</li>}
+              {g.navn && <li class:list={["gruppe", { skille: g.skille }]} aria-hidden="true" data-roller={[...new Set(g.punkter.flatMap((p) => rollerFor(p)))].join(" ")}>{g.navn}</li>}
+              {!g.navn && g.skille && <li class="skille" aria-hidden="true"></li>}
               {g.punkter.map((p) => (
-                <li class={p.under ? "under" : ""} data-roller={rollerFor(p).join(" ")}>
-                  <a href={p.sti} aria-current={aktiv === p.id || fane === p.id ? "page" : undefined}>
+                <li data-roller={rollerFor(p).join(" ")}>
+                  <a href={p.sti} aria-current={punkt === p.id ? "page" : undefined} title={p.navn}>
                     <Fragment set:html={ikon(p.ikon, 20)} />
-                    <span>{p.navn}</span>
+                    <span class="navn">{p.navn}</span>
                     <span class="tall" data-tall={p.id} data-datoer={p.id === "drift-frister" ? fristDatoer : undefined}>{p.id === "drift-frister" && fristerSnart ? String(fristerSnart) : ""}</span>
                   </a>
                 </li>
@@ -49,41 +72,45 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
         </ul>
       </nav>
       <div class="bunn">
-        <div class="bruker" id="bruker"><span class="init">·</span><span><b>Hengsel Admin</b>&nbsp;</span></div>
-        <img class="logo-bunn" src="/logo/logo-hengsel-lys.svg" alt="Hengsel" width="76" height="18" />
+        <div class="bruker" id="bruker"><span class="init">·</span><span class="navn"><b>Hengsel Admin</b>&nbsp;</span></div>
+        <button class="knapp ikon-knapp smal-knapp" type="button" id="meny-bredde" aria-label="Smal meny" aria-pressed="false"><Fragment set:html={ikon("pil-venstre", 16)} /></button>
       </div>
     </aside>
     <div class="skuff-overlegg" id="skuff-overlegg"></div>
 
     <div class="hoved">
-      <header class="toppfelt">
+      <header class="toppfelt" id="toppfelt">
         <button class="knapp ikon-knapp meny-knapp" type="button" id="meny-knapp" aria-controls="sidemeny" aria-expanded="false" aria-label="Meny"><Fragment set:html={ikon("mer", 20)} /></button>
-        <nav class="brodsmuler" aria-label="Du er her">
-          {sti.map((navn, i) => (
-            <>
-              {i > 0 && <Fragment set:html={ikon("pil-hoyre", 14)} />}
-              {i === sti.length - 1 ? <b id="brodsmule-sist">{navn}</b> : <span class="forelder">{navn}</span>}
-            </>
-          ))}
-        </nav>
-        <div class="toppsok" role="search">
+        <div class="tittelblokk">
+          <span class="forelder" id="forelder" hidden={!forelder}>{forelder}</span>
+          <div class="tittelrad">
+            <h1 class="sidetittel" id="sidetittel">{tittel}</h1>
+            <span class="k-pille" id="sidepille" data-tone={pilleTone} hidden={!pille} data-eksempel={eksempel ? "" : undefined}>{pille}</span>
+          </div>
+        </div>
+        <div class="toppsok" role="search" id="toppsok">
           <Fragment set:html={ikon("sok", 18)} />
           <label for="sok" class="visuelt-skjult">Søk</label>
           <input id="sok" type="search" placeholder={sokplassholder} autocomplete="off" spellcheck="false" data-modus={sokModus} />
-          <kbd aria-hidden="true">/</kbd>
+          <kbd aria-hidden="true">⌘K</kbd>
         </div>
-        {toppknapp === "sak" ? (
-          <>
-            <button class="knapp primar bare-pc" type="button" data-ny-sak><Fragment set:html={ikon("pluss", 18)} />Ny sak</button>
-            <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-sak aria-label="Ny sak"><Fragment set:html={ikon("pluss", 20)} /></button>
-          </>
-        ) : (
-          <>
-            <button class="knapp primar bare-pc" type="button" data-ny-aktivitet data-roller="eier"><Fragment set:html={ikon("pluss", 18)} />Ny aktivitet</button>
-            <button class="knapp primar ikon-knapp bare-telefon" type="button" data-ny-aktivitet data-roller="eier" aria-label="Ny aktivitet"><Fragment set:html={ikon("pluss", 20)} /></button>
-          </>
-        )}
+        <button class="knapp ikon-knapp bare-telefon sok-ikon" type="button" id="sok-ikon" aria-label="Søk" aria-controls="toppsok" aria-expanded="false"><Fragment set:html={ikon("sok", 20)} /></button>
+        <div class="topphandlinger" id="topphandlinger">
+          {egneHandlinger ? <slot name="handlinger" /> : toppknapp === "sak" ? (
+            <button class="knapp primar" type="button" data-ny-sak><Fragment set:html={ikon("pluss", 18)} />Ny sak</button>
+          ) : (
+            <button class="knapp" type="button" data-ny-aktivitet data-roller="eier">Ny aktivitet</button>
+          )}
+        </div>
+        <button class="knapp ikon-knapp bare-telefon mer-knapp" type="button" id="mer-handlinger" aria-label="Flere handlinger" aria-controls="topphandlinger" aria-expanded="false"><Fragment set:html={ikon("mer", 20)} /></button>
+        <a class="bjelle" href="/support/saker" aria-label="Varsler: åpne saker" data-roller="eier support"><Fragment set:html={ikon("varsler", 20)} /><span class="bjelle-tall" id="bjelle-tall" hidden></span></a>
+        <span class="init profil" id="profil" aria-hidden="true">·</span>
       </header>
+      <nav class="k-faner" id="faner" aria-label="Faner" hidden={!faner.length}>
+        {faner.map((f) => f.href
+          ? <a class="k-fane" href={f.href} aria-current={f.id === aktivFane ? "page" : undefined}>{f.navn}</a>
+          : <button class="k-fane" type="button" role="tab" data-k-fane={f.id} aria-selected={f.id === aktivFane ? "true" : "false"}>{f.navn}</button>)}
+      </nav>
       <main id="innhold">
         <slot />
       </main>
@@ -92,7 +119,7 @@ const fane = aktiv === "eierkort" ? "eiere" : aktiv === "avtale" ? "avtaler" : a
     <nav class="bunnfaner" aria-label="Bunnfaner">
       {BUNNFANER.map((f) => f.id === "mer"
         ? <button type="button" id="fane-mer" aria-controls="sidemeny" data-roller={f.roller.join(" ")}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</button>
-        : <a href={f.sti} aria-current={fane === f.id ? "page" : undefined} data-roller={f.roller.join(" ")}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</a>)}
+        : <a href={f.sti} aria-current={(f.id === "salg" ? aktiv === "salg" : punkt === f.id || aktiv === f.id) ? "page" : undefined} data-roller={f.roller.join(" ")}><Fragment set:html={ikon(f.ikon, 22)} />{f.navn}</a>)}
     </nav>
 
     <NyAktivitet />

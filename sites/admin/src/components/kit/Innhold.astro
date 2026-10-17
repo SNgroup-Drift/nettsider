@@ -1,0 +1,9 @@
+---
+/**
+ * Flis-kitet (fra N-3): flaten med radene under topplinja og fanene. Første rad 24 px under, siste 48 px over bunnen, 24 px mellom radene
+ * (16 px på telefon). Innholdet er maks 1280 px bredt og venstrestilt etter menyen (regel 1). Stil: src/styles/kit.css.
+ */
+interface Props { id?: string; [data: `data-${string}`]: string }
+const { id, ...data } = Astro.props;
+---
+<div class="k-innhold"><div class="k-rader" id={id} {...data}><slot /></div></div>

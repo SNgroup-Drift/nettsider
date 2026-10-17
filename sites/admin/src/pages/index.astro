@@ -1,13 +1,5 @@
 ---
-/** SA1 Oversikt (K-240): tallene, neste steg, nye leads og frister fra Drift. Dataene hentes fra /api/oversikt i nettleseren; fristene er bygd inn fra Drift. */
-import Side from "../layouts/Side.astro";
-import { alleFrister } from "../lib/data";
-import { norskDato } from "../lib/dato";
-const frister = alleFrister().filter((f) => f.dato).sort((a, b) => a.dato!.localeCompare(b.dato!)).slice(0, 4);
+/** 26-009 Salg (N-4): startsiden. Oversikt og tavle er slått sammen (sidekartet). Se components/sider/Salg.astro. */
+import Salg from "../components/sider/Salg.astro";
 ---
-<Side title="Oversikt" description="Hengsel Admin: salg, kunder og avtaler" aktiv="oversikt">
-  <div id="side" data-frister={JSON.stringify(frister.map((f) => ({ tekst: f.navn, kategori: f.type, dato: f.dato ? norskDato(f.dato) : "", horer: f.horer })))}></div>
-  <script>
-    import "../scripts/oversikt";
-  </script>
-</Side>
+<Salg aktiv="salg" />

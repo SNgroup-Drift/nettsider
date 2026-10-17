@@ -1,10 +1,5 @@
 ---
-/** SA2 Salgstavle (K-240): seks kolonner med dra og slipp på PC, liste gruppert på status på telefon. «Tapt» krever grunn. */
-import Side from "../../layouts/Side.astro";
+/** 26-009 Salg (N-4): /salg/tavle viser samme side som / (gamle lenker og bunnfanen «Tavle»). Se components/sider/Salg.astro. */
+import Salg from "../../components/sider/Salg.astro";
 ---
-<Side title="Salgstavle" description="Salgstavla: Ny, Demo avtalt, Tilbud sendt, Forhandling, Signert og Tapt" aktiv="tavle">
-  <div id="side"></div>
-  <script>
-    import "../../scripts/tavle";
-  </script>
-</Side>
+<Salg aktiv="tavle" />

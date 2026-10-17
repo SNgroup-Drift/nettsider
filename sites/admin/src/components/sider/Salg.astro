@@ -1,0 +1,23 @@
+---
+/**
+ * 26-009 Salg (muligheter og tavle), N-4: startsiden. Oversikt (SA1) og Salgstavle (SA2) er slått sammen. Faner Tavle · Liste.
+ * Rad 1 (120): Tall 1/4 ×4. Rad 2 (480): Tavle 1/1 «Salgstavle» med fem kolonner, søk og «Status ▾» (Åpne, Tapt). Rad 3: Tabell «Neste steg:
+ * forfalt og i dag» (høyden følger antall rader). Dataene fra /api/oversikt og /api/tavle (scripts/salg.ts). Brukes av / og /salg/tavle.
+ */
+import Side from "../../layouts/Side.astro";
+import Innhold from "../kit/Innhold.astro";
+import { ikon } from "../../lib/ikoner";
+interface Props { aktiv: "salg" | "tavle" }
+const { aktiv } = Astro.props;
+---
+<Side title="Salg" description="Salg: åpne muligheter, inntekt, salgstavla og neste steg" aktiv={aktiv} eksempel
+  faner={[{ id: "tavle", navn: "Tavle" }, { id: "liste", navn: "Liste" }]} aktivFane="tavle">
+  <Fragment slot="handlinger">
+    <button class="knapp" type="button" data-ny-aktivitet>Ny aktivitet</button>
+    <button class="knapp primar" type="button" id="ny-mulighet"><Fragment set:html={ikon("pluss", 18)} />Ny mulighet</button>
+  </Fragment>
+  <Innhold id="side" />
+  <script>
+    import "../../scripts/salg";
+  </script>
+</Side>

@@ -174,11 +174,31 @@ test("Workeren er låst (503) uten Access-oppsett, og viser ingenting", async ()
 });
 
 test("uten Cf-Access-Jwt-Assertion: 401, og alle svar er noindex og no-store", medNokler(async () => {
-  const r = await worker.fetch(be("/"), env());
+  const r = await worker.fetch(be("/"), env({ ASSETS: { fetch: async (req) => new Response(new URL(req.url).pathname === "/logg-inn" ? "<h1>Logg inn</h1>" : "<h1>admin</h1>", { headers: { "Content-Type": "text/html" } }) } }));
   assert.equal(r.status, 401);
   assert.match(r.headers.get("X-Robots-Tag"), /noindex/);
   assert.match(r.headers.get("Cache-Control"), /no-store/);
   assert.doesNotMatch(await r.text(), /admin<\/h1>/);
+}));
+
+test("N-4 (26-001): uten innlogging får sider bare innloggingskortet /logg-inn (401), aldri siden som ble bedt om", medNokler(async () => {
+  const hentet = [];
+  const assets = { fetch: async (req) => { const sti = new URL(req.url).pathname; hentet.push(sti); return new Response(sti === "/logg-inn" ? "<h1>Hengsel Admin</h1><a>Logg inn med Access</a>" : "<h1>admin</h1>", { headers: { "Content-Type": "text/html" } }); } };
+  for (const sti of ["/", "/salg/eiere", "/avtaler/A-2026-001"]) {
+    const r = await worker.fetch(be(sti), env({ ASSETS: assets }));
+    assert.equal(r.status, 401, sti);
+    const tekst = await r.text();
+    assert.match(tekst, /Logg inn med Access/);
+    assert.doesNotMatch(tekst, /admin<\/h1>/);
+    assert.match(r.headers.get("Cache-Control"), /no-store/);
+  }
+  assert.deepEqual([...new Set(hentet)], ["/logg-inn"]);
+  const api = await worker.fetch(be("/api/eiere"), env({ ASSETS: assets }));
+  assert.equal(api.status, 401);
+  assert.equal((await api.json()).kode, "ADM-401");
+  assert.equal((await worker.fetch(be("/", null, "POST"), env({ ASSETS: assets }))).status, 401);
+  // Med gyldig token serveres innloggingssiden ikke i stedet for den ekte siden
+  assert.equal(await (await worker.fetch(be("/", await lagToken()), env())).text(), "<h1>admin</h1>");
 }));
 
 test("gyldig token for es@sngroup.no: siden serveres", medNokler(async () => {
@@ -270,6 +290,18 @@ test("wrangler.jsonc: alle forespørsler går gjennom Workeren, variablene overs
   assert.deepEqual(finnHemmeligheter(les("wrangler.jsonc")), []);
 });
 
+test("wrangler.jsonc (N-4): tom previews-blokk, så `wrangler preview` i Workers Builds går, uten produksjons-D1 eller variabler i forhåndsvisningen", () => {
+  for (const sted of ["admin", "design"]) {
+    const w = JSON.parse(utenKommentarer(readFileSync(join(rot, "..", sted, "wrangler.jsonc"), "utf8")));
+    assert.deepEqual(w.previews, {}, `${sted}: previews må finnes og være tom`);
+  }
+  const hosting = readFileSync(join(rot, "..", "..", "docs", "hosting.md"), "utf8");
+  for (const sted of ["admin", "design"]) {
+    assert.ok(hosting.includes(`npx wrangler deploy -c sites/${sted}/wrangler.jsonc`), `hosting.md: Deploy command for ${sted}`);
+    assert.ok(hosting.includes(`npx wrangler preview -c sites/${sted}/wrangler.jsonc`), `hosting.md: Preview command for ${sted}`);
+  }
+});
+
 test("_headers: noindex, streng CSP uten inline-skript og uten tredjepart", () => {
   const h = les("public/_headers");
   assert.match(h, /X-Robots-Tag: noindex, nofollow/);
@@ -312,4 +344,16 @@ test("fristfarger: rød under 7 dager, gul under 30, grønn ellers, ukjent uten 
   assert.equal(niva(dagerIgjen("2026-11-11", na)), "gronn"); // 30 dager
   assert.equal(niva(dagerIgjen(null, na)), "ukjent");
   assert.equal(tekstFor(null), "fyll inn");
+});
+
+test("N-4: menyen følger sidekartet 26-001–26-013, og Kommer-sidene (26-011, 26-012) finnes, men står ikke i menyen", async () => {
+  const { MENY } = await import("../sites/admin/src/lib/meny.ts");
+  assert.deepEqual(MENY[0].punkter.map((p) => p.navn), ["Salg", "Eiere og butikker", "Prisberegner", "Avtaler"]);
+  assert.equal(MENY[1].navn, "Innstillinger");
+  assert.deepEqual(MENY[1].punkter.map((p) => p.navn), ["Prisliste", "Leverandør", "Excel-import", "Tilbakemeldinger"]);
+  const stier = MENY.flatMap((g) => g.punkter.map((p) => p.sti));
+  for (const s of ["/stotte", "/fakturering"]) assert.ok(!stier.includes(s), `${s} står ikke i menyen`);
+  for (const f of ["stotte.astro", "fakturering/index.astro", "logg-inn.astro", "salg/import.astro", "innstillinger/tilbakemeldinger.astro"]) assert.ok(statSync(join(rot, "src", "pages", f)).isFile(), f);
+  // Kitet er kopiert inn (ikke importert på tvers av nettsteder)
+  for (const f of readdirSync(join(rot, "src"), { recursive: true }).filter((f) => /\.(astro|ts)$/.test(f))) assert.doesNotMatch(les(join("src", f)), /(?:from|import)\s*\(?\s*["'][^"']*(?:sites\/hengsel|\.\.\/\.\.\/\.\.\/hengsel)/, f);
 });

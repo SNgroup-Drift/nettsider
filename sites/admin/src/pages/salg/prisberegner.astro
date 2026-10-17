@@ -1,9 +1,14 @@
 ---
-/** SA5 Prisberegner (K-240): pakke per butikk, Hengsel Ute per eier, tillegg uten rabatt, kjederabatt, etablering. Alt fra gjeldende prisliste. */
+/** 26-005 Pakke per butikk og prisberegner (N-4): faner Per butikk · Hele eieren · Sum per måned · Etablering, «Lag tilbud» i topplinja. Skript: scripts/prisberegner.ts. */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+import { ikon } from "../../lib/ikoner";
 ---
-<Side title="Prisberegner" description="Prisberegneren: pakke per butikk, kjederabatt, tillegg og etablering" aktiv="prisberegner">
-  <div id="side"></div>
+<Side title="Prisberegner" description="Prisberegneren: pakke per butikk, kjederabatt, tillegg og etablering" aktiv="prisberegner" eksempel>
+  <Fragment slot="handlinger">
+    <button class="knapp primar" type="button" id="lag-tilbud" disabled><Fragment set:html={ikon("tilbud", 18)} />Lag tilbud</button>
+  </Fragment>
+  <Innhold id="side" />
   <script>
     import "../../scripts/prisberegner";
   </script>

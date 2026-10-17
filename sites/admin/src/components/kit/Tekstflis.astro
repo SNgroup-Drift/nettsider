@@ -1,0 +1,14 @@
+---
+/**
+ * Flis-kitet (fra N-3): Tekst-flisen (regel 2c): tittel og brødtekst 14/22 i maks 720 px bredde. `kommer`: innholdet finnes ikke ennå – flisen viser
+ * «Kommer.» (N-3b).
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+interface Props { tittel: string; tekst?: string; bredde?: Bredde; kommer?: boolean; id?: string }
+const { tittel, tekst, bredde = "1/1", kommer = false, id } = Astro.props;
+---
+<Flis bredde={bredde} tittel={tittel} klasse="k-tekstflis" id={id}>
+  <div class:list={["k-brod", { kommer }]}>
+    {kommer ? <p>Kommer.</p> : tekst ? <p>{tekst}</p> : <slot />}
+  </div>
+</Flis>

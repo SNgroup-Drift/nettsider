@@ -1,0 +1,140 @@
+/* N-4: skallet i Hengsel Admin etter regel-layout-hengsel.md 7 (sidemenyen) og 8 (topplinja) og sidekartet 26-002–26-013 (Rammen):
+   sidemeny 240 px (smal 64 px), topplinje 56 px (48 px på telefon), faner 40 px, bunnfaner på telefon. Bare variabler fra den delte token-fila. */
+:root { --meny-bred: 240px; --meny-smal: 64px; --topp-h: 56px; }
+
+body { background: var(--flate-side); }
+.app { display: grid; grid-template-columns: var(--meny-bred) minmax(0, 1fr); min-height: 100vh; }
+
+/* ── Sidemenyen ── */
+.sidemeny { position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; background: var(--flate-kort); border-right: 1px solid var(--linje); }
+.sidemeny .merke { display: flex; align-items: center; gap: 12px; height: var(--topp-h); padding: 0 16px; border-bottom: 1px solid var(--linje); color: var(--tekst); text-decoration: none; font-size: 16px; font-weight: var(--skrift-vekt-sterk); flex: none; }
+.sidemeny .merke .merke-init { display: none; }
+.init { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--aksent-svak); color: var(--aksent-tekst); font-size: 13px; font-weight: var(--skrift-vekt-sterk); }
+.sidemeny .omfang { display: flex; align-items: center; gap: 12px; padding: 12px 12px; border-bottom: 1px solid var(--linje); flex: none; }
+.sidemeny .omfang .init { border-radius: var(--radius-kort-lite); }
+.sidemeny .omfang .tekst { display: flex; flex-direction: column; min-width: 0; line-height: 18px; }
+.sidemeny .omfang .domene { font-size: 12px; color: var(--tekst-dempet); }
+.sidemeny .omfang b { font-size: 15px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst); }
+.sidemeny nav { padding: 8px 8px 16px; }
+.meny { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.meny .gruppe { margin: 12px 0 4px; padding: 0 10px; font-size: 13px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst-dempet); }
+.meny .gruppe.skille, .meny .skille { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--linje); }
+.meny li.skille:not(.gruppe) { height: 0; margin-bottom: 4px; padding: 0; }
+.meny a { display: flex; align-items: center; gap: 12px; min-height: 36px; padding: 0 12px; border-radius: var(--radius-kort-lite); color: var(--tekst); text-decoration: none; font-size: 14px; font-weight: var(--skrift-vekt-normal); }
+.meny a .ikon { flex: none; color: var(--tekst-dempet); }
+.meny a .navn { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meny a:hover { background: var(--flate-senket); }
+.meny a[aria-current="page"] { background: var(--aksent-svak); color: var(--aksent-tekst); font-weight: var(--skrift-vekt-sterk); }
+.meny a[aria-current="page"] .ikon { color: var(--aksent-tekst); }
+.meny .tall { margin-left: auto; font-size: 12px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst-dempet); }
+.meny .tall:not(:empty) { min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--radius-pille); background: var(--aksent); color: var(--paa-aksent); display: inline-grid; place-items: center; }
+.meny .tall.feil { background: var(--status-feil-fg); color: var(--paa-aksent); }
+.sidemeny .bunn { margin-top: auto; display: flex; align-items: center; gap: 8px; padding: 8px 12px; min-height: 52px; border-top: 1px solid var(--linje); flex: none; }
+.sidemeny .bruker { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
+.sidemeny .bruker .navn { min-width: 0; overflow: hidden; }
+.sidemeny .bruker b { display: block; font-size: 14px; line-height: 18px; color: var(--tekst); font-weight: var(--skrift-vekt-sterk); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.smal-knapp { width: 32px !important; min-height: 32px !important; }
+
+/* Smal meny (64 px): bare ikoner, navn som tooltip (title). Automatisk 1024–1439 px, eller valgt med knappen nederst (data-meny på <html>). */
+@media (min-width: 1024px) and (max-width: 1439px) { html:not([data-meny="bred"]) { --meny-bred: var(--meny-smal); } html:not([data-meny="bred"]) .sidemeny { --smal: 1; } }
+html[data-meny="smal"] { --meny-bred: var(--meny-smal); }
+@media (min-width: 1024px) {
+  html[data-meny="smal"] .sidemeny .navn, html[data-meny="smal"] .sidemeny .omfang .tekst, html[data-meny="smal"] .meny .gruppe, html[data-meny="smal"] .meny .tall:empty { display: none; }
+  html[data-meny="smal"] .sidemeny .merke { justify-content: center; padding: 0; }
+  html[data-meny="smal"] .sidemeny .merke .merke-init { display: grid; }
+  html[data-meny="smal"] .sidemeny .omfang, html[data-meny="smal"] .sidemeny .bunn { justify-content: center; padding-inline: 0; flex-direction: column; }
+  html[data-meny="smal"] .meny a { justify-content: center; padding: 0; position: relative; }
+  html[data-meny="smal"] .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: 16px; height: 16px; font-size: 11px; padding: 0 4px; }
+  html[data-meny="smal"] .meny .gruppe.skille { display: block; font-size: 0; margin: 8px 8px 4px; padding: 0; }
+  html[data-meny="smal"] .sidemeny .bruker { flex: none; }
+  html[data-meny="smal"] .smal-knapp .ikon { transform: rotate(180deg); }
+}
+@media (min-width: 1024px) and (max-width: 1439px) {
+  html:not([data-meny]) .sidemeny .navn, html:not([data-meny]) .sidemeny .omfang .tekst, html:not([data-meny]) .meny .gruppe, html:not([data-meny]) .meny .tall:empty { display: none; }
+  html:not([data-meny]) .sidemeny .merke { justify-content: center; padding: 0; }
+  html:not([data-meny]) .sidemeny .merke .merke-init { display: grid; }
+  html:not([data-meny]) .sidemeny .omfang, html:not([data-meny]) .sidemeny .bunn { justify-content: center; padding-inline: 0; flex-direction: column; }
+  html:not([data-meny]) .meny a { justify-content: center; padding: 0; position: relative; }
+  html:not([data-meny]) .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: 16px; height: 16px; font-size: 11px; padding: 0 4px; }
+  html:not([data-meny]) .meny .gruppe.skille { display: block; font-size: 0; margin: 8px 8px 4px; padding: 0; }
+  html:not([data-meny]) .sidemeny .bruker { flex: none; }
+  html:not([data-meny]) .smal-knapp .ikon { transform: rotate(180deg); }
+}
+
+/* ── Topplinja (regel 8): én linje, 56 px, fast øverst ── */
+.hoved { min-width: 0; display: flex; flex-direction: column; }
+.toppfelt { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; height: var(--topp-h); padding: 0 32px; background: var(--flate-kort); border-bottom: 1px solid var(--linje); }
+.tittelblokk { min-width: 0; display: flex; flex-direction: column; justify-content: center; margin-right: auto; }
+.tittelblokk .forelder { font-size: 12px; line-height: 14px; color: var(--tekst-dempet); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tittelrad { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.sidetittel { margin: 0; font-family: var(--skrift-familie-hengsel-tekst); font-size: 20px; line-height: 26px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.toppsok { position: relative; flex: 0 1 320px; min-width: 160px; }
+.toppsok > .ikon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--tekst-dempet); pointer-events: none; }
+.toppsok input { width: 100%; height: 36px; padding: 0 48px 0 38px; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); font: inherit; font-size: 14px; }
+.toppsok input::placeholder { color: var(--tekst-dempet); opacity: 1; }
+.toppsok input:focus-visible { outline: 2px solid var(--aksent); outline-offset: 1px; }
+.toppsok kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font: var(--skrift-vekt-sterk) 11px var(--skrift-familie-hengsel-tekst); color: var(--tekst-dempet); border-radius: 4px; padding: 1px 6px; background: var(--flate-senket); }
+.topphandlinger { display: flex; align-items: center; gap: 12px; flex: none; }
+.topphandlinger .knapp { min-height: 36px; }
+.bjelle { position: relative; width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: var(--radius-kort-lite); color: var(--tekst-dempet); }
+.bjelle:hover { background: var(--flate-senket); }
+.bjelle-tall { position: absolute; top: 2px; right: 2px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: var(--radius-pille); background: var(--status-feil-fg); color: var(--paa-aksent); font-size: 11px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); text-align: center; }
+.profil { width: 32px; height: 32px; }
+.meny-knapp, .sok-ikon, .mer-knapp { display: none; }
+
+/* Gamle sider (fase B/C, Drift) har sin egen tittel i innholdet; topplinja har den nå, så den skjules der */
+.hoved > main:not(:has(> .k-innhold)) { padding: 24px 32px 96px; display: flex; flex-direction: column; gap: 18px; }
+main .sidehode h1, main .eierhode h1 { display: none; }
+
+/* ── Bunnfaner og skuff ── */
+.bunnfaner { display: none; }
+.skuff-overlegg { display: none; }
+@media (max-width: 1023px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .sidemeny { position: fixed; inset: 0 auto 0 0; width: min(300px, 85vw); z-index: 40; transform: translateX(-105%); transition: transform var(--k-dur) var(--k-ease); box-shadow: var(--skygge-dialog); }
+  .sidemeny.apen { transform: none; }
+  .skuff-overlegg.apen { display: block; position: fixed; inset: 0; background: var(--overlegg); z-index: 39; }
+  .meny-knapp { display: inline-flex; }
+  .toppfelt { padding: 0 16px; }
+  .k-faner { padding: 0 16px; }
+}
+@media (max-width: 767px) {
+  :root { --topp-h: 48px; }
+  .meny-knapp, .profil { display: none; }
+  .toppfelt { gap: 8px; }
+  .sidetittel { font-size: 17px; line-height: 22px; }
+  .tittelblokk .forelder { display: none; }
+  .tittelrad { gap: 8px; }
+  .toppsok { display: none; position: absolute; left: 8px; right: 8px; top: 6px; z-index: 2; flex: none; }
+  .toppsok.apen { display: block; }
+  .toppsok kbd { display: none; }
+  .sok-ikon, .mer-knapp { display: inline-flex; border-color: transparent; background: none; width: 36px !important; }
+  /* Hovedknappen fast nederst over bunnfanene (regel 5); sekundære handlinger under «⋯» */
+  .topphandlinger { display: contents; }
+  .topphandlinger .knapp:not(.primar) { display: none; }
+  .toppfelt.vis-mer .topphandlinger .knapp:not(.primar) { display: inline-flex; position: absolute; right: 52px; top: calc(var(--topp-h) - 4px); z-index: 3; box-shadow: var(--skygge-dialog); }
+  .topphandlinger .knapp.primar { position: fixed; left: 16px; right: 16px; bottom: calc(68px + env(safe-area-inset-bottom)); z-index: 29; min-height: 44px; font-size: 16px; }
+  .bjelle { width: 32px; }
+  .hoved > main:not(:has(> .k-innhold)) { padding: 16px 16px 180px; gap: 14px; }
+  .hoved > main:has(> .k-innhold) { padding-bottom: 132px; }
+  .bunnfaner { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--flate-kort); border-top: 1px solid var(--linje); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
+  html[data-rolle="support"] .bunnfaner { grid-template-columns: repeat(3, 1fr); }
+  .bunnfaner a, .bunnfaner button { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 44px; justify-content: center; text-decoration: none; color: var(--tekst-dempet); font: inherit; font-size: 11px; font-weight: var(--skrift-vekt-sterk); background: transparent; border: 0; border-radius: var(--radius-kort-lite); }
+  .bunnfaner a[aria-current="page"] { color: var(--aksent-tekst); }
+  .toast { bottom: 128px; }
+}
+@media (prefers-reduced-motion: reduce) { .sidemeny { transition: none; } }
+
+/* «⋯» med flere handlinger i topplinja (regel 8: flere enn to handlinger under «⋯») */
+.flere { position: relative; }
+.flere > summary { list-style: none; cursor: pointer; }
+.flere > summary::-webkit-details-marker { display: none; }
+.flere-meny { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; min-width: 220px; display: flex; flex-direction: column; padding: 6px; background: var(--flate-kort); border: 1px solid var(--linje); border-radius: var(--radius-kort-lite); box-shadow: var(--skygge-dialog); }
+.flere-meny button { text-align: left; min-height: 36px; padding: 0 12px; border: 0; border-radius: var(--radius-kort-lite); background: none; color: var(--tekst); font: inherit; font-size: 14px; cursor: pointer; }
+.flere-meny button:hover { background: var(--flate-senket); }
+.k-rader > .banner { margin: 0; }
+@media (max-width: 767px) { .topphandlinger .flere { display: none; } }
+.sidetittel { flex: none; }
+@media (max-width: 767px) { .sidetittel { flex: 0 1 auto; max-width: 52vw; } }
+#sidepille { min-width: 0; overflow: hidden; text-overflow: ellipsis; display: inline-block; line-height: 18px; }
+#sidepille[hidden] { display: none; }

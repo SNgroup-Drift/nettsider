@@ -1,5 +1,5 @@
 // Cloudflare Worker for design.hengsel.no (K-182): statiske filer fra ./dist, ingen skript. Bygg med `npm run build -w sites/design` først. Se docs/hosting.md.
-// Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/design/wrangler.jsonc`.
+// Workers Builds: både Deploy command og Preview command må ha `-c sites/design/wrangler.jsonc` (Preview command: `npx wrangler preview -c sites/design/wrangler.jsonc`).
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "design",

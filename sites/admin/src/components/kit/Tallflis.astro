@@ -1,0 +1,16 @@
+---
+/**
+ * Flis-kitet: Tall-flisen (regel 2c, flisklasse Tall): etikett 14, tall 32 tabulært, undertekst 12, fast høyde 120. 1/4 bare på oversiktssider
+ * (26-009). Samme markup som tallflis() i src/lib/kit.ts. id på tallet og underteksten, så skriptet kan fylle dem.
+ */
+import type { Bredde } from "./Flis.astro";
+interface Props { etikett: string; tall?: string; under?: string; id: string; bredde?: Bredde; href?: string }
+const { etikett, tall = "–", under = "", id, bredde = "1/4", href } = Astro.props;
+const b = { "1/4": "k-b14", "1/3": "k-b13", "1/2": "k-b12", "2/3": "k-b23", "1/1": "k-b11" }[bredde];
+const El = href ? "a" : "div";
+---
+<El class:list={["k-flis", "k-tallflis", b]} href={href}>
+  <span class="k-etikett">{etikett}</span>
+  <span class="k-tall" id={`${id}-tall`}>{tall}</span>
+  <span class="k-under" id={`${id}-under`}>{under}</span>
+</El>
