@@ -1,0 +1,21 @@
+---
+/**
+ * Kitet (N-5): Tall-flisen (regel 2c, flisklasser.md «Tall»): etikett 14, ett tall 32 med tabulære sifre og undertekst 12, høyrejustert,
+ * fast høyde 120. 1/4 (bare tall) eller 1/3. `haster`: tallet i varsel-rødt (status feil, regel 9: må gjøres nå).
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+interface Props { etikett: string; tall: string; under?: string; bredde?: Bredde; haster?: boolean }
+const { etikett, tall, under, bredde = "1/4", haster = false } = Astro.props;
+---
+<Flis bredde={bredde} klasse="k-tallflis">
+  <p class="k-etikett">{etikett}</p>
+  <p class:list={["k-tall", { haster }]}>{tall}</p>
+  {under && <p class="k-under" title={under}>{under}</p>}
+</Flis>
+
+<style>
+  .k-etikett { font-size: 14px; line-height: 20px; color: var(--tekst-dempet); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .k-tall { margin-top: auto; text-align: right; font-size: 32px; line-height: 36px; font-weight: var(--skrift-vekt-normal); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .k-tall.haster { color: var(--status-feil-fg); }
+  .k-under { text-align: right; font-size: 12px; line-height: 16px; color: var(--tekst-dempet); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>

@@ -1,0 +1,39 @@
+---
+/**
+ * Kitet (N-5): Plan-flisen (regel 2c, flisklasser.md «Plan»): 1/1, 480 til 7 rader (640 til 10), navnekolonne 200 px og 8 uker, rader 44 px,
+ * stolpe 24 px, så «Vis alle (n)». Stolpene plasseres med klasser (fra-/til-uke), ikke style-attributter (CSP). Telefon: tabellen scroller vannrett.
+ */
+import Flis from "./Flis.astro";
+interface Props { tittel: string; uker: string[]; rader: { navn: string; fra: number; til: number }[] }
+const { tittel, uker, rader } = Astro.props;
+if (uker.length !== 8) throw new Error(`${tittel}: 8 uker`);
+const navnUke = (i: number) => uker[i - 1];
+---
+<Flis bredde="1/1" tittel={tittel} teller={rader.length} tellerHoyre klasse="k-planflis">
+  <div class="k-plan" role="table" aria-label={tittel} tabindex="0">
+    <div class="k-prad k-phode" role="row">
+      <span role="columnheader" class="k-pnavn"><span class="skjult">Navn</span></span>
+      {uker.map((u) => <span role="columnheader" class="k-puke">{u}</span>)}
+    </div>
+    {rader.map((r) => (
+      <div class="k-prad" role="row">
+        <span role="rowheader" class="k-pnavn" title={r.navn}>{r.navn}</span>
+        <span role="cell" class:list={["k-stolpe", `fra-${r.fra}`, `til-${r.til}`]}><span class="skjult">{navnUke(r.fra)}–{navnUke(r.til)}</span></span>
+      </div>
+    ))}
+  </div>
+</Flis>
+
+<style>
+  .k-plan { overflow-x: auto; margin-top: 4px; }
+  .k-prad { display: grid; grid-template-columns: 200px repeat(8, minmax(64px, 1fr)); align-items: center; min-height: 44px; border-bottom: 1px solid var(--linje); }
+  .k-phode { min-height: 28px; }
+  .k-puke { height: 28px; display: grid; place-items: center; border-left: 1px solid var(--linje); color: var(--tekst-dempet); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .k-pnavn { grid-column: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+  .k-stolpe { grid-row: 1; height: 24px; border-radius: var(--radius-kort-lite); background: color-mix(in srgb, var(--aksent) 14%, var(--flate-kort)); border: 1px solid color-mix(in srgb, var(--aksent) 28%, var(--flate-kort)); box-sizing: border-box; }
+  .fra-1 { grid-column-start: 2; } .fra-2 { grid-column-start: 3; } .fra-3 { grid-column-start: 4; } .fra-4 { grid-column-start: 5; }
+  .fra-5 { grid-column-start: 6; } .fra-6 { grid-column-start: 7; } .fra-7 { grid-column-start: 8; } .fra-8 { grid-column-start: 9; }
+  .til-1 { grid-column-end: 3; } .til-2 { grid-column-end: 4; } .til-3 { grid-column-end: 5; } .til-4 { grid-column-end: 6; }
+  .til-5 { grid-column-end: 7; } .til-6 { grid-column-end: 8; } .til-7 { grid-column-end: 9; } .til-8 { grid-column-end: 10; }
+  @media (max-width: 767.98px) { .k-prad { grid-template-columns: 140px repeat(8, 56px); } }
+</style>

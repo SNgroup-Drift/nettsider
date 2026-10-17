@@ -1,0 +1,22 @@
+---
+/**
+ * N-5: rammen for én mønsterside (29 Felles i sidekartet): designfasitens meny og bunn (Side.astro), toppen med tittel 32 px og undertekst,
+ * fanene for de seks mønstrene og flisene i rader. Ingen sidemeny; flisene er de samme som i CRM.
+ */
+import Side from "../../layouts/Side.astro";
+import Sidetopp from "./Sidetopp.astro";
+import Monsterfaner from "./Monsterfaner.astro";
+import Innhold from "./Innhold.astro";
+import { monster, type Monster } from "../../content/monstre";
+interface Props { sti: Monster["sti"]; description: string }
+const { sti, description } = Astro.props;
+const m = monster(sti);
+---
+<Side title={`${m.tittel} – Mønstre – Hengsel designfasit`} description={description} aktiv="monstre">
+  <div class="k-monster" data-monster={m.nr}>
+    <Sidetopp tittel={m.tittel} undertekst={m.undertekst} nummer={`Mønster ${m.nr}`}>
+      <Monsterfaner slot="faner" aktiv={m.sti} />
+    </Sidetopp>
+    <Innhold><slot /></Innhold>
+  </div>
+</Side>

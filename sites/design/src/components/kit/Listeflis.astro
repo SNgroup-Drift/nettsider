@@ -1,0 +1,56 @@
+---
+/**
+ * Kitet (kopi fra N-3): Kortliste 1/3 og Liste 1/2 (regel 2c): tittel med antall til høyre, maks 5 rader på 40 px (én linje med …) og
+ * «Vis alle (n)» nederst til høyre, som åpner hele lista i en dialog (kit.ts). N-5: en rad kan ha navn (600), tekst (400) og pille til høyre.
+ */
+import Flis, { type Bredde } from "./Flis.astro";
+import Pille, { type Tone } from "./Pille.astro";
+export type Listerad = string | { navn: string; tekst?: string; pille?: string; tone?: Tone };
+interface Props { id: string; tittel: string; rader: Listerad[]; bredde?: Bredde; maks?: number; etikett?: string }
+const { id, tittel, rader, bredde = "1/2", maks = 5, etikett } = Astro.props;
+const liste = rader.map((r) => (typeof r === "string" ? { navn: r } : r));
+const dialogId = `${id}-alle`;
+const hel = (r: (typeof liste)[number]) => [r.navn, r.tekst, r.pille].filter(Boolean).join(" · ");
+---
+<Flis id={id} bredde={bredde} tittel={tittel} teller={liste.length} tellerHoyre klasse="k-listeflis" etikett={etikett}>
+  <ul class="k-liste">
+    {liste.slice(0, maks).map((r) => (
+      <li>
+        <span class="k-celle" title={hel(r)}><b>{r.navn}</b>{r.tekst && <span class="k-tekst"> {r.tekst}</span>}</span>
+        {r.pille && <Pille tone={r.tone}>{r.pille}</Pille>}
+      </li>
+    ))}
+  </ul>
+  <dialog class="k-alle" id={dialogId} aria-labelledby={`${dialogId}-t`} data-dialog>
+    <div class="k-d-topp">
+      <h2 id={`${dialogId}-t`}>{tittel}</h2>
+      <button type="button" class="k-lukk" aria-label="Lukk" data-dialog-lukk>
+        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
+      </button>
+    </div>
+    <ul class="k-liste hele">
+      {liste.map((r) => <li><span class="k-celle"><b>{r.navn}</b>{r.tekst && <span class="k-tekst"> {r.tekst}</span>}</span>{r.pille && <Pille tone={r.tone}>{r.pille}</Pille>}</li>)}
+    </ul>
+  </dialog>
+  <button slot="handling" type="button" class="k-vis-alle" aria-haspopup="dialog" aria-controls={dialogId} data-dialog-apne={dialogId}>Vis alle ({liste.length})</button>
+</Flis>
+
+
+<style>
+  .k-liste { list-style: none; margin: 4px 0 0; padding: 0; }
+  .k-liste li { height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--linje); }
+  .k-liste b { font-weight: var(--skrift-vekt-sterk); }
+  .k-tekst { color: var(--tekst-dempet); }
+  .k-celle { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .k-liste :global(.k-pille) { align-self: center; flex: none; }
+  .k-vis-alle { min-height: 20px; padding: 0; border: 0; background: none; color: var(--aksent-tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; }
+  .k-vis-alle:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media (scripting: none) { .k-vis-alle { display: none; } }
+  .k-alle { width: min(560px, calc(100vw - 32px)); padding: 24px; box-sizing: border-box; border: 1px solid var(--linje); border-radius: var(--radius-kort-stor); background: var(--flate-kort); color: var(--tekst); box-shadow: var(--skygge-dialog); font-size: 14px; line-height: 20px; }
+  .k-alle::backdrop { background: var(--overlegg); }
+  .k-d-topp { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .k-d-topp h2 { font-family: var(--skrift-familie-hengsel-tekst); font-size: 16px; line-height: 22px; font-weight: var(--skrift-vekt-sterk); letter-spacing: 0; }
+  .k-lukk { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+  .k-lukk svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .hele { margin-top: 12px; }
+</style>

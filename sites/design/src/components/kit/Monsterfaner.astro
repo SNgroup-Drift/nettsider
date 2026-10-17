@@ -1,0 +1,20 @@
+---
+/**
+ * N-5: fanene under toppen på mønstersidene (regel 8: egen rad rett under toppen, 40 px, venstrestilt, maks 6). Én fane per mønsterside,
+ * i sidekartets rekkefølge (29-001–29-006). Telefon: vannrett scrollbar rad.
+ */
+import { MONSTRE } from "../../content/monstre";
+interface Props { aktiv: string }
+const { aktiv } = Astro.props;
+---
+<nav class="k-faner" aria-label="Mønstrene">
+  {MONSTRE.map((m) => <a href={`/monstre/${m.sti}`} aria-current={m.sti === aktiv ? "page" : undefined}><span class="k-nr">{m.nr}</span> {m.kort}</a>)}
+</nav>
+
+<style>
+  .k-faner { max-width: 1280px; display: flex; gap: 4px; margin-top: 16px; border-bottom: 1px solid var(--linje); overflow-x: auto; scrollbar-width: thin; }
+  a { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; color: var(--tekst-dempet); text-decoration: none; font-size: 14px; font-weight: var(--skrift-vekt-medium); white-space: nowrap; }
+  a:hover { color: var(--tekst); background: var(--flate-hover); border-radius: var(--radius-felt) var(--radius-felt) 0 0; }
+  a[aria-current="page"] { color: var(--tekst); box-shadow: inset 0 -2px 0 var(--aksent); }
+  .k-nr { color: var(--tekst-svak); font-size: 12px; font-variant-numeric: tabular-nums; }
+</style>

@@ -1,0 +1,54 @@
+---
+/**
+ * N-5 · 29-005 Ikoner og piller, etter docs/sidekart/29-005.md i hengsel-crm (S-68): rad 1 og 2 Status 1/3 ×3 (én per statusnøkkel),
+ * rad 3 Tabell 1/1 (Ord og nøkkel, 6 rader = 480). Under står regelen ordrett fra designsystemet (Statuspille.prompt.md, Ikon.prompt.md, README).
+ * Pillene bruker statusrollene i den delte token-fila; ikonene vises med navn på /komponenter.
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Statusflis from "../../components/kit/Statusflis.astro";
+import Tabellflis, { tabellHoyde } from "../../components/kit/Tabellflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { siter } from "../../lib/ds-tekst";
+import type { Tone } from "../../components/kit/Pille.astro";
+
+const ord: { ord: string; nar: string; pille: string; tone: Tone }[] = [
+  { ord: "Nytt, Ny, Ubesvart", nar: "noe er kommet inn og ikke sett", pille: "Ny", tone: "ny" },
+  { ord: "Planlagt, I gang, Møte 10.00", nar: "noe er avtalt eller pågår", pille: "Planlagt", tone: "pagar" },
+  { ord: "Venter, Kommer", nar: "ballen er hos en annen", pille: "Venter", tone: "venter" },
+  { ord: "Frist, Mangler, Følg opp", nar: "du må gjøre noe snart", pille: "Mangler", tone: "advarsel" },
+  { ord: "Haster, Avvik, Forfalt", nar: "noe er galt", pille: "Haster", tone: "feil" },
+  { ord: "Ferdig, Signert, Betalt", nar: "det er gjort", pille: "Ferdig", tone: "ferdig" },
+];
+const regler = [
+  { gjelder: "Statuspillen", sitater: [
+    siter("components/status/Statuspille.prompt.md", /Statuspille med tekst\. Farge alene skal aldri bære betydningen\./),
+    siter("README.md", /Sju statuser \(ny, pågår[^)]*\), hver med fg\/bg\/kant, bare i piller og varsler og alltid med tekst\./),
+  ] },
+  { gjelder: "Ikonene", sitater: [
+    siter("components/brand/Ikon.prompt.md", /Strekikon fra Hengsels eget ikonsett \(49 ikoner, 16\/20\/24 px\)\./),
+    siter("components/brand/Ikon.prompt.md", /- Aktiv tilstand: samme ikon i var\(--aksent-tekst\)\. Ingen fylte varianter\./),
+    siter("README.md", /- Ingen emoji, ingen ikonfont, ingen PNG-ikoner\./),
+  ] },
+  { gjelder: "iOS", sitater: [siter("components/brand/Ikon.prompt.md", /- På iOS brukes SF Symbol fra ikoner\.json i stedet\./)] },
+];
+---
+<Monsterside sti="ikoner-og-piller" description="29-005 Ikoner og piller: statusnøklene i statuspillen, ordene som hører til hver nøkkel, og regelen for piller og ikoner fra designsystemet.">
+  <Rad hoyde={120}>
+    <Statusflis tittel="ny" pille="Nytt" tone="ny" tekst="Nytt lead, ny melding, ny KS." />
+    <Statusflis tittel="pagar" pille="Planlagt" tone="pagar" tekst="Møte, montering, i gang." />
+    <Statusflis tittel="venter" pille="Venter" tone="venter" tekst="På kunden eller leverandøren." />
+  </Rad>
+  <Rad hoyde={120}>
+    <Statusflis tittel="advarsel" pille="Frist" tone="advarsel" tekst="Må følges opp snart." />
+    <Statusflis tittel="feil" pille="Haster" tone="feil" tekst="Avvik, forfalt, uten eier." />
+    <Statusflis tittel="ferdig" pille="Ferdig" tone="ferdig" tekst="Signert, betalt, løst." />
+  </Rad>
+  <Rad hoyde={tabellHoyde(ord.length)}>
+    <Tabellflis id="ord" tittel="Ord og nøkkel" kolonner={[{ navn: "Ord i pillen", bredde: 40 }, { navn: "Brukes når", bredde: 30 }, "Status"]}
+      rader={ord.map((o) => [o.ord, o.nar, { pille: o.pille, tone: o.tone }])} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+</Monsterside>

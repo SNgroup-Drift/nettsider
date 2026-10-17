@@ -1,0 +1,39 @@
+---
+/**
+ * Kitet (kopi fra N-3): søket i tittelfeltet (Tabell kompakt) eller i verktøylinja (Tabell). PC: feltet (200 px, 240 px i verktøylinja).
+ * Telefon: bare søkeikonet; trykk åpner feltet over tittelen (kit.ts). Søket filtrerer radene i flisen. Luppen har samme strek som ikonsettet.
+ */
+interface Props { hva: string; bred?: boolean }
+const { hva, bred = false } = Astro.props;
+const etikett = `Søk i ${hva}`;
+---
+<div class:list={["k-sok", { bred }]} data-sok>
+  <button type="button" class="k-sokknapp" aria-label={etikett} aria-expanded="false" data-sok-knapp>
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" /></svg>
+  </button>
+  <label class="k-sokfelt">
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" /></svg>
+    <input type="search" placeholder="Søk" aria-label={etikett} autocomplete="off" data-sok-felt />
+  </label>
+</div>
+
+<style>
+  .k-sok { flex: none; display: flex; align-items: center; }
+  svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .k-sokknapp { display: none; width: 36px; height: 36px; padding: 0; place-items: center; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: var(--flate-kort); color: var(--tekst); cursor: pointer; }
+  .k-sokfelt { display: flex; align-items: center; gap: 8px; width: 200px; height: 36px; padding: 0 12px; box-sizing: border-box; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: var(--flate-kort); color: var(--tekst-dempet); cursor: text; }
+  .bred .k-sokfelt { width: 240px; }
+  .k-sokfelt:focus-within { border-color: var(--aksent); box-shadow: 0 0 0 3px var(--flate-valgt); }
+  input { flex: 1; min-width: 0; height: 100%; border: 0; padding: 0; background: transparent; color: var(--tekst); font: inherit; font-size: 14px; outline: none; }
+  input::placeholder { color: var(--tekst-dempet); }
+  @media (max-width: 767.98px) {
+    .k-sokknapp { display: grid; }
+    .k-sokfelt { display: none; }
+    .k-sok[data-apen] .k-sokfelt { display: flex; position: absolute; inset: 2px 0 2px 0; width: auto; z-index: 1; }
+    .k-sok[data-apen] .k-sokknapp { visibility: hidden; }
+    /* I verktøylinja (Tabell) står feltet hele tiden, i full bredde */
+    .bred .k-sokknapp { display: none; }
+    .bred .k-sokfelt, .bred.k-sok[data-apen] .k-sokfelt { display: flex; position: static; width: 100%; }
+    .bred { flex: 1; }
+  }
+</style>

@@ -1,0 +1,20 @@
+{
+  "$merknad": "N-5: ordrett kopi av regeltekstene i Hengsel-designsystemet som design.hengsel.no/monstre siterer. Den pinnede kopien i packages/hengsel-tokens/ds har bare tokens/ og assets/ (nettsider pinner ikke tekstene). Finnes en fil også i den pinnede kopien, leses den derfra (src/lib/ds-tekst.ts). Rediger aldri filene for hånd; hent dem på nytt fra commiten.",
+  "repo": "SNgroup-Drift/hengsel-crm",
+  "sti": "_ds/hengsel-designsystem",
+  "commit": "6003bc0bf5a78b6bc56119beb65c5d3b5d3b8f01",
+  "versjon": "2.2.0",
+  "filer": {
+    "README.md": "79bd823fece0ab8bf73f31a6e350ba0ad84f210b0d6d7ac0913af4805b2c02b8",
+    "components/brand/Ikon.prompt.md": "53dc387f0e92fd6c2dd0798ced0742fe75a18e096e8bf9c0bfe9c69e9bfb3909",
+    "components/layout/Flis.prompt.md": "c21156020b8c3284b547c8c5d82dcbb256dad5ae56fb27d87e6d2c8c045bc7f4",
+    "components/layout/Tabell.prompt.md": "a5c094941010806f462f0a2ee1296de7e1f0c76dff410fe637c877bd8b5837c1",
+    "components/overlays/Ark.prompt.md": "dcc9c58316cb8b43eb2c399ac7498a071d17ccb80b444579c20d16f64aea5fff",
+    "components/overlays/Dialog.prompt.md": "0be134c97b0faa57fedbea6ae34ee9d6f1880606dafae30d6733dc185fb3f259",
+    "components/overlays/Skuff.prompt.md": "8b611735ea2dd2c0a43279d5f107f1a4055338e8e6ab0740fc38592d6dc4ee3a",
+    "components/status/Statuspille.prompt.md": "bd50c3ed12b309df59957526de89a44aafdbb511219e1930b6a86ddcaec3fca5",
+    "components/status/Tilstand.prompt.md": "7d5a368d912ae63d54efd7b66fa25f91066fdbe4c7f5b15844f1c2248aaed7ff",
+    "dokumentasjon/LAYOUT-REGLER.md": "2206fa02f788b8efb049356fa03de303c08977acfefe9b83ad3b997587ce0644",
+    "flisklasser.md": "349b75d45a9bc152923723179e924f8fd590ff975ee48e1996f4ac30a444d836"
+  }
+}

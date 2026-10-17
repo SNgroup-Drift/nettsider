@@ -1,0 +1,143 @@
+---
+/**
+ * N-5 · 29-004 Flisklasser (alle), etter docs/sidekart/29-004.md i hengsel-crm (S-68) og regel 2b–2d. Rad 1–11 som i sidekartet; under står
+ * regelen ordrett fra designsystemet (flisklasser.md, LAYOUT-REGLER.md, Flis.prompt.md). Eksempeldata er oppdiktet.
+ */
+import Monsterside from "../../components/kit/Monsterside.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Tallflis from "../../components/kit/Tallflis.astro";
+import Statusflis from "../../components/kit/Statusflis.astro";
+import Listeflis from "../../components/kit/Listeflis.astro";
+import Diagramflis from "../../components/kit/Diagramflis.astro";
+import Skjemaflis from "../../components/kit/Skjemaflis.astro";
+import Tekstflis from "../../components/kit/Tekstflis.astro";
+import Tabellflis, { tabellHoyde } from "../../components/kit/Tabellflis.astro";
+import Stegflis from "../../components/kit/Stegflis.astro";
+import Tavleflis from "../../components/kit/Tavleflis.astro";
+import Planflis from "../../components/kit/Planflis.astro";
+import Tegningflis from "../../components/kit/Tegningflis.astro";
+import Regelflis from "../../components/kit/Regelflis.astro";
+import { flisklasser, siter } from "../../lib/ds-tekst";
+
+const ordre = [
+  { celler: ["O-2026-0412", "Ingrid og Ola Haugen", "257 700 kr", { pille: "Avvik", tone: "advarsel" as const }] },
+  { celler: ["O-2026-0398", "Familien Sæther", "142 800 kr", { pille: "Venter på leverandør", tone: "venter" as const }] },
+];
+const klasser = flisklasser();
+const regler = [
+  { gjelder: "Alle fliser", sitater: [
+    siter("components/layout/Flis.prompt.md", /Flis \(kort\) etter layout-reglene\. Én ting per flis\. Ikke fliser i fliser\./),
+    siter("flisklasser.md", /Skrift i alle fliser: [^\n]*?vises hel i tooltip\./),
+    siter("flisklasser.md", /Tom, laster og feil har samme høyde som fylt flis\./),
+  ] },
+  { gjelder: "Rutenett", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- PC 1440: 12 kolonner[^\n]*/),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- iPad 1024: 8 kolonner[^\n]*/),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Telefon 390: 4 kolonner[^\n]*/),
+  ] },
+  { gjelder: "Bredder", sitater: [siter("dokumentasjon/LAYOUT-REGLER.md", /- Bredder: 1\/3 \(4 kol\.\)[^\n]*/)] },
+  { gjelder: "En rad går opp (2b)", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- En rad fyller alltid hele bredden\.[^\n]*/),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Aldri rad med tomt felt\.[^\n]*/),
+  ] },
+  { gjelder: "Radhøyder (2d)", sitater: [
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Radhøyder bare fra skalaen[^\n]*/),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Hele raden har én høyde:[^\n]*/),
+    siter("dokumentasjon/LAYOUT-REGLER.md", /- Telefon: én flis per rad, flisen beholder sin høyde fra skalaen\./),
+  ] },
+];
+---
+<Monsterside sti="flisklasser" description="29-004 Flisklasser (alle): alle flisklassene fra regel 2c med radhøydene fra 2d, slik de tegnes i CRM, med regelen fra designsystemet under.">
+  <Rad hoyde={120}>
+    <Tallflis etikett="Tall 1/4 · 120" tall="1 240 000 kr" under="av 1 300 000 kr" />
+    <Tallflis etikett="Tall 1/4 · 120" tall="9" under="åpne tilbud" />
+    <Tallflis etikett="Tall 1/4 · 120" tall="44 %" under="tilbud til ordre" />
+    <Tallflis etikett="Tall 1/4 · 120" tall="1" under="forfalt" haster />
+  </Rad>
+  <Rad hoyde={120}>
+    <Statusflis tittel="Status 1/3 · 120" pille="Fredag 21.10" tone="advarsel" tekst="Endringsfrist. Etter fristen kan ordren ikke endres." />
+    <Statusflis tittel="Status 1/3 · 120" pille="Mottatt 14.10" tone="ferdig" tekst="OB 88412 fra Nordli Kjøkken AS." />
+    <Statusflis tittel="Status 1/3 · 120" pille="Uke 46" tone="venter" tekst="Ikke bekreftet av leverandøren." />
+  </Rad>
+  <Rad hoyde={320}>
+    <Listeflis id="kortliste-1" bredde="1/3" tittel="Kortliste 1/3 · 320" etikett="Kortliste 1/3 · 320, eksempel 1 av 3" rader={[
+      { navn: "Godta OB-avvik", tekst: "Frist 21.10", pille: "Haster", tone: "feil" },
+      { navn: "Bekreft levering", tekst: "uke 46", pille: "Venter", tone: "venter" },
+      { navn: "Montering 17.11", tekst: "Berg Montasje AS", pille: "Planlagt", tone: "pagar" },
+      { navn: "Kontrollmål", tekst: "Anne Berg tor. 22.10", pille: "Planlagt", tone: "pagar" },
+      { navn: "Følg opp tilbud", tekst: "Marte Kolstad", pille: "Svar i dag", tone: "advarsel" },
+      { navn: "Restordre benkeplate", tekst: "uke 47", pille: "Venter", tone: "venter" },
+      { navn: "Etterkalkyle", tekst: "O-2026-0377", pille: "Ny", tone: "ny" },
+    ]} />
+    <Listeflis id="kortliste-2" bredde="1/3" tittel="Kortliste 1/3 · 320" etikett="Kortliste 1/3 · 320, eksempel 2 av 3" rader={[
+      { navn: "Marte Kolstad", tekst: "Tilbud sendt 09.10", pille: "Ikke åpnet", tone: "advarsel" },
+      { navn: "Hege Lunde", tekst: "Svar i dag", pille: "Svar i dag", tone: "advarsel" },
+    ]} />
+    <Listeflis id="kortliste-3" bredde="1/3" tittel="Kortliste 1/3 · 320" etikett="Kortliste 1/3 · 320, eksempel 3 av 3" rader={[
+      { navn: "Per og Liv Dahl", tekst: "Møte 10.00", pille: "Møte", tone: "pagar" },
+    ]} />
+  </Rad>
+  <Rad hoyde={320}>
+    <Listeflis id="liste" bredde="1/2" tittel="Liste 1/2 · 320" rader={[
+      { navn: "Hamar", tekst: "1 030 000 kr", pille: "83 %", tone: "ferdig" },
+      { navn: "Gjøvik", tekst: "210 000 kr", pille: "17 %", tone: "venter" },
+    ]} />
+    <Diagramflis tittel="Diagram 1/2 · 320" enhet=" tusen kr" linje={1140} forklaring="Mai–oktober. Linja er budsjettet." verdier={[
+      { navn: "Mai", verdi: 820 }, { navn: "Jun", verdi: 940 }, { navn: "Jul", verdi: 1040 },
+      { navn: "Aug", verdi: 880 }, { navn: "Sep", verdi: 1140 }, { navn: "Okt", verdi: 1240 },
+    ]} />
+  </Rad>
+  <Rad hoyde={480}>
+    <Skjemaflis id="skjema" tittel="Skjema 1/2 · 480" knapp="Lagre" felt={[
+      { etikett: "Navn", verdi: "Ingrid Haugen" },
+      { etikett: "Telefon", verdi: "912 34 567", type: "tel" },
+      { etikett: "Butikk", verdi: "Hamar", type: "velg", valg: ["Hamar", "Gjøvik", "Lillehammer"] },
+    ]} />
+    <Tekstflis bredde="1/2" tittel="Tekst 1/2 · følger raden" tekst="Hjelpetekst til høyre for et skjema (regel 3, A5) får skjemaets høyde. Ellers er Tekst 1/1 og 120, 320 eller 480 etter lengden." />
+  </Rad>
+  <Rad hoyde={tabellHoyde(ordre.length)}>
+    <Tabellflis id="tabell" tittel="Tabell 1/1 · 320 (til 5 rader; 480 til 9)" verktoyTekst="Søk · Filter"
+      kolonner={[{ navn: "Ordre", bredde: 30 }, { navn: "Kunde", bredde: 25 }, { navn: "Beløp", tall: true, bredde: 25 }, "Status"]} rader={ordre} />
+  </Rad>
+  <Rad hoyde={120}>
+    <Stegflis tittel="Steg 1/1 · 120" steg={[
+      { navn: "Kontrakt", status: "ferdig", tekst: "Ferdig" }, { navn: "Bestilling", status: "ferdig", tekst: "Ferdig" },
+      { navn: "OB-kontroll", status: "na", tekst: "Nå" }, { navn: "Levering", status: "venter", tekst: "Venter" },
+      { navn: "Montering", status: "planlagt", tekst: "Planlagt" }, { navn: "Faktura", status: "ikke", tekst: "–" },
+    ]} />
+  </Rad>
+  <Rad hoyde={480}>
+    <Tavleflis id="tavle" tittel="Tavle 1/1 · 480" velger="Kolonne" kolonner={[
+      { navn: "Lead", kort: ["Ola Bakken · bad", "Silje Brenna · kjøkken"] },
+      { navn: "Tilbud sendt", kort: ["Marte Kolstad · 189 400 kr", "Hege Lunde · 142 000 kr", "Byggmester Hagen · 6 kjøkken", "Anders Rud · kjøkken", "Per og Liv Dahl · kjøkken", "Anne Berg · garderobe"] },
+      { navn: "Vunnet", kort: ["Ingrid og Ola Haugen · 257 700 kr"] },
+    ]} />
+  </Rad>
+  <Rad hoyde={480}>
+    <Tavleflis id="uke" tittel="Uke 1/1 · 480" velger="Dag" uke kolonner={[
+      { navn: "man. 19.10", kort: ["10.00 Per og Liv Dahl, møte", "14.30 Anders Rud, hjemmebesøk"] },
+      { navn: "tir. 20.10", kort: ["09.00 Kontrollmål Anne Berg"] },
+      { navn: "ons. 21.10", kort: ["13.00 Byggmester Hagen"] },
+      { navn: "tor. 22.10", kort: ["09.00 Kontrollmål Per Lunde"] },
+      { navn: "fre. 23.10", kort: ["11.00 Marte Kolstad, følg opp"] },
+    ]} />
+  </Rad>
+  <Rad hoyde={480}>
+    <Planflis tittel="Plan 1/1 · 480 (til 7 rader)" uker={["Uke 43", "Uke 44", "Uke 45", "Uke 46", "Uke 47", "Uke 48", "Uke 49", "Uke 50"]} rader={[
+      { navn: "Furulia hus 1-2", fra: 3, til: 5 },
+      { navn: "Bryn Hage tilvalg", fra: 1, til: 2 },
+      { navn: "Bråstad montering", fra: 2, til: 5 },
+    ]} />
+  </Rad>
+  <Rad hoyde={480}>
+    <Tegningflis tittel="Tegning 1/1 · 480" linje="Bildeflaten fyller flisen. Nål og kommentar bruker punktnummeret (14-3)." />
+  </Rad>
+  <Rad hoyde="auto">
+    <Tabellflis id="klassene" tittel="Flisklassene i designsystemet" bryt
+      kolonner={[{ navn: "Klasse", bredde: 15 }, { navn: "Bredde", bredde: 10 }, { navn: "Fast høyde (px)", bredde: 15 }, { navn: "Innhold", bredde: 30 }, "Tom / laster / feil"]}
+      rader={klasser.map((k) => [k.klasse, k.bredde, k.hoyde, k.innhold, k.tilstand])} />
+  </Rad>
+  <Rad hoyde="auto">
+    <Regelflis punkter={regler} />
+  </Rad>
+</Monsterside>
