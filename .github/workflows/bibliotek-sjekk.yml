@@ -6,6 +6,10 @@
 #   kjører bibliotekstesten og lenkesjekken (SKJERMBILDER_NETT=1: hver bibliotekadresse i dist bes om over nettet), tar skjermbildene i claude/k233
 #   uten stand-in, og legger manifest-kopien, sjekken, rapporten (antall ekte bilder og plassholdere per side) og skjermbildene som artefakt.
 # - Valget «oppdater kopi» (bare for hånd) committer den oppdaterte manifest-kopien til grenen workflowen kjøres på. Merger aldri.
+# - N-2 (17.10): kjører også hver morgen kl. 07.15 (Oslo) på main. Da fjernes nøkler fra KJENTE_MANGLER som nå finnes i biblioteket
+#   (scripts/rydd-kjente-mangler.mjs), og er bygget og testene grønne, committes manifest-kopien og lista til main – det får Cloudflare til å
+#   bygge sidene på nytt med de nye skjermbildene (biblioteket fylles av «Skjermbilder» i hengsel-crm etter hver Visning-utrulling).
+#   Er testene røde (et nytt bilde mangler som ikke står i lista), committes ingenting; avviket står i sammendraget.
 # - Ingen hemmeligheter: biblioteket er åpent, og committen bruker GITHUB_TOKEN.
 name: Bibliotek-sjekk
 
@@ -17,6 +21,8 @@ on:
         type: boolean
         default: false
   pull_request:
+  schedule:
+    - cron: "15 5 * * *" # 07.15 Oslo sommertid (06.15 etter 25.10), etter nattens Visning-utrulling og Skjermbilder i hengsel-crm
 
 permissions:
   contents: write
@@ -64,6 +70,10 @@ jobs:
 
       - name: Vis endringen i manifest-kopien
         run: git --no-pager diff --stat -- packages/hengsel-tokens/skjermbilder-manifest.json
+
+      # N-2: nøkler som nå finnes i biblioteket tas ut av KJENTE_MANGLER før bygg og test (ellers feiler bibliotekstesten punkt 4)
+      - name: Rydd KJENTE_MANGLER mot det ekte manifestet
+        run: node scripts/rydd-kjente-mangler.mjs
 
       - name: Bygg alle sidene (med det ekte manifestet)
         run: npm run build
@@ -113,17 +123,17 @@ jobs:
             done
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Commit den oppdaterte manifest-kopien til grenen («oppdater kopi»)
-        if: github.event_name == 'workflow_dispatch' && inputs.oppdater_kopi
+      - name: Commit manifest-kopien og KJENTE_MANGLER («oppdater kopi», eller morgenkjøringen på main når alt er grønt)
+        if: (github.event_name == 'workflow_dispatch' && inputs.oppdater_kopi) || (github.event_name == 'schedule' && github.ref_name == 'main' && steps.test.outcome == 'success')
         env:
           GREN: ${{ github.ref_name }}
         run: |
-          if git diff --quiet -- packages/hengsel-tokens/skjermbilder-manifest.json; then
-            echo "Kopien er alt lik det ekte manifestet; ingenting å committe."
+          if git diff --quiet -- packages/hengsel-tokens/skjermbilder-manifest.json scripts/lib/bildedomene.mjs; then
+            echo "Kopien og lista er alt lik det ekte manifestet; ingenting å committe."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages/hengsel-tokens/skjermbilder-manifest.json
-          git commit -m "K-233: manifest-kopien oppdatert fra bilder.hengsel.no (Bibliotek-sjekk, kjøring ${{ github.run_number }})"
+          git add packages/hengsel-tokens/skjermbilder-manifest.json scripts/lib/bildedomene.mjs
+          git commit -m "K-233/N-2: manifest-kopien og KJENTE_MANGLER oppdatert fra bilder.hengsel.no (Bibliotek-sjekk, kjøring ${{ github.run_number }})"
           git push origin "HEAD:refs/heads/$GREN"
