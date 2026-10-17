@@ -12,6 +12,7 @@ Gjelder hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.he
 7. **Tester stopper avvik.** Farge utenfor den delte fila, en delt fil som avviker fra pinnen, eller mørk modus gir rødt bygg.
 8. **Farger endres bare i designsystemet** i innlandet-crm-sync, og deretter pinnes ny commit her. Ingen retter farger på én side alene.
 9. **Omfang:** hengsel.no, vis.hengsel.no, design.hengsel.no, admin.hengsel.no, demo.hengsel.no og nye Hengsel-sider.
+10. **Appen i enhetsrammer øverst (Eirik 17.10, N-3c).** Hver hengsel.no-side viser appen i enhetsrammer øverst: Studio Display for CRM, iPad/iPhone for Ute og kundeportal; bildene fra biblioteket, aldri lokalt. Rammene (`Enhet.astro`, med `CrmSkjerm`/`PortalSkjerm` som HTML eller app-skjermbilder fra bilder.hengsel.no) står i sporet «komposisjon» i `Sidetopp` (kit): til høyre for tittel, ingress og knapper på PC (5 av 12 kolonner), under knappene på telefon, før rad 1 i kitet. Øverste bilde har `forst`, resten er lazy; mangler et bilde i manifestet, vises «Skjermbilde kommer» (K-233). `scripts/enhetsrammer.test.mjs` feiler hvis en side i lista der mangler rammer i toppen. Sidekartet 25-xxx (S-68) har ikke komposisjonen ennå og rettes i neste Design-runde (rad 0: komposisjon).
 
 ## Kundeutgaver (K-223): hengsel.no/kunde/sigdal
 

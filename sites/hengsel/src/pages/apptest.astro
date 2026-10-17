@@ -2,7 +2,7 @@
 /**
  * hengsel.no/apptest: slik tester du Hengsel Ute (K-172, etter Claude Design «apptest v3», docs/design/hengsel/apptest-v3/).
  * N-3: toppen og første rad følger sidekartet 25-012 «Bli tester» (S-68) i nettside-kitet: vanlig meny, topp med testversjonen som pille, og rad 1 (120)
- * Tekst 1/3 ×3 (iPhone og iPad, Android, Meld feil). Resten av siden (installering, roller, sjekkliste, bygg, spørsmål, meld feil) er som før.
+ * Tekst 1/3 ×3 (iPhone og iPad, Android, Meld feil). N-3c: bildevekslingen (fire iPhone-bilder fra biblioteket) står igjen til høyre i toppen. Resten av siden (installering, roller, sjekkliste, bygg, spørsmål, meld feil) er som før.
  * Fasit: Apptest.dc.html og Apptest-valg.md. Komponentene og tokenene er hengsel.no 2.0 (Side, Enhet, Bunn, tokens.css).
  *
  * Ligger bak passord: Workeren (worker/apptest.ts) slipper bare inn med gyldig informasjonskapsel (K-107) og setter demopassordet
@@ -52,6 +52,13 @@ const VEIER = [
 
 // Skjermene hentes fra biblioteket på bilder.hengsel.no (K-233): iOS-skjermene under app/ (tas på Mac, kjent mangel til første opplasting) og rollene
 // uten iOS-skjerm under apptest/ (fra demoen, 2× med @1x). Stien er uten tema; under /kunde/sigdal hentes Sigdal-utgaven (Enhet → Skjermbilde).
+const SLIDES = [
+  { bilde: "idag", navn: "I dag", alt: "Hengsel Ute: I dag med neste jobb, adresse og knappen Jeg er på vei" },
+  { bilde: "jobben", navn: "Jobben", alt: "Hengsel Ute: jobben med KS, På vei og tegning" },
+  { bilde: "ks", navn: "KS", alt: "Hengsel Ute: KS-sjekkliste punkt for punkt" },
+  { bilde: "ferdig", navn: "Ferdig montert", alt: "Hengsel Ute: meld ferdig montert" },
+];
+
 const APP = new Set(["idag", "jobben", "ks", "avvik", "ferdig"]);
 const bildeSti = (b: string) => (APP.has(b) ? `app/${b}-lys.webp` : `apptest/${b}-lys.webp`);
 const harFeil = KJENTE_FEIL.length > 0;
@@ -65,6 +72,21 @@ const harFeil = KJENTE_FEIL.length > 0;
   <main id="innhold" class="a-side">
     <Sidetopp tittel={BLI_TESTER.tittel} ingress={BLI_TESTER.tekst}>
       <Pille slot="pille" tone="ny">Testversjon {versjon} · {dato(oppdatert)}</Pille>
+      <div class="hero-bilder" slot="komposisjon">
+        <div class="slides">
+          {SLIDES.map((s, i) => (
+            <div class:list={["slide", { on: i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : "true"}>
+              <Enhet type="iphone" bilde={bildeSti(s.bilde)} hd={!APP.has(s.bilde)} alt={s.alt} forst={i === 0} symboler={i === 0} />
+            </div>
+          ))}
+        </div>
+        <div class="prikker" role="tablist" aria-label="Skjermbilder">
+          {SLIDES.map((s, i) => (
+            <button type="button" role="tab" class:list={["prikk", { on: i === 0 }]} aria-selected={i === 0 ? "true" : "false"} aria-label={s.navn} data-prikk><span></span></button>
+          ))}
+        </div>
+        <span class="slidenavn" aria-live="polite" data-slidenavn>{SLIDES[0].navn}</span>
+      </div>
     </Sidetopp>
     <Innhold>
       <Rad hoyde={120}>
@@ -121,7 +143,7 @@ const harFeil = KJENTE_FEIL.length > 0;
         <div class="chips" role="group" aria-label="Roller">
           {ROLLER.map((r) => <label class="chip" for={`rolle-${r.id}`}>{r.chip}</label>)}
         </div>
-        {ROLLER.map((r, i) => (
+        {ROLLER.map((r) => (
           <div class="rollekort" data-rolle={r.id}>
             <div class="rolle-tekst">
               <div class="rolle-hode">
@@ -151,7 +173,7 @@ const harFeil = KJENTE_FEIL.length > 0;
               <a class="pdf" href={`${kundeUtgave ? kundeUtgave.sti : ""}/apptest/Logg_inn_i_demoen.pdf`} download>Alle demobrukere (PDF)</a>
             </div>
             <div class="rolle-bilde">
-              <Enhet type="iphone" bilde={bildeSti(r.bilde)} hd={!APP.has(r.bilde)} alt={r.alt} symboler={i === 0} />
+              <Enhet type="iphone" bilde={bildeSti(r.bilde)} hd={!APP.has(r.bilde)} alt={r.alt} symboler={false} />
             </div>
           </div>
         ))}
@@ -282,6 +304,21 @@ const harFeil = KJENTE_FEIL.length > 0;
   :global(header.sidehode) { --a-flate: var(--flate-senket); --a-lenke: var(--aksent-tekst); }
 
   .a-side a:not(.btn) { color: var(--a-lenke); }
+
+  /* N-3c: bildevekslingen fra toppen før N-3, i sporet «komposisjon» i Sidetopp (scripts/apptest.ts) */
+  .hero-bilder { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
+  .slides { position: relative; width: 100%; max-width: 320px; }
+  .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 700ms var(--ease); }
+  .slide:first-child { position: relative; }
+  .slide.on { opacity: 1; pointer-events: auto; }
+  .prikker { display: flex; gap: 2px; align-items: center; visibility: hidden; }
+  :global(html.js) .prikker { visibility: visible; }
+  .prikk { width: 28px; height: 28px; min-height: 44px; min-width: 44px; margin-inline: -8px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; cursor: pointer; }
+  .prikk span { width: 8px; height: 8px; border-radius: var(--radius-pille); background: var(--surface-highlight-strong); transition: background var(--dur); }
+  .prikk.on span { background: var(--ink); }
+  .slidenavn { font-size: 0.9rem; color: var(--muted); margin-top: -6px; min-height: 1.4em; }
+  @media (max-width: 759px) { .slides { max-width: 250px; } }
+  @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
   .dempet { color: var(--muted); }
   .liten { font-size: 0.88rem; }
   .hode { display: flex; flex-direction: column; gap: 10px; }
