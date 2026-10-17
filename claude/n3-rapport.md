@@ -77,4 +77,19 @@ Ingen. Det eneste som mangler, er filmen «En dag i butikken» (25-001). Den er 
 6. /apptest under toppen er ikke i kitet ennå. Den bør tegnes om i Design hvis den skal følge 25-012 helt.
 7. Motion for Hengsel Ute og «Levert av Hengsel»-merket brukes ikke lenger på hengsel.no (filene ligger der fortsatt).
 
+## N-3b (Eirik 17.10, svar A)
+
+- **KOMMER-sidene er tatt ut av menyen og bunnen** til tekstene finnes (`nav.ts`: `leder`, `kunder` og `om` er fjernet fra `MENY` og `BUNN_MER`).
+  Nøklene står fortsatt i `MenyNokkel`, så `aktiv="om"` osv. typesjekker. Sidene finnes på /for-butikkleder, /kunder og /om-oss med noindex, og står ikke i sitemap.
+  Lenkesjekken finner sidene fra filene i `dist` og har ingen regel om foreldreløse sider, så det trengs ingen unntak. De tre sidene svarer 200 i lenkesjekken.
+  Ingen test krevde dem i menyen (`merkepakke`, `kundetema` og lenkesjekken er uendret).
+- **Ingressene** er nøytrale og nevner verken Eirik eller «venter»: «Siden kommer. Her samler vi det butikkleder trenger: …», «Siden kommer. Referansene legges
+  ut etter avtale med kundene.» og «Siden kommer.». Fliser uten tekst viser «Kommer.» (`Tekstflis kommer`). «Hvem vi er» og «Kontakt» er uendret.
+- **/crm** har ny ingress uten «Klikk deg gjennom» («En vanlig morgen i Hengsel CRM: … – alt på samme kundekort.») og ny description med lenke til
+  demo.hengsel.no i teksten. Modulene er urørt.
+- Filmflisen, sikkerhetstabellen med fem rader og personvernteksten om skjemaet står som før (Eirik har sett dem). Punktene 1 og 2 under «Hva Eirik bør se på» er dermed løst.
+- Nye skjermbilder: `n3b-meny-1440.png` og `n3b-meny-390.png` (menypanelet åpent) og `n3b-om-oss-1440.png`. Bildene av 25-001, 25-002 og 25-008–25-010
+  på 1440 og 390 er tatt på nytt.
+- `npm run build` er grønt for alle nettstedene. `npm test`: 203 av 203 grønne, og lenkesjekken har 0 feil i 749 forespørsler.
+
 N-3 KLAR

@@ -1,9 +1,9 @@
-// /crm: tekstene. Fasit: sidekartet 25-002 (S-68). Tittel, ingress og modulene er fra LES-MEG.md (/crm, K-160). N-3 tok bort den klikkbare
-// demoen (CrmSkjerm og dataene til den); demoen finnes på demo.hengsel.no.
+// /crm: tekstene. Fasit: sidekartet 25-002 (S-68). Tittelen og modulene er fra LES-MEG.md (/crm, K-160). N-3 tok bort den klikkbare demoen
+// (CrmSkjerm og dataene til den; demoen finnes på demo.hengsel.no), og N-3b ga ingressen ny tekst uten «Klikk deg gjennom» (Eirik 17.10).
 
 export const CRM_SIDE = {
   eyebrow: "Hengsel CRM", h1: "Hele butikken på én skjerm.",
-  lede: "Klikk deg gjennom en vanlig morgen: et avvik i ordrebekreftelsen, en ny tegning fra CET og montasjeplanen etterpå.",
+  lede: "En vanlig morgen i Hengsel CRM: et avvik i ordrebekreftelsen, en ny tegning fra CET og montasjeplanen etterpå – alt på samme kundekort.",
   modulerEyebrow: "I CRM", modulerH2: "Samme kundekort for selger, kontor og leder.",
 };
 export const CRM_MODULER: [string, string][] = [
