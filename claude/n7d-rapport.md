@@ -32,13 +32,15 @@ Sjekket `origin/demo` hvert minutt (ikke hvert 5., siden det kostet ingenting) f
 ## Funnet underveis: hengsel.no bygger ikke på `main` (PR #102)
 Flettecommiten `40d6bb4` («Merge branch 'main' into claude/n9-produktlogoer», i #99) løste konfliktene mellom N-9 (`produkt=` på Sidetopp) og N-10 (MacBook) feil: `sites/hengsel/src/pages/index.astro`, `crm.astro` og `kundeportal.astro` ble stående med bare 4–5 linjer hver (samme hunk fra kundeportal limt inn i alle tre). `astro build` feiler med `CompilerError` i `crm.astro:5`, så hengsel.no publiseres ikke fra `main` etter #99 (Workers Builds for hengsel er ikke i sjekklista på PR-ene). Rettelsen er den riktige flettingen (`git merge-tree 75d6750 3ecd5c7`, konfliktene løst for hånd: N-10-filene pluss `produkt="crm"`/`"kundeportal"`, og i `index.astro` bare toppkommentaren) i egen gren `claude/n9-flettefeil-crm-kundeportal`, **PR #102** (CI grønn: bygg og 257 tester). Samme to commiter er flettet inn i N-7d-grenen så #101 kan bygge og teste; når #102 er flettet, er den delen av #101 tom. Jeg rørte ikke `sites/hengsel/` på annen måte. **Valg:** rettelsen i egen PR (så N-7d holder seg til det den gjelder), ikke i #101 alene.
 
+**Oppdatering 00.20:** en annen økt rettet det samme i **#100** (`claude/n9-fiks-fletting`, flettet til main som 5fe009e); diffen mellom main og #102 var tom, så #102 er lukket som overflødig, og main er flettet inn i N-7d-grenen (f20cd7c). #101 har dermed ingen endringer i `sites/hengsel/` lenger.
+
 ## Åpent for Eirik
-1. Flett #102 først (hengsel.no på main), så #101.
+1. Flett #101 (#102 er lukket; #100 på main rettet hengsel.no).
 2. K-378-rapporten på demo mangler «K-378 KLAR» og pin-commiten; pinnen her er flettecommiten `bf31260c`.
 3. Skjermbildene til `claude/n7d-skjermbilder/`: kjør `npm run build && node scripts/skjermbilder-n7d.mjs` (eller la neste økt gjøre det når npm nås).
 4. Designs åpne spørsmål fra K-378 (samme 3:1-kantregel for palett-nettsider og de andre statusene) gjelder bare `tokens/hengsel-palett.*`, ikke `hengsel.tokens.json`, og er derfor uten virkning på nettsidene nå.
 
 ## Kontroll
-Ingen nøkler, passord eller tokens i repo, chat, rapport eller logg. Ikke flettet, ikke deployet. Rørte ikke `sites/vis/`, `sites/admin/`, sngroup.no, byggem.no, workflows eller `wrangler.*`; `sites/hengsel/` bare gjennom flettingen av #102. Ingen hex i sidene (`hengsel-regler`-testen grønn, kilde). Ingen app-skjermbilder i repoet. `npm test` i CI på #101 (commit 462661c, Bibliotek-sjekk-kjøring 39167407939): **257 tester, 256 bestått, 0 feilet, 1 hoppet over (fra før)**, lenkesjekken grønn, alle sidene bygget (Workers Builds for design, admin, sngroup, byggem grønne). De fem n7d-testene (a–e) bestått, inkludert e) mot de bygde sidene.
+Ingen nøkler, passord eller tokens i repo, chat, rapport eller logg. Ikke flettet, ikke deployet. Rørte ikke `sites/vis/`, `sites/admin/`, sngroup.no, byggem.no, workflows eller `wrangler.*`; `sites/hengsel/` ikke rørt (rettelsen av N-9-flettefeilen kom fra #100 på main). Ingen hex i sidene (`hengsel-regler`-testen grønn, kilde). Ingen app-skjermbilder i repoet. `npm test` i CI på #101 (commit 462661c, Bibliotek-sjekk-kjøring 39167407939): **257 tester, 256 bestått, 0 feilet, 1 hoppet over (fra før)**, lenkesjekken grønn, alle sidene bygget (Workers Builds for design, admin, sngroup, byggem grønne). De fem n7d-testene (a–e) bestått, inkludert e) mot de bygde sidene.
 
 N-7d KLAR
