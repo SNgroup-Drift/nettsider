@@ -10,7 +10,7 @@ Ventet på K-371b: den lå på `claude/k371b-ds-2-9` i hengsel-crm først, og bl
 - **Dokumentmaler** på design.hengsel.no: ny side `/dokumentmaler` med alle 28 maler (7 familier, 54 sider), generert fra den pinnede mappa.
 - **Admin:** Teller-komponenten og de sju ikonene er på plass der Admin hadde egne (se «Teller» og «De sju ikonene»).
 - **Workers Builds** (admin, design): ingen feil igjen i repoet; det som gjenstår er i Cloudflare-dashbordet (se egen del).
-- `npm test` grønn: **229 tester, 0 feilet** (4 nye i `scripts/n7b.test.mjs`). `npm run build` bygger alle nettstedene. `npx wrangler deploy --dry-run` for design og admin er grønn (design: 839 filer, 22 MB, ingen over grensen på 25 MiB).
+- `npm test` grønn: **230 tester, 229 bestått, 0 feilet, 1 hoppet over (fra før)** (4 nye i `scripts/n7b.test.mjs`). `npm run build` bygger alle nettstedene. `npx wrangler deploy --dry-run` for design og admin er grønn (design: 839 filer, 22 MB, ingen over grensen på 25 MiB).
 
 ## Hva som endret seg synlig, per side
 
@@ -59,7 +59,7 @@ Trykk «Retry build» på siste commit (på PR-en og på `main`). Er bygget fort
 Jeg har ikke endret `wrangler.*`, `package.json`-bygg for admin eller `.github/workflows/*` for dette punktet.
 
 ### 5. Test og skjermbilder
-- `npm test`: 229/229 grønne, 0 feilet, 0 hoppet over i denne kjøringen. Nye: `scripts/n7b.test.mjs` (tokens, Teller i Admin, dokumentmalene, CSP-sikre eksempler). Oppdatert: 75 ikoner og 2.10.0 i `design-fasit`, `produktpaletter`; og:image-testen hopper over `ds/dokumentmaler/` (utskriftsark).
+- `npm test`: 229 av 230 bestått, 0 feilet, 1 hoppet over (fra før). Nye: `scripts/n7b.test.mjs` (tokens, Teller i Admin, dokumentmalene, CSP-sikre eksempler). Oppdatert: 75 ikoner og 2.10.0 i `design-fasit`, `produktpaletter`; og:image-testen hopper over `ds/dokumentmaler/` (utskriftsark).
 - Skjermbilder (1440 og 390): forsidene hengsel.no, hengsel.no/crm, vis., design. (forside, /dokumentmaler, /farger, /komponenter) og admin (innlogging; `/` trenger API-et bak Access) i `claude/n7b-skjermbilder/` (`npm run build` og `node scripts/skjermbilder-n7b.mjs`). **Bilder fra biblioteket (bilder.hengsel.no) vises ikke i skjermbildene**: sandkassen når ikke nettet, manifestkopien i repoet brukes, så enhetsrammene står uten app-bilde. Admin-menyen med tellere er ikke i skjermbildene (den krever data fra API-et).
 
 ## Åpent for Eirik
