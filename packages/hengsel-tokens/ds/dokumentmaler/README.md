@@ -27,7 +27,7 @@ NN-navn/
   side-1.png …   forhåndsvisning per side (Hengsel standard)
 ```
 
-## Dokumentene (28 maler, 54 sider)
+## Dokumentene (29 maler, 55 sider)
 
 | Nr | Mappe | Dokument | Familie | Sider | Brukes i | Varianter | Kilde |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -48,6 +48,7 @@ NN-navn/
 | 15 | `15-ordrebekreftelse/` | Ordrebekreftelse **(NY)** | økonomi | 1 | CRM-PDF ved «Send ordrebekreftelse» (D3), e-post, SMS-lenke, Min side | Privat / proff (proff viser org.nr og eks. mva) | NY. Tegnet etter fil 65 D3 og fil 41 KA2. Ikke tegnet som dokument før |
 | 16 | `16-faktura/` | Faktura **(NY)** | økonomi | 1 | CRM-PDF fra «Lag faktura» (D9) før «Send til regnskap», e-post og Min side. Erstatter ikke PowerOffice-malen | Forskudd / sluttfaktura / kreditnota (faktura.type). Privat / proff | NY. Tegnet etter fil 65 D9. PowerOffice-mal finnes ikke i prosjektet |
 | 28 | `28-etikett-62x100/` | Kolli-etikett 62 × 100 mm | annet | 1 | Etikettskriver (LG7) | Ingen | Fil 36 LG7 |
+| 29 | `29-e11-hvordan-gikk-det/` | E-post: Hvordan gikk det? (E11) | kundeportal/e-post | 1 | E-post fra appen (kunde) | Ingen | Fil 52 E11 |
 | 17 | `17-e1-engangskode/` | E-post: Engangskode | kundeportal/e-post | 1 | E-post fra appen (kunde) | Ingen | Fil 40 E1 |
 | 18 | `18-e2-tilbudet-er-klart/` | E-post: Tilbudet er klart | kundeportal/e-post | 1 | E-post fra appen (kunde) | Ingen | Fil 40 E2 |
 | 19 | `19-e3-nytt-svar/` | E-post: Nytt svar på Min side | kundeportal/e-post | 1 | E-post fra appen (kunde) | Ingen | Fil 40 E3 |

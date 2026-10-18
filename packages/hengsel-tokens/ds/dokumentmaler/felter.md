@@ -1,28 +1,28 @@
 # Flettefelt i dokumentmalene
 
-409 felt i 51 objekter, samlet fra `felter.json` i de 28 malene (eksport fra CRM_v4, 18.10.2026). Alle er nye (NY), unntatt `kunde.*`, som kommer fra kundetemaet. Feltform `{{objekt.felt}}`. Lister skrives `{{#liste}}…{{/liste}}`, og «hvis ikke» skrives `{{^x}}…{{/x}}`. Felt med `[]` er felt per rad i en liste. Kolonnen «Maler» viser malnumrene.
+413 felt i 52 objekter, samlet fra `felter.json` i de 29 malene (eksport fra CRM_v4, 18.10.2026). Alle er nye (NY), unntatt `kunde.*`, som kommer fra kundetemaet. Feltform `{{objekt.felt}}`. Lister skrives `{{#liste}}…{{/liste}}`, og «hvis ikke» skrives `{{^x}}…{{/x}}`. Felt med `[]` er felt per rad i en liste. Kolonnen «Maler» viser malnumrene.
 
 ## kunde (3)
 
 | Felt | Type | Eksempel | Maler |
 |---|---|---|---|
 | `kunde.kortnavn` | tekst | Kjøkkenstudio | 28 |
-| `kunde.logo_lys` | tekst |  | 01, 02, 03, 04, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27 |
-| `kunde.navn` | tekst | Kjøkkenstudio Hamar | 01, 02, 03, 04, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27 |
+| `kunde.logo_lys` | tekst |  | 01, 02, 03, 04, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
+| `kunde.navn` | tekst | Kjøkkenstudio Hamar | 01, 02, 03, 04, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
 
 ## butikk (9)
 
 | Felt | Type | Eksempel | Maler |
 |---|---|---|---|
-| `butikk.adresse` | tekst | Storgata 1, 2317 Hamar | 01, 03, 05, 06, 07, 08, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27 |
+| `butikk.adresse` | tekst | Storgata 1, 2317 Hamar | 01, 03, 05, 06, 07, 08, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27, 29 |
 | `butikk.by` | tekst | Hamar | 12, 13 |
-| `butikk.epost` | tekst | post@demo.invalid | 08, 11, 13, 17, 18, 19, 20, 21, 22, 23, 27 |
+| `butikk.epost` | tekst | post@demo.invalid | 08, 11, 13, 17, 18, 19, 20, 21, 22, 23, 27, 29 |
 | `butikk.faktura_epost` | tekst | faktura@demo.invalid | 06 |
 | `butikk.kontonr` | tekst | 0000 00 00000 | 16 |
-| `butikk.navn` | tekst | Kjøkkenstudio Hamar | 01, 03, 06, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27 |
+| `butikk.navn` | tekst | Kjøkkenstudio Hamar | 01, 03, 06, 08, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27, 29 |
 | `butikk.orgnr` | tekst | 999 999 999 | 05, 06, 07, 15, 16 |
 | `butikk.selskap` | tekst | Kjøkkenstudio Hamar AS | 05, 06, 07 |
-| `butikk.telefon` | tekst | 970 06 500 | 07, 08, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27 |
+| `butikk.telefon` | tekst | 970 06 500 | 07, 08, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 27, 29 |
 
 ## kjoper (6)
 
@@ -30,7 +30,7 @@
 |---|---|---|---|
 | `kjoper.adresse` | tekst | Furuvegen 12, 2312 Ottestad | 01, 05, 11, 12, 14, 15, 16 |
 | `kjoper.epost` | tekst | ola@demo.invalid | 05, 11 |
-| `kjoper.fornavn` | tekst | Ola | 18 |
+| `kjoper.fornavn` | tekst | Ola | 18, 29 |
 | `kjoper.kundenr` | tekst | 10355 | 05, 16 |
 | `kjoper.navn` | tekst | Kari Nordmann | 01, 02, 04, 05, 11, 12, 14, 15, 16, 24, 25, 26 |
 | `kjoper.telefon` | tekst | 000 00 046 | 05, 11 |
@@ -46,14 +46,16 @@
 | `proffkunde.orgnr` | tekst | 912 345 678 | 06 |
 | `proffkunde.telefon` | tekst | 900 00 610 | 06 |
 
-## selger (4)
+## selger (6)
 
 | Felt | Type | Eksempel | Maler |
 |---|---|---|---|
 | `selger.epost` | tekst | kari@demo.invalid | 01, 03, 05, 06 |
 | `selger.fornavn` | tekst | Kari | 18, 19 |
-| `selger.navn` | tekst | Kari Selger | 01, 02, 03, 05, 06, 07, 11, 15, 16, 19, 27 |
-| `selger.telefon` | tekst | 000 00 047 | 01, 03, 05, 06, 18, 27 |
+| `selger.fritekst` | tekst | Jeg har lagt inn to forslag til benkeplate, så du kan sammenligne eik og kompositt før vi bestemmer oss. | 18 |
+| `selger.navn` | tekst | Kari Selger | 01, 02, 03, 05, 06, 07, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
+| `selger.telefon` | tekst | 000 00 047 | 01, 03, 05, 06, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
+| `selger.tittel` | tekst | Kjøkkenrådgiver | 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
 
 ## leverandor (1)
 
@@ -213,13 +215,13 @@
 | `ordre.pris[].belop` | tekst |  | 05 |
 | `ordre.pris[].navn` | tekst |  | 05 |
 | `ordre.rest` | tekst | 200 900 kr | 15 |
-| `ordre.rom` | tekst | Kjøkken | 05, 15, 19, 20, 21, 22, 23 |
+| `ordre.rom` | tekst | Kjøkken | 05, 15, 19, 20, 21, 22, 23, 29 |
 | `ordre.signert` | tekst | 12.10.2026 | 15 |
 | `ordre.sum` | tekst | 287 000 kr | 15 |
 | `ordre.tittel` | tekst | Kjøkken Nordmann | 15 |
 | `ordre.total` | tekst | 210 625 kr | 05 |
 
-## bestilling (11)
+## bestilling (12)
 
 | Felt | Type | Eksempel | Maler |
 |---|---|---|---|
@@ -227,6 +229,7 @@
 | `bestilling.flere` | tekst | 20 | 27 |
 | `bestilling.kundenr` | tekst | SSI-0412 | 27 |
 | `bestilling.levering` | tekst | uke 50 | 27 |
+| `bestilling.merknad` | tekst, valgfri | Benkeplaten må leveres samtidig med skrogene. Ring Eirik før kjøring. | 27 |
 | `bestilling.linjer` | liste |  | 27 |
 | `bestilling.linjer[].antall` | tekst |  | 27 |
 | `bestilling.linjer[].navn` | tekst |  | 27 |
@@ -476,8 +479,8 @@
 
 | Felt | Type | Eksempel | Maler |
 |---|---|---|---|
-| `epost.bunnlinje` | tekst | Svar gjerne direkte i Min side. | 17, 18, 19, 20, 21, 22, 23 |
-| `epost.forhandstekst` | tekst | Koden din til Min side er 902200. Den varer i 10 minutter. | 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27 |
+| `epost.bunnlinje` | tekst | Svar gjerne direkte i Min side. | 17, 18, 19, 20, 21, 22, 23, 29 |
+| `epost.forhandstekst` | tekst | Koden din til Min side er 902200. Den varer i 10 minutter. | 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29 |
 | `epost.knapp` | tekst | Se tilbudet | 18, 19, 20, 21, 22, 23, 24, 25, 26 |
 | `epost.lenke` | tekst | # | 18, 19, 20, 21, 22, 23, 24, 25, 26 |
 
@@ -666,3 +669,25 @@
 | `vedlikehold[].overflate` | tekst |  | 14 |
 | `vedlikehold[].tekst` | tekst |  | 14 |
 
+## Nye i 2.10 (29 E11 Hvordan gikk det?)
+
+| Felt | Type | Eksempel | Maler |
+|---|---|---|---|
+| `epost.emne` | tekst | Hvordan gikk det? | 29 |
+| `montering.ferdig_dato` | tekst | 14. desember | 29 |
+| `portal.lenke_fornoyd` | tekst | https://…/min-side/svar?valg=fornoyd | 29 |
+| `portal.lenke_noe_a_rette` | tekst | https://…/min-side/svar?valg=noe-a-rette | 29 |
+| `portal.lenke_ring_meg` | tekst | https://…/min-side/svar?valg=ring-meg | 29 |
+
+## Nye i 2.10b (felt CRM-et sender i dag)
+
+| Felt | Type | Eksempel | Maler |
+|---|---|---|---|
+| `selger.fritekst` | tekst, valgfri | Jeg har lagt inn to forslag til benkeplate … | 18 |
+| `selger.tittel` | tekst | Kjøkkenrådgiver | 17–27, 29 |
+| `bestilling.merknad` | tekst, valgfri | Benkeplaten må leveres samtidig med skrogene. … | 27 |
+| `testmodus` | valg | true | 27 |
+
+- **Signatur** nederst i e-postkortet i 17–29 (alle e-postmalene), lik i alle: `{{selger.navn}}` · `{{selger.tittel}}, {{butikk.navn}}` · `{{selger.telefon}}`. Klassen er `.epost-signatur` i `mal.css`.
+- **Valgfrie avsnitt** vises bare når feltet har innhold: `{{#selger.fritekst}}<p class="fritekst">{{selger.fritekst}}</p>{{/selger.fritekst}}`, og det samme for `bestilling.merknad`. Linjeskift i teksten blir beholdt.
+- **Testmodus (27):** `{{#testmodus}}…{{/testmodus}}` gir en gul stripe øverst med teksten «Testbestilling – ikke send videre».

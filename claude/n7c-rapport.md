@@ -19,7 +19,7 @@ Gren `claude/n7c-design-2-10c` fra `origin/main` (d5a8aca, #93, #94 og #95 er fl
 - **Dokumentasjon** (`#dokumentasjon`): LAYOUT-REGLER 3c («navn i stegraden»: høyst 14 tegn, Ferdigmelding og KS, Befaring som hendelse 21-309) hentet fra pinnet fil, ingen Sigdal og ingen hex (testet).
 - Fortsatt grønt: N-7b-vakten (ingen Sigdal på siden, CSP-trygge eksempler, ingen `side-N.png` fra kundetema; testen er oppdatert fordi bildene nå er Hengsel standard).
 
-### Det som ikke er i pinnen (Design 2.10c)
+### Det som ikke var i runde 1-pinnen (løst i runde 2, se under)
 1. **Mal 29-e11 er foreløpig:** bare `mal.css` og `side-1.png`; ingen `eksempel.html`, `felter.json`, `mal.html` eller rad i README-tabellen (K-371c-rapporten sier det samme: `eksport-2-10c` er ikke kommet). Kortet vises derfor med «foreløpig», flettefelt «kommer» og uten eksempellenker. Navnet «E-post: Hvordan gikk det» står i `FORELOPIG` i `dokumentmaler.ts` (min tolkning av mappenavnet). Testen b) feiler når mal 29 blir komplett, så oppføringen kan fjernes.
 2. **«Nye i 2.10b» i `felter.md` finnes ikke:** `felter.md` i commiten har ingen slik seksjon (grep på «2.10» og «Nye i»). Siden har et kort for den som sier det, og viser innholdet automatisk når avsnittet kommer i en senere pin.
 3. **Fritekst, merknad og testmodus-stripe i 18-e2 og 27-e10:** `eksempel.html` i 18-e2 og 27-e10 har ikke disse (ingen treff på fritekst, merknad eller testmodus i `eksempel.html`, `mal.html` eller bildene). Jeg har ikke funnet på noe: siden viser det Design har levert. Samme for «signatur» som eget element i e-postene: det som står er «Levert av Hengsel» i bunnen på alle 17–29.
@@ -42,5 +42,17 @@ Se PR-kommentaren (samme som N-7b: Preview/Deploy command `-c sites/<navn>/wrang
 
 ## Kontroll
 Ingen nøkler, passord eller tokens i repo, chat, rapport eller logg. Ikke flettet, ikke deployet. Rørte ikke `sites/vis/`, sngroup.no, byggem.no, workflows eller `wrangler.*`. Ingen hex i sidene (`hengsel-regler`-testen grønn). Ingen app-skjermbilder i repoet. For å lese pin-kilden ble hengsel-crm lagt til i økta (`add_repo`, bare lesing) og klonet utenfor repoet.
+
+## Runde 2 (Eirik 20.35): pin mot K-371c andre runde
+Runde 1 (PR #96, pin `12c2c245`) ble flettet før andre runde var inne, så dette er en ny gren fra oppdatert `main` (13817d9) og en ny PR; #96 er ikke gjenbrukt.
+- **Ny pin: `3ad8cd783be3ffe5af8b1d477bacf7924cf94c6e`** (`demo: flett claude/k371c-ds-2-10-delta-demo`, etter `12c2c245`; funnet av sjekken i bakgrunnen, hvert 5. minutt). Designsystem fortsatt 2.10.0.
+- **`tokens.css`, `tokens-mork-prover.css` og `fonts.css` er uendret** bortsett fra commit-kommentaren (`12c2c245` → `3ad8cd78`). Ingen verdier endret seg.
+- De tre punktene som sto som «mangler» er nå med:
+  1. **Mal 29 er komplett** (`eksempel.html`, `felter.json`, `mal.html`, rad i README-tabellen): `FORELOPIG` er tom, kortet har eksempel- og flettefeltlenker, og testen b) feiler hvis en mal igjen mangler README-rad.
+  2. **«Nye i 2.10b» (og «Nye i 2.10» for E11) i `felter.md`** vises som tabeller under «Dokumentasjon» sammen med punktene om signatur, valgfrie avsnitt og testmodus.
+  3. **Fritekst, merknad og testmodus-stripe** står i `eksempel.html` for 18-e2 og 27-e10, og alle e-postene 17–29 har signaturen (`epost-signatur`); `n7c.test.mjs` c) sjekker det. De nye bildene viser «Testbestilling – ikke send videre» øverst i 27-e10.
+- Dokumentasjonskortene ligger i én kolonne (tabellene er for brede for tre), og felttabellene ruller sidelengs på 390 uten at siden får vannrett rulling.
+- `npm test`: 238 tester, 237 bestått, 0 feilet, 1 hoppet over (fra før). Skjermbildene i `claude/n7c-skjermbilder/` er tatt på nytt.
+- «Åpent for Eirik» punkt 1–2 over er løst (mal 29 hentet navnet «E-post: Hvordan gikk det?» fra `felter.json`). Punkt 3: K-371c-rapportens `PIN_COMMIT` er fortsatt plassholder hos meg å se; pinnen er flettecommiten.
 
 N-7c KLAR

@@ -87,6 +87,18 @@
           "type": "string",
           "pattern": "^#[0-9A-Fa-f]{6}$",
           "description": "Kant på felt og sekundærknapp. ≥ 3:1."
+        },
+        "advarsel_bg": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "default": "#FFE9BC",
+          "description": "Valgfri. Bakgrunn på advarselstripen (testmodus i e-post). Standard er status advarsel lys i paletten."
+        },
+        "advarsel_fg": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "default": "#6D5000",
+          "description": "Valgfri. Tekst på advarselstripen. ≥ 4,5:1 på advarsel_bg. Standard er status advarsel lys i paletten."
         }
       }
     },
@@ -240,7 +252,8 @@
     "tekst": "≥ 4,5:1 på bakgrunn, flate og felt",
     "paa-aksent": "≥ 4,5:1 på aksent",
     "lenke": "≥ 4,5:1 på bakgrunn",
-    "kant": "≥ 3:1 mot flate og bakgrunn"
+    "kant": "≥ 3:1 mot flate og bakgrunn",
+    "advarsel_fg": "≥ 4,5:1 på advarsel_bg (valgfri)"
   },
   "x-css": {
     "bakgrunn": "--kt-bakgrunn",
@@ -250,6 +263,8 @@
     "aksent": "--kt-aksent",
     "lenke": "--kt-lenke",
     "kant": "--kt-kant",
+    "advarsel_bg": "--kt-advarsel-bg (valgfri)",
+    "advarsel_fg": "--kt-advarsel-fg (valgfri)",
     "skrift_overskrift": "--kt-skrift-overskrift (og @font-face fra fontfil)",
     "skrift_tekst": "--kt-skrift-tekst (og @font-face fra fontfil)",
     "hjorner": "--kt-radius",
