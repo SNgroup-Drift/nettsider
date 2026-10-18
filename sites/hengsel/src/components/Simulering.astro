@@ -4,7 +4,10 @@
  * steg for steg, som en stille demo. Bildene hentes fra biblioteket på bilder.hengsel.no (K-233, Skjermbilde.astro); aldri lokale app-bilder.
  *
  *  - Myk overgang (crossfade) mellom bildene, ca. 3,5 s per bilde, og stegmerker under rammen som kan trykkes (scripts/simulering.ts).
- *  - Går bare når rammen er synlig. prefers-reduced-motion: første bilde står, merkene bytter for hånd. Uten skript står første bilde.
+ *  - N-6b (WCAG 2.2.2): pause-knapp ved merkene (Stegmerker.astro) som stopper og starter serien; serien holdes også mens musen er over rammen eller
+ *    fokus er inne i gruppen, og går videre når musen/fokus går ut.
+ *  - Går bare når rammen er synlig. prefers-reduced-motion: første bilde står, merkene bytter for hånd, ingen pause-knapp. Uten skript står første bilde.
+ *  - Statuslinjens symboler (id-ene sb-* i Enhet.astro) tegnes aldri her (symboler={false}): den første rammen på siden definerer dem (scripts/symboler.test.mjs).
  *  - Alle bildene har bredde og høyde fra manifestet (ingen CLS). Bare første bilde kan lastes med en gang (forst); resten er lazy
  *    og hentes når rammen kommer til syne.
  *  - Et steg uten bilde i manifestet hoppes over. Mangler alle, vises «Skjermbilde kommer» (K-233).

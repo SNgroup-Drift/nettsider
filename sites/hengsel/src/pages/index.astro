@@ -5,6 +5,7 @@
  *  rad 1 (120) Status 1/3 ×3 · rad 2 (480) Tabell «En dag i butikken» (6 rader) · rad 3 (320) Liste «Bygget for» 1/2 + Tekst «Film» 1/2.
  * Tekster og data i content/forside.ts.
  * N-6: «Fra tilbud til ferdig montert» (simulering på Studio Display, content/simuleringer.ts) og «Tre enheter» under raden «En dag i butikken».
+ * N-6b: bare den første rammen (Studio Display i toppen) definerer statuslinjens symboler (sb-*); alle andre rammer på siden har symboler={false}.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -29,7 +30,7 @@ import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/fo
       <a class="btn" href="/priser-og-demo#demo">{HERO.demo}</a>
       <div class="komposisjon" slot="komposisjon">
         <div class="pc"><Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet></div>
-        <div class="iphone"><Enhet type="iphone" bilde="app/idag-lys.webp" alt={HERO.altIphone} /></div>
+        <div class="iphone"><Enhet type="iphone" bilde="app/idag-lys.webp" alt={HERO.altIphone} symboler={false} /></div>
       </div>
     </Sidetopp>
     <Innhold>

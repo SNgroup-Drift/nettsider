@@ -2,24 +2,40 @@
 /**
  * N-6: stegmerkene under en simulering («1 Tilbud · 2 Ordre · 3 Bestilling …»). Aktivt steg er markert; merkene kan trykkes (scripts/simulering.ts).
  * Uten skript står første steg som aktivt og knappene gjør ingenting.
+ * N-6b: en liten pause-knapp ved merkene (WCAG 2.2.2): stopper og starter serien igjen (aria-pressed="true" = satt på pause). Knappen vises først når
+ * skriptet har tatt den i bruk (klassen «klar»), og aldri ved prefers-reduced-motion, der serien ikke går av seg selv. Ikonene er inline-SVG med currentColor.
  */
-interface Props { navn: readonly string[]; etikett?: string }
-const { navn, etikett = "Velg steg" } = Astro.props;
+interface Props { navn: readonly string[]; etikett?: string; /** false: ingen pause-knapp (serien er ikke automatisk) */ pause?: boolean }
+const { navn, etikett = "Velg steg", pause = true } = Astro.props;
 ---
 {navn.length > 1 && (
   <div class="merker" role="group" aria-label={etikett}>
     {navn.map((n, i) => (
       <button type="button" class:list={["merke", { aktiv: i === 0 }]} data-merke aria-pressed={i === 0 ? "true" : "false"}><span class="nr">{i + 1}</span> {n}</button>
     ))}
+    {pause && (
+      <button type="button" class="pause" data-pause aria-pressed="false" aria-label="Pause serien" title="Pause serien">
+        <svg class="ikon ikon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3" y="2.5" width="3.6" height="11" rx="1" /><rect x="9.4" y="2.5" width="3.6" height="11" rx="1" /></svg>
+        <svg class="ikon ikon-spill" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.6 3.1v9.8c0 .9 1 1.4 1.7 1l7.6-4.9c.7-.4.7-1.5 0-1.9L6.3 2.1c-.7-.5-1.7 0-1.7 1z" /></svg>
+      </button>
+    )}
   </div>
 )}
 
 <style>
-  .merker { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; margin-top: 12px; font-family: var(--f-body); }
+  .merker { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; margin-top: 12px; font-family: var(--f-body); }
   .merke { appearance: none; margin: 0; padding: 6px 12px; min-height: 32px; border: 1px solid var(--linje); border-radius: var(--radius-felt); background: transparent; color: var(--tekst-dempet); font: inherit; font-size: 13px; line-height: 18px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
   .merke:hover { color: var(--tekst); border-color: var(--kant); }
   .merke:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
   .merke.aktiv { background: var(--aksent); border-color: var(--aksent); color: var(--tekst-invers); }
   .nr { font-variant-numeric: tabular-nums; font-weight: 600; }
-  @media (prefers-reduced-motion: reduce) { .merke { transition: none; } }
+  /* Pause-knappen: skjult til skriptet har tatt den i bruk (uten skript går ikke serien) */
+  .pause { appearance: none; display: none; align-items: center; justify-content: center; margin: 0 0 0 4px; padding: 0; width: 32px; min-height: 32px; border: 1px solid var(--linje); border-radius: var(--radius-felt); background: transparent; color: var(--tekst-dempet); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .pause.klar { display: inline-flex; }
+  .pause:hover { color: var(--tekst); border-color: var(--kant); }
+  .pause:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  .pause[aria-pressed="true"] { background: var(--aksent); border-color: var(--aksent); color: var(--tekst-invers); }
+  .ikon { width: 14px; height: 14px; fill: currentColor; }
+  .pause[aria-pressed="true"] .ikon-pause, .pause[aria-pressed="false"] .ikon-spill { display: none; }
+  @media (prefers-reduced-motion: reduce) { .merke, .pause { transition: none; } .pause.klar { display: none; } }
 </style>
