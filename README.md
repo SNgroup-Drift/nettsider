@@ -12,7 +12,7 @@ Nettstedene til SN Group (ES-HOLDING AS, org.nr. 927 363 585), samlet i ett repo
 | hengsel.no/kunde/sigdal | `sites/hengsel` (`src/pages/kunde/sigdal*`) + `packages/kundetema-sigdal` | K-223: Sigdal-utgave av Hengsel-sidene og Visningsrommet (`/kunde/sigdal/vis/`), bak Cloudflare Access, noindex. Se `claude/k223-rapport.md` |
 | vis.sngroup.no | `sites/vis` | Visningsrommet: lukket demo bak Cloudflare Access, ren HTML uten Astro, på Cloudflare Pages (K-110, se `sites/vis/README.md`) |
 
-**Hengsel-sidene** (hengsel.no, vis., design., admin.) har én delt token-fil og bare lys modus; reglene står i [docs/design/hengsel-regler.md](docs/design/hengsel-regler.md).
+**Hengsel-sidene** (hengsel.no, vis., design., admin.) har én delt token-fil og bare lys modus; reglene står i [docs/design/hengsel-regler.md](docs/design/hengsel-regler.md). Fra designsystem 2.5 (N-7) har hver side `data-produkt` (nettsider oransje, CRM blå, Ute grønn, Admin lilla) og produktlogoer fra pakken, se regel 12 der.
 
 Alt er statisk (Astro, og ren HTML for Visningsrommet): ingen server, ingen database, ingen sporing og ingen informasjonskapsler. Unntakene på hengsel.no: /apptest ligger bak et felles passord med et lite Worker-skript og én informasjonskapsel, og demoskjemaet sender til /api/demo i samme Worker (se docs/hosting.md). Unntaket admin.hengsel.no (K-240): Workeren har et JSON-API under /api mot Cloudflare D1 (migreringer i `sites/admin/migrations`), bak Cloudflare Access.
 
