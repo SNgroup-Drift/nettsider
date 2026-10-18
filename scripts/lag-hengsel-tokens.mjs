@@ -41,6 +41,15 @@ function lysUtgaver() {
 }
 const lagBlokk = (kommentar, betingelse, v) => (Object.keys(v).length ? `\n/* ${kommentar} */\n@media ${betingelse} {\n  :root {\n${Object.entries(v).map(([n, x]) => `    --${n}: ${x};`).join("\n")}\n  }\n}\n` : "");
 
+/** K-371 / N-7: produktpaletter (designsystem 2.5). data-produkt="ute|nettsider|crm|admin" setter aksent, flater og tekst for produktet. Bare lys (nettsidene har ikke mørk),
+ *  uten P3 og økt kontrast (finnes ikke for produktpaletter i 2.5). Rollenavnene i JSON (grunn, grunn-hevet …) er de samme variablene som i :root (flate-side, flate-kort …). */
+const PRODUKT_ROLLER = [["aksent", "aksent"], ["aksent-trykk", "aksent-trykk"], ["aksent-tekst", "aksent-tekst"], ["aksent-svak", "aksent-svak"], ["aksent-valgt", "aksent-valgt"], ["paa-aksent", "paa-aksent"], ["flate-valgt", "flate-valgt"], ["merke-stift", "prikk"], ["flate-side", "grunn"], ["flate-kort", "grunn-hevet"], ["flate-senket", "grunn-senket"], ["tekst", "tekst"], ["tekst-dempet", "tekst-dempet"], ["tekst-svak", "tekst-svak"]];
+function lagProduktCss() {
+  const blokker = Object.keys(json.produkt).filter((n) => !n.startsWith("$")).map((n) => `[data-produkt="${n}"] {\n${PRODUKT_ROLLER.map(([v, r]) => `  --${v}: ${json.produkt[n].lys[r]};`).join("\n")}\n  color-scheme: light;\n}\n`);
+  const nivaa = `/* Haster og synlighet (designsystem 2.5, HASTER.md): aliaser til status-tokens, ingen nye farger. */\n:root,\n[data-produkt] {\n${["haster", "snart"].flatMap((n) => ["fg", "bg", "kant"].map((d) => `  --nivaa-${n}-${d}: var(--status-${json.nivaa[n] === "feil" ? "feil" : "advarsel"}-${d});`)).join("\n")}\n  --nivaa-stripe: ${json.nivaa.stripe}px;\n}\n`;
+  return `\n${nivaa}\n/* Produktpaletter (designsystem 2.5): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */\n${blokker.join("\n")}`;
+}
+
 export function lagTokensCss() {
   const u = [];
   const v = (navn, verdi) => u.push(`  --${navn}: ${verdi};`);
@@ -79,7 +88,7 @@ export function lagTokensCss() {
 
 :root {${u.join("\n").replace(/^\n/, "\n")}
 }
-${blokk("nettbrett", sm.nettbrett)}${blokk("telefon", sm.telefon)}${(() => { const { p3Lys, okt, p3Okt } = lysUtgaver(); return lagBlokk("Display P3, lys (besluttet, palettpakke v2): furu også på Mac og iPhone", "(color-gamut: p3)", p3Lys) + lagBlokk("Økt kontrast, lys (besluttet, palettpakke v2)", "(prefers-contrast: more)", okt) + lagBlokk("Økt kontrast og Display P3, lys (besluttet, palettpakke v2)", "(prefers-contrast: more) and (color-gamut: p3)", p3Okt); })()}`;
+${blokk("nettbrett", sm.nettbrett)}${blokk("telefon", sm.telefon)}${(() => { const { p3Lys, okt, p3Okt } = lysUtgaver(); return lagBlokk("Display P3, lys (besluttet, palettpakke v2): furu også på Mac og iPhone", "(color-gamut: p3)", p3Lys) + lagBlokk("Økt kontrast, lys (besluttet, palettpakke v2)", "(prefers-contrast: more)", okt) + lagBlokk("Økt kontrast og Display P3, lys (besluttet, palettpakke v2)", "(prefers-contrast: more) and (color-gamut: p3)", p3Okt); })()}${lagProduktCss()}`;
 }
 
 /** K-202: de mørke verdiene som fargeprøver (--mork-*), scopet til klassen .mork-prover, aldri :root. Importeres bare av design.hengsel.no. */

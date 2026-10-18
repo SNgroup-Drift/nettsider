@@ -1,7 +1,7 @@
 // GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
-// Hengsel-designsystemet, versjon 2.2.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
+// Hengsel-designsystemet, versjon 2.5.0 (palett «blekk med furu», K-206). Brukes av CRM (src) og Expo-montørappen (montorapp).
 
-export const versjon = "2.2.0" as const;
+export const versjon = "2.5.0" as const;
 
 /** Merkefargene (råfarger): blekk, furu og produktfargene. Bruk rollene under i komponenter. */
 export const palett = {
@@ -1715,6 +1715,149 @@ export const kundetema = {
 } as const;
 
 export type Kundetema = (typeof kundetema.eksempler)[keyof typeof kundetema.eksempler];
+
+/**
+ * Produktpaletter (designsystem 2.5, K-371): ute (lys og mork), nettsider, crm og admin (bare lys). Nøklene er rolle-/variabelnavnene i
+ * data-produkt-blokkene i tokens.css: grunn = --flate-side, grunn-hevet = --flate-kort, grunn-senket = --flate-senket, prikk = --merke-stift.
+ */
+export const produkt = {
+  "ute": {
+    "navn": "Hengsel Ute (grønn)",
+    "gjelder": [
+      "Hengsel Ute",
+      "montørappen"
+    ],
+    "modus": [
+      "lys",
+      "mork"
+    ],
+    "lys": {
+      "aksent": "#05806F",
+      "aksent-trykk": "#007665",
+      "aksent-tekst": "#016d5e",
+      "aksent-svak": "#E0F4EE",
+      "aksent-valgt": "#BCE6DB",
+      "paa-aksent": "#FBF9F6",
+      "prikk": "#068472",
+      "flate-valgt": "#E0F4EE",
+      "grunn": "#F6F8FB",
+      "grunn-hevet": "#FBFDFF",
+      "grunn-senket": "#EFF1F4",
+      "tekst": "#1A1D22",
+      "tekst-dempet": "#51565C",
+      "tekst-svak": "#686E75"
+    },
+    "mork": {
+      "aksent": "#54B9A5",
+      "aksent-trykk": "#63C8B3",
+      "aksent-tekst": "#8ACDBE",
+      "aksent-svak": "#112823",
+      "aksent-valgt": "#163F37",
+      "paa-aksent": "#0D1013",
+      "prikk": "#54B9A5",
+      "flate-valgt": "#13332D",
+      "grunn": "#0B0D11",
+      "grunn-hevet": "#111418",
+      "grunn-senket": "#06080B",
+      "tekst": "#EAEDF0",
+      "tekst-dempet": "#ADB1B7",
+      "tekst-svak": "#90969D"
+    }
+  },
+  "nettsider": {
+    "navn": "Nettsider (oransje)",
+    "gjelder": [
+      "hengsel.no",
+      "vis.hengsel.no",
+      "design.hengsel.no",
+      "admin.hengsel.no",
+      "demo.hengsel.no",
+      "bilder.hengsel.no"
+    ],
+    "modus": [
+      "lys"
+    ],
+    "lys": {
+      "aksent": "#AD5626",
+      "aksent-trykk": "#99440F",
+      "aksent-tekst": "#964109",
+      "aksent-svak": "#F8F1EE",
+      "aksent-valgt": "#EFDDD4",
+      "paa-aksent": "#FBF9F6",
+      "prikk": "#B54F00",
+      "flate-valgt": "#F8F1EE",
+      "grunn": "#FAF6F2",
+      "grunn-hevet": "#FEFDFB",
+      "grunn-senket": "#F3EFE9",
+      "tekst": "#272D38",
+      "tekst-dempet": "#4E535C",
+      "tekst-svak": "#666A71"
+    }
+  },
+  "crm": {
+    "navn": "Hengsel CRM (blå, PC)",
+    "gjelder": [
+      "Hengsel CRM",
+      "kundeportalen"
+    ],
+    "modus": [
+      "lys"
+    ],
+    "lys": {
+      "aksent": "#4C5FCB",
+      "aksent-trykk": "#3D4DB7",
+      "aksent-tekst": "#3A49A8",
+      "aksent-svak": "#F6F7FC",
+      "aksent-valgt": "#EAECF9",
+      "paa-aksent": "#FBF9F6",
+      "prikk": "#5165D3",
+      "flate-valgt": "#EAECF9",
+      "grunn": "#F1F1EF",
+      "grunn-hevet": "#F9F9F7",
+      "grunn-senket": "#EAEAE8",
+      "tekst": "#232A34",
+      "tekst-dempet": "#4D525B",
+      "tekst-svak": "#64686F"
+    }
+  },
+  "admin": {
+    "navn": "Hengsel Admin (lilla, PC)",
+    "gjelder": [
+      "admin.hengsel.no",
+      "Innstillinger 21-901–911 i CRM",
+      "brukere",
+      "butikker"
+    ],
+    "modus": [
+      "lys"
+    ],
+    "lys": {
+      "aksent": "#7233AC",
+      "aksent-trykk": "#611E98",
+      "aksent-tekst": "#6929A2",
+      "aksent-svak": "#F8F5FB",
+      "aksent-valgt": "#EEE7F5",
+      "paa-aksent": "#FBF9F6",
+      "prikk": "#8348BE",
+      "flate-valgt": "#EEE7F5",
+      "grunn": "#F1F1EF",
+      "grunn-hevet": "#F9F9F7",
+      "grunn-senket": "#EAEAE8",
+      "tekst": "#232A34",
+      "tekst-dempet": "#4D525B",
+      "tekst-svak": "#64686F"
+    }
+  }
+} as const;
+
+/** Hastenivåene (aliaser til statustonene, ingen nye farger) og stripebredden i px */
+export const nivaa = {
+  "haster": "feil",
+  "snart": "advarsel",
+  "stripe": 3
+} as const;
+
+export type Produkt = keyof typeof produkt;
 
 /** CSS-variabler for et kundetema (settes på kundens flate: PDF-mal, e-postmal, kundeportal) */
 export function kundetemaCss(t: { aksent: string; paaAksent: string; skrift: { tekst: string; overskrift: string } }): string {

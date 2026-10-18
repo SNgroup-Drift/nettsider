@@ -1,7 +1,7 @@
 {
-  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger.",
-  "versjon": "2.2.0",
-  "dato": "2026-10-17",
+  "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger. K-371 (18.10.2026): versjon 2.5.0, designsystem 2.5 fra Design (produktpaletter, kundetema, haster, 19 nye ikoner) lagt inn ved siden av; grunnpaletten (farge) er uendret og fortsatt fasit, produktpalettene ligger i «produkt» og hastealiasene i «nivaa».",
+  "versjon": "2.5.0",
+  "dato": "2026-10-18",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
     "blekk": "#1D2430",
@@ -25,6 +25,142 @@
       "design.hengsel.no",
       "admin.hengsel.no"
     ]
+  },
+  "produkt": {
+    "$merknad": "K-371 (18.10.2026): produktpaletter fra Designs palettfil 2.4/2.5 (claude-design/2-5/tokens/hengsel-palett.tokens.json, palett-ute/-nettsider/-crm/-admin), status «foreslått» hos Design. Grunnpaletten (farge) er uendret; Ute bruker den (K-222/K-234-verdiene vinner der Design avviker, se ENDRINGSLOGG 2.5.0). Satt på en innpakning med data-produkt=\"ute|nettsider|crm|admin\" (ikke på html). Nettsider, CRM og Admin er bare lyse (K-201); bare Ute har mørk. Økt kontrast og P3 finnes ikke for produktpaletter ennå. «prikk» er merkets stift i produktfargen (--merke-stift). Statusfargene er felles i alle fire (status-tokens). Kundetema: tokens/kundetema.css, kundetema.schema.json og dokumentasjon/KUNDETEMA.md.",
+    "ute": {
+      "navn": "Hengsel Ute (grønn)",
+      "gjelder": [
+        "Hengsel Ute",
+        "montørappen"
+      ],
+      "modus": [
+        "lys",
+        "mork"
+      ],
+      "lys": {
+        "aksent": "#05806F",
+        "aksent-trykk": "#007665",
+        "aksent-tekst": "#016d5e",
+        "aksent-svak": "#E0F4EE",
+        "aksent-valgt": "#BCE6DB",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#068472",
+        "flate-valgt": "#E0F4EE",
+        "grunn": "#F6F8FB",
+        "grunn-hevet": "#FBFDFF",
+        "grunn-senket": "#EFF1F4",
+        "tekst": "#1A1D22",
+        "tekst-dempet": "#51565C",
+        "tekst-svak": "#686E75"
+      },
+      "mork": {
+        "aksent": "#54B9A5",
+        "aksent-trykk": "#63C8B3",
+        "aksent-tekst": "#8ACDBE",
+        "aksent-svak": "#112823",
+        "aksent-valgt": "#163F37",
+        "paa-aksent": "#0D1013",
+        "prikk": "#54B9A5",
+        "flate-valgt": "#13332D",
+        "grunn": "#0B0D11",
+        "grunn-hevet": "#111418",
+        "grunn-senket": "#06080B",
+        "tekst": "#EAEDF0",
+        "tekst-dempet": "#ADB1B7",
+        "tekst-svak": "#90969D"
+      }
+    },
+    "nettsider": {
+      "navn": "Nettsider (oransje)",
+      "gjelder": [
+        "hengsel.no",
+        "vis.hengsel.no",
+        "design.hengsel.no",
+        "admin.hengsel.no",
+        "demo.hengsel.no",
+        "bilder.hengsel.no"
+      ],
+      "modus": [
+        "lys"
+      ],
+      "lys": {
+        "aksent": "#AD5626",
+        "aksent-trykk": "#99440F",
+        "aksent-tekst": "#964109",
+        "aksent-svak": "#F8F1EE",
+        "aksent-valgt": "#EFDDD4",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#B54F00",
+        "flate-valgt": "#F8F1EE",
+        "grunn": "#FAF6F2",
+        "grunn-hevet": "#FEFDFB",
+        "grunn-senket": "#F3EFE9",
+        "tekst": "#272D38",
+        "tekst-dempet": "#4E535C",
+        "tekst-svak": "#666A71"
+      }
+    },
+    "crm": {
+      "navn": "Hengsel CRM (blå, PC)",
+      "gjelder": [
+        "Hengsel CRM",
+        "kundeportalen"
+      ],
+      "modus": [
+        "lys"
+      ],
+      "lys": {
+        "aksent": "#4C5FCB",
+        "aksent-trykk": "#3D4DB7",
+        "aksent-tekst": "#3A49A8",
+        "aksent-svak": "#F6F7FC",
+        "aksent-valgt": "#EAECF9",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#5165D3",
+        "flate-valgt": "#EAECF9",
+        "grunn": "#F1F1EF",
+        "grunn-hevet": "#F9F9F7",
+        "grunn-senket": "#EAEAE8",
+        "tekst": "#232A34",
+        "tekst-dempet": "#4D525B",
+        "tekst-svak": "#64686F"
+      }
+    },
+    "admin": {
+      "navn": "Hengsel Admin (lilla, PC)",
+      "gjelder": [
+        "admin.hengsel.no",
+        "Innstillinger 21-901–911 i CRM",
+        "brukere",
+        "butikker"
+      ],
+      "modus": [
+        "lys"
+      ],
+      "lys": {
+        "aksent": "#7233AC",
+        "aksent-trykk": "#611E98",
+        "aksent-tekst": "#6929A2",
+        "aksent-svak": "#F8F5FB",
+        "aksent-valgt": "#EEE7F5",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#8348BE",
+        "flate-valgt": "#EEE7F5",
+        "grunn": "#F1F1EF",
+        "grunn-hevet": "#F9F9F7",
+        "grunn-senket": "#EAEAE8",
+        "tekst": "#232A34",
+        "tekst-dempet": "#4D525B",
+        "tekst-svak": "#64686F"
+      }
+    }
+  },
+  "nivaa": {
+    "$merknad": "K-371 (Haster og synlighet, designsystem 2.5, dokumentasjon/HASTER.md avsnitt 5): aliaser som bare peker på eksisterende status-tokens, ingen nye farger. Haster = feil, Snart og Venter = advarsel (Venter har egen pille og eget ikon, men samme farger som Snart). Stripen (bare Haster) er 3 px.",
+    "haster": "feil",
+    "snart": "advarsel",
+    "stripe": 3
   },
   "farge": {
     "$merknad": "Roller. Hver rolle har lys og mørk verdi, og økt kontrast i begge (lys-okt-kontrast, mork-okt-kontrast). p3 har samme fire utgaver i Display P3 (hex-sifrene er P3-koordinater, ikke sRGB). K-206 (13.10.2026): ny palett «blekk med furu», kilde hengsel-palett.tokens.json 1.0 (12.10.2026). Mørk gjelder bare montørappen og iOS (CRM, nettsidene og kundeportalen er bare lyse, K-201). Rollene ramme, overlegg og alltid-mork fantes ikke i den nye fila; de står videre med verdier regnet fra den nye paletten (se rapporten K-206).",
