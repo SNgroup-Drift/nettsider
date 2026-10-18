@@ -3,10 +3,13 @@
  * Nettside-kitet: flaten med radene under toppen. Første rad 24 px under toppen, siste 48 px over bunnen (regel 2d), 24 px mellom radene
  * (16 px på telefon). Innholdet er maks 1280 px bredt og venstrestilt i rammen (1440 px med 32 px marg, 16 px på telefon).
  */
-interface Props { klasse?: string }
-const { klasse } = Astro.props;
+interface Props { klasse?: string; /** N-7: produktpalett for flaten under toppen (ute, crm …); uten = arver siden (nettsider) */ produkt?: "ute" | "crm" | "admin" | "nettsider" }
+import { kundeFra } from "../../kunde";
+const { klasse, produkt } = Astro.props;
+// Kundeutgaver (K-223) har kundens tema, ikke Hengsels produktpaletter
+const data_produkt = kundeFra(Astro.url.pathname) ? undefined : produkt;
 ---
-<div class:list={["innhold", klasse]}>
+<div class:list={["innhold", klasse]} data-produkt={data_produkt}>
   <div class="k-ramme">
     <div class="rader"><slot /></div>
   </div>

@@ -19,9 +19,9 @@ export const SIDER = {
   design: ["/", "/farger", "/komponenter"],
 };
 
-// Tillatt «flate-side» fra den delte fila (hex), så testen ikke har egne fargeverdier å holde i synk
-const delt = readFileSync(join(rot, "packages", "hengsel-tokens", "tokens.css"), "utf8");
-const flateSide = delt.match(/--flate-side:\s*(#[0-9a-fA-F]{6})/)[1];
+// N-7: Hengsel-sidene har data-produkt på html (designsystem 2.5): nettsider for hengsel, vis og design, admin for admin. Bakgrunnen er da grunn i produktpaletten.
+const produktJson = JSON.parse(readFileSync(join(rot, "packages", "hengsel-tokens", "ds", "tokens", "hengsel.tokens.json"), "utf8")).produkt;
+const FORVENTET_PRODUKT = { hengsel: "nettsider", vis: "nettsider", design: "nettsider", admin: "admin" };
 const tilRgb = (h) => `rgb(${[1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)).join(", ")})`;
 
 const nettleser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
@@ -41,10 +41,12 @@ for (const [side, stier] of Object.entries(SIDER)) {
       const svar = await p.goto(base + sti, { waitUntil: "load" });
       assert.equal(svar.status(), 200, `${side}${sti} ga ${svar.status()}`);
       assert.equal(await p.evaluate(() => matchMedia("(prefers-color-scheme: dark)").matches), true, "nettleseren er ikke i mørk modus");
-      const r = await p.evaluate(() => ({ cs: getComputedStyle(document.documentElement).colorScheme, bg: getComputedStyle(document.body).backgroundColor }));
+      const r = await p.evaluate(() => ({ produkt: document.documentElement.dataset.produkt, cs: getComputedStyle(document.documentElement).colorScheme, bg: getComputedStyle(document.body).backgroundColor }));
       await ctx.close();
       assert.equal(r.cs, "light", `${side}${sti}: color-scheme på html er «${r.cs}», skal være light`);
-      assert.equal(r.bg, tilRgb(flateSide), `${side}${sti}: body-bakgrunn er ${r.bg}, skal være --flate-side (${flateSide})`);
+      assert.equal(r.produkt, FORVENTET_PRODUKT[side], `${side}${sti}: data-produkt på html er «${r.produkt}», skal være «${FORVENTET_PRODUKT[side]}»`);
+      const grunn = produktJson[FORVENTET_PRODUKT[side]].lys.grunn;
+      assert.equal(r.bg, tilRgb(grunn), `${side}${sti}: body-bakgrunn er ${r.bg}, skal være --flate-side i produktpaletten ${r.produkt} (${grunn})`);
     }
   });
 }

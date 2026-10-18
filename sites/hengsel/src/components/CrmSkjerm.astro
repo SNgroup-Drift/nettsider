@@ -6,6 +6,8 @@
  * Uten `interaktiv` er skjermen en ren illustrasjon (inert, role="img"); med `interaktiv` har den data-neste på raden og knappene
  * som går videre i demoen (scripts/crm.ts).
  */
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
+import { kundeFra } from "../kunde";
 import { CRM_AKTIV_MENY, CRM_ALT, CRM_BRUKER, CRM_MENY, MINDAG_AVVIK, MINDAG_META, MINDAG_RADER, MINDAG_TALL, MONTASJE, ORDRE, TELEFON_FANER, TILBUD } from "../content/crm";
 import type { CrmEnhet, Skjerm } from "../content/crm";
 
@@ -18,7 +20,7 @@ const rader = MINDAG_RADER.slice(0, tlf ? 5 : 6);
 const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f === "Ordre" && skjerm !== "minDag");
 import { APPTEST } from "../apptest-lenker";
 ---
-<div class:list={["crm", enhet, skjerm]} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
+<div class:list={["crm", enhet, skjerm]} data-produkt={kundeFra(Astro.url.pathname) ? undefined : "crm"} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
   {!tlf && (
     <aside class="side">
       <div class="logo"><span class="dinlogo"><span class="boks">Din logo</span></span></div>
@@ -26,7 +28,7 @@ import { APPTEST } from "../apptest-lenker";
       <div class="bruker"><div class="ink">{CRM_BRUKER[0]}</div><div>{CRM_BRUKER[1]}</div></div>
       <div class="hengsel-crm">
         <picture>
-          <img src="/logo/hengsel-crm-aksent-lys.svg" alt="Hengsel CRM" width="622" height="100" loading="lazy" decoding="async" />
+          <img src={PRODUKTLOGO.crm.src} alt={PRODUKTLOGO.crm.alt} width={PRODUKTLOGO.crm.width} height={PRODUKTLOGO.crm.height} loading="lazy" decoding="async" />
         </picture>
         <span>v. {APPTEST.versjon}</span>
       </div>

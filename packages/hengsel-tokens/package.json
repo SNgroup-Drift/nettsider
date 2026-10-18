@@ -14,6 +14,7 @@
     "./skjermbilder.mjs": "./skjermbilder.mjs",
     "./skjermbilder-manifest.json": "./skjermbilder-manifest.json",
     "./Hode.astro": "./src/Hode.astro",
+    "./produktlogo": "./src/produktlogo.ts",
     "./ds/*": "./ds/*"
   },
   "peerDependencies": {

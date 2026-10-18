@@ -79,8 +79,8 @@ function html(t, fil) {
   u = u.replace(/<html lang="([a-z]+)">/, `<html lang="$1" ${profil.attributt}="${profil.kunde}">`);
   u = u.replace(/(<meta name="theme-color" content=")#[0-9A-Fa-f]{6}(">)/, `$1${offWhite}$2`);
   // Merket i toppfeltet: Sigdal med «levert av Hengsel»; Hengsel CRM → «Sigdal CRM»; «levert av» i bunnen → tekst
-  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/hengsel-(?:aksent-)?lys\.svg"[^>]*>(<\/span>)/g, `$1${LOGO_NAVN}$2`);
-  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/hengsel-crm-aksent-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kl-ord">${profil.produkt}</span>$2`);
+  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/(?:logo-hengsel|hengsel-aksent|hengsel)-lys\.svg"[^>]*>(<\/span>)/g, `$1${LOGO_NAVN}$2`);
+  u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/(?:logo-crm|hengsel-crm-aksent)-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kl-ord">${profil.produkt}</span>$2`);
   u = u.replace(/(<span class="hlogo"[^>]*>)<img src="\/assets\/logo\/levert-av-hengsel-lys\.svg"[^>]*>(<\/span>)/g, `$1<span class="kundelogo-levert">levert av Hengsel</span>$2`);
   u = u.replace(/<img class="sn" src="\/img\/sn-logo\.svg"[^>]*>/g, ""); // SN Group-merket hører ikke til Sigdal-utgaven
   for (const [fra, til] of VIS_TEKST) u = u.split(fra).join(til);

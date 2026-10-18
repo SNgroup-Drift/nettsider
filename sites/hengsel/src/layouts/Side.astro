@@ -45,6 +45,7 @@ const temaFarge = /--sigdal-off-white:\s*(#[0-9A-Fa-f]{6})/.exec(temaTokens)?.[1
   robots={kunde ? "noindex, nofollow" : robots}
   delingsbilde={kunde ? undefined : delingsbilde}
   appleIkon="/favicon-180.png"
+  htmlAttributter={kunde ? undefined : { "data-produkt": "nettsider" }}
   manifest={kunde ? undefined : "/manifest.webmanifest"}
   forhandslast={kunde ? [FONTER.newsreader, FONTER.inter] : undefined}
   kunde={kunde ? { attributt: "data-kunde", verdi: kunde.nokkel, temaCss: `${kunde.sti}/tema.css`, temaFarge } : undefined}

@@ -6,6 +6,7 @@
  * Cf-Access-Jwt-Assertion. Siden har noindex,nofollow, står ikke i sitemap.txt og lenkes ikke fra menyen eller bunnen (scripts/sjekk-lenker.mjs passer på det).
  * Innholdet ligger i src/data/hjelp.ts (samme oppbygging som Hjelp i CRM-et, K-225). Én side med rollevelger øverst; velgeren er ankere, uten skript.
  */
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 import Side from "../../layouts/Side.astro";
 import Hjelpebunn from "../../components/Hjelpebunn.astro";
 import { HJELP, HJELP_OPPGAVER, HJELP_ROLLER, type Skjermbilde } from "../../data/hjelp";
@@ -20,7 +21,7 @@ const bilde = (s: Skjermbilde) => skjermbilde("hengsel", `hjelp/${s.id}.webp`, {
     <div class="rad h-innhold">
       <a class="logo" href="/" aria-label="Hengsel – til forsiden">
         <picture>
-          <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
+          <img src={PRODUKTLOGO.nettsider.src} alt={PRODUKTLOGO.nettsider.alt} width={PRODUKTLOGO.nettsider.width} height={PRODUKTLOGO.nettsider.height} />
         </picture>
       </a>
       <a class="merke" href="/kunde">‹ Kundeområdet</a>
