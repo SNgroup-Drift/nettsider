@@ -19,10 +19,12 @@ const { tittel, tekst, id } = Astro.props;
   .tekst { margin: 0 0 16px; max-width: 720px; line-height: 22px; color: var(--tekst-dempet); }
   .enheter { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 24px 40px; padding-block: 8px; }
   .enheter > :global(.sim.display), .enheter > :global(.enhet.display), .enheter > :global(.tre) { flex: 1 1 480px; max-width: 760px; }
+  .enheter > :global(.sim.macbook), .enheter > :global(.enhet.macbook) { flex: 1 1 420px; max-width: 640px; }
   .enheter > :global(.sim.ipad), .enheter > :global(.enhet.ipad) { flex: 0 1 320px; }
   .enheter > :global(.sim.iphone), .enheter > :global(.enhet.iphone) { flex: 0 1 180px; }
   @media (max-width: 959px) {
     .enheter { gap: 24px; }
+    .enheter > :global(.sim.macbook), .enheter > :global(.enhet.macbook) { flex-basis: 100%; max-width: none; }
     .enheter > :global(.sim.display), .enheter > :global(.enhet.display), .enheter > :global(.tre) { flex-basis: 100%; max-width: none; }
     .enheter > :global(.sim.ipad), .enheter > :global(.enhet.ipad) { flex-basis: 100%; max-width: 420px; }
     .enheter > :global(.sim.iphone), .enheter > :global(.enhet.iphone) { flex-basis: 200px; max-width: 200px; }

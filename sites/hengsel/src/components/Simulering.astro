@@ -1,6 +1,6 @@
 ---
 /**
- * N-6 (Eirik 18.10): en «simulering» – en kort, automatisk bildeserie i en enhetsramme (Enhet.astro: Studio Display, iPad eller iPhone) som viser en flyt
+ * N-6 (Eirik 18.10): en «simulering» – en kort, automatisk bildeserie i en enhetsramme (Enhet.astro: Studio Display, MacBook, iPad eller iPhone) som viser en flyt
  * steg for steg, som en stille demo. Bildene hentes fra biblioteket på bilder.hengsel.no (K-233, Skjermbilde.astro); aldri lokale app-bilder.
  *
  *  - Myk overgang (crossfade) mellom bildene, ca. 3,5 s per bilde, og stegmerker under rammen som kan trykkes (scripts/simulering.ts).
@@ -21,7 +21,7 @@ import { kundeFra } from "../kunde";
 import type { Steg } from "../content/simuleringer";
 
 interface Props {
-  type: "display" | "ipad" | "iphone";
+  type: "display" | "macbook" | "ipad" | "iphone";
   steg: readonly Steg[];
   /** Det øverste bildet på siden: første steg lastes med en gang */
   forst?: boolean;
