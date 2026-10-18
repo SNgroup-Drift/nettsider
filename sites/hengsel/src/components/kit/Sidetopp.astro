@@ -5,7 +5,10 @@
  * Flaten er kortflaten med strek under, som i tegningene; radene (Innhold.astro) ligger på sideflaten under.
  * Sporet «komposisjon» (N-3c, regel 10 i docs/design/hengsel-regler.md): appen i enhetsrammer (Enhet.astro). På PC står den til høyre for tittel,
  * ingress og knapper (5 av 12 kolonner), på telefon under knappene. Sider uten sporet er uendret.
+ * N-9: `produkt` viser produktlogoen (34 px) over tittelen; sider uten `produkt` er uendret.
  */
+import Produktlogo from "../Produktlogo.astro";
+import { PRODUKTER, type ProduktNokkel } from "../../content/produkter";
 interface Props {
   tittel: string;
   ingress?: string;
@@ -13,8 +16,12 @@ interface Props {
   id?: string;
   /** h1 på sidens første topp, h2 når en side har to topper (25-006 + 25-007) */
   niva?: 1 | 2;
+  /** N-9: produktsidene (crm, ute, admin, levering, kundeportal, telefon): produktlogoen over tittelen */
+  produkt?: ProduktNokkel;
 }
-const { tittel, ingress, id, niva = 1 } = Astro.props;
+const { tittel, ingress, id, niva = 1, produkt } = Astro.props;
+// Logoen er pynt (alt="") når tittelen alt sier produktnavnet; ellers er alt produktnavnet
+const pyntet = produkt ? tittel.toLowerCase().includes(PRODUKTER[produkt].navn.toLowerCase()) : false;
 const H = niva === 1 ? "h1" : "h2";
 const komp = Astro.slots.has("komposisjon");
 ---
@@ -22,6 +29,7 @@ const komp = Astro.slots.has("komposisjon");
   <div class="k-ramme inn">
    <div class:list={["oppsett", { "med-komp": komp }]}>
     <div class="tekst">
+      {produkt && <div class="produktrad"><Produktlogo produkt={produkt} hoyde={34} pyntet={pyntet} /></div>}
       <div class="tittelrad">
         <H class="tittel">{tittel}</H>
         <slot name="pille" />
@@ -43,6 +51,7 @@ const komp = Astro.slots.has("komposisjon");
   .med-komp { max-width: 1280px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: center; }
   .med-komp .tekst { grid-column: span 7; }
   .komp { grid-column: span 5; min-width: 0; }
+  .produktrad { display: flex; align-items: center; min-height: 34px; }
   .tittelrad { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; max-width: 1280px; }
   .tittel { font-size: 48px; line-height: 56px; letter-spacing: -0.02em; text-wrap: balance; }
   .ingress { max-width: 720px; font-size: 18px; line-height: 27px; color: var(--tekst-dempet); }

@@ -1,0 +1,32 @@
+---
+/**
+ * N-9: produktlogoen (Sidetopp 34 px, produktfliser på forsiden 24 px). Med logo (CRM, Ute, Admin, Levering): designsystemets logo (aksent, lys).
+ * Uten (Kundeportal, Hengsel på telefon, til Design 2.13): Hengsel-symbolet + tekstnavnet i samme høyde. `pyntet`: logoen er pynt (alt="") fordi
+ * navnet står i teksten ved siden av; tekstnavnet skjules da for skjermleser. Ingen style= (CSP): høyden er en klasse.
+ */
+import { PRODUKTER, SYMBOL, type ProduktNokkel } from "../content/produkter";
+interface Props { produkt: ProduktNokkel; hoyde?: 24 | 34; pyntet?: boolean }
+const { produkt, hoyde = 34, pyntet = false } = Astro.props;
+const { navn, logo } = PRODUKTER[produkt];
+---
+<span class:list={["produktlogo", `h${hoyde}`]} data-produktlogo={produkt}>
+  {logo ? (
+    <img class="logo" src={logo.src} alt={pyntet ? "" : navn} width={logo.width} height={logo.height} />
+  ) : (
+    <>
+      <img class="symbol" src={SYMBOL.src} alt="" width={SYMBOL.width} height={SYMBOL.height} />
+      <span class="navn" aria-hidden={pyntet ? "true" : undefined}>{navn}</span>
+    </>
+  )}
+</span>
+
+<style>
+  .produktlogo { display: inline-flex; align-items: center; gap: 10px; color: var(--tekst); }
+  .produktlogo img { display: block; width: auto; max-width: none; }
+  .navn { font-family: var(--skrift-familie-hengsel-tekst); font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+  .h34 img { height: 34px; }
+  .h34 .navn { font-size: 24px; line-height: 34px; }
+  .h24 { gap: 8px; }
+  .h24 img { height: 24px; }
+  .h24 .navn { font-size: 17px; line-height: 24px; }
+</style>

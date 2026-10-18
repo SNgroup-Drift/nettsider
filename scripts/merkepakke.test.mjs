@@ -142,7 +142,8 @@ test("c) «Levert av Hengsel» (lys) i alle vis-rommene og der hengsel.no bruker
   assert.equal(sha(readFileSync(join(dist("vis"), "assets", "logo", "levert-av-hengsel-lys.svg"))), lys);
   // N-3: /kundeportal følger sidekartet 25-004 (to tabeller) og har ikke portal-mocken lenger; der hengsel.no viser merket, er det riktig fil og tekst
   for (const f of alle(dist("hengsel")).filter((x) => x.endsWith(".html"))) {
-    const t = readFileSync(f, "utf8");
+    // N-9 (Eirik 18.10): produktfliska «Hengsel Levering» i «Produktene» på forsiden er bevisst; ellers gjelder regelen
+    const t = readFileSync(f, "utf8").replace(/<section class="flis [^"]*produktflis[^"]*"[^>]*id="produkt-levering"[\s\S]*?<\/section>/, "");
     assert.ok(!/Hengsel Levering|hengsel-levering/.test(t), `${relative(dist("hengsel"), f)}: erstatningen «Hengsel Levering» fra K-212 runde 2`);
     for (const m of t.matchAll(/<img[^>]*src="\/logo\/levert-av-hengsel[^>]*>/g)) assert.match(m[0], /src="\/logo\/levert-av-hengsel-lys\.svg" alt="Levert av Hengsel"/, relative(dist("hengsel"), f));
   }

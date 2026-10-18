@@ -5,6 +5,7 @@
  *  rad 1 (120) Status 1/3 ×3 · rad 2 (480) Tabell «En dag i butikken» (6 rader) · rad 3 (320) Liste «Bygget for» 1/2 + Tekst «Film» 1/2.
  * Tekster og data i content/forside.ts.
  * N-6: «Fra tilbud til ferdig montert» (simulering på Studio Display, content/simuleringer.ts) og «Tre enheter» under raden «En dag i butikken».
+ * N-9: «Produktene» (seks fliser med produktlogo, navn, setning og lenke, content/produkter.ts) etter «Samme ordre på alle enheter».
  * N-8: produktkortene (rad 1) har lenken «På telefon» til /telefon (ikke i kundeutgavene).
  * N-6b: bare den første rammen (Studio Display i toppen) definerer statuslinjens symboler (sb-*); alle andre rammer på siden har symboler={false}.
  */
@@ -21,6 +22,9 @@ import Tekstflis from "../components/kit/Tekstflis.astro";
 import Simulering from "../components/Simulering.astro";
 import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import TreEnheter from "../components/TreEnheter.astro";
+import Flis from "../components/kit/Flis.astro";
+import Produktlogo from "../components/Produktlogo.astro";
+import { PRODUKTENE, PRODUKTER } from "../content/produkter";
 import { FORSIDE_FLYT } from "../content/simuleringer";
 import { kundeFra } from "../kunde";
 import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/forside";
@@ -50,6 +54,15 @@ const telefonLenke = kundeFra(Astro.url.pathname) ? undefined : { tekst: "På te
       <Simuleringsflis id="tre-enheter" tittel="Samme ordre på alle enheter" tekst="Kontoret på Studio Display, butikken på iPad og selgeren på iPhone ser den samme ordren.">
         <TreEnheter />
       </Simuleringsflis>
+      <Rad hoyde="auto">
+        {PRODUKTENE.fliser.map((f) => (
+          <Flis bredde="1/3" tittel={PRODUKTER[f.nokkel].navn} klasse="produktflis" id={`produkt-${f.nokkel}`}>
+            {f.href && <a slot="verktoy" class="lenke" href={f.href} aria-label={`Les om ${PRODUKTER[f.nokkel].navn}`}>Les mer ›</a>}
+            <Produktlogo produkt={f.nokkel} hoyde={24} pyntet />
+            <p class="setning">{f.tekst}</p>
+          </Flis>
+        ))}
+      </Rad>
       <Rad hoyde={320}>
         <Listeflis id="bygget-for" tittel={BYGGET_FOR.tittel} rader={BYGGET_FOR.rader} />
         <Tekstflis bredde="1/2" tittel={FILM.tittel} tekst={FILM.tekst} />
@@ -63,6 +76,9 @@ const telefonLenke = kundeFra(Astro.url.pathname) ? undefined : { tekst: "På te
 </script>
 
 <style>
+  /* N-9: «Produktene». Raden er «auto»: seks fliser i to rader, og setningene er fra to til tre linjer, så 120 er for lite og 320 for mye luft */
+  .setning { margin: 12px 0 0; max-width: 720px; line-height: 22px; color: var(--tekst); }
+  .lenke { color: var(--aksent-tekst); white-space: nowrap; }
   /* Komposisjonen fra før N-3: Studio Display bak, iPhone nede til høyre over rammen (også på 390) */
   .komposisjon { position: relative; width: 100%; padding-bottom: 6%; }
   .pc { width: 80%; margin-left: auto; margin-right: 4%; }
