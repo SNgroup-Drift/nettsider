@@ -84,11 +84,11 @@ test("c) dokumentasjonen og e-postfeltene: 3c, «Nye i 2.10» og «Nye i 2.10b»
   }
 });
 
-test("d) pinnen: 2.10.0 på K-371c-flettecommiten (andre runde), og tokens.css er den delte fila", () => {
+test("d) pinnen: tokens.css er generert fra den pinnede JSON-en (versjon og commit i toppkommentaren), og mal 29 er komplett", () => {
+  // N-7d: pinnen er ikke lenger 3ad8cd78 (2.10.0); den gjeldende pinnen sjekkes i scripts/n7d.test.mjs. Her bare at fila følger pin-fila.
   const pin = JSON.parse(les(pakke, "designsystem.pin.json"));
-  assert.equal(pin.versjon, "2.10.0");
-  assert.match(pin.commit, /^3ad8cd783be3ffe5af8b1d477bacf7924cf94c6e$/);
-  assert.match(les(pakke, "tokens.css"), /designsystem 2\.10\.0, commit 3ad8cd78\)/);
+  assert.equal(pin.versjon, JSON.parse(les(pakke, "ds", "tokens", "hengsel.tokens.json")).versjon);
+  assert.match(les(pakke, "tokens.css"), new RegExp(`designsystem ${pin.versjon.replace(/\./g, "\\.")}, commit ${pin.commit.slice(0, 8)}\\)`));
   assert.ok(existsSync(join(dm, "29-e11-hvordan-gikk-det", "side-1.png")));
 });
 

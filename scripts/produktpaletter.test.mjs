@@ -23,8 +23,8 @@ const PRODUKTER = ["ute", "nettsider", "crm", "admin"];
 const ROLLER = { aksent: "aksent", "aksent-trykk": "aksent-trykk", "aksent-tekst": "aksent-tekst", "aksent-svak": "aksent-svak", "aksent-valgt": "aksent-valgt", "paa-aksent": "paa-aksent", "flate-valgt": "flate-valgt", prikk: "merke-stift", grunn: "flate-side", "grunn-hevet": "flate-kort", "grunn-senket": "flate-senket", tekst: "tekst", "tekst-dempet": "tekst-dempet", "tekst-svak": "tekst-svak" };
 
 test("a) tokens.css har produktblokkene og nivå-aliasene fra pinnet JSON, bare lyse", () => {
-  assert.equal(json.versjon, "2.10.0");
-  assert.equal(pin.versjon, "2.10.0");
+  assert.equal(json.versjon, "2.12.0"); // N-7d: designsystem 2.12 (K-378)
+  assert.equal(pin.versjon, "2.12.0");
   for (const p of PRODUKTER) {
     const m = css.match(new RegExp(`\\n\\[data-produkt="${p}"\\] \\{([^}]*)\\}`));
     assert.ok(m, `blokken [data-produkt="${p}"] mangler i tokens.css`);

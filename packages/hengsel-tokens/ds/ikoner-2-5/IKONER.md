@@ -45,6 +45,8 @@
 | `sok.svg` | Søk | `magnifyingglass` |  | Søkefelt og søkeknapp i toppfeltet |
 | `kalender.svg` | Kalender | `calendar` |  | Kalenderknapp i toppfeltet og «Book tegnetime» |
 | `oversikt.svg` | Oversikt | `square.grid.2x2` |  | Oversikt og dashbord |
+| `datakilde.svg` | Datakilde | `cylinder.split.1x2` |  | Bytt datakilde i Brukermeny (erstatter lånt «Rapporter») |
+| `tv.svg` | TV-visning | `tv` |  | TV-visning på storskjerm (erstatter lånt «Oversikt») |
 
 ## Trenger handling og saker
 

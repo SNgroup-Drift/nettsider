@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.10.0, commit 3ad8cd78). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.12.0, commit 26faec40). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
  * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
@@ -48,27 +48,27 @@
   --paa-alltid-mork: #EAEDF0;
 
   /* Statustoner, lys: fg = tekst og prikk, bg = flate, kant = ramme */
-  --status-ny-fg: #1A57AD;
-  --status-ny-bg: #E7F1FF;
-  --status-ny-kant: #A0C6FF;
+  --status-ny-fg: #405B85;
+  --status-ny-bg: #E4EAF3;
+  --status-ny-kant: #73849F;
   --status-pagar-fg: #5C46A7;
   --status-pagar-bg: #EFEEFF;
-  --status-pagar-kant: #C3BBFB;
+  --status-pagar-kant: #8B82BF;
   --status-venter-fg: #555B64;
   --status-venter-bg: #E9F1FB;
-  --status-venter-kant: #BDC5CF;
+  --status-venter-kant: #838B94;
   --status-sannsynlig-fg: #80378C;
   --status-sannsynlig-bg: #FCE9FF;
-  --status-sannsynlig-kant: #E0B1E7;
+  --status-sannsynlig-kant: #A77AAD;
   --status-ferdig-fg: #1F6D02;
   --status-ferdig-bg: #E3F7DE;
-  --status-ferdig-kant: #A5D39B;
+  --status-ferdig-kant: #6B9661;
   --status-advarsel-fg: #6D5000;
   --status-advarsel-bg: #FFE9BC;
-  --status-advarsel-kant: #E0C07F;
+  --status-advarsel-kant: #A18242;
   --status-feil-fg: #9E2D28;
   --status-feil-bg: #FFEBE8;
-  --status-feil-kant: #F9AEA5;
+  --status-feil-kant: #BD776F;
 
   /* Skygger */
   --skygge-side: none;
@@ -173,26 +173,26 @@
     --varsel-tekst: color(display-p3 0.4235 0.3137 0.0000);
     --feil-flate: color(display-p3 0.9922 0.9216 0.9098);
     --feil-tekst: color(display-p3 0.5686 0.2118 0.1804);
-    --status-ny-fg: color(display-p3 0.1725 0.3373 0.6549);
-    --status-ny-bg: color(display-p3 0.9098 0.9451 1.0000);
-    --status-ny-kant: color(display-p3 0.6588 0.7725 0.9804);
+    --status-ny-fg: color(display-p3 0.2745 0.3529 0.5098);
+    --status-ny-bg: color(display-p3 0.8980 0.9176 0.9490);
+    --status-ny-kant: color(display-p3 0.4627 0.5176 0.6118);
     --status-pagar-fg: color(display-p3 0.3490 0.2784 0.6353);
-    --status-pagar-kant: color(display-p3 0.7569 0.7333 0.9647);
+    --status-pagar-kant: color(display-p3 0.5373 0.5137 0.7294);
     --status-venter-fg: color(display-p3 0.3373 0.3569 0.3882);
     --status-venter-bg: color(display-p3 0.9216 0.9451 0.9804);
-    --status-venter-kant: color(display-p3 0.7490 0.7725 0.8078);
+    --status-venter-kant: color(display-p3 0.5176 0.5412 0.5765);
     --status-sannsynlig-fg: color(display-p3 0.4667 0.2314 0.5294);
     --status-sannsynlig-bg: color(display-p3 0.9804 0.9137 1.0000);
-    --status-sannsynlig-kant: color(display-p3 0.8510 0.7020 0.8941);
+    --status-sannsynlig-kant: color(display-p3 0.6275 0.4863 0.6667);
     --status-ferdig-fg: color(display-p3 0.2157 0.4235 0.1137);
     --status-ferdig-bg: color(display-p3 0.9020 0.9686 0.8784);
-    --status-ferdig-kant: color(display-p3 0.6863 0.8235 0.6275);
+    --status-ferdig-kant: color(display-p3 0.4549 0.5843 0.4000);
     --status-advarsel-fg: color(display-p3 0.4235 0.3137 0.0000);
     --status-advarsel-bg: color(display-p3 0.9961 0.9137 0.7333);
-    --status-advarsel-kant: color(display-p3 0.8588 0.7569 0.5333);
+    --status-advarsel-kant: color(display-p3 0.6118 0.5176 0.2980);
     --status-feil-fg: color(display-p3 0.5686 0.2118 0.1804);
     --status-feil-bg: color(display-p3 0.9922 0.9216 0.9098);
-    --status-feil-kant: color(display-p3 0.9333 0.6941 0.6549);
+    --status-feil-kant: color(display-p3 0.7020 0.4784 0.4471);
   }
 }
 
@@ -212,9 +212,9 @@
     --varsel-tekst: #503900;
     --feil-flate: #FFF4F2;
     --feil-tekst: #780007;
-    --status-ny-fg: #003882;
-    --status-ny-bg: #F2F7FF;
-    --status-ny-kant: #3E71BC;
+    --status-ny-fg: #233D64;
+    --status-ny-bg: #ECF0F7;
+    --status-ny-kant: #596E8D;
     --status-pagar-fg: #402584;
     --status-pagar-bg: #F6F6FF;
     --status-pagar-kant: #7262B7;
@@ -226,7 +226,7 @@
     --status-sannsynlig-kant: #94559E;
     --status-ferdig-fg: #104B00;
     --status-ferdig-bg: #E9FEE5;
-    --status-ferdig-kant: #448335;
+    --status-ferdig-kant: #418032;
     --status-advarsel-fg: #503900;
     --status-advarsel-bg: #FFF6E4;
     --status-advarsel-kant: #916B00;
@@ -252,8 +252,9 @@
     --varsel-tekst: color(display-p3 0.3059 0.2235 0.0000);
     --feil-flate: color(display-p3 0.9961 0.9569 0.9490);
     --feil-tekst: color(display-p3 0.4314 0.0627 0.0588);
-    --status-ny-fg: color(display-p3 0.0471 0.2078 0.5176);
-    --status-ny-kant: color(display-p3 0.2902 0.4392 0.7176);
+    --status-ny-fg: color(display-p3 0.1608 0.2392 0.3804);
+    --status-ny-bg: color(display-p3 0.9294 0.9412 0.9647);
+    --status-ny-kant: color(display-p3 0.3686 0.4314 0.5451);
     --status-pagar-fg: color(display-p3 0.2353 0.1490 0.4980);
     --status-pagar-bg: color(display-p3 0.9647 0.9608 1.0000);
     --status-pagar-kant: color(display-p3 0.4353 0.3843 0.6980);
@@ -265,7 +266,7 @@
     --status-sannsynlig-kant: color(display-p3 0.5451 0.3451 0.6039);
     --status-ferdig-fg: color(display-p3 0.1137 0.2941 0.0039);
     --status-ferdig-bg: color(display-p3 0.9294 0.9922 0.9059);
-    --status-ferdig-kant: color(display-p3 0.3255 0.5098 0.2471);
+    --status-ferdig-kant: color(display-p3 0.3176 0.4941 0.2353);
     --status-advarsel-fg: color(display-p3 0.3059 0.2235 0.0000);
     --status-advarsel-bg: color(display-p3 0.9961 0.9647 0.8902);
     --status-advarsel-kant: color(display-p3 0.5569 0.4196 0.0000);
@@ -390,25 +391,25 @@
   --felt-deaktivert: #EAEAE8;
   --status-ny-fg: #405B85;
   --status-ny-bg: #D4DDEA;
-  --status-ny-kant: #9CB3D4;
+  --status-ny-kant: #697E9D;
   --status-pagar-fg: #5C46A7;
   --status-pagar-bg: #DCDBEC;
-  --status-pagar-kant: #B1A9E7;
+  --status-pagar-kant: #7E75AF;
   --status-venter-fg: #555B64;
   --status-venter-bg: #D6DEE8;
-  --status-venter-kant: #ABB3BC;
+  --status-venter-kant: #777E87;
   --status-sannsynlig-fg: #80378C;
   --status-sannsynlig-bg: #EAD7ED;
-  --status-sannsynlig-kant: #CEA0D5;
+  --status-sannsynlig-kant: #996EA0;
   --status-ferdig-fg: #1F6D02;
   --status-ferdig-bg: #CFE2CA;
-  --status-ferdig-kant: #92BF88;
+  --status-ferdig-kant: #5C8753;
   --status-advarsel-fg: #6D5000;
   --status-advarsel-bg: #F0DAAE;
-  --status-advarsel-kant: #D2B271;
+  --status-advarsel-kant: #977837;
   --status-feil-fg: #9E2D28;
   --status-feil-bg: #ECD9D6;
-  --status-feil-kant: #E69C94;
+  --status-feil-kant: #B06A63;
   color-scheme: light;
 }
 
@@ -448,25 +449,25 @@
   --felt-deaktivert: #EAEAE8;
   --status-ny-fg: #405B85;
   --status-ny-bg: #D4DDEA;
-  --status-ny-kant: #9CB3D4;
+  --status-ny-kant: #697E9D;
   --status-pagar-fg: #5C46A7;
   --status-pagar-bg: #DCDBEC;
-  --status-pagar-kant: #B1A9E7;
+  --status-pagar-kant: #7E75AF;
   --status-venter-fg: #555B64;
   --status-venter-bg: #D6DEE8;
-  --status-venter-kant: #ABB3BC;
+  --status-venter-kant: #777E87;
   --status-sannsynlig-fg: #80378C;
   --status-sannsynlig-bg: #EAD7ED;
-  --status-sannsynlig-kant: #CEA0D5;
+  --status-sannsynlig-kant: #996EA0;
   --status-ferdig-fg: #1F6D02;
   --status-ferdig-bg: #CFE2CA;
-  --status-ferdig-kant: #92BF88;
+  --status-ferdig-kant: #5C8753;
   --status-advarsel-fg: #6D5000;
   --status-advarsel-bg: #F0DAAE;
-  --status-advarsel-kant: #D2B271;
+  --status-advarsel-kant: #977837;
   --status-feil-fg: #9E2D28;
   --status-feil-bg: #ECD9D6;
-  --status-feil-kant: #E69C94;
+  --status-feil-kant: #B06A63;
   color-scheme: light;
 }
 

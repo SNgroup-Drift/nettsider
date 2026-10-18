@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.10.0, commit 3ad8cd78). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.12.0, commit 26faec40). Ikke rediger for hånd.
  *
  * Mørke fargeprøver (--mork-*) til design.hengsel.no, som viser dem til appene og CRM-et. Bare under klassen .mork-prover, aldri på :root,
  * og ingen media-spørring mot maskinens fargevalg: ingen side blir mørk av denne fila. Alle andre Hengsel-sider importerer den ikke. Se docs/design/hengsel-regler.md. */
@@ -30,27 +30,27 @@
   --mork-overlegg: rgba(0, 0, 0, 0.60);
   --mork-alltid-mork: #0B0D11;
   --mork-paa-alltid-mork: #EAEDF0;
-  --mork-status-ny-fg: #B5D3FF;
-  --mork-status-ny-bg: #152946;
-  --mork-status-ny-kant: #37588A;
+  --mork-status-ny-fg: #C3D2E8;
+  --mork-status-ny-bg: #222934;
+  --mork-status-ny-kant: #687589;
   --mork-status-pagar-fg: #D0C9FF;
   --mork-status-pagar-bg: #292344;
-  --mork-status-pagar-kant: #584E87;
+  --mork-status-pagar-kant: #7369A5;
   --mork-status-venter-fg: #CAD2DC;
   --mork-status-venter-bg: #242931;
-  --mork-status-venter-kant: #525961;
+  --mork-status-venter-kant: #6B737B;
   --mork-status-sannsynlig-fg: #F3B9FC;
   --mork-status-sannsynlig-bg: #361E3A;
-  --mork-status-sannsynlig-kant: #6F4676;
+  --mork-status-sannsynlig-kant: #8C6193;
   --mork-status-ferdig-fg: #AAE39E;
   --mork-status-ferdig-bg: #173012;
-  --mork-status-ferdig-kant: #3B6432;
+  --mork-status-ferdig-kant: #547E4A;
   --mork-status-advarsel-fg: #FCC959;
   --mork-status-advarsel-bg: #3D2A00;
-  --mork-status-advarsel-kant: #70530B;
+  --mork-status-advarsel-kant: #907232;
   --mork-status-feil-fg: #FFBFB6;
   --mork-status-feil-bg: #421C18;
-  --mork-status-feil-kant: #83423C;
+  --mork-status-feil-kant: #A25E57;
   --mork-skygge-side: none;
   --mork-skygge-overlegg: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.4);
   --mork-skygge-dialog: 0 24px 64px rgb(0 0 0 / 0.45);

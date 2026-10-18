@@ -9,7 +9,10 @@ import Komponent from "../components/Komponent.astro";
 import Ikon from "../components/Ikon.astro";
 import { GRUPPER, ikonStatus, ikoner, ikonerNye } from "../lib/ikoner";
 const egne = ikoner.filter((i) => i.egen);
-import { status } from "../lib/tokens";
+import { designsystem, status } from "../lib/tokens";
+// N-7d: versjonen og «nye i»-listen leses fra tokens og ikoner.json, ikke skrevet for hånd
+const nyeVersjoner = [...new Set(ikonerNye.map((i) => i.ny))].sort();
+const nyeTekst = nyeVersjoner.length > 1 ? `${nyeVersjoner.slice(0, -1).join(", ")} og ${nyeVersjoner.at(-1)}` : nyeVersjoner.join("");
 const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "Venter på svar", sannsynlig: "Sannsynlig", ferdig: "Ferdig", advarsel: "Advarsel", feil: "Feilet" };
 ---
 <Side title="Komponenter – Hengsel designfasit" description="Knapper, piller, kort, varsel, faner, tabell, skjema, tom tilstand, Sheet/Dialog og ikonsettet i lys og mørk, med hva de brukes til og ikke til." aktiv="komponenter">
@@ -104,14 +107,14 @@ const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "V
       </div>
     </Komponent>
 
-    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`${ikoner.length} strekikoner fra designsystem 2.10 (${ikoner.length - egne.length} fra Design, ${ikonerNye.length} av dem nye i 2.5 og 2.6, og ${egne.length} egne fra CRM-et: ${egne.map((i) => i.navn).join(", ")}) på et 20 px rutenett, i 16, 20 og 24 px, nivåikonene også i 12 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
+    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`${ikoner.length} strekikoner fra designsystem ${designsystem.versjon} (${ikoner.length - egne.length} fra Design, ${ikonerNye.length} av dem nye i ${nyeTekst}, og ${egne.length} egne fra CRM-et: ${egne.map((i) => i.navn).join(", ")}) på et 20 px rutenett, i 16, 20 og 24 px, nivåikonene også i 12 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
       <div class="flate-kort ikon-gruppe">
         <div class="ikon-storrelser"><Ikon navn="ordre" storrelse={16} /><Ikon navn="ordre" storrelse={20} /><Ikon navn="ordre" storrelse={24} /><span class="dempet">Ordre i 16, 20 og 24 px</span></div>
         {GRUPPER.map(([g, tittel]) => (
           <div class="ikon-gruppe">
             <h3>{tittel}</h3>
             <div class="ikonrutenett">
-              {ikoner.filter((i) => i.gruppe === g).map((i) => <div class:list={["ikonrute", { egen: i.egen }]}><Ikon navn={i.fil} /><span>{i.navn}</span></div>)}
+              {ikoner.filter((i) => i.gruppe === g).map((i) => <div class:list={["ikonrute", { egen: i.egen }]} data-ny={i.ny}><Ikon navn={i.fil} /><span>{i.navn}{i.ny ? <small class="dempet"> ny i {i.ny}</small> : null}</span></div>)}
             </div>
           </div>
         ))}
