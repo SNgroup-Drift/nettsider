@@ -46,7 +46,7 @@ const rens = (l: string) => l.replace(/^[-*]\s+/, "").replace(/`([^`]+)`/g, "$1"
     ))}
     <section class="sek" id="dokumentasjon">
       <header><h2>Dokumentasjon</h2><p>Fra designsystemet, i pinnet commit</p></header>
-      <div class="mal-rutenett">
+      <div class="dok-rutenett">
         {layoutRegler && (
           <article class="kort">
             <span class="merkelapp">LAYOUT-REGLER</span>
@@ -60,10 +60,10 @@ const rens = (l: string) => l.replace(/^[-*]\s+/, "").replace(/`([^`]+)`/g, "$1"
             <h3 class="kort-tittel">{av.tittel}</h3>
             {(() => { const b = blokker(av.linjer); return (<>
               {b.rader.length > 0 && (
-                <table class="dok-tabell">
+                <div class="dok-rull" tabindex="0" role="region" aria-label={`Felttabell: ${av.tittel}`}><table class="dok-tabell">
                   <thead><tr>{b.hode.map((h) => <th scope="col">{h}</th>)}</tr></thead>
                   <tbody>{b.rader.map((r) => <tr>{r.map((c, i) => i === 0 ? <th scope="row" class="mono">{c}</th> : <td>{c}</td>)}</tr>)}</tbody>
-                </table>
+                </table></div>
               )}
               {b.punkter.length > 0 && <ul class="dok-liste">{b.punkter.map((l) => <li>{l}</li>)}</ul>}
             </>); })()}
