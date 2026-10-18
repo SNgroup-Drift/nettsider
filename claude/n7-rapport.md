@@ -7,7 +7,7 @@ Gren `claude/n7-design-2-5-xebqv1` (dagøkt 18.10.2026, startet kl. 15.35; K-371
 - **Pin = K-371-commiten:** `7419b949097b2883b9bbfff2ad4bede001a46861` («demo: flett claude/k371-ds-2-5», rapporten i hengsel-crm: `claude/k371-rapport.md` på grenen `claude/k371-ds-2-5`, avsnittet «Nettsider-pinnen»). `designsystem.pin.json` har versjon **2.5.0**. `npm run design:hent -- --kilde <hengsel-crm> --commit 7419b949…` er kjørt; ingen fil i `ds/` eller `tokens.css` er redigert for hånd.
 - **Produktpalettene i `tokens.css`:** `[data-produkt="ute|nettsider|crm|admin"]` (bare lyse) og `--nivaa-haster-*`, `--nivaa-snart-*`, `--nivaa-stripe`. Generatoren `scripts/lag-hengsel-tokens.mjs` skriver dem fra `produkt` og `nivaa` i pinnet JSON (den delte fila er bare lys, så pakkens egen `tokens.css` med mørke Ute-blokker kunne ikke brukes som den er).
 - **Hver Hengsel-side har riktig `data-produkt` og riktig logo,** design.hengsel.no viser de fire palettene og de 72 ikonene fra pakken.
-- **Ingen avvik funnet ved gjennomgangen mot hengsel-regler.md** (se under). `npm test` grønn: 226 tester, 225 bestått, 0 feilet, 1 hoppet over (var 223 før N-7; 3 nye i `produktpaletter.test.mjs`).
+- **Ingen avvik funnet ved gjennomgangen mot hengsel-regler.md** (se under). `npm test` grønn: 226 tester, 225 bestått, 0 feilet, 1 hoppet over (nye: `produktpaletter.test.mjs` med 3 tester og 1 i `design-fasit.test.mjs`).
 - Alle sidene bygger (`npm run build`).
 
 ## Hva som endret seg synlig, per side
