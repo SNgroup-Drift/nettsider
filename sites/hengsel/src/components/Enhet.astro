@@ -1,13 +1,15 @@
 ---
 /**
- * Enhetsramme (Enhet.dc.html): Studio Display (type="display"), iPad (type="ipad") og iPhone (type="iphone") med iOS-statuslinje.
+ * Enhetsramme (Enhet.dc.html): Studio Display (type="display"), MacBook (type="macbook"), iPad (type="ipad") og iPhone (type="iphone") med iOS-statuslinje.
+ * N-10: type="macbook" er Apples MacBook-bezel (public/img/ramme-macbook.webp, 2400 × 1565, gjennomsiktig skjermhull 16:10, hentet fra git-historikken før K-177).
+ *   Ingen statuslinje (menylinja ligger i skjermbildet) og ingen «Din logo». Bibliotekbilder i 16:9 (display/) fyller hullet med object-fit: cover, object-position: top.
  * N-8: type="android" er en nøytral Android-ramme tegnet i CSS (rund hullkamera, klokke og symboler, ingen merke, ingen Google- eller Samsung-logo).
  *
  * Innholdet er enten et app-skjermbilde fra biblioteket (bilde="app/idag-lys.webp", K-233, se Skjermbilde.astro), et lokalt bilde (src) eller HTML i sporet (slot),
- * tegnet i naturlig størrelse (nw × nh: display 1440 × 810, iPad 1180 × 820, iPhone 402 × 874) og skalert til skjermen av scripts/skala.ts.
+ * tegnet i naturlig størrelse (nw × nh: display 1440 × 810, MacBook 1440 × 900, iPad 1180 × 820, iPhone 402 × 874) og skalert til skjermen av scripts/skala.ts.
  * Bredden på rammen er 100 % av plassen; sett maks bredde på omslaget. Ingen style-attributter (CSP style-src 'self').
  *
- *  - Studio Display bruker bezelen public/img/ramme-studio-display.webp; iPad og iPhone er tegnet i CSS (--alltid-mork).
+ *  - Studio Display og MacBook bruker bezelene public/img/ramme-studio-display.webp og ramme-macbook.webp; iPad og iPhone er tegnet i CSS (--alltid-mork).
  *  - Statuslinjen: iPhone «9:41» med Dynamic Island, signal, Wi-Fi og batteri; iPad «9:41 man. 12. okt.», Wi-Fi og batteri.
  *    Svart som standard (bare lys modus). statusFarge overstyrer.
  *  - «Din logo» ligger over I dag-skjermbildene (idag-*, ipad-idag-*), som i designet.
@@ -16,7 +18,7 @@
 import Skjermbilde from "./Skjermbilde.astro";
 
 interface Props {
-  type: "display" | "ipad" | "iphone" | "android";
+  type: "display" | "macbook" | "ipad" | "iphone" | "android";
   /** Sti i biblioteket uten tema (bilder.hengsel.no): «app/idag-lys.webp», «apptest/ruten-lys.webp». Målene kommer fra manifestet. */
   bilde?: string;
   /** Lokal fil som ikke er et app-skjermbilde */
@@ -43,7 +45,7 @@ interface Props {
   /** N-6: sporet inneholder en bildeserie (Simulering.astro) som fyller skjermen, ikke HTML i naturlig størrelse: ingen skalering, ingen statuslinje, ingen forskyvning */
   serie?: boolean;
 }
-const NAT = { display: [1440, 810], ipad: [1180, 820], iphone: [402, 874], android: [412, 892] } as const;
+const NAT = { display: [1440, 810], macbook: [1440, 900], ipad: [1180, 820], iphone: [402, 874], android: [412, 892] } as const;
 const { type, bilde, src, w, h, alt = "", statusFarge = "auto", forst = false, utenLogo = false, class: klasse, symboler = true, utenStatus = false, hd = false, serie = false } = Astro.props;
 const [nw, nh] = [Astro.props.nw ?? NAT[type][0], Astro.props.nh ?? NAT[type][1]];
 const bw = w ?? NAT[type][0], bh = h ?? NAT[type][1];
@@ -52,7 +54,7 @@ const kilde = bilde ?? src;
 // K-267: appbildene fra biblioteket (app/*) er tatt i simulatoren med egen statuslinje (klokke, Dynamic Island).
 // Uten dette tegnes rammens «9:41» oppå bildets klokke.
 const utenStatusEff = utenStatus || serie || (!!bilde && /^app\//.test(bilde));
-const visLogo = !!kilde && !utenLogo && !utenStatusEff && /\/(ipad-)?idag-/.test(kilde) && type !== "display";
+const visLogo = !!kilde && !utenLogo && !utenStatusEff && /\/(ipad-)?idag-/.test(kilde) && type !== "display" && type !== "macbook";
 const inset = type === "ipad" && !kilde && !serie ? 24 : 0; // CRM på iPad flyttes 24 px ned under statuslinja
 const lasting = forst ? "eager" : "lazy";
 ---
@@ -63,6 +65,14 @@ const lasting = forst ? "eager" : "lazy";
         {kilde ? <Skjermbilde bilde={bilde} src={src} w={bw} h={bh} alt={alt} forst={forst} topp={type !== "iphone" && type !== "android"} hd={hd} /> : serie ? <slot /> : <div class="skala"><slot /></div>}
       </div>
       <img class="bezel" src="/img/ramme-studio-display.webp" alt="" width="2160" height="1664" loading={lasting} decoding="async" aria-hidden="true" />
+    </div>
+  )}
+  {type === "macbook" && (
+    <div class="ramme">
+      <div class="skjerm" data-skala data-nw={nw} data-nh={nh} data-inset={inset}>
+        {kilde ? <Skjermbilde bilde={bilde} src={src} w={bw} h={bh} alt={alt} forst={forst} topp hd={hd} /> : serie ? <slot /> : <div class="skala"><slot /></div>}
+      </div>
+      <img class="bezel" src="/img/ramme-macbook.webp" alt="" width="2400" height="1565" loading={lasting} decoding="async" aria-hidden="true" />
     </div>
   )}
   {type === "ipad" && (
@@ -128,6 +138,9 @@ const lasting = forst ? "eager" : "lazy";
   /* Studio Display: skjermhullet i bezelen (prosent av rammen) */
   .display .ramme { aspect-ratio: 2160 / 1664; }
   .display .skjerm { left: 2.59%; top: 3.37%; width: 94.81%; height: 69.23%; }
+  /* MacBook (N-10): bezelen 2400 × 1565, skjermhullet 1794 × 1121 (16:10) */
+  .macbook .ramme { aspect-ratio: 2400 / 1565; }
+  .macbook .skjerm { left: 12.63%; top: 14.19%; width: 74.75%; height: 71.63%; border-radius: 1% / 1.4%; }
   /* iPad */
   .ipad .ramme { aspect-ratio: 1212 / 852; box-sizing: border-box; background: var(--alltid-mork); border-radius: 3.2% / 4.4%; padding: 1.32%; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
   .ipad .skjerm { position: relative; width: 100%; height: 100%; border-radius: 1.9% / 2.7%; }

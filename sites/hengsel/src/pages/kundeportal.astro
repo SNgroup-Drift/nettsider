@@ -5,6 +5,7 @@
  * N-6: simuleringer av portalen (iPhone) og dokumentene kunden får (Studio Display) før tabellene, content/simuleringer.ts.
  * Tekster i content/kundeportal.ts (STEG og SELGER). N-3c: kundeportalen på iPhone (PortalSkjerm, steg 1 «Tilbud og aksept» som før N-3) til høyre
  * i toppen, uten stegvelger og SMS (de var klikkbare deler av demoen som N-3 tok bort).
+ * N-10: portalen på MacBook (PortalSkjerm pc, 1440 × 900) bak og iPhone foran nede til høyre. Bare iPhone-rammen tegner statuslinjens symboler.
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -25,7 +26,10 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
 <Side title={SIDE.tittel} description={SIDE.beskrivelse} aktiv="portal">
   <main id="innhold">
     <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede}>
-      <div class="topp-telefon" slot="komposisjon"><Enhet type="iphone" forst><PortalSkjerm enhet="telefon" /></Enhet></div>
+      <div class="komposisjon" slot="komposisjon">
+        <div class="mac"><Enhet type="macbook" forst symboler={false}><PortalSkjerm enhet="pc" /></Enhet></div>
+        <div class="iphone"><Enhet type="iphone"><PortalSkjerm enhet="telefon" /></Enhet></div>
+      </div>
     </Sidetopp>
     <Innhold produkt="crm">
       <Simuleringsflis id="se-portalen" tittel="Se kundeportalen i bruk" tekst="Det kunden ser på telefonen, og dokumentene som kommer til Min side.">
@@ -44,6 +48,8 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
 </Side>
 
 <style>
-  .topp-telefon { width: min(100%, 260px); margin-inline: auto; }
-  @media (max-width: 959px) { .topp-telefon { width: 220px; } }
+  /* N-10: MacBook bak, iPhone foran nede til høyre (også på 390) */
+  .komposisjon { position: relative; width: 100%; padding-bottom: 8%; }
+  .mac { width: 84%; margin-right: auto; }
+  .iphone { position: absolute; right: 0; bottom: 0; width: 22%; }
 </style>

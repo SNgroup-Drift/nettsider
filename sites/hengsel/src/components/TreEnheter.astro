@@ -1,7 +1,8 @@
 ---
 /**
- * N-6: «Tre enheter». Studio Display bak, iPad foran til venstre og iPhone foran til høyre, med samme flyt på alle tre (Min dag → Ordre → Kontrollmål).
- * De tre bytter i takt (scripts/simulering.ts, data-sim-gruppe) og deler ett sett stegmerker under komposisjonen. Bildene kommer fra biblioteket.
+ * N-6 / N-10: «Samme ordre på alle enheter». Studio Display og MacBook øverst, iPad og iPhone foran nede, med samme flyt på alle fire
+ * (Min dag → Ordre → Kontrollmål). De fire bytter i takt (scripts/simulering.ts, data-sim-gruppe) og deler ett sett stegmerker under komposisjonen.
+ * Bildene kommer fra biblioteket. På telefon (under 640 px) stables de: Studio Display, MacBook, iPad, iPhone.
  */
 import Simulering from "./Simulering.astro";
 import Stegmerker from "./Stegmerker.astro";
@@ -12,18 +13,26 @@ const { forst = false, class: klasse } = Astro.props;
 <div class:list={["tre", klasse]} data-sim-gruppe>
   <div class="scene">
     <div class="pc"><Simulering type="display" steg={TRE_ENHETER.display} forst={forst} merker={false} etikett="Studio Display" /></div>
+    <div class="mac"><Simulering type="macbook" steg={TRE_ENHETER.macbook} merker={false} etikett="MacBook" /></div>
     <div class="ipad"><Simulering type="ipad" steg={TRE_ENHETER.ipad} merker={false} etikett="iPad" /></div>
     <div class="iphone"><Simulering type="iphone" steg={TRE_ENHETER.iphone} merker={false} etikett="iPhone" /></div>
   </div>
-  <Stegmerker navn={TRE_STEG} etikett="Steg: samme flyt på Studio Display, iPad og iPhone" />
+  <Stegmerker navn={TRE_STEG} etikett="Steg: samme flyt på Studio Display, MacBook, iPad og iPhone" />
 </div>
 
 <style>
   .tre { width: 100%; max-width: 960px; margin-inline: auto; }
-  /* Studio Display bak, iPad foran til venstre og iPhone foran til høyre; begge henger litt under skjermen */
-  .scene { position: relative; width: 100%; padding-bottom: 9%; }
-  .pc { width: 84%; margin-inline: auto; }
-  .ipad { position: absolute; left: 0; bottom: 0; width: 38%; }
-  .iphone { position: absolute; right: 0; bottom: 0; width: 16%; }
-  @media (max-width: 959px) { .scene { padding-bottom: 12%; } .ipad { width: 40%; } .iphone { width: 19%; } }
+  /* Studio Display til venstre og MacBook til høyre bak; iPad og iPhone foran nede. Høyden settes av .scene (62 % av bredden). */
+  .scene { position: relative; width: 100%; padding-bottom: 62%; }
+  .scene > div { position: absolute; }
+  .pc { left: 0; top: 0; width: 52%; }
+  .mac { right: 0; top: 6%; width: 50%; }
+  .ipad { left: 12%; bottom: 0; width: 32%; }
+  .iphone { right: 12%; bottom: 0; width: 14%; }
+  @media (max-width: 639px) {
+    .scene { padding-bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .scene > div { position: static; width: 100%; }
+    .scene > .ipad { max-width: 420px; }
+    .scene > .iphone { width: 200px; }
+  }
 </style>

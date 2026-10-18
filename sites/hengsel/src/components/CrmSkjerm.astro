@@ -11,8 +11,9 @@ import { kundeFra } from "../kunde";
 import { CRM_AKTIV_MENY, CRM_ALT, CRM_BRUKER, CRM_MENY, MINDAG_AVVIK, MINDAG_META, MINDAG_RADER, MINDAG_TALL, MONTASJE, ORDRE, TELEFON_FANER, TILBUD } from "../content/crm";
 import type { CrmEnhet, Skjerm } from "../content/crm";
 
-interface Props { skjerm?: Skjerm; enhet?: CrmEnhet; interaktiv?: boolean }
-const { skjerm = "minDag", enhet = "pc", interaktiv = false } = Astro.props;
+/** mac: PC-skjermen i MacBook-rammen (N-10), 1440 × 900 i stedet for 1440 × 810 */
+interface Props { skjerm?: Skjerm; enhet?: CrmEnhet; interaktiv?: boolean; mac?: boolean }
+const { skjerm = "minDag", enhet = "pc", interaktiv = false, mac = false } = Astro.props;
 const tlf = enhet === "telefon";
 const aktivMeny = CRM_AKTIV_MENY[skjerm];
 const stat = interaktiv ? {} : { inert: true, role: "img", "aria-label": CRM_ALT };
@@ -20,7 +21,7 @@ const rader = MINDAG_RADER.slice(0, tlf ? 5 : 6);
 const fanerAktiv = (f: string) => (f === "Min dag" && skjerm === "minDag") || (f === "Ordre" && skjerm !== "minDag");
 import { APPTEST } from "../apptest-lenker";
 ---
-<div class:list={["crm", enhet, skjerm]} data-produkt={kundeFra(Astro.url.pathname) ? undefined : "crm"} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
+<div class:list={["crm", enhet, skjerm, { mac }]} data-produkt={kundeFra(Astro.url.pathname) ? undefined : "crm"} data-skjerm={skjerm} data-enhet-type={enhet} {...stat}>
   {!tlf && (
     <aside class="side">
       <div class="logo"><span class="dinlogo"><span class="boks">Din logo</span></span></div>
@@ -147,6 +148,7 @@ import { APPTEST } from "../apptest-lenker";
 <style>
   .crm { display: flex; background: var(--surface-app); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.4; overflow: hidden; position: relative; box-sizing: border-box; text-align: left; -webkit-font-smoothing: antialiased; }
   .crm.pc { width: 1440px; height: 810px; }
+  .crm.pc.mac { height: 900px; }
   .crm.ipad { width: 1180px; height: 796px; }
   .crm.telefon { width: 402px; height: 874px; }
   .crm :is(button) { font-family: var(--f-body); }

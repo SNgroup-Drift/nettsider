@@ -5,6 +5,7 @@
  * Tekster i content/crm.ts. Den klikkbare demoen (K-160) er erstattet av tabellene etter sidekartet; demoen finnes på demo.hengsel.no.
  * N-6: simuleringer på Studio Display, iPad og iPhone (content/simuleringer.ts) før tabellene.
  * N-3c: Min dag i Studio Display (CrmSkjerm, som steg 1 i demoen før N-3) til høyre i toppen.
+ * N-10: MacBook (Montasje, CrmSkjerm mac) som andre ramme foran Studio Display i toppen, slik at siden viser alle fire enhetene (display, MacBook, iPad, iPhone).
  */
 import Side from "../layouts/Side.astro";
 import Enhet from "../components/Enhet.astro";
@@ -23,10 +24,13 @@ import { PAA_TELEFON } from "../content/telefon";
 <Side title="Hengsel CRM – Min dag, ordre og montasjeplan" description="Hengsel CRM: Min dag, avvik, CET-tegninger og montasjeplan på samme kundekort. Se demoen på demo.hengsel.no." aktiv="crm">
   <main id="innhold">
     <Sidetopp tittel={T.h1} ingress={T.lede}>
-      <div class="ramme" slot="komposisjon"><Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet></div>
+      <div class="komposisjon" slot="komposisjon">
+        <div class="pc"><Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet></div>
+        <div class="mac"><Enhet type="macbook" symboler={false}><CrmSkjerm skjerm="montasje" enhet="pc" mac /></Enhet></div>
+      </div>
     </Sidetopp>
     <Innhold produkt="crm">
-      <Simuleringsflis id="se-crm" tittel="Se Hengsel CRM i bruk" tekst="Samme kundekort på PC, iPad og iPhone: fra Min dag til kontrollmål.">
+      <Simuleringsflis id="se-crm" tittel="Se Hengsel CRM i bruk" tekst="Samme kundekort på Studio Display, iPad og iPhone: fra Min dag til kontrollmål.">
         <Simulering type="display" steg={CRM_DISPLAY} etikett="Hengsel CRM på Studio Display" />
         <Simulering type="ipad" steg={CRM_IPAD} etikett="Hengsel CRM på iPad" />
         <Simulering type="iphone" steg={CRM_IPHONE} etikett="Hengsel CRM på iPhone" />
@@ -41,3 +45,10 @@ import { PAA_TELEFON } from "../content/telefon";
     </Innhold>
   </main>
 </Side>
+
+<style>
+  /* N-10: Studio Display bak til høyre, MacBook foran nede til venstre (også på 390) */
+  .komposisjon { position: relative; width: 100%; padding-bottom: 16%; }
+  .pc { width: 78%; margin-left: auto; }
+  .mac { position: absolute; left: 0; bottom: 0; width: 50%; }
+</style>
