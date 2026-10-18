@@ -211,9 +211,14 @@ button.knapp { font-family: inherit; appearance: none; }
 .mal-rutenett > * { min-width: 0; }
 .mal { display: grid; gap: 16px; align-content: start; }
 .mal-bilde { display: block; border: 1px solid var(--linje); border-radius: var(--radius-bilde); overflow: hidden; background: var(--flate-senket); }
-.mal-bilde img { display: block; width: 100%; height: auto; aspect-ratio: 397 / 561; object-fit: cover; object-position: top; }
+.mal-bilde img { display: block; width: 100%; height: auto; }
 .mal-tekst { display: grid; gap: 8px; }
 .mal-fakta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: var(--skrift-meta); }
 .mal-fakta dt { color: var(--tekst-dempet); }
 .mal-fakta dd { margin: 0; overflow-wrap: anywhere; }
-.mal-lenker { font-size: var(--skrift-meta); }
+.mal-lenker, .mal-merknad { font-size: var(--skrift-meta); margin: 0; }
+.mal-sider summary { cursor: pointer; font-size: var(--skrift-meta); color: var(--aksent); }
+.mal-sider-rad { display: grid; gap: 8px; margin-top: 8px; }
+.mal-sider-rad a { display: block; border: 1px solid var(--linje); border-radius: var(--radius-bilde); overflow: hidden; background: var(--flate-senket); }
+.mal-sider-rad img { display: block; width: 100%; height: auto; }
+.dok-liste { margin: 8px 0 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: var(--skrift-meta); }

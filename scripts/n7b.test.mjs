@@ -2,7 +2,8 @@
  * N-7b (designsystem 2.10): tokens, Teller og dokumentmalene på design.hengsel.no.
  *  a) den delte token-fila har Teller-tokenene, --flate-meny, --radius-rad, --skrift-mono og P3-/økt-kontrast-blokker per produkt, uten kundetema-velgere
  *  b) Admin tegner menytellerne og bjella med --teller-* (ikke egen pille)
- *  c) design.hengsel.no/dokumentmaler lister alle malene i den pinnede mappa (nummer, navn, familie, sider, forhåndsvisning, eksempel.html), uten Sigdal,
+ *  c) design.hengsel.no/dokumentmaler lister alle malene i den pinnede mappa (nummer, navn, familie, sider, forhåndsvisning, eksempel.html), uten Sigdal;
+ *     N-7c: 29 maler, Designs side-N.png (Hengsel standard) vises, mal 29 er foreløpig uten eksempel og flettefelt (scripts/n7c.test.mjs),
  *     med --skrift-mono på adresselinjen, og eksemplene følger CSP-en (ingen innebygd skript eller stil)
  * Kjør `npm run build` først (dist må finnes).
  */
@@ -43,31 +44,33 @@ test("c) /dokumentmaler: alle malene fra pin-mappa, generert, uten Sigdal", () =
   assert.ok(existsSync(join(dist, "dokumentmaler.html")), "kjør npm run build først");
   const h = les(dist, "dokumentmaler.html");
   const mapper = readdirSync(dm).filter((m) => /^\d\d-/.test(m)).sort();
-  assert.equal(mapper.length, 28);
+  assert.equal(mapper.length, 29);
   const readme = les(dm, "README.md");
   for (const m of mapper) {
-    const felt = JSON.parse(les(dm, m, "felter.json"));
     const rad = readme.split("\n").find((l) => l.includes(`\`${m}/\``));
-    assert.ok(rad, `${m} står ikke i README-tabellen`);
-    const [, nr, , navn, familie, sider] = rad.split("|").map((c) => c.trim());
+    const nr = m.slice(0, 2);
     assert.ok(h.includes(`Mal ${nr}`), `${m}: nummer ${nr}`);
+    const sider = readdirSync(dm + "/" + m).filter((f) => /^side-\d+\.png$/.test(f));
+    assert.ok(sider.length > 0, `${m}: ingen side-N.png`);
+    for (const f of sider) assert.ok(h.includes(`/ds/dokumentmaler/${m}/${f}`) && existsSync(join(dist, "ds", "dokumentmaler", m, f)), `${m}/${f}: Designs bilde vises ikke eller mangler i dist`);
+    assert.ok(existsSync(join(dist, "ds", "dokumentmaler", m, "mal.css")), `${m}/mal.css mangler i dist`);
+    if (!rad) continue; // foreløpig mal (29): n7c.test.mjs
+    const felt = JSON.parse(les(dm, m, "felter.json"));
+    const [, , , , familie, antall] = rad.split("|").map((c) => c.trim());
     assert.ok(h.includes(felt.dokument.replace(/&/g, "&amp;")), `${m}: navnet «${felt.dokument}» vises ikke`);
     assert.ok(h.includes(`/ds/dokumentmaler/${m}/eksempel.html`), `${m}: lenke til eksempel.html`);
     assert.ok(h.includes(`/ds/dokumentmaler/${m}/felter.json`), `${m}: lenke til felter.json`);
-    assert.ok(h.includes(`/dokumentmaler/${m}.png`) && existsSync(join(dist, "dokumentmaler", `${m}.png`)), `${m}: forhåndsvisning mangler`);
-    for (const f of ["eksempel.html", "felter.json", "mal.css"]) assert.ok(existsSync(join(dist, "ds", "dokumentmaler", m, f)), `${m}/${f} mangler i dist`);
-    assert.equal(readdirSync(dm + "/" + m).filter((f) => /^side-\d+\.png$/.test(f)).length, Number(sider), `${m}: sider i README (${sider}) og antall side-N.png`);
-    assert.ok(new RegExp(`<dt>Sider</dt><dd>${sider}</dd>`).test(h) || h.includes(`<dd>${sider}</dd>`), `${m}: antall sider`);
+    for (const f of ["eksempel.html", "felter.json"]) assert.ok(existsSync(join(dist, "ds", "dokumentmaler", m, f)), `${m}/${f} mangler i dist`);
+    assert.equal(sider.length, Number(antall), `${m}: sider i README (${antall}) og antall side-N.png`);
+    assert.ok(h.includes(`<dd>${antall}</dd>`), `${m}: antall sider`);
   }
-  assert.ok(!/side-\d+\.png/.test(h), "pakkens side-N.png (kundetema) skal ikke vises");
-  assert.ok(!existsSync(join(dist, "ds", "dokumentmaler", "01-tilbud", "side-1.png")), "side-N.png (kundetemaet) skal ikke ligge i dist");
   assert.ok(!/sigdal/i.test(h), "ingen Sigdal på siden");
   assert.match(h, /class="mono"[^>]*>Furuvegen 12/, "adresselinjen er satt i --skrift-mono");
   assert.match(les(rot, "sites", "design", "src", "styles", "design.css"), /\.mono \{[^}]*var\(--skrift-mono\)/);
 });
 
 test("c2) eksempel.html følger CSP-en: ingen innebygd skript eller stil, med favicon og noindex, uten Sigdal", () => {
-  for (const m of readdirSync(dm).filter((x) => /^\d\d-/.test(x))) {
+  for (const m of readdirSync(dm).filter((x) => /^\d\d-/.test(x) && existsSync(join(dm, x, "eksempel.html")))) {
     const t = les(dist, "ds", "dokumentmaler", m, "eksempel.html");
     assert.ok(!/<script(?![^>]*\bsrc=)/.test(t) && !/ style="/.test(t), `${m}: innebygd skript eller stil`);
     assert.ok(t.includes('href="/favicon.ico"') && t.includes('name="robots" content="noindex'), `${m}: favicon og noindex`);
