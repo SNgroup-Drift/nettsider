@@ -17,6 +17,8 @@ import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import { CRM_DISPLAY, CRM_IPAD, CRM_IPHONE } from "../content/simuleringer";
 import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
 import { CRM_MODULER, CRM_SIDE as T, FOR_OG_MED, MODULER_KOLONNER } from "../content/crm";
+import PaaTelefon from "../components/PaaTelefon.astro";
+import { PAA_TELEFON } from "../content/telefon";
 ---
 <Side title="Hengsel CRM – Min dag, ordre og montasjeplan" description="Hengsel CRM: Min dag, avvik, CET-tegninger og montasjeplan på samme kundekort. Se demoen på demo.hengsel.no." aktiv="crm">
   <main id="innhold">
@@ -35,6 +37,7 @@ import { CRM_MODULER, CRM_SIDE as T, FOR_OG_MED, MODULER_KOLONNER } from "../con
       <Rad hoyde={tabellHoyde(CRM_MODULER.length)}>
         <Tabellflis id="moduler" tittel={T.modulerH2} kolonner={MODULER_KOLONNER} rader={CRM_MODULER} />
       </Rad>
+      <PaaTelefon tekst={PAA_TELEFON.crm.tekst} bilde={PAA_TELEFON.crm.bilde} alt={PAA_TELEFON.crm.alt} />
     </Innhold>
   </main>
 </Side>

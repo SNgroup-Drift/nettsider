@@ -5,6 +5,7 @@
  *  rad 1 (120) Status 1/3 ×3 · rad 2 (480) Tabell «En dag i butikken» (6 rader) · rad 3 (320) Liste «Bygget for» 1/2 + Tekst «Film» 1/2.
  * Tekster og data i content/forside.ts.
  * N-6: «Fra tilbud til ferdig montert» (simulering på Studio Display, content/simuleringer.ts) og «Tre enheter» under raden «En dag i butikken».
+ * N-8: produktkortene (rad 1) har lenken «På telefon» til /telefon (ikke i kundeutgavene).
  * N-6b: bare den første rammen (Studio Display i toppen) definerer statuslinjens symboler (sb-*); alle andre rammer på siden har symboler={false}.
  */
 import Side from "../layouts/Side.astro";
@@ -21,7 +22,10 @@ import Simulering from "../components/Simulering.astro";
 import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import TreEnheter from "../components/TreEnheter.astro";
 import { FORSIDE_FLYT } from "../content/simuleringer";
+import { kundeFra } from "../kunde";
 import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/forside";
+// N-8: lenke til /telefon i produktkortene; /telefon finnes ikke i kundeutgavene (/kunde/sigdal)
+const telefonLenke = kundeFra(Astro.url.pathname) ? undefined : { tekst: "På telefon", href: "/telefon" };
 ---
 <Side title="Hengsel – CRM, montørapp og kundeportal for kjøkkenbutikker" description={HERO.lede} aktiv="">
   <main id="innhold">
@@ -35,7 +39,7 @@ import { BYGGET_FOR, EN_DAG, FILM, HERO, PROV_SELV, STATUS } from "../content/fo
     </Sidetopp>
     <Innhold>
       <Rad hoyde={120}>
-        {STATUS.map(([t, p, tone, s]) => <Statusflis tittel={t} pille={p} tone={tone} tekst={s} />)}
+        {STATUS.map(([t, p, tone, s]) => <Statusflis tittel={t} pille={p} tone={tone} tekst={s} lenke={telefonLenke} />)}
       </Rad>
       <Rad hoyde={tabellHoyde(EN_DAG.rader.length)}>
         <Tabellflis id="en-dag" tittel={EN_DAG.tittel} kolonner={EN_DAG.kolonner} rader={EN_DAG.rader} tall />

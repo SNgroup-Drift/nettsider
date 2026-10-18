@@ -124,7 +124,7 @@ test("4. bibliotekadressene i dist står i manifestet, og KJENTE_MANGLER har bar
   assert.deepEqual(Object.keys(LOKALE_BILDER).filter((k) => nokler.has(k)), [], "nettsidenes egne bilder (LOKALE_BILDER) skal ikke ligge i biblioteket");
   assert.deepEqual(KJENTE_MANGLER.filter((k) => Object.hasOwn(LOKALE_BILDER, k)), [], "en nøkkel kan ikke stå både i KJENTE_MANGLER og LOKALE_BILDER");
   assert.equal(new Set(KJENTE_MANGLER).size, KJENTE_MANGLER.length, "KJENTE_MANGLER har dubletter");
-  for (const k of KJENTE_MANGLER) assert.match(k, /^(app|apptest|hjelp|vis)\/[\w/-]+$/, k);
+  for (const k of KJENTE_MANGLER) assert.match(k, /^(app|apptest|hjelp|telefon|vis)\/[\w/-]+$/, k);
 });
 
 test("5. manifestkopien i repoet er gyldig og har begge temaer", () => {
@@ -133,7 +133,7 @@ test("5. manifestkopien i repoet er gyldig og har begge temaer", () => {
   assert.ok(MANIFEST_FIL.endsWith("skjermbilder-manifest.json") && existsSync(MANIFEST_FIL));
   for (const tema of TEMAER) assert.ok(Object.keys(m.filer).some((k) => k.startsWith(`${tema}/`)), `ingen ${tema}-bilder i manifestet`);
   for (const [sti, f] of Object.entries(m.filer)) {
-    assert.match(sti, /^(hengsel|sigdal)\/(app|apptest|hjelp|dok-forside\.webp|vis\/)/, sti);
+    assert.match(sti, /^(hengsel|sigdal)\/(app|apptest|hjelp|telefon|dok-forside\.webp|vis\/)/, sti);
     assert.match(f.sha256, /^[0-9a-f]{64}$/, sti);
     assert.ok(f.bredde > 0 && f.hoyde > 0 && f.bytes > 0, sti);
   }

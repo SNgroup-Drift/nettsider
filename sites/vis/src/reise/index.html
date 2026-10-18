@@ -32,7 +32,8 @@
 /* Selgeren ser: skjermbildet fra CRM_v4 for scenen (PC, iPad eller kundens telefon). Ordreboksen under er skjult, men
    driver fortsatt scenemanuset (radene som «kommer inn»). */
 .pane .pc-ramme{width:100%}
-.pane .tlf{margin:0 auto}
+.pane .tlf{margin:0 auto;max-width:240px}
+.pane-h .btn{min-height:44px}
 .order[hidden]{display:none}
 /* Ordreboksen */
 .order{border:1px solid var(--linje);border-radius:var(--radius-kort-lite);overflow:hidden}
@@ -131,8 +132,9 @@
 
   <main class="stage" id="stage">
     <section class="card pane" aria-label="Det selgeren ser">
-      <div class="pane-h"><h2 class="eyebrow">Selgeren ser</h2><span id="where"></span></div>
+      <div class="pane-h"><h2 class="eyebrow">Selgeren ser</h2><span id="where"></span><button class="btn ghost" id="telefon" type="button" aria-pressed="false" title="Bytt rammen fra Studio Display til iPhone">Telefon</button></div>
       <div class="enhet" data-enhet="pc"><div class="pc-ramme" id="pc" data-bilder="crm-tilbud,crm-tilbud-kunde,crm-ordre-kontrollmal,crm-montasje,crm-etterkalkyle" data-ingen-nav data-alt="Hengsel CRM på PC"><div class="skjermkant"><div class="skjerm"></div></div><span class="stang" aria-hidden="true"></span><span class="fot" aria-hidden="true"></span></div></div>
+      <div class="enhet" data-enhet="tlf" hidden><div class="tlf" id="tlf" data-bilder="crm-tilbud-telefon,crm-tilbud-kunde-telefon,crm-ordre-kontrollmal-telefon,crm-montasje-telefon,crm-etterkalkyle-telefon" data-ingen-nav data-alt="Hengsel CRM på iPhone"><div class="skjerm"></div></div></div>
       <div class="order" hidden>
         <div class="order-h"><b id="ohT"></b><small id="ohS"></small></div>
         <div class="rows" id="rows"></div>

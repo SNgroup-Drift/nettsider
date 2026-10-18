@@ -5,14 +5,20 @@
  */
 import Flis, { type Bredde } from "./Flis.astro";
 import Pille, { type Tone } from "./Pille.astro";
-interface Props { tittel: string; pille: string; tone?: Tone; tekst: string; bredde?: Bredde }
-const { tittel, pille, tone, tekst, bredde = "1/3" } = Astro.props;
+/** N-8: `lenke` er en liten lenke på pille-linja (forsiden: «På telefon» til /telefon); høyden på flisen er den samme. */
+interface Props { tittel: string; pille: string; tone?: Tone; tekst: string; bredde?: Bredde; lenke?: { tekst: string; href: string } }
+const { tittel, pille, tone, tekst, bredde = "1/3", lenke } = Astro.props;
 ---
 <Flis bredde={bredde} tittel={tittel} klasse="statusflis">
-  <Pille tone={tone}>{pille}</Pille>
+  <div class="pillerad">
+    <Pille tone={tone}>{pille}</Pille>
+    {lenke && <a class="lenke" href={lenke.href}>{lenke.tekst} ›</a>}
+  </div>
   <p class="setning" title={tekst}>{tekst}</p>
 </Flis>
 
 <style>
+  .pillerad { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .lenke { color: var(--aksent-tekst); white-space: nowrap; }
   .setning { margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--tekst); }
 </style>
