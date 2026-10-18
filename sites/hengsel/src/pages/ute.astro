@@ -19,6 +19,8 @@ import Simulering from "../components/Simulering.astro";
 import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import { UTE_IPAD, UTE_IPHONE, UTE_UTEN_NETT } from "../content/simuleringer";
 import { GJENNOM_DAGEN, HERO, STATUS, STEG, TEGNING, UTEN_NETT } from "../content/ute";
+import PaaTelefon from "../components/PaaTelefon.astro";
+import { PAA_TELEFON } from "../content/telefon";
 const rader = STEG.map((s) => [s.tittel, s.tekst]);
 ---
 <Side
@@ -54,6 +56,7 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
       <Simuleringsflis id="uten-nett" tittel={UTEN_NETT.eyebrow} tekst="Jobben virker uten dekning. Det montøren sender inn, ligger i køen på telefonen og går av seg selv når nettet er tilbake.">
         <Enhet type="iphone" bilde={UTE_UTEN_NETT.bilde} alt={UTE_UTEN_NETT.alt} symboler={false} />
       </Simuleringsflis>
+      <PaaTelefon tekst={PAA_TELEFON.ute.tekst} bilde={PAA_TELEFON.ute.bilde} alt={PAA_TELEFON.ute.alt} />
     </Innhold>
   </main>
 </Side>

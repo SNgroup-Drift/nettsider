@@ -17,6 +17,8 @@ import Simulering from "../components/Simulering.astro";
 import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
 import { PORTAL_DISPLAY, PORTAL_IPHONE } from "../content/simuleringer";
 import { SIDE, STEG, SELGER } from "../content/kundeportal";
+import PaaTelefon from "../components/PaaTelefon.astro";
+import { PAA_TELEFON } from "../content/telefon";
 const reise = STEG.map((s) => [s.t, s.s]);
 const selger = SELGER.kort.map((k) => [k.t, k.s]);
 ---
@@ -36,6 +38,7 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
       <Rad hoyde={tabellHoyde(selger.length)}>
         <Tabellflis id="samme-ordre" tittel={SELGER.h2} kolonner={["Hva", "Hvor"]} rader={selger} />
       </Rad>
+      <PaaTelefon tekst={PAA_TELEFON.portal.tekst} bilde={PAA_TELEFON.portal.bilde} alt={PAA_TELEFON.portal.alt} />
     </Innhold>
   </main>
 </Side>

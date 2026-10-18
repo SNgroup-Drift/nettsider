@@ -1,0 +1,159 @@
+---
+/**
+ * /telefon (N-8, Eirik 18.10): «Hengsel på telefon». Samme oppsett og komponenter som produktsidene (Sidetopp, Innhold, Rad, Flis, Tekstflis):
+ *  toppen: tre telefoner side om side (CRM i nettleseren, Hengsel Ute på iPhone og på Android) · «Alt i nettleseren» (CRM og kundeportal) ·
+ *  «Appen gjør mer» (tabell, nettleser mot Hengsel Ute) · «Hengsel Ute» (ni skjermer, iPad, mørk modus) · «Android» · «Prøv i nettleseren nå».
+ * Bildene kommer fra skjermbildebiblioteket (bilder.hengsel.no, K-233); telefon/* tas av K-228b og vises som «Skjermbilde kommer» til de er i manifestet.
+ * Enhetsrammene: iPhone og iPad (Enhet.astro), nøytral Android-ramme (type="android"), iPhone med nettleserlinje (NettleserTelefon.astro).
+ * Statuslinjens symboler (sb-*) defineres bare av den første rammen (toppen). Tekster og stier i content/telefon.ts.
+ */
+import Side from "../layouts/Side.astro";
+import Enhet from "../components/Enhet.astro";
+import NettleserTelefon from "../components/NettleserTelefon.astro";
+import Telefonrad from "../components/Telefonrad.astro";
+import Sidetopp from "../components/kit/Sidetopp.astro";
+import Innhold from "../components/kit/Innhold.astro";
+import Rad from "../components/kit/Rad.astro";
+import Flis from "../components/kit/Flis.astro";
+import Tekstflis from "../components/kit/Tekstflis.astro";
+import { PROV_SELV, EPOST } from "../content/forside";
+import { ANDROID, APP_MOT_WEB, AVSLUTNING, HERO, NETTLESER, TOPP, UTE } from "../content/telefon";
+const IKON = {
+  ja: { navn: "Ja", sti: "M4 10.5l4 4 8-9" },
+  nei: { navn: "Nei", sti: "M5 5l10 10M15 5L5 15" },
+  delvis: { navn: "Delvis", sti: "M5 10h10" },
+} as const;
+---
+<Side
+  title="Hengsel på telefon – i nettleseren og i Hengsel Ute"
+  description={HERO.ingress}
+  aktiv=""
+>
+  <main id="innhold">
+    <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress}>
+      <a class="btn primary" href={PROV_SELV}>{HERO.prov}</a>
+      <a class="btn" href="/priser-og-demo#demo">{HERO.kontakt}</a>
+      <div class="topp" slot="komposisjon">
+        <figure class="tf">
+          <NettleserTelefon bilde={TOPP.nettleser.bilde} alt={TOPP.nettleser.alt} forst />
+          <figcaption><b>{TOPP.nettleser.navn}</b>{TOPP.nettleser.tekst}</figcaption>
+        </figure>
+        <figure class="tf">
+          <Enhet type="iphone" bilde={TOPP.iphone.bilde} alt={TOPP.iphone.alt} symboler={false} forst />
+          <figcaption><b>{TOPP.iphone.navn}</b>{TOPP.iphone.tekst}</figcaption>
+        </figure>
+        <figure class="tf">
+          <Enhet type="android" bilde={TOPP.android.bilde} alt={TOPP.android.alt} symboler={false} forst />
+          <figcaption><b>{TOPP.android.navn}</b>{TOPP.android.tekst}</figcaption>
+        </figure>
+      </div>
+    </Sidetopp>
+    <Innhold produkt="crm">
+      <Telefonrad id="alt-i-nettleseren" tittel={NETTLESER.crmTittel} tekst={`${NETTLESER.tekst} ${NETTLESER.crmTekst}`}>
+        {NETTLESER.crm.map(([bilde, navn, alt]) => (
+          <figure class="tf"><NettleserTelefon bilde={bilde} alt={alt} symboler={false} /><figcaption>{navn}</figcaption></figure>
+        ))}
+      </Telefonrad>
+      <Telefonrad id="kundeportal-pa-telefon" tittel={NETTLESER.portalTittel} tekst={NETTLESER.portalTekst}>
+        {NETTLESER.portal.map(([bilde, navn, alt]) => (
+          <figure class="tf"><NettleserTelefon bilde={bilde} alt={alt} symboler={false} /><figcaption>{navn}</figcaption></figure>
+        ))}
+      </Telefonrad>
+      <Rad hoyde="auto">
+        <Flis id="app-mot-web" bredde="1/1" tittel={APP_MOT_WEB.tittel} klasse="sammenlikning">
+          <p class="ingress">{APP_MOT_WEB.tekst}</p>
+          <table class="sml">
+            <thead><tr>{APP_MOT_WEB.kolonner.map((k, i) => <th scope="col" class:list={{ forst: i === 0 }}>{k || <span class="skjult">Funksjon</span>}</th>)}</tr></thead>
+            <tbody>
+              {APP_MOT_WEB.rader.map(([hva, web, app]) => (
+                <tr>
+                  <th scope="row">{hva}</th>
+                  {[web, app].map((s) => (
+                    <td class={`svar ${s}`}>
+                      <span class="svarinn">
+                        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d={IKON[s].sti} /></svg>
+                        <span>{IKON[s].navn}</span>
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="merknad">{APP_MOT_WEB.merknad}</p>
+        </Flis>
+      </Rad>
+    </Innhold>
+    <Innhold produkt="ute">
+      <Telefonrad id="hengsel-ute" tittel={UTE.tittel} tekst={UTE.tekst} storrelse="liten">
+        {UTE.skjermer.map(([navn, tittel, alt]) => (
+          <figure class="tf"><Enhet type="iphone" bilde={`vis/skjermbilder/${navn}.webp`} alt={alt} symboler={false} /><figcaption>{tittel}</figcaption></figure>
+        ))}
+      </Telefonrad>
+      <Telefonrad id="ute-ipad" tittel={UTE.ipadTittel} tekst={UTE.ipadTekst} storrelse="ipad">
+        <figure class="tf"><Enhet type="ipad" bilde={`${UTE.ipad[0]}.webp`} w={2360} h={1640} alt={UTE.ipad[2]} symboler={false} /><figcaption>Lys</figcaption></figure>
+        <figure class="tf"><Enhet type="ipad" bilde={`${UTE.ipad[0]}-mork.webp`} w={2360} h={1640} alt={`${UTE.ipad[2]}, mørk modus`} statusFarge="hvit" symboler={false} /><figcaption>Mørk</figcaption></figure>
+      </Telefonrad>
+      <Telefonrad id="ute-mork" tittel={UTE.morkTittel} tekst={UTE.morkTekst} storrelse="liten">
+        {UTE.skjermer.map(([navn, tittel, alt]) => (
+          <figure class="tf"><Enhet type="iphone" bilde={`vis/skjermbilder/${navn}-mork.webp`} alt={`${alt}, mørk modus`} statusFarge="hvit" symboler={false} /><figcaption>{tittel}</figcaption></figure>
+        ))}
+      </Telefonrad>
+      <Telefonrad id="android" tittel={ANDROID.tittel} tekst={ANDROID.tekst}>
+        {ANDROID.skjermer.map(([navn, tittel, alt]) => (
+          <figure class="tf"><Enhet type="android" bilde={`vis/skjermbilder/${navn}.webp`} alt={alt} symboler={false} /><figcaption>{tittel}</figcaption></figure>
+        ))}
+      </Telefonrad>
+      <Rad hoyde={120}>
+        <Tekstflis bredde="1/1" tittel="Hengsel Ute i App Store og Google Play">
+          <p class="plassholder">{ANDROID.plassholder}</p>
+        </Tekstflis>
+      </Rad>
+    </Innhold>
+    <Innhold produkt="crm">
+      <Rad hoyde={120}>
+        <Tekstflis bredde="1/1" tittel={AVSLUTNING.tittel} id="prov">
+          <p>{AVSLUTNING.tekst}</p>
+          <div class="knapper" slot="handling">
+            <a class="btn primary" href={PROV_SELV}>{AVSLUTNING.prov}</a>
+            <a class="btn" href={`mailto:${EPOST}`}>{AVSLUTNING.kontakt}</a>
+          </div>
+        </Tekstflis>
+      </Rad>
+    </Innhold>
+  </main>
+</Side>
+
+<style>
+  /* Toppen: tre telefoner side om side med én setning under hver */
+  .topp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .tf { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .topp figcaption { font-size: 13px; line-height: 18px; color: var(--tekst-dempet); display: flex; flex-direction: column; gap: 2px; }
+  .topp figcaption b { color: var(--tekst); font-weight: var(--skrift-vekt-sterk); }
+  @media (max-width: 959px) {
+    .topp { gap: 8px; max-width: 420px; margin-inline: auto; }
+    .topp figcaption { font-size: 12px; line-height: 16px; }
+  }
+
+  /* App mot web: ja/nei/delvis med ikoner fra systemet (hake, lukk; delvis er samme strek), bare tokens */
+  .ingress { margin: 0 0 12px; max-width: 720px; line-height: 22px; color: var(--tekst-dempet); }
+  .sml { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+  .sml th, .sml td { height: 40px; padding: 0 16px 0 0; box-sizing: border-box; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--linje); }
+  .sml thead th { height: 36px; font-weight: var(--skrift-vekt-sterk); }
+  .sml thead th.forst { width: 52%; }
+  .sml tbody th { font-weight: var(--skrift-vekt-sterk); }
+  .skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .svarinn { display: inline-flex; align-items: center; gap: 8px; }
+  .svarinn svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.875; stroke-linecap: round; stroke-linejoin: round; }
+  .svar.ja { color: var(--status-ferdig-fg); }
+  .svar.delvis { color: var(--status-advarsel-fg); }
+  .svar.nei { color: var(--tekst-dempet); }
+  .merknad { margin: 12px 0 0; max-width: 720px; font-size: 13px; line-height: 18px; color: var(--tekst-dempet); }
+  .plassholder { color: var(--tekst-dempet); }
+  .knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 959px) {
+    .sml thead th.forst { width: 46%; }
+    .sml th, .sml td { padding-right: 8px; }
+    .sml tbody th { font-weight: var(--skrift-vekt-normal); }
+  }
+</style>

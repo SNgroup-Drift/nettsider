@@ -1,0 +1,41 @@
+---
+/**
+ * N-8: iPhone-ramme med nettleseren synlig (adresselinje nederst, som i Safari): CRM-et eller kundeportalen i nettleseren på telefon. Skjermbildet
+ * (390 px bredt, tema hengsel, lys) hentes fra biblioteket på bilder.hengsel.no (K-233, Skjermbilde.astro) og står under statuslinja og over
+ * adresselinja; mangler det i manifestet, vises «Skjermbilde kommer» (nøklene telefon/* står i KJENTE_MANGLER). Innholdet i sporet er tegnet i
+ * iPhone-skjermens naturlige størrelse (402 × 874) og skaleres av Enhet.astro. Bare tokens, ingen style-attributter (CSP).
+ */
+import Enhet from "./Enhet.astro";
+import Skjermbilde from "./Skjermbilde.astro";
+interface Props {
+  /** Sti i biblioteket uten tema: «telefon/crm-min-dag.webp» */
+  bilde: string;
+  alt: string;
+  /** Adressen som står i adresselinja */
+  adresse?: string;
+  forst?: boolean;
+  /** false på alle rammer unntatt den første på siden (statuslinjens symboler, scripts/symboler.test.mjs) */
+  symboler?: boolean;
+}
+const { bilde, alt, adresse = "demo.hengsel.no", forst = false, symboler = true } = Astro.props;
+---
+<Enhet type="iphone" symboler={symboler}>
+  <div class="nett">
+    <div class="side"><Skjermbilde bilde={bilde} alt={alt} forst={forst} /></div>
+    <div class="linje">
+      <span class="adresse">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><rect x="4.5" y="9" width="11" height="8" rx="2" /><path d="M7 9V6.5a3 3 0 0 1 6 0V9" /></svg>
+        <span>{adresse}</span>
+      </span>
+    </div>
+  </div>
+</Enhet>
+
+<style>
+  .nett { width: 100%; height: 100%; display: flex; flex-direction: column; background: var(--flate-kort); padding-top: 54px; box-sizing: border-box; }
+  .side { position: relative; flex: 1; min-height: 0; border-top: 1px solid var(--linje); }
+  .side :global(picture), .side :global(img.innhold), .side :global(figure.innhold) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+  .linje { flex: none; height: 96px; display: flex; justify-content: center; padding-top: 12px; box-sizing: border-box; background: var(--flate-kort); border-top: 1px solid var(--linje); }
+  .adresse { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 22px; background: var(--flate-senket); color: var(--tekst); font: 500 17px / 1 var(--f-body); }
+  .adresse svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+</style>

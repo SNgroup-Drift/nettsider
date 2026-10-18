@@ -1,0 +1,34 @@
+---
+/**
+ * N-8: seksjonen «På telefon» nederst på produktsidene (CRM, Hengsel Ute, Kundeportal): ett bilde og lenke til /telefon. Bildet er en sti i
+ * skjermbildebiblioteket (bilder.hengsel.no, K-233). I kundeutgavene (/kunde/sigdal) finnes ikke /telefon, så seksjonen vises ikke der.
+ */
+import Rad from "./kit/Rad.astro";
+import Flis from "./kit/Flis.astro";
+import Enhet from "./Enhet.astro";
+import { kundeFra } from "../kunde";
+interface Props { tekst: string; bilde: string; alt: string }
+const { tekst, bilde, alt } = Astro.props;
+const vis = !kundeFra(Astro.url.pathname);
+---
+{vis && (
+  <Rad hoyde="auto">
+    <Flis bredde="1/1" tittel="På telefon" id="pa-telefon" klasse="patelefon">
+      <div class="innh">
+        <div class="ramme"><Enhet type="iphone" bilde={bilde} alt={alt} symboler={false} /></div>
+        <div class="tekst">
+          <p>{tekst}</p>
+          <p><a class="btn" href="/telefon">Se Hengsel på telefon</a></p>
+        </div>
+      </div>
+    </Flis>
+  </Rad>
+)}
+
+<style>
+  .innh { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 40px; padding-block: 8px; }
+  .ramme { flex: 0 0 150px; width: 150px; }
+  .tekst { flex: 1 1 320px; max-width: 720px; display: flex; flex-direction: column; gap: 12px; line-height: 22px; }
+  .tekst p { margin: 0; }
+  @media (max-width: 959px) { .ramme { flex-basis: 140px; width: 140px; } }
+</style>

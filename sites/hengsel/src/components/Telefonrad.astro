@@ -1,0 +1,34 @@
+---
+/**
+ * N-8: en rad (høyde «auto», fordi bildene setter høyden) med én flis over hele bredden som viser telefoner side om side, hver med en bildetekst.
+ * Rammene (Enhet.astro, NettleserTelefon.astro) står i sporet, pakket i <figure class="tf"> med <figcaption>. Størrelsen følger `storrelse`;
+ * på telefon brytes raden, så to eller tre står ved siden av hverandre. Ingen style-attributter (CSP).
+ */
+import Rad from "./kit/Rad.astro";
+import Flis from "./kit/Flis.astro";
+interface Props { tittel: string; tekst?: string; id?: string; storrelse?: "liten" | "vanlig" | "ipad" }
+const { tittel, tekst, id, storrelse = "vanlig" } = Astro.props;
+---
+<Rad hoyde="auto">
+  <Flis bredde="1/1" tittel={tittel} id={id} klasse="telefonflis">
+    {tekst && <p class="tekst">{tekst}</p>}
+    <div class:list={["enheter", storrelse]}><slot /></div>
+  </Flis>
+</Rad>
+
+<style>
+  .tekst { margin: 0 0 16px; max-width: 720px; line-height: 22px; color: var(--tekst-dempet); }
+  .enheter { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 24px 32px; padding-block: 8px; }
+  .enheter > :global(.tf) { margin: 0; min-width: 0; flex: 0 1 180px; display: flex; flex-direction: column; gap: 12px; }
+  .enheter.liten { gap: 24px 16px; }
+  .enheter.liten > :global(.tf) { flex-basis: 120px; }
+  .enheter.ipad { gap: 32px; }
+  .enheter.ipad > :global(.tf) { flex-basis: 440px; }
+  .enheter :global(figcaption) { font-size: 13px; line-height: 18px; color: var(--tekst-dempet); text-align: center; text-wrap: balance; }
+  @media (max-width: 959px) {
+    .enheter { gap: 20px 12px; }
+    .enheter > :global(.tf) { flex-basis: calc(33.333% - 8px); }
+    .enheter.vanlig > :global(.tf) { flex-basis: calc(50% - 8px); max-width: 200px; }
+    .enheter.ipad > :global(.tf) { flex-basis: 100%; max-width: 440px; }
+  }
+</style>

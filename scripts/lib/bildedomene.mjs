@@ -20,5 +20,8 @@ export const KJENTE_MANGLER = [
   "vis/skjermbilder/crm-mal-skisser", "vis/skjermbilder/mb-crm-mal-skisser",
   // 17.10 (K-316 kjøring 18, 458 filer i biblioteket): kundeportal-k03/k06/k08/pc, portal-montering, portal-fdv, d2a-signer-med-bankid,
   // d11-min-side-nytt, rom-minside, d1-lag-pdf-og-send, dok-d1…d11 og d12-e-postvarsel er i biblioteket og tatt ut av lista.
+  // N-8: tas av K-228b (390 px) i hengsel-crm
+  "telefon/crm-min-dag", "telefon/crm-kunder", "telefon/crm-ordre", "telefon/crm-saker", "telefon/crm-mer", "telefon/portal-tilbud", "telefon/portal-levering",
+  "vis/skjermbilder/crm-tilbud-telefon", "vis/skjermbilder/crm-tilbud-kunde-telefon", "vis/skjermbilder/crm-ordre-kontrollmal-telefon", "vis/skjermbilder/crm-montasje-telefon", "vis/skjermbilder/crm-etterkalkyle-telefon",
   // Rommene uten app-skjermbilde (rommet selv i Studio Display) og dokumentforsiden er nettsidenes egne bilder: LOKALE_BILDER, aldri i biblioteket
 ];
