@@ -115,3 +115,9 @@ table.liste{width:100%;border-collapse:collapse;font-size:9pt}
 
 /* Tabulære sifre bare i tallkolonner og beløp (2.10b). På body ga de brede komma og punktum i løpende tekst. */
 .liste td.tall,.liste tr.sum td,.belop,.tall-stor,.nummer,.kode,.sidetall{font-variant-numeric:tabular-nums}
+
+/* E-post: signatur, valgfrie avsnitt og testmodus (2.10b). Gul stripe = status advarsel (standard lys); kundetemaet kan overstyre. */
+.epost-signatur{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.45;padding-top:16px;border-top:1px solid var(--kt-linje,var(--kt-felt))}
+.epost-signatur .fet{font-size:15px}
+.fritekst{margin:0;white-space:pre-line}
+.testmodus{background:var(--kt-advarsel-bg,#FFE9BC);color:var(--kt-advarsel-fg,#6D5000);font-weight:600;font-size:14px;text-align:center;padding:10px 16px;border-radius:var(--kt-r-kort);margin-bottom:12px}

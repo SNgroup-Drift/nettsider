@@ -92,6 +92,33 @@
       "type": "tekst",
       "kilde": "NY",
       "eksempel": "Svar gjerne direkte i Min side."
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "selger.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kjøkkenrådgiver"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "000 00 047"
     }
   ]
 }

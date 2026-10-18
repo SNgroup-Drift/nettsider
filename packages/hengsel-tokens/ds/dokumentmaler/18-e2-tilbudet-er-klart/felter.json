@@ -172,6 +172,34 @@
       "type": "tekst",
       "kilde": "NY",
       "eksempel": "Svar gjerne direkte i Min side."
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "selger.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kjøkkenrådgiver"
+    },
+    {
+      "felt": "selger.fritekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "valgfri": true,
+      "eksempel": "Jeg har lagt inn to forslag til benkeplate, så du kan sammenligne eik og kompositt før vi bestemmer oss."
     }
   ]
 }

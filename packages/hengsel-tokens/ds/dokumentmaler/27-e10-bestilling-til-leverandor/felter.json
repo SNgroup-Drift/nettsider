@@ -5,6 +5,16 @@
   "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
   "felt": [
     {
+      "felt": "testmodus",
+      "sider": [
+        1
+      ],
+      "type": "valg",
+      "kilde": "CRM",
+      "valgfri": true,
+      "eksempel": true
+    },
+    {
       "felt": "epost.forhandstekst",
       "sider": [
         1
@@ -179,6 +189,25 @@
       "type": "tekst",
       "kilde": "NY",
       "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "selger.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Butikksjef"
+    },
+    {
+      "felt": "bestilling.merknad",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "valgfri": true,
+      "eksempel": "Benkeplaten må leveres samtidig med skrogene. Ring Eirik før kjøring."
     }
   ]
 }

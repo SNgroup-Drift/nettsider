@@ -1,7 +1,7 @@
 ---
 /** Dokumentmalene fra designsystemet (N-7b, N-7c): listen genereres fra den pinnede dokumentmaler-mappa (lib/dokumentmaler.ts), ikke skrevet for hånd. Bildene er Designs side-N.png i Hengsel standard. */
 import Side from "../layouts/Side.astro";
-import { antallSider, dokumentmaler, familier, layoutRegler, nyeFelter } from "../lib/dokumentmaler";
+import { antallSider, dokumentmaler, familier, blokker, layoutRegler, nyeFelter, nyeFelter210 } from "../lib/dokumentmaler";
 const rens = (l: string) => l.replace(/^[-*]\s+/, "").replace(/`([^`]+)`/g, "$1");
 ---
 <Side title="Dokumentmaler – Hengsel designfasit" description="Dokumentmalene i Hengsel designsystem: tilbud, avtaler, rapporter, faktura og e-poster, med Designs forhåndsvisning av hver side og eksempel." aktiv="dokumentmaler">
@@ -54,13 +54,21 @@ const rens = (l: string) => l.replace(/^[-*]\s+/, "").replace(/`([^`]+)`/g, "$1"
             <ul class="dok-liste">{layoutRegler.linjer.map((l) => <li>{rens(l)}</li>)}</ul>
           </article>
         )}
-        <article class="kort">
-          <span class="merkelapp">felter.md</span>
-          <h3 class="kort-tittel">Nye felt i 2.10b</h3>
-          {nyeFelter
-            ? <ul class="dok-liste">{nyeFelter.linjer.map((l) => <li>{rens(l)}</li>)}</ul>
-            : <p class="dempet">Designs 2.10b har ikke et eget avsnitt «Nye i 2.10b» i <span class="mono">felter.md</span> i den pinnede commiten. Det vises her så snart det står i pinnen.</p>}
-        </article>
+        {[nyeFelter210, nyeFelter].map((av) => av && (
+          <article class="kort">
+            <span class="merkelapp">felter.md</span>
+            <h3 class="kort-tittel">{av.tittel}</h3>
+            {(() => { const b = blokker(av.linjer); return (<>
+              {b.rader.length > 0 && (
+                <table class="dok-tabell">
+                  <thead><tr>{b.hode.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+                  <tbody>{b.rader.map((r) => <tr>{r.map((c, i) => i === 0 ? <th scope="row" class="mono">{c}</th> : <td>{c}</td>)}</tr>)}</tbody>
+                </table>
+              )}
+              {b.punkter.length > 0 && <ul class="dok-liste">{b.punkter.map((l) => <li>{l}</li>)}</ul>}
+            </>); })()}
+          </article>
+        ))}
       </div>
     </section>
   </div>

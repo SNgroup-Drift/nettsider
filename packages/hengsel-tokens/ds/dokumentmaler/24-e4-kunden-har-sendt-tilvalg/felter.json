@@ -125,6 +125,42 @@
       "type": "tekst",
       "kilde": "NY",
       "eksempel": "Åpne tilvalget"
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "selger.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kjøkkenrådgiver"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "000 00 047"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kjøkkenstudio Hamar"
     }
   ]
 }

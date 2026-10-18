@@ -1,0 +1,169 @@
+{
+  "dokument": "E-post: Hvordan gikk det?",
+  "mappe": "29-e11-hvordan-gikk-det",
+  "kilde": "Sidekart 28-007 Spørreskjema (E11)",
+  "merknad": "Spørreskjema etter levering. Tre knapper lenker til kundeportalen, der svaret lagres. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16), kjoper.* er sluttkunden.",
+  "felt": [
+    {
+      "felt": "epost.emne",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Hvordan gikk det?"
+    },
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenet er på plass. Fortell oss hvordan det gikk, det tar ett trykk."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "kjoper.fornavn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola"
+    },
+    {
+      "felt": "ordre.rom",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenet"
+    },
+    {
+      "felt": "montering.ferdig_dato",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "14. desember"
+    },
+    {
+      "felt": "portal.lenke_fornoyd",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "https://…/min-side/svar?valg=fornoyd"
+    },
+    {
+      "felt": "portal.lenke_noe_a_rette",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "https://…/min-side/svar?valg=noe-a-rette"
+    },
+    {
+      "felt": "portal.lenke_ring_meg",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "https://…/min-side/svar?valg=ring-meg"
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "selger.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "Kjøkkenrådgiver"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "CRM",
+      "eksempel": "000 00 047"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "epost.bunnlinje",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Endre varsler på Min side."
+    }
+  ]
+}

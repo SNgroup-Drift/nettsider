@@ -1,9 +1,9 @@
 /**
- * N-7c (designsystem 2.10 etter K-371c, pin 12c2c245): nettsidene på designsystemet slik K-371c etterlater det.
+ * N-7c (designsystem 2.10 etter K-371c andre runde, pin 3ad8cd78): nettsidene på designsystemet slik K-371c etterlater det.
  *  a) /dokumentmaler viser alle 29 malene med Designs side-N.png (55 bilder) i stedet for egne forhåndsvisninger, med bredde og høyde (ingen CLS), og alle sidene i en <details>
- *  b) mal 29-e11 er foreløpig (ingen eksempel.html, felter.json eller README-rad) og står i FORELOPIG; testen sier fra når den er komplett, så oppføringen kan fjernes
- *  c) LAYOUT-REGLER 3c (korte stegnavn, Befaring som hendelse) vises på siden; «Nye i 2.10b» i felter.md vises hvis avsnittet finnes i pinnen
- *  d) tokens.css er generert fra pinnet JSON og pinnen er 12c2c245 eller nyere i demo (versjon 2.10.0)
+ *  b) mal 29-e11 er komplett (eksempel.html, felter.json, README-rad, side-1.png): ingen foreløpige maler, og 29 har eksempel- og flettefeltlenker
+ *  c) LAYOUT-REGLER 3c og «Nye i 2.10» og «Nye i 2.10b» fra felter.md vises på siden; 18-e2 og 27-e10 har fritekst, merknad og testmodus-stripe i eksempel.html, og alle e-postmalene 17–29 har signatur
+ *  d) tokens.css er generert fra pinnet JSON, og pinnen er K-371c-flettecommiten 3ad8cd78 (versjon 2.10.0)
  *  e) /telefon (N-8): sitemap, hovedmenyen (etter Kundeportal) og enhetsrammer-testen; nøklene telefon/* og vis/skjermbilder/*-telefon i KJENTE_MANGLER sier fra når manifestet har dem
  * Kjør `npm run build` først (dist må finnes).
  */
@@ -44,18 +44,19 @@ test("a) /dokumentmaler: 29 maler og Designs 55 side-N.png, med mål, alle sider
   for (const nr of ["17", "18", "27"]) assert.match(h, new RegExp(`Mal ${nr}`), `e-postmal ${nr}`);
 });
 
-test("b) mal 29 er foreløpig: uten eksempel og flettefelt, og testen sier fra når Design har levert resten", () => {
+test("b) mal 29 er komplett og ingen mal er foreløpig", () => {
   const h = les(dist, "dokumentmaler.html");
-  for (const m of FORELOPIG) {
-    const komplett = ["eksempel.html", "felter.json"].every((f) => existsSync(join(dm, m, f))) && les(dm, "README.md").includes(`\`${m}/\``);
-    assert.equal(komplett, false, `${m} er nå komplett (eksempel.html, felter.json og README-rad): fjern den fra FORELOPIG i sites/design/src/lib/dokumentmaler.ts og i denne testen`);
-    assert.ok(h.includes("Levert uten eksempel og flettefelt"), `${m}: merknaden mangler`);
-    assert.ok(!h.includes(`/ds/dokumentmaler/${m}/eksempel.html`) && !h.includes(`/ds/dokumentmaler/${m}/felter.json`), `${m}: lenker til filer som ikke finnes`);
-  }
-  assert.deepEqual(mapper.filter((m) => !les(dm, "README.md").includes(`\`${m}/\``)), FORELOPIG, "maler uten README-rad er bare de foreløpige");
+  const readme = les(dm, "README.md");
+  assert.deepEqual(mapper.filter((m) => !readme.includes(`\`${m}/\``)), [], "alle malene har README-rad");
+  const m = "29-e11-hvordan-gikk-det";
+  for (const f of ["eksempel.html", "felter.json", "mal.html", "mal.css", "side-1.png"]) assert.ok(existsSync(join(dm, m, f)), `${m}/${f}`);
+  assert.ok(h.includes(`/ds/dokumentmaler/${m}/eksempel.html`) && h.includes(`/ds/dokumentmaler/${m}/felter.json`), "29: lenker til eksempel og flettefelt");
+  assert.ok(!h.includes("foreløpig") && !h.includes("Levert uten eksempel"), "ingen foreløpige maler");
+  assert.equal(JSON.parse(les(rot, "sites", "design", "dist", "ds", "dokumentmaler", m, "felter.json")).dokument.length > 0, true);
+  assert.match(h, /Hvordan gikk det/);
 });
 
-test("c) dokumentasjonen: LAYOUT-REGLER 3c (stegnavn, Befaring) vises, og «Nye i 2.10b» vises hvis den finnes i felter.md", () => {
+test("c) dokumentasjonen og e-postfeltene: 3c, «Nye i 2.10» og «Nye i 2.10b» vises; fritekst, merknad, testmodus og signatur står i eksemplene", () => {
   const h = les(dist, "dokumentmaler.html");
   const regler = les(pakke, "ds", "dokumentasjon", "LAYOUT-REGLER.md");
   assert.match(regler, /### 3c/);
@@ -67,15 +68,27 @@ test("c) dokumentasjonen: LAYOUT-REGLER 3c (stegnavn, Befaring) vises, og «Nye 
   const innhold = /<main[\s\S]*<\/main>/.exec(h)?.[0] ?? "";
   assert.ok(innhold.length > 1000 && !/sigdal/i.test(innhold) && !/#[0-9a-f]{6}\b|rgb\(|hsl\(/i.test(innhold), "ingen Sigdal eller fargeverdi i innholdet");
   const felter = les(dm, "felter.md");
-  if (/^#{2,4} .*Nye i 2\.10b/m.test(felter)) assert.match(h, /Nye i 2\.10b/);
-  else assert.match(h, /har ikke et eget avsnitt «Nye i 2\.10b»/, "avsnittet finnes ikke i pinnen, og siden skal si det");
+  assert.match(felter, /^## Nye i 2\.10b/m, "felter.md i pinnen har «Nye i 2.10b»");
+  assert.match(h, /Nye i 2\.10b/);
+  assert.match(h, /Nye i 2\.10 \(29 E11/);
+  for (const f of ["selger.fritekst", "selger.tittel", "bestilling.merknad", "testmodus", "portal.lenke_fornoyd"]) assert.ok(h.includes(f), `${f} vises i felttabellen`);
+  assert.match(h, /Testbestilling – ikke send videre/);
+  assert.match(h, /epost-signatur/);
+  const e18 = les(dist, "ds", "dokumentmaler", "18-e2-tilbudet-er-klart", "eksempel.html");
+  const e27 = les(dist, "ds", "dokumentmaler", "27-e10-bestilling-til-leverandor", "eksempel.html");
+  assert.match(e18, /class="fritekst"/, "18-e2: fritekst");
+  assert.match(e27, /class="fritekst"|class="merknad"|merknad/i, "27-e10: merknad");
+  assert.match(e27, /class="testmodus"/, "27-e10: testmodus-stripe");
+  for (const m of mapper.filter((x) => Number(x.slice(0, 2)) >= 17 && Number(x.slice(0, 2)) <= 27)) {
+    assert.match(les(dist, "ds", "dokumentmaler", m, "eksempel.html"), /epost-signatur/, `${m}: signatur`);
+  }
 });
 
-test("d) pinnen: 2.10.0 på K-371c-flettecommiten, og tokens.css er den delte fila", () => {
+test("d) pinnen: 2.10.0 på K-371c-flettecommiten (andre runde), og tokens.css er den delte fila", () => {
   const pin = JSON.parse(les(pakke, "designsystem.pin.json"));
   assert.equal(pin.versjon, "2.10.0");
-  assert.match(pin.commit, /^12c2c2450a400ee8a999975f71a14daa60cf6983$/);
-  assert.match(les(pakke, "tokens.css"), /designsystem 2\.10\.0, commit 12c2c245\)/);
+  assert.match(pin.commit, /^3ad8cd783be3ffe5af8b1d477bacf7924cf94c6e$/);
+  assert.match(les(pakke, "tokens.css"), /designsystem 2\.10\.0, commit 3ad8cd78\)/);
   assert.ok(existsSync(join(dm, "29-e11-hvordan-gikk-det", "side-1.png")));
 });
 
