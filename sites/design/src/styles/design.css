@@ -15,7 +15,7 @@ h1 { font-size: var(--skrift-h1); line-height: var(--skrift-h1-lh); }
 h2 { font-size: var(--skrift-h2); line-height: var(--skrift-h2-lh); }
 h3 { font: 600 var(--skrift-tittel)/var(--skrift-tittel-lh) var(--skrift-familie-hengsel-tekst); letter-spacing: 0; }
 p { margin: 0; text-wrap: pretty; }
-code { font: 500 0.92em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
+code, .mono { font: 500 0.92em/1.4 var(--skrift-mono); overflow-wrap: anywhere; }
 .skip { position: absolute; left: -9999px; top: 8px; background: var(--flate-kort); color: var(--tekst); padding: 8px 14px; border-radius: var(--radius-felt); z-index: 100; }
 .skip:focus { left: 8px; }
 .skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -204,17 +204,16 @@ button.knapp { font-family: inherit; appearance: none; }
 .produkt-verdier dt, .produkt-verdier dd { margin: 0; }
 .produkt-verdier dd { display: inline-flex; align-items: center; gap: 8px; }
 .produkt-sv { display: inline-block; width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--kant); flex: none; }
-.produkt-aksent { background: var(--aksent); }
-.produkt-aksent-trykk { background: var(--aksent-trykk); }
-.produkt-aksent-tekst { background: var(--aksent-tekst); }
-.produkt-aksent-svak { background: var(--aksent-svak); }
-.produkt-merke-stift { background: var(--merke-stift); }
-.produkt-flate-side { background: var(--flate-side); }
-.produkt-flate-kort { background: var(--flate-kort); }
-.produkt-flate-senket { background: var(--flate-senket); }
-.produkt-tekst { background: var(--tekst); }
-.produkt-aksent-valgt { background: var(--aksent-valgt); }
-.produkt-paa-aksent { background: var(--paa-aksent); }
-.produkt-flate-valgt { background: var(--flate-valgt); }
-.produkt-tekst-dempet { background: var(--tekst-dempet); }
-.produkt-tekst-svak { background: var(--tekst-svak); }
+
+/* N-7b: Dokumentmaler */
+.adresselinje { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-top: 4px; }
+.mal-rutenett { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.mal-rutenett > * { min-width: 0; }
+.mal { display: grid; gap: 16px; align-content: start; }
+.mal-bilde { display: block; border: 1px solid var(--linje); border-radius: var(--radius-bilde); overflow: hidden; background: var(--flate-senket); }
+.mal-bilde img { display: block; width: 100%; height: auto; aspect-ratio: 397 / 561; object-fit: cover; object-position: top; }
+.mal-tekst { display: grid; gap: 8px; }
+.mal-fakta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font-size: var(--skrift-meta); }
+.mal-fakta dt { color: var(--tekst-dempet); }
+.mal-fakta dd { margin: 0; overflow-wrap: anywhere; }
+.mal-lenker { font-size: var(--skrift-meta); }

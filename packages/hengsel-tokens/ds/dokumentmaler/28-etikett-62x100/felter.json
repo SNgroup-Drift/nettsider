@@ -1,0 +1,79 @@
+{
+  "dokument": "Kolli-etikett 62 × 100 mm",
+  "mappe": "28-etikett-62x100",
+  "kilde": "Fil 36 LG7",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.kortnavn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio"
+    },
+    {
+      "felt": "etikett.qr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etikett.kode",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "HU-7K3Q9F"
+    },
+    {
+      "felt": "etikett.ordre",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "10412"
+    },
+    {
+      "felt": "etikett.n",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 5
+    },
+    {
+      "felt": "etikett.av",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 18
+    },
+    {
+      "felt": "etikett.innhold",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Benkeplate"
+    },
+    {
+      "felt": "etikett.uke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 41
+    }
+  ]
+}

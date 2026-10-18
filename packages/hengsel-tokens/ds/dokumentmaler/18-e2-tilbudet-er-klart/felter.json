@@ -1,0 +1,177 @@
+{
+  "dokument": "E-post: Tilbudet er klart",
+  "mappe": "18-e2-tilbudet-er-klart",
+  "kilde": "Fil 40 E2",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Tilbudet på kjøkkenet ditt er klart. Se tegning, pris og oppgraderinger på Min side."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "tilbud.bilde",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilbud.nr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "10418"
+    },
+    {
+      "felt": "kjoper.fornavn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola"
+    },
+    {
+      "felt": "tilbud.rom",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken"
+    },
+    {
+      "felt": "tilbud.modell",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Fluted eik"
+    },
+    {
+      "felt": "tilbud.gyldig_til",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "7. november"
+    },
+    {
+      "felt": "tilbud.total",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "189 900 kr"
+    },
+    {
+      "felt": "epost.lenke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "#"
+    },
+    {
+      "felt": "epost.knapp",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Se tilbudet"
+    },
+    {
+      "felt": "selger.fornavn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "000 00 047"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "epost.bunnlinje",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Svar gjerne direkte i Min side."
+    }
+  ]
+}

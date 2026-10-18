@@ -1,0 +1,88 @@
+{
+  "dokument": "E-post: Kunden har skrevet",
+  "mappe": "26-e5-kunden-har-skrevet",
+  "kilde": "Fil 40 E5",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola Kjøper skrev: «hei» – Tilvalg H0304."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "enhet.nr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "H0304"
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola Kjøper"
+    },
+    {
+      "felt": "melding.tekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "hei"
+    },
+    {
+      "felt": "melding.tid",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "i dag 01.43"
+    },
+    {
+      "felt": "epost.lenke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "#"
+    },
+    {
+      "felt": "epost.knapp",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Svar i samtalen"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ export const MENY = [
   ["komponenter", "Komponenter", "/komponenter"],
   ["skjermer", "Skjermer", "/skjermer"],
   ["monstre", "Mønstre", "/monstre"], // N-5: mønstersidene 29-001–29-006 fra sidekartet
+  ["dokumentmaler", "Dokumentmaler", "/dokumentmaler"], // N-7b: de 28 malene fra den pinnede dokumentmaler-mappa
   ["last-ned", "Last ned", "/last-ned"],
 ] as const;
 export type MenyNokkel = (typeof MENY)[number][0];

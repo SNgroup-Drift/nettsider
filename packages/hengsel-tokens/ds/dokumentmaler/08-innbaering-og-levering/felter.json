@@ -1,0 +1,79 @@
+{
+  "dokument": "Instruks for innbæring og levering",
+  "mappe": "08-innbaering-og-levering",
+  "kilde": "Fil 51 PDF-A",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "instruks.versjon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "2026-10"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 1
+    }
+  ]
+}

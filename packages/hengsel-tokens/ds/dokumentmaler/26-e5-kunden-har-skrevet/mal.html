@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>{{epost.emne}}</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body class="epost-kropp">
+<article class="dok" data-dok="26-e5-kunden-har-skrevet">
+<div class="forhand">{{epost.forhandstekst}}</div><div class="epost"><div class="epost-kort"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><span class="eyebrow">Melding fra kunden · Leilighet {{enhet.nr}}</span><h1>{{kjoper.navn}} har skrevet til deg</h1><div class="sitat stack tett"><p style="margin:0">«{{melding.tekst}}»</p><span class="liten dempet">Min side · {{melding.tid}}</span></div><a class="knapp" href="{{epost.lenke}}">{{epost.knapp}}</a><p class="liten dempet">Svarer du her i e-posten, havner svaret ikke hos kunden. Bruk knappen.</p></div><div class="epost-bunn"><span>Sendt fra Hengsel CRM til deg som selger på ordren. Endre varsler under Meg › Varsler.</span><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span></div></div>
+</article>
+</body>
+</html>

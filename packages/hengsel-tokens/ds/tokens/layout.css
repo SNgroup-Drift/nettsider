@@ -1,0 +1,70 @@
+/* Layout-regler 16.10.2026 (dokumentasjon/LAYOUT-REGLER.md). Rutenett, flisklasser og sidemeny. */
+:root {
+  --rute-kolonner: 12;
+  --rute-gap: 24px;
+  --rute-marg: 32px;
+  --rute-innhold-maks: 1280px;
+  --flis-pad: 16px 24px;
+  --rad-1: 120px;
+  --rad-2: 320px;
+  --rad-3: 480px;
+  --rad-4: 640px;
+  --flis-tittelfelt: 40px;
+  --flis-handlingsfelt: 48px;
+  --listerad: 40px;
+  --tabellrad: 44px;
+  --rad-topp: 24px;
+  --rad-bunn: 48px;
+  --flis-h-tall: 120px;
+  --flis-h-status: 120px;
+  --flis-h-kortliste: 320px;
+  --flis-h-diagram: 320px;
+  --flis-h-tavle: 480px;
+  --flis-h-uke: 480px;
+  --flis-h-tegning: 480px;
+  --flis-plan-rad: 44px;
+  --flis-plan-navn: 200px;
+  --flis-min: 320px;
+  --flis-tittel: 16px;
+  --flis-innhold: 14px;
+  --flis-under: 12px;
+  --flis-tall: 32px;
+  --tekst-maks: 720px;
+  --sidemeny-bred: 240px;
+  --sidemeny-smal: 64px;
+  --rom-12: 48px;
+}
+@media (max-width: 1439.98px) { :root { --rute-kolonner: 8; --rute-gap: 20px; --rute-marg: 24px; } }
+@media (max-width: 767.98px) { :root { --rute-kolonner: 4; --rute-gap: 16px; --rute-marg: 16px; --flis-pad: 16px; } }
+
+/* Designsystem 2.6 (K-371b): Teller (regel 9, dokumentasjon/HASTER.md 3b) og --flate-meny. Ingen hex: bare navn som peker på eksisterende tokens.
+   --radius-liten, --radius-rad, --skrift-sidetittel, --skrift-tall-stor og --skrift-mono ligger i hengsel.tokens.json (tokens.css). */
+:root, [data-produkt], [data-kundetema], [data-tema], [data-plattform] {
+  --flate-meny: var(--sidemeny-flate, var(--flate-kort));
+  /* Teller: mål */
+  --teller-meny: 20px;
+  --teller-fane: 16px;
+  --teller-flis: 16px;
+  --teller-merke: 12px;
+  --teller-merke-skrift: 9px;
+  --teller-merke-topp: -6px;
+  --teller-merke-hoyre: -6px;
+  --teller-merke-ring: 1.5px;
+  /* Teller: farger */
+  --teller-bg: var(--aksent-svak);
+  --teller-kant: var(--aksent-valgt);
+  --teller-tekst: var(--aksent-tekst);
+  --teller-haster-tekst: var(--status-feil-fg);
+  --teller-merke-bg: var(--status-feil-fg);
+  --teller-merke-tekst: var(--tekst-invers);
+  /* Bjella bruker samme teller (regel 9). Navnene beholdes for eldre skjermer. */
+  --varsler-teller-bg: var(--teller-bg);
+  --varsler-teller-tekst: var(--teller-tekst);
+  /* Regel 10 (2.6–2.9): rader, kanter og rullefelt */
+  --rad-innrykk: 12px;
+  --rullefelt: 8px;
+  --flis-pad-x: 24px;
+}
+[data-produkt] ::-webkit-scrollbar { width: var(--rullefelt); height: var(--rullefelt); }
+[data-produkt] ::-webkit-scrollbar-thumb { background: var(--kant); border-radius: var(--radius-pille); border: 2px solid transparent; background-clip: padding-box; }
+[data-produkt] ::-webkit-scrollbar-track { background: transparent; }

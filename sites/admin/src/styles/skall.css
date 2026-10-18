@@ -27,8 +27,10 @@ body { background: var(--flate-side); }
 .meny a[aria-current="page"] { background: var(--aksent-svak); color: var(--aksent-tekst); font-weight: var(--skrift-vekt-sterk); }
 .meny a[aria-current="page"] .ikon { color: var(--aksent-tekst); }
 .meny .tall { margin-left: auto; font-size: 12px; font-weight: var(--skrift-vekt-sterk); color: var(--tekst-dempet); }
-.meny .tall:not(:empty) { min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--radius-pille); background: var(--aksent); color: var(--paa-aksent); display: inline-grid; place-items: center; }
-.meny .tall.feil { background: var(--status-feil-fg); color: var(--paa-aksent); }
+/* N-7b: Teller fra designsystem 2.6 (regel 9): tallet i aksent på --teller-bg med kant, 20 px i menyen. Haster (.feil): tallet i --teller-haster-tekst og et rundt «!»-merke øverst til høyre med ring i menyflaten. Bakgrunnen endres ikke. */
+.meny .tall:not(:empty) { position: relative; min-width: var(--teller-meny); height: var(--teller-meny); padding: 0 6px; box-sizing: border-box; border: 1px solid var(--teller-kant); border-radius: var(--radius-pille); background: var(--teller-bg); color: var(--teller-tekst); display: inline-grid; place-items: center; font-variant-numeric: tabular-nums; }
+.meny .tall.feil { color: var(--teller-haster-tekst); }
+.meny .tall.feil:not(:empty)::after, .bjelle-tall.haster::after { content: "!" / ""; position: absolute; top: var(--teller-merke-topp); right: var(--teller-merke-hoyre); width: var(--teller-merke); height: var(--teller-merke); border-radius: var(--radius-pille); background: var(--teller-merke-bg); color: var(--teller-merke-tekst); font-size: var(--teller-merke-skrift); font-weight: var(--skrift-vekt-sterk); line-height: var(--teller-merke); text-align: center; box-shadow: 0 0 0 var(--teller-merke-ring) var(--flate-meny); }
 .sidemeny .bunn { margin-top: auto; display: flex; align-items: center; gap: 8px; padding: 8px 12px; min-height: 52px; border-top: 1px solid var(--linje); flex: none; }
 .sidemeny .bruker { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; font-size: 12px; line-height: 16px; color: var(--tekst-dempet); }
 .sidemeny .bruker .navn { min-width: 0; overflow: hidden; }
@@ -44,7 +46,7 @@ html[data-meny="smal"] { --meny-bred: var(--meny-smal); }
   html[data-meny="smal"] .sidemeny .merke .merke-init { display: grid; }
   html[data-meny="smal"] .sidemeny .omfang, html[data-meny="smal"] .sidemeny .bunn { justify-content: center; padding-inline: 0; flex-direction: column; }
   html[data-meny="smal"] .meny a { justify-content: center; padding: 0; position: relative; }
-  html[data-meny="smal"] .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: 16px; height: 16px; font-size: 11px; padding: 0 4px; }
+  html[data-meny="smal"] .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: var(--teller-fane); height: var(--teller-fane); font-size: 11px; padding: 0 4px; }
   html[data-meny="smal"] .meny .gruppe.skille { display: block; font-size: 0; margin: 8px 8px 4px; padding: 0; }
   html[data-meny="smal"] .sidemeny .bruker { flex: none; }
   html[data-meny="smal"] .smal-knapp .ikon { transform: rotate(180deg); }
@@ -55,7 +57,7 @@ html[data-meny="smal"] { --meny-bred: var(--meny-smal); }
   html:not([data-meny]) .sidemeny .merke .merke-init { display: grid; }
   html:not([data-meny]) .sidemeny .omfang, html:not([data-meny]) .sidemeny .bunn { justify-content: center; padding-inline: 0; flex-direction: column; }
   html:not([data-meny]) .meny a { justify-content: center; padding: 0; position: relative; }
-  html:not([data-meny]) .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: 16px; height: 16px; font-size: 11px; padding: 0 4px; }
+  html:not([data-meny]) .meny .tall:not(:empty) { position: absolute; top: 0; right: 4px; min-width: var(--teller-fane); height: var(--teller-fane); font-size: 11px; padding: 0 4px; }
   html:not([data-meny]) .meny .gruppe.skille { display: block; font-size: 0; margin: 8px 8px 4px; padding: 0; }
   html:not([data-meny]) .sidemeny .bruker { flex: none; }
   html:not([data-meny]) .smal-knapp .ikon { transform: rotate(180deg); }
@@ -78,7 +80,8 @@ html[data-meny="smal"] { --meny-bred: var(--meny-smal); }
 .topphandlinger .knapp { min-height: 36px; }
 .bjelle { position: relative; width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: var(--radius-kort-lite); color: var(--tekst-dempet); }
 .bjelle:hover { background: var(--flate-senket); }
-.bjelle-tall { position: absolute; top: 2px; right: 2px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: var(--radius-pille); background: var(--status-feil-fg); color: var(--paa-aksent); font-size: 11px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); text-align: center; }
+.bjelle-tall { position: absolute; top: 2px; right: 2px; min-width: var(--teller-fane); height: var(--teller-fane); padding: 0 4px; box-sizing: border-box; border: 1px solid var(--teller-kant); border-radius: var(--radius-pille); background: var(--teller-bg); color: var(--teller-tekst); font-size: 11px; line-height: calc(var(--teller-fane) - 2px); font-weight: var(--skrift-vekt-sterk); text-align: center; font-variant-numeric: tabular-nums; }
+.bjelle-tall.haster { color: var(--teller-haster-tekst); }
 .profil { width: 32px; height: 32px; }
 .meny-knapp, .sok-ikon, .mer-knapp { display: none; }
 

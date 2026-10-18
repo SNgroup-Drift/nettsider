@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="10-montasjeplan">
+<section class="side side--liggende"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Montasjeplan uke {{plan.uke}}</b>{{plan.periode}}<br>Skrevet ut {{plan.skrevet_ut}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">{{butikk.navn}} · montasjeplan uke {{plan.uke}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><h1>Montasjeplan uke {{plan.uke}}</h1><table class="liste"><thead><tr><th style="width:44mm">Montør</th>{{#plan.dager}}<th>{{.}}</th>{{/plan.dager}}</tr></thead><tbody>{{#plan.montorer}}<tr><td><span class="fet">{{navn}}</span><br><span class="liten dempet">{{type}}</span></td>{{#dager}}<td>{{#jobb}}<span class="fet">{{ordre}} · {{kunde}}</span>{{#vis.adresse}}<br>{{adresse}}<br><span class="liten dempet">Kontakt {{telefon}}</span>{{/vis.adresse}}{{#vis.kolli}}<br><span class="liten dempet">{{kolli}}</span>{{/vis.kolli}}{{/jobb}}</td>{{/dager}}</tr>{{/plan.montorer}}</tbody></table></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>

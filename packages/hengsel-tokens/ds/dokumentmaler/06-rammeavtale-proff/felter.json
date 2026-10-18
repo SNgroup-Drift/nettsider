@@ -1,0 +1,331 @@
+{
+  "dokument": "Rammeavtale (kundeavtale proff)",
+  "mappe": "06-rammeavtale-proff",
+  "kilde": "Fil 20 M01.5",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "proffkunde.navn",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Lena Bygg AS"
+    },
+    {
+      "felt": "butikk.selskap",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar AS"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 3
+    },
+    {
+      "felt": "vis.bilde",
+      "sider": [
+        1
+      ],
+      "type": "valg",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vis.bilde[].avtale.forsidebilde",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "avtale.omfang_kort",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "kjøkken og garderobe"
+    },
+    {
+      "felt": "leverandor.navn",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Leverandør A"
+    },
+    {
+      "felt": "avtale.fra",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "01.11.2026"
+    },
+    {
+      "felt": "avtale.til",
+      "sider": [
+        1,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "31.10.2027"
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1,
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "vis.illustrasjon",
+      "sider": [
+        1
+      ],
+      "type": "valg",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vis.illustrasjon[].avtale.illustrasjon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "proffkunde.orgnr",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "912 345 678"
+    },
+    {
+      "felt": "proffkunde.adresse",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 14, 2317 Hamar"
+    },
+    {
+      "felt": "proffkunde.kontakt",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Lena Holm"
+    },
+    {
+      "felt": "proffkunde.epost",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "lena@demo.invalid"
+    },
+    {
+      "felt": "proffkunde.telefon",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "900 00 610"
+    },
+    {
+      "felt": "butikk.orgnr",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "999 999 999"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "selger.epost",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "kari@demo.invalid"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        2,
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "000 00 047"
+    },
+    {
+      "felt": "avtale.omfang",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "kjøkken, bad og garderobe fra Leverandør A"
+    },
+    {
+      "felt": "avtale.rabattmatrise",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Lokal proff standard"
+    },
+    {
+      "felt": "avtale.rabatter",
+      "sider": [
+        2
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "avtale.rabatter[].gruppe",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "avtale.rabatter[].rabatt",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "avtale.rabatter[].merknad",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "butikk.faktura_epost",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "faktura@demo.invalid"
+    },
+    {
+      "felt": "avtale.omrade",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Hamar"
+    },
+    {
+      "felt": "avtale.levering_eksempel",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "uke 45"
+    },
+    {
+      "felt": "avtale.garanti_tekst",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "25 års garanti på skrog og 5 år på fronter"
+    }
+  ]
+}

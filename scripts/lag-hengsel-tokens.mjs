@@ -43,11 +43,44 @@ const lagBlokk = (kommentar, betingelse, v) => (Object.keys(v).length ? `\n/* ${
 
 /** K-371 / N-7: produktpaletter (designsystem 2.5). data-produkt="ute|nettsider|crm|admin" setter aksent, flater og tekst for produktet. Bare lys (nettsidene har ikke mørk),
  *  uten P3 og økt kontrast (finnes ikke for produktpaletter i 2.5). Rollenavnene i JSON (grunn, grunn-hevet …) er de samme variablene som i :root (flate-side, flate-kort …). */
-const PRODUKT_ROLLER = [["aksent", "aksent"], ["aksent-trykk", "aksent-trykk"], ["aksent-tekst", "aksent-tekst"], ["aksent-svak", "aksent-svak"], ["aksent-valgt", "aksent-valgt"], ["paa-aksent", "paa-aksent"], ["flate-valgt", "flate-valgt"], ["merke-stift", "prikk"], ["flate-side", "grunn"], ["flate-kort", "grunn-hevet"], ["flate-senket", "grunn-senket"], ["tekst", "tekst"], ["tekst-dempet", "tekst-dempet"], ["tekst-svak", "tekst-svak"]];
+// N-7b (designsystem 2.10): crm og admin har hele paletten i `lys` (33 roller, inkl. kant, felt og tabell), nettsider/crm/admin har P3 og økt kontrast. De fire første navnene heter noe annet i :root.
+const PRODUKT_NAVN = { prikk: "merke-stift", grunn: "flate-side", "grunn-hevet": "flate-kort", "grunn-senket": "flate-senket" };
+const produktVar = (r) => PRODUKT_NAVN[r] ?? r;
+const produktRoller = (lys) => uten$(lys).map(([r, v]) => [produktVar(r), v]);
 function lagProduktCss() {
-  const blokker = Object.keys(json.produkt).filter((n) => !n.startsWith("$")).map((n) => `[data-produkt="${n}"] {\n${PRODUKT_ROLLER.map(([v, r]) => `  --${v}: ${json.produkt[n].lys[r]};`).join("\n")}\n  color-scheme: light;\n}\n`);
+  const navn = Object.keys(json.produkt).filter((n) => !n.startsWith("$"));
+  const blokker = navn.map((n) => {
+    const p = json.produkt[n];
+    const status = uten$(p.status?.lys ?? {}).flatMap(([t, d]) => ["fg", "bg", "kant"].map((x) => [`status-${t}-${x}`, d[x]]));
+    return `[data-produkt="${n}"] {\n${[...produktRoller(p.lys), ...status].map(([v, x]) => `  --${v}: ${x};`).join("\n")}\n  color-scheme: light;\n}\n`;
+  });
+  // P3 og økt kontrast per produkt: bare roller som avviker fra det som ellers gjelder for produktet (samme regel som for grunnpaletten)
+  const sam = (a, b) => siffer(a) === siffer(b);
+  const lagP = (kommentar, betingelse, hent) => {
+    const deler = navn.map((n) => {
+      const p = json.produkt[n];
+      const v = hent(p, n);
+      return Object.keys(v).length ? `  [data-produkt="${n}"] {\n${Object.entries(v).map(([k, x]) => `    --${k}: ${x};`).join("\n")}\n  }\n` : "";
+    }).join("");
+    return deler ? `\n/* ${kommentar} */\n@media ${betingelse} {\n${deler}}\n` : "";
+  };
+  const diff = (fra, lys) => Object.fromEntries(produktRoller(fra ?? {}).filter(([k, v]) => { const l = produktRoller(lys).find(([kk]) => kk === k)?.[1]; return l && !sam(v, l); }));
+  const p3Lys = lagP("Display P3 per produkt (designsystem 2.10)", "(color-gamut: p3)", (p) => Object.fromEntries(Object.entries(diff(p.p3?.lys, p.lys)).map(([k, v]) => [k, p3(v)])));
+  const okt = lagP("Økt kontrast per produkt (designsystem 2.10)", "(prefers-contrast: more)", (p) => diff(p["lys-okt-kontrast"], p.lys));
+  const p3Okt = lagP("Økt kontrast og Display P3 per produkt (designsystem 2.10)", "(prefers-contrast: more) and (color-gamut: p3)", (p) => Object.fromEntries(Object.entries(diff(p.p3?.["lys-okt-kontrast"], p["lys-okt-kontrast"] ?? p.lys)).map(([k, v]) => [k, p3(v)])));
   const nivaa = `/* Haster og synlighet (designsystem 2.5, HASTER.md): aliaser til status-tokens, ingen nye farger. */\n:root,\n[data-produkt] {\n${["haster", "snart"].flatMap((n) => ["fg", "bg", "kant"].map((d) => `  --nivaa-${n}-${d}: var(--status-${json.nivaa[n] === "feil" ? "feil" : "advarsel"}-${d});`)).join("\n")}\n  --nivaa-stripe: ${json.nivaa.stripe}px;\n}\n`;
-  return `\n${nivaa}\n/* Produktpaletter (designsystem 2.5): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */\n${blokker.join("\n")}`;
+  return `\n${lagTeller()}\n${nivaa}\n/* Produktpaletter (designsystem 2.5, 2.10): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */\n${blokker.join("\n")}${p3Lys}${okt}${p3Okt}`;
+}
+
+/** N-7b (designsystem 2.6–2.10): Teller (regel 9) og --flate-meny står i ds/tokens/layout.css, ikke i hengsel.tokens.json. Blokken kopieres derfra ord for ord (den har ingen fargeverdier,
+ *  bare navn som peker på andre tokens), så tokens.css har --teller-* uten at noen skriver dem for hånd. */
+function lagTeller() {
+  const css = readFileSync(join(pakke, "ds", "tokens", "layout.css"), "utf8");
+  const i = css.indexOf("/* Designsystem 2.6 (K-371b)");
+  const j = css.indexOf("\n}\n", i);
+  if (i < 0 || j < 0) throw new Error("layout.css mangler Teller-blokka (Designsystem 2.6 / K-371b); hent ny pin.");
+  // Kundetema- og plattformvelgerne hører ikke hjemme på Hengsel-sidene (kundetemaet er bare i /kunde/sigdal); Teller virker på :root og under data-produkt.
+  return css.slice(i, j + 3).replace(":root, [data-produkt], [data-kundetema], [data-tema], [data-plattform] {", ":root,\n[data-produkt] {");
 }
 
 export function lagTokensCss() {

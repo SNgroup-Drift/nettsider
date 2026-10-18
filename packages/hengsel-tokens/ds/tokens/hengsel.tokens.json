@@ -1,6 +1,6 @@
 {
   "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger. K-371 (18.10.2026): versjon 2.5.0, designsystem 2.5 fra Design (produktpaletter, kundetema, haster, 19 nye ikoner) lagt inn ved siden av; grunnpaletten (farge) er uendret og fortsatt fasit, produktpalettene ligger i «produkt» og hastealiasene i «nivaa».",
-  "versjon": "2.5.0",
+  "versjon": "2.10.0",
   "dato": "2026-10-18",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
@@ -10,12 +10,12 @@
     "aksent-mork": "#54B9A5",
     "produkt-crm": "#5165D3",
     "produkt-crm-mork": "#859DFF",
-    "produkt-ute": "#B54F00",
-    "produkt-ute-mork": "#F77E35",
+    "produkt-ute": "#068472",
+    "produkt-ute-mork": "#54B9A5",
     "produkt-levering": "#1C8742",
     "produkt-levering-mork": "#5BBD74",
-    "produkt-admin": "#70757C",
-    "produkt-admin-mork": "#A6ABB2"
+    "produkt-admin": "#8348BE",
+    "produkt-admin-mork": "#B68FE7"
   },
   "nettsider": {
     "flate-side": "#F6F8FB",
@@ -99,6 +99,56 @@
         "tekst": "#272D38",
         "tekst-dempet": "#4E535C",
         "tekst-svak": "#666A71"
+      },
+      "lys-okt-kontrast": {
+        "aksent": "#964109",
+        "aksent-trykk": "#7E3400",
+        "aksent-tekst": "#833600",
+        "aksent-svak": "#F8F1EE",
+        "aksent-valgt": "#EAD3C7",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#B54F00",
+        "flate-valgt": "#F8F1EE",
+        "grunn": "#FAF6F2",
+        "grunn-hevet": "#FEFDFB",
+        "grunn-senket": "#F3EFE9",
+        "tekst": "#151B25",
+        "tekst-dempet": "#3D424B",
+        "tekst-svak": "#4B4F55"
+      },
+      "p3": {
+        "lys": {
+          "aksent": "#A25B32",
+          "aksent-trykk": "#8E491F",
+          "aksent-tekst": "#8C461C",
+          "aksent-svak": "#F7F1EE",
+          "aksent-valgt": "#ECDED5",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#A8551F",
+          "flate-valgt": "#F7F1EE",
+          "grunn": "#F9F6F2",
+          "grunn-hevet": "#FEFDFB",
+          "grunn-senket": "#F2EFEA",
+          "tekst": "#282D37",
+          "tekst-dempet": "#4F535B",
+          "tekst-svak": "#676A70"
+        },
+        "lys-okt-kontrast": {
+          "aksent": "#8C461C",
+          "aksent-trykk": "#753812",
+          "aksent-tekst": "#7A3B13",
+          "aksent-svak": "#F7F1EE",
+          "aksent-valgt": "#E6D4C9",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#A8551F",
+          "flate-valgt": "#F7F1EE",
+          "grunn": "#F9F6F2",
+          "grunn-hevet": "#FEFDFB",
+          "grunn-senket": "#F2EFEA",
+          "tekst": "#161B24",
+          "tekst-dempet": "#3E424A",
+          "tekst-svak": "#4C4F54"
+        }
       }
     },
     "crm": {
@@ -124,7 +174,319 @@
         "grunn-senket": "#EAEAE8",
         "tekst": "#232A34",
         "tekst-dempet": "#4D525B",
-        "tekst-svak": "#64686F"
+        "tekst-svak": "#64686F",
+        "grunn-overlegg": "#FFFFFF",
+        "tekst-invers": "#F9F9F7",
+        "tekst-lenke": "#3A49A8",
+        "kant": "#C7C6C3",
+        "kant-sterk": "#656970",
+        "skillelinje-tabell": "#E9E8E5",
+        "kant-fokus": "#4C5FCB",
+        "rad-stripe": "#F3F4F2",
+        "rad-hover": "#F6F7FC",
+        "tabellhode": "#EAEAE8",
+        "tabellhode-tekst": "#4D525B",
+        "sumrad": "#F9F9F7",
+        "felt-bakgrunn": "#FFFFFF",
+        "felt-kant": "#888B90",
+        "felt-kant-fokus": "#4C5FCB",
+        "felt-tekst": "#232A34",
+        "felt-plassholder": "#64686F",
+        "felt-feil": "#9E2D28",
+        "felt-deaktivert": "#EAEAE8"
+      },
+      "lys-okt-kontrast": {
+        "aksent": "#3A49B4",
+        "aksent-trykk": "#2D37A0",
+        "aksent-tekst": "#303D9B",
+        "aksent-svak": "#F6F7FC",
+        "aksent-valgt": "#E2E5F7",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#5165D3",
+        "flate-valgt": "#E2E5F7",
+        "grunn": "#F1F1EF",
+        "grunn-hevet": "#F9F9F7",
+        "grunn-senket": "#EAEAE8",
+        "tekst": "#101620",
+        "tekst-dempet": "#393E47",
+        "tekst-svak": "#474B52",
+        "grunn-overlegg": "#FFFFFF",
+        "tekst-invers": "#F9F9F7",
+        "tekst-lenke": "#303D9B",
+        "kant": "#ADACA9",
+        "kant-sterk": "#52555C",
+        "skillelinje-tabell": "#D1D0CD",
+        "kant-fokus": "#3A49B4",
+        "rad-stripe": "#F3F4F2",
+        "rad-hover": "#F6F7FC",
+        "tabellhode": "#EAEAE8",
+        "tabellhode-tekst": "#393E47",
+        "sumrad": "#F9F9F7",
+        "felt-bakgrunn": "#FFFFFF",
+        "felt-kant": "#6B6E73",
+        "felt-kant-fokus": "#3A49B4",
+        "felt-tekst": "#101620",
+        "felt-plassholder": "#474B52",
+        "felt-feil": "#780007",
+        "felt-deaktivert": "#EAEAE8"
+      },
+      "p3": {
+        "lys": {
+          "aksent": "#505EC4",
+          "aksent-trykk": "#404DB1",
+          "aksent-tekst": "#3D49A2",
+          "aksent-svak": "#F6F7FC",
+          "aksent-valgt": "#EAECF8",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#5564CC",
+          "flate-valgt": "#EAECF8",
+          "grunn": "#F1F1EF",
+          "grunn-hevet": "#F9F9F7",
+          "grunn-senket": "#EAEAE8",
+          "tekst": "#242A33",
+          "tekst-dempet": "#4E525A",
+          "tekst-svak": "#65686E",
+          "grunn-overlegg": "#FFFFFF",
+          "tekst-invers": "#F9F9F7",
+          "tekst-lenke": "#3D49A2",
+          "kant": "#C7C6C3",
+          "kant-sterk": "#66696F",
+          "skillelinje-tabell": "#E9E8E5",
+          "kant-fokus": "#505EC4",
+          "rad-stripe": "#F3F4F2",
+          "rad-hover": "#F6F7FC",
+          "tabellhode": "#EAEAE8",
+          "tabellhode-tekst": "#4E525A",
+          "sumrad": "#F9F9F7",
+          "felt-bakgrunn": "#FFFFFF",
+          "felt-kant": "#898B90",
+          "felt-kant-fokus": "#505EC4",
+          "felt-tekst": "#242A33",
+          "felt-plassholder": "#65686E",
+          "felt-feil": "#92362E",
+          "felt-deaktivert": "#EAEAE8"
+        },
+        "lys-okt-kontrast": {
+          "aksent": "#3D49AE",
+          "aksent-trykk": "#2F379A",
+          "aksent-tekst": "#333D95",
+          "aksent-svak": "#F6F7FC",
+          "aksent-valgt": "#E3E5F5",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#5564CC",
+          "flate-valgt": "#E3E5F5",
+          "grunn": "#F1F1EF",
+          "grunn-hevet": "#F9F9F7",
+          "grunn-senket": "#EAEAE8",
+          "tekst": "#11161F",
+          "tekst-dempet": "#3A3E46",
+          "tekst-svak": "#484B51",
+          "grunn-overlegg": "#FFFFFF",
+          "tekst-invers": "#F9F9F7",
+          "tekst-lenke": "#333D95",
+          "kant": "#ADACA9",
+          "kant-sterk": "#53555B",
+          "skillelinje-tabell": "#D1D0CD",
+          "kant-fokus": "#3D49AE",
+          "rad-stripe": "#F3F4F2",
+          "rad-hover": "#F6F7FC",
+          "tabellhode": "#EAEAE8",
+          "tabellhode-tekst": "#3A3E46",
+          "sumrad": "#F9F9F7",
+          "felt-bakgrunn": "#FFFFFF",
+          "felt-kant": "#6C6E73",
+          "felt-kant-fokus": "#3D49AE",
+          "felt-tekst": "#11161F",
+          "felt-plassholder": "#484B51",
+          "felt-feil": "#6E1210",
+          "felt-deaktivert": "#EAEAE8"
+        }
+      },
+      "status": {
+        "lys": {
+          "ny": {
+            "fg": "#405B85",
+            "bg": "#D4DDEA",
+            "kant": "#9CB3D4"
+          },
+          "pagar": {
+            "fg": "#5C46A7",
+            "bg": "#DCDBEC",
+            "kant": "#B1A9E7"
+          },
+          "venter": {
+            "fg": "#555B64",
+            "bg": "#D6DEE8",
+            "kant": "#ABB3BC"
+          },
+          "sannsynlig": {
+            "fg": "#80378C",
+            "bg": "#EAD7ED",
+            "kant": "#CEA0D5"
+          },
+          "ferdig": {
+            "fg": "#1F6D02",
+            "bg": "#CFE2CA",
+            "kant": "#92BF88"
+          },
+          "advarsel": {
+            "fg": "#6D5000",
+            "bg": "#F0DAAE",
+            "kant": "#D2B271"
+          },
+          "feil": {
+            "fg": "#9E2D28",
+            "bg": "#ECD9D6",
+            "kant": "#E69C94"
+          }
+        },
+        "lys-okt-kontrast": {
+          "ny": {
+            "fg": "#233D64",
+            "bg": "#D8DDE5",
+            "kant": "#465D7D"
+          },
+          "pagar": {
+            "fg": "#402584",
+            "bg": "#DCDCE5",
+            "kant": "#5C4B9E"
+          },
+          "venter": {
+            "fg": "#383E46",
+            "bg": "#D7DDE5",
+            "kant": "#555C64"
+          },
+          "sannsynlig": {
+            "fg": "#5F136A",
+            "bg": "#E4D9E5",
+            "kant": "#7C3E86"
+          },
+          "ferdig": {
+            "fg": "#104B00",
+            "bg": "#CEE3CA",
+            "kant": "#2C6B1B"
+          },
+          "advarsel": {
+            "fg": "#503900",
+            "bg": "#E5DCCB",
+            "kant": "#755600"
+          },
+          "feil": {
+            "fg": "#780007",
+            "bg": "#E5DAD8",
+            "kant": "#973830"
+          }
+        },
+        "p3": {
+          "lys": {
+            "ny": {
+              "fg": "#465A82",
+              "bg": "#D6DDE9",
+              "kant": "#A0B2D1"
+            },
+            "pagar": {
+              "fg": "#5947A1",
+              "bg": "#DCDBEB",
+              "kant": "#B0A9E2"
+            },
+            "venter": {
+              "fg": "#565B63",
+              "bg": "#D7DEE7",
+              "kant": "#ACB3BB"
+            },
+            "sannsynlig": {
+              "fg": "#773B88",
+              "bg": "#E7D8EB",
+              "kant": "#C7A2D2"
+            },
+            "ferdig": {
+              "fg": "#376B1C",
+              "bg": "#D3E1CC",
+              "kant": "#9BBE8D"
+            },
+            "advarsel": {
+              "fg": "#695117",
+              "bg": "#ECDBB3",
+              "kant": "#CDB37A"
+            },
+            "feil": {
+              "fg": "#92362E",
+              "bg": "#E9DAD7",
+              "kant": "#DB9F97"
+            }
+          },
+          "lys-okt-kontrast": {
+            "ny": {
+              "fg": "#293C61",
+              "bg": "#D9DDE4",
+              "kant": "#4B5C7A"
+            },
+            "pagar": {
+              "fg": "#3C267F",
+              "bg": "#DCDCE4",
+              "kant": "#594C99"
+            },
+            "venter": {
+              "fg": "#393E45",
+              "bg": "#D8DDE4",
+              "kant": "#565C63"
+            },
+            "sannsynlig": {
+              "fg": "#571A66",
+              "bg": "#E2D9E4",
+              "kant": "#744182"
+            },
+            "ferdig": {
+              "fg": "#234A10",
+              "bg": "#D2E2CC",
+              "kant": "#3D6A28"
+            },
+            "advarsel": {
+              "fg": "#4D3A0E",
+              "bg": "#E3DCCD",
+              "kant": "#705719"
+            },
+            "feil": {
+              "fg": "#6E1210",
+              "bg": "#E3DAD8",
+              "kant": "#8C3E35"
+            }
+          }
+        }
+      },
+      "maal": {
+        "rad": "40px",
+        "rad-tett": "36px",
+        "felt-hoyde": "36px",
+        "knapp-hoyde": "36px",
+        "sidemeny-rad": "36px",
+        "ikon": "16px",
+        "ikon-stor": "20px",
+        "font-grunn": "14px",
+        "linjehoyde": "1.4286",
+        "font-tabell": "13px",
+        "linjehoyde-tabell": "18px",
+        "font-meta": "12px",
+        "font-pille": "12px",
+        "font-korttittel": "16px",
+        "font-sidetittel": "20px",
+        "vekt-sidetittel": "600",
+        "radius-felt": "6px",
+        "radius-knapp": "6px",
+        "radius-knapp-stor": "6px",
+        "radius-kort": "10px",
+        "trykk-min": "32px"
+      },
+      "skygge": {
+        "kort": "0 1px 2px rgba(29,36,48,.05)",
+        "skuff": "0 0 0 1px rgba(29,36,48,.06), -8px 0 24px -12px rgba(29,36,48,.18)",
+        "dialog": "0 0 0 1px rgba(29,36,48,.06), 0 12px 32px -12px rgba(29,36,48,.20)"
+      },
+      "overlegg": "rgba(29,36,48,.32)",
+      "fokus": {
+        "innside": "#FFFFFF",
+        "innside-bredde": "1px",
+        "ytre": "3px"
       }
     },
     "admin": {
@@ -152,7 +514,319 @@
         "grunn-senket": "#EAEAE8",
         "tekst": "#232A34",
         "tekst-dempet": "#4D525B",
-        "tekst-svak": "#64686F"
+        "tekst-svak": "#64686F",
+        "grunn-overlegg": "#FFFFFF",
+        "tekst-invers": "#F9F9F7",
+        "tekst-lenke": "#6929A2",
+        "kant": "#C7C6C3",
+        "kant-sterk": "#656970",
+        "skillelinje-tabell": "#E9E8E5",
+        "kant-fokus": "#7233AC",
+        "rad-stripe": "#F3F4F2",
+        "rad-hover": "#F8F5FB",
+        "tabellhode": "#EAEAE8",
+        "tabellhode-tekst": "#4D525B",
+        "sumrad": "#F9F9F7",
+        "felt-bakgrunn": "#FFFFFF",
+        "felt-kant": "#888B90",
+        "felt-kant-fokus": "#7233AC",
+        "felt-tekst": "#232A34",
+        "felt-plassholder": "#64686F",
+        "felt-feil": "#9E2D28",
+        "felt-deaktivert": "#EAEAE8"
+      },
+      "lys-okt-kontrast": {
+        "aksent": "#5F1A95",
+        "aksent-trykk": "#4E007F",
+        "aksent-tekst": "#570B8B",
+        "aksent-svak": "#F7F4FA",
+        "aksent-valgt": "#E8DEF2",
+        "paa-aksent": "#FBF9F6",
+        "prikk": "#8348BE",
+        "flate-valgt": "#E8DEF2",
+        "grunn": "#F1F1EF",
+        "grunn-hevet": "#F9F9F7",
+        "grunn-senket": "#EAEAE8",
+        "tekst": "#101620",
+        "tekst-dempet": "#373C45",
+        "tekst-svak": "#45484F",
+        "grunn-overlegg": "#FFFFFF",
+        "tekst-invers": "#F9F9F7",
+        "tekst-lenke": "#570B8B",
+        "kant": "#ADACA9",
+        "kant-sterk": "#52555C",
+        "skillelinje-tabell": "#D1D0CD",
+        "kant-fokus": "#5F1A95",
+        "rad-stripe": "#F3F4F2",
+        "rad-hover": "#F7F4FA",
+        "tabellhode": "#EAEAE8",
+        "tabellhode-tekst": "#373C45",
+        "sumrad": "#F9F9F7",
+        "felt-bakgrunn": "#FFFFFF",
+        "felt-kant": "#6B6E73",
+        "felt-kant-fokus": "#5F1A95",
+        "felt-tekst": "#101620",
+        "felt-plassholder": "#45484F",
+        "felt-feil": "#780007",
+        "felt-deaktivert": "#EAEAE8"
+      },
+      "p3": {
+        "lys": {
+          "aksent": "#6A37A6",
+          "aksent-trykk": "#592392",
+          "aksent-tekst": "#612D9C",
+          "aksent-svak": "#F7F5FB",
+          "aksent-valgt": "#EDE7F4",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#7B4BB8",
+          "flate-valgt": "#EDE7F4",
+          "grunn": "#F1F1EF",
+          "grunn-hevet": "#F9F9F7",
+          "grunn-senket": "#EAEAE8",
+          "tekst": "#242A33",
+          "tekst-dempet": "#4E525A",
+          "tekst-svak": "#65686E",
+          "grunn-overlegg": "#FFFFFF",
+          "tekst-invers": "#F9F9F7",
+          "tekst-lenke": "#612D9C",
+          "kant": "#C7C6C3",
+          "kant-sterk": "#66696F",
+          "skillelinje-tabell": "#E9E8E5",
+          "kant-fokus": "#6A37A6",
+          "rad-stripe": "#F3F4F2",
+          "rad-hover": "#F7F5FB",
+          "tabellhode": "#EAEAE8",
+          "tabellhode-tekst": "#4E525A",
+          "sumrad": "#F9F9F7",
+          "felt-bakgrunn": "#FFFFFF",
+          "felt-kant": "#898B90",
+          "felt-kant-fokus": "#6A37A6",
+          "felt-tekst": "#242A33",
+          "felt-plassholder": "#65686E",
+          "felt-feil": "#92362E",
+          "felt-deaktivert": "#EAEAE8"
+        },
+        "lys-okt-kontrast": {
+          "aksent": "#571F8F",
+          "aksent-trykk": "#47087A",
+          "aksent-tekst": "#4F1386",
+          "aksent-svak": "#F6F4FA",
+          "aksent-valgt": "#E6DEF0",
+          "paa-aksent": "#FBF9F6",
+          "prikk": "#7B4BB8",
+          "flate-valgt": "#E6DEF0",
+          "grunn": "#F1F1EF",
+          "grunn-hevet": "#F9F9F7",
+          "grunn-senket": "#EAEAE8",
+          "tekst": "#11161F",
+          "tekst-dempet": "#383C44",
+          "tekst-svak": "#46484E",
+          "grunn-overlegg": "#FFFFFF",
+          "tekst-invers": "#F9F9F7",
+          "tekst-lenke": "#4F1386",
+          "kant": "#ADACA9",
+          "kant-sterk": "#53555B",
+          "skillelinje-tabell": "#D1D0CD",
+          "kant-fokus": "#571F8F",
+          "rad-stripe": "#F3F4F2",
+          "rad-hover": "#F6F4FA",
+          "tabellhode": "#EAEAE8",
+          "tabellhode-tekst": "#383C44",
+          "sumrad": "#F9F9F7",
+          "felt-bakgrunn": "#FFFFFF",
+          "felt-kant": "#6C6E73",
+          "felt-kant-fokus": "#571F8F",
+          "felt-tekst": "#11161F",
+          "felt-plassholder": "#46484E",
+          "felt-feil": "#6E1210",
+          "felt-deaktivert": "#EAEAE8"
+        }
+      },
+      "status": {
+        "lys": {
+          "ny": {
+            "fg": "#405B85",
+            "bg": "#D4DDEA",
+            "kant": "#9CB3D4"
+          },
+          "pagar": {
+            "fg": "#5C46A7",
+            "bg": "#DCDBEC",
+            "kant": "#B1A9E7"
+          },
+          "venter": {
+            "fg": "#555B64",
+            "bg": "#D6DEE8",
+            "kant": "#ABB3BC"
+          },
+          "sannsynlig": {
+            "fg": "#80378C",
+            "bg": "#EAD7ED",
+            "kant": "#CEA0D5"
+          },
+          "ferdig": {
+            "fg": "#1F6D02",
+            "bg": "#CFE2CA",
+            "kant": "#92BF88"
+          },
+          "advarsel": {
+            "fg": "#6D5000",
+            "bg": "#F0DAAE",
+            "kant": "#D2B271"
+          },
+          "feil": {
+            "fg": "#9E2D28",
+            "bg": "#ECD9D6",
+            "kant": "#E69C94"
+          }
+        },
+        "lys-okt-kontrast": {
+          "ny": {
+            "fg": "#233D64",
+            "bg": "#D8DDE5",
+            "kant": "#465D7D"
+          },
+          "pagar": {
+            "fg": "#402584",
+            "bg": "#DCDCE5",
+            "kant": "#5C4B9E"
+          },
+          "venter": {
+            "fg": "#383E46",
+            "bg": "#D7DDE5",
+            "kant": "#555C64"
+          },
+          "sannsynlig": {
+            "fg": "#5F136A",
+            "bg": "#E4D9E5",
+            "kant": "#7C3E86"
+          },
+          "ferdig": {
+            "fg": "#104B00",
+            "bg": "#CEE3CA",
+            "kant": "#2C6B1B"
+          },
+          "advarsel": {
+            "fg": "#503900",
+            "bg": "#E5DCCB",
+            "kant": "#755600"
+          },
+          "feil": {
+            "fg": "#780007",
+            "bg": "#E5DAD8",
+            "kant": "#973830"
+          }
+        },
+        "p3": {
+          "lys": {
+            "ny": {
+              "fg": "#465A82",
+              "bg": "#D6DDE9",
+              "kant": "#A0B2D1"
+            },
+            "pagar": {
+              "fg": "#5947A1",
+              "bg": "#DCDBEB",
+              "kant": "#B0A9E2"
+            },
+            "venter": {
+              "fg": "#565B63",
+              "bg": "#D7DEE7",
+              "kant": "#ACB3BB"
+            },
+            "sannsynlig": {
+              "fg": "#773B88",
+              "bg": "#E7D8EB",
+              "kant": "#C7A2D2"
+            },
+            "ferdig": {
+              "fg": "#376B1C",
+              "bg": "#D3E1CC",
+              "kant": "#9BBE8D"
+            },
+            "advarsel": {
+              "fg": "#695117",
+              "bg": "#ECDBB3",
+              "kant": "#CDB37A"
+            },
+            "feil": {
+              "fg": "#92362E",
+              "bg": "#E9DAD7",
+              "kant": "#DB9F97"
+            }
+          },
+          "lys-okt-kontrast": {
+            "ny": {
+              "fg": "#293C61",
+              "bg": "#D9DDE4",
+              "kant": "#4B5C7A"
+            },
+            "pagar": {
+              "fg": "#3C267F",
+              "bg": "#DCDCE4",
+              "kant": "#594C99"
+            },
+            "venter": {
+              "fg": "#393E45",
+              "bg": "#D8DDE4",
+              "kant": "#565C63"
+            },
+            "sannsynlig": {
+              "fg": "#571A66",
+              "bg": "#E2D9E4",
+              "kant": "#744182"
+            },
+            "ferdig": {
+              "fg": "#234A10",
+              "bg": "#D2E2CC",
+              "kant": "#3D6A28"
+            },
+            "advarsel": {
+              "fg": "#4D3A0E",
+              "bg": "#E3DCCD",
+              "kant": "#705719"
+            },
+            "feil": {
+              "fg": "#6E1210",
+              "bg": "#E3DAD8",
+              "kant": "#8C3E35"
+            }
+          }
+        }
+      },
+      "maal": {
+        "rad": "40px",
+        "rad-tett": "36px",
+        "felt-hoyde": "36px",
+        "knapp-hoyde": "36px",
+        "sidemeny-rad": "36px",
+        "ikon": "16px",
+        "ikon-stor": "20px",
+        "font-grunn": "14px",
+        "linjehoyde": "1.4286",
+        "font-tabell": "13px",
+        "linjehoyde-tabell": "18px",
+        "font-meta": "12px",
+        "font-pille": "12px",
+        "font-korttittel": "16px",
+        "font-sidetittel": "20px",
+        "vekt-sidetittel": "600",
+        "radius-felt": "6px",
+        "radius-knapp": "6px",
+        "radius-knapp-stor": "6px",
+        "radius-kort": "10px",
+        "trykk-min": "32px"
+      },
+      "skygge": {
+        "kort": "0 1px 2px rgba(29,36,48,.05)",
+        "skuff": "0 0 0 1px rgba(29,36,48,.06), -8px 0 24px -12px rgba(29,36,48,.18)",
+        "dialog": "0 0 0 1px rgba(29,36,48,.06), 0 12px 32px -12px rgba(29,36,48,.20)"
+      },
+      "overlegg": "rgba(29,36,48,.32)",
+      "fokus": {
+        "innside": "#FFFFFF",
+        "innside-bredde": "1px",
+        "ytre": "3px"
       }
     }
   },
@@ -869,7 +1543,10 @@
       }
     },
     "egenskap": {
-      "tabell": "tabular-nums"
+      "tabell": "tabular-nums",
+      "sidetittel": "28px",
+      "tall-stor": "32px",
+      "mono": "ui-monospace, \"SF Mono\", Menlo, Consolas, monospace"
     },
     "storrelseSmal": {
       "nettbrett": {
@@ -1471,7 +2148,9 @@
     "kort-lite": 8,
     "felt": 6,
     "bilde": 8,
-    "pille": 999
+    "pille": 999,
+    "liten": 4,
+    "rad": 6
   },
   "avstand": {
     "1": 4,

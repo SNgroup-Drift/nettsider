@@ -1,0 +1,96 @@
+{
+  "dokument": "Kolli-etiketter, A4 3 × 8",
+  "mappe": "09-kolli-etiketter-a4",
+  "kilde": "Fil 36 LG7.1 og fil 47 LC5",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "etiketter",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].qr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].kode",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].ordre",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].n",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].av",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].innhold",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].leverandor",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].uke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "etiketter[].tom[].butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    }
+  ]
+}

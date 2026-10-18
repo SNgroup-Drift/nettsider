@@ -1,0 +1,130 @@
+{
+  "dokument": "E-post: Kunden har sendt tilvalg",
+  "mappe": "24-e4-kunden-har-sendt-tilvalg",
+  "kilde": "Fil 40 E4",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola Kjøper har sendt 2 tilvalg, + 14 900 kr, på leilighet H0304."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "enhet.nr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "H0304"
+    },
+    {
+      "felt": "prosjekt.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Fjordhagen"
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola Kjøper"
+    },
+    {
+      "felt": "tilvalg.linjer",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].pris",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.sum",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "+ 14 900 kr"
+    },
+    {
+      "felt": "tilvalg.frist",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "20. oktober"
+    },
+    {
+      "felt": "tilvalg.dager_igjen",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 6
+    },
+    {
+      "felt": "epost.lenke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "#"
+    },
+    {
+      "felt": "epost.knapp",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Åpne tilvalget"
+    }
+  ]
+}

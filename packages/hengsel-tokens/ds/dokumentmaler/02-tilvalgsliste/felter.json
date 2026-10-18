@@ -1,0 +1,169 @@
+{
+  "dokument": "Tilvalgsliste",
+  "mappe": "02-tilvalgsliste",
+  "kilde": "Fil 44 TV1–TV2",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "prosjekt.navn",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Fjordhagen"
+    },
+    {
+      "felt": "enhet.nr",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "H0304"
+    },
+    {
+      "felt": "tilvalg.versjon",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "2"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 2
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Ola Kjøper"
+    },
+    {
+      "felt": "prosjekt.entreprenor",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Byggmester Demo AS"
+    },
+    {
+      "felt": "tilvalg.frist",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "20. oktober 2026"
+    },
+    {
+      "felt": "tilvalg.sendt",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "8. oktober 2026"
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "tilvalg.linjer",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].omrade",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].standard",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].valg",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.linjer[].pris",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "tilvalg.sum",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "+ 14 900 kr"
+    },
+    {
+      "felt": "tilvalg.tegning",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    }
+  ]
+}

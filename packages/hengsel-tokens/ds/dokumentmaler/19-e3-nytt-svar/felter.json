@@ -1,0 +1,151 @@
+{
+  "dokument": "E-post: Nytt svar på Min side",
+  "mappe": "19-e3-nytt-svar",
+  "kilde": "Fil 40 E3",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari har svart deg på Min side."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "selger.fornavn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari"
+    },
+    {
+      "felt": "ordre.rom",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken"
+    },
+    {
+      "felt": "ordre.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Oppdiktet gate 4"
+    },
+    {
+      "felt": "melding.tekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Hei Ola! Lys blå matt er bestilt. Vi ser på levering uke 46. Si fra om det passer."
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "melding.tid",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "i dag 09.12"
+    },
+    {
+      "felt": "epost.lenke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "#"
+    },
+    {
+      "felt": "epost.knapp",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Svar på Min side"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "epost.bunnlinje",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Svar gjerne direkte i Min side."
+    }
+  ]
+}

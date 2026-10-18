@@ -1,0 +1,14 @@
+/* Kundetema: Hengsel standard. Verdier etter tokens/kundetema.schema.json (2.7, to skriftfelt). Bare for eksempel.html. */
+:root{
+  --kt-bakgrunn:#F9F9F7;
+  --kt-flate:#F1F1EF;
+  --kt-felt:#EAEAE8;
+  --kt-tekst:#232A34;
+  --kt-aksent:#4C5FCB;
+  --kt-lenke:#3A49A8;
+  --kt-kant:#64686F;
+  --kt-paa-aksent:#FFFFFF;
+  --kt-skrift-overskrift:'Schibsted Grotesk', system-ui, sans-serif;
+  --kt-skrift-tekst:'Schibsted Grotesk', system-ui, sans-serif;
+  --kt-radius:6px;
+}

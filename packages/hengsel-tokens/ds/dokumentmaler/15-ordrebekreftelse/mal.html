@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="15-ordrebekreftelse">
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Ordrebekreftelse</b>Ordre {{ordre.nr}} · {{ordre.bekreftet}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">{{butikk.navn}} · {{butikk.adresse}} · {{butikk.telefon}} · Org.nr {{butikk.orgnr}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><div class="stack tett"><span class="eyebrow">Ordrebekreftelse · {{ordre.rom}}</span><h1>{{ordre.tittel}}</h1></div><div class="to"><dl class="nv"><dt>Kjøper</dt><dd>{{kjoper.navn}}<br>{{kjoper.adresse}}</dd><dt>Ordre</dt><dd>{{ordre.nr}}</dd><dt>Kjøpsavtale</dt><dd>{{ordre.avtale}} · signert {{ordre.signert}}</dd><dt>Selger</dt><dd>{{selger.navn}}</dd></dl><dl class="nv"><dt>Modell</dt><dd>{{ordre.modell}}</dd><dt>Levering</dt><dd>{{ordre.levering}}</dd><dt>Montering</dt><dd>{{ordre.montering}}</dd></dl></div><div class="stack tett"><h3>Bestilt</h3><table class="liste"><thead><tr><th>Leverandør</th><th>Hva</th><th>Status</th></tr></thead><tbody>{{#ordre.bestillinger}}<tr><td>{{leverandor}}</td><td>{{hva}}</td><td><span class="pille">{{status}}</span></td></tr>{{/ordre.bestillinger}}</tbody></table></div><div class="stack tett"><h3>Linjer</h3><table class="liste"><thead><tr><th>Beskrivelse</th><th class="tall">Antall</th><th class="tall">Beløp inkl. mva</th></tr></thead><tbody>{{#ordre.linjer}}<tr><td>{{beskrivelse}}</td><td class="tall">{{antall}}</td><td class="tall">{{belop}}</td></tr>{{/ordre.linjer}}<tr class="sum"><td colspan="2">Sum inkl. mva</td><td class="tall">{{ordre.sum}}</td></tr></tbody></table></div><div class="to"><div class="betaling"><span class="belop-etikett">Rest å betale ved levering</span><span class="belop">{{ordre.rest}}</span><span class="liten">Sum {{ordre.sum}} · forskudd {{ordre.forskudd}} betalt {{ordre.forskudd_betalt}}</span></div><div class="kort stack tett"><h3>Sjekk bekreftelsen</h3><p>Sjekk ordrebekreftelsen når den kommer, og meld avvik skriftlig innen 3 dager.</p></div></div></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>

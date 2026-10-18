@@ -1,0 +1,160 @@
+{
+  "dokument": "E-post: Leveringstid bekreftet",
+  "mappe": "20-e6-leveringstid-bekreftet",
+  "kilde": "Fil 51 E6",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "epost.forhandstekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Levering torsdag 11. desember mellom 08 og 12. Sjekk at veien er klar."
+    },
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "ordre.rom",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken"
+    },
+    {
+      "felt": "ordre.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Oppdiktet gate 4"
+    },
+    {
+      "felt": "levering.dag",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Torsdag 11. desember"
+    },
+    {
+      "felt": "levering.tidsrom",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "08.00–12.00"
+    },
+    {
+      "felt": "levering.kolli",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "24 kolli, ca. 2 paller"
+    },
+    {
+      "felt": "levering.utkjorer",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar, ring 30 min før"
+    },
+    {
+      "felt": "levering.svarfrist",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "mandag 8. desember"
+    },
+    {
+      "felt": "epost.lenke",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "#"
+    },
+    {
+      "felt": "epost.knapp",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Se leveringen på Min side"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "epost.bunnlinje",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Endre varsler på Min side."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.5.0, commit 7419b949). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.10.0, commit 8bb8351a). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
  * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
@@ -12,12 +12,12 @@
   --aksent-mork: #54B9A5;
   --produkt-crm: #5165D3;
   --produkt-crm-mork: #859DFF;
-  --produkt-ute: #B54F00;
-  --produkt-ute-mork: #F77E35;
+  --produkt-ute: #068472;
+  --produkt-ute-mork: #54B9A5;
   --produkt-levering: #1C8742;
   --produkt-levering-mork: #5BBD74;
-  --produkt-admin: #70757C;
-  --produkt-admin-mork: #A6ABB2;
+  --produkt-admin: #8348BE;
+  --produkt-admin-mork: #B68FE7;
 
   /* Roller, lys utgave (nettsidene har bare denne) */
   --flate-side: #F6F8FB;
@@ -102,6 +102,9 @@
   --skrift-tittel-vekt: 700;
   --skrift-tittel-sporing: 0;
   --skrift-tabell: tabular-nums;
+  --skrift-sidetittel: 28px;
+  --skrift-tall-stor: 32px;
+  --skrift-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Radius og avstand */
   --radius-kort-stor: 12px;
@@ -109,6 +112,8 @@
   --radius-felt: 6px;
   --radius-bilde: 8px;
   --radius-pille: 999px;
+  --radius-liten: 4px;
+  --radius-rad: 6px;
   --avstand-1: 4px;
   --avstand-2: 8px;
   --avstand-3: 12px;
@@ -270,6 +275,36 @@
   }
 }
 
+/* Designsystem 2.6 (K-371b): Teller (regel 9, dokumentasjon/HASTER.md 3b) og --flate-meny. Ingen hex: bare navn som peker på eksisterende tokens.
+   --radius-liten, --radius-rad, --skrift-sidetittel, --skrift-tall-stor og --skrift-mono ligger i hengsel.tokens.json (tokens.css). */
+:root,
+[data-produkt] {
+  --flate-meny: var(--sidemeny-flate, var(--flate-kort));
+  /* Teller: mål */
+  --teller-meny: 20px;
+  --teller-fane: 16px;
+  --teller-flis: 16px;
+  --teller-merke: 12px;
+  --teller-merke-skrift: 9px;
+  --teller-merke-topp: -6px;
+  --teller-merke-hoyre: -6px;
+  --teller-merke-ring: 1.5px;
+  /* Teller: farger */
+  --teller-bg: var(--aksent-svak);
+  --teller-kant: var(--aksent-valgt);
+  --teller-tekst: var(--aksent-tekst);
+  --teller-haster-tekst: var(--status-feil-fg);
+  --teller-merke-bg: var(--status-feil-fg);
+  --teller-merke-tekst: var(--tekst-invers);
+  /* Bjella bruker samme teller (regel 9). Navnene beholdes for eldre skjermer. */
+  --varsler-teller-bg: var(--teller-bg);
+  --varsler-teller-tekst: var(--teller-tekst);
+  /* Regel 10 (2.6–2.9): rader, kanter og rullefelt */
+  --rad-innrykk: 12px;
+  --rullefelt: 8px;
+  --flis-pad-x: 24px;
+}
+
 /* Haster og synlighet (designsystem 2.5, HASTER.md): aliaser til status-tokens, ingen nye farger. */
 :root,
 [data-produkt] {
@@ -282,7 +317,7 @@
   --nivaa-stripe: 3px;
 }
 
-/* Produktpaletter (designsystem 2.5): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */
+/* Produktpaletter (designsystem 2.5, 2.10): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */
 [data-produkt="ute"] {
   --aksent: #05806F;
   --aksent-trykk: #007665;
@@ -290,8 +325,8 @@
   --aksent-svak: #E0F4EE;
   --aksent-valgt: #BCE6DB;
   --paa-aksent: #FBF9F6;
-  --flate-valgt: #E0F4EE;
   --merke-stift: #068472;
+  --flate-valgt: #E0F4EE;
   --flate-side: #F6F8FB;
   --flate-kort: #FBFDFF;
   --flate-senket: #EFF1F4;
@@ -308,8 +343,8 @@
   --aksent-svak: #F8F1EE;
   --aksent-valgt: #EFDDD4;
   --paa-aksent: #FBF9F6;
-  --flate-valgt: #F8F1EE;
   --merke-stift: #B54F00;
+  --flate-valgt: #F8F1EE;
   --flate-side: #FAF6F2;
   --flate-kort: #FEFDFB;
   --flate-senket: #F3EFE9;
@@ -326,14 +361,54 @@
   --aksent-svak: #F6F7FC;
   --aksent-valgt: #EAECF9;
   --paa-aksent: #FBF9F6;
-  --flate-valgt: #EAECF9;
   --merke-stift: #5165D3;
+  --flate-valgt: #EAECF9;
   --flate-side: #F1F1EF;
   --flate-kort: #F9F9F7;
   --flate-senket: #EAEAE8;
   --tekst: #232A34;
   --tekst-dempet: #4D525B;
   --tekst-svak: #64686F;
+  --grunn-overlegg: #FFFFFF;
+  --tekst-invers: #F9F9F7;
+  --tekst-lenke: #3A49A8;
+  --kant: #C7C6C3;
+  --kant-sterk: #656970;
+  --skillelinje-tabell: #E9E8E5;
+  --kant-fokus: #4C5FCB;
+  --rad-stripe: #F3F4F2;
+  --rad-hover: #F6F7FC;
+  --tabellhode: #EAEAE8;
+  --tabellhode-tekst: #4D525B;
+  --sumrad: #F9F9F7;
+  --felt-bakgrunn: #FFFFFF;
+  --felt-kant: #888B90;
+  --felt-kant-fokus: #4C5FCB;
+  --felt-tekst: #232A34;
+  --felt-plassholder: #64686F;
+  --felt-feil: #9E2D28;
+  --felt-deaktivert: #EAEAE8;
+  --status-ny-fg: #405B85;
+  --status-ny-bg: #D4DDEA;
+  --status-ny-kant: #9CB3D4;
+  --status-pagar-fg: #5C46A7;
+  --status-pagar-bg: #DCDBEC;
+  --status-pagar-kant: #B1A9E7;
+  --status-venter-fg: #555B64;
+  --status-venter-bg: #D6DEE8;
+  --status-venter-kant: #ABB3BC;
+  --status-sannsynlig-fg: #80378C;
+  --status-sannsynlig-bg: #EAD7ED;
+  --status-sannsynlig-kant: #CEA0D5;
+  --status-ferdig-fg: #1F6D02;
+  --status-ferdig-bg: #CFE2CA;
+  --status-ferdig-kant: #92BF88;
+  --status-advarsel-fg: #6D5000;
+  --status-advarsel-bg: #F0DAAE;
+  --status-advarsel-kant: #D2B271;
+  --status-feil-fg: #9E2D28;
+  --status-feil-bg: #ECD9D6;
+  --status-feil-kant: #E69C94;
   color-scheme: light;
 }
 
@@ -344,13 +419,230 @@
   --aksent-svak: #F8F5FB;
   --aksent-valgt: #EEE7F5;
   --paa-aksent: #FBF9F6;
-  --flate-valgt: #EEE7F5;
   --merke-stift: #8348BE;
+  --flate-valgt: #EEE7F5;
   --flate-side: #F1F1EF;
   --flate-kort: #F9F9F7;
   --flate-senket: #EAEAE8;
   --tekst: #232A34;
   --tekst-dempet: #4D525B;
   --tekst-svak: #64686F;
+  --grunn-overlegg: #FFFFFF;
+  --tekst-invers: #F9F9F7;
+  --tekst-lenke: #6929A2;
+  --kant: #C7C6C3;
+  --kant-sterk: #656970;
+  --skillelinje-tabell: #E9E8E5;
+  --kant-fokus: #7233AC;
+  --rad-stripe: #F3F4F2;
+  --rad-hover: #F8F5FB;
+  --tabellhode: #EAEAE8;
+  --tabellhode-tekst: #4D525B;
+  --sumrad: #F9F9F7;
+  --felt-bakgrunn: #FFFFFF;
+  --felt-kant: #888B90;
+  --felt-kant-fokus: #7233AC;
+  --felt-tekst: #232A34;
+  --felt-plassholder: #64686F;
+  --felt-feil: #9E2D28;
+  --felt-deaktivert: #EAEAE8;
+  --status-ny-fg: #405B85;
+  --status-ny-bg: #D4DDEA;
+  --status-ny-kant: #9CB3D4;
+  --status-pagar-fg: #5C46A7;
+  --status-pagar-bg: #DCDBEC;
+  --status-pagar-kant: #B1A9E7;
+  --status-venter-fg: #555B64;
+  --status-venter-bg: #D6DEE8;
+  --status-venter-kant: #ABB3BC;
+  --status-sannsynlig-fg: #80378C;
+  --status-sannsynlig-bg: #EAD7ED;
+  --status-sannsynlig-kant: #CEA0D5;
+  --status-ferdig-fg: #1F6D02;
+  --status-ferdig-bg: #CFE2CA;
+  --status-ferdig-kant: #92BF88;
+  --status-advarsel-fg: #6D5000;
+  --status-advarsel-bg: #F0DAAE;
+  --status-advarsel-kant: #D2B271;
+  --status-feil-fg: #9E2D28;
+  --status-feil-bg: #ECD9D6;
+  --status-feil-kant: #E69C94;
   color-scheme: light;
+}
+
+/* Display P3 per produkt (designsystem 2.10) */
+@media (color-gamut: p3) {
+  [data-produkt="nettsider"] {
+    --aksent: color(display-p3 0.6353 0.3569 0.1961);
+    --aksent-trykk: color(display-p3 0.5569 0.2863 0.1216);
+    --aksent-tekst: color(display-p3 0.5490 0.2745 0.1098);
+    --aksent-svak: color(display-p3 0.9686 0.9451 0.9333);
+    --aksent-valgt: color(display-p3 0.9255 0.8706 0.8353);
+    --merke-stift: color(display-p3 0.6588 0.3333 0.1216);
+    --flate-valgt: color(display-p3 0.9686 0.9451 0.9333);
+    --flate-side: color(display-p3 0.9765 0.9647 0.9490);
+    --flate-senket: color(display-p3 0.9490 0.9373 0.9176);
+    --tekst: color(display-p3 0.1569 0.1765 0.2157);
+    --tekst-dempet: color(display-p3 0.3098 0.3255 0.3569);
+    --tekst-svak: color(display-p3 0.4039 0.4157 0.4392);
+  }
+  [data-produkt="crm"] {
+    --aksent: color(display-p3 0.3137 0.3686 0.7686);
+    --aksent-trykk: color(display-p3 0.2510 0.3020 0.6941);
+    --aksent-tekst: color(display-p3 0.2392 0.2863 0.6353);
+    --aksent-valgt: color(display-p3 0.9176 0.9255 0.9725);
+    --merke-stift: color(display-p3 0.3333 0.3922 0.8000);
+    --flate-valgt: color(display-p3 0.9176 0.9255 0.9725);
+    --tekst: color(display-p3 0.1412 0.1647 0.2000);
+    --tekst-dempet: color(display-p3 0.3059 0.3216 0.3529);
+    --tekst-svak: color(display-p3 0.3961 0.4078 0.4314);
+    --tekst-lenke: color(display-p3 0.2392 0.2863 0.6353);
+    --kant-sterk: color(display-p3 0.4000 0.4118 0.4353);
+    --kant-fokus: color(display-p3 0.3137 0.3686 0.7686);
+    --tabellhode-tekst: color(display-p3 0.3059 0.3216 0.3529);
+    --felt-kant: color(display-p3 0.5373 0.5451 0.5647);
+    --felt-kant-fokus: color(display-p3 0.3137 0.3686 0.7686);
+    --felt-tekst: color(display-p3 0.1412 0.1647 0.2000);
+    --felt-plassholder: color(display-p3 0.3961 0.4078 0.4314);
+    --felt-feil: color(display-p3 0.5725 0.2118 0.1804);
+  }
+  [data-produkt="admin"] {
+    --aksent: color(display-p3 0.4157 0.2157 0.6510);
+    --aksent-trykk: color(display-p3 0.3490 0.1373 0.5725);
+    --aksent-tekst: color(display-p3 0.3804 0.1765 0.6118);
+    --aksent-svak: color(display-p3 0.9686 0.9608 0.9843);
+    --aksent-valgt: color(display-p3 0.9294 0.9059 0.9569);
+    --merke-stift: color(display-p3 0.4824 0.2941 0.7216);
+    --flate-valgt: color(display-p3 0.9294 0.9059 0.9569);
+    --tekst: color(display-p3 0.1412 0.1647 0.2000);
+    --tekst-dempet: color(display-p3 0.3059 0.3216 0.3529);
+    --tekst-svak: color(display-p3 0.3961 0.4078 0.4314);
+    --tekst-lenke: color(display-p3 0.3804 0.1765 0.6118);
+    --kant-sterk: color(display-p3 0.4000 0.4118 0.4353);
+    --kant-fokus: color(display-p3 0.4157 0.2157 0.6510);
+    --rad-hover: color(display-p3 0.9686 0.9608 0.9843);
+    --tabellhode-tekst: color(display-p3 0.3059 0.3216 0.3529);
+    --felt-kant: color(display-p3 0.5373 0.5451 0.5647);
+    --felt-kant-fokus: color(display-p3 0.4157 0.2157 0.6510);
+    --felt-tekst: color(display-p3 0.1412 0.1647 0.2000);
+    --felt-plassholder: color(display-p3 0.3961 0.4078 0.4314);
+    --felt-feil: color(display-p3 0.5725 0.2118 0.1804);
+  }
+}
+
+/* Økt kontrast per produkt (designsystem 2.10) */
+@media (prefers-contrast: more) {
+  [data-produkt="nettsider"] {
+    --aksent: #964109;
+    --aksent-trykk: #7E3400;
+    --aksent-tekst: #833600;
+    --aksent-valgt: #EAD3C7;
+    --tekst: #151B25;
+    --tekst-dempet: #3D424B;
+    --tekst-svak: #4B4F55;
+  }
+  [data-produkt="crm"] {
+    --aksent: #3A49B4;
+    --aksent-trykk: #2D37A0;
+    --aksent-tekst: #303D9B;
+    --aksent-valgt: #E2E5F7;
+    --flate-valgt: #E2E5F7;
+    --tekst: #101620;
+    --tekst-dempet: #393E47;
+    --tekst-svak: #474B52;
+    --tekst-lenke: #303D9B;
+    --kant: #ADACA9;
+    --kant-sterk: #52555C;
+    --skillelinje-tabell: #D1D0CD;
+    --kant-fokus: #3A49B4;
+    --tabellhode-tekst: #393E47;
+    --felt-kant: #6B6E73;
+    --felt-kant-fokus: #3A49B4;
+    --felt-tekst: #101620;
+    --felt-plassholder: #474B52;
+    --felt-feil: #780007;
+  }
+  [data-produkt="admin"] {
+    --aksent: #5F1A95;
+    --aksent-trykk: #4E007F;
+    --aksent-tekst: #570B8B;
+    --aksent-svak: #F7F4FA;
+    --aksent-valgt: #E8DEF2;
+    --flate-valgt: #E8DEF2;
+    --tekst: #101620;
+    --tekst-dempet: #373C45;
+    --tekst-svak: #45484F;
+    --tekst-lenke: #570B8B;
+    --kant: #ADACA9;
+    --kant-sterk: #52555C;
+    --skillelinje-tabell: #D1D0CD;
+    --kant-fokus: #5F1A95;
+    --rad-hover: #F7F4FA;
+    --tabellhode-tekst: #373C45;
+    --felt-kant: #6B6E73;
+    --felt-kant-fokus: #5F1A95;
+    --felt-tekst: #101620;
+    --felt-plassholder: #45484F;
+    --felt-feil: #780007;
+  }
+}
+
+/* Økt kontrast og Display P3 per produkt (designsystem 2.10) */
+@media (prefers-contrast: more) and (color-gamut: p3) {
+  [data-produkt="nettsider"] {
+    --aksent: color(display-p3 0.5490 0.2745 0.1098);
+    --aksent-trykk: color(display-p3 0.4588 0.2196 0.0706);
+    --aksent-tekst: color(display-p3 0.4784 0.2314 0.0745);
+    --aksent-svak: color(display-p3 0.9686 0.9451 0.9333);
+    --aksent-valgt: color(display-p3 0.9020 0.8314 0.7882);
+    --merke-stift: color(display-p3 0.6588 0.3333 0.1216);
+    --flate-valgt: color(display-p3 0.9686 0.9451 0.9333);
+    --flate-side: color(display-p3 0.9765 0.9647 0.9490);
+    --flate-senket: color(display-p3 0.9490 0.9373 0.9176);
+    --tekst: color(display-p3 0.0863 0.1059 0.1412);
+    --tekst-dempet: color(display-p3 0.2431 0.2588 0.2902);
+    --tekst-svak: color(display-p3 0.2980 0.3098 0.3294);
+  }
+  [data-produkt="crm"] {
+    --aksent: color(display-p3 0.2392 0.2863 0.6824);
+    --aksent-trykk: color(display-p3 0.1843 0.2157 0.6039);
+    --aksent-tekst: color(display-p3 0.2000 0.2392 0.5843);
+    --aksent-valgt: color(display-p3 0.8902 0.8980 0.9608);
+    --merke-stift: color(display-p3 0.3333 0.3922 0.8000);
+    --flate-valgt: color(display-p3 0.8902 0.8980 0.9608);
+    --tekst: color(display-p3 0.0667 0.0863 0.1216);
+    --tekst-dempet: color(display-p3 0.2275 0.2431 0.2745);
+    --tekst-svak: color(display-p3 0.2824 0.2941 0.3176);
+    --tekst-lenke: color(display-p3 0.2000 0.2392 0.5843);
+    --kant-sterk: color(display-p3 0.3255 0.3333 0.3569);
+    --kant-fokus: color(display-p3 0.2392 0.2863 0.6824);
+    --tabellhode-tekst: color(display-p3 0.2275 0.2431 0.2745);
+    --felt-kant: color(display-p3 0.4235 0.4314 0.4510);
+    --felt-kant-fokus: color(display-p3 0.2392 0.2863 0.6824);
+    --felt-tekst: color(display-p3 0.0667 0.0863 0.1216);
+    --felt-plassholder: color(display-p3 0.2824 0.2941 0.3176);
+    --felt-feil: color(display-p3 0.4314 0.0706 0.0627);
+  }
+  [data-produkt="admin"] {
+    --aksent: color(display-p3 0.3412 0.1216 0.5608);
+    --aksent-trykk: color(display-p3 0.2784 0.0314 0.4784);
+    --aksent-tekst: color(display-p3 0.3098 0.0745 0.5255);
+    --aksent-svak: color(display-p3 0.9647 0.9569 0.9804);
+    --aksent-valgt: color(display-p3 0.9020 0.8706 0.9412);
+    --merke-stift: color(display-p3 0.4824 0.2941 0.7216);
+    --flate-valgt: color(display-p3 0.9020 0.8706 0.9412);
+    --tekst: color(display-p3 0.0667 0.0863 0.1216);
+    --tekst-dempet: color(display-p3 0.2196 0.2353 0.2667);
+    --tekst-svak: color(display-p3 0.2745 0.2824 0.3059);
+    --tekst-lenke: color(display-p3 0.3098 0.0745 0.5255);
+    --kant-sterk: color(display-p3 0.3255 0.3333 0.3569);
+    --kant-fokus: color(display-p3 0.3412 0.1216 0.5608);
+    --rad-hover: color(display-p3 0.9647 0.9569 0.9804);
+    --tabellhode-tekst: color(display-p3 0.2196 0.2353 0.2667);
+    --felt-kant: color(display-p3 0.4235 0.4314 0.4510);
+    --felt-kant-fokus: color(display-p3 0.3412 0.1216 0.5608);
+    --felt-tekst: color(display-p3 0.0667 0.0863 0.1216);
+    --felt-plassholder: color(display-p3 0.2745 0.2824 0.3059);
+    --felt-feil: color(display-p3 0.4314 0.0706 0.0627);
+  }
 }
