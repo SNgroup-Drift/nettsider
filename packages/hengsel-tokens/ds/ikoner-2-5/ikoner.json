@@ -924,6 +924,7 @@
       "egen": false,
       "bruk": "Menypunkt «Montasjeplan»",
       "filer": {
+        "12": "12/montasjeplan.svg",
         "16": "16/montasjeplan.svg",
         "20": "20/montasjeplan.svg",
         "24": "24/montasjeplan.svg"
@@ -937,6 +938,7 @@
       "egen": false,
       "bruk": "Menypunkt «Innboks»",
       "filer": {
+        "12": "12/innboks.svg",
         "16": "16/innboks.svg",
         "20": "20/innboks.svg",
         "24": "24/innboks.svg"
@@ -950,6 +952,7 @@
       "egen": false,
       "bruk": "Menypunkt «Profil», brukermeny",
       "filer": {
+        "12": "12/profil.svg",
         "16": "16/profil.svg",
         "20": "20/profil.svg",
         "24": "24/profil.svg"
@@ -963,9 +966,55 @@
       "egen": false,
       "bruk": "Menypunkt «Hjelp», hjelpeknapp",
       "filer": {
+        "12": "12/hjelp.svg",
         "16": "16/hjelp.svg",
         "20": "20/hjelp.svg",
         "24": "24/hjelp.svg"
+      }
+    },
+    {
+      "fil": "lenke",
+      "navn": "Lenke",
+      "gruppe": "handling",
+      "sf": "link",
+      "egen": false,
+      "bruk": "Ressurser, lenke til ekstern side eller dokument",
+      "ny": "2.6",
+      "filer": {
+        "12": "12/lenke.svg",
+        "16": "16/lenke.svg",
+        "20": "20/lenke.svg",
+        "24": "24/lenke.svg"
+      }
+    },
+    {
+      "fil": "dra",
+      "navn": "Dra",
+      "gruppe": "handling",
+      "sf": "line.3.horizontal",
+      "egen": true,
+      "bruk": "Håndtak for å dra og flytte rader og kort",
+      "ny": "2.6",
+      "filer": {
+        "12": "12/dra.svg",
+        "16": "16/dra.svg",
+        "20": "20/dra.svg",
+        "24": "24/dra.svg"
+      }
+    },
+    {
+      "fil": "last-opp",
+      "navn": "Last opp",
+      "gruppe": "handling",
+      "sf": "square.and.arrow.up",
+      "egen": false,
+      "bruk": "Excel-import, last opp fil",
+      "ny": "2.6",
+      "filer": {
+        "12": "12/last-opp.svg",
+        "16": "16/last-opp.svg",
+        "20": "20/last-opp.svg",
+        "24": "24/last-opp.svg"
       }
     }
   ],

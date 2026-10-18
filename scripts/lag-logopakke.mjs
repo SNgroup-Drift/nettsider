@@ -77,11 +77,11 @@ Alle regler og plasseringer: https://design.hengsel.no/merke
   await writeFile(join(ut, "hengsel-logopakke.zip"), await lagZip(filer));
   console.log(`✓ hengsel-logopakke.zip: ${logoer.length} logoer, ${pngNavn.length} PNG, ${flisNavn.length} favicon-filer`);
 
-  // Ikonsettet (designsystem 2.5, N-7): 72 SVG-er i 16, 20 og 24 px (currentColor), nivåikonene også i 12 px, navn og SF Symbol i ikoner.json, sprite og tabell (ds/ikoner-2-5, fra pakken)
+  // Ikonsettet (designsystem 2.5, N-7): 75 SVG-er i 16, 20 og 24 px (currentColor), nivåikonene også i 12 px, navn og SF Symbol i ikoner.json, sprite og tabell (ds/ikoner-2-5, fra pakken)
   const ikonJson = JSON.parse(await readFile(join(ds, "ikoner-2-5", "ikoner.json"), "utf8"));
   const ikonNavn = ikonJson.ikoner.map((i) => i.fil).sort();
   const ikonFiler = [
-    ["LES-MEG.txt", Buffer.from(`Hengsel-ikonene (designsystem 2.5). Status: foreslått, venter på bekreftelse.\n\n${ikonNavn.length} strekikoner på et 20 px rutenett, i 16, 20 og 24 px (nivåikonene også i 12 px). Fargen er currentColor.\nikoner.json har navn, gruppe, SF Symbol og bruk. 68 er fra Design 2.5 (19 nye), fire er egne (Montasjeplan, Innboks, Profil og Hjelp, se ikoner-tillegg.json).\nhengsel-ikoner.svg er en sprite med <symbol id>. IKONER.md er tabellen.\nhttps://design.hengsel.no/komponenter#ikoner\n`)],
+    ["LES-MEG.txt", Buffer.from(`Hengsel-ikonene (designsystem 2.10). Status: foreslått, venter på bekreftelse.\n\n${ikonNavn.length} strekikoner på et 20 px rutenett, i 16, 20 og 24 px (nivåikonene også i 12 px). Fargen er currentColor.\nikoner.json har navn, gruppe, SF Symbol og bruk. felt «ny» viser hvilken versjon som la dem til (2.5 eller 2.6), «egen» er ikoner CRM-et har laget selv.\nhengsel-ikoner.svg er en sprite med <symbol id>. IKONER.md er tabellen.\nhttps://design.hengsel.no/komponenter#ikoner\n`)],
     ["ikoner.json", await les("ikoner-2-5", "ikoner.json")],
     ["ikoner-tillegg.json", await les("ikoner-2-5", "ikoner-tillegg.json")],
     ["hengsel-ikoner.svg", await les("ikoner-2-5", "hengsel-ikoner.svg")],

@@ -1,0 +1,272 @@
+{
+  "dokument": "Leveringspakke del 2 (FDV, garanti, vedlikehold)",
+  "mappe": "14-leveringspakke-del-2",
+  "kilde": "Fil 48 LP3, K14.1–K14.3",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 4
+    },
+    {
+      "felt": "pakke.forsidebilde",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Nordmann"
+    },
+    {
+      "felt": "kjoper.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Furuvegen 12, 2312 Ottestad"
+    },
+    {
+      "felt": "pakke.montert",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "7. oktober 2026"
+    },
+    {
+      "felt": "pakke.innhold",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "pakke.innhold[].nr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "pakke.innhold[].tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "pakke.innhold[].tekst",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "fdv.antall",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 6
+    },
+    {
+      "felt": "fdv.oppdatert",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "10.12.2026"
+    },
+    {
+      "felt": "fdv.grupper",
+      "sider": [
+        2
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "fdv.grupper[].leverandor",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "fdv.grupper[].dokumenter",
+      "sider": [
+        2
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "fdv.grupper[].dokumenter[].produkt",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "fdv.grupper[].dokumenter[].type",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "pakke.montert_dato",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "10.12.2026"
+    },
+    {
+      "felt": "garanti",
+      "sider": [
+        3
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "garanti[].navn",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "garanti[].lengde",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "garanti[].tekst",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vedlikehold",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vedlikehold[].overflate",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vedlikehold[].tekst",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    }
+  ]
+}

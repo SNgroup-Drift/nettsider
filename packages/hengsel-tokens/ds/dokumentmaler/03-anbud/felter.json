@@ -1,0 +1,498 @@
+{
+  "dokument": "Anbud",
+  "mappe": "03-anbud",
+  "kilde": "Fil 44 AN1–AN8",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "anbud.omfang",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken og garderobe"
+    },
+    {
+      "felt": "anbud.nr",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "A-2026-031"
+    },
+    {
+      "felt": "prosjekt.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Fjordhagen"
+    },
+    {
+      "felt": "proffkunde.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Byggmester Demo AS"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 8
+    },
+    {
+      "felt": "vis.bilde",
+      "sider": [
+        1,
+        2
+      ],
+      "type": "valg",
+      "kilde": "NY"
+    },
+    {
+      "felt": "vis.bilde[].anbud.forsidebilde",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken til Fjordhagen"
+    },
+    {
+      "felt": "anbud.ingress",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "48 leiligheter i tre typer."
+    },
+    {
+      "felt": "proffkunde.kontakt",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Per Prosjektleder"
+    },
+    {
+      "felt": "anbud.dato",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "8. oktober 2026"
+    },
+    {
+      "felt": "anbud.gyldig_dager",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "60"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        2,
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "leverandor.navn",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Leverandør A"
+    },
+    {
+      "felt": "vis.bilde[].anbud.bilde_om_oss",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.nokkeltall",
+      "sider": [
+        2
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.nokkeltall[].tall",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.nokkeltall[].tekst",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.losning_tittel",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Tre kjøkken, én linje"
+    },
+    {
+      "felt": "anbud.typer",
+      "sider": [
+        3
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].kode",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].navn",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].antall",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].egenskaper",
+      "sider": [
+        3
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].egenskaper[].navn",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.typer[].egenskaper[].verdi",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.materialgrupper",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.materialgrupper[].navn",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.materialgrupper[].valg",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.materialgrupper[].valg[].bilde",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.materialgrupper[].valg[].navn",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.priser",
+      "sider": [
+        5
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.priser[].type",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.priser[].antall",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.priser[].per_enhet",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.priser[].sum",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.antall_totalt",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 48
+    },
+    {
+      "felt": "anbud.total",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "2 762 600 kr"
+    },
+    {
+      "felt": "anbud.hvitevarer_tekst",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Etter egen liste (vedlegg 2). Kan leveres av entreprenør; da trekkes 21 300 kr per K2."
+    },
+    {
+      "felt": "anbud.etapper",
+      "sider": [
+        7
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.etapper[].nr",
+      "sider": [
+        7
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.etapper[].naar",
+      "sider": [
+        7
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.etapper[].omfang",
+      "sider": [
+        7
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.garanti_tekst",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "skap og fronter 10 år, benkeplater 5 år, montering 5 år."
+    },
+    {
+      "felt": "anbud.vedlegg",
+      "sider": [
+        8
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.vedlegg[].nr",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "anbud.vedlegg[].navn",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Selger"
+    },
+    {
+      "felt": "selger.telefon",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "000 00 047"
+    },
+    {
+      "felt": "selger.epost",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "kari@demo.invalid"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        8
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    }
+  ]
+}

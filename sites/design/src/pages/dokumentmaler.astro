@@ -1,0 +1,38 @@
+---
+/** Dokumentmalene fra designsystemet (N-7b): listen genereres fra den pinnede dokumentmaler-mappa (lib/dokumentmaler.ts), ikke skrevet for hånd. */
+import Side from "../layouts/Side.astro";
+import { antallSider, dokumentmaler, familier } from "../lib/dokumentmaler";
+---
+<Side title="Dokumentmaler – Hengsel designfasit" description="De dokumentmalene i Hengsel designsystem: tilbud, avtaler, rapporter, faktura og e-poster, med forhåndsvisning og eksempel." aktiv="dokumentmaler">
+  <div class="wrap">
+    <div class="hode">
+      <span class="merkelapp">Dokumentmaler · {dokumentmaler.length} maler · {antallSider} sider</span>
+      <h1>Dokumentmaler</h1>
+      <p class="lede">Malene er fasit for PDF-ene og e-postene CRM-et lager: tilbud, kjøpsavtale, faktura, rapporter, etiketter og e-postene til kunder og ansatte. Listen leses fra designsystemets mappe <code>dokumentmaler/</code> i pinnet commit, og alle navn, adresser og beløp i eksemplene er oppdiktet. Kundens logo, farger og skrift kommer inn fra kundetemaet; forhåndsvisningene her er i Hengsel standard.</p>
+      <p class="adresselinje" aria-label="Eksempel på en adresselinje i malene"><span class="dempet">Adresselinje i malene</span> <span class="mono">Furuvegen 12, 2312 Ottestad</span></p>
+    </div>
+    {familier.map((familie) => (
+      <section class="sek" id={familie.toLowerCase().replace(/[^a-zæøå]+/g, "-")}>
+        <header><h2>{familie}</h2><p>{dokumentmaler.filter((m) => m.familie === familie).length} maler</p></header>
+        <div class="mal-rutenett">
+          {dokumentmaler.filter((m) => m.familie === familie).map((m) => (
+            <article class="kort mal">
+              <a class="mal-bilde" href={m.eksempel} aria-label={`Åpne eksempelet på ${m.navn}`}><img src={m.bilde} width="397" height="561" loading="lazy" decoding="async" alt={`Forhåndsvisning av side 1 i malen ${m.navn}`} /></a>
+              <div class="mal-tekst">
+                <span class="merkelapp">Mal {m.nr}{m.ny && " · ny"}</span>
+                <h3 class="kort-tittel">{m.navn}</h3>
+                <dl class="mal-fakta">
+                  <dt>Familie</dt><dd>{m.familie}</dd>
+                  <dt>Sider</dt><dd>{m.sider}</dd>
+                  <dt>Flettefelt</dt><dd>{m.felt}</dd>
+                  <dt>Mappe</dt><dd class="mono">{m.mappe}/</dd>
+                </dl>
+                <p class="mal-lenker"><a href={m.eksempel}>Eksempel (eksempel.html)</a> · <a href={m.felter}>Flettefelt (felter.json)</a></p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Side>

@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design.hengsel.no/tokens/kundetema.schema.json",
+  "title": "Hengsel kundetema",
+  "description": "Én butikks uttrykk i kundeportal, prosjektportal, e-post, dokumenter og innlogging. Aldri i CRM-et innvendig. Statusfargene er alltid Hengsels og står ikke her. Se dokumentasjon/KUNDETEMA.md. 2.7: to skriftfelt, skrift_overskrift og skrift_tekst.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "navn",
+    "kortnavn",
+    "logo_lys",
+    "logo_mork",
+    "favicon",
+    "farger",
+    "skrift_overskrift",
+    "skrift_tekst",
+    "hjorner"
+  ],
+  "properties": {
+    "navn": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Fullt navn, f.eks. i e-post og PDF."
+    },
+    "kortnavn": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "description": "Kort navn i fanen og på telefon."
+    },
+    "logo_lys": {
+      "type": "string",
+      "description": "URL eller sti til logo for lys bakgrunn (SVG eller PNG)."
+    },
+    "logo_mork": {
+      "type": "string",
+      "description": "URL eller sti til logo for mørk bakgrunn (brukes i e-post med mørk modus)."
+    },
+    "favicon": {
+      "type": "string",
+      "description": "URL eller sti til favicon (SVG eller PNG 32 px)."
+    },
+    "farger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bakgrunn",
+        "flate",
+        "felt",
+        "tekst",
+        "aksent",
+        "lenke",
+        "kant"
+      ],
+      "properties": {
+        "bakgrunn": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Siden."
+        },
+        "flate": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Kort og paneler."
+        },
+        "felt": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Skrivefelt, dialoger og dokumenter."
+        },
+        "tekst": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Tekst. ≥ 4,5:1 på bakgrunn, flate og felt."
+        },
+        "aksent": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hovedknapp. paa-aksent ≥ 4,5:1 på den."
+        },
+        "lenke": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Lenker, valgt og fokus. ≥ 4,5:1 på bakgrunn."
+        },
+        "kant": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Kant på felt og sekundærknapp. ≥ 3:1."
+        }
+      }
+    },
+    "skrift_overskrift": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valg"
+      ],
+      "description": "Overskrifter (h1–h3, store tall i dokumenter).",
+      "properties": {
+        "valg": {
+          "enum": [
+            "hengsel",
+            "egen"
+          ],
+          "description": "hengsel = Schibsted Grotesk. egen = fontfilene under."
+        },
+        "familie": {
+          "type": "string",
+          "description": "Navnet på skriften i CSS, f.eks. «Inter». Kreves med egen."
+        },
+        "reserve": {
+          "enum": [
+            "sans-serif",
+            "serif"
+          ],
+          "description": "Systemskrift hvis fontfilen ikke lastes. Standard sans-serif."
+        },
+        "fontfil": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "normal",
+            "fet"
+          ],
+          "properties": {
+            "normal": {
+              "type": "string",
+              "description": "woff2, vekt 400."
+            },
+            "fet": {
+              "type": "string",
+              "description": "woff2, vekt 600–700."
+            }
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "valg": {
+            "const": "egen"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "valg",
+          "familie",
+          "fontfil"
+        ]
+      }
+    },
+    "skrift_tekst": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valg"
+      ],
+      "description": "Brødtekst, tabeller, knapper og beløp.",
+      "properties": {
+        "valg": {
+          "enum": [
+            "hengsel",
+            "egen"
+          ],
+          "description": "hengsel = Schibsted Grotesk. egen = fontfilene under."
+        },
+        "familie": {
+          "type": "string",
+          "description": "Navnet på skriften i CSS, f.eks. «Inter». Kreves med egen."
+        },
+        "reserve": {
+          "enum": [
+            "sans-serif",
+            "serif"
+          ],
+          "description": "Systemskrift hvis fontfilen ikke lastes. Standard sans-serif."
+        },
+        "fontfil": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "normal",
+            "fet"
+          ],
+          "properties": {
+            "normal": {
+              "type": "string",
+              "description": "woff2, vekt 400."
+            },
+            "fet": {
+              "type": "string",
+              "description": "woff2, vekt 600–700."
+            }
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "valg": {
+            "const": "egen"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "valg",
+          "familie",
+          "fontfil"
+        ]
+      }
+    },
+    "hjorner": {
+      "enum": [
+        "kantet",
+        "myk",
+        "rund"
+      ],
+      "description": "kantet = 6 px, myk = 12 px, rund = 999 px (knapper som piller).",
+      "x-px": {
+        "kantet": 6,
+        "myk": 12,
+        "rund": 999
+      }
+    }
+  },
+  "x-utledning": {
+    "hover": "flate + 4 % mot tekst",
+    "valgt": "aksent 12 % (over flate)",
+    "senket": "bakgrunn − 3 % lyshet",
+    "tekst-dempet": "tekst 70 % mot bakgrunn",
+    "aksent-svak": "aksent 8 % (over flate)",
+    "aksent-trykk": "aksent − 8 % lyshet",
+    "fokus": "lenke",
+    "diagram-1..4": "tekst, lenke, aksent, kant",
+    "paa-aksent": "hvit eller tekst, den som gir best kontrast mot aksent",
+    "blanding": "color-mix(in oklch, …)"
+  },
+  "x-kontrastkrav": {
+    "tekst": "≥ 4,5:1 på bakgrunn, flate og felt",
+    "paa-aksent": "≥ 4,5:1 på aksent",
+    "lenke": "≥ 4,5:1 på bakgrunn",
+    "kant": "≥ 3:1 mot flate og bakgrunn"
+  },
+  "x-css": {
+    "bakgrunn": "--kt-bakgrunn",
+    "flate": "--kt-flate",
+    "felt": "--kt-felt",
+    "tekst": "--kt-tekst",
+    "aksent": "--kt-aksent",
+    "lenke": "--kt-lenke",
+    "kant": "--kt-kant",
+    "skrift_overskrift": "--kt-skrift-overskrift (og @font-face fra fontfil)",
+    "skrift_tekst": "--kt-skrift-tekst (og @font-face fra fontfil)",
+    "hjorner": "--kt-radius",
+    "paa-aksent": "--kt-paa-aksent (regnes ved lagring)"
+  },
+  "examples": [
+    {
+      "navn": "Eksempelkjøkken AS",
+      "kortnavn": "Eksempelkjøkken",
+      "logo_lys": "ui_kits/kundeportal/eksempelkjokken/logo-lys.svg",
+      "logo_mork": "ui_kits/kundeportal/eksempelkjokken/logo-mork.svg",
+      "favicon": "ui_kits/kundeportal/eksempelkjokken/favicon.svg",
+      "farger": {
+        "bakgrunn": "#F3F1ED",
+        "flate": "#FAF9F6",
+        "felt": "#FFFFFF",
+        "tekst": "#24211E",
+        "aksent": "#3D4F46",
+        "lenke": "#2E5B7A",
+        "kant": "#8B857D"
+      },
+      "hjorner": "myk",
+      "skrift_overskrift": {
+        "valg": "hengsel"
+      },
+      "skrift_tekst": {
+        "valg": "hengsel"
+      }
+    }
+  ]
+}

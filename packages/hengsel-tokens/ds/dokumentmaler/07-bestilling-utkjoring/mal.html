@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="07-bestilling-utkjoring">
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Bestilling av utkjøring</b>{{butikk.selskap}} · org.nr {{butikk.orgnr}}<br>{{butikk.adresse}} · {{butikk.telefon}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">Bestilling av utkjøring · {{utkjoring.nr}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><div class="to"><div class="stack tett"><h1>Bestilling av utkjøring</h1><p>Til {{utkjorer.firma}} · {{utkjorer.kontakt}} · {{utkjorer.adresse}}</p></div><dl class="nv"><dt>Bestillingsnr.</dt><dd>{{utkjoring.nr}}</dd><dt>Sendt</dt><dd>{{utkjoring.sendt}}</dd></dl></div><div class="betaling"><div class="tre"><div class="stack tett"><span class="dempet">Dato</span><span class="belop">{{utkjoring.dato}}</span></div><div class="stack tett"><span class="dempet">Tidsrom</span><span class="belop">{{utkjoring.tidsrom}}</span></div><div class="stack tett"><span class="dempet">Innbæring</span><span class="belop-etikett">{{utkjoring.innbaering}}</span></div></div></div><div class="stack tett"><h3>Leveres til</h3><dl class="nv"><dt>Adresse</dt><dd>{{utkjoring.adresse}}</dd><dt>Prosjekt</dt><dd>{{utkjoring.prosjekt}}</dd><dt>Kontakt på stedet</dt><dd>{{utkjoring.kontakt}}</dd><dt>Vår ordre</dt><dd>{{ordre.nr}} · selger {{selger.navn}}</dd></dl></div><div class="kort stack tett"><h3>Beskjed til sjåføren</h3><p>{{utkjoring.beskjed}}</p></div><div class="stack tett"><h3>Kolliliste</h3><table class="liste"><thead><tr><th>Kolli</th><th>Innhold</th><th>Merking</th><th class="tall">Ant.</th><th>Levert</th></tr></thead><tbody>{{#kolli}}<tr><td>{{nr}}</td><td>{{innhold}}</td><td>{{merking}}</td><td class="tall">{{antall}}</td><td><span class="kryss"></span></td></tr>{{/kolli}}<tr class="sum"><td colspan="3">Sum</td><td class="tall">{{utkjoring.sum_kolli}}</td><td></td></tr></tbody></table></div><div class="to"><div class="stack tett"><span class="liten dempet">Mottatt av (navn)</span><div class="skrivefelt"></div></div><div class="stack tett"><span class="liten dempet">Dato og klokkeslett</span><div class="skrivefelt"></div></div></div><p class="liten dempet">Skader eller manglende kolli noteres på listen og meldes til oss samme dag med bilde. Kvitter i lenken i e-posten, så oppdateres ordren hos oss.</p></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>

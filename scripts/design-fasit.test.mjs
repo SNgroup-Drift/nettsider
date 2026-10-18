@@ -132,11 +132,11 @@ test("/merke viser logoene fra palettpakke v2 (besluttede former og utgaver), og
   for (const f of ["crm", "ute-tonet"]) assert.ok(!existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `gammelt app-ikon ${f}.png (brevann) skal ikke finnes`);
 });
 
-test("/komponenter viser alle 72 ikonene fra designsystem 2.5 (68 fra Design, 19 av dem nye, og fire egne) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
+test("/komponenter viser alle 75 ikonene fra designsystem 2.10 (Designs 2.5–2.6 og tre egne) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
   const h = html("komponenter");
   const ikoner = JSON.parse(les(ds, "ikoner-2-5", "ikoner.json")).ikoner;
-  assert.equal(ikoner.length, 72);
-  assert.equal(ikoner.filter((i) => i.ny).length, 19, "19 nye ikoner i 2.5");
+  assert.equal(ikoner.length, 75);
+  assert.equal(ikoner.filter((i) => i.ny).length, 22, "22 nye ikoner (19 i 2.5 og tre i 2.6: lenke, dra, last-opp)");
   assert.deepEqual(JSON.parse(les(ds, "ikoner-2-5", "ikoner-tillegg.json")).ikoner.map((i) => i.fil), ["montasjeplan", "innboks", "profil", "hjelp"]);
   const t = tekst(h);
   for (const i of ikoner) {
@@ -144,8 +144,8 @@ test("/komponenter viser alle 72 ikonene fra designsystem 2.5 (68 fra Design, 19
     assert.ok(h.includes(`<code>${i.sf}</code>`), `SF Symbol ${i.sf} vises ikke`);
     for (const m of ["16", "20", "24"]) assert.ok(existsSync(join(dist, "ds", "ikoner-2-5", m, `${i.fil}.svg`)), `${m}/${i.fil}.svg mangler i dist`);
   }
-  assert.ok(/foreslått/i.test(t.slice(t.indexOf("72 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
-  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 72 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
+  assert.ok(/foreslått/i.test(t.slice(t.indexOf("75 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
+  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 75 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
   assert.ok(!/stroke="#|stroke="rgb/.test(h), "ikonene skal bruke currentColor, ikke egne farger");
 });
 
@@ -193,7 +193,7 @@ test("/skjermer og /last-ned peker på filer som finnes", () => {
   for (const f of ["ute-motion-1080x1080.mp4", "ute-motion-1080x1920.webm", "og-hengsel-no.png", "og-kunde.svg"]) assert.ok(l.includes(f) && existsSync(join(dist, "ds", "assets", f.startsWith("ute") ? "motion" : "deling", f)), `${f} på /last-ned`);
   assert.ok(l.includes("/last-ned/hengsel-ikoner.zip") && existsSync(join(dist, "last-ned", "hengsel-ikoner.zip")), "ikonpakken mangler");
   const ikonZip = readFileSync(join(dist, "last-ned", "hengsel-ikoner.zip"));
-  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 72 * 3 + 3 + 5, "ikonpakken skal ha 72 ikoner i 3 størrelser (nivåikonene også i 12 px), pluss LES-MEG, ikoner.json, ikoner-tillegg.json, sprite og tabell");
+  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 75 * 3 + readdirSync(join(ds, "ikoner-2-5", "12")).length + 5, "ikonpakken skal ha 75 ikoner i 3 størrelser (de som har 12 px, i 12 px også), pluss LES-MEG, ikoner.json, ikoner-tillegg.json, sprite og tabell");
 });
 
 test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlandet, Lausanne eller Reckless på sidene eller i nedlastingene", () => {

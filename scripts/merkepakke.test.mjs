@@ -65,6 +65,7 @@ test("b) og:image: hver bygd side peker på et delingsbilde som finnes (PNG, 120
       const rel = relative(d, f).split("\\").join("/");
       const t = readFileSync(f, "utf8");
       const m = [...t.matchAll(/<meta property="og:image" content="([^"]+)"/g)].map((x) => x[1]);
+      if (rel.startsWith("ds/dokumentmaler/")) continue; // N-7b: eksempel.html i malene er utskriftsark fra designsystemet (favicon og noindex sjekkes i testen over), ikke sider som deles
       if (rel.startsWith("kunde/sigdal")) { assert.deepEqual(m, [], `${site}/${rel}: kundeutgaven skal ikke ha og:image`); continue; }
       assert.equal(m.length, 1, `${site}/${rel}: skal ha nøyaktig én og:image, har ${m.length}`);
       const url = new URL(m[0]);

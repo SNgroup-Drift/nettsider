@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="09-kolli-etiketter-a4">
+<section class="side side--etikettark"><div class="etikettark">{{#etiketter}}<div class="etikett">{{^tom}}<div class="qr"><img src="{{qr}}" alt="{{kode}}"></div><div class="stack" style="gap:1mm"><span class="fet" style="font-size:9pt">Ordre {{ordre}} · kolli {{n}} / {{av}}</span><span>{{innhold}}</span><span class="dempet">{{leverandor}} · uke {{uke}} · {{butikk.navn}}</span><span class="dempet">{{kode}}</span></div>{{/tom}}</div>{{/etiketter}}</div></section>
+</article>
+</body>
+</html>

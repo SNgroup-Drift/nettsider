@@ -1,0 +1,387 @@
+{
+  "dokument": "Mål og skisser-rapport",
+  "mappe": "04-mal-og-skisser",
+  "kilde": "Fil 32 PF1–PF6",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "rapport.dato",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "6.11.2026"
+    },
+    {
+      "felt": "rapport.adresse",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Furuvegen 12, 2320 Furnes"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 6
+    },
+    {
+      "felt": "montor.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Tor Montør"
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari og Ola Nordmann"
+    },
+    {
+      "felt": "rapport.forsidebilde",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "rapport.antall_omrader",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 3
+    },
+    {
+      "felt": "rapport.antall_bilder",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 6
+    },
+    {
+      "felt": "rapport.antall_mal",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 13
+    },
+    {
+      "felt": "rapport.mal_mangler",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 2
+    },
+    {
+      "felt": "jobb.nr",
+      "sider": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "24318"
+    },
+    {
+      "felt": "omrade.nr",
+      "sider": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": 1
+    },
+    {
+      "felt": "omrade.navn",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkken"
+    },
+    {
+      "felt": "omrade.lerret",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "omrade.merknad",
+      "sider": [
+        2
+      ],
+      "type": "valg",
+      "kilde": "NY"
+    },
+    {
+      "felt": "omrade.merknad[].omrade.merknad",
+      "sider": [
+        2
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde.navn",
+      "sider": [
+        3,
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Bilde 1"
+    },
+    {
+      "felt": "bilde.url",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde.minikart",
+      "sider": [
+        3
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].type",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal[].nr",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal[].navn",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal[].verdi",
+      "sider": [
+        4
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal[].laser",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "maltyper[].mal[].mangler",
+      "sider": [
+        4
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.navn",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Bilde 2"
+    },
+    {
+      "felt": "bilde2.url",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.mal",
+      "sider": [
+        5
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.mal[].nr",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.mal[].navn",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.mal[].verdi",
+      "sider": [
+        5
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "bilde2.mal[].mangler",
+      "sider": [
+        5
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "merknader",
+      "sider": [
+        6
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "merknader[].tekst",
+      "sider": [
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "merknader[].av",
+      "sider": [
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "merknader[].tid",
+      "sider": [
+        6
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    }
+  ]
+}

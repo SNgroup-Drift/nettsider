@@ -1,0 +1,264 @@
+{
+  "dokument": "Montørens oppdrag",
+  "mappe": "11-montorens-oppdrag",
+  "kilde": "Fil 51 PDF-B",
+  "merknad": "Flettefeltene er laget ut fra innholdet i tegningen (CRM-feltform {{…}}). Kilden hadde ingen flettefelt. Alle er derfor merket NY. Lister: {{#navn}}…{{/navn}}, valg (variant): {{#vis.x}}…{{/vis.x}}. kunde.* kommer fra kundetemaet, butikk.* fra avdelingen (I16).",
+  "felt": [
+    {
+      "felt": "kunde.logo_lys",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema"
+    },
+    {
+      "felt": "kunde.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "kundetema",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "ordre.nr",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "10398"
+    },
+    {
+      "felt": "butikk.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kjøkkenstudio Hamar"
+    },
+    {
+      "felt": "butikk.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Storgata 1, 2317 Hamar"
+    },
+    {
+      "felt": "butikk.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "62 00 00 00"
+    },
+    {
+      "felt": "butikk.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "post@demo.invalid"
+    },
+    {
+      "felt": "dok.sider",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY (sidetelling)",
+      "eksempel": 1
+    },
+    {
+      "felt": "oppdrag.tittel",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Nordmann, Hamar · Form eik"
+    },
+    {
+      "felt": "oppdrag.periode",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "15.–18. desember 2026"
+    },
+    {
+      "felt": "montor.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Jonas B."
+    },
+    {
+      "felt": "selger.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Eirik S."
+    },
+    {
+      "felt": "kjoper.navn",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Kari Nordmann"
+    },
+    {
+      "felt": "kjoper.adresse",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Oppdiktet gate 4, 2317 Hamar"
+    },
+    {
+      "felt": "kjoper.telefon",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "900 00 000"
+    },
+    {
+      "felt": "kjoper.epost",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "kari@demo.invalid"
+    },
+    {
+      "felt": "oppdrag.tilgang",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY",
+      "eksempel": "Hjemme fra kl. 07. Nøkkel i boks, kode fra selger."
+    },
+    {
+      "felt": "oppdrag.punkter",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.punkter[]",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.dagsplan",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.dagsplan[].dag",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.dagsplan[].arbeid",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.dagsplan[].merk",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.kolli",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.kolli[]",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.befaring",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.befaring[]",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.kontakter",
+      "sider": [
+        1
+      ],
+      "type": "liste",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.kontakter[].rolle",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    },
+    {
+      "felt": "oppdrag.kontakter[].kontakt",
+      "sider": [
+        1
+      ],
+      "type": "tekst",
+      "kilde": "NY"
+    }
+  ]
+}

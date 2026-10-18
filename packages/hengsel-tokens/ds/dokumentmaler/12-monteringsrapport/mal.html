@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="12-monteringsrapport">
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Monteringsrapport</b>Ordre {{ordre.nr}} · {{butikk.by}}<br>Montert {{montering.dato}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">{{butikk.navn}} · {{butikk.adresse}} · {{butikk.telefon}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><div class="stack tett"><span class="eyebrow">Monteringsrapport</span><h1>{{montering.tittel}}</h1></div><dl class="nv"><dt>Adresse</dt><dd>{{kjoper.adresse}}</dd><dt>Montør</dt><dd>{{montor.navn}}, {{montor.firma}}</dd><dt>Tid</dt><dd>{{montering.tid}}</dd></dl><div class="stack tett"><h3>Kvalitetssjekk</h3><table class="liste"><thead><tr><th>Punkt</th><th>Kontroll</th><th class="tall">Status</th></tr></thead><tbody>{{#ks}}<tr><td>{{punkt}}</td><td>{{kontroll}}</td><td class="tall">{{#ok}}<span class="pille">OK</span>{{/ok}}{{^ok}}<span class="pille pille--fylt">Avvik</span>{{/ok}}</td></tr>{{/ks}}</tbody></table></div>{{#vis.bilder}}<div class="stack tett"><h3>Bilder</h3><div class="fire">{{#bilder}}<div class="stack tett"><div class="bilde" style="height:28mm"><img src="{{url}}" alt="{{tekst}}"></div><span class="liten">{{tekst}}</span></div>{{/bilder}}</div></div>{{/vis.bilder}}{{#restpunkt}}<div class="kort stack tett"><h3>Restpunkt {{nr}} · {{tittel}}</h3><p>{{tekst}}</p></div>{{/restpunkt}}<div class="to"><div class="signatur"><span class="fet">{{kjoper.navn}}</span><span class="liten dempet">Kunde · signert på skjerm {{montering.signert}}</span></div><div class="signatur"><span class="fet">{{montor.navn}}</span><span class="liten dempet">Montør · {{montor.firma}}</span></div></div></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>

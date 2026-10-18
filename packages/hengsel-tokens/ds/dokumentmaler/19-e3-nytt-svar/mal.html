@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>{{epost.emne}}</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body class="epost-kropp">
+<article class="dok" data-dok="19-e3-nytt-svar">
+<div class="forhand">{{epost.forhandstekst}}</div><div class="epost"><div class="epost-kort"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><h1>Nytt svar fra {{selger.fornavn}}</h1><span class="dempet">{{ordre.rom}} · {{ordre.adresse}}</span><div class="sitat stack tett"><p style="margin:0">«{{melding.tekst}}»</p><span class="liten dempet">{{selger.navn}} · {{melding.tid}}</span></div><a class="knapp" href="{{epost.lenke}}">{{epost.knapp}}</a></div><div class="epost-bunn"><span>{{butikk.navn}} · {{butikk.adresse}} · {{butikk.telefon}} · {{butikk.epost}}</span><span>Du får denne e-posten fordi du har en avtale med oss. {{epost.bunnlinje}}</span><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span></div></div>
+</article>
+</body>
+</html>

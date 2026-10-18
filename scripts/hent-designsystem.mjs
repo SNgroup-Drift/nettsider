@@ -29,8 +29,10 @@ const DS = "_ds/hengsel-designsystem";
 // Lista er hele "hva hentes": ny fil i designsystemet kommer ikke med før den står her.
 const HENTES = [
   "tokens/hengsel.tokens.json", "tokens/tokens.css", "tokens/fonts.css", "tokens/plattform.css", "tokens/tokens.ts",
+  "tokens/layout.css", // N-7b: bare Teller-blokka (--teller-*, --flate-meny) brukes, av scripts/lag-hengsel-tokens.mjs; resten av layout.css er ikke Hengsel-sidenes
   "tokens/fonts-fri-liste.css", // unntak fra N-1-lista: OFL-skriftene design.hengsel.no viser på /skrift og /last-ned; ingen Sigdal eller TWK
   "assets/logo", "assets/fonts", "assets/favicon", "assets/ikoner",
+  "dokumentmaler", // N-7b: de 28 dokumentmalene (mal, eksempel.html, felter.json, side-N.png) som design.hengsel.no lister; ingen kundetema
 ];
 const UTE = ["assets/logo/kunde/", "assets/fonts/kundetema-sigdal/"];
 // N-7 (designsystem 2.5): produktlogoene (Hengsel oransje, CRM blå, Ute grønn, Admin lilla) står bare i Designs kilde claude-design/2-5/assets/logo, ikke i assets/logo
@@ -49,7 +51,7 @@ if (!commit) throw new Error("Ingen commit: gi --commit <sha> (første gang) ell
 const git = (...a) => execFileSync("git", ["-C", kilde, ...a], { maxBuffer: 64 * 1024 * 1024 });
 const full = git("rev-parse", "--verify", `${commit}^{commit}`).toString().trim();
 const filer = git("ls-tree", "-r", "--name-only", full, "--", ...HENTES.map((m) => `${DS}/${m}`)).toString().trim().split("\n")
-  .filter((f) => !/\.(swift|md)$/.test(f) && !f.includes("/arkiv/") && !UTE.some((u) => f.slice(DS.length + 1).startsWith(u)) && !/lausanne/i.test(f));
+  .filter((f) => (!/\.(swift|md)$/.test(f) || f === `${DS}/dokumentmaler/README.md`) && !f.includes("/arkiv/") && !UTE.some((u) => f.slice(DS.length + 1).startsWith(u)) && !/lausanne/i.test(f));
 // tokens.ts og tokens.css hører med (nedlasting); Swift-filen gjør ikke det
 const ut = {};
 const ekstra = EKSTRA.flatMap((e) => git("ls-tree", "-r", "--name-only", full, "--", `${DS}/${e.fra}`).toString().trim().split("\n").filter((f) => f && e.bare.test(f)).map((f) => ({ f, rel: `${e.til}/${f.slice(`${DS}/${e.fra}/`.length)}` })));

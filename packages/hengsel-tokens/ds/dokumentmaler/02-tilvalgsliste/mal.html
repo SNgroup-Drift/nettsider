@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="02-tilvalgsliste">
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Tilvalg · {{prosjekt.navn}}</b>Leilighet {{enhet.nr}} · versjon {{tilvalg.versjon}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">Tilvalg · Leilighet {{enhet.nr}} · Prosjekt {{prosjekt.navn}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><div class="stack tett"><span class="eyebrow">Tilvalg · Prosjekt {{prosjekt.navn}}</span><h1>Dine valg for leilighet {{enhet.nr}}</h1><p>{{kjoper.navn}} · Entreprenør: {{prosjekt.entreprenor}}</p></div><dl class="nv"><dt>Frist</dt><dd>{{tilvalg.frist}}</dd><dt>Sendt</dt><dd>{{tilvalg.sendt}}</dd><dt>Versjon</dt><dd>{{tilvalg.versjon}}</dd><dt>Kontakt</dt><dd>{{selger.navn}}</dd></dl><div class="stack tett"><h3>Standard og dine endringer</h3><table class="liste"><thead><tr><th>Område</th><th>Ditt valg</th><th class="tall">Pris</th></tr></thead><tbody>{{#tilvalg.linjer}}<tr><td>{{omrade}} <span class="dempet">({{standard}})</span></td><td>{{valg}}</td><td class="tall">{{pris}}</td></tr>{{/tilvalg.linjer}}</tbody></table></div><div class="betaling"><span class="belop-etikett">Sum tilvalg</span><span class="belop">{{tilvalg.sum}}</span></div><p><span class="fet">Slik betaler du.</span> Tilvalgene faktureres av entreprenøren sammen med boligen. Prisene er inkl. mva og entreprenørens påslag. Endringer etter fristen kan bare gjøres hvis fabrikken kan ta dem.</p></div></td></tr></tbody></table></section>
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Tilvalg · {{prosjekt.navn}}</b>Leilighet {{enhet.nr}} · versjon {{tilvalg.versjon}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">Tilvalg · Leilighet {{enhet.nr}} · Prosjekt {{prosjekt.navn}}</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><h1>Tegning og godkjenning</h1><div class="stack tett"><h3>Kjøkkentegning for {{enhet.nr}} med valgene</h3><div class="bilde" style="height:120mm"><img src="{{tilvalg.tegning}}" alt="Kjøkkentegning"></div></div><div class="kort stack tett"><h3>Godkjenning</h3><p>Du godkjenner tilvalgene på Min side (eller med BankID via Penneo hvis prosjektet krever det). Når du har godkjent, sendes bestillingen til produksjon og bekreftelsen til entreprenøren.</p><p>Har du ingen endringer, bekrefter du standard. Da blir ingenting fakturert for tilvalg.</p></div></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>

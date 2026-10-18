@@ -1,0 +1,24 @@
+{
+  "$schema": "kundetema.schema.json",
+  "navn": "Kjøkkenstudio Hamar",
+  "kortnavn": "Kjøkkenstudio",
+  "logo_lys": "",
+  "logo_mork": "",
+  "favicon": "",
+  "farger": {
+    "bakgrunn": "#F9F9F7",
+    "flate": "#F1F1EF",
+    "felt": "#EAEAE8",
+    "tekst": "#232A34",
+    "aksent": "#4C5FCB",
+    "lenke": "#3A49A8",
+    "kant": "#64686F"
+  },
+  "skrift_overskrift": {
+    "valg": "hengsel"
+  },
+  "skrift_tekst": {
+    "valg": "hengsel"
+  },
+  "hjorner": "kantet"
+}

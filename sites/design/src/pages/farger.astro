@@ -11,9 +11,14 @@ type ProduktRolle = Record<string, string>;
 const produkter = Object.entries(tokens.produkt as Record<string, { navn: string; gjelder: string[]; modus: string[]; lys: ProduktRolle }>)
   .filter(([n]) => !n.startsWith("$"))
   .map(([nokkel, p]) => ({ nokkel, navn: p.navn, gjelder: p.gjelder, bareLys: !p.modus.includes("mork"), lys: p.lys, paaAksent: kontrast(p.lys["paa-aksent"], p.lys.aksent), tekstPaaGrunn: kontrast(p.lys.tekst, p.lys.grunn) }));
-const PRODUKT_ROLLER: [string, string][] = [["aksent", "aksent"], ["aksent-trykk", "aksent-trykk"], ["aksent-tekst", "aksent-tekst"], ["aksent-svak", "aksent-svak"], ["aksent-valgt", "aksent-valgt"], ["paa-aksent", "paa-aksent"], ["flate-valgt", "flate-valgt"], ["prikk", "merke-stift"], ["grunn", "flate-side"], ["grunn-hevet", "flate-kort"], ["grunn-senket", "flate-senket"], ["tekst", "tekst"], ["tekst-dempet", "tekst-dempet"], ["tekst-svak", "tekst-svak"]];
+// N-7b (2.10): alle rollene i produktets lys-blokk (crm og admin har 33, nettsider og ute 14). Fire heter noe annet i :root (som i scripts/lag-hengsel-tokens.mjs).
+const PRODUKT_NAVN: Record<string, string> = { prikk: "merke-stift", grunn: "flate-side", "grunn-hevet": "flate-kort", "grunn-senket": "flate-senket" };
+const produktVar = (r: string) => PRODUKT_NAVN[r] ?? r;
+const produktRoller = (lys: ProduktRolle): [string, string][] => Object.keys(lys).filter((r) => !r.startsWith("$")).map((r) => [r, produktVar(r)]);
+const produktCss = [...new Set(produkter.flatMap((p) => produktRoller(p.lys).map(([, css]) => css)))].map((css) => `.produkt-sv.pr-${css}{background:var(--${css})}`).join("");
 ---
 <Side title="Farger – Hengsel designfasit" description="Alle fargetokens i lys og mørk med hex og kontrast, de sju statustonene og regelen for kundens aksentfarge." aktiv="farger">
+  <style slot="head" is:inline set:html={produktCss}></style>
   <div class="wrap">
     <div class="hode">
       <span class="merkelapp">Farger · {roller.length} roller, {status.length} statustoner</span>
@@ -63,8 +68,8 @@ const PRODUKT_ROLLER: [string, string][] = [["aksent", "aksent"], ["aksent-trykk
               <a class="produkt-lenke" href={`#produkt-${p.nokkel}`}>Lenke</a>
             </div>
             <dl class="produkt-verdier">
-              {PRODUKT_ROLLER.map(([rolle, css]) => (
-                <div><dt><code>--{css}</code></dt><dd><span class={`produkt-sv produkt-${css}`} role="img" aria-label={`${rolle} ${p.lys[rolle]}`}></span><code>{p.lys[rolle]}</code></dd></div>
+              {produktRoller(p.lys).map(([rolle, css]) => (
+                <div><dt><code>--{css}</code></dt><dd><span class={`produkt-sv pr-${css}`} role="img" aria-label={`${rolle} ${p.lys[rolle]}`}></span><code>{p.lys[rolle]}</code></dd></div>
               ))}
             </dl>
             <p class="dempet">Tekst på aksent {fmt(p.paaAksent)} · tekst på grunn {fmt(p.tekstPaaGrunn)}</p>

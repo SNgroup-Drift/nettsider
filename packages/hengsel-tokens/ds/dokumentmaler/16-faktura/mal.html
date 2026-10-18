@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>undefined</title>
+<link rel="stylesheet" href="../felles/fonter.css">
+<link rel="stylesheet" href="mal.css">
+<style id="kundetema">/* {{kundetema.css}}: --kt-* fra kundetemaet settes inn her (se ../kundetema.schema.json) */</style>
+</head>
+<body>
+<article class="dok" data-dok="16-faktura">
+<section class="side"><table class="ramme"><thead><tr><td><div class="topp"><img class="logo" src="{{kunde.logo_lys}}" alt="{{kunde.navn}}"><div class="topp-meta"><b>Faktura {{faktura.nr}}</b>{{faktura.type}} · ordre {{ordre.nr}}</div></div></td></tr></thead><tfoot><tr><td><div class="bunn"><span class="levert"><img src="../felles/merke-hengsel-lys.svg" alt="">Levert av Hengsel</span><span class="bunn-tekst">{{butikk.navn}} · {{butikk.adresse}} · {{butikk.telefon}} · Org.nr {{butikk.orgnr}} MVA</span><span class="sidetall">{{dok.sider}}</span></div></td></tr></tfoot><tbody><tr><td><div class="stack"><div class="to"><div class="stack tett"><span class="eyebrow">{{faktura.type}}</span><h1>Faktura {{faktura.nr}}</h1><p>{{kjoper.navn}}<br>{{kjoper.adresse}}</p></div><dl class="nv"><dt>Fakturadato</dt><dd>{{faktura.dato}}</dd><dt>Forfall</dt><dd>{{faktura.forfall}}</dd><dt>Ordre</dt><dd>{{ordre.nr}}</dd><dt>Kundenummer</dt><dd>{{kjoper.kundenr}}</dd><dt>Selger</dt><dd>{{selger.navn}}</dd></dl></div><div class="stack tett"><h3>Linjer fra ordren</h3><table class="liste"><thead><tr><th>Beskrivelse</th><th class="tall">Antall</th><th class="tall">Beløp inkl. mva</th></tr></thead><tbody>{{#faktura.linjer}}<tr><td>{{beskrivelse}}</td><td class="tall">{{antall}}</td><td class="tall">{{belop}}</td></tr>{{/faktura.linjer}}<tr class="sum"><td colspan="2">Sum ordre</td><td class="tall">{{faktura.sum_ordre}}</td></tr>{{#faktura.fradrag}}<tr><td colspan="2">{{tekst}}</td><td class="tall">{{belop}}</td></tr>{{/faktura.fradrag}}</tbody></table></div><div class="betaling"><span class="belop-etikett">Beløp å betale</span><span class="belop">{{faktura.a_betale}}</span><span>herav mva {{faktura.mva}}</span><hr class="skille"><dl class="nv"><dt>Forfall</dt><dd>{{faktura.forfall}}</dd><dt>Kontonummer</dt><dd>{{butikk.kontonr}}</dd><dt>KID</dt><dd>{{faktura.kid}}</dd></dl></div></div></td></tr></tbody></table></section>
+</article>
+</body>
+</html>
