@@ -1,55 +1,5 @@
----
-/**
- * /kundeportal, sidekartet 25-004 (S-68): toppen og to rader i nettside-kitet:
- *  rad 1 (320) Tabell «Fra tilbud til FDV» (5 steg) · rad 2 (320) Tabell «Det kunden gjør, ser selgeren med en gang.» (4 rader).
- * N-6: simuleringer av portalen (iPhone) og dokumentene kunden får (Studio Display) før tabellene, content/simuleringer.ts.
- * Tekster i content/kundeportal.ts (STEG og SELGER). N-3c: kundeportalen på iPhone (PortalSkjerm, steg 1 «Tilbud og aksept» som før N-3) til høyre
- * i toppen, uten stegvelger og SMS (de var klikkbare deler av demoen som N-3 tok bort).
- * N-10: portalen på MacBook (PortalSkjerm pc, 1440 × 900) bak og iPhone foran nede til høyre. Bare iPhone-rammen tegner statuslinjens symboler.
- */
-import Side from "../layouts/Side.astro";
-import Enhet from "../components/Enhet.astro";
-import PortalSkjerm from "../components/PortalSkjerm.astro";
-import Sidetopp from "../components/kit/Sidetopp.astro";
-import Innhold from "../components/kit/Innhold.astro";
-import Rad from "../components/kit/Rad.astro";
-import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
-import Simulering from "../components/Simulering.astro";
-import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
-import { PORTAL_DISPLAY, PORTAL_IPHONE } from "../content/simuleringer";
-import { SIDE, STEG, SELGER } from "../content/kundeportal";
-import PaaTelefon from "../components/PaaTelefon.astro";
-import { PAA_TELEFON } from "../content/telefon";
-const reise = STEG.map((s) => [s.t, s.s]);
-const selger = SELGER.kort.map((k) => [k.t, k.s]);
----
-<Side title={SIDE.tittel} description={SIDE.beskrivelse} aktiv="portal">
-  <main id="innhold">
-    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede}>
+    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede} produkt="kundeportal">
       <div class="komposisjon" slot="komposisjon">
         <div class="mac"><Enhet type="macbook" forst symboler={false}><PortalSkjerm enhet="pc" /></Enhet></div>
         <div class="iphone"><Enhet type="iphone"><PortalSkjerm enhet="telefon" /></Enhet></div>
       </div>
-    </Sidetopp>
-    <Innhold produkt="crm">
-      <Simuleringsflis id="se-portalen" tittel="Se kundeportalen i bruk" tekst="Det kunden ser på telefonen, og dokumentene som kommer til Min side.">
-        <Simulering type="display" steg={PORTAL_DISPLAY} etikett="Kundeportalen og dokumentene på Studio Display" />
-        <Simulering type="iphone" steg={PORTAL_IPHONE} etikett="Kundeportalen på iPhone" />
-      </Simuleringsflis>
-      <Rad hoyde={tabellHoyde(reise.length)}>
-        <Tabellflis id="fra-tilbud-til-fdv" tittel="Fra tilbud til FDV" kolonner={["Steg", "Hva"]} rader={reise} />
-      </Rad>
-      <Rad hoyde={tabellHoyde(selger.length)}>
-        <Tabellflis id="samme-ordre" tittel={SELGER.h2} kolonner={["Hva", "Hvor"]} rader={selger} />
-      </Rad>
-      <PaaTelefon tekst={PAA_TELEFON.portal.tekst} bilde={PAA_TELEFON.portal.bilde} alt={PAA_TELEFON.portal.alt} />
-    </Innhold>
-  </main>
-</Side>
-
-<style>
-  /* N-10: MacBook bak, iPhone foran nede til høyre (også på 390) */
-  .komposisjon { position: relative; width: 100%; padding-bottom: 8%; }
-  .mac { width: 84%; margin-right: auto; }
-  .iphone { position: absolute; right: 0; bottom: 0; width: 22%; }
-</style>

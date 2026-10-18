@@ -9,17 +9,23 @@ import { ikoner } from "../lib/ikoner";
 const m = (f: Form, modus: "lys" | "mork", u: "aksent" | "ensfarget", h: number) => logoMaal(fil(f, modus, u), h);
 
 // Palettpakke v2 (14.10.2026): Hengsel og produktlogoene CRM, Ute, Admin og Levering. Ensfarget (blekk/hvit) finnes bare for symbolet og Hengsel; de monokrome produktlogoene er foreslått.
-const FORMER: { form: Form; navn: string; bruk: string; hoyde: number; ensfarget: boolean }[] = [
+const FORMER: { form: Form; navn: string; bruk: string; hoyde: number; ensfarget: boolean; kommer?: boolean }[] = [
   { form: "symbol", navn: "Symbol", bruk: "Alene der navnet står ved siden av uansett: app-ikon, favicon, profilbilde. Stiften er furu.", hoyde: 44, ensfarget: true },
   { form: "hengsel", navn: "Hengsel", bruk: "hengsel.no, vis og design (toppfelt og bunn), PDF, sngroup.no.", hoyde: 32, ensfarget: true },
   { form: "crm", navn: "Hengsel CRM", bruk: "hengsel.no/crm, og nederst til venstre i CRM-ets sidemeny.", hoyde: 32, ensfarget: false },
   { form: "ute", navn: "Hengsel Ute", bruk: "hengsel.no/ute og butikkene for appen.", hoyde: 32, ensfarget: false },
   { form: "admin", navn: "Hengsel Admin", bruk: "admin.hengsel.no og innlogging i admin.", hoyde: 32, ensfarget: false },
   { form: "levering", navn: "Hengsel Levering", bruk: "Produktlogo for leveringen. Bunnteksten i kundeportalen er «Levert av Hengsel» (se under).", hoyde: 32, ensfarget: false },
+  // N-9 (Eirik 18.10): produkter uten logo ennå. Til Design 2.13 vises Hengsel-symbolet + tekstnavnet (hengsel.no, Sidetopp og «Produktene»); ingen nye logofiler.
+  { form: "symbol", navn: "Kundeportal", bruk: "Logo kommer (Design 2.13) – til da Hengsel-symbol + tekstnavn.", hoyde: 32, ensfarget: false, kommer: true },
+  { form: "symbol", navn: "Telefon", bruk: "Logo kommer (Design 2.13) – til da Hengsel-symbol + tekstnavn («Hengsel på telefon»).", hoyde: 32, ensfarget: false, kommer: true },
+  { form: "symbol", navn: "TV", bruk: "Logo kommer (Design 2.13) – til da Hengsel-symbol + tekstnavn. TV står ikke på hengsel.no.", hoyde: 32, ensfarget: false, kommer: true },
 ];
 const PLASSERINGER = [
   ["hengsel.no, toppfelt og bunn", "–", "hengsel, aksent, 30 px (34 px fra 1180 px)"],
   ["hengsel.no /ute og /crm", "–", "ute / crm, aksent, 34 px i heroen"],
+  ["hengsel.no /crm, /ute, /kundeportal og /telefon (N-9)", "–", "produktlogo øverst i Sidetopp, aksent, lys, 34 px. Kundeportal og Hengsel på telefon: Hengsel-symbol (aksent) + tekstnavn, samme høyde"],
+  ["hengsel.no forsiden, «Produktene» (N-9)", "–", "produktlogo i hver av de seks flisene, aksent, lys, 24 px. Kundeportal og Hengsel på telefon: symbol + tekstnavn, 24 px"],
   ["vis.hengsel.no", "–", "hengsel, aksent, 28 px i toppfeltet"],
   ["CRM, PC og iPad (besluttet 14.10)", "øverst til høyre i toppfeltet, etter varsler, med skillelinje. Maks 28 px høy (24 px under 1024 px)", "crm, aksent, 16 px nederst til venstre i sidemenyen, med «v. {versjon}» 12 px i tekst-svak"],
   ["CRM, telefon i nettleser", "toppfelt, maks 24 px høy", "crm, aksent, 16 px nederst i «Mer»"],
@@ -72,9 +78,11 @@ const APPIKON = [
       {FORMER.map((f) => (
         <div class="merkerad">
           <div class="navn"><div>{f.navn}</div><div class="svak">{f.bruk}</div></div>
-          <div class={`flis ${fargeKlasse("flate-side", "lys")}`}><img src={fil(f.form, "lys", "aksent")} alt={`${f.navn}, aksent, for lys flate`} {...m(f.form, "lys", "aksent", f.hoyde)} loading="lazy" /></div>
-          <div class={`flis ${fargeKlasse("flate-side", "mork")}`}><img src={fil(f.form, "mork", "aksent")} alt={`${f.navn}, aksent, for mørk flate`} {...m(f.form, "mork", "aksent", f.hoyde)} loading="lazy" /></div>
-          {f.ensfarget ? (
+          <div class={`flis ${fargeKlasse("flate-side", "lys")}`}><img src={fil(f.form, "lys", "aksent")} alt={f.kommer ? "" : `${f.navn}, aksent, for lys flate`} {...m(f.form, "lys", "aksent", f.hoyde)} loading="lazy" />{f.kommer && <strong>&nbsp;{f.navn}</strong>}</div>
+          <div class={`flis ${fargeKlasse("flate-side", "mork")}`}><img src={fil(f.form, "mork", "aksent")} alt={f.kommer ? "" : `${f.navn}, aksent, for mørk flate`} {...m(f.form, "mork", "aksent", f.hoyde)} loading="lazy" /></div>
+          {f.kommer ? (
+            <Fragment><div class="flis svak">Logo kommer (Design 2.13)</div><div class="flis svak">Logo kommer (Design 2.13)</div></Fragment>
+          ) : f.ensfarget ? (
             <Fragment>
               <div class={`flis ${fargeKlasse("flate-side", "lys")}`}><img src={fil(f.form, "lys", "ensfarget")} alt={`${f.navn}, ensfarget, for lys flate`} {...m(f.form, "lys", "ensfarget", f.hoyde)} loading="lazy" /></div>
               <div class={`flis ${fargeKlasse("flate-side", "mork")}`}><img src={fil(f.form, "mork", "ensfarget")} alt={`${f.navn}, ensfarget, for mørk flate`} {...m(f.form, "mork", "ensfarget", f.hoyde)} loading="lazy" /></div>
