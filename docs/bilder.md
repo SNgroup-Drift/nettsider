@@ -19,11 +19,14 @@ navn fra før) er ikke brukt; alle bilder kommer fra pakkene.
 
 Kilde, i prioritert rekkefølge: pakke v8 (fasit), v7 (`ute-*` unntatt `ute-i-dag`), v6 (`display/` til Studio Display), v5 (`ute-i-dag`), v4
 (`portal-tilbud` og `ute-ipad-bildeverktoy`). Hver ramme har sitt eget bildeformat: Studio Display 16:9 (`display/`, 2560 × 1440), MacBook 16:10
-(`pc/`, 2880 × 1800; ikke i bruk på siden nå), iPad (`ipad-liggende` er en iPad Air 11″-ramme, hull 1,44:1) 2360 × 1640 og iPhone 18 1206 × 2622.
+(`pc/`, 2880 × 1800; N-10: rammen er tilbake, men biblioteket har ingen `pc/`-nøkler, så MacBook viser 16:9-bildene fra `display/`/`vis/skjermbilder/` med cover fra toppen), iPad (`ipad-liggende` er en iPad Air 11″-ramme, hull 1,44:1) 2360 × 1640 og iPhone 18 1206 × 2622.
 Rammene er Apples Product Bezels med gjennomsiktig skjermhull (`public/img/ramme-*.webp`); skjermbildet ligger under rammen og klippes til hullet med
 hjørneradius, `object-fit: cover`, `object-position: top` (`src/components/Enhet.astro`). Rammen er ikke beskåret, vippet eller speilvendt, og har
 ingen skygge. Skjermbildene er WebP (kvalitet 80–82) laget av PNG-ene i pakkene, uten endring i oppløsning. Skjermhullene (andel av rammen) står i
-`Enhet.astro` og i INSTRUKS.md.
+`Enhet.astro` (INSTRUKS.md ligger ikke i repoet lenger). **MacBook (N-10, 18.10):** `public/img/ramme-macbook.webp`, 2400 × 1565, hull
+12,63 % · 14,19 % · 74,75 % × 71,63 % av rammen (1794 × 1121, 16:10), radius 1 % / 1,4 %, naturlig størrelse 1440 × 900, ingen statuslinje (menylinja ligger i
+skjermbildet). Bezelen er den fra K-177 (Apples Product Bezel, hentet fra git-historikken, commit `f00dfaa^`); den er ikke et app-skjermbilde. Både
+`bilde=`/`src=` og `<slot>` (CrmSkjerm/PortalSkjerm, `mac` gir 1440 × 900) virker.
 
 ## Hvor hvert bilde brukes (forsiden, W1)
 
@@ -34,6 +37,9 @@ ingen skygge. Skjermbildene er WebP (kvalitet 80–82) laget av PNG-ene i pakken
 | Hengsel Ute, bildeverktøy | iPad liggende (11″) | `ute-ipad-bildeverktoy` (v4, 2360 × 1640) |
 | For kontoret (liste som faner) | Studio Display | `crm-resultater` (Ledertavle), `crm-montasje` (Montasjeplan og kontrollmål), `crm-bestilling` (Bestilling), `crm-etterkalkyle` (Økonomi), alle v6 `display/` |
 | Kundeportalen | iPhone 18 | `portal-tilbud` (v4) |
+| Samme ordre på alle enheter (N-10) | Studio Display, MacBook, iPad, iPhone | Display: `crm-min-dag`, `crm-ordre-kontrollmal`, `crm-montasje`; MacBook: samme tre (16:9, cover fra toppen); iPad: `crm-ipad-min-dag`, `-kontrollmal`, `-belastninger`; iPhone: `crm-tlf-min-dag`, `-ordre`, `-kontrollmal` (alle `vis/skjermbilder/`) |
+| /crm, toppen (N-10) | Studio Display + MacBook | tegnet: `CrmSkjerm` Min dag (display) og Montasje (MacBook, `mac`) |
+| /kundeportal, toppen (N-10) | MacBook + iPhone 18 | tegnet: `PortalSkjerm` pc (MacBook) og telefon |
 | /apptest | iPhone 18 ×3 | `ute-i-dag` (v5), `ute-ks`, `ute-laser` (v7) |
 
 Seksjonsrekkefølge: hero, produkt (tre kort), «Slik går en jobb gjennom Hengsel» (sju steg uten bilder), Hengsel Ute (mørk), For kontoret,
@@ -59,7 +65,7 @@ Kundeportalen, Integrasjoner, priser og om, kontakt.
 - **Ikke i fasit, men beholdt:** kontaktskjemaet med plantegning og bunnen. Avgjort å beholde, i likhet med deaktiverte appknapper og faner i «For kontoret».
 - **/apptest** følger W2 (korttekster, pillknapper, «‹ Tilbake til hengsel.no», to kolonner, bunn med merke). Beholdt fra tidligere beskjed: Ute-logoen
   øverst, versjon og «Hva er nytt» fra `apptest-lenker.ts` (Action), «Siste oppdatering», «Testere» og tre iPhone-skjermer.
-- Ikke i bruk i pakkene: `ipad13/*`, Duo-rammen `iphone-aapen`, `pc/*` (ingen MacBook-ramme på siden).
+- Ikke i bruk i pakkene: `ipad13/*`, Duo-rammen `iphone-aapen`, `pc/*` (MacBook-rammen er tilbake fra N-10, men uten `pc/`-bilder; se over).
 
 ## Sjekk
 

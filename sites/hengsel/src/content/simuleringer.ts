@@ -15,13 +15,18 @@ export const FORSIDE_FLYT: Steg[] = [
   ["vis/skjermbilder/crm-etterkalkyle.webp", "Etterkalkyle", "Hengsel CRM: etterkalkyle på ferdig montert jobb"],
 ];
 
-/** «Tre enheter»: samme flyt på Studio Display, iPad og iPhone (forsiden og slik virker det) */
+/** «Fire enheter» (N-10): samme flyt på Studio Display, MacBook, iPad og iPhone (forsiden og slik virker det). Biblioteket har ingen pc/-nøkler; 16:9-bildene fyller MacBook-hullet (16:10) med cover fra toppen. */
 export const TRE_STEG = ["Min dag", "Ordre", "Kontrollmål"] as const;
 export const TRE_ENHETER = {
   display: [
     ["vis/skjermbilder/crm-min-dag.webp", "Min dag", "Hengsel CRM på Studio Display: Min dag"],
     ["vis/skjermbilder/crm-ordre-kontrollmal.webp", "Ordre", "Hengsel CRM på Studio Display: ordren"],
     ["vis/skjermbilder/crm-montasje.webp", "Kontrollmål", "Hengsel CRM på Studio Display: montasje og kontrollmål"],
+  ],
+  macbook: [
+    ["vis/skjermbilder/crm-min-dag.webp", "Min dag", "Hengsel CRM på MacBook: Min dag"],
+    ["vis/skjermbilder/crm-ordre-kontrollmal.webp", "Ordre", "Hengsel CRM på MacBook: ordren"],
+    ["vis/skjermbilder/crm-montasje.webp", "Kontrollmål", "Hengsel CRM på MacBook: montasje og kontrollmål"],
   ],
   ipad: [
     ["vis/skjermbilder/crm-ipad-min-dag.webp", "Min dag", "Hengsel CRM på iPad: Min dag"],

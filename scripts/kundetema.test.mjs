@@ -84,8 +84,8 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal
     const r = relative(dist, f);
     assert.ok(!/\/logo\/hengsel-|\/assets\/logo\//.test(t), `${r}: Hengsel-logo`);
     assert.ok(!/Hengsel CRM|Butikknavn/.test(t), `${r}: «Hengsel CRM» eller «Butikknavn» står igjen`);
-    // Studio Display-rammen (Apples ramme, ingen Hengsel-farger) er den eneste filen som hentes fra /img
-    const utenRamme = t.replace(/\/img\/ramme-studio-display\.webp/g, "");
+    // Studio Display- og MacBook-rammene (Apples rammer, N-10, ingen Hengsel-farger) er de eneste filene som hentes fra /img
+    const utenRamme = t.replace(/\/img\/ramme-(?:studio-display|macbook)\.webp/g, "");
     assert.ok(!/(?:src|srcset|poster)="\/(?:img|skjermbilder)\//.test(utenRamme) && !/,\s\/(?:img|skjermbilder)\//.test(utenRamme), `${r}: lokalt skjermbilde (alle app-skjermbilder kommer fra biblioteket)`);
     // K-233: app-skjermbildene fra biblioteket hentes i Sigdal-tema (…/v1/sigdal/…), aldri Hengsel-utgaven
     assert.ok(!t.includes(`${BILDEDOMENE}/hengsel/`), `${r}: skjermbilde i Hengsel-tema fra biblioteket`);
@@ -94,7 +94,7 @@ test("d) kundeutgaven har ingen Hengsel-logoer, ingen lenker ut av /kunde/sigdal
       const u = m[1];
       if (/^(#|mailto:|tel:|https:\/\/hengsel\.no\/personvern$)/.test(u)) continue;
       if (/^https:\/\/(?!(?:www\.|vis\.)?hengsel\.no)/.test(u)) continue; // eksterne tjenester (TestFlight, Google Play …)
-      if (u === "/img/ramme-studio-display.webp" || u.startsWith("/_astro/") || /^\/favicon[-.]/.test(u) || u.startsWith("/cdn-cgi/")) continue;
+      if (u === "/img/ramme-studio-display.webp" || u === "/img/ramme-macbook.webp" || u.startsWith("/_astro/") || /^\/favicon[-.]/.test(u) || u.startsWith("/cdn-cgi/")) continue;
       assert.ok(u.startsWith("/kunde/sigdal"), `${r}: lenke ut av /kunde/sigdal: ${u}`);
     }
   }

@@ -1,43 +1,5 @@
----
-/**
- * /crm, sidekartet 25-002 (S-68): toppen og to rader i nettside-kitet:
- *  rad 1 (320) Tabell «Før og med Hengsel» (5 rader) · rad 2 (480) Tabell «Samme kundekort for selger, kontor og leder.» (9 rader, CRM_MODULER).
- * Tekster i content/crm.ts. Den klikkbare demoen (K-160) er erstattet av tabellene etter sidekartet; demoen finnes på demo.hengsel.no.
- * N-6: simuleringer på Studio Display, iPad og iPhone (content/simuleringer.ts) før tabellene.
- * N-3c: Min dag i Studio Display (CrmSkjerm, som steg 1 i demoen før N-3) til høyre i toppen.
- */
-import Side from "../layouts/Side.astro";
-import Enhet from "../components/Enhet.astro";
-import CrmSkjerm from "../components/CrmSkjerm.astro";
-import Sidetopp from "../components/kit/Sidetopp.astro";
-import Innhold from "../components/kit/Innhold.astro";
-import Rad from "../components/kit/Rad.astro";
-import Simulering from "../components/Simulering.astro";
-import Simuleringsflis from "../components/kit/Simuleringsflis.astro";
-import { CRM_DISPLAY, CRM_IPAD, CRM_IPHONE } from "../content/simuleringer";
-import Tabellflis, { tabellHoyde } from "../components/kit/Tabellflis.astro";
-import { CRM_MODULER, CRM_SIDE as T, FOR_OG_MED, MODULER_KOLONNER } from "../content/crm";
-import PaaTelefon from "../components/PaaTelefon.astro";
-import { PAA_TELEFON } from "../content/telefon";
----
-<Side title="Hengsel CRM – Min dag, ordre og montasjeplan" description="Hengsel CRM: Min dag, avvik, CET-tegninger og montasjeplan på samme kundekort. Se demoen på demo.hengsel.no." aktiv="crm">
-  <main id="innhold">
-    <Sidetopp tittel={T.h1} ingress={T.lede} produkt="crm">
-      <div class="ramme" slot="komposisjon"><Enhet type="display" forst><CrmSkjerm skjerm="minDag" enhet="pc" /></Enhet></div>
-    </Sidetopp>
-    <Innhold produkt="crm">
-      <Simuleringsflis id="se-crm" tittel="Se Hengsel CRM i bruk" tekst="Samme kundekort på PC, iPad og iPhone: fra Min dag til kontrollmål.">
-        <Simulering type="display" steg={CRM_DISPLAY} etikett="Hengsel CRM på Studio Display" />
-        <Simulering type="ipad" steg={CRM_IPAD} etikett="Hengsel CRM på iPad" />
-        <Simulering type="iphone" steg={CRM_IPHONE} etikett="Hengsel CRM på iPhone" />
-      </Simuleringsflis>
-      <Rad hoyde={tabellHoyde(FOR_OG_MED.rader.length)}>
-        <Tabellflis id="for-og-med" tittel={FOR_OG_MED.tittel} kolonner={FOR_OG_MED.kolonner} rader={FOR_OG_MED.rader} />
-      </Rad>
-      <Rad hoyde={tabellHoyde(CRM_MODULER.length)}>
-        <Tabellflis id="moduler" tittel={T.modulerH2} kolonner={MODULER_KOLONNER} rader={CRM_MODULER} />
-      </Rad>
-      <PaaTelefon tekst={PAA_TELEFON.crm.tekst} bilde={PAA_TELEFON.crm.bilde} alt={PAA_TELEFON.crm.alt} />
-    </Innhold>
-  </main>
-</Side>
+    <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede} produkt="kundeportal">
+      <div class="komposisjon" slot="komposisjon">
+        <div class="mac"><Enhet type="macbook" forst symboler={false}><PortalSkjerm enhet="pc" /></Enhet></div>
+        <div class="iphone"><Enhet type="iphone"><PortalSkjerm enhet="telefon" /></Enhet></div>
+      </div>
