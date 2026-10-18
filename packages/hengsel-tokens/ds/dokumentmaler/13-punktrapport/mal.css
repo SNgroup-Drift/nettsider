@@ -14,7 +14,7 @@
 @page liggende{size:A4 landscape;margin:0}
 *{box-sizing:border-box}
 html{background:var(--kt-bakgrunn);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{margin:0;font-family:var(--kt-skrift-tekst,var(--kt-font));color:var(--kt-tekst);font-size:9.5pt;line-height:1.4;font-variant-numeric:tabular-nums}
+body{margin:0;font-family:var(--kt-skrift-tekst,var(--kt-font));color:var(--kt-tekst);font-size:9.5pt;line-height:1.4}
 @media screen{html{background:color-mix(in oklab,var(--kt-tekst) 14%,var(--kt-bakgrunn))}.dok{display:flex;flex-direction:column;align-items:center;gap:10mm;padding:10mm 0}}
 .dok{counter-reset:side}
 html.liten{background:transparent}html.liten .dok{padding:0;gap:0;align-items:flex-start}html.liten .epost{padding-top:0}
@@ -107,3 +107,6 @@ table.liste{width:100%;border-collapse:collapse;font-size:9pt}
 @page etikett{size:62mm 100mm;margin:0}
 .side--etikett{page:etikett;width:62mm;height:100mm;padding:4mm;display:flex;flex-direction:column;gap:2.5mm;font-size:9pt;line-height:1.3}
 .side--etikett .qr{width:40mm;height:40mm}
+
+/* Tabulære sifre bare i tallkolonner og beløp (2.10b). På body ga de brede komma og punktum i løpende tekst. */
+.liste td.tall,.liste tr.sum td,.belop,.tall-stor,.nummer,.kode,.sidetall{font-variant-numeric:tabular-nums}

@@ -1,14 +1,15 @@
 ---
-/** Dokumentmalene fra designsystemet (N-7b): listen genereres fra den pinnede dokumentmaler-mappa (lib/dokumentmaler.ts), ikke skrevet for hånd. */
+/** Dokumentmalene fra designsystemet (N-7b, N-7c): listen genereres fra den pinnede dokumentmaler-mappa (lib/dokumentmaler.ts), ikke skrevet for hånd. Bildene er Designs side-N.png i Hengsel standard. */
 import Side from "../layouts/Side.astro";
-import { antallSider, dokumentmaler, familier } from "../lib/dokumentmaler";
+import { antallSider, dokumentmaler, familier, layoutRegler, nyeFelter } from "../lib/dokumentmaler";
+const rens = (l: string) => l.replace(/^[-*]\s+/, "").replace(/`([^`]+)`/g, "$1");
 ---
-<Side title="Dokumentmaler – Hengsel designfasit" description="De dokumentmalene i Hengsel designsystem: tilbud, avtaler, rapporter, faktura og e-poster, med forhåndsvisning og eksempel." aktiv="dokumentmaler">
+<Side title="Dokumentmaler – Hengsel designfasit" description="Dokumentmalene i Hengsel designsystem: tilbud, avtaler, rapporter, faktura og e-poster, med Designs forhåndsvisning av hver side og eksempel." aktiv="dokumentmaler">
   <div class="wrap">
     <div class="hode">
-      <span class="merkelapp">Dokumentmaler · {dokumentmaler.length} maler · {antallSider} sider</span>
+      <span class="merkelapp">Dokumentmaler · {dokumentmaler.length} maler · {antallSider} bilder</span>
       <h1>Dokumentmaler</h1>
-      <p class="lede">Malene er fasit for PDF-ene og e-postene CRM-et lager: tilbud, kjøpsavtale, faktura, rapporter, etiketter og e-postene til kunder og ansatte. Listen leses fra designsystemets mappe <code>dokumentmaler/</code> i pinnet commit, og alle navn, adresser og beløp i eksemplene er oppdiktet. Kundens logo, farger og skrift kommer inn fra kundetemaet; forhåndsvisningene her er i Hengsel standard.</p>
+      <p class="lede">Malene er fasit for PDF-ene og e-postene CRM-et lager: tilbud, kjøpsavtale, faktura, rapporter, etiketter og e-postene til kunder og ansatte. Listen leses fra designsystemets mappe <code>dokumentmaler/</code> i pinnet commit, og alle navn, adresser og beløp i eksemplene er oppdiktet. Kundens logo, farger og skrift kommer inn fra kundetemaet; forhåndsvisningene her er Designs egne bilder av hver side, i Hengsel standard.</p>
       <p class="adresselinje" aria-label="Eksempel på en adresselinje i malene"><span class="dempet">Adresselinje i malene</span> <span class="mono">Furuvegen 12, 2312 Ottestad</span></p>
     </div>
     {familier.map((familie) => (
@@ -16,23 +17,51 @@ import { antallSider, dokumentmaler, familier } from "../lib/dokumentmaler";
         <header><h2>{familie}</h2><p>{dokumentmaler.filter((m) => m.familie === familie).length} maler</p></header>
         <div class="mal-rutenett">
           {dokumentmaler.filter((m) => m.familie === familie).map((m) => (
-            <article class="kort mal">
-              <a class="mal-bilde" href={m.eksempel} aria-label={`Åpne eksempelet på ${m.navn}`}><img src={m.bilde} width="397" height="561" loading="lazy" decoding="async" alt={`Forhåndsvisning av side 1 i malen ${m.navn}`} /></a>
+            <article class="kort mal" id={`mal-${m.nr}`}>
+              <a class="mal-bilde" href={m.eksempel ?? m.sider[0].bilde} aria-label={m.eksempel ? `Åpne eksempelet på ${m.navn}` : `Åpne forhåndsvisningen av ${m.navn}`}><img src={m.sider[0].bilde} width={m.sider[0].bredde} height={m.sider[0].hoyde} loading="lazy" decoding="async" alt={`Side 1 i malen ${m.navn}`} /></a>
               <div class="mal-tekst">
-                <span class="merkelapp">Mal {m.nr}{m.ny && " · ny"}</span>
+                <span class="merkelapp">Mal {m.nr}{m.ny && " · ny"}{m.foreloepig && " · foreløpig"}</span>
                 <h3 class="kort-tittel">{m.navn}</h3>
                 <dl class="mal-fakta">
                   <dt>Familie</dt><dd>{m.familie}</dd>
-                  <dt>Sider</dt><dd>{m.sider}</dd>
-                  <dt>Flettefelt</dt><dd>{m.felt}</dd>
+                  <dt>Sider</dt><dd>{m.sider.length}</dd>
+                  <dt>Flettefelt</dt><dd>{m.felt ?? "kommer"}</dd>
                   <dt>Mappe</dt><dd class="mono">{m.mappe}/</dd>
                 </dl>
-                <p class="mal-lenker"><a href={m.eksempel}>Eksempel (eksempel.html)</a> · <a href={m.felter}>Flettefelt (felter.json)</a></p>
+                {m.foreloepig && <p class="dempet mal-merknad">Levert uten eksempel og flettefelt; resten kommer i Designs 2.10c.</p>}
+                {m.eksempel && m.felter && <p class="mal-lenker"><a href={m.eksempel}>Eksempel (eksempel.html)</a> · <a href={m.felter}>Flettefelt (felter.json)</a></p>}
+                {m.sider.length > 1 && (
+                  <details class="mal-sider">
+                    <summary>Alle {m.sider.length} sider</summary>
+                    <div class="mal-sider-rad">
+                      {m.sider.slice(1).map((sd) => <a href={sd.bilde}><img src={sd.bilde} width={sd.bredde} height={sd.hoyde} loading="lazy" decoding="async" alt={`Side ${sd.n} i malen ${m.navn}`} /></a>)}
+                    </div>
+                  </details>
+                )}
               </div>
             </article>
           ))}
         </div>
       </section>
     ))}
+    <section class="sek" id="dokumentasjon">
+      <header><h2>Dokumentasjon</h2><p>Fra designsystemet, i pinnet commit</p></header>
+      <div class="mal-rutenett">
+        {layoutRegler && (
+          <article class="kort">
+            <span class="merkelapp">LAYOUT-REGLER</span>
+            <h3 class="kort-tittel">{layoutRegler.tittel}</h3>
+            <ul class="dok-liste">{layoutRegler.linjer.map((l) => <li>{rens(l)}</li>)}</ul>
+          </article>
+        )}
+        <article class="kort">
+          <span class="merkelapp">felter.md</span>
+          <h3 class="kort-tittel">Nye felt i 2.10b</h3>
+          {nyeFelter
+            ? <ul class="dok-liste">{nyeFelter.linjer.map((l) => <li>{rens(l)}</li>)}</ul>
+            : <p class="dempet">Designs 2.10b har ikke et eget avsnitt «Nye i 2.10b» i <span class="mono">felter.md</span> i den pinnede commiten. Det vises her så snart det står i pinnen.</p>}
+        </article>
+      </div>
+    </section>
   </div>
 </Side>

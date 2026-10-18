@@ -17,6 +17,7 @@ export const SIDER_MED_RAMMER = {
   "crm.astro": ["crm.html", "kunde/sigdal/crm.html"],
   "ute.astro": ["ute.html", "kunde/sigdal/ute.html"],
   "kundeportal.astro": ["kundeportal.html", "kunde/sigdal/kundeportal.html"],
+  "telefon.astro": ["telefon.html"], // N-7c: /telefon (N-8) finnes ikke i Sigdal-utgaven
   "apptest.astro": ["apptest.html", "kunde/apptest.html", "kunde/sigdal/apptest.html"],
 };
 

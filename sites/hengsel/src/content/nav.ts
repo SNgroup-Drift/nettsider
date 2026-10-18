@@ -9,6 +9,7 @@ export const MENY = [
   ["crm", "CRM", "/crm"],
   ["ute", "Hengsel Ute", "/ute"],
   ["portal", "Kundeportal", "/kundeportal"],
+  ["telefon", "Telefon", "/telefon"], // N-7c: produktsidene i menyen, /telefon (N-8) etter Kundeportal
   ["int", "Integrasjoner", "/integrasjoner"],
   ["pris", "Priser", "/priser-og-demo"],
 ] as const;

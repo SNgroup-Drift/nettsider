@@ -1,19 +1,12 @@
-# Dokumentmaler – i Hengsel designsystem 2.10 (K-371b)
+# Dokumentmaler – i Hengsel designsystem 2.10.0 (K-371b)
 
-**Status i repoet (18.10.2026):** Malene er fasit for CRM-ets PDF- og e-postgeneratorer (tilbud, kjøpsavtale, faktura, e-postene E1–E10 og resten av de 28). Generatorene kobles til malene i en egen K; til da er dette bare designfilene. Innholdet er Designs 2.9-eksport uendret, med disse avvikene:
-
-- **Uten Sigdal.** Designsystemet er rent Hengsel (Eirik 17.34). `kundetema-sigdal.json`, `tema/sigdal.css` og skriftene Inter og Newsreader i `felles/fonter/` er ikke tatt med. Kundens verdier ligger i databasen og settes i Admin (K-357).
-- `eksempel.html` bruker `tema/hengsel.css` som standard (Designs fil pekte på `tema/sigdal.css`), og `felles/fonter.css` har bare Schibsted Grotesk.
-- **`side-N.png` er tatt i Sigdal-temaet** og byttes når Design leverer dem i Hengsel standard (2.10-delta).
-- Bare `#B54F00` (Hengsel-merket) er hex i malene (`mal.html`, `mal.css`, `eksempel.html`); kontrollert med grep 18.10.2026. `tema/hengsel.css` og `kundetema-hengsel-standard.json` har temaverdiene.
-
-Listen over de 28 malene med nummer, familie og hvor de brukes står også i `../maler.md`.
+**Status i repoet (18.10.2026):** Malene er fasit for CRM-ets PDF- og e-postgeneratorer (tilbud, kjøpsavtale, faktura, e-postene E1–E10 og resten av de 28). Generatorene kobles til malene i en egen K; til da er dette bare designfilene. Innholdet er Designs 2.10 (rent Hengsel, uten kundetema) uendret. `eksempel.html` og `side-N.png` viser Hengsel standard. Bare `#B54F00` (Hengsel-merket) er hex i `mal.html`, `mal.css` og `eksempel.html` (kontrollert med grep). Kundens verdier ligger i databasen og settes i Admin (K-357). Listen over de 28 står også i `../maler.md`.
 
 ---
 
-# Dokumentmaler – Designs eksport (2.0 → 2.9)
+# Dokumentmaler – eksport til Hengsel designsystem 2.0
 
-Eksportert 18.10.2026 fra prosjektet CRM_v4. Alle dokumentene som er tegnet i prosjektet, laget som maler der kundens logo, farger, skrift og hjørner kommer inn som variabler fra kundetemaet. Ingenting Sigdal-spesifikt ligger i malene. Sigdal er bare et eksempel i `kundetema-sigdal.json`.
+Eksportert 18.10.2026 fra prosjektet CRM_v4. Alle dokumentene som er tegnet i prosjektet, laget som maler der kundens logo, farger, skrift og hjørner kommer inn som variabler fra kundetemaet. Ingenting kundespesifikt ligger i malene. Kundens verdier settes i Admin (21-914 Merkevare) og lagres i databasen. Eneste eksempel er Hengsel standard i `kundetema-hengsel-standard.json`.
 
 Alle navn, adresser, numre og beløp i eksemplene er oppdiktet.
 
@@ -23,7 +16,7 @@ Alle navn, adresser, numre og beløp i eksemplene er oppdiktet.
 README.md
 kundetema.schema.json          variablene malene bruker (--kt-* og {{kunde.*}})
 kundetema-hengsel-standard.json  Hengsels nøytrale standardverdier (forslag), for testing
-tema/hengsel.css               verdiene som CSS, bare for eksempel.html (Sigdal-varianten er ikke med i repoet)
+tema/hengsel.css               Hengsel standard som CSS, bare for eksempel.html
 felles/fonter.css + fonter/    Schibsted Grotesk, bare for eksemplene
 felles/hengsel-merke-oransje.svg  Hengsel-merket i #B54F00 til bunnlinja
 NN-navn/
@@ -31,7 +24,7 @@ NN-navn/
   mal.css        felles A4-oppsett (likt i alle mapper). Ingen hex ut over #B54F00
   eksempel.html  samme mal fylt med demodata. ?tema=hengsel bytter tema
   felter.json    alle flettefelt, hvilke sider de står på, og eksempelverdi
-  side-1.png …   forhåndsvisning per side (tatt i Sigdal-temaet; byttes i 2.10-delta)
+  side-1.png …   forhåndsvisning per side (Hengsel standard)
 ```
 
 ## Dokumentene (28 maler, 54 sider)
@@ -80,7 +73,7 @@ Utledet i `mal.css`: dempet tekst (tekst 74 % mot bakgrunn), delelinjer (kant 24
 
 Temaet settes inn i `<style id="kundetema">` øverst i `mal.html` som `:root { --kt-…: … }`.
 
-`{{kunde.*}}` er Hengsels kunde (butikken eller kjeden). `{{butikk.*}}` er avdelingen som sender dokumentet (adresse, org.nr, telefon, fra I16). `{{kjoper.*}}` er sluttkunden. `{{leverandor.navn}}` er produsenten, som før stod som «Sigdal» i teksten.
+`{{kunde.*}}` er Hengsels kunde (butikken eller kjeden). `{{butikk.*}}` er avdelingen som sender dokumentet (adresse, org.nr, telefon, fra I16). `{{kjoper.*}}` er sluttkunden. `{{leverandor.navn}}` er produsenten, som før stod med navn i teksten.
 
 ## Felles mål
 
@@ -96,28 +89,28 @@ Temaet settes inn i `<style id="kundetema">` øverst i `mal.html` som `:root { -
 
 ## Kontrast
 
-Regnet med verdiene i de to temaene (dempet tekst og delelinjer er regnet etter blandingen i `mal.css`). Begge holder kravene.
+Regnet med verdiene i Hengsel standard (dempet tekst og delelinjer er regnet etter blandingen i `mal.css`). Den holder kravene.
 
-| Test | Krav | Sigdal | Hengsel standard |
-| --- | --- | --- | --- |
-| Tekst på bakgrunn | 4.5:1 | 14,02:1 | 16,7:1 |
-| Tekst på flate (betalingsboks) | 4.5:1 | 12,24:1 | 14,76:1 |
-| Tekst på felt (kort) | 4.5:1 | 13,26:1 | 15,58:1 |
-| Dempet tekst på bakgrunn | 4.5:1 | 6,76:1 | 7,99:1 |
-| Dempet tekst på felt | 4.5:1 | 6,4:1 | 7,45:1 |
-| Tekst på aksent (knapp, pille) | 4.5:1 | 4,53:1 | 7:1 |
-| Lenke på bakgrunn | 4.5:1 | 6,26:1 | 7:1 |
-| Lenke på felt | 4.5:1 | 5,93:1 | 6,53:1 |
-| Kant på bakgrunn | 3:1 | 14,02:1 | 5,05:1 |
-| Kant på flate | 3:1 | 12,24:1 | 4,46:1 |
-| Kant på felt | 3:1 | 13,26:1 | 4,71:1 |
+| Test | Krav | Hengsel standard |
+| --- | --- | --- |
+| Tekst på bakgrunn | 4.5:1 | | 16,7:1 |
+| Tekst på flate (betalingsboks) | 4.5:1 | | 14,76:1 |
+| Tekst på felt (kort) | 4.5:1 | | 15,58:1 |
+| Dempet tekst på bakgrunn | 4.5:1 | | 7,99:1 |
+| Dempet tekst på felt | 4.5:1 | | 7,45:1 |
+| Tekst på aksent (knapp, pille) | 4.5:1 | | 7:1 |
+| Lenke på bakgrunn | 4.5:1 | | 7:1 |
+| Lenke på felt | 4.5:1 | | 6,53:1 |
+| Kant på bakgrunn | 3:1 | | 5,05:1 |
+| Kant på flate | 3:1 | | 4,46:1 |
+| Kant på felt | 3:1 | | 4,71:1 |
 
 Delelinjene mellom tabellrader er pynt (24 % av kanten) og har ikke krav. Kanter med betydning (tabellhode, sumlinje, skrivefelt, avkrysning, piller) bruker `--kt-kant` fullt ut.
 
 ## Endret fra kildene
 
 - Skrift og farger er erstattet med `--kt-*`. Butikkens navn og logo er `{{kunde.*}}` og `{{butikk.*}}`.
-- «Sigdal» i teksten er byttet med `{{leverandor.navn}}`, også i de juridiske tekstene (kjøpsavtale punkt 6, rammeavtale punkt 3, 5 og 6, tilbud «Greit å vite», anbud «Om oss»). Resten av de juridiske tekstene er ordrett. «Vilkår for privatkunder, versjon 2026.2» er `{{vilkar.versjon}}`.
+- Produsentnavnet i teksten er byttet med `{{leverandor.navn}}`, også i de juridiske tekstene (kjøpsavtale punkt 6, rammeavtale punkt 3, 5 og 6, tilbud «Greit å vite», anbud «Om oss»). Resten av de juridiske tekstene er ordrett. «Vilkår for privatkunder, versjon 2026.2» er `{{vilkar.versjon}}`.
 - Sidetall står som «Side x av y» i alle maler (anbudet hadde «1 / 8», rammeavtalen «2 / 3»).
 - Rammeavtalen: kunden «Lena Bygg AS» er `{{proffkunde.*}}`.
 - Bestilling av utkjøring: merkingen «SIG-…» i eksemplet er byttet til «LA-…».
@@ -137,7 +130,7 @@ Delelinjene mellom tabellrader er pynt (24 % av kanten) og har ikke krav. Kanter
 7. **Mørk logo.** Malene bruker `{{kunde.logo_lys}}`. Hengsel 2.0 velger `{{kunde.logo_mork}}` når `--kt-bakgrunn` er mørk. Det kan ikke avgjøres i CSS.
 8. **Tekst på aksent** er bakgrunnsfargen. Er aksenten lys, blir kontrasten for svak. Temaet må da ha mørk bakgrunn eller mørk aksent. Det må sjekkes når temaet lagres, for schemaet kan ikke regne kontrast.
 9. **Bilder.** Forsidebilde, tegninger, KS-bilder og QR-koder er flettefelt. Det er ingen merkevarebilder i pakken, og eksemplene viser en tom plass med bildetekst.
-10. **Skrift** i eksemplene er Inter og Newsreader. Andre skrifter fra kundetemaet må lastes av Hengsel 2.0 (`@font-face`).
+10. **Skrift** i eksemplene er Schibsted Grotesk. Andre skrifter fra kundetemaet lastes som egen fontfil (`@font-face`).
 
 ## Flettefelt
 

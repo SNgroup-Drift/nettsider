@@ -7,6 +7,7 @@
  *   - style="…" blir data-s="n", og reglene ligger i felles/eksempel-stiler.css (med !important, som en innebygd stil)
  *   - <title> får malens navn (kilden har «undefined»), og siden får favicon og noindex
  */
+import { existsSync } from "node:fs";
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
@@ -15,8 +16,11 @@ const mappe = join(rot, "sites", "design", "public", "ds", "dokumentmaler");
 const mapper = (await readdir(mappe)).filter((m) => /^\d\d-/.test(m)).sort();
 const stiler = new Map();
 let skript = null;
+let antall = 0;
 for (const m of mapper) {
   const fil = join(mappe, m, "eksempel.html");
+  if (!existsSync(fil)) continue; // N-7c: mal 29 er levert uten eksempel.html (kommer i 2.10c)
+  antall++;
   let html = await readFile(fil, "utf8");
   const navn = JSON.parse(await readFile(join(mappe, m, "felter.json"), "utf8")).dokument ?? m;
   html = html.replace(/<script>([\s\S]*?)<\/script>/, (_, kode) => { skript ??= kode; return '<script src="../felles/tema.js"></script>'; });
@@ -33,4 +37,4 @@ for (const m of mapper) {
 if (!skript) throw new Error("fant ikke temaskriptet i eksempel.html (ny versjon av malene?)");
 await writeFile(join(mappe, "felles", "tema.js"), `${skript}\n`);
 await writeFile(join(mappe, "felles", "eksempel-stiler.css"), `/* GENERERT av scripts/lag-dokumentmaler.mjs: style="…" fra eksempel.html (CSP-en tillater ikke innebygde stiler) */\n${[...stiler].map(([s, n]) => `[data-s="${n}"]{${s.split(";").map((d) => d.trim()).filter(Boolean).map((d) => `${d} !important`).join(";")}}`).join("\n")}\n`);
-console.log(`✓ ${mapper.length} eksempel.html gjort CSP-trygge (${stiler.size} stiler flyttet til felles/eksempel-stiler.css)`);
+console.log(`✓ ${antall} eksempel.html gjort CSP-trygge (${stiler.size} stiler flyttet til felles/eksempel-stiler.css)`);
