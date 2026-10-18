@@ -1,4 +1,4 @@
-/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.2.0, commit b1841be7). Ikke rediger for hånd.
+/* GENERERT av scripts/lag-hengsel-tokens.mjs fra ds/tokens/hengsel.tokens.json (designsystem 2.5.0, commit 7419b949). Ikke rediger for hånd.
  *
  * Den DELTE Hengsel-fila: hengsel.no, vis., design. og admin. importerer denne og bruker bare variablene. Det finnes ingen fargeverdier i sidene.
  * Bare lys modus: ingen mørk modus som følger maskinen, ingen tema-attributt, ingen mørk-bryter. Se docs/design/hengsel-regler.md.
@@ -268,4 +268,89 @@
     --status-feil-bg: color(display-p3 0.9961 0.9569 0.9490);
     --status-feil-kant: color(display-p3 0.6471 0.3294 0.2941);
   }
+}
+
+/* Haster og synlighet (designsystem 2.5, HASTER.md): aliaser til status-tokens, ingen nye farger. */
+:root,
+[data-produkt] {
+  --nivaa-haster-fg: var(--status-feil-fg);
+  --nivaa-haster-bg: var(--status-feil-bg);
+  --nivaa-haster-kant: var(--status-feil-kant);
+  --nivaa-snart-fg: var(--status-advarsel-fg);
+  --nivaa-snart-bg: var(--status-advarsel-bg);
+  --nivaa-snart-kant: var(--status-advarsel-kant);
+  --nivaa-stripe: 3px;
+}
+
+/* Produktpaletter (designsystem 2.5): data-produkt="ute|nettsider|crm|admin" på roten eller en innpakning. Bare lys. Etter :root og mediablokkene over, så produktet vinner. */
+[data-produkt="ute"] {
+  --aksent: #05806F;
+  --aksent-trykk: #007665;
+  --aksent-tekst: #016d5e;
+  --aksent-svak: #E0F4EE;
+  --aksent-valgt: #BCE6DB;
+  --paa-aksent: #FBF9F6;
+  --flate-valgt: #E0F4EE;
+  --merke-stift: #068472;
+  --flate-side: #F6F8FB;
+  --flate-kort: #FBFDFF;
+  --flate-senket: #EFF1F4;
+  --tekst: #1A1D22;
+  --tekst-dempet: #51565C;
+  --tekst-svak: #686E75;
+  color-scheme: light;
+}
+
+[data-produkt="nettsider"] {
+  --aksent: #AD5626;
+  --aksent-trykk: #99440F;
+  --aksent-tekst: #964109;
+  --aksent-svak: #F8F1EE;
+  --aksent-valgt: #EFDDD4;
+  --paa-aksent: #FBF9F6;
+  --flate-valgt: #F8F1EE;
+  --merke-stift: #B54F00;
+  --flate-side: #FAF6F2;
+  --flate-kort: #FEFDFB;
+  --flate-senket: #F3EFE9;
+  --tekst: #272D38;
+  --tekst-dempet: #4E535C;
+  --tekst-svak: #666A71;
+  color-scheme: light;
+}
+
+[data-produkt="crm"] {
+  --aksent: #4C5FCB;
+  --aksent-trykk: #3D4DB7;
+  --aksent-tekst: #3A49A8;
+  --aksent-svak: #F6F7FC;
+  --aksent-valgt: #EAECF9;
+  --paa-aksent: #FBF9F6;
+  --flate-valgt: #EAECF9;
+  --merke-stift: #5165D3;
+  --flate-side: #F1F1EF;
+  --flate-kort: #F9F9F7;
+  --flate-senket: #EAEAE8;
+  --tekst: #232A34;
+  --tekst-dempet: #4D525B;
+  --tekst-svak: #64686F;
+  color-scheme: light;
+}
+
+[data-produkt="admin"] {
+  --aksent: #7233AC;
+  --aksent-trykk: #611E98;
+  --aksent-tekst: #6929A2;
+  --aksent-svak: #F8F5FB;
+  --aksent-valgt: #EEE7F5;
+  --paa-aksent: #FBF9F6;
+  --flate-valgt: #EEE7F5;
+  --merke-stift: #8348BE;
+  --flate-side: #F1F1EF;
+  --flate-kort: #F9F9F7;
+  --flate-senket: #EAEAE8;
+  --tekst: #232A34;
+  --tekst-dempet: #4D525B;
+  --tekst-svak: #64686F;
+  color-scheme: light;
 }

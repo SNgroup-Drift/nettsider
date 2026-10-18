@@ -79,9 +79,9 @@ if (tema === "hengsel") await cp(join(sites, "hengsel", "public", "img", "dok-fo
 // Merket (palettpakke v2 og merkepakke v2) der det står <!--logo-hengsel 28--> (tallet er høyden i px). Skjemaet kan stå etter tallet:
 // <!--logo-hengsel 24 crm--> (crm, hengsel-crm, levert-av). Uten skjema brukes «Hengsel» (symbol + navn). Utgaven er aksent, lys utgave (levert-av: levert-av-hengsel-lys fra merkepakke v2) (bare lys modus). SVG-ene er brukt som de er: aldri strekk, farger eller effekter.
 const LOGOER = {
-  hengsel: { fil: "hengsel-aksent", alt: "Hengsel", b: 422, h: 100 },
-  crm: { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
-  "hengsel-crm": { fil: "hengsel-crm-aksent", alt: "Hengsel CRM", b: 622, h: 100 },
+  hengsel: { fil: "logo-hengsel", alt: "Hengsel", b: 422, h: 100 }, // N-7: produktlogoene fra designsystem 2.5 (oransje prikk for Hengsel, blå for CRM), ds/produktlogo
+  crm: { fil: "logo-crm", alt: "Hengsel CRM", b: 622, h: 100 },
+  "hengsel-crm": { fil: "logo-crm", alt: "Hengsel CRM", b: 622, h: 100 },
   "levert-av": { fil: "levert-av-hengsel", alt: "Levert av Hengsel", b: 254, h: 40 },
 };
 function hengselLogo(size, skjema = "hengsel") {
@@ -89,6 +89,16 @@ function hengselLogo(size, skjema = "hengsel") {
   if (!l) throw new Error(`Ukjent logoskjema «${skjema}» i <!--logo-hengsel ${size} ${skjema}-->`);
   return `<span class="hlogo" style="--h:${size}px">` +
     `<img src="/assets/logo/${l.fil}-lys.svg" alt="${l.alt}" width="${l.b}" height="${l.h}"></span>`;
+}
+for (const f of ["logo-hengsel-lys.svg", "logo-crm-lys.svg"]) await cp(join(tokens, "ds", "produktlogo", f), join(dist, "assets", "logo", f));
+// N-7 (designsystem 2.5): produktpalettene. Alle sidene er nettsider (data-produkt på html); skjermrammene får produktet fra bildenøkkelen (crm-, kundeportal-, portal- = crm; ute- = ute),
+// så CRM-skjermene er blå og Ute-skjermene grønne. Sigdal-utgaven (VIS_TEMA=sigdal) er en kundeutgave og får ingen produktpalett.
+const PRODUKT_AV_BILDE = { crm: "crm", kundeportal: "crm", portal: "crm", ute: "ute" };
+function settProdukt(tekst) {
+  if (tema !== "hengsel") return tekst;
+  return tekst
+    .replace(/<html lang="([a-z]{2})">/, '<html lang="$1" data-produkt="nettsider">')
+    .replace(/<([a-z]+)((?:\s[^>]*?)?) data-bilder="(crm|kundeportal|portal|ute)-/g, (_, tag, rest, pre) => `<${tag} data-produkt="${PRODUKT_AV_BILDE[pre]}"${rest} data-bilder="${pre}-`);
 }
 // Menyen øverst (K-229): Forstå, Prøv, Dokumenter og Presenter er egne sider. <!--meny prov--> setter aria-current="page" på den aktive.
 // Gruppesidene (butikken, montoren, kunden, leverandoren) ligger under Prøv og bruker <!--meny prov-->; oversiktssiden /rom/ bruker <!--meny-->.
@@ -125,7 +135,8 @@ async function settInnLogo(dir) {
         .replace("<!--dokumentvisning-->", () => dokumentvisningHtml())
         .replace("<!--a4-stil-->", () => a4Stil())
         .replace(/<!--a4-ark:([a-z]+):(\d+):([^>]*?)-->/g, (_, id, side, tittel) => a4Ark(id, Number(side), tittel));
-      if (ny !== tekst) { await writeFile(sti, ny); sider++; }
+      const medProdukt = settProdukt(ny);
+      if (medProdukt !== tekst) { await writeFile(sti, medProdukt); sider++; }
     }
   }
 }

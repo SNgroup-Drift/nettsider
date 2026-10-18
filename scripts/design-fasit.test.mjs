@@ -132,20 +132,30 @@ test("/merke viser logoene fra palettpakke v2 (besluttede former og utgaver), og
   for (const f of ["crm", "ute-tonet"]) assert.ok(!existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `gammelt app-ikon ${f}.png (brevann) skal ikke finnes`);
 });
 
-test("/komponenter viser alle 53 ikonene (49 fra palettpakke v2 og fire nye fra merkepakke v2) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
+test("/komponenter viser alle 72 ikonene fra designsystem 2.5 (68 fra Design, 19 av dem nye, og fire egne) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
   const h = html("komponenter");
-  const ikoner = [...JSON.parse(les(ds, "assets", "ikoner", "ikoner.json")).ikoner, ...JSON.parse(les(ds, "assets", "ikoner", "ikoner-tillegg.json")).ikoner];
-  assert.equal(ikoner.length, 53);
-  assert.deepEqual(ikoner.slice(49).map((i) => i.fil), ["montasjeplan", "innboks", "profil", "hjelp"]);
+  const ikoner = JSON.parse(les(ds, "ikoner-2-5", "ikoner.json")).ikoner;
+  assert.equal(ikoner.length, 72);
+  assert.equal(ikoner.filter((i) => i.ny).length, 19, "19 nye ikoner i 2.5");
+  assert.deepEqual(JSON.parse(les(ds, "ikoner-2-5", "ikoner-tillegg.json")).ikoner.map((i) => i.fil), ["montasjeplan", "innboks", "profil", "hjelp"]);
   const t = tekst(h);
   for (const i of ikoner) {
     assert.ok(t.includes(i.navn), `ikonet ${i.navn} vises ikke`);
     assert.ok(h.includes(`<code>${i.sf}</code>`), `SF Symbol ${i.sf} vises ikke`);
-    for (const m of ["16", "20", "24"]) assert.ok(existsSync(join(dist, "ds", "assets", "ikoner", m, `${i.fil}.svg`)), `${m}/${i.fil}.svg mangler i dist`);
+    for (const m of ["16", "20", "24"]) assert.ok(existsSync(join(dist, "ds", "ikoner-2-5", m, `${i.fil}.svg`)), `${m}/${i.fil}.svg mangler i dist`);
   }
-  assert.ok(/foreslått/i.test(t.slice(t.indexOf("53 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
-  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 53 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
+  assert.ok(/foreslått/i.test(t.slice(t.indexOf("72 strekikoner"))), "ikonenes status (foreslått) skal stå på siden");
+  assert.ok((h.match(/class="ikon-svg"/g) ?? []).length >= 72 * 2, "ikonene skal tegnes inline (currentColor), i lys og mørk");
   assert.ok(!/stroke="#|stroke="rgb/.test(h), "ikonene skal bruke currentColor, ikke egne farger");
+});
+
+test("/farger viser de fire produktpalettene (ute, nettsider, crm, admin) fra JSON, og html har data-produkt=nettsider", () => {
+  const h = html("farger");
+  for (const n of ["ute", "nettsider", "crm", "admin"]) {
+    assert.ok(h.includes(`data-produkt="${n}"`), `produktpaletten ${n} vises ikke`);
+    for (const [rolle, hex] of uten$(json.produkt[n].lys)) assert.ok(h.includes(hex), `${n}: ${rolle} ${hex} vises ikke`);
+  }
+  assert.match(h, /<html[^>]*data-produkt="nettsider"/, "design.hengsel.no er en nettside: data-produkt=nettsider");
 });
 
 test("/komponenter har alle komponentene i lys og mørk med brukes til og ikke til", () => {
@@ -183,7 +193,7 @@ test("/skjermer og /last-ned peker på filer som finnes", () => {
   for (const f of ["ute-motion-1080x1080.mp4", "ute-motion-1080x1920.webm", "og-hengsel-no.png", "og-kunde.svg"]) assert.ok(l.includes(f) && existsSync(join(dist, "ds", "assets", f.startsWith("ute") ? "motion" : "deling", f)), `${f} på /last-ned`);
   assert.ok(l.includes("/last-ned/hengsel-ikoner.zip") && existsSync(join(dist, "last-ned", "hengsel-ikoner.zip")), "ikonpakken mangler");
   const ikonZip = readFileSync(join(dist, "last-ned", "hengsel-ikoner.zip"));
-  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 53 * 3 + 5, "ikonpakken skal ha 53 ikoner i 3 størrelser, pluss LES-MEG, ikoner.json, ikoner-tillegg.json, sprite og tabell");
+  assert.equal(ikonZip.readUInt16LE(ikonZip.length - 22 + 10), 72 * 3 + 3 + 5, "ikonpakken skal ha 72 ikoner i 3 størrelser (nivåikonene også i 12 px), pluss LES-MEG, ikoner.json, ikoner-tillegg.json, sprite og tabell");
 });
 
 test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlandet, Lausanne eller Reckless på sidene eller i nedlastingene", () => {

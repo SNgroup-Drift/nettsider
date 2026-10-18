@@ -30,7 +30,7 @@ const rader = STEG.map((s) => [s.tittel, s.tekst]);
     <Sidetopp tittel={HERO.tittel} ingress={HERO.ingress}>
       <div class="topp-telefon" slot="komposisjon"><Enhet type="iphone" bilde={HERO.bilde} alt={HERO.alt} forst /></div>
     </Sidetopp>
-    <Innhold>
+    <Innhold produkt="ute">
       <Rad hoyde={120}>
         {STATUS.map(([t, p, tone, s]) => <Statusflis tittel={t} pille={p} tone={tone} tekst={s} />)}
       </Rad>

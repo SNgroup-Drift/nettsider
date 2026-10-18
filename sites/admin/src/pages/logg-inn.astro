@@ -5,12 +5,13 @@
  * gyldig Access-token, f.eks. på workers.dev-adressen. Knappen går til admin.hengsel.no, der Access ber om jobbkontoen. Bare lys modus, ingen skript.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 import "../styles/logg-inn.css";
 ---
-<Hode title="Logg inn · Hengsel Admin" description="Hengsel Admin: bare for Hengsel. Logg inn med Cloudflare Access." robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png">
+<Hode title="Logg inn · Hengsel Admin" description="Hengsel Admin: bare for Hengsel. Logg inn med Cloudflare Access." robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-produkt": "admin" }}>
   <main class="innlogging-flate" id="innhold">
     <section class="kort" aria-labelledby="logg-inn-tittel">
-      <img src="/logo/logo-hengsel-lys.svg" alt="Hengsel" width="92" height="22" />
+      <img src={PRODUKTLOGO.admin.src} alt={PRODUKTLOGO.admin.alt} width="150" height="22" />
       <h1 id="logg-inn-tittel">Hengsel Admin</h1>
       <p>Bare for Hengsel. Logg inn med Cloudflare Access og jobbkontoen din.</p>
       <a class="knapp" href="https://admin.hengsel.no/">Logg inn med Access</a>

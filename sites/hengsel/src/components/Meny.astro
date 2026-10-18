@@ -4,6 +4,7 @@
  * Integrasjoner, Priser) og KOMMER-sidene 25-008–25-010 (N-3); «Logg inn» til Visningsrommet står i bunnen. Kundeutgave: kundens lenker og Visningsrommet.
  * Under 1180 px erstattes lenkene av ≡ (det er ikke plass til åtte lenker). Menypanelet åpnes av scripts/meny.ts.
  */
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 import { LOGG_INN, MENY, type MenyNokkel } from "../content/nav";
 import KundeLogo from "./KundeLogo.astro";
 import { kundeHref, type Kunde } from "../kunde";
@@ -20,7 +21,7 @@ const logginn = kunde ? kunde.vis : LOGG_INN;
     ) : (
       <a class="logo" href="/" aria-label="Hengsel – til forsiden">
         <picture>
-          <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
+          <img src={PRODUKTLOGO.nettsider.src} alt={PRODUKTLOGO.nettsider.alt} width={PRODUKTLOGO.nettsider.width} height={PRODUKTLOGO.nettsider.height} />
         </picture>
       </a>
     )}

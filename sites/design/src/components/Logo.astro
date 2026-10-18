@@ -24,8 +24,11 @@ interface Props {
   alt?: string;
   /** Utgave for lys eller mørk flate. Siden er lys: uten verdi brukes «lys». «mork» er bare til fargeprøver som viser logoen på den mørke flaten i appene og CRM-et. */
   modus?: Modus;
+  /** N-7: produktlogoen fra designsystem 2.5 (ds/produktlogo: oransje prikk for Hengsel, blå CRM, grønn Ute, lilla Admin). Siden er en nettside, så menyen og bunnen bruker «nettsider». Bare lys utgave. */
+  produkt?: boolean;
 }
-const { form = "hengsel", utgave = "aksent", hoyde = 28, alt = "Hengsel", modus = "lys" } = Astro.props;
+const { form = "hengsel", utgave = "aksent", hoyde = 28, alt = "Hengsel", modus = "lys", produkt = false } = Astro.props;
 const mal = (src: string) => logoMaal(src, hoyde);
+const kilde = produkt ? `/ds/produktlogo/logo-${form}-lys.svg` : fil(form, modus, utgave);
 ---
-<img src={fil(form, modus, utgave)} alt={alt} {...mal(fil(form, modus, utgave))} />
+<img src={kilde} alt={alt} {...mal(kilde)} />

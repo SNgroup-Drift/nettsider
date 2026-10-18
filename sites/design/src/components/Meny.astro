@@ -7,7 +7,7 @@ const { aktiv = "" } = Astro.props;
 ---
 <header class="meny">
   <div class="wrap rad">
-    <a class="logo" href="/" aria-label="Hengsel designfasit, til forsiden"><Logo form="hengsel" hoyde={28} /></a>
+    <a class="logo" href="/" aria-label="Hengsel designfasit, til forsiden"><Logo form="hengsel" produkt hoyde={28} /></a>
     <nav aria-label="Hovedmeny">
       {MENY.map(([k, t, h]) => <a href={h} aria-current={k === aktiv ? "page" : undefined}>{t}</a>)}
     </nav>

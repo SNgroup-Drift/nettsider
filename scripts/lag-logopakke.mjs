@@ -5,6 +5,7 @@
  hengsel-butikkmaler.zip (ds/assets/butikk) og hengsel-appikoner.zip (PWA, Expo og Android fra ds/assets/pwa og ds/assets/app-ikon). Kjøres først i `npm run build -w sites/design`. Ren Node (zip uten komprimering), og alltid de samme bytene for de samme filene
  * (fast tidsstempel, sortert), så bygget er reproduserbart. Fila genereres, den er ikke i git.
  */
+import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, relative, resolve } from "node:path";
 
@@ -76,15 +77,17 @@ Alle regler og plasseringer: https://design.hengsel.no/merke
   await writeFile(join(ut, "hengsel-logopakke.zip"), await lagZip(filer));
   console.log(`✓ hengsel-logopakke.zip: ${logoer.length} logoer, ${pngNavn.length} PNG, ${flisNavn.length} favicon-filer`);
 
-  // Ikonsettet: 49 SVG-er i 16, 20 og 24 px (currentColor), navn og SF Symbol i ikoner.json, sprite og tabell
-  const ikonNavn = [...JSON.parse(await readFile(join(ds, "assets", "ikoner", "ikoner.json"), "utf8")).ikoner, ...JSON.parse(await readFile(join(ds, "assets", "ikoner", "ikoner-tillegg.json"), "utf8")).ikoner].map((i) => i.fil).sort();
+  // Ikonsettet (designsystem 2.5, N-7): 72 SVG-er i 16, 20 og 24 px (currentColor), nivåikonene også i 12 px, navn og SF Symbol i ikoner.json, sprite og tabell (ds/ikoner-2-5, fra pakken)
+  const ikonJson = JSON.parse(await readFile(join(ds, "ikoner-2-5", "ikoner.json"), "utf8"));
+  const ikonNavn = ikonJson.ikoner.map((i) => i.fil).sort();
   const ikonFiler = [
-    ["LES-MEG.txt", Buffer.from(`Hengsel-ikonene (palettpakke v2 og merkepakke v2). Status: foreslått, venter på bekreftelse.\n\n${ikonNavn.length} strekikoner på et 20 px rutenett, i 16, 20 og 24 px. Fargen er currentColor.\nikoner.json har navn, gruppe, SF Symbol og bruk for de 49 fra palettpakke v2. ikoner-tillegg.json har de fire nye (Montasjeplan, Innboks, Profil og Hjelp, merkepakke v2).\nhengsel-ikoner.svg er en sprite med <symbol id> for de 49 (de fire nye er ikke i spriten ennå). IKONER.md er tabellen.\nhttps://design.hengsel.no/komponenter#ikoner\n`)],
-    ["ikoner.json", await les("assets", "ikoner", "ikoner.json")],
-    ["ikoner-tillegg.json", await les("assets", "ikoner", "ikoner-tillegg.json")],
-    ["hengsel-ikoner.svg", await les("assets", "ikoner", "hengsel-ikoner.svg")],
-    ["IKONER.md", await les("assets", "ikoner", "IKONER.md")],
-    ...(await Promise.all(["16", "20", "24"].flatMap((m) => ikonNavn.map(async (n) => [`${m}/${n}.svg`, await les("assets", "ikoner", m, `${n}.svg`)])))),
+    ["LES-MEG.txt", Buffer.from(`Hengsel-ikonene (designsystem 2.5). Status: foreslått, venter på bekreftelse.\n\n${ikonNavn.length} strekikoner på et 20 px rutenett, i 16, 20 og 24 px (nivåikonene også i 12 px). Fargen er currentColor.\nikoner.json har navn, gruppe, SF Symbol og bruk. 68 er fra Design 2.5 (19 nye), fire er egne (Montasjeplan, Innboks, Profil og Hjelp, se ikoner-tillegg.json).\nhengsel-ikoner.svg er en sprite med <symbol id>. IKONER.md er tabellen.\nhttps://design.hengsel.no/komponenter#ikoner\n`)],
+    ["ikoner.json", await les("ikoner-2-5", "ikoner.json")],
+    ["ikoner-tillegg.json", await les("ikoner-2-5", "ikoner-tillegg.json")],
+    ["hengsel-ikoner.svg", await les("ikoner-2-5", "hengsel-ikoner.svg")],
+    ["IKONER.md", await les("ikoner-2-5", "IKONER.md")],
+    ...(await Promise.all(["16", "20", "24"].flatMap((m) => ikonNavn.map(async (n) => [`${m}/${n}.svg`, await les("ikoner-2-5", m, `${n}.svg`)])))),
+    ...(await Promise.all(ikonNavn.filter((n) => existsSync(join(ds, "ikoner-2-5", "12", `${n}.svg`))).map(async (n) => [`12/${n}.svg`, await les("ikoner-2-5", "12", `${n}.svg`)]))),
   ];
   await writeFile(join(ut, "hengsel-ikoner.zip"), await lagZip(ikonFiler));
   console.log(`✓ hengsel-ikoner.zip: ${ikonNavn.length} ikoner × 3 størrelser`);

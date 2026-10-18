@@ -33,6 +33,12 @@ const HENTES = [
   "assets/logo", "assets/fonts", "assets/favicon", "assets/ikoner",
 ];
 const UTE = ["assets/logo/kunde/", "assets/fonts/kundetema-sigdal/"];
+// N-7 (designsystem 2.5): produktlogoene (Hengsel oransje, CRM blå, Ute grønn, Admin lilla) står bare i Designs kilde claude-design/2-5/assets/logo, ikke i assets/logo
+// (K-371 tok dem ikke inn), og ikonsettet 2.5 (72 ikoner med ikoner.json) ligger i ikoner/ i roten. De legges i egne mapper i ds så palettpakke v2 og merkepakke v2 ikke berøres.
+const EKSTRA = [
+  { fra: "claude-design/2-5/assets/logo", til: "produktlogo", bare: /\.svg$/ },
+  { fra: "ikoner", til: "ikoner-2-5", bare: /\.(svg|json|md)$/ },
+];
 
 const arg = (navn) => { const i = process.argv.indexOf(navn); return i > 0 ? process.argv[i + 1] : undefined; };
 const kilde = resolve(arg("--kilde") ?? process.env.DESIGNSYSTEM_KILDE ?? "/home/user/innlandet-crm-sync");
@@ -46,6 +52,7 @@ const filer = git("ls-tree", "-r", "--name-only", full, "--", ...HENTES.map((m) 
   .filter((f) => !/\.(swift|md)$/.test(f) && !f.includes("/arkiv/") && !UTE.some((u) => f.slice(DS.length + 1).startsWith(u)) && !/lausanne/i.test(f));
 // tokens.ts og tokens.css hører med (nedlasting); Swift-filen gjør ikke det
 const ut = {};
+const ekstra = EKSTRA.flatMap((e) => git("ls-tree", "-r", "--name-only", full, "--", `${DS}/${e.fra}`).toString().trim().split("\n").filter((f) => f && e.bare.test(f)).map((f) => ({ f, rel: `${e.til}/${f.slice(`${DS}/${e.fra}/`.length)}` })));
 await rm(MAL, { recursive: true, force: true });
 for (const f of filer) {
   const rel = f.slice(DS.length + 1);
@@ -54,9 +61,15 @@ for (const f of filer) {
   await writeFile(join(MAL, rel), data);
   ut[rel] = createHash("sha256").update(data).digest("hex");
 }
+for (const { f, rel } of ekstra) {
+  const data = git("show", `${full}:${f}`);
+  await mkdir(dirname(join(MAL, rel)), { recursive: true });
+  await writeFile(join(MAL, rel), data);
+  ut[rel] = createHash("sha256").update(data).digest("hex");
+}
 const nyPin = { repo: "SNgroup-Drift/hengsel-crm", sti: DS, commit: full, versjon: JSON.parse(await readFile(join(MAL, "tokens", "hengsel.tokens.json"), "utf8")).versjon, filer: ut };
 // Med palettpakke (K-212 runde 2) er logo, ikoner, favicon og app-ikon i pin-fila fra pakken, ikke fra commiten: bare tokens og fonter sammenliknes.
-const fraCommit = (f) => (pin.palettpakke ? Object.fromEntries(Object.entries(f).filter(([k]) => /^(tokens|assets\/fonts)\//.test(k))) : f);
+const fraCommit = (f) => (pin.palettpakke ? Object.fromEntries(Object.entries(f).filter(([k]) => /^(tokens|assets\/fonts|produktlogo|ikoner-2-5)\//.test(k))) : f);
 if (!arg("--commit") && pin.filer && JSON.stringify(fraCommit(pin.filer)) !== JSON.stringify(fraCommit(ut))) throw new Error("Filene på pinnet commit avviker fra pin-fila (pin-fila er redigert for hånd?).");
 await writeFile(PIN, JSON.stringify(nyPin, null, 2) + "\n");
 console.log(`✓ ${Object.keys(ut).length} filer fra ${full.slice(0, 8)} (designsystem ${nyPin.versjon}) → packages/hengsel-tokens/ds`);

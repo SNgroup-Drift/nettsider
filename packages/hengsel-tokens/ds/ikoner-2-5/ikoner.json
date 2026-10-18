@@ -1,0 +1,975 @@
+{
+  "navn": "Hengsel ikoner",
+  "dato": "2026-10-18",
+  "rutenett": 20,
+  "strek": {
+    "16": 1.5,
+    "20": 1.6,
+    "24": 1.75
+  },
+  "hjorner": "rund (linecap og linejoin round), rektangler rx 1,25–2,5",
+  "farge": "currentColor",
+  "ikoner": [
+    {
+      "fil": "min-dag",
+      "navn": "Min dag",
+      "gruppe": "meny",
+      "sf": "sun.max",
+      "egen": false,
+      "bruk": "Menypunkt «Min dag» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/min-dag.svg",
+        "20": "20/min-dag.svg",
+        "24": "24/min-dag.svg"
+      }
+    },
+    {
+      "fil": "samtaler",
+      "navn": "Samtaler",
+      "gruppe": "meny",
+      "sf": "bubble.left.and.bubble.right",
+      "egen": false,
+      "bruk": "Menypunkt «Samtaler» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/samtaler.svg",
+        "20": "20/samtaler.svg",
+        "24": "24/samtaler.svg"
+      }
+    },
+    {
+      "fil": "innkommende",
+      "navn": "Innkommende",
+      "gruppe": "meny",
+      "sf": "tray.and.arrow.down",
+      "egen": false,
+      "bruk": "Menypunkt «Innkommende» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/innkommende.svg",
+        "20": "20/innkommende.svg",
+        "24": "24/innkommende.svg"
+      }
+    },
+    {
+      "fil": "salgstavle",
+      "navn": "Salgstavle",
+      "gruppe": "meny",
+      "sf": "rectangle.split.3x1",
+      "egen": false,
+      "bruk": "Menypunkt «Salgstavle» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/salgstavle.svg",
+        "20": "20/salgstavle.svg",
+        "24": "24/salgstavle.svg"
+      }
+    },
+    {
+      "fil": "kunder",
+      "navn": "Kunder",
+      "gruppe": "meny",
+      "sf": "person.2",
+      "egen": false,
+      "bruk": "Menypunkt «Kunder» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/kunder.svg",
+        "20": "20/kunder.svg",
+        "24": "24/kunder.svg"
+      }
+    },
+    {
+      "fil": "tilbud",
+      "navn": "Tilbud",
+      "gruppe": "meny",
+      "sf": "doc.text",
+      "egen": false,
+      "bruk": "Menypunkt «Tilbud» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/tilbud.svg",
+        "20": "20/tilbud.svg",
+        "24": "24/tilbud.svg"
+      }
+    },
+    {
+      "fil": "ordre",
+      "navn": "Ordre",
+      "gruppe": "meny",
+      "sf": "list.clipboard",
+      "egen": false,
+      "bruk": "Menypunkt «Ordre» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/ordre.svg",
+        "20": "20/ordre.svg",
+        "24": "24/ordre.svg"
+      }
+    },
+    {
+      "fil": "prosjekter",
+      "navn": "Prosjekter",
+      "gruppe": "meny",
+      "sf": "folder",
+      "egen": false,
+      "bruk": "Menypunkt «Prosjekter» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/prosjekter.svg",
+        "20": "20/prosjekter.svg",
+        "24": "24/prosjekter.svg"
+      }
+    },
+    {
+      "fil": "montasje",
+      "navn": "Montasje",
+      "gruppe": "meny",
+      "sf": "wrench.and.screwdriver",
+      "egen": false,
+      "bruk": "Menypunkt «Montasje» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/montasje.svg",
+        "20": "20/montasje.svg",
+        "24": "24/montasje.svg"
+      }
+    },
+    {
+      "fil": "prosjektplan",
+      "navn": "Prosjektplan",
+      "gruppe": "meny",
+      "sf": "calendar.day.timeline.left",
+      "egen": false,
+      "bruk": "Menypunkt «Prosjektplan» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/prosjektplan.svg",
+        "20": "20/prosjektplan.svg",
+        "24": "24/prosjektplan.svg"
+      }
+    },
+    {
+      "fil": "saker",
+      "navn": "Saker",
+      "gruppe": "meny",
+      "sf": "ticket",
+      "egen": false,
+      "bruk": "Menypunkt «Saker» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/saker.svg",
+        "20": "20/saker.svg",
+        "24": "24/saker.svg"
+      }
+    },
+    {
+      "fil": "bestilling",
+      "navn": "Bestilling",
+      "gruppe": "meny",
+      "sf": "cart",
+      "egen": false,
+      "bruk": "Menypunkt «Bestilling» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/bestilling.svg",
+        "20": "20/bestilling.svg",
+        "24": "24/bestilling.svg"
+      }
+    },
+    {
+      "fil": "resultater",
+      "navn": "Resultater",
+      "gruppe": "meny",
+      "sf": "chart.line.uptrend.xyaxis",
+      "egen": false,
+      "bruk": "Menypunkt «Resultater» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/resultater.svg",
+        "20": "20/resultater.svg",
+        "24": "24/resultater.svg"
+      }
+    },
+    {
+      "fil": "fakturaer",
+      "navn": "Fakturaer",
+      "gruppe": "meny",
+      "sf": "receipt",
+      "egen": false,
+      "bruk": "Menypunkt «Fakturaer» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/fakturaer.svg",
+        "20": "20/fakturaer.svg",
+        "24": "24/fakturaer.svg"
+      }
+    },
+    {
+      "fil": "rapporter",
+      "navn": "Rapporter",
+      "gruppe": "meny",
+      "sf": "chart.bar.doc.horizontal",
+      "egen": false,
+      "bruk": "Menypunkt «Rapporter» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/rapporter.svg",
+        "20": "20/rapporter.svg",
+        "24": "24/rapporter.svg"
+      }
+    },
+    {
+      "fil": "salgsbanken",
+      "navn": "Salgsbanken",
+      "gruppe": "meny",
+      "sf": "archivebox",
+      "egen": false,
+      "bruk": "Menypunkt «Salgsbanken» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/salgsbanken.svg",
+        "20": "20/salgsbanken.svg",
+        "24": "24/salgsbanken.svg"
+      }
+    },
+    {
+      "fil": "leder",
+      "navn": "Leder",
+      "gruppe": "meny",
+      "sf": "briefcase",
+      "egen": false,
+      "bruk": "Menypunkt «Leder» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/leder.svg",
+        "20": "20/leder.svg",
+        "24": "24/leder.svg"
+      }
+    },
+    {
+      "fil": "mitt-team",
+      "navn": "Mitt team",
+      "gruppe": "meny",
+      "sf": "person.3",
+      "egen": false,
+      "bruk": "Menypunkt «Mitt team» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/mitt-team.svg",
+        "20": "20/mitt-team.svg",
+        "24": "24/mitt-team.svg"
+      }
+    },
+    {
+      "fil": "etterkalkyler",
+      "navn": "Etterkalkyler",
+      "gruppe": "meny",
+      "sf": "plus.forwardslash.minus",
+      "egen": false,
+      "bruk": "Menypunkt «Etterkalkyler» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/etterkalkyler.svg",
+        "20": "20/etterkalkyler.svg",
+        "24": "24/etterkalkyler.svg"
+      }
+    },
+    {
+      "fil": "utstillinger",
+      "navn": "Utstillinger",
+      "gruppe": "meny",
+      "sf": "storefront",
+      "egen": false,
+      "bruk": "Menypunkt «Utstillinger» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/utstillinger.svg",
+        "20": "20/utstillinger.svg",
+        "24": "24/utstillinger.svg"
+      }
+    },
+    {
+      "fil": "forskudd-leverandor",
+      "navn": "Forskudd til leverandør",
+      "gruppe": "meny",
+      "sf": "banknote",
+      "egen": true,
+      "bruk": "Menypunkt «Forskudd til leverandør» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/forskudd-leverandor.svg",
+        "20": "20/forskudd-leverandor.svg",
+        "24": "24/forskudd-leverandor.svg"
+      }
+    },
+    {
+      "fil": "unoterte-leverandor",
+      "navn": "Unoterte til leverandør",
+      "gruppe": "meny",
+      "sf": "doc.badge.ellipsis",
+      "egen": true,
+      "bruk": "Menypunkt «Unoterte til leverandør» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/unoterte-leverandor.svg",
+        "20": "20/unoterte-leverandor.svg",
+        "24": "24/unoterte-leverandor.svg"
+      }
+    },
+    {
+      "fil": "lager",
+      "navn": "Lager",
+      "gruppe": "meny",
+      "sf": "shippingbox",
+      "egen": false,
+      "bruk": "Menypunkt «Lager» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/lager.svg",
+        "20": "20/lager.svg",
+        "24": "24/lager.svg"
+      }
+    },
+    {
+      "fil": "innstillinger",
+      "navn": "Innstillinger",
+      "gruppe": "meny",
+      "sf": "slider.horizontal.3",
+      "egen": false,
+      "bruk": "Menypunkt «Innstillinger» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/innstillinger.svg",
+        "20": "20/innstillinger.svg",
+        "24": "24/innstillinger.svg"
+      }
+    },
+    {
+      "fil": "mer",
+      "navn": "Mer",
+      "gruppe": "meny",
+      "sf": "ellipsis",
+      "egen": false,
+      "bruk": "Menypunkt «Mer» i sidemeny, skuff og «Mer»",
+      "filer": {
+        "16": "16/mer.svg",
+        "20": "20/mer.svg",
+        "24": "24/mer.svg"
+      }
+    },
+    {
+      "fil": "varsler",
+      "navn": "Varsler",
+      "gruppe": "verktoy",
+      "sf": "bell",
+      "egen": false,
+      "bruk": "Varselknapp i toppfeltet",
+      "filer": {
+        "16": "16/varsler.svg",
+        "20": "20/varsler.svg",
+        "24": "24/varsler.svg"
+      }
+    },
+    {
+      "fil": "sok",
+      "navn": "Søk",
+      "gruppe": "verktoy",
+      "sf": "magnifyingglass",
+      "egen": false,
+      "bruk": "Søkefelt og søkeknapp i toppfeltet",
+      "filer": {
+        "16": "16/sok.svg",
+        "20": "20/sok.svg",
+        "24": "24/sok.svg"
+      }
+    },
+    {
+      "fil": "kalender",
+      "navn": "Kalender",
+      "gruppe": "verktoy",
+      "sf": "calendar",
+      "egen": false,
+      "bruk": "Kalenderknapp i toppfeltet og «Book tegnetime»",
+      "filer": {
+        "16": "16/kalender.svg",
+        "20": "20/kalender.svg",
+        "24": "24/kalender.svg"
+      }
+    },
+    {
+      "fil": "oversikt",
+      "navn": "Oversikt",
+      "gruppe": "verktoy",
+      "sf": "square.grid.2x2",
+      "egen": false,
+      "bruk": "Oversikt og dashbord",
+      "filer": {
+        "16": "16/oversikt.svg",
+        "20": "20/oversikt.svg",
+        "24": "24/oversikt.svg"
+      }
+    },
+    {
+      "fil": "prisavvik",
+      "navn": "Prisavvik / advarsel",
+      "gruppe": "status",
+      "sf": "exclamationmark.triangle",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: prisavvik / advarsel",
+      "filer": {
+        "16": "16/prisavvik.svg",
+        "20": "20/prisavvik.svg",
+        "24": "24/prisavvik.svg"
+      }
+    },
+    {
+      "fil": "frist",
+      "navn": "Utløper / frist",
+      "gruppe": "status",
+      "sf": "hourglass",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: utløper / frist",
+      "filer": {
+        "16": "16/frist.svg",
+        "20": "20/frist.svg",
+        "24": "24/frist.svg"
+      }
+    },
+    {
+      "fil": "stoppet",
+      "navn": "Stoppet",
+      "gruppe": "status",
+      "sf": "nosign",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: stoppet",
+      "filer": {
+        "16": "16/stoppet.svg",
+        "20": "20/stoppet.svg",
+        "24": "24/stoppet.svg"
+      }
+    },
+    {
+      "fil": "mangler-montor",
+      "navn": "Mangler montør",
+      "gruppe": "status",
+      "sf": "person.fill.questionmark",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: mangler montør",
+      "filer": {
+        "16": "16/mangler-montor.svg",
+        "20": "20/mangler-montor.svg",
+        "24": "24/mangler-montor.svg"
+      }
+    },
+    {
+      "fil": "endringsfrist",
+      "navn": "Endringsfrist",
+      "gruppe": "status",
+      "sf": "calendar.badge.exclamationmark",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: endringsfrist",
+      "filer": {
+        "16": "16/endringsfrist.svg",
+        "20": "20/endringsfrist.svg",
+        "24": "24/endringsfrist.svg"
+      }
+    },
+    {
+      "fil": "kontrollmal",
+      "navn": "Kontrollmål",
+      "gruppe": "status",
+      "sf": "ruler",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: kontrollmål",
+      "filer": {
+        "16": "16/kontrollmal.svg",
+        "20": "20/kontrollmal.svg",
+        "24": "24/kontrollmal.svg"
+      }
+    },
+    {
+      "fil": "reklamasjon",
+      "navn": "Reklamasjon",
+      "gruppe": "status",
+      "sf": "arrow.uturn.backward",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: reklamasjon",
+      "filer": {
+        "16": "16/reklamasjon.svg",
+        "20": "20/reklamasjon.svg",
+        "24": "24/reklamasjon.svg"
+      }
+    },
+    {
+      "fil": "levering",
+      "navn": "Levering",
+      "gruppe": "status",
+      "sf": "truck.box",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: levering",
+      "filer": {
+        "16": "16/levering.svg",
+        "20": "20/levering.svg",
+        "24": "24/levering.svg"
+      }
+    },
+    {
+      "fil": "montering",
+      "navn": "Montering",
+      "gruppe": "status",
+      "sf": "hammer",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: montering",
+      "filer": {
+        "16": "16/montering.svg",
+        "20": "20/montering.svg",
+        "24": "24/montering.svg"
+      }
+    },
+    {
+      "fil": "signert",
+      "navn": "Signert",
+      "gruppe": "status",
+      "sf": "signature",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: signert",
+      "filer": {
+        "16": "16/signert.svg",
+        "20": "20/signert.svg",
+        "24": "24/signert.svg"
+      }
+    },
+    {
+      "fil": "sendt",
+      "navn": "Sendt",
+      "gruppe": "status",
+      "sf": "paperplane",
+      "egen": false,
+      "bruk": "«Trenger handling», saker og historikk: sendt",
+      "filer": {
+        "16": "16/sendt.svg",
+        "20": "20/sendt.svg",
+        "24": "24/sendt.svg"
+      }
+    },
+    {
+      "fil": "pil-hoyre",
+      "navn": "Pil høyre",
+      "gruppe": "hjelp",
+      "sf": "chevron.right",
+      "egen": false,
+      "bruk": "Rad som åpner noe, brødsmuler",
+      "filer": {
+        "16": "16/pil-hoyre.svg",
+        "20": "20/pil-hoyre.svg",
+        "24": "24/pil-hoyre.svg"
+      }
+    },
+    {
+      "fil": "pil-venstre",
+      "navn": "Pil venstre",
+      "gruppe": "hjelp",
+      "sf": "chevron.left",
+      "egen": false,
+      "bruk": "Tilbake",
+      "filer": {
+        "16": "16/pil-venstre.svg",
+        "20": "20/pil-venstre.svg",
+        "24": "24/pil-venstre.svg"
+      }
+    },
+    {
+      "fil": "pluss",
+      "navn": "Legg til",
+      "gruppe": "hjelp",
+      "sf": "plus",
+      "egen": false,
+      "bruk": "Ny, legg til",
+      "filer": {
+        "16": "16/pluss.svg",
+        "20": "20/pluss.svg",
+        "24": "24/pluss.svg"
+      }
+    },
+    {
+      "fil": "lukk",
+      "navn": "Lukk",
+      "gruppe": "hjelp",
+      "sf": "xmark",
+      "egen": false,
+      "bruk": "Lukk dialog, ark og skuff",
+      "filer": {
+        "16": "16/lukk.svg",
+        "20": "20/lukk.svg",
+        "24": "24/lukk.svg"
+      }
+    },
+    {
+      "fil": "hake",
+      "navn": "Hake",
+      "gruppe": "hjelp",
+      "sf": "checkmark",
+      "egen": false,
+      "bruk": "Fullført, avkrysset, bekreftelse",
+      "filer": {
+        "16": "16/hake.svg",
+        "20": "20/hake.svg",
+        "24": "24/hake.svg"
+      }
+    },
+    {
+      "fil": "telefon",
+      "navn": "Ring",
+      "gruppe": "hjelp",
+      "sf": "phone",
+      "egen": false,
+      "bruk": "Ring kunden",
+      "filer": {
+        "16": "16/telefon.svg",
+        "20": "20/telefon.svg",
+        "24": "24/telefon.svg"
+      }
+    },
+    {
+      "fil": "naviger",
+      "navn": "Naviger",
+      "gruppe": "hjelp",
+      "sf": "location",
+      "egen": false,
+      "bruk": "Adresse, naviger, kart",
+      "filer": {
+        "16": "16/naviger.svg",
+        "20": "20/naviger.svg",
+        "24": "24/naviger.svg"
+      }
+    },
+    {
+      "fil": "kamera",
+      "navn": "Kamera",
+      "gruppe": "hjelp",
+      "sf": "camera",
+      "egen": false,
+      "bruk": "Ta bilde (avvik)",
+      "filer": {
+        "16": "16/kamera.svg",
+        "20": "20/kamera.svg",
+        "24": "24/kamera.svg"
+      }
+    },
+    {
+      "fil": "filter",
+      "navn": "Filter",
+      "gruppe": "hjelp",
+      "sf": "line.3.horizontal.decrease",
+      "egen": false,
+      "bruk": "Filter i tabeller og lister",
+      "filer": {
+        "16": "16/filter.svg",
+        "20": "20/filter.svg",
+        "24": "24/filter.svg"
+      }
+    },
+    {
+      "fil": "nivaa-haster",
+      "navn": "Haster",
+      "gruppe": "nivaa",
+      "sf": "exclamationmark.circle",
+      "egen": false,
+      "bruk": "Nivå «Haster» (må gjøres nå): i pillen, prioritetsfeltet og stegraden. Alltid sammen med ordet.",
+      "ny": "2.5",
+      "filer": {
+        "12": "12/nivaa-haster.svg",
+        "16": "16/nivaa-haster.svg",
+        "20": "20/nivaa-haster.svg",
+        "24": "24/nivaa-haster.svg"
+      }
+    },
+    {
+      "fil": "nivaa-snart",
+      "navn": "Snart",
+      "gruppe": "nivaa",
+      "sf": "clock",
+      "egen": false,
+      "bruk": "Nivå «Snart» (frist om få dager): i pillen og prioritetsfeltet. Alltid sammen med ordet.",
+      "ny": "2.5",
+      "filer": {
+        "12": "12/nivaa-snart.svg",
+        "16": "16/nivaa-snart.svg",
+        "20": "20/nivaa-snart.svg",
+        "24": "24/nivaa-snart.svg"
+      }
+    },
+    {
+      "fil": "nivaa-venter",
+      "navn": "Venter",
+      "gruppe": "nivaa",
+      "sf": "pause.circle",
+      "egen": false,
+      "bruk": "Venter på svar fra andre (kunde, leverandør). Brukes på nivå «Snart» når grunnen er venting.",
+      "ny": "2.5",
+      "filer": {
+        "12": "12/nivaa-venter.svg",
+        "16": "16/nivaa-venter.svg",
+        "20": "20/nivaa-venter.svg",
+        "24": "24/nivaa-venter.svg"
+      }
+    },
+    {
+      "fil": "chevron-ned",
+      "navn": "Chevron ned",
+      "gruppe": "hjelp",
+      "sf": "chevron.down",
+      "egen": false,
+      "bruk": "Åpne nedtrekk, velger, utvid rad",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/chevron-ned.svg",
+        "20": "20/chevron-ned.svg",
+        "24": "24/chevron-ned.svg"
+      }
+    },
+    {
+      "fil": "chevron-hoyre-liten",
+      "navn": "Chevron høyre (liten)",
+      "gruppe": "hjelp",
+      "sf": "chevron.right",
+      "egen": false,
+      "bruk": "Brødsmuler, lenkerader og «vis mer» i 16 px",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/chevron-hoyre-liten.svg",
+        "20": "20/chevron-hoyre-liten.svg",
+        "24": "24/chevron-hoyre-liten.svg"
+      }
+    },
+    {
+      "fil": "sorter",
+      "navn": "Sorter",
+      "gruppe": "hjelp",
+      "sf": "arrow.up.arrow.down",
+      "egen": false,
+      "bruk": "Kolonne som kan sorteres (ikke sortert nå)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/sorter.svg",
+        "20": "20/sorter.svg",
+        "24": "24/sorter.svg"
+      }
+    },
+    {
+      "fil": "sorter-opp",
+      "navn": "Sortert stigende",
+      "gruppe": "hjelp",
+      "sf": "arrow.up",
+      "egen": false,
+      "bruk": "Kolonne sortert stigende (A–Å, eldst først)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/sorter-opp.svg",
+        "20": "20/sorter-opp.svg",
+        "24": "24/sorter-opp.svg"
+      }
+    },
+    {
+      "fil": "sorter-ned",
+      "navn": "Sortert synkende",
+      "gruppe": "hjelp",
+      "sf": "arrow.down",
+      "egen": false,
+      "bruk": "Kolonne sortert synkende (Å–A, nyest først)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/sorter-ned.svg",
+        "20": "20/sorter-ned.svg",
+        "24": "24/sorter-ned.svg"
+      }
+    },
+    {
+      "fil": "kopier",
+      "navn": "Kopier",
+      "gruppe": "hjelp",
+      "sf": "doc.on.doc",
+      "egen": false,
+      "bruk": "Kopier ordrenummer, lenke eller tekst",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/kopier.svg",
+        "20": "20/kopier.svg",
+        "24": "24/kopier.svg"
+      }
+    },
+    {
+      "fil": "e-post",
+      "navn": "E-post",
+      "gruppe": "hjelp",
+      "sf": "envelope",
+      "egen": false,
+      "bruk": "Send e-post, e-postadresse i kontaktfelt",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/e-post.svg",
+        "20": "20/e-post.svg",
+        "24": "24/e-post.svg"
+      }
+    },
+    {
+      "fil": "ekstern-lenke",
+      "navn": "Ekstern lenke",
+      "gruppe": "hjelp",
+      "sf": "arrow.up.right.square",
+      "egen": false,
+      "bruk": "Lenke som åpner noe utenfor Hengsel (ny fane)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/ekstern-lenke.svg",
+        "20": "20/ekstern-lenke.svg",
+        "24": "24/ekstern-lenke.svg"
+      }
+    },
+    {
+      "fil": "legg-til-bilde",
+      "navn": "Legg til bilde",
+      "gruppe": "hjelp",
+      "sf": "photo.badge.plus",
+      "egen": false,
+      "bruk": "Last opp bilde (montasje, reklamasjon, befaring)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/legg-til-bilde.svg",
+        "20": "20/legg-til-bilde.svg",
+        "24": "24/legg-til-bilde.svg"
+      }
+    },
+    {
+      "fil": "laster",
+      "navn": "Laster",
+      "gruppe": "hjelp",
+      "sf": "progress.indicator",
+      "egen": false,
+      "bruk": "Venter på svar fra server. Roterer bare når prefers-reduced-motion ikke er satt; ellers står den stille med teksten «Laster …»",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/laster.svg",
+        "20": "20/laster.svg",
+        "24": "24/laster.svg"
+      }
+    },
+    {
+      "fil": "oye",
+      "navn": "Vis",
+      "gruppe": "hjelp",
+      "sf": "eye",
+      "egen": false,
+      "bruk": "Vis passord, forhåndsvis, «sett av kunden»",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/oye.svg",
+        "20": "20/oye.svg",
+        "24": "24/oye.svg"
+      }
+    },
+    {
+      "fil": "flagg",
+      "navn": "Flagg",
+      "gruppe": "hjelp",
+      "sf": "flag",
+      "egen": false,
+      "bruk": "Merk for oppfølging (eget valg, ikke et hastenivå)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/flagg.svg",
+        "20": "20/flagg.svg",
+        "24": "24/flagg.svg"
+      }
+    },
+    {
+      "fil": "melding",
+      "navn": "Melding",
+      "gruppe": "hjelp",
+      "sf": "message",
+      "egen": false,
+      "bruk": "Melding, kommentar, intern notat",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/melding.svg",
+        "20": "20/melding.svg",
+        "24": "24/melding.svg"
+      }
+    },
+    {
+      "fil": "logg-ut",
+      "navn": "Logg ut",
+      "gruppe": "hjelp",
+      "sf": "rectangle.portrait.and.arrow.right",
+      "egen": false,
+      "bruk": "Logg ut (brukermeny)",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/logg-ut.svg",
+        "20": "20/logg-ut.svg",
+        "24": "24/logg-ut.svg"
+      }
+    },
+    {
+      "fil": "bok",
+      "navn": "Håndbok",
+      "gruppe": "hjelp",
+      "sf": "book",
+      "egen": false,
+      "bruk": "Håndbok, rutiner, hjelpeartikler",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/bok.svg",
+        "20": "20/bok.svg",
+        "24": "24/bok.svg"
+      }
+    },
+    {
+      "fil": "kompass",
+      "navn": "Kompass",
+      "gruppe": "hjelp",
+      "sf": "safari",
+      "egen": false,
+      "bruk": "Veibeskrivelse, «finn fram», kart over butikker",
+      "ny": "2.5",
+      "filer": {
+        "16": "16/kompass.svg",
+        "20": "20/kompass.svg",
+        "24": "24/kompass.svg"
+      }
+    },
+    {
+      "fil": "montasjeplan",
+      "navn": "Montasjeplan",
+      "gruppe": "meny",
+      "sf": "calendar.badge.clock",
+      "egen": false,
+      "bruk": "Menypunkt «Montasjeplan»",
+      "filer": {
+        "16": "16/montasjeplan.svg",
+        "20": "20/montasjeplan.svg",
+        "24": "24/montasjeplan.svg"
+      }
+    },
+    {
+      "fil": "innboks",
+      "navn": "Innboks",
+      "gruppe": "meny",
+      "sf": "tray",
+      "egen": false,
+      "bruk": "Menypunkt «Innboks»",
+      "filer": {
+        "16": "16/innboks.svg",
+        "20": "20/innboks.svg",
+        "24": "24/innboks.svg"
+      }
+    },
+    {
+      "fil": "profil",
+      "navn": "Profil",
+      "gruppe": "meny",
+      "sf": "person.crop.circle",
+      "egen": false,
+      "bruk": "Menypunkt «Profil», brukermeny",
+      "filer": {
+        "16": "16/profil.svg",
+        "20": "20/profil.svg",
+        "24": "24/profil.svg"
+      }
+    },
+    {
+      "fil": "hjelp",
+      "navn": "Hjelp",
+      "gruppe": "meny",
+      "sf": "questionmark.circle",
+      "egen": false,
+      "bruk": "Menypunkt «Hjelp», hjelpeknapp",
+      "filer": {
+        "16": "16/hjelp.svg",
+        "20": "20/hjelp.svg",
+        "24": "24/hjelp.svg"
+      }
+    }
+  ],
+  "status": "foreslått (nytt ikonsett, venter på bekreftelse)",
+  "nivaa-12px": "Nivåikonene finnes også i 12 px (mappe 12/, strek 2,5 i 20-rutenettet = 1,5 px) for bruk inne i Statuspille.",
+  "merknad": "K-371 (18.10.2026): Designs ikoner 2.5 (68, felt «ny»: «2.5») pluss de fire egne fra K-220/K-222 (montasjeplan, innboks, profil, hjelp, se ikoner-tillegg.json). Ikonene med «ny» tas ikke inn i CRM-et og montørappen før en egen K (lag-ikoner.mjs hopper over dem)."
+}

@@ -1,4 +1,5 @@
 ---
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 /**
  * Sidehodet på /apptest og passordsiden (Apptest.dc.html): bare logoen og «Meld feil». Ingen hovedmeny, siden lenkes ikke fra menyen.
  */
@@ -9,7 +10,7 @@ const { meldFeil = false } = Astro.props;
   <div class="rad h-innhold">
     <a class="logo" href="/" aria-label="Hengsel – til forsiden">
       <picture>
-        <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" />
+        <img src={PRODUKTLOGO.nettsider.src} alt={PRODUKTLOGO.nettsider.alt} width={PRODUKTLOGO.nettsider.width} height={PRODUKTLOGO.nettsider.height} />
       </picture>
     </a>
     {meldFeil && <a class="meld" href="#meld-feil">Meld feil</a>}

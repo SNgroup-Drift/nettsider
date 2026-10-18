@@ -42,7 +42,7 @@ const fristerSnart = alleFrister().filter((f) => f.dato && f.dato >= idag && f.d
 const punkt = AKTIVT_PUNKT[aktiv] ?? aktiv;
 const egneHandlinger = Astro.slots.has("handlinger");
 ---
-<Hode title={`${title} · Hengsel Admin`} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc" }}>
+<Hode title={`${title} · Hengsel Admin`} description={description} robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-plattform": "pc", "data-produkt": "admin" }}>
   <div class={`app ${klasse}`.trim()} id="app">
     <aside class="sidemeny" id="sidemeny" aria-label="Hovedmeny">
       <a class="merke" href="/" aria-label="Hengsel Admin, til Salg">

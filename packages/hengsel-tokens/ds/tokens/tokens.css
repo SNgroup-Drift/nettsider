@@ -1,6 +1,6 @@
 /* GENERERT av scripts/design/lag-tokens.mjs fra tokens/hengsel.tokens.json. Ikke rediger for hånd.
  *
- * Hengsel-designsystemet, versjon 2.2.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
+ * Hengsel-designsystemet, versjon 2.5.0 (palett «blekk med furu», K-206). Lys er standard. Mørk følger systemet, med disse overstyringene:
  *   <html data-theme="light"> eller data-theme="dark"   fast utgave (design., admin., forhåndsvisning)
  *   <html class="dark">                                  CRM (src/tema/lysMork.ts)
  *   <html data-alltid-lys>                               kundeportal og offentlige sider: aldri mørk
@@ -1455,6 +1455,288 @@
     --status-feil-fg: color(display-p3 0.9922 0.8941 0.8784);
     --status-feil-bg: color(display-p3 0.1765 0.0588 0.0471);
     --status-feil-kant: color(display-p3 0.7529 0.5255 0.4902);
+  }
+}
+
+/* Haster og synlighet (designsystem 2.5, dokumentasjon/HASTER.md): aliaser til status-tokens, ingen nye farger. */
+:root,
+[data-produkt] {
+  --nivaa-haster-fg: var(--status-feil-fg);
+  --nivaa-haster-bg: var(--status-feil-bg);
+  --nivaa-haster-kant: var(--status-feil-kant);
+  --nivaa-snart-fg: var(--status-advarsel-fg);
+  --nivaa-snart-bg: var(--status-advarsel-bg);
+  --nivaa-snart-kant: var(--status-advarsel-kant);
+  --nivaa-stripe: 3px;
+}
+
+/* Produktpaletter (designsystem 2.5, K-371): data-produkt="ute|nettsider|crm|admin" på en innpakning. Grunnpaletten over er Ute. Nettsider, CRM og Admin er bare lyse og har ikke økt kontrast eller P3 ennå. */
+[data-produkt="nettsider"] {
+  --aksent: #AD5626;
+  --aksent-hsl: 21.3 64% 41.4%;
+  --aksent-rgb: 173 86 38;
+  --aksent-trykk: #99440F;
+  --aksent-trykk-hsl: 23 82.1% 32.9%;
+  --aksent-trykk-rgb: 153 68 15;
+  --aksent-tekst: #964109;
+  --aksent-tekst-hsl: 23.8 88.7% 31.2%;
+  --aksent-tekst-rgb: 150 65 9;
+  --aksent-svak: #F8F1EE;
+  --aksent-svak-hsl: 18 41.7% 95.3%;
+  --aksent-svak-rgb: 248 241 238;
+  --aksent-valgt: #EFDDD4;
+  --aksent-valgt-hsl: 20 45.8% 88.4%;
+  --aksent-valgt-rgb: 239 221 212;
+  --paa-aksent: #FBF9F6;
+  --paa-aksent-hsl: 36 38.5% 97.5%;
+  --paa-aksent-rgb: 251 249 246;
+  --flate-valgt: #F8F1EE;
+  --flate-valgt-hsl: 18 41.7% 95.3%;
+  --flate-valgt-rgb: 248 241 238;
+  --merke-stift: #B54F00;
+  --flate-side: #FAF6F2;
+  --flate-side-hsl: 30 44.4% 96.5%;
+  --flate-side-rgb: 250 246 242;
+  --flate-kort: #FEFDFB;
+  --flate-kort-hsl: 40 60% 99%;
+  --flate-kort-rgb: 254 253 251;
+  --flate-senket: #F3EFE9;
+  --flate-senket-hsl: 36 29.4% 93.3%;
+  --flate-senket-rgb: 243 239 233;
+  --tekst: #272D38;
+  --tekst-hsl: 218.8 17.9% 18.6%;
+  --tekst-rgb: 39 45 56;
+  --tekst-dempet: #4E535C;
+  --tekst-dempet-hsl: 218.6 8.2% 33.3%;
+  --tekst-dempet-rgb: 78 83 92;
+  --tekst-svak: #666A71;
+  --tekst-svak-hsl: 218.2 5.1% 42.2%;
+  --tekst-svak-rgb: 102 106 113;
+  color-scheme: light;
+}
+
+[data-produkt="crm"] {
+  --aksent: #4C5FCB;
+  --aksent-hsl: 231 55% 54.7%;
+  --aksent-rgb: 76 95 203;
+  --aksent-trykk: #3D4DB7;
+  --aksent-trykk-hsl: 232.1 50% 47.8%;
+  --aksent-trykk-rgb: 61 77 183;
+  --aksent-tekst: #3A49A8;
+  --aksent-tekst-hsl: 231.8 48.7% 44.3%;
+  --aksent-tekst-rgb: 58 73 168;
+  --aksent-svak: #F6F7FC;
+  --aksent-svak-hsl: 230 50% 97.6%;
+  --aksent-svak-rgb: 246 247 252;
+  --aksent-valgt: #EAECF9;
+  --aksent-valgt-hsl: 232 55.6% 94.7%;
+  --aksent-valgt-rgb: 234 236 249;
+  --paa-aksent: #FBF9F6;
+  --paa-aksent-hsl: 36 38.5% 97.5%;
+  --paa-aksent-rgb: 251 249 246;
+  --flate-valgt: #EAECF9;
+  --flate-valgt-hsl: 232 55.6% 94.7%;
+  --flate-valgt-rgb: 234 236 249;
+  --merke-stift: #5165D3;
+  --flate-side: #F1F1EF;
+  --flate-side-hsl: 60 6.7% 94.1%;
+  --flate-side-rgb: 241 241 239;
+  --flate-kort: #F9F9F7;
+  --flate-kort-hsl: 60 14.3% 97.3%;
+  --flate-kort-rgb: 249 249 247;
+  --flate-senket: #EAEAE8;
+  --flate-senket-hsl: 60 4.5% 91.4%;
+  --flate-senket-rgb: 234 234 232;
+  --tekst: #232A34;
+  --tekst-hsl: 215.3 19.5% 17.1%;
+  --tekst-rgb: 35 42 52;
+  --tekst-dempet: #4D525B;
+  --tekst-dempet-hsl: 218.6 8.3% 32.9%;
+  --tekst-dempet-rgb: 77 82 91;
+  --tekst-svak: #64686F;
+  --tekst-svak-hsl: 218.2 5.2% 41.4%;
+  --tekst-svak-rgb: 100 104 111;
+  color-scheme: light;
+}
+
+[data-produkt="admin"] {
+  --aksent: #7233AC;
+  --aksent-hsl: 271.2 54.3% 43.7%;
+  --aksent-rgb: 114 51 172;
+  --aksent-trykk: #611E98;
+  --aksent-trykk-hsl: 273 67% 35.7%;
+  --aksent-trykk-rgb: 97 30 152;
+  --aksent-tekst: #6929A2;
+  --aksent-tekst-hsl: 271.7 59.6% 39.8%;
+  --aksent-tekst-rgb: 105 41 162;
+  --aksent-svak: #F8F5FB;
+  --aksent-svak-hsl: 270 42.9% 97.3%;
+  --aksent-svak-rgb: 248 245 251;
+  --aksent-valgt: #EEE7F5;
+  --aksent-valgt-hsl: 270 41.2% 93.3%;
+  --aksent-valgt-rgb: 238 231 245;
+  --paa-aksent: #FBF9F6;
+  --paa-aksent-hsl: 36 38.5% 97.5%;
+  --paa-aksent-rgb: 251 249 246;
+  --flate-valgt: #EEE7F5;
+  --flate-valgt-hsl: 270 41.2% 93.3%;
+  --flate-valgt-rgb: 238 231 245;
+  --merke-stift: #8348BE;
+  --flate-side: #F1F1EF;
+  --flate-side-hsl: 60 6.7% 94.1%;
+  --flate-side-rgb: 241 241 239;
+  --flate-kort: #F9F9F7;
+  --flate-kort-hsl: 60 14.3% 97.3%;
+  --flate-kort-rgb: 249 249 247;
+  --flate-senket: #EAEAE8;
+  --flate-senket-hsl: 60 4.5% 91.4%;
+  --flate-senket-rgb: 234 234 232;
+  --tekst: #232A34;
+  --tekst-hsl: 215.3 19.5% 17.1%;
+  --tekst-rgb: 35 42 52;
+  --tekst-dempet: #4D525B;
+  --tekst-dempet-hsl: 218.6 8.3% 32.9%;
+  --tekst-dempet-rgb: 77 82 91;
+  --tekst-svak: #64686F;
+  --tekst-svak-hsl: 218.2 5.2% 41.4%;
+  --tekst-svak-rgb: 100 104 111;
+  color-scheme: light;
+}
+
+/* Ute: lys og mørk (nullstilling inni et annet produkt) */
+@media not (prefers-contrast: more) {
+  :root:not([data-kontrast="okt"]) [data-produkt="ute"] {
+    --aksent: #05806F;
+    --aksent-hsl: 171.7 92.5% 26.1%;
+    --aksent-rgb: 5 128 111;
+    --aksent-trykk: #007665;
+    --aksent-trykk-hsl: 171.4 100% 23.1%;
+    --aksent-trykk-rgb: 0 118 101;
+    --aksent-tekst: #016d5e;
+    --aksent-tekst-hsl: 171.7 98.2% 21.6%;
+    --aksent-tekst-rgb: 1 109 94;
+    --aksent-svak: #E0F4EE;
+    --aksent-svak-hsl: 162 47.6% 91.8%;
+    --aksent-svak-rgb: 224 244 238;
+    --aksent-valgt: #BCE6DB;
+    --aksent-valgt-hsl: 164.3 45.7% 82%;
+    --aksent-valgt-rgb: 188 230 219;
+    --paa-aksent: #FBF9F6;
+    --paa-aksent-hsl: 36 38.5% 97.5%;
+    --paa-aksent-rgb: 251 249 246;
+    --flate-valgt: #E0F4EE;
+    --flate-valgt-hsl: 162 47.6% 91.8%;
+    --flate-valgt-rgb: 224 244 238;
+    --merke-stift: #068472;
+    --flate-side: #F6F8FB;
+    --flate-side-hsl: 216 38.5% 97.5%;
+    --flate-side-rgb: 246 248 251;
+    --flate-kort: #FBFDFF;
+    --flate-kort-hsl: 210 100% 99.2%;
+    --flate-kort-rgb: 251 253 255;
+    --flate-senket: #EFF1F4;
+    --flate-senket-hsl: 216 18.5% 94.7%;
+    --flate-senket-rgb: 239 241 244;
+    --tekst: #1A1D22;
+    --tekst-hsl: 217.5 13.3% 11.8%;
+    --tekst-rgb: 26 29 34;
+    --tekst-dempet: #51565C;
+    --tekst-dempet-hsl: 212.7 6.4% 33.9%;
+    --tekst-dempet-rgb: 81 86 92;
+    --tekst-svak: #686E75;
+    --tekst-svak-hsl: 212.3 5.9% 43.3%;
+    --tekst-svak-rgb: 104 110 117;
+  }
+}
+
+@media (prefers-color-scheme: dark) and (not (prefers-contrast: more)) {
+  :root:not([data-theme="light"]):not([data-alltid-lys]):not([data-kontrast="okt"]) [data-produkt="ute"] {
+    --aksent: #54B9A5;
+    --aksent-hsl: 168.1 41.9% 52.7%;
+    --aksent-rgb: 84 185 165;
+    --aksent-trykk: #63C8B3;
+    --aksent-trykk-hsl: 167.5 47.9% 58.6%;
+    --aksent-trykk-rgb: 99 200 179;
+    --aksent-tekst: #8ACDBE;
+    --aksent-tekst-hsl: 166.6 40.1% 67.3%;
+    --aksent-tekst-rgb: 138 205 190;
+    --aksent-svak: #112823;
+    --aksent-svak-hsl: 167 40.4% 11.2%;
+    --aksent-svak-rgb: 17 40 35;
+    --aksent-valgt: #163F37;
+    --aksent-valgt-hsl: 168.3 48.2% 16.7%;
+    --aksent-valgt-rgb: 22 63 55;
+    --paa-aksent: #0D1013;
+    --paa-aksent-hsl: 210 18.8% 6.3%;
+    --paa-aksent-rgb: 13 16 19;
+    --flate-valgt: #13332D;
+    --flate-valgt-hsl: 168.8 45.7% 13.7%;
+    --flate-valgt-rgb: 19 51 45;
+    --merke-stift: #54B9A5;
+    --flate-side: #0B0D11;
+    --flate-side-hsl: 220 21.4% 5.5%;
+    --flate-side-rgb: 11 13 17;
+    --flate-kort: #111418;
+    --flate-kort-hsl: 214.3 17.1% 8%;
+    --flate-kort-rgb: 17 20 24;
+    --flate-senket: #06080B;
+    --flate-senket-hsl: 216 29.4% 3.3%;
+    --flate-senket-rgb: 6 8 11;
+    --tekst: #EAEDF0;
+    --tekst-hsl: 210 16.7% 92.9%;
+    --tekst-rgb: 234 237 240;
+    --tekst-dempet: #ADB1B7;
+    --tekst-dempet-hsl: 216 6.5% 69.8%;
+    --tekst-dempet-rgb: 173 177 183;
+    --tekst-svak: #90969D;
+    --tekst-svak-hsl: 212.3 6.2% 59%;
+    --tekst-svak-rgb: 144 150 157;
+  }
+}
+
+@media not (prefers-contrast: more) {
+  :root[data-theme="dark"]:not([data-alltid-lys]):not([data-kontrast="okt"]) [data-produkt="ute"],
+:root.dark:not([data-alltid-lys]):not([data-kontrast="okt"]) [data-produkt="ute"] {
+    --aksent: #54B9A5;
+    --aksent-hsl: 168.1 41.9% 52.7%;
+    --aksent-rgb: 84 185 165;
+    --aksent-trykk: #63C8B3;
+    --aksent-trykk-hsl: 167.5 47.9% 58.6%;
+    --aksent-trykk-rgb: 99 200 179;
+    --aksent-tekst: #8ACDBE;
+    --aksent-tekst-hsl: 166.6 40.1% 67.3%;
+    --aksent-tekst-rgb: 138 205 190;
+    --aksent-svak: #112823;
+    --aksent-svak-hsl: 167 40.4% 11.2%;
+    --aksent-svak-rgb: 17 40 35;
+    --aksent-valgt: #163F37;
+    --aksent-valgt-hsl: 168.3 48.2% 16.7%;
+    --aksent-valgt-rgb: 22 63 55;
+    --paa-aksent: #0D1013;
+    --paa-aksent-hsl: 210 18.8% 6.3%;
+    --paa-aksent-rgb: 13 16 19;
+    --flate-valgt: #13332D;
+    --flate-valgt-hsl: 168.8 45.7% 13.7%;
+    --flate-valgt-rgb: 19 51 45;
+    --merke-stift: #54B9A5;
+    --flate-side: #0B0D11;
+    --flate-side-hsl: 220 21.4% 5.5%;
+    --flate-side-rgb: 11 13 17;
+    --flate-kort: #111418;
+    --flate-kort-hsl: 214.3 17.1% 8%;
+    --flate-kort-rgb: 17 20 24;
+    --flate-senket: #06080B;
+    --flate-senket-hsl: 216 29.4% 3.3%;
+    --flate-senket-rgb: 6 8 11;
+    --tekst: #EAEDF0;
+    --tekst-hsl: 210 16.7% 92.9%;
+    --tekst-rgb: 234 237 240;
+    --tekst-dempet: #ADB1B7;
+    --tekst-dempet-hsl: 216 6.5% 69.8%;
+    --tekst-dempet-rgb: 173 177 183;
+    --tekst-svak: #90969D;
+    --tekst-svak-hsl: 212.3 6.2% 59%;
+    --tekst-svak-rgb: 144 150 157;
   }
 }
 

@@ -189,3 +189,32 @@ button.knapp { font-family: inherit; appearance: none; }
 
 /* Bunnen er et flex-element i .side med margin-inline:auto: uten bredde krymper den til innholdet */
 .side > .bunn { width: 100%; }
+
+/* N-7: produktpalettene (designsystem 2.5). Kortene setter data-produkt; farger kommer bare fra variablene i den delte token-fila. */
+.produktkort { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.produktkort-en { background: var(--flate-side); color: var(--tekst); border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); padding: 16px; display: grid; gap: 12px; align-content: start; }
+.produktkort-en h3 { margin: 0; }
+.produktkort-en .dempet { color: var(--tekst-dempet); margin: 0; }
+.produkt-eksempel { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--flate-kort); border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); padding: 12px; }
+.produkt-prikk { width: 16px; height: 16px; border-radius: 50%; background: var(--merke-stift); flex: none; }
+.produkt-knapp { background: var(--aksent); color: var(--paa-aksent); border-radius: var(--radius-felt); padding: 8px 14px; font-weight: 600; }
+.produkt-lenke { color: var(--aksent-tekst); text-decoration: underline; }
+.produkt-verdier { margin: 0; display: grid; gap: 4px; }
+.produkt-verdier > div { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.produkt-verdier dt, .produkt-verdier dd { margin: 0; }
+.produkt-verdier dd { display: inline-flex; align-items: center; gap: 8px; }
+.produkt-sv { display: inline-block; width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--kant); flex: none; }
+.produkt-aksent { background: var(--aksent); }
+.produkt-aksent-trykk { background: var(--aksent-trykk); }
+.produkt-aksent-tekst { background: var(--aksent-tekst); }
+.produkt-aksent-svak { background: var(--aksent-svak); }
+.produkt-merke-stift { background: var(--merke-stift); }
+.produkt-flate-side { background: var(--flate-side); }
+.produkt-flate-kort { background: var(--flate-kort); }
+.produkt-flate-senket { background: var(--flate-senket); }
+.produkt-tekst { background: var(--tekst); }
+.produkt-aksent-valgt { background: var(--aksent-valgt); }
+.produkt-paa-aksent { background: var(--paa-aksent); }
+.produkt-flate-valgt { background: var(--flate-valgt); }
+.produkt-tekst-dempet { background: var(--tekst-dempet); }
+.produkt-tekst-svak { background: var(--tekst-svak); }

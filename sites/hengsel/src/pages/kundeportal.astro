@@ -25,7 +25,7 @@ const selger = SELGER.kort.map((k) => [k.t, k.s]);
     <Sidetopp tittel={SIDE.h1} ingress={SIDE.lede}>
       <div class="topp-telefon" slot="komposisjon"><Enhet type="iphone" forst><PortalSkjerm enhet="telefon" /></Enhet></div>
     </Sidetopp>
-    <Innhold>
+    <Innhold produkt="crm">
       <Simuleringsflis id="se-portalen" tittel="Se kundeportalen i bruk" tekst="Det kunden ser på telefonen, og dokumentene som kommer til Min side.">
         <Simulering type="display" steg={PORTAL_DISPLAY} etikett="Kundeportalen og dokumentene på Studio Display" />
         <Simulering type="iphone" steg={PORTAL_IPHONE} etikett="Kundeportalen på iPhone" />

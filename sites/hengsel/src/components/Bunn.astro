@@ -1,5 +1,6 @@
 ---
 /** Bunnen (Bunn.dc.html): Hengsel-merket, to lenkegrupper, kontakt og selskapslinja. Tekst ordrett fra LES-MEG.md. */
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 import { BUNN_MER, BUNN_PRODUKT } from "../content/nav";
 import { EPOST, TEL, TEL_HREF } from "../content/forside";
 import KundeLogo from "./KundeLogo.astro";
@@ -15,7 +16,7 @@ const produkt = kunde ? kunde.bunnProdukt.map(([t, h]) => [t, kundeHref(kunde, h
         <KundeLogo kunde={kunde} />
       ) : (
         <picture>
-          <img src="/logo/hengsel-aksent-lys.svg" alt="Hengsel" width="422" height="100" loading="lazy" />
+          <img src={PRODUKTLOGO.nettsider.src} alt={PRODUKTLOGO.nettsider.alt} width={PRODUKTLOGO.nettsider.width} height={PRODUKTLOGO.nettsider.height} loading="lazy" />
         </picture>
       )}
       <p>{kunde ? `${kunde.produkt}: CRM, montørapp og kundeportal for Sigdals butikker.` : "CRM, montørapp og kundeportal for kjøkken- og interiørbutikker."}</p>
