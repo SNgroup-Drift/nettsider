@@ -23,7 +23,7 @@ const uten$ = (o) => Object.entries(o ?? {}).filter(([k]) => !k.startsWith("$"))
 const STATUS = ["ny", "pagar", "venter", "sannsynlig", "ferdig", "advarsel", "feil"];
 
 /** K-378 flettet til demo i hengsel-crm (pinnet med npm run design:hent). */
-export const PIN_COMMIT = "26faec40bb60271b3ea7e5fbfefcd7e32e318eb5";
+export const PIN_COMMIT = "bf31260cd262d0a0813cc25c516a202ca2ef239b";
 
 // WCAG-kontrast (sRGB), samme regnestykke som design.hengsel.no bruker på /farger
 const lum = (hex) => {
