@@ -1,0 +1,37 @@
+{
+  "navn": "Statusrad – ikonkart",
+  "versjon": "2.13",
+  "dato": "2026-10-18",
+  "regel": "Første kolonne i Tabell, Kortliste og Listerad: 24 px ikon i 32 px celle, midtstilt. Ikonfarge status.<farge>.fg; «ingen» i tekst-svak. Radbakgrunn status.<farge>.bg.",
+  "ikon": {
+    "ny": "status-ny",
+    "pagar": "status-pagar",
+    "venter": "nivaa-venter",
+    "sannsynlig": "status-sannsynlig",
+    "ferdig": "status-ferdig",
+    "advarsel": "prisavvik",
+    "feil": "stoppet",
+    "haster": "nivaa-haster",
+    "snart": "nivaa-snart",
+    "snart-venter": "nivaa-venter",
+    "ingen": "status-ingen"
+  },
+  "farge": {
+    "ny": "ny",
+    "pagar": "pagar",
+    "venter": "venter",
+    "sannsynlig": "sannsynlig",
+    "ferdig": "ferdig",
+    "advarsel": "advarsel",
+    "feil": "feil",
+    "haster": "feil",
+    "snart": "advarsel",
+    "snart-venter": "advarsel",
+    "ingen": null
+  },
+  "nivaa": {
+    "1": "haster",
+    "2": "snart",
+    "3": "snart-venter"
+  }
+}

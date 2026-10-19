@@ -4,13 +4,20 @@
  * nederst til høyre. «Vis alle» åpner hele lista i en dialog (scripts/kit.ts); uten skript er knappen skjult og de fem første står.
  */
 import Flis, { type Bredde } from "./Flis.astro";
-interface Props { id: string; tittel: string; rader: string[]; bredde?: Bredde; maks?: number }
-const { id, tittel, rader, bredde = "1/2", maks = 5 } = Astro.props;
+import { STATUSNAVN, statusSvg, type Status } from "@sngroup/hengsel-tokens/statusrad";
+import "@sngroup/hengsel-tokens/statusrad.css";
+/** N-7e (2.13): en rad kan ha status (ikon først og radfarge). Har minst én rad status, får rader uten «ingen»; ellers er lista som før. */
+export interface ListeRad { tekst: string; status?: Status }
+interface Props { id: string; tittel: string; rader: (string | ListeRad)[]; bredde?: Bredde; maks?: number }
+const { id, tittel, rader: inn, bredde = "1/2", maks = 5 } = Astro.props;
+const rader: ListeRad[] = inn.map((r) => (typeof r === "string" ? { tekst: r } : r));
+const medStatus = rader.some((r) => r.status);
+const statusAv = (r: ListeRad): Status => r.status ?? "ingen";
 const dialogId = `${id}-alle`;
 ---
 <Flis id={id} bredde={bredde} tittel={tittel} teller={rader.length} tellerHoyre klasse="listeflis">
   <ul class="liste">
-    {rader.slice(0, maks).map((r) => <li><span class="celle" title={r}>{r}</span></li>)}
+    {rader.slice(0, maks).map((r) => <li class:list={{ statusrad: medStatus }} data-status={medStatus ? statusAv(r) : undefined}>{medStatus && <span class="rad-ikon" role="img" aria-label={STATUSNAVN[statusAv(r)]} set:html={statusSvg(statusAv(r))} />}<span class="celle" title={r.tekst}>{r.tekst}</span></li>)}
   </ul>
   <button slot="handling" type="button" class="vis-alle" aria-haspopup="dialog" aria-controls={dialogId} data-dialog-apne={dialogId}>Vis alle ({rader.length})</button>
 </Flis>
@@ -21,12 +28,13 @@ const dialogId = `${id}-alle`;
       <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
     </button>
   </div>
-  <ul class="liste hele">{rader.map((r) => <li>{r}</li>)}</ul>
+  <ul class="liste hele">{rader.map((r) => <li class:list={{ statusrad: medStatus }} data-status={medStatus ? statusAv(r) : undefined}>{medStatus && <span class="rad-ikon" role="img" aria-label={STATUSNAVN[statusAv(r)]} set:html={statusSvg(statusAv(r))} />}{r.tekst}</li>)}</ul>
 </dialog>
 
 <style>
   .liste { list-style: none; margin: 4px 0 0; padding: 0; }
   .liste li { height: 40px; display: flex; align-items: center; border-top: 1px solid var(--linje); font-weight: var(--skrift-vekt-sterk); }
+  .liste li.statusrad { gap: 4px; padding-left: 8px; }
   .celle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .vis-alle { min-height: 20px; padding: 0; border: 0; background: none; color: var(--aksent-tekst); font: inherit; font-size: 14px; font-weight: var(--skrift-vekt-sterk); cursor: pointer; }
   .vis-alle:hover { text-decoration: underline; text-underline-offset: 3px; }

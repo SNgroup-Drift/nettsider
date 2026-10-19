@@ -132,12 +132,13 @@ test("/merke viser logoene fra palettpakke v2 (besluttede former og utgaver), og
   for (const f of ["crm", "ute-tonet"]) assert.ok(!existsSync(join(side, "public", "merke", "app-ikon", `${f}.png`)), `gammelt app-ikon ${f}.png (brevann) skal ikke finnes`);
 });
 
-test("/komponenter viser alle 77 ikonene fra designsystem 2.12 (Designs 2.5–2.6 og 2.11, og tre egne) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
+test("/komponenter viser alle 82 ikonene fra designsystem 2.12/2.13 (Designs 2.5–2.6, 2.11 og 2.13, og tre egne) med SF Symbol, og ikonfilene finnes i tre størrelser", () => {
   const h = html("komponenter");
   const ikoner = JSON.parse(les(ds, "ikoner-2-5", "ikoner.json")).ikoner;
-  assert.equal(ikoner.length, 77); // N-7d: 75 + datakilde og tv (Designs 2.11, K-378)
-  assert.equal(ikoner.filter((i) => i.ny).length, 24, "24 nye ikoner (19 i 2.5, tre i 2.6: lenke, dra, last-opp, og to i 2.11: datakilde, tv)");
+  assert.equal(ikoner.length, 82); // N-7e: 77 + de fem statusikonene (Designs 2.13, K-388); N-7d: 75 + datakilde og tv (2.11, K-378)
+  assert.equal(ikoner.filter((i) => i.ny).length, 29, "29 nye ikoner (19 i 2.5, tre i 2.6: lenke, dra, last-opp, to i 2.11: datakilde, tv, og fem i 2.13: status-ny, -pagar, -sannsynlig, -ferdig, -ingen)");
   assert.deepEqual(ikoner.filter((i) => i.ny === "2.11").map((i) => i.fil), ["datakilde", "tv"]);
+  assert.deepEqual(ikoner.filter((i) => i.ny === "2.13").map((i) => i.fil), ["status-ny", "status-pagar", "status-sannsynlig", "status-ferdig", "status-ingen"]);
   assert.deepEqual(JSON.parse(les(ds, "ikoner-2-5", "ikoner-tillegg.json")).ikoner.map((i) => i.fil), ["montasjeplan", "innboks", "profil", "hjelp"]);
   const t = tekst(h);
   for (const i of ikoner) {
@@ -203,7 +204,7 @@ test("ingen ekte navn, ingen gammel H-logo, ingen «by Hengsel», Sigdal, Innlan
   const GAMMELT = /by Hengsel|innlandet|\bengsel\b|H-merke|h-merke|hengsel-merke-liten|v2-h-merke|Lausanne|Reckless|Gjennom linsa/i;
   const treff = [];
   for (const f of alle(dist).filter((f) => /\.(html|css|js|txt|svg|webmanifest)$/.test(f))) {
-    const t = les(dist, f);
+    const t = les(dist, f).replace(/<c2pa:manifest>[\s\S]*?<\/c2pa:manifest>/g, ""); // N-7e: c2pa-manifestet i ikonfilene er base64 uten tekst; et tilfeldig «maxbo» i det er ikke et navn
     const sjekk = f.endsWith(".html") ? tekst(t) + " " + [...t.matchAll(/(?:alt|title|aria-label)="([^"]*)"/g)].map((m) => m[1]).join(" ") : t;
     // K-231: Sigdal står bare i kundemerke-eksempelet på /merke (og i de to merkefilene), ingen andre steder
     const sigdalLov = f === "merke.html";

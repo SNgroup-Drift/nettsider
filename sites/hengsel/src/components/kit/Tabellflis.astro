@@ -7,8 +7,10 @@
  */
 import Flis, { type Bredde } from "./Flis.astro";
 import Sok from "./Sok.astro";
+import { STATUSNAVN, statusSvg, type Status } from "@sngroup/hengsel-tokens/statusrad";
+import "@sngroup/hengsel-tokens/statusrad.css";
 
-export interface TabellRad { celler: string[]; /** Mer om raden: vises når raden åpnes */ mer?: string }
+export interface TabellRad { celler: string[]; /** Mer om raden: vises når raden åpnes */ mer?: string; /** Statusrad (2.13): ikonkolonne og radfarge */ status?: Status }
 /** Trinnet i høydeskalaen for en Tabell kompakt med n rader (regel 2d, Eirik 17.10 kl. 13.36) */
 export const tabellHoyde = (n: number) => (n <= 5 ? 320 : n <= 9 ? 480 : 640);
 
@@ -25,12 +27,16 @@ const { id, tittel, kolonner, rader, bredde = "1/1", tall = false } = Astro.prop
 const n = kolonner.length;
 const liste: TabellRad[] = rader.map((r) => (Array.isArray(r) ? { celler: r } : r));
 const midt = (i: number) => i > 0 && i < n - 1;
+/** N-7e (2.13): har minst én rad status, får tabellen ikonkolonnen først, og rader uten status får «ingen» (cellen er aldri tom). Uten status er tabellen som før. */
+const medStatus = liste.some((r) => r.status);
+const kol = n + (medStatus ? 1 : 0);
+const statusAv = (r: TabellRad): Status => r.status ?? "ingen";
 ---
 <Flis id={id} bredde={bredde} tittel={tittel} teller={liste.length} klasse="tabellflis">
   <Sok slot="verktoy" hva={tittel.replace(/\.$/, "")} />
-  <table class:list={["tabell", `n${n}`, { tall }]} data-tabell>
+  <table class:list={["tabell", `n${n}`, { tall, "med-status": medStatus }]} data-tabell>
     <thead>
-      <tr>{kolonner.map((k, i) => <th scope="col" class:list={{ midt: midt(i) }}>{k}</th>)}</tr>
+      <tr>{medStatus && <th scope="col" class="ikon-celle rad-ikon-hode"><span class="statusrad-skjult">Status</span></th>}{kolonner.map((k, i) => <th scope="col" class:list={{ midt: midt(i) }}>{k}</th>)}</tr>
     </thead>
     <tbody>
       {liste.map((r, ri) => {
@@ -39,7 +45,8 @@ const midt = (i: number) => i > 0 && i < n - 1;
         const detId = `${id}-rad-${ri}`;
         return (
           <Fragment>
-            <tr data-rad data-bare-tlf={apnes && !r.mer ? "" : undefined}>
+            <tr class:list={{ statusrad: medStatus }} data-rad data-status={medStatus ? statusAv(r) : undefined} data-bare-tlf={apnes && !r.mer ? "" : undefined}>
+              {medStatus && <td class="ikon-celle"><span class="rad-ikon" role="img" aria-label={STATUSNAVN[statusAv(r)]} set:html={statusSvg(statusAv(r))} /></td>}
               {r.celler.map((c, i) => (i === 0
                 ? <th scope="row">{apnes
                     ? <button type="button" class="apne" aria-expanded="false" aria-controls={detId} data-apne title={c}><span class="celle">{c}</span><svg class="pil" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M6 8l4 4 4-4" /></svg></button>
@@ -47,8 +54,8 @@ const midt = (i: number) => i > 0 && i < n - 1;
                 : <td class:list={{ midt: midt(i) }}><span class="celle" title={c}>{c}</span></td>))}
             </tr>
             {apnes && (
-              <tr class:list={["detalj", { "bare-tlf": !r.mer }]} id={detId} data-detalj hidden>
-                <td colspan={n}>
+              <tr class:list={["detalj", { "bare-tlf": !r.mer, statusrad: medStatus }]} id={detId} data-status={medStatus ? statusAv(r) : undefined} data-detalj hidden>
+                <td colspan={kol}>
                   {harMidt && (
                     <dl class="midtfelt">
                       {kolonner.map((k, i) => midt(i) && <div><dt>{k}</dt><dd>{r.celler[i]}</dd></div>)}
@@ -61,7 +68,7 @@ const midt = (i: number) => i > 0 && i < n - 1;
           </Fragment>
         );
       })}
-      <tr class="ingen" data-ingen hidden><td colspan={n}>Ingen treff.</td></tr>
+      <tr class="ingen" data-ingen hidden><td colspan={kol}>Ingen treff.</td></tr>
     </tbody>
   </table>
 </Flis>
@@ -91,10 +98,20 @@ const midt = (i: number) => i > 0 && i < n - 1;
   .midtfelt dd { margin: 0; }
   .mer { margin: 0; max-width: 720px; color: var(--tekst-dempet); }
   .ingen td { color: var(--tekst-dempet); }
+  /* Statusrad (2.13): ikonkolonnen er 32 px (8 px luft til venstre), og de andre kolonnene beholder bredden, regnet etter at ikonkolonnen er trukket fra */
+  .ikon-celle { width: 40px; padding: 0 0 0 8px; }
+  .med-status .ikon-celle + th, .med-status .ikon-celle + td { padding-left: 8px; }
+  .med-status.n2 thead th:nth-child(1), .med-status.n3 thead th:nth-child(1), .med-status.n5 thead th:nth-child(1) { width: 40px; }
+  .med-status.n2 thead th:nth-child(2) { width: 59%; }
+  .med-status.n3 thead th:nth-child(2) { width: 41%; } .med-status.n3 thead th:nth-child(3) { width: 30%; }
+  .med-status.n5 thead th:nth-child(2) { width: 26%; } .med-status.n5 thead th:nth-child(3), .med-status.n5 thead th:nth-child(4), .med-status.n5 thead th:nth-child(5) { width: 19%; }
+  .detalj.statusrad td { padding-left: 48px; }
   @media (max-width: 959px) {
     .midt { display: none; }
     thead th { width: auto !important; }
     thead th:first-child { width: 50% !important; }
+    .med-status thead th:first-child { width: 40px !important; }
+    .med-status thead th:nth-child(2) { width: 50% !important; }
     .midtfelt { display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px; }
     .mer { color: var(--tekst); }
   }

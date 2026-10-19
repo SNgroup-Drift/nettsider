@@ -29,7 +29,7 @@ test("a) tokens.css har Teller, --flate-meny, --radius-rad, --skrift-mono og pro
   const json = JSON.parse(les(pakke, "ds", "tokens", "hengsel.tokens.json"));
   assert.equal(json.versjon, "2.12.0"); // N-7d: 2.10.0 → 2.12.0 (K-378)
   assert.equal(JSON.parse(les(pakke, "designsystem.pin.json")).versjon, "2.12.0");
-  assert.equal(JSON.parse(les(pakke, "ds", "ikoner-2-5", "ikoner.json")).ikoner.length, 77); // N-7d: 75 + datakilde og tv (2.11)
+  assert.equal(JSON.parse(les(pakke, "ds", "ikoner-2-5", "ikoner.json")).ikoner.length, 82); // N-7e: 77 + fem statusikoner (2.13); N-7d: 75 + datakilde og tv (2.11)
 });
 
 test("b) Admin: menytellerne og bjella bruker --teller-*", () => {

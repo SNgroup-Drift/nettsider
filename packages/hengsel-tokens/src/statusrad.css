@@ -1,0 +1,20 @@
+/*
+ * N-7e (designsystem 2.13, K-388): Statusrad (LAYOUT-REGLER.md «Statusrad», components/Statusrad/README.md). Bare variabler fra tokens.css.
+ * Rader med status (`.statusrad[data-status]`) får ikonkolonnen (`.rad-ikon`: 24 px ikon i 32 px celle) og radbakgrunnen status.<farge>.bg; rader uten status i en
+ * tabell som viser status får `ingen` (åpen sirkel i --tekst-svak, ingen radfarge). Hover: ett trinn mørkere i samme kulør (color-mix mot teksten, ca. L −0,03;
+ * Designs OKLCH-formel brukes ikke fordi hengsel-regler.mjs forbyr fargefunksjoner i sidene). Valgt rad: kant på 3 px til venstre i status.<farge>.kant.
+ */
+.rad-ikon { display: inline-grid; place-items: center; width: 32px; height: 32px; flex: none; vertical-align: middle; color: var(--rad-fg, var(--tekst-svak)); }
+.rad-ikon svg { width: 24px; height: 24px; display: block; }
+.statusrad-skjult { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.statusrad[data-status]:not([data-status="ingen"]) { background: var(--rad-bg, var(--flate-kort)); color: var(--tekst); }
+.statusrad[data-status]:not([data-status="ingen"]):not([aria-selected="true"]):not(.valgt):hover { background: color-mix(in oklab, var(--rad-bg, var(--flate-kort)) 94%, var(--tekst)); }
+.statusrad[data-status][aria-selected="true"], .statusrad[data-status].valgt { box-shadow: inset 3px 0 0 var(--rad-kant, var(--aksent)); }
+.statusrad[data-status="ny"] { --rad-bg: var(--status-ny-bg); --rad-fg: var(--status-ny-fg); --rad-kant: var(--status-ny-kant); }
+.statusrad[data-status="pagar"] { --rad-bg: var(--status-pagar-bg); --rad-fg: var(--status-pagar-fg); --rad-kant: var(--status-pagar-kant); }
+.statusrad[data-status="venter"] { --rad-bg: var(--status-venter-bg); --rad-fg: var(--status-venter-fg); --rad-kant: var(--status-venter-kant); }
+.statusrad[data-status="sannsynlig"] { --rad-bg: var(--status-sannsynlig-bg); --rad-fg: var(--status-sannsynlig-fg); --rad-kant: var(--status-sannsynlig-kant); }
+.statusrad[data-status="ferdig"] { --rad-bg: var(--status-ferdig-bg); --rad-fg: var(--status-ferdig-fg); --rad-kant: var(--status-ferdig-kant); }
+.statusrad[data-status="advarsel"], .statusrad[data-status="snart"], .statusrad[data-status="snart-venter"] { --rad-bg: var(--status-advarsel-bg); --rad-fg: var(--status-advarsel-fg); --rad-kant: var(--status-advarsel-kant); }
+.statusrad[data-status="feil"], .statusrad[data-status="haster"] { --rad-bg: var(--status-feil-bg); --rad-fg: var(--status-feil-fg); --rad-kant: var(--status-feil-kant); }
+.statusrad[data-status="ingen"] { --rad-fg: var(--tekst-svak); --rad-kant: var(--aksent); }
