@@ -26,7 +26,12 @@ export interface Kunde {
   bunnProdukt: readonly (readonly [string, string])[];
   /** Adressen til kundens Visningsrom */
   vis: string;
+  /** K-452: «Meld reklamasjon» per butikk i bunnen (skjemaet 21-505 i appen, uten innlogging) */
+  reklamasjon?: readonly (readonly [string, string])[];
 }
+
+/** K-452: skjemaet «Meld en feil» for butikken i Sigdal CRM (app.hengsel.no, ruten /#/nettside/:butikk/reklamasjon i hengsel-crm) */
+export const reklamasjonHref = (butikk: string) => `https://app.hengsel.no/#/nettside/${butikk}/reklamasjon`;
 
 export const SIGDAL: Kunde = {
   nokkel: "sigdal",
@@ -46,6 +51,7 @@ export const SIGDAL: Kunde = {
     ["int", "Integrasjoner", "/integrasjoner"],
   ],
   bunnProdukt: [["CRM", "/crm"], ["Hengsel Ute", "/ute"], ["Kundeportal", "/kundeportal"], ["Dokumenter", "/dokumenter"], ["Test appen", "/apptest"]],
+  reklamasjon: [["Hamar", reklamasjonHref("hamar")], ["Lillehammer", reklamasjonHref("lillehammer")], ["Gjøvik", reklamasjonHref("gjovik")]],
 };
 
 export const KUNDER: Record<KundeNokkel, Kunde> = { sigdal: SIGDAL };
