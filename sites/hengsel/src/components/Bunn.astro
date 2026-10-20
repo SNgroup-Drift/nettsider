@@ -31,6 +31,12 @@ const produkt = kunde ? kunde.bunnProdukt.map(([t, h]) => [t, kundeHref(kunde, h
         ? <><a href={kundeHref(kunde, "/slik-virker-det")}>Slik virker det</a><a href={kundeHref(kunde, "/integrasjoner")}>Integrasjoner og sikkerhet</a><a href={kunde.vis}>Visningsrommet</a></>
         : BUNN_MER.map(([t, h]) => <a href={h}>{t}</a>)}
     </nav>
+    {kunde?.reklamasjon && (
+      <nav aria-label="Meld reklamasjon">
+        <span class="tittel">Meld reklamasjon</span>
+        {kunde.reklamasjon.map(([t, h]) => <a href={h}>Meld reklamasjon · {t}</a>)}
+      </nav>
+    )}
     <div class="kontakt">
       <span class="tittel">Kontakt</span>
       <a href={TEL_HREF}>{TEL}</a>
