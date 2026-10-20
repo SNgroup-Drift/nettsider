@@ -388,6 +388,36 @@
       }
     },
     {
+      "fil": "datakilde",
+      "navn": "Datakilde",
+      "gruppe": "verktoy",
+      "sf": "cylinder.split.1x2",
+      "egen": false,
+      "bruk": "Bytt datakilde i Brukermeny (erstatter lånt «Rapporter»)",
+      "ny": "2.11",
+      "filer": {
+        "12": "12/datakilde.svg",
+        "16": "16/datakilde.svg",
+        "20": "20/datakilde.svg",
+        "24": "24/datakilde.svg"
+      }
+    },
+    {
+      "fil": "tv",
+      "navn": "TV-visning",
+      "gruppe": "verktoy",
+      "sf": "tv",
+      "egen": false,
+      "bruk": "TV-visning på storskjerm (erstatter lånt «Oversikt»)",
+      "ny": "2.11",
+      "filer": {
+        "12": "12/tv.svg",
+        "16": "16/tv.svg",
+        "20": "20/tv.svg",
+        "24": "24/tv.svg"
+      }
+    },
+    {
       "fil": "prisavvik",
       "navn": "Prisavvik / advarsel",
       "gruppe": "status",

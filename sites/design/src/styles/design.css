@@ -195,6 +195,7 @@ button.knapp { font-family: inherit; appearance: none; }
 .produktkort-en { background: var(--flate-side); color: var(--tekst); border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); padding: 16px; display: grid; gap: 12px; align-content: start; }
 .produktkort-en h3 { margin: 0; }
 .produktkort-en .dempet { color: var(--tekst-dempet); margin: 0; }
+.produkt-status { margin-top: 4px; } /* N-7d: status-pillene i produktkortet (var(--status-*) under data-produkt) */
 .produkt-eksempel { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--flate-kort); border: 1px solid var(--kant); border-radius: var(--radius-kort-lite); padding: 12px; }
 .produkt-prikk { width: 16px; height: 16px; border-radius: 50%; background: var(--merke-stift); flex: none; }
 .produkt-knapp { background: var(--aksent); color: var(--paa-aksent); border-radius: var(--radius-felt); padding: 8px 14px; font-weight: 600; }

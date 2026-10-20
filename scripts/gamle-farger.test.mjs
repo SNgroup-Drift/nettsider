@@ -59,7 +59,15 @@ test("P3-blokken i den delte token-fila har K-234-aksenten (color(display-p3 0.2
   const start = kilde.indexOf("@media (color-gamut: p3) {");
   const p3 = vars(kilde.slice(start, kilde.indexOf("/* ── Grunnpalett, mørk", start)));
   assert.equal(p3["--aksent"], AKSENT_P3_FURU, "pakkens P3-blokk har ikke furu-aksenten (er pakken byttet ut?)");
-  assert.deepEqual(vars(blokk[1]), { ...p3, "--aksent": AKSENT_P3_K234, ...NYE_P3_K256 }, "P3-blokken avviker fra pakkens (BESLUTTET) blokk med K-234-aksenten og K-256-rollene");
+  // N-7d (designsystem 2.11/2.12, K-378): status «ny» er gråblå og alle statuskantene er løftet, så statusfargene i P3-blokka er de fra pinnet hengsel.tokens.json (status.*.p3.lys),
+  // ikke lenger pakkens. Pakkens status-* byttes ut med JSON-verdiene (samme hex→P3 som scripts/lag-hengsel-tokens.mjs); alt annet er fortsatt pakkens besluttede blokk.
+  const json = JSON.parse(readFileSync(join(rot, "packages", "hengsel-tokens", "ds", "tokens", "hengsel.tokens.json"), "utf8"));
+  const tilP3 = (h) => `color(display-p3 ${[1, 3, 5].map((i) => (parseInt(h.slice(i, i + 2), 16) / 255).toFixed(4)).join(" ")})`;
+  const statusP3 = {};
+  for (const [n, t] of Object.entries(json.status).filter(([k]) => !k.startsWith("$"))) for (const d of ["fg", "bg", "kant"]) if (t.p3?.lys?.[d] && t.p3.lys[d] !== t.lys[d]) statusP3[`--status-${n}-${d}`] = tilP3(t.p3.lys[d]);
+  const forventet = Object.fromEntries(Object.entries({ ...p3, "--aksent": AKSENT_P3_K234, ...NYE_P3_K256 }).filter(([k]) => !k.startsWith("--status-")));
+  assert.ok(Object.keys(p3).some((k) => k.startsWith("--status-")), "pakkens P3-blokk skal ha statusfarger (de byttes ut med pinnet JSON)");
+  assert.deepEqual(vars(blokk[1]), { ...forventet, ...statusP3 }, "P3-blokken avviker fra pakkens (BESLUTTET) blokk med K-234-aksenten, K-256-rollene og statusfargene fra pinnet JSON (2.11/2.12)");
 });
 
 // ── K-231: gamle logoer, favicon og blå merkefiler ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

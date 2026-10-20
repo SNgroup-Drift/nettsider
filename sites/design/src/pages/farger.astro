@@ -1,16 +1,30 @@
 ---
 /** Farger: alle tokens i lys og mørk med hex og kontrast, de sju statustonene og regelen for kundens aksent. Genereres fra hengsel.tokens.json (src/lib/tokens.ts). */
 import Side from "../layouts/Side.astro";
-import { kontrast, fargeKlasse, fmtKontrast, kontrastRader, kundeAksentSjekk, kundeEksempler, palett, roller, status, statusKontrast, toneKlasse, MODI, tokens, tilHex } from "../lib/tokens";
+import { kontrast, fargeKlasse, fmtKontrast, kontrastRader, kundeAksentSjekk, kundeEksempler, palett, roller, status, statusKontrast, toneKlasse, MODI, tokens, tilHex, type TonePar } from "../lib/tokens";
 const kontrastTabell = kontrastRader();
 const sk = statusKontrast();
+// N-7d (designsystem 2.12): kant mot pillens bg, minst 3:1 i vanlig kontrast og minst 4,5:1 i økt kontrast (KONTROLL.md 2.12). Verdiene fra JSON, ingen egen liste.
+type ToneJson = { lys: TonePar; mork?: TonePar; "lys-okt-kontrast"?: TonePar; "mork-okt-kontrast"?: TonePar };
+const toneJson = (navn: string) => (tokens.status as unknown as Record<string, ToneJson>)[navn];
+const kantKontrast = (t: TonePar) => kontrast(t.kant, t.bg);
+const kk = status.map((s) => {
+  const j = toneJson(s.navn);
+  return { lys: kantKontrast(s.lys), lysOkt: kantKontrast(j["lys-okt-kontrast"] ?? s.lys), mork: kantKontrast(s.mork), morkOkt: kantKontrast(j["mork-okt-kontrast"] ?? s.mork) };
+});
 const eksempler = kundeEksempler.map((t) => ({ ...t, sjekk: kundeAksentSjekk(t.aksent, t.paaAksent) }));
 const fmt = (n: number) => fmtKontrast(n);
 // N-7 (designsystem 2.5): produktpalettene fra hengsel.tokens.json (produkt). Kortene bruker data-produkt, så flatene og aksenten kommer fra variablene i den delte token-fila; hex-verdiene står som tekst.
 type ProduktRolle = Record<string, string>;
+// N-7d (2.11/2.12): statustonene per palett. CRM og Admin har egne status-verdier i JSON (produkt.<navn>.status.lys, skrevet til [data-produkt]-blokka i tokens.css); Ute og Nettsider arver grunnpaletten.
+// Pillene i kortet bruker var(--status-*) under data-produkt, så det som vises er det den delte fila gir for paletten. Kant/bg regnes fra samme verdier.
+const produktStatus = (nokkel: string) => {
+  const egne = (tokens.produkt as unknown as Record<string, { status?: { lys?: Record<string, TonePar> } }>)[nokkel]?.status?.lys;
+  return status.map((s) => { const t = egne?.[s.navn] ?? s.lys; return { navn: s.navn, egen: Boolean(egne?.[s.navn]), kantBg: kontrast(t.kant, t.bg) }; });
+};
 const produkter = Object.entries(tokens.produkt as Record<string, { navn: string; gjelder: string[]; modus: string[]; lys: ProduktRolle }>)
   .filter(([n]) => !n.startsWith("$"))
-  .map(([nokkel, p]) => ({ nokkel, navn: p.navn, gjelder: p.gjelder, bareLys: !p.modus.includes("mork"), lys: p.lys, paaAksent: kontrast(p.lys["paa-aksent"], p.lys.aksent), tekstPaaGrunn: kontrast(p.lys.tekst, p.lys.grunn) }));
+  .map(([nokkel, p]) => ({ nokkel, navn: p.navn, gjelder: p.gjelder, bareLys: !p.modus.includes("mork"), lys: p.lys, paaAksent: kontrast(p.lys["paa-aksent"], p.lys.aksent), tekstPaaGrunn: kontrast(p.lys.tekst, p.lys.grunn), status: produktStatus(nokkel) }));
 // N-7b (2.10): alle rollene i produktets lys-blokk (crm og admin har 33, nettsider og ute 14). Fire heter noe annet i :root (som i scripts/lag-hengsel-tokens.mjs).
 const PRODUKT_NAVN: Record<string, string> = { prikk: "merke-stift", grunn: "flate-side", "grunn-hevet": "flate-kort", "grunn-senket": "flate-senket" };
 const produktVar = (r: string) => PRODUKT_NAVN[r] ?? r;
@@ -55,7 +69,7 @@ const produktCss = [...new Set(produkter.flatMap((p) => produktRoller(p.lys).map
     <section class="sek" id="produktpaletter">
       <header>
         <h2>Produktpaletter</h2>
-        <p>Prikken i H-symbolet er plattformkoden: grønn er Hengsel Ute, oransje er Hengsel (merket og nettsidene), blå er Hengsel CRM og lilla er Hengsel Admin. Hver palett settes med <code>data-produkt="ute | nettsider | crm | admin"</code> på roten eller en innpakning, og bytter aksent, flater og tekst. Grunnpaletten over er Ute. Nettsider, CRM og Admin er bare lyse. Statusfargene er felles for alle fire. Fra designsystem {tokens.versjon}.</p>
+        <p>Prikken i H-symbolet er plattformkoden: grønn er Hengsel Ute, oransje er Hengsel (merket og nettsidene), blå er Hengsel CRM og lilla er Hengsel Admin. Hver palett settes med <code>data-produkt="ute | nettsider | crm | admin"</code> på roten eller en innpakning, og bytter aksent, flater og tekst. Grunnpaletten over er Ute. Nettsider, CRM og Admin er bare lyse. Statustonene er de samme sju i alle fire; CRM og Admin har egne verdier for dem i sin blokk (2.10), Ute og Nettsider arver grunnpaletten. «ny» er gråblå i alle fire (2.11), og kantene har minst 3:1 mot bg (2.12). Fra designsystem {tokens.versjon}.</p>
       </header>
       <div class="produktkort">
         {produkter.map((p) => (
@@ -73,6 +87,10 @@ const produktCss = [...new Set(produkter.flatMap((p) => produktRoller(p.lys).map
               ))}
             </dl>
             <p class="dempet">Tekst på aksent {fmt(p.paaAksent)} · tekst på grunn {fmt(p.tekstPaaGrunn)}</p>
+            <div class="tonerad produkt-status" aria-label={`Statustoner i ${p.navn}`}>
+              {p.status.map((s) => <span class={`pille s-${s.navn}`} title={`kant/bg ${fmt(s.kantBg)}`}><i></i>{s.navn}</span>)}
+            </div>
+            <p class="dempet">{p.status.some((s) => s.egen) ? "Egne statusverdier for paletten" : "Statustonene fra grunnpaletten"} · kant/bg minst {fmt(Math.min(...p.status.map((s) => s.kantBg)))}</p>
           </article>
         ))}
       </div>
@@ -125,7 +143,7 @@ const produktCss = [...new Set(produkter.flatMap((p) => produktRoller(p.lys).map
     <section class="sek" id="status">
       <header>
         <h2>Statustoner</h2>
-        <p>Sju toner. Hver farge betyr det samme overalt i CRM, kundeportalen og Hengsel Ute. <b>fg</b> er tekst og prikk, <b>bg</b> er flaten og <b>kant</b> er rammen. «sannsynlig» er foreslått i K-186 runde 2 i samme stil som de andre og er ikke tatt i bruk i noen app ennå.</p>
+        <p>Sju toner. Hver farge betyr det samme overalt i CRM, kundeportalen og Hengsel Ute. <b>fg</b> er tekst og prikk, <b>bg</b> er flaten og <b>kant</b> er rammen. «ny» er gråblå fra designsystem 2.11 (ikke lenger samme blå som aksenten i CRM). Fra 2.12 har kanten minst 3:1 mot pillens bg i vanlig kontrast og minst 4,5:1 i økt kontrast (<code>prefers-contrast: more</code>); bare lysheten på kanten er endret. «sannsynlig» er foreslått i K-186 runde 2 i samme stil som de andre og er ikke tatt i bruk i noen app ennå.</p>
       </header>
       <div class="prove-par">
         {MODI.map((m) => (
@@ -139,15 +157,17 @@ const produktCss = [...new Set(produkter.flatMap((p) => produktRoller(p.lys).map
       </div>
       <div class="tabell" tabindex="0" role="region" aria-label="Statustoner">
         <table>
-          <thead><tr><th>Tone</th><th>Lys: fg, bg, kant</th><th>Kontrast</th><th>Mørk: fg, bg, kant</th><th>Kontrast</th></tr></thead>
+          <thead><tr><th>Tone</th><th>Lys: fg, bg, kant</th><th>Kontrast fg/bg</th><th>Kant/bg (lys · økt)</th><th>Mørk: fg, bg, kant</th><th>Kontrast fg/bg</th><th>Kant/bg (mørk · økt)</th></tr></thead>
           <tbody>
             {status.map((s, i) => (
               <tr data-tone={s.navn}>
                 <td><b>{s.navn}</b></td>
                 <td><code>{s.lys.fg}</code> <code>{s.lys.bg}</code> <code>{s.lys.kant}</code></td>
                 <td class="tall"><span class={sk[i].lys >= 4.5 ? "ok" : "feil-tekst"}>{fmt(sk[i].lys)}</span></td>
+                <td class="tall"><span class={kk[i].lys >= 3 ? "ok" : "feil-tekst"}>{fmt(kk[i].lys)}</span> · <span class={kk[i].lysOkt >= 4.5 ? "ok" : "feil-tekst"}>{fmt(kk[i].lysOkt)}</span></td>
                 <td><code>{s.mork.fg}</code> <code>{s.mork.bg}</code> <code>{s.mork.kant}</code></td>
                 <td class="tall"><span class={sk[i].mork >= 4.5 ? "ok" : "feil-tekst"}>{fmt(sk[i].mork)}</span></td>
+                <td class="tall"><span class={kk[i].mork >= 3 ? "ok" : "feil-tekst"}>{fmt(kk[i].mork)}</span> · <span class={kk[i].morkOkt >= 4.5 ? "ok" : "feil-tekst"}>{fmt(kk[i].morkOkt)}</span></td>
               </tr>
             ))}
           </tbody>

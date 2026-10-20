@@ -1,6 +1,6 @@
 {
   "$merknad": "ENESTE KILDE for Hengsel-designet. Rediger bare denne fila, kjør så `node scripts/design/lag-tokens.mjs`. K-206 (13.10.2026): palett «blekk med furu» 1.0 (hengsel-palett.tokens.json, 12.10.2026), Schibsted Grotesk, nytt merke. K-234 (14.10.2026): tekst på aksentflate er Off White #FBF9F6 i lys (ikke #FFFFFF), og aksent lys er #05806F så kontrasten holder 4,5:1. K-307 (17.10.2026): versjon 2.2.0, designsystem 2.0 fra Design (S-68) lagt inn ved siden av; ingen fargeverdier er endret, og denne fila er fortsatt fasit for farger. K-371 (18.10.2026): versjon 2.5.0, designsystem 2.5 fra Design (produktpaletter, kundetema, haster, 19 nye ikoner) lagt inn ved siden av; grunnpaletten (farge) er uendret og fortsatt fasit, produktpalettene ligger i «produkt» og hastealiasene i «nivaa».",
-  "versjon": "2.10.0",
+  "versjon": "2.12.0",
   "dato": "2026-10-18",
   "palett": {
     "$merknad": "Merkefargene (råfarger): blekk på bladene, furu på stiften, og produktfargene (bare i stiften). Bruk rollene i komponenter. «aksent-mork» er furu for mørk flate.",
@@ -307,37 +307,37 @@
           "ny": {
             "fg": "#405B85",
             "bg": "#D4DDEA",
-            "kant": "#9CB3D4"
+            "kant": "#697E9D"
           },
           "pagar": {
             "fg": "#5C46A7",
             "bg": "#DCDBEC",
-            "kant": "#B1A9E7"
+            "kant": "#7E75AF"
           },
           "venter": {
             "fg": "#555B64",
             "bg": "#D6DEE8",
-            "kant": "#ABB3BC"
+            "kant": "#777E87"
           },
           "sannsynlig": {
             "fg": "#80378C",
             "bg": "#EAD7ED",
-            "kant": "#CEA0D5"
+            "kant": "#996EA0"
           },
           "ferdig": {
             "fg": "#1F6D02",
             "bg": "#CFE2CA",
-            "kant": "#92BF88"
+            "kant": "#5C8753"
           },
           "advarsel": {
             "fg": "#6D5000",
             "bg": "#F0DAAE",
-            "kant": "#D2B271"
+            "kant": "#977837"
           },
           "feil": {
             "fg": "#9E2D28",
             "bg": "#ECD9D6",
-            "kant": "#E69C94"
+            "kant": "#B06A63"
           }
         },
         "lys-okt-kontrast": {
@@ -382,37 +382,37 @@
             "ny": {
               "fg": "#465A82",
               "bg": "#D6DDE9",
-              "kant": "#A0B2D1"
+              "kant": "#6D7E9B"
             },
             "pagar": {
               "fg": "#5947A1",
               "bg": "#DCDBEB",
-              "kant": "#B0A9E2"
+              "kant": "#7C75AB"
             },
             "venter": {
               "fg": "#565B63",
               "bg": "#D7DEE7",
-              "kant": "#ACB3BB"
+              "kant": "#787E86"
             },
             "sannsynlig": {
               "fg": "#773B88",
               "bg": "#E7D8EB",
-              "kant": "#C7A2D2"
+              "kant": "#93709D"
             },
             "ferdig": {
               "fg": "#376B1C",
               "bg": "#D3E1CC",
-              "kant": "#9BBE8D"
+              "kant": "#668658"
             },
             "advarsel": {
               "fg": "#695117",
               "bg": "#ECDBB3",
-              "kant": "#CDB37A"
+              "kant": "#927942"
             },
             "feil": {
               "fg": "#92362E",
               "bg": "#E9DAD7",
-              "kant": "#DB9F97"
+              "kant": "#A66D66"
             }
           },
           "lys-okt-kontrast": {
@@ -647,37 +647,37 @@
           "ny": {
             "fg": "#405B85",
             "bg": "#D4DDEA",
-            "kant": "#9CB3D4"
+            "kant": "#697E9D"
           },
           "pagar": {
             "fg": "#5C46A7",
             "bg": "#DCDBEC",
-            "kant": "#B1A9E7"
+            "kant": "#7E75AF"
           },
           "venter": {
             "fg": "#555B64",
             "bg": "#D6DEE8",
-            "kant": "#ABB3BC"
+            "kant": "#777E87"
           },
           "sannsynlig": {
             "fg": "#80378C",
             "bg": "#EAD7ED",
-            "kant": "#CEA0D5"
+            "kant": "#996EA0"
           },
           "ferdig": {
             "fg": "#1F6D02",
             "bg": "#CFE2CA",
-            "kant": "#92BF88"
+            "kant": "#5C8753"
           },
           "advarsel": {
             "fg": "#6D5000",
             "bg": "#F0DAAE",
-            "kant": "#D2B271"
+            "kant": "#977837"
           },
           "feil": {
             "fg": "#9E2D28",
             "bg": "#ECD9D6",
-            "kant": "#E69C94"
+            "kant": "#B06A63"
           }
         },
         "lys-okt-kontrast": {
@@ -722,37 +722,37 @@
             "ny": {
               "fg": "#465A82",
               "bg": "#D6DDE9",
-              "kant": "#A0B2D1"
+              "kant": "#6D7E9B"
             },
             "pagar": {
               "fg": "#5947A1",
               "bg": "#DCDBEB",
-              "kant": "#B0A9E2"
+              "kant": "#7C75AB"
             },
             "venter": {
               "fg": "#565B63",
               "bg": "#D7DEE7",
-              "kant": "#ACB3BB"
+              "kant": "#787E86"
             },
             "sannsynlig": {
               "fg": "#773B88",
               "bg": "#E7D8EB",
-              "kant": "#C7A2D2"
+              "kant": "#93709D"
             },
             "ferdig": {
               "fg": "#376B1C",
               "bg": "#D3E1CC",
-              "kant": "#9BBE8D"
+              "kant": "#668658"
             },
             "advarsel": {
               "fg": "#695117",
               "bg": "#ECDBB3",
-              "kant": "#CDB37A"
+              "kant": "#927942"
             },
             "feil": {
               "fg": "#92362E",
               "bg": "#E9DAD7",
-              "kant": "#DB9F97"
+              "kant": "#A66D66"
             }
           },
           "lys-okt-kontrast": {
@@ -1141,45 +1141,45 @@
     "$merknad": "Sju toner, hver farge betyr det samme overalt. fg = tekst og prikk, bg = flate, kant = ramme. Hver tone har lys, mørk, lys-okt-kontrast, mork-okt-kontrast og p3. K-206: ny, pagar, venter, sannsynlig, ferdig, advarsel, feil (erstatter noytral, info, venter, sannsynlig, ok, haster, feil).",
     "ny": {
       "lys": {
-        "fg": "#1A57AD",
-        "bg": "#E7F1FF",
-        "kant": "#A0C6FF"
+        "fg": "#405B85",
+        "bg": "#E4EAF3",
+        "kant": "#73849F"
       },
       "mork": {
-        "fg": "#B5D3FF",
-        "bg": "#152946",
-        "kant": "#37588A"
+        "fg": "#C3D2E8",
+        "bg": "#222934",
+        "kant": "#687589"
       },
       "lys-okt-kontrast": {
-        "fg": "#003882",
-        "bg": "#F2F7FF",
-        "kant": "#3E71BC"
+        "fg": "#233D64",
+        "bg": "#ECF0F7",
+        "kant": "#596E8D"
       },
       "mork-okt-kontrast": {
-        "fg": "#E0ECFF",
-        "bg": "#071A36",
-        "kant": "#759AD0"
+        "fg": "#DFE9F7",
+        "bg": "#11161E",
+        "kant": "#728094"
       },
       "p3": {
         "lys": {
-          "fg": "#2C56A7",
-          "bg": "#E8F1FF",
-          "kant": "#A8C5FA"
+          "fg": "#465A82",
+          "bg": "#E5EAF2",
+          "kant": "#76849C"
         },
         "mork": {
-          "fg": "#B9D2FF",
-          "bg": "#1A2844",
-          "kant": "#3E5786"
+          "fg": "#C6D2E6",
+          "bg": "#242933",
+          "kant": "#6A7588"
         },
         "lys-okt-kontrast": {
-          "fg": "#0C3584",
-          "bg": "#F2F7FF",
-          "kant": "#4A70B7"
+          "fg": "#293D61",
+          "bg": "#EDF0F6",
+          "kant": "#5E6E8B"
         },
         "mork-okt-kontrast": {
-          "fg": "#E1ECFF",
-          "bg": "#0C1A34",
-          "kant": "#7D99CB"
+          "fg": "#E1E8F6",
+          "bg": "#12161E",
+          "kant": "#768093"
         }
       },
       "etikett": "Ny"
@@ -1188,12 +1188,12 @@
       "lys": {
         "fg": "#5C46A7",
         "bg": "#EFEEFF",
-        "kant": "#C3BBFB"
+        "kant": "#8B82BF"
       },
       "mork": {
         "fg": "#D0C9FF",
         "bg": "#292344",
-        "kant": "#584E87"
+        "kant": "#7369A5"
       },
       "lys-okt-kontrast": {
         "fg": "#402584",
@@ -1209,12 +1209,12 @@
         "lys": {
           "fg": "#5947A2",
           "bg": "#EFEEFF",
-          "kant": "#C1BBF6"
+          "kant": "#8983BA"
         },
         "mork": {
           "fg": "#CEC9FF",
           "bg": "#282342",
-          "kant": "#564F83"
+          "kant": "#716AA1"
         },
         "lys-okt-kontrast": {
           "fg": "#3C267F",
@@ -1233,12 +1233,12 @@
       "lys": {
         "fg": "#555B64",
         "bg": "#E9F1FB",
-        "kant": "#BDC5CF"
+        "kant": "#838B94"
       },
       "mork": {
         "fg": "#CAD2DC",
         "bg": "#242931",
-        "kant": "#525961"
+        "kant": "#6B737B"
       },
       "lys-okt-kontrast": {
         "fg": "#383E46",
@@ -1254,12 +1254,12 @@
         "lys": {
           "fg": "#565B63",
           "bg": "#EBF1FA",
-          "kant": "#BFC5CE"
+          "kant": "#848A93"
         },
         "mork": {
           "fg": "#CCD1DB",
           "bg": "#252930",
-          "kant": "#535860"
+          "kant": "#6D727A"
         },
         "lys-okt-kontrast": {
           "fg": "#393D45",
@@ -1278,12 +1278,12 @@
       "lys": {
         "fg": "#80378C",
         "bg": "#FCE9FF",
-        "kant": "#E0B1E7"
+        "kant": "#A77AAD"
       },
       "mork": {
         "fg": "#F3B9FC",
         "bg": "#361E3A",
-        "kant": "#6F4676"
+        "kant": "#8C6193"
       },
       "lys-okt-kontrast": {
         "fg": "#5F136A",
@@ -1299,12 +1299,12 @@
         "lys": {
           "fg": "#773B87",
           "bg": "#FAE9FF",
-          "kant": "#D9B3E4"
+          "kant": "#A07CAA"
         },
         "mork": {
           "fg": "#EABBF8",
           "bg": "#331F39",
-          "kant": "#694873"
+          "kant": "#856390"
         },
         "lys-okt-kontrast": {
           "fg": "#571A66",
@@ -1323,17 +1323,17 @@
       "lys": {
         "fg": "#1F6D02",
         "bg": "#E3F7DE",
-        "kant": "#A5D39B"
+        "kant": "#6B9661"
       },
       "mork": {
         "fg": "#AAE39E",
         "bg": "#173012",
-        "kant": "#3B6432"
+        "kant": "#547E4A"
       },
       "lys-okt-kontrast": {
         "fg": "#104B00",
         "bg": "#E9FEE5",
-        "kant": "#448335"
+        "kant": "#418032"
       },
       "mork-okt-kontrast": {
         "fg": "#C4FEB7",
@@ -1344,17 +1344,17 @@
         "lys": {
           "fg": "#376C1D",
           "bg": "#E6F7E0",
-          "kant": "#AFD2A0"
+          "kant": "#749566"
         },
         "mork": {
           "fg": "#B6E2A5",
           "bg": "#1D2F16",
-          "kant": "#456338"
+          "kant": "#5D7D50"
         },
         "lys-okt-kontrast": {
           "fg": "#1D4B01",
           "bg": "#EDFDE7",
-          "kant": "#53823F"
+          "kant": "#517E3C"
         },
         "mork-okt-kontrast": {
           "fg": "#D0FCBE",
@@ -1368,12 +1368,12 @@
       "lys": {
         "fg": "#6D5000",
         "bg": "#FFE9BC",
-        "kant": "#E0C07F"
+        "kant": "#A18242"
       },
       "mork": {
         "fg": "#FCC959",
         "bg": "#3D2A00",
-        "kant": "#70530B"
+        "kant": "#907232"
       },
       "lys-okt-kontrast": {
         "fg": "#503900",
@@ -1389,12 +1389,12 @@
         "lys": {
           "fg": "#6C5000",
           "bg": "#FEE9BB",
-          "kant": "#DBC188"
+          "kant": "#9C844C"
         },
         "mork": {
           "fg": "#F4CB6C",
           "bg": "#3B2B01",
-          "kant": "#6B541D"
+          "kant": "#8B733D"
         },
         "lys-okt-kontrast": {
           "fg": "#4E3900",
@@ -1413,12 +1413,12 @@
       "lys": {
         "fg": "#9E2D28",
         "bg": "#FFEBE8",
-        "kant": "#F9AEA5"
+        "kant": "#BD776F"
       },
       "mork": {
         "fg": "#FFBFB6",
         "bg": "#421C18",
-        "kant": "#83423C"
+        "kant": "#A25E57"
       },
       "lys-okt-kontrast": {
         "fg": "#780007",
@@ -1434,12 +1434,12 @@
         "lys": {
           "fg": "#91362E",
           "bg": "#FDEBE8",
-          "kant": "#EEB1A7"
+          "kant": "#B37A72"
         },
         "mork": {
           "fg": "#FABFB5",
           "bg": "#3D1E1A",
-          "kant": "#7B463F"
+          "kant": "#996159"
         },
         "lys-okt-kontrast": {
           "fg": "#6E100F",
@@ -1605,16 +1605,16 @@
         "status": {
           "ny": {
             "fg": {
-              "srgb": "#1A57AD",
-              "p3": "#2C56A7"
+              "srgb": "#405B85",
+              "p3": "#465A82"
             },
             "bg": {
-              "srgb": "#E7F1FF",
-              "p3": "#E8F1FF"
+              "srgb": "#E4EAF3",
+              "p3": "#E5EAF2"
             },
             "kant": {
-              "srgb": "#A0C6FF",
-              "p3": "#A8C5FA"
+              "srgb": "#73849F",
+              "p3": "#76849C"
             }
           },
           "pagar": {
@@ -1627,8 +1627,8 @@
               "p3": "#EFEEFF"
             },
             "kant": {
-              "srgb": "#C3BBFB",
-              "p3": "#C1BBF6"
+              "srgb": "#8B82BF",
+              "p3": "#8983BA"
             }
           },
           "venter": {
@@ -1641,8 +1641,8 @@
               "p3": "#EBF1FA"
             },
             "kant": {
-              "srgb": "#BDC5CF",
-              "p3": "#BFC5CE"
+              "srgb": "#838B94",
+              "p3": "#848A93"
             }
           },
           "sannsynlig": {
@@ -1655,8 +1655,8 @@
               "p3": "#FAE9FF"
             },
             "kant": {
-              "srgb": "#E0B1E7",
-              "p3": "#D9B3E4"
+              "srgb": "#A77AAD",
+              "p3": "#A07CAA"
             }
           },
           "ferdig": {
@@ -1669,8 +1669,8 @@
               "p3": "#E6F7E0"
             },
             "kant": {
-              "srgb": "#A5D39B",
-              "p3": "#AFD2A0"
+              "srgb": "#6B9661",
+              "p3": "#749566"
             }
           },
           "advarsel": {
@@ -1683,8 +1683,8 @@
               "p3": "#FEE9BB"
             },
             "kant": {
-              "srgb": "#E0C07F",
-              "p3": "#DBC188"
+              "srgb": "#A18242",
+              "p3": "#9C844C"
             }
           },
           "feil": {
@@ -1697,8 +1697,8 @@
               "p3": "#FDEBE8"
             },
             "kant": {
-              "srgb": "#F9AEA5",
-              "p3": "#EEB1A7"
+              "srgb": "#BD776F",
+              "p3": "#B37A72"
             }
           }
         }
@@ -1719,16 +1719,16 @@
         "status": {
           "ny": {
             "fg": {
-              "srgb": "#B5D3FF",
-              "p3": "#B9D2FF"
+              "srgb": "#C3D2E8",
+              "p3": "#C6D2E6"
             },
             "bg": {
-              "srgb": "#152946",
-              "p3": "#1A2844"
+              "srgb": "#222934",
+              "p3": "#242933"
             },
             "kant": {
-              "srgb": "#37588A",
-              "p3": "#3E5786"
+              "srgb": "#687589",
+              "p3": "#6A7588"
             }
           },
           "pagar": {
@@ -1741,8 +1741,8 @@
               "p3": "#282342"
             },
             "kant": {
-              "srgb": "#584E87",
-              "p3": "#564F83"
+              "srgb": "#7369A5",
+              "p3": "#716AA1"
             }
           },
           "venter": {
@@ -1755,8 +1755,8 @@
               "p3": "#252930"
             },
             "kant": {
-              "srgb": "#525961",
-              "p3": "#535860"
+              "srgb": "#6B737B",
+              "p3": "#6D727A"
             }
           },
           "sannsynlig": {
@@ -1769,8 +1769,8 @@
               "p3": "#331F39"
             },
             "kant": {
-              "srgb": "#6F4676",
-              "p3": "#694873"
+              "srgb": "#8C6193",
+              "p3": "#856390"
             }
           },
           "ferdig": {
@@ -1783,8 +1783,8 @@
               "p3": "#1D2F16"
             },
             "kant": {
-              "srgb": "#3B6432",
-              "p3": "#456338"
+              "srgb": "#547E4A",
+              "p3": "#5D7D50"
             }
           },
           "advarsel": {
@@ -1797,8 +1797,8 @@
               "p3": "#3B2B01"
             },
             "kant": {
-              "srgb": "#70530B",
-              "p3": "#6B541D"
+              "srgb": "#907232",
+              "p3": "#8B733D"
             }
           },
           "feil": {
@@ -1811,8 +1811,8 @@
               "p3": "#3D1E1A"
             },
             "kant": {
-              "srgb": "#83423C",
-              "p3": "#7B463F"
+              "srgb": "#A25E57",
+              "p3": "#996159"
             }
           }
         }
@@ -1833,16 +1833,16 @@
         "status": {
           "ny": {
             "fg": {
-              "srgb": "#003882",
-              "p3": "#0C3584"
+              "srgb": "#233D64",
+              "p3": "#293D61"
             },
             "bg": {
-              "srgb": "#F2F7FF",
-              "p3": "#F2F7FF"
+              "srgb": "#ECF0F7",
+              "p3": "#EDF0F6"
             },
             "kant": {
-              "srgb": "#3E71BC",
-              "p3": "#4A70B7"
+              "srgb": "#596E8D",
+              "p3": "#5E6E8B"
             }
           },
           "pagar": {
@@ -1897,8 +1897,8 @@
               "p3": "#EDFDE7"
             },
             "kant": {
-              "srgb": "#448335",
-              "p3": "#53823F"
+              "srgb": "#418032",
+              "p3": "#517E3C"
             }
           },
           "advarsel": {
@@ -1947,16 +1947,16 @@
         "status": {
           "ny": {
             "fg": {
-              "srgb": "#E0ECFF",
-              "p3": "#E1ECFF"
+              "srgb": "#DFE9F7",
+              "p3": "#E1E8F6"
             },
             "bg": {
-              "srgb": "#071A36",
-              "p3": "#0C1A34"
+              "srgb": "#11161E",
+              "p3": "#12161E"
             },
             "kant": {
-              "srgb": "#759AD0",
-              "p3": "#7D99CB"
+              "srgb": "#728094",
+              "p3": "#768093"
             }
           },
           "pagar": {
