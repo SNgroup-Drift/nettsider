@@ -197,3 +197,19 @@ Tabell, Listerad, Flis og Kort (`components/layout/`).
 - En kolonne er enten tall eller tekst. Forklaringer som «etter ferdigmelding» hører hjemme i tekstkolonnen.
 - I sammenligningstabeller (bestilt mot OB) er kolonnene som sammenlignes høyrestilt, også når de har tekst.
 - Tekst over 42 tegn brytes over inntil tre linjer og kuttes ikke. Raden får 8 px luft over og under.
+
+
+## Statusrad (2.13, 18.10.2026): erstatter venstrestreken
+
+Denne regelen erstatter stripen på 3 px i venstrekant for Haster i tabellrader og kortlister (HASTER.md 2.5).
+
+1. **Ikonkolonne:** første kolonne i Tabell, Kortliste og Listerad er en fast ikonkolonne. Ikonet er 24 px i en celle på 32 px og er midtstilt vertikalt. På telefon står ikonet foran tittelen i kortet, på linje med tittelen.
+2. **Ikon:** ikonet følger radens status (kart i `assets/ikoner/status-ikon.json` og IKONER.md) og tegnes i `status.<farge>.fg`.
+3. **Rader uten status** får `status-ingen` (liten åpen sirkel) i `--tekst-svak`. Cellen er aldri tom.
+4. **Tabellhodet** får en tom kolonne med samme bredde (32 px).
+5. **Radfarge:** hele raden får bakgrunnen `status.<farge>.bg`, samme flate som pillen. Teksten beholder `--tekst`, og andre celler får ikke farget tekst.
+6. **Hover:** bakgrunnen går ett trinn i samme kulør, OKLCH L −0,03 i lys modus og +0,03 i mørk modus.
+7. **Valgt rad:** kant på 3 px i `status.<farge>.kant` på venstre side, og ingen hover-endring. Kanten måles mot bakgrunnen og har ≥ 3:1 (2.12). Mot hover-flaten ville den falt under kravet.
+8. **Rader uten status:** som før (`--flate-kort` / `--flate-rad`).
+9. **Statuspillen** i Status-kolonnen beholdes. Ikonet viser typen uten at man må lese, og pillen har ordet.
+10. **Kontrast:** tekst på radfargen og hover er minst 4,5:1. Ikon og kant er minst 3:1, og minst 4,5:1 i økt kontrast. Tallene står i KONTROLL.md («2.13»).

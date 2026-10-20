@@ -10,6 +10,22 @@ import Ikon from "../components/Ikon.astro";
 import { GRUPPER, ikonStatus, ikoner, ikonerNye } from "../lib/ikoner";
 const egne = ikoner.filter((i) => i.egen);
 import { designsystem, status } from "../lib/tokens";
+// N-7e (2.13, K-388): Statusrad. Kartet, ikonene og stilen (`.statusrad`, `.rad-ikon`) kommer fra den delte pakken; kortet er bygget fra components/Statusrad/preview.html (Min dag › Trenger deg), uten Designs egne fargeverdier.
+import { STATUSKART, STATUSNAVN, statusSvg, type Status } from "@sngroup/hengsel-tokens/statusrad";
+import "@sngroup/hengsel-tokens/statusrad.css";
+const tone: Record<string, string> = { haster: "feil", "snart-venter": "advarsel" };
+const radTone = (s: Status) => tone[s] ?? STATUSKART.farge[s];
+const STATUSRADER: { s: Status; k: string; h: string; o: string; f: string; p: string; valgt?: boolean }[] = [
+  { s: "haster", k: "Svein Aas", h: "Avvik på 3 linjer i OB", o: "O-24118", f: "I dag", p: "Avvik på 3 linjer" },
+  { s: "haster", k: "Kari Lund", h: "Kunden venter på svar om benkeplate", o: "O-24102", f: "Forfalt 2 d", p: "Venter på svar" },
+  { s: "haster", k: "Per Moe", h: "Reklamasjon uten ansvarlig", o: "S-1187", f: "3 dager", p: "Haster", valgt: true },
+  { s: "snart-venter", k: "Ingrid Berg", h: "Venter på OB fra Leverandør A", o: "O-24131", f: "Fre 23.10", p: "Venter på OB" },
+  { s: "snart-venter", k: "Ola Haugen", h: "Venter på OB fra Leverandør A", o: "O-24129", f: "Fre 23.10", p: "Venter på OB" },
+  { s: "snart-venter", k: "Marte Dahl", h: "Venter på OB fra Leverandør A", o: "O-24127", f: "Man 26.10", p: "Venter på OB" },
+  { s: "ingen", k: "Tone Sæther", h: "Ring om tilbud", o: "T-8812", f: "Ons 28.10", p: "" },
+  { s: "ingen", k: "Jon Brekke", h: "Måltaking avtalt", o: "T-8807", f: "Tor 29.10", p: "" },
+];
+const statusIkonNavn = Object.entries(STATUSKART.ikon).map(([k, v]) => `${k} → ${v}`).join(", ");
 // N-7d: versjonen og «nye i»-listen leses fra tokens og ikoner.json, ikke skrevet for hånd
 const nyeVersjoner = [...new Set(ikonerNye.map((i) => i.ny))].sort();
 const nyeTekst = nyeVersjoner.length > 1 ? `${nyeVersjoner.slice(0, -1).join(", ")} og ${nyeVersjoner.at(-1)}` : nyeVersjoner.join("");
@@ -73,6 +89,38 @@ const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "V
       </div>
     </Komponent>
 
+    <Komponent id="statusrad" navn="Statusrad" kode=".rad[data-status], .rad-ikon" tekst={`Designsystem ${STATUSKART.versjon} (K-388): raden viser status med et ikon først (24 px i en celle på 32 px, i statusens farge) og hele raden i statusens bakgrunn. Erstatter venstrestreken på 3 px for Haster. Pillen i Status-kolonnen beholdes.`} bruk="Rader i Tabell, Kortliste og Listerad som har en status (Min dag › Trenger deg: haster, venter, uten status). Rader uten status i en tabell som viser status får «ingen» (åpen sirkel i svak tekst), så ikonkolonnen aldri er tom. Valgt rad får en kant på 3 px til venstre i statusens kantfarge. På telefon står ikonet foran tittelen i kortet." ikke="Venstrestrek for Haster (borte fra 2.13). Farget tekst i andre celler enn pillen: teksten beholder tekstfargen. Ikon uten ord ved siden av (pillen eller teksten har ordet). Statusrad i tabeller uten status: de er som før.">
+      <div class="flate-kort">
+        <div class="tabell" tabindex="0" role="region" aria-label="Statusrad i tabell (PC)">
+        <table class="mini-tabell statusrad-tabell">
+          <thead><tr><th class="ikon-celle"><span class="statusrad-skjult">Status</span></th><th>Kunde</th><th>Hva</th><th>Ordre</th><th class="hoyre">Frist</th><th>Status</th></tr></thead>
+          <tbody>
+            {STATUSRADER.map((r) => (
+              <tr class="statusrad" data-status={r.s} aria-selected={r.valgt ? "true" : undefined}>
+                <td class="ikon-celle"><span class="rad-ikon" role="img" aria-label={STATUSNAVN[r.s]} set:html={statusSvg(r.s)} /></td>
+                <td><b>{r.k}</b></td><td>{r.h}</td><td class="tall">{r.o}</td><td class="tall hoyre">{r.f}</td>
+                <td>{r.p ? <span class={`pille s-${radTone(r.s)}`}><i></i>{r.p}</span> : <span class="dempet">–</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+        <div class="statusrad-kort" aria-label="Statusrad i kortliste (telefon)">
+          {STATUSRADER.slice(0, 5).concat(STATUSRADER.slice(6, 7)).map((r) => (
+            <div class="statusrad" data-status={r.s} aria-selected={r.valgt ? "true" : undefined}>
+              <span class="rad-ikon" role="img" aria-label={STATUSNAVN[r.s]} set:html={statusSvg(r.s)} />
+              <div class="innh">
+                <div class="topp"><b>{r.k}</b><span class="dempet tall">{r.f}</span></div>
+                <span class="dempet">{r.h} · {r.o}</span>
+                {r.p ? <span class={`pille s-${radTone(r.s)}`}><i></i>{r.p}</span> : null}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="dempet">Ikonkartet står i <code>status-ikon.json</code>: {statusIkonNavn}.</p>
+      </div>
+    </Komponent>
+
     <Komponent id="skjema" navn="Skjema" kode="Input, Select, Switch" tekst="Felt i senket flate med kant (radius 6), ledetekst over feltet og hjelpetekst under i svak tekst. Bryteren er blå når den er på." bruk="Å registrere og endre data: felt, valg, dato, bryter (også «Skjul innpris»)." ikke="Plassholder i stedet for ledetekst. Rød kant uten feilmelding i tekst. Hjelpetekst under 12 px.">
       <div class="flate-kort">
         <div class="felt"><label>Notat</label><div class="inn">Ønsker matt front.</div><span class="hjelp">Vises bare for interne brukere.</span></div>
@@ -107,7 +155,7 @@ const etikett: Record<string, string> = { ny: "Ny", pagar: "Pågår", venter: "V
       </div>
     </Komponent>
 
-    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`${ikoner.length} strekikoner fra designsystem ${designsystem.versjon} (${ikoner.length - egne.length} fra Design, ${ikonerNye.length} av dem nye i ${nyeTekst}, og ${egne.length} egne fra CRM-et: ${egne.map((i) => i.navn).join(", ")}) på et 20 px rutenett, i 16, 20 og 24 px, nivåikonene også i 12 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
+    <Komponent id="ikoner" navn="Ikoner" kode="SVG med currentColor (SVGR eller sprite)" tekst={`${ikoner.length} strekikoner fra designsystem ${designsystem.versjon} (${ikoner.length - egne.length} fra Design, ${ikonerNye.length} av dem nye i ${nyeTekst}, og ${egne.length} egne fra CRM-et: ${egne.map((i) => i.navn).join(", ")}) på et 20 px rutenett, i 16, 20 og 24 px, nivå- og statusikonene m.fl. også i 12 px (strek 1,5, 1,6 og 1,75 px, runde ender og hjørner). Fargen kommer fra teksten rundt, så de følger tokens. Status: ${ikonStatus}.`} bruk="Menypunkter i sidemeny, skuff og «Mer», verktøylinjen (varsler, søk, kalender), «Trenger handling» og saker, og hjelpeikoner (pil, pluss, lukk, hake). Aktiv tilstand er samme ikon i aksent-tekst. Navnet står alltid ved siden av eller som tilgjengelig tekst." ikke="Fylte varianter, egne farger eller Material Symbols. Ikonet alene som eneste bærer av betydningen. Ikoner i knapper og tekster til sluttkunden: der er butikken avsender.">
       <div class="flate-kort ikon-gruppe">
         <div class="ikon-storrelser"><Ikon navn="ordre" storrelse={16} /><Ikon navn="ordre" storrelse={20} /><Ikon navn="ordre" storrelse={24} /><span class="dempet">Ordre i 16, 20 og 24 px</span></div>
         {GRUPPER.map(([g, tittel]) => (

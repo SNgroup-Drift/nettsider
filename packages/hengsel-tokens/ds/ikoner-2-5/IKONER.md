@@ -124,3 +124,24 @@ De 14 ikonene Code manglet. «Sortering opp/ned» er tre filer: `sorter` (kan so
 | `logg-ut.svg` | Logg ut | `rectangle.portrait.and.arrow.right` |  | Logg ut (brukermeny) |
 | `bok.svg` | Håndbok | `book` |  | Håndbok, rutiner, hjelpeartikler |
 | `kompass.svg` | Kompass | `safari` |  | Veibeskrivelse, «finn fram», kart over butikker |
+
+
+## Statusrad (2.13, 18.10.2026)
+
+Ikonet står i første kolonne i Tabell, Kortliste og Listerad, i 24 px. Fargen er `status.<farge>.fg`, og «ingen» bruker `--tekst-svak`. Kartet finnes også som `status-ikon.json`.
+
+| Status | Ikon | Farge (tokens) | Ny i 2.13 |
+|---|---|---|---|
+| Ny | `status-ny` | `--status-ny-*` | ja |
+| Pågår | `status-pagar` | `--status-pagar-*` | ja |
+| Venter | `nivaa-venter` | `--status-venter-*` |  |
+| Sannsynlig | `status-sannsynlig` | `--status-sannsynlig-*` | ja |
+| Ferdig | `status-ferdig` | `--status-ferdig-*` | ja |
+| Advarsel (prisavvik) | `prisavvik` | `--status-advarsel-*` |  |
+| Feil (stoppet) | `stoppet` | `--status-feil-*` |  |
+| Haster (nivå 1) | `nivaa-haster` | `--status-feil-*` |  |
+| Snart (nivå 2) | `nivaa-snart` | `--status-advarsel-*` |  |
+| Snart, venter (nivå 3) | `nivaa-venter` | `--status-advarsel-*` |  |
+| Ingen status | `status-ingen` | `--tekst-svak` | ja |
+
+Nye ikoner (12, 16, 20 og 24 px, samme strek som de andre): `status-ny` (stjerne i sirkel), `status-pagar` (halvfylt sirkel), `status-sannsynlig` (pil opp i sirkel), `status-ferdig` (hake i sirkel) og `status-ingen` (liten åpen sirkel). `prisavvik` og `stoppet` har fått 12 px.

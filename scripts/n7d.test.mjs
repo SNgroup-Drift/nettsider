@@ -23,7 +23,8 @@ const uten$ = (o) => Object.entries(o ?? {}).filter(([k]) => !k.startsWith("$"))
 const STATUS = ["ny", "pagar", "venter", "sannsynlig", "ferdig", "advarsel", "feil"];
 
 /** K-378 flettet til demo i hengsel-crm (pinnet med npm run design:hent). */
-export const PIN_COMMIT = "bf31260cd262d0a0813cc25c516a202ca2ef239b";
+/** N-7e flyttet pinnen til K-388-commiten (tokens uendret, 2.12.0); n7e.test.mjs sjekker den gjeldende commiten. Her sjekkes bare at pinnen er en full sha og at tokens fortsatt er 2.12.0. */
+export const PIN_COMMIT = JSON.parse(readFileSync(join(import.meta.dirname, "..", "packages", "hengsel-tokens", "designsystem.pin.json"), "utf8")).commit;
 
 // WCAG-kontrast (sRGB), samme regnestykke som design.hengsel.no bruker på /farger
 const lum = (hex) => {
@@ -35,8 +36,8 @@ const kontrast = (a, b) => { const [x, y] = [lum(a), lum(b)]; return (Math.max(x
 const blokk = (velger) => { const m = css.match(new RegExp(`\\n${velger.replace(/[[\]().*+?]/g, "\\$&")} \\{([^}]*)\\}`)); assert.ok(m, `blokken ${velger} mangler i tokens.css`); return m[1]; };
 const rot$ = () => { const m = css.match(/\n:root \{([^}]*)\}/); assert.ok(m, ":root mangler"); return m[1]; };
 
-test("a) pinnen er K-378-commiten, versjon 2.12.0, og de genererte filene følger pinnen", () => {
-  assert.equal(pin.commit, PIN_COMMIT);
+test("a) pinnen er en full sha, tokens er versjon 2.12.0 (K-378, uendret i 2.13), og de genererte filene følger pinnen", () => {
+  assert.match(pin.commit, /^[0-9a-f]{40}$/);
   assert.equal(pin.versjon, "2.12.0");
   assert.equal(json.versjon, "2.12.0");
   assert.equal(pin.repo, "SNgroup-Drift/hengsel-crm");
@@ -92,7 +93,7 @@ test("c) statuskanter: minst 3:1 mot bg (lys, mørk, CRM, Admin) og minst 4,5:1 
 
 test("d) ikonene datakilde og tv (Designs 2.11) ligger i ds/ikoner-2-5 i fire størrelser, står i ikoner.json og er pinnet med sha256", () => {
   const kart = JSON.parse(les(pakke, "ds", "ikoner-2-5", "ikoner.json"));
-  assert.equal(kart.ikoner.length, 77);
+  assert.equal(kart.ikoner.length, 82); // N-7e: 77 + fem statusikoner (2.13)
   for (const navn of ["datakilde", "tv"]) {
     const i = kart.ikoner.find((x) => x.fil === navn);
     assert.ok(i, `${navn} mangler i ikoner.json`);
@@ -127,6 +128,6 @@ test("e) design.hengsel.no: status-pillene i hvert produktkort og kant/bg på /f
   const komp = les(dist, "komponenter.html");
   for (const n of ["Datakilde", "TV-visning", "cylinder.split.1x2"]) assert.ok(komp.includes(n), `${n} vises ikke på /komponenter`);
   assert.match(komp, /ny i 2\.11/, "«ny i 2.11» mangler på /komponenter");
-  assert.match(komp, /77 strekikoner fra designsystem 2\.12\.0/, "ikonteksten skal lese antall og versjon fra pakken");
+  assert.match(komp, /82 strekikoner fra designsystem 2\.12\.0/, "ikonteksten skal lese antall og versjon fra pakken");
   for (const m of ["12", "16", "20", "24"]) for (const n of ["datakilde", "tv"]) assert.ok(existsSync(join(dist, "ds", "ikoner-2-5", m, `${n}.svg`)), `${m}/${n}.svg mangler i dist`);
 });

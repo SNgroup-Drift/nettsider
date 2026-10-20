@@ -388,36 +388,6 @@
       }
     },
     {
-      "fil": "datakilde",
-      "navn": "Datakilde",
-      "gruppe": "verktoy",
-      "sf": "cylinder.split.1x2",
-      "egen": false,
-      "bruk": "Bytt datakilde i Brukermeny (erstatter lånt «Rapporter»)",
-      "ny": "2.11",
-      "filer": {
-        "12": "12/datakilde.svg",
-        "16": "16/datakilde.svg",
-        "20": "20/datakilde.svg",
-        "24": "24/datakilde.svg"
-      }
-    },
-    {
-      "fil": "tv",
-      "navn": "TV-visning",
-      "gruppe": "verktoy",
-      "sf": "tv",
-      "egen": false,
-      "bruk": "TV-visning på storskjerm (erstatter lånt «Oversikt»)",
-      "ny": "2.11",
-      "filer": {
-        "12": "12/tv.svg",
-        "16": "16/tv.svg",
-        "20": "20/tv.svg",
-        "24": "24/tv.svg"
-      }
-    },
-    {
       "fil": "prisavvik",
       "navn": "Prisavvik / advarsel",
       "gruppe": "status",
@@ -425,6 +395,7 @@
       "egen": false,
       "bruk": "«Trenger handling», saker og historikk: prisavvik / advarsel",
       "filer": {
+        "12": "12/prisavvik.svg",
         "16": "16/prisavvik.svg",
         "20": "20/prisavvik.svg",
         "24": "24/prisavvik.svg"
@@ -451,6 +422,7 @@
       "egen": false,
       "bruk": "«Trenger handling», saker og historikk: stoppet",
       "filer": {
+        "12": "12/stoppet.svg",
         "16": "16/stoppet.svg",
         "20": "20/stoppet.svg",
         "24": "24/stoppet.svg"
@@ -944,6 +916,111 @@
         "16": "16/kompass.svg",
         "20": "20/kompass.svg",
         "24": "24/kompass.svg"
+      }
+    },
+    {
+      "fil": "datakilde",
+      "navn": "Datakilde",
+      "gruppe": "verktoy",
+      "sf": "cylinder.split.1x2",
+      "egen": false,
+      "bruk": "Bytt datakilde i Brukermeny (erstatter lånt «Rapporter»)",
+      "ny": "2.11",
+      "filer": {
+        "12": "12/datakilde.svg",
+        "16": "16/datakilde.svg",
+        "20": "20/datakilde.svg",
+        "24": "24/datakilde.svg"
+      }
+    },
+    {
+      "fil": "tv",
+      "navn": "TV-visning",
+      "gruppe": "verktoy",
+      "sf": "tv",
+      "egen": false,
+      "bruk": "TV-visning på storskjerm (erstatter lånt «Oversikt»)",
+      "ny": "2.11",
+      "filer": {
+        "12": "12/tv.svg",
+        "16": "16/tv.svg",
+        "20": "20/tv.svg",
+        "24": "24/tv.svg"
+      }
+    },
+    {
+      "fil": "status-ny",
+      "navn": "Status ny",
+      "gruppe": "status",
+      "sf": "sparkle",
+      "egen": false,
+      "bruk": "Statusrad: ny (gråblå)",
+      "ny": "2.13",
+      "filer": {
+        "12": "12/status-ny.svg",
+        "16": "16/status-ny.svg",
+        "20": "20/status-ny.svg",
+        "24": "24/status-ny.svg"
+      }
+    },
+    {
+      "fil": "status-pagar",
+      "navn": "Status pågår",
+      "gruppe": "status",
+      "sf": "circle.lefthalf.filled",
+      "egen": false,
+      "bruk": "Statusrad: pågår (fiolett)",
+      "ny": "2.13",
+      "filer": {
+        "12": "12/status-pagar.svg",
+        "16": "16/status-pagar.svg",
+        "20": "20/status-pagar.svg",
+        "24": "24/status-pagar.svg"
+      }
+    },
+    {
+      "fil": "status-sannsynlig",
+      "navn": "Status sannsynlig",
+      "gruppe": "status",
+      "sf": "arrow.up.right.circle",
+      "egen": false,
+      "bruk": "Statusrad: sannsynlig (lilla)",
+      "ny": "2.13",
+      "filer": {
+        "12": "12/status-sannsynlig.svg",
+        "16": "16/status-sannsynlig.svg",
+        "20": "20/status-sannsynlig.svg",
+        "24": "24/status-sannsynlig.svg"
+      }
+    },
+    {
+      "fil": "status-ferdig",
+      "navn": "Status ferdig",
+      "gruppe": "status",
+      "sf": "checkmark.circle",
+      "egen": false,
+      "bruk": "Statusrad: ferdig (grønn)",
+      "ny": "2.13",
+      "filer": {
+        "12": "12/status-ferdig.svg",
+        "16": "16/status-ferdig.svg",
+        "20": "20/status-ferdig.svg",
+        "24": "24/status-ferdig.svg"
+      }
+    },
+    {
+      "fil": "status-ingen",
+      "navn": "Ingen status",
+      "gruppe": "status",
+      "sf": "circle",
+      "egen": false,
+      "bruk": "Statusrad: rad uten status (tekst-svak). Holder ikonkolonnen",
+      "ny": "2.13",
+      "filer": {
+        "12": "12/status-ingen.svg",
+        "16": "16/status-ingen.svg",
+        "20": "20/status-ingen.svg",
+        "24": "24/status-ingen.svg"
       }
     },
     {

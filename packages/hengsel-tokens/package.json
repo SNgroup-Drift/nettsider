@@ -15,7 +15,9 @@
     "./skjermbilder-manifest.json": "./skjermbilder-manifest.json",
     "./Hode.astro": "./src/Hode.astro",
     "./produktlogo": "./src/produktlogo.ts",
-    "./ds/*": "./ds/*"
+    "./ds/*": "./ds/*",
+    "./statusrad": "./src/statusrad.ts",
+    "./statusrad.css": "./src/statusrad.css"
   },
   "peerDependencies": {
     "astro": "^7.3.0"

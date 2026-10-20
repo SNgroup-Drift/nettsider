@@ -1,5 +1,5 @@
 /**
- * Ikonsettet fra designsystemet (N-7, N-7b, N-7d: 77 i 2.12): strekikoner i 16/20/24 px (currentColor) pluss nivåikonene og de nye i 2.11 (datakilde, tv) også i 12 px. Designs 2.5, 2.6 og 2.11 (`ny`) og CRM-ets egne (`egen`-merkene i ikoner.json). Kilden er pakkens ikoner.json (ds/ikoner-2-5, kopiert til public/ds/ikoner-2-5 ved bygging); siden har ingen egen liste.
+ * Ikonsettet fra designsystemet (N-7, N-7b, N-7d: 77 i 2.12, N-7e: 82 i 2.13): strekikoner i 16/20/24 px (currentColor) pluss nivåikonene, de nye i 2.11 (datakilde, tv) og 2.13 (statusikonene) også i 12 px. Designs 2.5, 2.6, 2.11 og 2.13 (`ny`) og CRM-ets egne (`egen`-merkene i ikoner.json). Kilden er pakkens ikoner.json (ds/ikoner-2-5, kopiert til public/ds/ikoner-2-5 ved bygging); siden har ingen egen liste.
  * SVG-ene har c2pa-metadata og rolle/aria-label; siden tegner dem inline som dekor (aria-hidden) og lar navnet stå som tekst ved siden av.
  * Status i ikoner.json: foreslått (venter på bekreftelse).
  */
