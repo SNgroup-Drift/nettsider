@@ -44,6 +44,8 @@ function vis({ tomt = false, feil = null as unknown } = {}) {
   if (side > sider) side = sider;
   const synlige = rader.slice((side - 1) * PER_SIDE, side * PER_SIDE);
   const inntekt = kunder.reduce((s: number, e: any) => s + (e.verdi_ore ?? 0), 0);
+  // K-469: rollen support får eierne uten beløp (verdi_ore er null); da vises verken kolonnen, sumraden eller inntekten
+  const medBelop = !(alle as any[]).length || (alle as any[]).some((e: any) => e.verdi_ore !== null);
   const verktoylinje = html`<div class="k-verktoylinje">
     <label class="k-sok-felt bred">${raw(`<svg class="ikon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.875" stroke-linecap="round" aria-hidden="true"><circle cx="8.75" cy="8.75" r="5.25"></circle><path d="M12.6 12.6L17 17"></path></svg>`)}<input id="lokalsok" type="search" placeholder="Søk på navn, sted eller org.nr." aria-label="Søk på navn, sted eller org.nr." value="${sok}" autocomplete="off" /></label>
     ${velger("f-status", "Status", [["alle", "Status: Alle"], ["prospekt", "Prospekt"], ["kunde", "Kunde"], ["tapt", "Tapt"]], fStatus)}
@@ -55,11 +57,11 @@ function vis({ tomt = false, feil = null as unknown } = {}) {
     : tomt ? tom("Ingen eiere ennå", "Importer kjedelisten fra Excel, eller legg inn den første eieren. Du ser alltid en forhåndsvisning før noe lagres.", raw(`<a class="knapp" href="/salg/import">Importer fra Excel</a>`))
     : html`${verktoylinje}${feil ? raw(feilbanner(feil, "Kunne ikke oppdatere listen. Viser sist hentede.")) : ""}
       ${rader.length === 0 ? tom(`Ingen treff${sok ? ` på «${sok}»` : ""}`, "Søket ser på navn, sted, org.nr. og butikkenes sted. Prøv et annet ord, eller fjern et filter.", raw(`<button class="knapp" type="button" id="nullstill">Nullstill søk</button>`))
-      : html`${tabell({ kolonner: [{ navn: "Eier" }, { navn: "Org.nr.", h: true, midt: true }, { navn: "Butikker", h: true, midt: true, klasse: "smal" }, { navn: "Kjede", midt: true }, { navn: "Fylke", midt: true }, { navn: "Verdi per mnd", h: true, midt: true }, { navn: "Status", klasse: "statuskol" }],
-          rader: synlige.map((e: any) => html`<tr data-lenke="${lenke(e)}"><th scope="row"><a href="${lenke(e)}">${e.navn}</a>${e.lead_ny ? raw(` ${kpille("Ny lead", "ny")}`) : ""}</th><td class="h midt">${orgnr(e.orgnr)}</td><td class="h midt">${e.antall_butikker}</td><td class="midt">${e.kjede === "sigdal" ? "Sigdal" : "Uavhengig"}</td><td class="midt">${e.fylke ?? "–"}</td><td class="h midt">${e.status === "tapt" ? "–" : kr(e.verdi_ore)}</td><td>${kpille(e.er_kunde ? "Kunde" : STATUSNAVN[e.status] ?? e.status, e.er_kunde ? "kunde" : e.status)}</td></tr>`),
-          sumrad: fane === "muligheter" ? "" : html`<tr class="k-sumrad"><th scope="row">Inntekt per måned</th><td class="midt"></td><td class="midt"></td><td class="midt"></td><td class="midt"></td><td class="h midt">${kr(inntekt)}</td><td></td></tr>` })}
+      : html`${tabell({ kolonner: [{ navn: "Eier" }, { navn: "Org.nr.", h: true, midt: true }, { navn: "Butikker", h: true, midt: true, klasse: "smal" }, { navn: "Kjede", midt: true }, { navn: "Fylke", midt: true }, ...(medBelop ? [{ navn: "Verdi per mnd", h: true, midt: true }] : []), { navn: "Status", klasse: "statuskol" }],
+          rader: synlige.map((e: any) => html`<tr data-lenke="${lenke(e)}"><th scope="row"><a href="${lenke(e)}">${e.navn}</a>${e.lead_ny ? raw(` ${kpille("Ny lead", "ny")}`) : ""}</th><td class="h midt">${orgnr(e.orgnr)}</td><td class="h midt">${e.antall_butikker}</td><td class="midt">${e.kjede === "sigdal" ? "Sigdal" : "Uavhengig"}</td><td class="midt">${e.fylke ?? "–"}</td>${medBelop ? html`<td class="h midt">${e.status === "tapt" ? "–" : kr(e.verdi_ore)}</td>` : ""}<td>${kpille(e.er_kunde ? "Kunde" : STATUSNAVN[e.status] ?? e.status, e.er_kunde ? "kunde" : e.status)}</td></tr>`),
+          sumrad: fane === "muligheter" || !medBelop ? "" : html`<tr class="k-sumrad"><th scope="row">Inntekt per måned</th><td class="midt"></td><td class="midt"></td><td class="midt"></td><td class="midt"></td><td class="h midt">${kr(inntekt)}</td><td></td></tr>` })}
         ${sidevelger(side, rader.length, PER_SIDE)}`}`;
-  sett(rot, rad(640, [flis({ id: "eiere", tittel: paKunder ? "Kunder" : "Eiere og butikker", teller: data ? rader.length : "", tittelverdi: data ? html`· Inntekt per måned <b>${kr(inntekt)}</b>` : "", innhold, klasse: "eiere-flis" })]));
+  sett(rot, rad(640, [flis({ id: "eiere", tittel: paKunder ? "Kunder" : "Eiere og butikker", teller: data ? rader.length : "", tittelverdi: data && medBelop ? html`· Inntekt per måned <b>${kr(inntekt)}</b>` : "", innhold, klasse: "eiere-flis" })]));
   koble();
 }
 

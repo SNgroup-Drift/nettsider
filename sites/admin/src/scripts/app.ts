@@ -34,8 +34,9 @@ q("#mer-handlinger")?.addEventListener("click", (e) => { const t = q("#toppfelt"
 document.addEventListener("click", (e) => { if (!(e.target as HTMLElement).closest("#mer-handlinger")) q("#toppfelt")?.classList.remove("vis-mer"); });
 
 // Eksempel-pillen i topplinja: «Eksempel – prislisten er ikke låst» så lenge gjeldende prisliste er merket eksempel
+// Prislisten er ikke for rollen support (K-469): pillen hentes først når /api/meg har svart med en annen rolle
 const eksPille = q("#sidepille[data-eksempel]");
-if (eksPille) api<{ prisliste: { eksempel: number | boolean } }>("GET", "/api/prisliste/gjeldende", undefined, { utenTilstand: true }).then((g) => {
+const visEksPille = () => eksPille && api<{ prisliste: { eksempel: number | boolean } }>("GET", "/api/prisliste/gjeldende", undefined, { utenTilstand: true }).then((g) => {
   if (!g.prisliste?.eksempel) return;
   eksPille.textContent = "Eksempel – prislisten er ikke låst"; eksPille.dataset.tone = "advarsel"; eksPille.hidden = false;
 }).catch(() => {});
@@ -125,6 +126,7 @@ qa("[data-type-ikon]").forEach((el) => { el.innerHTML = ikon(AKTIVITET[el.datase
 // Hvem er innlogget (navn og rolle fra Workeren) i bunnen av sidemenyen
 api<{ navn: string; rolle: string; epost: string }>("GET", "/api/meg").then((m) => {
   settRolle(m.rolle === "support" ? "support" : "eier");
+  if (m.rolle !== "support") visEksPille();
   document.dispatchEvent(new CustomEvent("rolle", { detail: m.rolle }));
   const init = esc((m.navn || m.epost).slice(0, 1).toUpperCase());
   const b = q("#bruker"); if (b) b.innerHTML = `<span class="init">${init}</span><span class="navn"><b>${esc(m.navn)}</b>${m.rolle === "eier" ? "Admin" : m.rolle === "support" ? "Support" : esc(m.rolle)}</span>`;

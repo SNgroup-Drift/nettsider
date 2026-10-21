@@ -346,14 +346,15 @@ test("fristfarger: rød under 7 dager, gul under 30, grønn ellers, ukjent uten 
   assert.equal(tekstFor(null), "fyll inn");
 });
 
-test("N-4: menyen følger sidekartet 26-001–26-013, og Kommer-sidene (26-011, 26-012) finnes, men står ikke i menyen", async () => {
+test("N-4 og K-469: menyen følger sidekartet 26-001–26-013; Støtte (26-011) og Fakturering (26-012) er ekte sider og står i menyen", async () => {
   const { MENY } = await import("../sites/admin/src/lib/meny.ts");
-  assert.deepEqual(MENY[0].punkter.map((p) => p.navn), ["Salg", "Eiere og butikker", "Prisberegner", "Avtaler"]);
-  assert.equal(MENY[1].navn, "Innstillinger");
-  assert.deepEqual(MENY[1].punkter.map((p) => p.navn), ["Prisliste", "Leverandør", "Excel-import", "Tilbakemeldinger"]);
+  assert.deepEqual(MENY[0].punkter.filter((p) => !p.roller || p.roller.includes("eier")).map((p) => p.navn), ["Salg", "Eiere og butikker", "Prisberegner", "Avtaler"]);
+  assert.deepEqual(MENY.map((g) => g.navn ?? g.punkter[0].navn), ["Salg", "Støtte", "Oppstart", "Fakturering", "Tall", "Drift", "Innstillinger"]);
+  assert.deepEqual(MENY.find((g) => g.navn === "Innstillinger").punkter.map((p) => p.navn), ["Prisliste", "Leverandør", "Excel-import", "Tilbakemeldinger", "Support og roller"]);
   const stier = MENY.flatMap((g) => g.punkter.map((p) => p.sti));
-  for (const s of ["/stotte", "/fakturering"]) assert.ok(!stier.includes(s), `${s} står ikke i menyen`);
-  for (const f of ["stotte.astro", "fakturering/index.astro", "logg-inn.astro", "salg/import.astro", "innstillinger/tilbakemeldinger.astro"]) assert.ok(statSync(join(rot, "src", "pages", f)).isFile(), f);
+  for (const s of ["/stotte", "/fakturering"]) assert.ok(stier.includes(s), `${s} står i menyen`);
+  for (const f of ["stotte.astro", "fakturering/index.astro", "logg-inn.astro", "logg-inn-ingen.astro", "salg/import.astro", "innstillinger/tilbakemeldinger.astro"]) assert.ok(statSync(join(rot, "src", "pages", f)).isFile(), f);
+  for (const f of ["stotte.astro", "fakturering/index.astro"]) assert.doesNotMatch(les(join("src", "pages", f)), /KommerSide/, `${f} er ikke lenger «Kommer»`);
   // Kitet er kopiert inn (ikke importert på tvers av nettsteder)
   for (const f of readdirSync(join(rot, "src"), { recursive: true }).filter((f) => /\.(astro|ts)$/.test(f))) assert.doesNotMatch(les(join("src", f)), /(?:from|import)\s*\(?\s*["'][^"']*(?:sites\/hengsel|\.\.\/\.\.\/\.\.\/hengsel)/, f);
 });

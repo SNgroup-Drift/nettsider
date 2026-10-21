@@ -3,16 +3,25 @@
  * for andre roller enn eier, sidehode og små SVG-diagrammer (ingen style-attributter, CSP uten inline-stiler).
  */
 import { api, html, raw, sett, q, feilbanner, skjelett, tilstand, ikon, esc, ApiFeil, kr, type Raa } from "./dom";
+import { settTittel } from "./kit";
 
 export const rot = () => q("#side")!;
 
-export const sidehode = (tittel: string, under: string, handlinger: string | Raa = "") =>
-  html`<header class="sidehode"><div><h1>${tittel}</h1><p class="under">${under}</p></div>${handlinger ? html`<div class="handlinger">${raw(String(handlinger))}</div>` : ""}</header>`;
+/**
+ * K-469 (kitet fra N-4, regel 6 og 8): tittelen står i topplinja (ikke som overskrift over flisene), forklaringen som tooltip på tittelen (som
+ * org.nr. på eierkortet i N-4), og sidens knapper som topplinjas handlinger. Returnerer ingenting til flaten.
+ */
+export const sidehode = (tittel: string, under: string, handlinger: string | Raa = ""): Raa => {
+  settTittel(tittel);
+  const t = q("#sidetittel"); if (t) t.title = under;
+  const topp = q("#topphandlinger"); if (topp && handlinger) topp.innerHTML = String(handlinger);
+  return raw("");
+};
 
 /** «Du har ikke tilgang til …» med feilkode ADM-403, «Til saker» og «Spør Eirik om tilgang» (60-211) */
-export const ingenTilgang = (omraade: string) => html`<div class="kort ikke-tilgang" role="alert">${raw(ikon("stoppet", 28))}<h1>Du har ikke tilgang til ${omraade}</h1>
+export const ingenTilgang = (omraade: string) => html`<div class="k-rad" data-hoyde="320"><div class="k-flis k-b11 ikke-tilgang" role="alert">${raw(ikon("stoppet", 28))}<h1>Du har ikke tilgang til ${omraade}</h1>
   <p class="meta">Rollen din ser Kunder og Support. Feilkode ADM-403.</p>
-  <div class="handlinger"><a class="knapp primar" href="/stotte">Til saker</a><a class="knapp" href="mailto:es@sngroup.no?subject=${encodeURIComponent(`Tilgang til ${omraade} i Hengsel Admin`)}">Spør Eirik om tilgang</a></div></div>`;
+  <div class="handlinger"><a class="knapp primar" href="/stotte">Til saker</a><a class="knapp" href="mailto:es@sngroup.no?subject=${encodeURIComponent(`Tilgang til ${omraade} i Hengsel Admin`)}">Spør Eirik om tilgang</a></div></div></div>`;
 
 export const eksempel = (tekst = "Eksempel") => raw(`<span class="pille" data-status="eksempel">${esc(tekst)}</span>`);
 export const tom = (ikonNavn: string, tittel: string, tekst: string, handling = "") => raw(`<div class="tom">${ikon(ikonNavn, 28)}<b>${esc(tittel)}</b><span>${esc(tekst)}</span>${handling ? `<div class="handlinger">${handling}</div>` : ""}</div>`);
