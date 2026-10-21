@@ -4,8 +4,9 @@
  * sendt med «Hjelp». Svar lagres som e-postutkast med forhåndsvisning; ingenting sendes fra Admin (rapporten K-259).
  * Tilstander: tom (ingen meldinger), laster (grå blokker), feil (svaret kunne ikke lagres, teksten tas vare på som utkast i nettleseren).
  */
-import { api, ApiFeil, html, raw, q, qa, sett, skjelett, tilstand, feilbanner, ikon, esc, toast, skjemaDialog, idFraSti, type Raa } from "../lib/dom";
-import { prioritet, frist, kilde, sakstatus, klokke, datoTid, timestolpe, settBredder, t as timer } from "../lib/support-ui";
+import { api, ApiFeil, html, raw, q, qa, sett, tilstand, feilbanner, ikon, esc, toast, skjemaDialog, idFraSti, type Raa } from "../lib/dom";
+import { prioritet, frist, kilde, klokke, datoTid, timestolpe, settBredder, t as timer } from "../lib/support-ui";
+import { flis, rad, tom, laster, settTittel, settSidepille } from "../lib/kit";
 
 const rot = q("#side")!;
 const nr = idFraSti();
@@ -18,16 +19,13 @@ const init = (navn: string | null | undefined) => esc((navn ?? "?").split(/\s+/)
 const lesUtkast = () => { try { return sessionStorage.getItem(UTKAST) ?? ""; } catch { return ""; } };
 const lagreUtkast = (v: string) => { try { if (v) sessionStorage.setItem(UTKAST, v); else sessionStorage.removeItem(UTKAST); } catch { /* privat modus */ } };
 
+/** Rad 1: flisen «Sak» med fakta og svarfristen, og statusvalget i tittelfeltet (frist-stopp ved «Venter på kunde») */
 function topp(): Raa {
   const s = d.sak;
-  return html`<header class="sakhode">
-    <div class="sakhode-tekst">
-      <p class="merker"><a class="tilbake" href="/support/saker">${raw(ikon("pil-venstre", 16))}Saker</a><span class="dempet">${s.nr}</span>${prioritet(s.prioritet)}${kilde(s.kilde, s.kilde_navn)}<span class="dempet">Opprettet ${datoTid(s.opprettet)}</span></p>
-      <h1>${s.emne}</h1>
-      <p class="merker">${raw(`<span class="bare-pc">${frist(s.frist)}</span>`)}<span class="dempet">${d.frist_tekst}</span></p>
-    </div>
-    <div class="segment status-segment" role="group" aria-label="Status">${d.statuser.map((x: any) => html`<button type="button" data-status="${x.id}" aria-pressed="${String(s.status === x.id)}">${x.navn}</button>`)}</div>
-  </header>`;
+  settTittel(s.emne, "Saker");
+  settSidepille(s.status_navn ?? "", s.status === "lost" ? "ferdig" : s.status === "venter" ? "venter" : s.status === "ny" ? "ny" : "pagar");
+  const segment = html`<div class="segment status-segment" role="group" aria-label="Status">${d.statuser.map((x: any) => html`<button type="button" data-status="${x.id}" aria-pressed="${String(s.status === x.id)}">${x.navn}</button>`)}</div>`;
+  return rad("auto", [flis({ id: "sak", tittel: s.nr, verktoy: segment, innhold: html`<p class="merker">${prioritet(s.prioritet)}${kilde(s.kilde, s.kilde_navn)}<span class="dempet">Opprettet ${datoTid(s.opprettet)}</span>${frist(s.frist)}<span class="dempet">${d.frist_tekst}</span></p>` })]);
 }
 
 function melding(m: any): Raa {
@@ -55,7 +53,7 @@ function skriv(): Raa {
 function tidsforing(): Raa {
   const tt = d.tidtaker;
   const tm = d.timer_mnd;
-  return html`<section class="kort uten-pad" aria-labelledby="h-tid"><h2 id="h-tid" class="korthode">Tidsføring <span class="mer">Denne saken: ${d.sum_min ? timer(d.sum_min) : "0 t"}</span></h2>
+  return flis({ id: "tidsforing", tittel: "Tidsføring", tittelverdi: `Denne saken: ${d.sum_min ? timer(d.sum_min) : "0 t"}`, innhold: html`
     <div class="tidtaker" data-gar="${String(!!tt)}">
       <div><span class="meta">${tt ? `Tidtakeren går · startet ${klokke(tt.startet)}` : "Tidtakeren står"}</span><b class="klokke" id="klokke">${tt ? "00:00:00" : "00:00:00"}</b></div>
       ${tt ? html`<div class="knapper-rad"><button class="knapp" type="button" id="tid-avbryt">Avbryt</button><button class="knapp" type="button" id="tid-stopp">${raw(`<span class="stopp-ikon" aria-hidden="true"></span>`)}Stopp og før</button></div>` : html`<button class="knapp" type="button" id="tid-start">${raw(ikon("frist", 18))}Start</button>`}
@@ -65,40 +63,31 @@ function tidsforing(): Raa {
       <label class="visuelt-skjult" for="man-tekst">Hva ble gjort</label><input id="man-tekst" name="tekst" type="text" maxlength="300" placeholder="Hva ble gjort" /><button class="knapp" type="submit">Før tid</button></form>
     <p class="meta innrykk">Føres i påbegynte ${d.foring_min} minutter.</p>
     ${tm ? html`<div class="inkludert"><p><span>Inkluderte timer, ${d.eier.navn.replace(/ AS$/, "")}</span><b>${timer(tm.brukt_min)} av ${timer(tm.inkludert_min)}</b></p>${timestolpe(tm.inkludert_min, tm.brukt_min)}
-      <p class="meta">${tm.over_min ? `${timer(tm.over_min)} over inkludert i ${tm.mnd_navn}. Tid ut over inkludert faktureres.` : `${timer(tm.igjen_min)} igjen i ${tm.mnd_navn}. Tid ut over inkludert faktureres.`}</p></div>` : ""}
-  </section>`;
+      <p class="meta">${tm.over_min ? `${timer(tm.over_min)} over inkludert i ${tm.mnd_navn}. Tid ut over inkludert faktureres.` : `${timer(tm.igjen_min)} igjen i ${tm.mnd_navn}. Tid ut over inkludert faktureres.`}</p></div>` : ""}` });
 }
 
 function kontaktKort(): Raa {
   const k = d.kontakt;
-  return html`<section class="kort uten-pad" aria-labelledby="h-kontakt"><h2 id="h-kontakt" class="korthode">Kontakt og kunde ${d.eier && d.kan_apne_kunde ? html`<a class="mer lenke-mer" href="/kunder/${d.eier.id}">Åpne kunden</a>` : ""}</h2>
-    <div class="kontaktboks"><span class="init">${raw(init(k.navn))}</span><div><b>${k.navn ?? "Ukjent kontakt"}</b>${k.rolle ? html`<span class="meta">${k.rolle}</span>` : ""}<span class="meta">${[k.telefon, k.epost].filter(Boolean).join(" · ")}</span></div></div>
-    <dl class="dl innrykk"><dt>Butikk</dt><dd>${d.butikk_navn ?? "–"}</dd><dt>Kunde</dt><dd>${d.eier?.navn ?? "Ikke koblet til en kunde"}</dd><dt>Pakker</dt><dd>${d.eier?.pakker || "–"}</dd></dl></section>`;
+  return flis({ id: "kontakt", tittel: "Kontakt og kunde", handling: d.eier && d.kan_apne_kunde ? html`<a class="k-vis-alle" href="/kunder/${d.eier.id}">Åpne kunden</a>` : "", innhold: html`<div class="kontaktboks"><span class="init">${raw(init(k.navn))}</span><div><b>${k.navn ?? "Ukjent kontakt"}</b>${k.rolle ? html`<span class="meta">${k.rolle}</span>` : ""}<span class="meta">${[k.telefon, k.epost].filter(Boolean).join(" · ")}</span></div></div>
+    <dl class="dl innrykk"><dt>Butikk</dt><dd>${d.butikk_navn ?? "–"}</dd><dt>Kunde</dt><dd>${d.eier?.navn ?? "Ikke koblet til en kunde"}</dd><dt>Pakker</dt><dd>${d.eier?.pakker || "–"}</dd></dl>` });
 }
 
 function hjelpKort(kompakt = false): Raa {
   const h = d.hjelp;
-  if (!h) return html`<section class="kort uten-pad${kompakt ? " bare-telefon" : ""}" aria-label="Sendt med «Hjelp»"><h2 class="korthode"><span class="med-ikon">${raw(ikon("hjelp", 18))}Sendt med «Hjelp»</span></h2><p class="meta innrykk">Saken kom på ${d.sak.kilde === "telefon" ? "telefon" : "e-post"}. Side i appen, adresse, versjon og nettleser følger bare med når kunden bruker «Hjelp» i Hengsel CRM eller Ute.</p></section>`;
+  if (!h) return kompakt ? html`` : flis({ id: "hjelp", tittel: "Sendt med «Hjelp»", innhold: html`<p class="meta">Saken kom på ${d.sak.kilde === "telefon" ? "telefon" : "e-post"}. Side i appen, adresse, versjon og nettleser følger bare med når kunden bruker «Hjelp» i Hengsel CRM eller Ute.</p>` });
   if (kompakt) return html`<section class="kort hjelp-kompakt bare-telefon"><b>${raw(ikon("hjelp", 16))} Sendt med ${d.sak.kilde_navn}</b><span>${h.side ?? ""}</span><span>${[h.versjon, h.enhet?.split(" · ")[0], h.skjermbilde ? "med skjermbilde" : ""].filter(Boolean).join(" · ")}</span></section>`;
-  return html`<section class="kort uten-pad" aria-labelledby="h-hjelp"><h2 id="h-hjelp" class="korthode"><span class="med-ikon">${raw(ikon("hjelp", 18))}Sendt med «Hjelp»</span></h2>
-    <dl class="dl innrykk"><dt>Side i appen</dt><dd>${h.side ?? "–"}</dd><dt>Adresse</dt><dd>${h.adresse ?? "–"}</dd><dt>Versjon</dt><dd>${h.versjon ?? "–"}</dd><dt>Nettleser</dt><dd>${h.enhet ?? "–"}</dd><dt>Innlogget som</dt><dd>${h.bruker ?? "–"}</dd></dl>
-    ${h.skjermbilde ? html`<div class="skjermbilde"><div class="skjermbilde-flate" aria-hidden="true"><span>skjermbilde fra brukeren</span></div><p>${raw(ikon("kamera", 16))}<span>${h.skjermbilde.navn}</span><a href="${h.skjermbilde.url}" target="_blank" rel="noopener">Åpne</a></p></div>` : html`<p class="meta innrykk">Ingen skjermbilde lagt ved.</p>`}</section>`;
+  return flis({ id: "hjelp", tittel: "Sendt med «Hjelp»", klasse: "bare-pc", innhold: html`<dl class="dl"><dt>Side i appen</dt><dd>${h.side ?? "–"}</dd><dt>Adresse</dt><dd>${h.adresse ?? "–"}</dd><dt>Versjon</dt><dd>${h.versjon ?? "–"}</dd><dt>Nettleser</dt><dd>${h.enhet ?? "–"}</dd><dt>Innlogget som</dt><dd>${h.bruker ?? "–"}</dd></dl>
+    ${h.skjermbilde ? html`<div class="skjermbilde"><div class="skjermbilde-flate" aria-hidden="true"><span>skjermbilde fra brukeren</span></div><p>${raw(ikon("kamera", 16))}<span>${h.skjermbilde.navn}</span><a href="${h.skjermbilde.url}" target="_blank" rel="noopener">Åpne</a></p></div>` : html`<p class="meta">Ingen skjermbilde lagt ved.</p>`}` });
 }
 
 function vis() {
   const meldinger = d.meldinger;
-  sett(rot, html`${topp()}
-    <div class="sak-oppsett">
-      <div class="sak-venstre">
-        <div class="telefon-tidtaker bare-telefon">${frist(d.sak.frist, true)}<button class="knapp liten" type="button" data-telefon-tid>${d.tidtaker ? raw(`<span class="stopp-ikon" aria-hidden="true"></span><span id="klokke-telefon">00:00:00</span>`) : raw(`${ikon("frist", 16)}Start tid`)}</button></div>
-        ${hjelpKort(true)}
-        <section class="kort uten-pad traad" aria-labelledby="h-traad"><h2 id="h-traad" class="korthode">Tråd <span class="mer">Interne notater ser bare du</span></h2>
-          ${meldinger.length ? html`<ol class="meldinger">${meldinger.map(melding)}</ol>` : html`<div class="tom">${raw(ikon("samtaler", 28))}<b>Ingen meldinger ennå</b><span>Saken ble opprettet av ${d.sak.kilde.startsWith("hjelp") ? "kunden" : "Eirik"}. Skriv et svar eller et internt notat under.</span></div>`}
-          ${skriv()}
-        </section>
-      </div>
-      <div class="sak-hoyre">${tidsforing()}${kontaktKort()}${hjelpKort()}</div>
-    </div>`);
+  const traad = flis({ bredde: "2/3", id: "traad", tittel: "Tråd", teller: meldinger.length, tittelverdi: "Interne notater ser bare du", klasse: "traad",
+    innhold: html`<div class="telefon-tidtaker bare-telefon">${frist(d.sak.frist, true)}<button class="knapp liten" type="button" data-telefon-tid>${d.tidtaker ? raw(`<span class="stopp-ikon" aria-hidden="true"></span><span id="klokke-telefon">00:00:00</span>`) : raw(`${ikon("frist", 16)}Start tid`)}</button></div>
+      ${hjelpKort(true)}
+      ${meldinger.length ? html`<ol class="meldinger">${meldinger.map(melding)}</ol>` : tom("Ingen meldinger ennå", `Saken ble opprettet av ${d.sak.kilde.startsWith("hjelp") ? "kunden" : "Eirik"}. Skriv et svar eller et internt notat under.`)}
+      ${skriv()}` });
+  sett(rot, html`${topp()}${rad("auto", [traad, html`<div class="k-b13 k-stabel">${tidsforing()}${kontaktKort()}${hjelpKort()}</div>`])}`);
   koble();
   settBredder(rot);
   startKlokke();
@@ -201,15 +190,14 @@ async function hentSak() {
 }
 
 async function last() {
-  if (!d) sett(rot, html`<div class="skjelett sakhode-skjelett"></div><div class="sak-oppsett"><div>${raw(skjelett(3, "kortet"))}</div><div>${raw(skjelett(2, "kortet"))}</div></div>`);
+  if (!d) sett(rot, html`${rad(120, [flis({ tittel: "Sak", innhold: laster() })])}${rad(480, [flis({ bredde: "2/3", tittel: "Tråd", innhold: laster() }), flis({ bredde: "1/3", tittel: "Tidsføring", innhold: laster() })])}`);
   try {
     d = await hentSak();
-    const sb = q("#sidetittel"); if (sb) sb.textContent = d.sak.nr;
-    document.title = `${d.sak.nr} ${d.sak.emne} · Hengsel Admin`;
     vis();
+    document.title = `${d.sak.nr} ${d.sak.emne} · Hengsel Admin`;
     if (tilstand() === "feil") { sett(q("#skriv-feil", rot), `<div class="banner" role="alert">${ikon("stoppet", 18)}<div><b>Svaret kunne ikke sendes.</b>Det er lagret som utkast. <span class="feilkode">Feilkode ADM-504.</span></div></div>`); q<HTMLTextAreaElement>("#skrivfelt", rot)!.value = "Hei Eva. Tilbud som allerede er sendt må lages på nytt for å få logoen med. Vi kan gjøre det for dere i dag."; oppdaterSend(); }
   } catch (e) {
-    sett(rot, html`${raw(feilbanner(e, e instanceof ApiFeil && e.status === 404 ? "Saken finnes ikke." : "Kunne ikke hente saken."))}<p><a href="/support/saker">Til saker</a></p>`);
+    sett(rot, rad(320, [flis({ tittel: "Sak", innhold: html`${raw(feilbanner(e, e instanceof ApiFeil && e.status === 404 ? "Saken finnes ikke." : "Kunne ikke hente saken."))}<p><a href="/stotte">Til saker</a></p>` })]));
     q("#prov-igjen", rot)?.addEventListener("click", last);
   }
 }

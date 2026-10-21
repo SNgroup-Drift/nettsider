@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="00_designsystem/styles.css" rel="stylesheet">
+<script src="20_sidekart/assets/sidekart-data.js"></script>
+<script src="20_sidekart/assets/sidekart-skjermer.js"></script>
+<script src="20_sidekart/assets/d12-skjermer.js"></script>
+<style>body{margin:0;background:var(--flate-side);font-family:var(--font);color:var(--tekst)} a{color:var(--aksent-tekst);text-decoration:none} a:hover{color:var(--aksent-trykk);text-decoration:underline}</style>
+</helmet>
+<div data-screen-label="{{ nr }}" data-side="{{ sideId }}" style="font-family:var(--font);color:var(--tekst);font-size:14px;line-height:1.45;min-height:{{ minH }};width:{{ bredde }};display:flex;flex-direction:column;background:var(--flate-side)">
+  <header style="position:{{ toppPos }};top:0;z-index:20;background:var(--flate-kort);border-bottom:1px solid var(--ramme)">
+    <div style="height:56px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 32px">
+      <a href="20-000 Sidekart - oversikt.dc.html" style="flex:none;white-space:nowrap;font-size:12px;font-weight:600">‹ 20-000 Sidekart</a>
+      <span style="width:1px;height:24px;background:var(--linje)"></span>
+      <h1 style="margin:0;min-width:0;flex:0 1 auto;font-size:20px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ nr }} {{ navn }}</h1>
+      <span style="flex:none;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.kant }}">{{ st }}</span>
+      <sc-if value="{{ enhetNavn }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:12px;color:var(--tekst-dempet)">{{ enhetNavn }}</span></sc-if>
+      <span style="flex:1"></span>
+      <sc-if value="{{ forrige }}" hint-placeholder-val="{{ false }}"><a href="{{ forrige.fil }}" style="flex:none;white-space:nowrap;font-size:14px;font-weight:600">‹ {{ forrige.nr }}</a></sc-if>
+      <sc-if value="{{ neste }}" hint-placeholder-val="{{ false }}"><a href="{{ neste.fil }}" style="flex:none;white-space:nowrap;font-size:14px;font-weight:600">{{ neste.nr }} ›</a></sc-if>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;padding:10px 32px 12px;border-top:1px solid var(--linje);font-size:12px">
+      <span style="display:flex;flex-direction:column;min-width:0"><span style="color:var(--tekst-dempet)">Rute</span><span title="{{ rute }}" style="font-family:ui-monospace,Menlo,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ rute }}</span></span>
+      <span style="display:flex;flex-direction:column;min-width:0"><span style="color:var(--tekst-dempet)">Hvem ser den</span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ rolle }}</span></span>
+      <span style="display:flex;flex-direction:column;min-width:0"><span style="color:var(--tekst-dempet)">Enheter</span><span>{{ enheter }}</span></span>
+      <span style="display:flex;flex-direction:column;min-width:0"><span style="color:var(--tekst-dempet)">Kilde</span><span title="{{ kilde }}" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ kilde }}</span></span>
+      <span style="display:flex;flex-direction:column;min-width:0"><span style="color:var(--tekst-dempet)">Merknad</span><span title="{{ m }}" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m }}</span></span>
+    </div>
+  </header>
+
+  <sc-if value="{{ harTegning }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ visValg }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:8px;padding:16px 32px 0">
+        <sc-for list="{{ valg }}" as="v" hint-placeholder-count="2"><button onClick="{{ v.klikk }}" aria-pressed="{{ v.aktiv }}" style="all:unset;cursor:pointer;height:32px;box-sizing:border-box;padding:0 14px;border-radius:999px;border:1px solid {{ v.kant }};background:{{ v.bg }};color:{{ v.fg }};font-size:14px;font-weight:600;display:flex;align-items:center">{{ v.navn }}</button></sc-for>
+      </div>
+    </sc-if>
+    <div style="margin-top:16px;overflow-x:auto;border-top:1px solid var(--linje);border-bottom:1px solid var(--linje)">
+      <dc-import name="_skjerm" nr="{{ skjermNr }}" enhet="{{ enhet }}" tilstand="{{ tilstand }}" modus="{{ modus }}" hint-size="1440px,900px"></dc-import>
+    </div>
+  </sc-if>
+
+  <main style="flex:1;padding:24px 32px;display:flex;flex-direction:column;gap:24px">
+    <sc-if value="{{ harSkjerm }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--tekst-dempet)">Skjermen, kopiert inn fra <a href="{{ fil }}">{{ filNavn }}</a>. Åpne fila for alle flater og tilstander.</span>
+      <sc-if value="{{ visIframe }}" hint-placeholder-val="{{ true }}"><iframe src="{{ fil }}" title="{{ navn }}" loading="lazy" style="width:100%;height:{{ hoyde }};border:1px solid var(--ramme);border-radius:14px;background:var(--flate-kort)"></iframe></sc-if></div>
+    </sc-if>
+    <sc-if value="{{ erSkjult }}" hint-placeholder-val="{{ false }}">
+      <section style="max-width:720px;background:var(--flate-kort);border:1px solid var(--ramme);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px"><h2 style="margin:0;font-size:16px;font-weight:600">Vises ikke i v5</h2><span style="color:var(--tekst-dempet)">{{ m }} Siden finnes i v4 ({{ kilde }}) og tegnes ikke.</span></section>
+    </sc-if>
+    <sc-if value="{{ spes }}" hint-placeholder-val="{{ false }}">
+      <section aria-label="Spesifikasjon" style="background:var(--flate-kort);border:1px solid var(--ramme);border-radius:14px;padding:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+        <div style="display:flex;flex-direction:column;gap:8px"><h2 style="margin:0;font-size:16px;font-weight:600">Fra v4</h2><p style="margin:0;line-height:22px;max-width:720px">{{ spes.v4 }}</p><h2 style="margin:8px 0 0;font-size:16px;font-weight:600">Endret</h2><p style="margin:0;line-height:22px;max-width:720px">{{ spes.endret }}</p></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><h2 style="margin:0;font-size:16px;font-weight:600">Handlinger</h2><sc-for list="{{ spes.handlinger }}" as="h" hint-placeholder-count="2"><span>{{ h }}</span></sc-for><h2 style="margin:8px 0 0;font-size:16px;font-weight:600">Åpent</h2><sc-for list="{{ spes.apent }}" as="a" hint-placeholder-count="1"><span style="color:var(--tekst-dempet)">{{ a }}</span></sc-for></div>
+      </section>
+    </sc-if>
+    <sc-if value="{{ visLenker }}" hint-placeholder-val="{{ true }}">
+    <section aria-label="Sider i samme tier" style="background:var(--flate-kort);border:1px solid var(--ramme);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px">
+      <h2 style="margin:0;font-size:16px;font-weight:600">Fører til og ligger ved siden av</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ lenker }}" as="l" hint-placeholder-count="6"><a href="{{ l.fil }}" style="font-size:14px;padding:4px 12px;border-radius:999px;border:1px solid var(--linje);background:{{ l.bg }};color:var(--tekst)">{{ l.nr }} {{ l.navn }}</a></sc-for></div>
+    </section>
+    </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;nr&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;21-004&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;enhet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;P&quot;,&quot;I&quot;,&quot;T&quot;],&quot;default&quot;:&quot;P&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;tilstand&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;data&quot;,&quot;tom&quot;,&quot;laster&quot;,&quot;feil&quot;,&quot;ingen&quot;,&quot;uten-nett&quot;],&quot;default&quot;:&quot;data&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;modus&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;lys&quot;,&quot;mork&quot;],&quot;default&quot;:&quot;lys&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;eksport&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { klar: !!(window.Sidekart && window.SidekartSkjermer && window.D12), enhet: null };
+  componentDidMount() { const t = () => (window.Sidekart && window.SidekartSkjermer && window.D12) ? this.setState({ klar: true }) : setTimeout(t, 30); t(); }
+  renderVals() {
+    const P = this.props, nr = P.nr || '21-004', eksport = !!P.eksport;
+    if (!this.state.klar) return { nr, minH: '100vh', bredde: 'auto', navn: '', st: '', rute: '', rolle: '', enheter: '', kilde: '', m: '', p: {}, lenker: [], valg: [] };
+    const K = window.Sidekart, SK = window.SidekartSkjermer;
+    const alle = K.produkter.flatMap(x => x.tiere.flatMap(t => t.sider.map(s => ({ ...s, tier: t.id })))).concat(K.forslag.map(s => ({ ...s, tier: s.nr.slice(0, 4) })));
+    alle.sort((a, b) => a.nr.localeCompare(b.nr));
+    let i = alle.findIndex(s => s.nr === nr); if (i < 0) i = alle.findIndex(s => nr.startsWith(s.nr + '-')); const s = alle[i] || alle[0];
+    const ST = { FINNES: 'venter', ENDRET: 'advarsel', NY: 'ferdig', KOMMER: 'ny', SKJULT: 'feil' }, k = ST[s.st];
+    const E = { P: 'PC 1440', I: 'iPad 1024', T: 'Telefon 390' };
+    const enheter = (s.enh || '').split(' ').map(x => E[x] || x).join(' · ');
+    const kort = s.nr.slice(0, 2), tierAlle = alle.filter(x => x.nr.slice(0, kort === '21' ? 4 : 2) === s.nr.slice(0, kort === '21' ? 4 : 2));
+    const S = SK[nr] || SK[s.nr], skjermNr = SK[nr] ? nr : s.nr;
+    let enhListe = (s.enh || 'P').split(' ').filter(x => /^[PIT]$/.test(x));
+    if (S && (S.flate === 'ute' || S.flate === 'ute-inn')) enhListe = ['T', 'I'];
+    if (S && ['tv', 'epost', 'pdf', 'tekst'].includes(S.flate)) enhListe = ['P'];
+    if (S && S.flate === 'portal' && S.pc) enhListe = enhListe.filter(x => x !== 'I');
+    if (!enhListe.length) enhListe = ['P'];
+    const enhet = enhListe.includes(P.enhet) ? P.enhet : enhListe.includes(this.state.enhet) ? this.state.enhet : enhListe[0];
+    return { skjermNr, tilstand: P.tilstand || 'data', modus: P.modus || 'lys', nr: s.nr, navn: s.navn, st: s.st, p: { bg: 'var(--status-' + k + '-bg)', fg: 'var(--status-' + k + '-fg)', kant: 'var(--status-' + k + '-kant)' },
+      sideId: skjermNr + (enhet !== enhListe[0] ? '-' + enhet : '') + (P.modus === 'mork' ? '-mork' : '') + (P.tilstand && P.tilstand !== 'data' ? '-' + P.tilstand : ''), minH: eksport ? 'auto' : '100vh', bredde: eksport ? '1440px' : 'auto', toppPos: eksport ? 'relative' : 'sticky',
+      rute: s.rute, rolle: s.rolle, enheter, kilde: s.kilde, m: s.m || '–',
+      harTegning: !!S, enhet, enhetNavn: S && enhListe.length > 1 ? 'Vist: ' + E[enhet] : null, visValg: !!S && enhListe.length > 1 && !eksport,
+      valg: enhListe.map(e => ({ navn: E[e], aktiv: e === enhet, klikk: () => this.setState({ enhet: e }), bg: e === enhet ? 'var(--flate-valgt)' : 'var(--flate-kort)', fg: e === enhet ? 'var(--aksent-tekst)' : 'var(--tekst)', kant: e === enhet ? 'var(--aksent)' : 'var(--linje)' })),
+      harSkjerm: !S && !!s.fil, fil: s.fil, filNavn: (s.fil || '').split('/').pop(), hoyde: (s.enh || '').trim() === 'T' ? '900px' : '960px',
+      erSkjult: s.st === 'SKJULT', spes: S && S.spes ? S.spes : null, visLenker: !eksport, visIframe: !eksport,
+      forrige: alle[i - 1] ? { nr: alle[i - 1].nr, fil: alle[i - 1].side } : null, neste: alle[i + 1] ? { nr: alle[i + 1].nr, fil: alle[i + 1].side } : null,
+      lenker: tierAlle.map(x => ({ nr: x.nr, navn: x.navn, fil: x.side, bg: x.nr === s.nr ? 'var(--flate-valgt)' : 'var(--flate-kort)' })) };
+  }
+}
+</script>
+</body>
+</html>

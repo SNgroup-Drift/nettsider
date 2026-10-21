@@ -13,8 +13,12 @@
  * - Ellers serveres de statiske filene, med Cache-Control: private, no-store og X-Robots-Tag: noindex.
  * Alle svar får noindex. Ingen innlogging, informasjonskapsler eller hemmeligheter i denne koden.
  */
+import { utenBelopSvar } from "./belop.js";
+
+/** Tekst trygt inn i HTML (adressen fra Access-tokenet) */
+const escHtml = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 import { sjekkAccess } from "./access.js";
-import { rolleFor, kanSe, kanSkrive, supportFraDb } from "./tilgang.js";
+import { rolleFor, kanSe, kanSkrive, supportFraDb, utenInnlogging } from "./tilgang.js";
 import { handterApi, tilbudPdf } from "./api.js";
 import { handterLead } from "./lead.js";
 import { handterHjelp } from "./hjelp.js";
@@ -56,6 +60,9 @@ export default {
     if (sti === "/api/lead") return merk(await handterLead(req, env));
     if (sti === "/api/hjelp") return merk(await handterHjelp(req, env));
 
+    // K-469 (26-001): stilark, skrifter, logo og favicon til innloggingskortene (ingen data, ingen skript)
+    if ((req.method === "GET" || req.method === "HEAD") && utenInnlogging(sti)) return merk(await env.ASSETS.fetch(req));
+
     const team = (env.ACCESS_TEAM_DOMAIN ?? "").trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
     const aud = (env.ACCESS_AUD ?? "").trim();
     if (!team || !aud) return erApi ? merk(json(503, { ok: false, kode: "ADM-503", melding: "Cloudflare Access er ikke koblet til." })) : avvis(503, "Siden er låst. Cloudflare Access er ikke koblet til ennå.");
@@ -78,6 +85,15 @@ export default {
         const side = await env.ASSETS.fetch(new Request(`${url.origin}/ingen-tilgang`, { method: req.method, headers: req.headers }));
         return merk(new Response(side.body, { status: 403, headers: side.headers }));
       }
+      // K-469 (26-001-ingen, D-12 del B): gyldig Access-token, men adressen har ingen rolle: kortet «Ingen tilgang» med adressen, status 403
+      if (!rolle && (req.method === "GET" || req.method === "HEAD")) {
+        const side = await env.ASSETS.fetch(new Request(`${url.origin}/logg-inn-ingen`, { method: "GET" }));
+        if (side.ok) {
+          const html = (await side.text()).replace('<span id="ingen-epost">Denne e-postadressen</span>', `<span id="ingen-epost">${escHtml(sjekk.epost)}</span>`);
+          const h = new Headers(side.headers); h.delete("Content-Length");
+          return merk(new Response(req.method === "HEAD" ? null : html, { status: 403, headers: h }));
+        }
+      }
       return avvis(403, "Ingen tilgang.");
     }
 
@@ -87,7 +103,9 @@ export default {
       const bilde = SKJERMBILDE.exec(sti);
       if (bilde && leser) return merk(await skjermbilde(env, bilde[1]));
       const bruker = { epost: sjekk.epost, navn: rolle.navn ?? sjekk.epost, rolle: rolle.rolle ?? "leser" };
-      return merk(await handterApi(req, env, { bruker, hentLogo: () => hentLogo(env, url.origin) }));
+      const svar = await handterApi(req, env, { bruker, hentLogo: () => hentLogo(env, url.origin) });
+      // K-469: support ser Kunder uten beløp (felt som slutter på _ore blir null)
+      return merk(rolle?.rolle === "support" && /^\/api\/eiere(?:\/|$)/.test(sti) ? await utenBelopSvar(svar) : svar);
     }
     if (req.method !== "GET" && req.method !== "HEAD") return avvis(405, "Metoden er ikke tillatt.");
 

@@ -1,9 +1,14 @@
 ---
 /** SO2 Oppstart (K-259, 60-211): dataene hentes fra /api i nettleseren (scripts/oppstart.ts). */
+import Innhold from "../../components/kit/Innhold.astro";
 import Side from "../../layouts/Side.astro";
+import { ikon } from "../../lib/ikoner";
 ---
 <Side title="Oppstart" description="Oppstarter i gang og fullførte" aktiv="oppstart">
-  <div id="side" class="oppstart-side"></div>
+  <Fragment slot="handlinger">
+    <button class="knapp primar" type="button" id="ny-oppstart"><Fragment set:html={ikon("pluss", 18)} />Ny oppstart</button>
+  </Fragment>
+  <Innhold id="side" />
   <script>
     import "../../scripts/oppstart";
   </script>

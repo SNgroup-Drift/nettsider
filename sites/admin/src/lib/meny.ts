@@ -1,11 +1,10 @@
 /**
  * Menyen i Hengsel Admin lages fra denne ene konfigurasjonen. N-4 (sidekartet 26-001–26-013, S-68): øverst sidekartets punkter (Salg, Eiere og
- * butikker, Prisberegner, Avtaler) og gruppen Innstillinger (Prisliste, Leverandør, Excel-import, Tilbakemeldinger). Støtte og Fakturering er
- * «Kommer» i sidekartet og står ikke i menyen (sidene /stotte og /fakturering finnes). Under dem står modulene som allerede er bygd i fase B
- * (Support, Oppstart; K-259) og fase C (Fakturering, Tall; K-260) og Drift, uendret, så ingenting som virker forsvinner.
+ * butikker, Prisberegner, Avtaler). K-469 (S-62, 60-211, Eirik 20.10): Støtte og Fakturering er ekte sider og står i menyen (26-011 er SB1 Saker på
+ * /stotte, 26-012 er SC2 Fakturakjøring på /fakturering), sammen med Oppstart, Tall og Drift. Innstillinger står nederst.
  * Oversikt (SA1) er slått sammen med tavla i Salg (26-009) og ligger på «/». Kunder er fanen «Aktive kunder» i Eiere og butikker (26-002).
- * roller: hvem som ser punktet («eier», «support»). Rollen support ser bare Support (Saker, Timer). Menyen filtreres i nettleseren (app.ts) og
- * stengt i Workeren. Telefon: bunnfanene Oversikt, Tavle, Eiere, Avtaler og Mer (besluttet 15.10, BUNNFANER).
+ * roller: hvem som ser punktet («eier», «support»). Rollen support ser Støtte (Saker, Timer uten beløp) og Kunder (60-211 «Rolle Support»).
+ * Menyen filtreres i nettleseren (app.ts) og stengt i Workeren. Telefon: bunnfanene Oversikt, Tavle, Eiere, Avtaler og Mer (besluttet 15.10, BUNNFANER).
  */
 export type Fase = "a" | "b" | "c";
 export type Rolle = "eier" | "support";
@@ -18,22 +17,16 @@ export const MENY: Gruppe[] = [
     { id: "eiere", navn: "Eiere og butikker", sti: "/salg/eiere", ikon: "kunder", fase: "a" },
     { id: "prisberegner", navn: "Prisberegner", sti: "/salg/prisberegner", ikon: "tilbud", fase: "a" },
     { id: "avtaler", navn: "Avtaler", sti: "/avtaler", ikon: "signert", fase: "a" },
+    { id: "kunder", navn: "Kunder", sti: "/kunder", ikon: "kunder", fase: "a", roller: ["support"] },
   ] },
-  { navn: "Innstillinger", punkter: [
-    { id: "prisliste", navn: "Prisliste", sti: "/innstillinger/prisliste", ikon: "rapporter", fase: "a" },
-    { id: "leverandor", navn: "Leverandør", sti: "/innstillinger/leverandor", ikon: "profil", fase: "a" },
-    { id: "import", navn: "Excel-import", sti: "/salg/import", ikon: "last-opp", fase: "a" },
-    { id: "tilbakemeldinger", navn: "Tilbakemeldinger", sti: "/innstillinger/tilbakemeldinger", ikon: "varsler", fase: "a" },
-  ] },
-  { navn: "Support", skille: true, punkter: [
-    { id: "saker", navn: "Saker", sti: "/support/saker", ikon: "saker", fase: "b", roller: ["eier", "support"] },
+  { navn: "Støtte", skille: true, punkter: [
+    { id: "saker", navn: "Saker", sti: "/stotte", ikon: "saker", fase: "b", roller: ["eier", "support"] },
     { id: "timer", navn: "Timer", sti: "/support/timer", ikon: "kalender", fase: "b", roller: ["eier", "support"] },
-    { id: "support-innstillinger", navn: "Support og roller", sti: "/innstillinger/support", ikon: "innstillinger", fase: "b" },
   ] },
   { punkter: [{ id: "oppstart", navn: "Oppstart", sti: "/oppstart", ikon: "prosjektplan", fase: "b" }] },
   { navn: "Fakturering", punkter: [
+    { id: "kjoring", navn: "Fakturakjøring", sti: "/fakturering", ikon: "fakturaer", fase: "c" },
     { id: "abonnement", navn: "Abonnement", sti: "/fakturering/abonnement", ikon: "ordre", fase: "c" },
-    { id: "kjoring", navn: "Fakturakjøring", sti: "/fakturering/kjoring", ikon: "fakturaer", fase: "c" },
     { id: "kpi", navn: "KPI", sti: "/fakturering/kpi", ikon: "prisavvik", fase: "c" },
     { id: "utestaende", navn: "Utestående", sti: "/fakturering/utestaende", ikon: "forskudd-leverandor", fase: "c" },
   ] },
@@ -45,6 +38,13 @@ export const MENY: Gruppe[] = [
     { id: "drift-frister", navn: "Frister", sti: "/drift/frister", ikon: "frist", fase: "a" },
     { id: "drift-rutiner", navn: "Rutiner", sti: "/drift/rutiner", ikon: "kontrollmal", fase: "a" },
     { id: "drift-kunder", navn: "Kundemapper", sti: "/drift/kunder", ikon: "kunder", fase: "a" },
+  ] },
+  { navn: "Innstillinger", punkter: [
+    { id: "prisliste", navn: "Prisliste", sti: "/innstillinger/prisliste", ikon: "rapporter", fase: "a" },
+    { id: "leverandor", navn: "Leverandør", sti: "/innstillinger/leverandor", ikon: "profil", fase: "a" },
+    { id: "import", navn: "Excel-import", sti: "/salg/import", ikon: "last-opp", fase: "a" },
+    { id: "tilbakemeldinger", navn: "Tilbakemeldinger", sti: "/innstillinger/tilbakemeldinger", ikon: "varsler", fase: "a" },
+    { id: "support-innstillinger", navn: "Support og roller", sti: "/innstillinger/support", ikon: "innstillinger", fase: "b" },
   ] },
 ];
 
@@ -72,8 +72,9 @@ export const BUNNFANER = [
   { id: "tavle", navn: "Tavle", sti: "/salg/tavle", ikon: "salgsbanken", roller: ["eier"] },
   { id: "eiere", navn: "Eiere", sti: "/salg/eiere", ikon: "kunder", roller: ["eier"] },
   { id: "avtaler", navn: "Avtaler", sti: "/avtaler", ikon: "signert", roller: ["eier"] },
-  { id: "saker", navn: "Saker", sti: "/support/saker", ikon: "saker", roller: ["support"] },
+  { id: "saker", navn: "Saker", sti: "/stotte", ikon: "saker", roller: ["support"] },
   { id: "timer", navn: "Timer", sti: "/support/timer", ikon: "kalender", roller: ["support"] },
+  { id: "kunder", navn: "Kunder", sti: "/kunder", ikon: "kunder", roller: ["support"] },
   { id: "mer", navn: "Mer", sti: "#meny", ikon: "mer", roller: ["eier", "support"] },
 ];
 
@@ -84,4 +85,4 @@ export const FORELDER: Record<string, string> = {
   sak: "Saker", "oppstart-kunde": "Oppstart", "drift-kunder": "Drift",
 };
 /** Menypunktet som er aktivt for en side-id som ikke selv står i menyen */
-export const AKTIVT_PUNKT: Record<string, string> = { tavle: "salg", eierkort: "eiere", kunder: "eiere", kundekort: "eiere", avtale: "avtaler", sak: "saker", "oppstart-kunde": "oppstart" };
+export const AKTIVT_PUNKT: Record<string, string> = { tavle: "salg", eierkort: "eiere", kundekort: "eiere", avtale: "avtaler", sak: "saker", stotte: "saker", fakturering: "kjoring", "oppstart-kunde": "oppstart" };

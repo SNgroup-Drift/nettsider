@@ -3,8 +3,11 @@
  * noe stopper (hva, hva det hindrer, hva som venter på kunden, «Send påminnelse»); sjekklista med ni punkter (status, ansvarlig, dato eller
  * frist, detalj). Opplæring viser øktene med dato, sted og deltakere. Klikk på status bytter (meny med de fem statusene).
  * Tilstander: tom («Lag sjekkliste fra mal»), laster, feil (endring ikke lagret).
+ * K-469: på kitet fra N-4: kunden er sidetittelen (brødsmule Oppstart), de andre oppstartene er faner, Status 1/3 ×3 (Oppstartsdato, Avtale,
+ * Fremdrift), flisen «Stopper» (det som stopper vises tydelig, med «Send påminnelse») og Tabell 1/1 «Sjekkliste».
  */
-import { api, ApiFeil, html, raw, q, qa, sett, skjelett, tilstand, feilbanner, ikon, esc, dato, toast, skjemaDialog, idFraSti } from "../lib/dom";
+import { api, ApiFeil, html, raw, q, qa, sett, tilstand, feilbanner, ikon, esc, dato, toast, skjemaDialog, idFraSti } from "../lib/dom";
+import { flis, rad, tom, laster, settTittel, settSidepille, settFaner } from "../lib/kit";
 import { fremdrift, oppstartstatus, ansvarlig, settBredder } from "../lib/support-ui";
 
 const rot = q("#side")!;
@@ -23,28 +26,26 @@ function punktDato(p: any) {
 function vis() {
   const o = d.oppstart;
   const hos = d.punkter.filter((p: any) => p.status === "venter" && p.ansvarlig === "kunden").map((p: any) => p.punkt.toLowerCase());
-  sett(rot, html`<div class="oppstart-topplinje"><a class="tilbake" href="/oppstart">${raw(ikon("pil-venstre", 16))}Oppstarter</a>
-      ${d.andre.length > 1 ? html`<nav class="segment kunde-segment" aria-label="Oppstarter">${d.andre.map((x: any) => html`<a href="/oppstart/${x.id}" aria-current="${x.id === o.id ? "page" : "false"}">${x.eier_navn.replace(/ AS$/, "")}</a>`)}</nav>` : ""}</div>
-    <section class="kort oppstarthode">
-      <div class="dato-blokk"><span class="meta">Oppstartsdato</span><b>${dato(o.oppstartsdato)}</b><span class="${o.dager_igjen < 0 ? "dempet" : "aksent-tekst"}">${o.dager_igjen > 0 ? `${o.dager_igjen} dager igjen` : o.dager_igjen === 0 ? "I dag" : `${-o.dager_igjen} dager siden`}</span></div>
-      <div class="kunde-blokk"><h1>${o.eier_navn}</h1><span class="meta">${o.avtale_nr ? `Avtale ${o.avtale_nr} · ` : ""}Ansvarlig: ${o.ansvarlig}</span></div>
-      <div class="fremdrift-blokk"><p><span class="meta">Fremdrift</span><b>${o.ferdig} av ${o.av} ferdig</b></p>${fremdrift(o.ferdig, o.av)}</div>
-    </section>
-    <div id="lagre-feil"></div>
-    ${o.stopper.length ? html`<section class="stopper-banner" role="alert"><span class="stopper-ikon">${raw(ikon("stoppet", 20))}</span><div>
-      ${o.stopper.map((s: any) => html`<b>Stopper: ${s.punkt}</b><p>${s.detalj ?? ""}</p>`)}
-      ${hos.length ? html`<p class="meta">Venter også på kunden: ${hos.join(", ")}.</p>` : ""}</div>
-      <button class="knapp" type="button" id="paaminnelse">${raw(ikon("sendt", 18))}Send påminnelse</button></section>` : ""}
-    <section class="kort uten-pad" aria-labelledby="h-sjekk"><h2 id="h-sjekk" class="korthode">Sjekkliste <span class="mer">Klikk på status for å endre</span></h2>
-      ${d.punkter.length ? html`<div class="tabellramme"><table class="tabell sjekkliste"><thead><tr><th class="ikon-kol"><span class="visuelt-skjult">Status</span></th><th>Punkt</th><th>Ansvarlig</th><th>Dato</th><th>Status</th></tr></thead><tbody>
+  settTittel(o.eier_navn, "Oppstart");
+  settSidepille(o.status_navn ?? "", o.stopper.length ? "feil" : o.status === "ferdig" ? "ferdig" : "pagar");
+  if (d.andre.length > 1) settFaner(d.andre.map((x: any) => ({ id: x.id, navn: x.eier_navn.replace(/ AS$/, ""), href: `/oppstart/${x.id}` })), o.id);
+  const dager = o.dager_igjen > 0 ? `${o.dager_igjen} dager igjen` : o.dager_igjen === 0 ? "I dag" : `${-o.dager_igjen} dager siden`;
+  const status = rad(120, [
+    flis({ bredde: "1/3", tittel: "Oppstartsdato", innhold: html`<p class="k-statusverdi"><b>${dato(o.oppstartsdato)}</b> <span class="${o.dager_igjen < 0 ? "dempet" : "aksent-tekst"}">${dager}</span></p>` }),
+    flis({ bredde: "1/3", tittel: "Avtale", innhold: html`<p class="k-statusverdi"><b>${o.avtale_nr ?? "–"}</b> <span class="dempet">Ansvarlig: ${o.ansvarlig}</span></p>` }),
+    flis({ bredde: "1/3", tittel: "Fremdrift", innhold: html`<p class="k-statusverdi"><b>${o.ferdig} av ${o.av} ferdig</b></p>${fremdrift(o.ferdig, o.av)}` }),
+  ]);
+  const stopper = o.stopper.length ? rad("auto", [flis({ id: "stopper", tittel: "Stopper", teller: o.stopper.length, klasse: "stopper-flis", handling: html`<button class="knapp" type="button" id="paaminnelse">${raw(ikon("sendt", 18))}Send påminnelse</button>`,
+    innhold: html`<div class="stopper-banner" role="alert"><span class="stopper-ikon">${raw(ikon("stoppet", 20))}</span><div>${o.stopper.map((s: any) => html`<b>Stopper: ${s.punkt}</b><p>${s.detalj ?? ""}</p>`)}${hos.length ? html`<p class="meta">Venter også på kunden: ${hos.join(", ")}.</p>` : ""}</div></div>` })]) : "";
+  const sjekk = flis({ id: "sjekkliste", tittel: "Sjekkliste", teller: d.punkter.length, tittelverdi: "Klikk på status for å endre", innhold: html`<div id="lagre-feil"></div>${d.punkter.length ? html`<div class="tabellramme"><table class="tabell sjekkliste"><thead><tr><th class="ikon-kol"><span class="visuelt-skjult">Status</span></th><th>Punkt</th><th>Ansvarlig</th><th>Dato</th><th>Status</th></tr></thead><tbody>
         ${d.punkter.map((p: any) => html`<tr data-status="${p.status}"><td class="ikon-kol"><span class="statusprikk" data-status="${p.status}">${raw(STATUSIKON[p.status] ? ikon(STATUSIKON[p.status], 16) : "")}</span></td>
           <td class="punkt"><b>${p.nr}. ${p.punkt}</b>${p.detalj ? html`<span>${p.detalj}</span>` : ""}
             ${p.nr === 7 ? html`<div class="okter">${p.okter.map((k: any) => html`<div class="okt"><b>${k.navn}</b><span>${oktTid(k)}${k.sted ? ` · ${k.sted}` : ""}</span>${k.deltakere ? html`<span class="meta">Deltakere: ${k.deltakere}</span>` : ""}<button class="lukk-liten" type="button" data-slett-okt="${k.id}" aria-label="Slett økten">${raw(ikon("lukk", 16))}</button></div>`)}<button class="knapp tekst liten" type="button" data-ny-okt="${p.id}">${raw(ikon("pluss", 16))}Ny økt</button></div>` : ""}</td>
           <td><button class="ansvarlig-knapp" type="button" data-ansvarlig="${p.id}" aria-label="Endre ansvarlig for ${p.punkt}">${ansvarlig(p.ansvarlig, p.ansvarlig_navn)}</button></td>
           <td class="dato-celle"><button class="dato-knapp" type="button" data-dato="${p.id}">${punktDato(p)}</button></td>
           <td><button class="status-knapp" type="button" data-punkt="${p.id}" aria-haspopup="menu" aria-label="Status for ${p.punkt}: ${p.status_navn}. Klikk for å endre">${oppstartstatus(p.status, p.status_navn)}</button>${p.fra_avtale ? html`<span class="meta liten blokk">fra avtalen</span>` : ""}</td></tr>`)}
-      </tbody></table></div>` : html`<div class="tom">${raw(ikon("kontrollmal", 28))}<b>Ingen sjekkliste ennå</b><button class="knapp primar" type="button" disabled>Lag sjekkliste fra mal</button></div>`}
-    </section>`);
+      </tbody></table></div>` : tom("Ingen sjekkliste ennå", "", html`<button class="knapp primar" type="button" disabled>Lag sjekkliste fra mal</button>`)}` });
+  sett(rot, html`${status}${stopper}${rad("auto", [sjekk])}`);
   koble();
   settBredder(rot);
 }
@@ -95,20 +96,19 @@ function koble() {
 }
 
 async function last() {
-  if (!d) sett(rot, html`<div class="skjelett sakhode-skjelett"></div>${raw(skjelett(1, "kortet"))}<div class="kort uten-pad">${raw(skjelett(9, "rad"))}</div>`);
+  if (!d) sett(rot, html`${rad(120, ["Oppstartsdato", "Avtale", "Fremdrift"].map((t) => flis({ bredde: "1/3", tittel: t, innhold: laster() })))}${rad(480, [flis({ id: "sjekkliste", tittel: "Sjekkliste", innhold: laster() })])}`);
   try {
     // ?tilstand=feil viser feilen ved lagring (60-211); oppstarten hentes som vanlig
     const ny = await api("GET", `/api/oppstart/${id}`, undefined, { utenTilstand: tilstand() === "feil" });
     if (!ny?.oppstart) throw new ApiFeil(404, "ADM-404", "Oppstarten finnes ikke.");
     if (tilstand() === "tom") ny.punkter = [];
     d = ny;
-    const sb = q("#sidetittel"); if (sb) sb.textContent = d.oppstart.eier_navn;
     document.title = `Oppstart ${d.oppstart.eier_navn} · Hengsel Admin`;
     vis();
     if (tilstand() === "feil") visFeil(new ApiFeil(503, "ADM-504", "Serveren svarte ikke. Statusen står som før."));
   } catch (e) {
     if (d) { visFeil(e); return; }
-    sett(rot, html`${raw(feilbanner(e, e instanceof ApiFeil && e.status === 404 ? "Oppstarten finnes ikke." : "Kunne ikke hente oppstarten."))}<p><a href="/oppstart">Til oppstarter</a></p>`);
+    sett(rot, rad(320, [flis({ tittel: "Oppstart", innhold: html`${raw(feilbanner(e, e instanceof ApiFeil && e.status === 404 ? "Oppstarten finnes ikke." : "Kunne ikke hente oppstarten."))}<p><a href="/oppstart">Til oppstarter</a></p>` })]));
     q("#prov-igjen", rot)?.addEventListener("click", last);
   }
 }

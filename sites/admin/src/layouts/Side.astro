@@ -10,6 +10,7 @@
  * Sider uten sporet «handlinger» (fase B/C og Drift) får knappen fra `toppknapp` som før. Bare lys modus, delte Hengsel-tokens. Aldri indeksert.
  */
 import Hode from "@sngroup/hengsel-tokens/Hode.astro";
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
 import "../styles/admin.css";
 import "../styles/support.css";
 import "../styles/kit.css";
@@ -46,7 +47,9 @@ const egneHandlinger = Astro.slots.has("handlinger");
   <div class={`app ${klasse}`.trim()} id="app">
     <aside class="sidemeny" id="sidemeny" aria-label="Hovedmeny">
       <a class="merke" href="/" aria-label="Hengsel Admin, til Salg">
-        <span class="init merke-init" aria-hidden="true">H</span><span class="navn">Hengsel Admin</span>
+        {/* K-469 (D-12 del B): Admin-logoen i menyen; merket alene når menyen er smal */}
+        <img class="merke-init merke-bilde" src="/logo/merke-admin-lys.svg" alt="" width="22" height="28" />
+        <img class="navn logo-bilde" src={PRODUKTLOGO.admin.src} alt={PRODUKTLOGO.admin.alt} width="150" height="22" />
       </a>
       <div class="omfang" title="admin.hengsel.no · Alle kunder">
         <span class="init" aria-hidden="true">H</span>
@@ -103,7 +106,7 @@ const egneHandlinger = Astro.slots.has("handlinger");
           )}
         </div>
         <button class="knapp ikon-knapp bare-telefon mer-knapp" type="button" id="mer-handlinger" aria-label="Flere handlinger" aria-controls="topphandlinger" aria-expanded="false"><Fragment set:html={ikon("mer", 20)} /></button>
-        <a class="bjelle" href="/support/saker" aria-label="Varsler: åpne saker" data-roller="eier support"><Fragment set:html={ikon("varsler", 20)} /><span class="bjelle-tall" id="bjelle-tall" hidden></span></a>
+        <a class="bjelle" href="/stotte" aria-label="Varsler: åpne saker" data-roller="eier support"><Fragment set:html={ikon("varsler", 20)} /><span class="bjelle-tall" id="bjelle-tall" hidden></span></a>
         <span class="init profil" id="profil" aria-hidden="true">·</span>
       </header>
       <nav class="k-faner" id="faner" aria-label="Faner" hidden={!faner.length}>

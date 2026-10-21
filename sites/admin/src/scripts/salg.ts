@@ -2,15 +2,20 @@
  * 26-009 Salg (N-4): tallraden (Åpne muligheter, Inntekt per måned, Neste steg i dag, Fornyes innen N dager), salgstavla med fem kolonner
  * (dra og slipp på PC; slipp i «Tapt» krever grunn – feltet vises mens et kort dras), «Status ▾» (Åpne, Tapt), søk, fanen Liste, og tabellen
  * «Neste steg: forfalt og i dag». Samme API som før: GET /api/oversikt, GET /api/tavle, PATCH /api/eiere/:id. Tilstander: tom, laster, feil.
+ * K-469 (60-211 SA1): rad 4 med tre kort, Kortliste 1/3 ×3: «Åpne saker og frister» (fire nærmeste, forfalt først), «Oppstarter i gang»
+ * (fremdrift og hva som stopper) og «Neste fakturakjøring» (dato, antall, sum uten mva, klar og sendt, feil i rød tekst). Tittelen åpner Saker,
+ * Oppstart og Fakturakjøring. Kilder: GET /api/oversikt/saker, /api/oversikt/oppstart og /api/oversikt/fakturering.
  */
 import { api, html, raw, kr, datoKort, flertall, sett, q, qa, feilbanner, tilstand, toast, taptDialog, nyEierDialog } from "../lib/dom";
-import { rad, flis, tallflis, kpille, sokFelt, velger, tabell, tabellHoyde, tom, laster, settFaner, kobleKit } from "../lib/kit";
+import { frist } from "../lib/support-ui";
+import { rad, flis, tallflis, kpille, sokFelt, velger, tabell, tabellHoyde, tom, laster, settFaner, kobleKit, liste } from "../lib/kit";
 
 const rot = q("#side")!;
 let fane = "tavle";
 let visTapt = false;
 let sokeord = "";
 let ov: any = null, tv: any = null;
+let kort: { saker: any; oppstart: any; fakturering: any } | null = null;
 let dras: string | null = null;
 const APNE = ["ny", "demo", "tilbud", "forhandling", "signert"];
 
@@ -57,11 +62,33 @@ function nesteFlis(o: any | null) {
     innhold: o ? tabell({ kompakt: true, kolonner: [{ navn: "Når", klasse: "smal" }, { navn: "Eier" }, { navn: "Hva", midt: true }, { navn: "Status", klasse: "smal" }], rader, ingen: "Ingen steg i dag." }) : laster() }) };
 }
 
+/** K-469: de tre kortene fra fase B og C (SA1). Feil i ett kort stopper ikke de andre. */
+function kortRad() {
+  const feilet = (x: any) => x instanceof Error;
+  const k = kort;
+  const saker = !k ? null : feilet(k.saker) ? null : k.saker;
+  const sakRader = (saker?.saker ?? []).map((s: any) => ({ venstre: html`<a href="/support/saker/${s.nr}">${s.emne}</a> <span class="dempet">${s.nr}${s.eier_navn ? ` · ${s.eier_navn}` : ""}</span>`, hoyre: frist(s.frist, true) }));
+  const sl = liste("ov-saker", "Åpne saker og frister", sakRader, { maks: 4, tom: "Ingen åpne saker." });
+  const opp = !k || feilet(k.oppstart) ? null : k.oppstart;
+  const oppRader = (opp?.i_gang ?? []).map((o: any) => ({ venstre: html`<a href="/oppstart/${o.id}">${o.eier_navn}</a> <span class="dempet">${o.ferdig} av ${o.av}${o.stopper.length ? ` · ${o.stopper[0].punkt}` : o.neste ? ` · ${o.neste.punkt}` : ""}</span>`, hoyre: o.stopper.length ? kpille("Stopper", "feil") : kpille(o.status_navn, o.status === "venter" ? "venter" : "pagar") }));
+  const ol = liste("ov-oppstart", "Oppstarter i gang", oppRader, { maks: 4, tom: "Ingen oppstarter i gang." });
+  const f = !k || feilet(k.fakturering) ? null : k.fakturering;
+  const fakturaInnhold = !k ? laster() : !f ? tom("Fakturakjøringen svarte ikke") : html`<ul class="k-liste">
+      <li><span class="k-celle">${f.navn}</span><span class="k-hoyre">${datoKort(f.dato)}</span></li>
+      <li><span class="k-celle">${flertall(f.antall, "faktura", "fakturaer")}</span><span class="k-hoyre">${kr(f.sum_uten_mva_ore)} uten mva</span></li>
+      <li><span class="k-celle">Klar ${f.klar} · sendt ${f.sendt}</span><span class="k-hoyre">${f.feil ? raw(`<b class="forfalt-tekst">${f.feil} feil</b>`) : "ingen feil"}</span></li></ul>`;
+  return rad(320, [
+    flis({ bredde: "1/3", id: "ov-saker", tittel: "Åpne saker og frister", tittelHref: "/stotte", teller: saker ? saker.apne : "", innhold: !k ? laster() : !saker ? tom("Sakene svarte ikke") : sl.innhold, handling: sl.handling }),
+    flis({ bredde: "1/3", id: "ov-oppstart", tittel: "Oppstarter i gang", tittelHref: "/oppstart", teller: opp ? opp.i_gang.length : "", innhold: !k ? laster() : !opp ? tom("Oppstartene svarte ikke") : ol.innhold, handling: ol.handling }),
+    flis({ bredde: "1/3", id: "ov-faktura", tittel: "Neste fakturakjøring", tittelHref: "/fakturering", innhold: fakturaInnhold }),
+  ], "ov-kort");
+}
+
 function vis(feil?: unknown) {
   settFaner([{ id: "tavle", navn: "Tavle" }, { id: "liste", navn: "Liste" }], fane, (id) => { fane = id; vis(); });
   const neste = nesteFlis(ov);
   const midt = fane === "liste" ? listeFlis(tv) : { hoyde: 480 as const, html: tavleFlis(tv, feil) };
-  sett(rot, html`${tallRad(ov)}${rad(midt.hoyde, [midt.html])}${rad(neste.hoyde, [neste.html])}`);
+  sett(rot, html`${tallRad(ov)}${rad(midt.hoyde, [midt.html])}${rad(neste.hoyde, [neste.html])}${kortRad()}`);
   koble();
 }
 
@@ -107,10 +134,14 @@ async function flytt(k: any, mal: string) {
 async function last() {
   if (tilstand() === "tom") {
     ov = { tall: { apne_muligheter: 0, apen_verdi_ore: 0, inntekt_mnd_ore: 0, fornyes_snart: 0 }, neste_steg: [], fornyes: [], fornyes_snart_dager: 90 };
+    kort = { saker: { apne: 0, forfalt: 0, saker: [] }, oppstart: { i_gang: [] }, fakturering: { navn: "–", dato: "", antall: 0, sum_uten_mva_ore: 0, klar: 0, sendt: 0, feil: 0 } };
     tv = { apne: 0, tap_grunner: [], kolonner: [["ny", "Ny"], ["demo", "Demo avtalt"], ["tilbud", "Tilbud sendt"], ["forhandling", "Forhandling"], ["signert", "Signert"], ["tapt", "Tapt"]].map(([id, navn]) => ({ id, navn, antall: 0, sum_ore: 0, kort: [] })) };
     return vis();
   }
   if (!ov) vis();
+  const feil = (e: unknown) => (e instanceof Error ? e : new Error(String(e)));
+  void Promise.all([api("GET", "/api/oversikt/saker").catch(feil), api("GET", "/api/oversikt/oppstart").catch(feil), api("GET", "/api/oversikt/fakturering").catch(feil)])
+    .then(([saker, oppstart, fakturering]) => { kort = { saker, oppstart, fakturering }; if (ov) vis(); });
   try { [ov, tv] = await Promise.all([api("GET", "/api/oversikt"), api("GET", "/api/tavle")]); vis(); if (location.pathname.startsWith("/salg/tavle") && matchMedia("(max-width: 959px)").matches) q("#salgstavle")?.scrollIntoView(); }
   catch (e) { vis(e); }
 }

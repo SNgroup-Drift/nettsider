@@ -1,21 +1,29 @@
 ---
-/** SD2 Lenker (K-260): kort med navn, hva den er og adresse. Fra datafilene i src/data (samme som Drift fra K-184), bygd inn ved bygging. */
+/**
+ * SD2 Lenker (K-260): kort med navn, hva den er og adresse. Fra datafilene i src/data (samme som Drift fra K-184), bygd inn ved bygging.
+ * K-469: på kitet fra N-4: én Flis 1/1 per gruppe; forklaringen er tooltip på tittelen.
+ */
 import Side from "../../layouts/Side.astro";
+import Innhold from "../../components/kit/Innhold.astro";
+import Rad from "../../components/kit/Rad.astro";
+import Flis from "../../components/kit/Flis.astro";
 import "../../styles/fase-c.css";
 import { plattformLenkegrupper } from "../../lib/data";
 const grupper = plattformLenkegrupper();
 const vert = (url: string) => { try { const u = new URL(url); return `${u.host}${u.pathname === "/" ? "" : u.pathname}`; } catch { return url; } };
 ---
-<Side title="Lenker" description="Lenker til verktøyene som driver Hengsel" aktiv="drift-lenker" sokplassholder="Søk i lenker" sokModus="side">
-  <header class="sidehode"><div><h1>Lenker</h1><p class="under">Verktøyene som driver Hengsel. Bare lenker, aldri innlogging eller nøkler.</p></div></header>
+<Side title="Lenker" description="Verktøyene som driver Hengsel. Bare lenker, aldri innlogging eller nøkler." aktiv="drift-lenker" sokplassholder="Søk i lenker" sokModus="side">
+  <Innhold id="lenker">
   {grupper.map((g) => (
-    <section class="stabel" aria-labelledby={`h-${g.id}`}>
-      <h2 id={`h-${g.id}`}>{g.tittel}</h2>
+    <Rad hoyde="auto">
+    <Flis tittel={g.tittel} teller={g.lenker.length} id={`h-${g.id}`}>
       <div class="lenkekort">
         {g.lenker.map((l) => l.url
           ? <a href={l.url} target="_blank" rel="noopener noreferrer"><b>{l.navn}</b>{(l.merknad || ("kunde" in l && l.kunde)) && <span class="meta">{l.merknad ?? ""}{"kunde" in l && l.kunde ? ` · ${l.kunde}` : ""}</span>}<span class="adresse">{vert(l.url)}</span></a>
           : <a class="uten" aria-disabled="true"><b>{l.navn}</b><span class="meta">{l.merknad ?? (l.status === "kommer" ? "Kommer" : "Ingen adresse ennå")}</span></a>)}
       </div>
-    </section>
+    </Flis>
+    </Rad>
   ))}
+  </Innhold>
 </Side>

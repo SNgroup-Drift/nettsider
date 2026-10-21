@@ -216,3 +216,11 @@ a.k-tallflis:hover { border-color: var(--kant); }
   .k-topp:has(.k-tittelverdi) { flex-wrap: wrap; row-gap: 4px; }
   .k-topp .k-tittelverdi { order: 3; flex-basis: 100%; margin-left: 0; }
 }
+
+/* K-469: en kolonne med fliser over hverandre i en rad (SB2: Tidsføring, Kontakt og kunde, «Hjelp» ved siden av tråden 2/3) */
+.k-stabel { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.k-stabel > .k-flis { grid-column: auto; }
+/* K-469: verdien i Status-flisene (3c) på detaljsidene i fase B og C: tekst 20/600 med en dempet tillegg ved siden av */
+.k-statusverdi { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 14px; line-height: 20px; }
+.k-statusverdi b { font-size: 20px; line-height: 28px; font-weight: var(--skrift-vekt-sterk); }
+.k-statusverdi .aksent-tekst { color: var(--aksent-tekst); }

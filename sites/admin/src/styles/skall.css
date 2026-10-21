@@ -9,6 +9,9 @@ body { background: var(--flate-side); }
 .sidemeny { position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; background: var(--flate-kort); border-right: 1px solid var(--linje); }
 .sidemeny .merke { display: flex; align-items: center; gap: 12px; height: var(--topp-h); padding: 0 16px; border-bottom: 1px solid var(--linje); color: var(--tekst); text-decoration: none; font-size: 16px; font-weight: var(--skrift-vekt-sterk); flex: none; }
 .sidemeny .merke .merke-init { display: none; }
+/* K-469 (D-12 del B): Admin-logoen (bred meny) og Admin-merket (smal meny) */
+.sidemeny .merke .logo-bilde { height: 22px; width: auto; display: block; }
+.sidemeny .merke .merke-bilde { height: 28px; width: auto; }
 .init { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--aksent-svak); color: var(--aksent-tekst); font-size: 13px; font-weight: var(--skrift-vekt-sterk); }
 .sidemeny .omfang { display: flex; align-items: center; gap: 12px; padding: 12px 12px; border-bottom: 1px solid var(--linje); flex: none; }
 .sidemeny .omfang .init { border-radius: var(--radius-kort-lite); }

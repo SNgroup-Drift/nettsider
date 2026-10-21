@@ -79,23 +79,23 @@ async function eksempel() {
   return felles;
 }
 
-test("tilgang (ren funksjon): support ser bare Support og skriver bare saker og tidsføring", () => {
+test("tilgang (ren funksjon): support ser Støtte og Kunder (K-469) og skriver bare saker og tidsføring", () => {
   const sup = { rolle: "support", navn: "S" };
-  for (const s of ["/support/saker", "/support/saker/H-1047", "/support/timer", "/ingen-tilgang", "/api/saker", "/api/saker/H-1047/meldinger", "/api/timer", "/api/tidsforing/01K7JX0000000000000000ABCD", "/api/meg", "/api/meny-tall", "/_astro/x.js"]) assert.equal(kanSe(sup, s), true, s);
-  for (const s of ["/", "/kunder", "/oppstart", "/fakturering/kjoring", "/drift", "/innstillinger/support", "/api/oversikt", "/api/eiere", "/api/oppstart", "/api/support/innstillinger", "/api/brukere", "/api/oversikt/saker", "/support/../kunder", "/api/saker/../eiere"]) assert.equal(kanSe(sup, s), false, s);
+  for (const s of ["/support/saker", "/support/saker/H-1047", "/support/timer", "/stotte", "/kunder", "/kunder/01K7JX0000000000000000ABCD", "/api/eiere", "/api/eiere/01K7JX0000000000000000ABCD", "/ingen-tilgang", "/api/saker", "/api/saker/H-1047/meldinger", "/api/timer", "/api/tidsforing/01K7JX0000000000000000ABCD", "/api/meg", "/api/meny-tall", "/_astro/x.js"]) assert.equal(kanSe(sup, s), true, s);
+  for (const s of ["/", "/salg/eiere", "/api/eiere/01K7JX0000000000000000ABCD/butikker", "/oppstart", "/fakturering/kjoring", "/drift", "/innstillinger/support", "/api/oversikt", "/api/oppstart", "/api/support/innstillinger", "/api/brukere", "/api/oversikt/saker", "/support/../kunder", "/api/saker/../eiere"]) assert.equal(kanSe(sup, s), false, s);
   assert.equal(kanSkrive(sup, "/api/saker/H-1047/meldinger"), true);
   assert.equal(kanSkrive(sup, "/api/tidsforing/01K7JX0000000000000000ABCD"), true);
   assert.equal(kanSkrive(sup, "/api/eiere"), false); assert.equal(kanSkrive(sup, "/api/oppstart"), false); assert.equal(kanSkrive(sup), false);
   assert.equal(kanSkrive({ rolle: "eier" }, "/api/oppstart"), true);
-  // Menyen: support ser bare Support; alle punktene for fase B og C og Drift er på for eier
-  assert.deepEqual(menyNaa("support").flatMap((g) => g.punkter.map((p) => p.id)), ["saker", "timer"]);
+  // Menyen: support ser Kunder og Støtte (K-469); alle punktene for fase B og C og Drift er på for eier
+  assert.deepEqual(menyNaa("support").flatMap((g) => g.punkter.map((p) => p.id)), ["kunder", "saker", "timer"]);
   const alle = menyNaa("eier").flatMap((g) => g.punkter.map((p) => p.id));
   for (const id of ["saker", "timer", "oppstart", "abonnement", "kjoring", "kpi", "utestaende", "tall", "drift", "drift-lenker", "drift-kontoer", "drift-frister", "drift-rutiner"]) assert.ok(alle.includes(id), id);
   assert.equal(omradeFor("/fakturering/kjoring"), "Fakturering"); assert.equal(omradeFor("/oppstart/01K7JX0000000000000000ABCD"), "Oppstart"); assert.equal(omradeFor("/"), "Salg"); // N-4: Oversikt er slått sammen med tavla i Salg (26-009)
   assert.equal(stiTilFil("/support/saker/H-1047"), "/support/sak"); assert.equal(stiTilFil("/oppstart/01K7JX0000000000000000ABCD"), "/oppstart/kunde");
 });
 
-test("tilgang gjennom Workeren: eier alt; support saker og timer (uten beløp), ADM-403 og «Ingen tilgang» ellers", { timeout: 60_000 }, medNokler(async () => {
+test("tilgang gjennom Workeren: eier alt; support saker, timer og kunder (uten beløp), ADM-403 og «Ingen tilgang» ellers", { timeout: 60_000 }, medNokler(async () => {
   const { env } = await eksempel();
   const eier = await token(), sup = await token(SUPPORTBRUKER.epost);
   const status = async (sti, tok, metode, kropp) => (await worker.fetch(be(sti, tok, metode, kropp), env)).status;
@@ -116,7 +116,12 @@ test("tilgang gjennom Workeren: eier alt; support saker og timer (uten beløp), 
   const meg = await (await worker.fetch(be("/api/meg", sup), env)).json();
   assert.equal(meg.rolle, "support");
   // … og får ADM-403 på alt annet
-  for (const [s, m, k] of [["/api/oppstart"], ["/api/oversikt"], ["/api/eiere"], ["/api/avtaler"], ["/api/support/innstillinger"], ["/api/brukere"], ["/api/oversikt/saker"], ["/api/eiere", "POST", { navn: "x" }], ["/api/oppstart", "POST", { avtale_nr: "A-2026-001" }], ["/api/support/innstillinger", "PATCH", { foring_min: 5 }]]) {
+  // K-469: support ser kundene, men ingen beløp (felt som slutter på _ore er null)
+  const ke = await (await worker.fetch(be("/api/eiere", sup), env)).json();
+  assert.ok(ke.eiere.length > 0 && ke.eiere.every((e) => e.verdi_ore === null), "support ser kundene uten beløp");
+  const ee = await (await worker.fetch(be("/api/eiere", eier), env)).json();
+  assert.ok(ee.eiere.some((e) => e.verdi_ore > 0), "eier ser beløpene");
+  for (const [s, m, k] of [["/api/oppstart"], ["/api/oversikt"], ["/api/avtaler"], ["/api/support/innstillinger"], ["/api/brukere"], ["/api/oversikt/saker"], ["/api/eiere", "POST", { navn: "x" }], ["/api/oppstart", "POST", { avtale_nr: "A-2026-001" }], ["/api/support/innstillinger", "PATCH", { foring_min: 5 }]]) {
     const r = await worker.fetch(be(s, sup, m, k), env);
     assert.equal(r.status, 403, `${m ?? "GET"} ${s}`); assert.equal((await r.json()).kode, "ADM-403");
   }
