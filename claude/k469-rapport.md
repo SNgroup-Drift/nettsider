@@ -74,7 +74,9 @@ Eirik eller Oversikt fletter.
 
 Admin bygges av Workers Builds med `npx wrangler preview -c sites/admin/wrangler.jsonc` (`docs/hosting.md`).
 Da PR-en ble laget, sto bare «Workers Builds: sngroup» og «Manifest, bilder, bygg og test» som sjekker, og ingen lenke til forhåndsvisning av admin var postet.
-Lenken står på PR #106 når Cloudflare legger den inn. Uten Access-tilgang er det skjermbildene under som viser sidene.
+Cloudflare har postet forhåndsvisningen av grenen for Pages-prosjektet sngroup-nettsider: https://claude-k469-admin-resten.sngroup-nettsider.pages.dev
+(commit 28c4761: https://4692158c.sngroup-nettsider.pages.dev). Admin står bak Cloudflare Access og har ingen egen forhåndsvisning på PR-en,
+så det er skjermbildene under som viser Admin-sidene.
 
 ## Tester
 
