@@ -12,7 +12,7 @@ export const sidehode = (tittel: string, under: string, handlinger: string | Raa
 /** «Du har ikke tilgang til …» med feilkode ADM-403, «Til saker» og «Spør Eirik om tilgang» (60-211) */
 export const ingenTilgang = (omraade: string) => html`<div class="kort ikke-tilgang" role="alert">${raw(ikon("stoppet", 28))}<h1>Du har ikke tilgang til ${omraade}</h1>
   <p class="meta">Rollen din ser Kunder og Support. Feilkode ADM-403.</p>
-  <div class="handlinger"><a class="knapp primar" href="/support/saker">Til saker</a><a class="knapp" href="mailto:es@sngroup.no?subject=${encodeURIComponent(`Tilgang til ${omraade} i Hengsel Admin`)}">Spør Eirik om tilgang</a></div></div>`;
+  <div class="handlinger"><a class="knapp primar" href="/stotte">Til saker</a><a class="knapp" href="mailto:es@sngroup.no?subject=${encodeURIComponent(`Tilgang til ${omraade} i Hengsel Admin`)}">Spør Eirik om tilgang</a></div></div>`;
 
 export const eksempel = (tekst = "Eksempel") => raw(`<span class="pille" data-status="eksempel">${esc(tekst)}</span>`);
 export const tom = (ikonNavn: string, tittel: string, tekst: string, handling = "") => raw(`<div class="tom">${ikon(ikonNavn, 28)}<b>${esc(tittel)}</b><span>${esc(tekst)}</span>${handling ? `<div class="handlinger">${handling}</div>` : ""}</div>`);

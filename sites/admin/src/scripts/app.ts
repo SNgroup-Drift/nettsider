@@ -43,7 +43,7 @@ if (eksPille) api<{ prisliste: { eksempel: number | boolean } }>("GET", "/api/pr
 // Søk: Enter går til Eiere og butikker med søkeordet. På Drift-sidene filtreres siden (drift.ts).
 const sok = q<HTMLInputElement>("#sok");
 if (sok && sok.dataset.modus !== "side") {
-  const mal = sok.dataset.modus === "saker" ? "/support/saker" : "/salg/eiere";
+  const mal = sok.dataset.modus === "saker" ? "/stotte" : "/salg/eiere";
   sok.addEventListener("keydown", (e) => { if (e.key === "Enter" && sok.value.trim()) location.href = `${mal}?sok=${encodeURIComponent(sok.value.trim())}`; });
 }
 document.addEventListener("keydown", (e) => {

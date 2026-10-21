@@ -1,6 +1,16 @@
 ---
-/** 26-012 Fakturering (KOMMER), N-4: nøytral «Kommer»-side etter sidekartet. Ikke i menyen. */
-import KommerSide from "../../components/kit/KommerSide.astro";
+/**
+ * 26-012 Fakturering (K-469): den ekte siden etter 60-211, SC2 Fakturakjøring (utkast per måned, endringer siden sist, timer ut over inkludert,
+ * viderefakturert med 15 % påslag uten rabatt, sum med og uten mva, status Klar/Sendt/Feil). Samme side som /fakturering/kjoring (K-260).
+ * Bare rollen eier ser innholdet (ADM-403 ellers).
+ */
+import Innhold from "../../components/kit/Innhold.astro";
+import Side from "../../layouts/Side.astro";
+import "../../styles/fase-c.css";
 ---
-<KommerSide tittel="Fakturering" beskrivelse="Fakturering i Hengsel Admin kommer i fase C" aktiv="fakturering" flistittel="Kommer i fase C"
-  tekst="Månedlig fakturakjøring til PowerOffice fra abonnementene: linjer per butikk, kjederabatten som én linje, tillegg uten rabatt, endringer siden forrige måned og KPI-justering." />
+<Side title="Fakturakjøring" description="Månedens fakturaer: abonnement, etablering, timer og viderefakturering" aktiv="fakturering" forelder="Fakturering">
+  <Innhold id="side" />
+  <script>
+    import "../../scripts/kjoring";
+  </script>
+</Side>

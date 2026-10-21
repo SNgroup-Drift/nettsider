@@ -1,6 +1,14 @@
 ---
-/** 26-011 Støtte (KOMMER), N-4: nøytral «Kommer»-side etter sidekartet. Ikke i menyen. */
-import KommerSide from "../components/kit/KommerSide.astro";
+/**
+ * 26-011 Støtte (K-469): den ekte siden etter 60-211, SB1 Saker (filter på status, prioritet, kilde og kunde; tid igjen til svarfrist; forfalt uten
+ * rødt fyll). Samme side som /support/saker (K-259), som står igjen så gamle lenker virker. Menyen: Støtte › Saker.
+ */
+import Innhold from "../components/kit/Innhold.astro";
+import Side from "../layouts/Side.astro";
 ---
-<KommerSide tittel="Støtte" beskrivelse="Støtte i Hengsel Admin kommer i fase B" aktiv="stotte" flistittel="Kommer i fase B"
-  tekst="Saker fra kundene: Hjelp i CRM og Hengsel Ute med prioritet, svarfrist, saksnummer og «Mine saker»." />
+<Side title="Saker" description="Saker fra «Hjelp» i Hengsel CRM og Ute, e-post og telefon" aktiv="stotte" forelder="Støtte" toppknapp="sak" sokplassholder="Søk etter sak, kunde eller kontakt" sokModus="saker">
+  <Innhold id="side" />
+  <script>
+    import "../scripts/saker";
+  </script>
+</Side>

@@ -8,3 +8,9 @@ body { background: var(--flate-side); }
 .innlogging-flate .knapp { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--radius-kort-lite); background: var(--aksent); color: var(--paa-aksent); font-size: 15px; font-weight: var(--skrift-vekt-sterk); text-decoration: none; }
 .innlogging-flate .knapp:hover { background: var(--aksent-trykk); }
 @media (max-width: 767px) { .innlogging-flate { padding-top: 48px; } .innlogging-flate .kort { padding: 24px; } }
+/* K-469 (D-12 del B): skjemaet med e-post og «Send kode» */
+.innlogging-flate .skjema { display: flex; flex-direction: column; gap: 16px; margin: 0; }
+.innlogging-flate .felt { display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 16px; color: var(--tekst); }
+.innlogging-flate .felt input { min-height: 44px; padding: 0 12px; border: 1px solid var(--linje); border-radius: var(--radius-kort-lite); background: var(--flate-kort); color: var(--tekst); font: inherit; font-size: 15px; }
+.innlogging-flate .felt input:focus-visible { outline: 2px solid var(--aksent); outline-offset: 1px; }
+.innlogging-flate button.knapp { border: 0; cursor: pointer; font-family: inherit; }

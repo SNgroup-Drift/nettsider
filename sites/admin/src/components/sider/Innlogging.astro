@@ -1,0 +1,36 @@
+---
+/**
+ * 26-001 Innlogging (Access), D-12 del B punkt 15 (K-469): kortet 400 px midt på siden med Admin-logoen. Cloudflare Access står foran
+ * admin.hengsel.no og sender koden til jobb-e-posten (Access har selve kode-steget, 26-001-kode.png). Workeren viser disse kortene når en
+ * forespørsel kommer fram uten gyldig token (steg «epost», status 401) og når tokenet er gyldig, men adressen ikke har tilgang (steg «ingen»,
+ * status 403, adressen settes inn av Workeren i #ingen-epost). Bare lys modus, ingen skript.
+ */
+import Hode from "@sngroup/hengsel-tokens/Hode.astro";
+import { PRODUKTLOGO } from "@sngroup/hengsel-tokens/produktlogo";
+import "../../styles/logg-inn.css";
+interface Props { steg: "epost" | "ingen" }
+const { steg } = Astro.props;
+---
+<Hode title={steg === "ingen" ? "Ingen tilgang · Hengsel Admin" : "Logg inn · Hengsel Admin"} description="Hengsel Admin: bare for Hengsel. Logg inn med Cloudflare Access." robots="noindex, nofollow, noarchive" appleIkon="/favicon-180.png" htmlAttributter={{ "data-produkt": "admin" }}>
+  <main class="innlogging-flate" id="innhold">
+    <section class="kort" aria-labelledby="logg-inn-tittel" data-steg={steg}>
+      <img src={PRODUKTLOGO.admin.src} alt={PRODUKTLOGO.admin.alt} width="150" height="22" />
+      {steg === "epost" ? (
+        <>
+          <h1 id="logg-inn-tittel">Logg inn</h1>
+          <p>Bare for Hengsel. Cloudflare Access sender en kode til jobb-e-posten din.</p>
+          <form class="skjema" action="https://admin.hengsel.no/" method="get">
+            <label class="felt"><span>E-post</span><input type="email" name="epost" autocomplete="email" inputmode="email" /></label>
+            <button class="knapp" type="submit">Send kode</button>
+          </form>
+        </>
+      ) : (
+        <>
+          <h1 id="logg-inn-tittel">Ingen tilgang</h1>
+          <p><span id="ingen-epost">Denne e-postadressen</span> har ikke tilgang til Hengsel Admin. Bruk jobb-e-posten din i Hengsel, eller spør en superadmin.</p>
+          <a class="knapp" href="https://admin.hengsel.no/cdn-cgi/access/logout">Prøv en annen e-post</a>
+        </>
+      )}
+    </section>
+  </main>
+</Hode>

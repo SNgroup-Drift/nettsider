@@ -10,7 +10,8 @@ import { finnFil } from "../statisk-server.mjs";
 import { handterApi, tilbudPdf } from "../../sites/admin/worker/api.js";
 import { handterLead } from "../../sites/admin/worker/lead.js";
 import { stiTilFil, TILBUD_PDF } from "../../sites/admin/worker/ruter.js";
-import { kanSe, kanSkrive } from "../../sites/admin/worker/tilgang.js";
+import { kanSe, kanSkrive, utenInnlogging } from "../../sites/admin/worker/tilgang.js";
+import { utenBelopSvar } from "../../sites/admin/worker/belop.js";
 import { BRUKER } from "./admin-eksempeldata.mjs";
 
 const TYPER = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".txt": "text/plain", ".ico": "image/x-icon", ".png": "image/png", ".json": "application/json" };
@@ -40,6 +41,14 @@ export async function startAdminLokalt({ dist, env, bruker = BRUKER }) {
     const erApi = sti === "/api" || sti.startsWith("/api/");
     const pdf = TILBUD_PDF.exec(sti);
     const rolle = bruker.rolle === "support" ? { rolle: "support", navn: bruker.navn } : null;
+    // K-469 (26-001-ingen): en innlogget adresse uten rolle får kortet «Ingen tilgang» med adressen og 403, som i Workeren
+    if (!bruker.rolle && !erApi && !utenInnlogging(sti)) {
+      const side = await finnFil(dist, "/logg-inn-ingen.html");
+      const html = (await readFile(side, "utf8")).replace('<span id="ingen-epost">Denne e-postadressen</span>', `<span id="ingen-epost">${String(bruker.epost).replace(/[&<>"']/g, "")}</span>`);
+      res.writeHead(403, { "Content-Type": TYPER[".html"], "Cache-Control": "no-store", ...hoder });
+      res.end(html);
+      return;
+    }
     if (rolle && !/^\/(?:_astro|fonts|logo)\//.test(sti) && !/^\/favicon/.test(sti) && (!kanSe(rolle, sti) || (erApi && !["GET", "HEAD"].includes(req.method) && !kanSkrive(rolle, sti)))) {
       if (erApi) { res.writeHead(403, { "Content-Type": "application/json; charset=utf-8" }); res.end(JSON.stringify({ ok: false, kode: "ADM-403", melding: "Ingen tilgang." })); return; }
       const side = await finnFil(dist, "/ingen-tilgang.html");
@@ -52,7 +61,8 @@ export async function startAdminLokalt({ dist, env, bruker = BRUKER }) {
       for await (const d of req) deler.push(d);
       const body = Buffer.concat(deler);
       const request = new Request(url.href, { method: req.method, headers: req.headers, body: ["GET", "HEAD"].includes(req.method) ? undefined : body, duplex: "half" });
-      const svar = sti === "/api/lead" ? await handterLead(request, env) : pdf ? await tilbudPdf(env, pdf[1], Number(pdf[2]), { hentLogo }) : await handterApi(request, env, { bruker, hentLogo });
+      let svar = sti === "/api/lead" ? await handterLead(request, env) : pdf ? await tilbudPdf(env, pdf[1], Number(pdf[2]), { hentLogo }) : await handterApi(request, env, { bruker, hentLogo });
+      if (rolle && /^\/api\/eiere(?:\/|$)/.test(sti)) svar = await utenBelopSvar(svar); // K-469: support ser kundene uten beløp
       res.writeHead(svar.status, Object.fromEntries(svar.headers));
       res.end(Buffer.from(await svar.arrayBuffer()));
       return;
