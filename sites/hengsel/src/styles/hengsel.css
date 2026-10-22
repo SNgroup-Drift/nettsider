@@ -66,6 +66,19 @@ h1, h2, h3 { font-family: var(--f-display); font-weight: var(--skrift-vekt-fet);
 h1 { font-size: var(--t-hero); line-height: 1.02; }
 h2 { font-size: var(--t-h1); line-height: 1.08; }
 h3 { font-size: var(--t-h3); line-height: 1.2; }
+/* Skriftskala for nettsider-temaet: h1 56/64, h2 40/48, h3 32/40, ingress 18/28, brødtekst 16/26 (px), mindre på telefon.
+   Gjelder bare sider med data-produkt="nettsider"; kundeutgavene (/kunde/*) har ikke produktpalett og beholder sin egen skala. */
+:root[data-produkt="nettsider"] {
+  --t-hero: clamp(2.25rem, 7vw, 56px);
+  --t-h1: clamp(1.75rem, 5vw, 40px);
+  --t-h3: clamp(1.5rem, 4vw, 32px);
+  --t-lede: 18px;
+}
+:root[data-produkt="nettsider"] body { font-size: 16px; line-height: 26px; }
+:root[data-produkt="nettsider"] h1 { line-height: 1.143; letter-spacing: -1.5px; }
+:root[data-produkt="nettsider"] h2 { line-height: 1.2; }
+:root[data-produkt="nettsider"] h3 { line-height: 1.25; }
+:root[data-produkt="nettsider"] .lede { line-height: 28px; }
 p { margin: 0; text-wrap: pretty; }
 b, strong { font-weight: var(--w-strong); }
 a { color: var(--aksent-tekst); text-decoration: none; }
