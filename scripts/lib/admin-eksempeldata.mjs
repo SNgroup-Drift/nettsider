@@ -126,7 +126,7 @@ export async function leggInnEksempeldata(env, { idag = idagOslo() } = {}) {
   await akt(ider.elvetangen, "epost", d(-2), `Tilbud ${t3.nr} v1 sendt`, null, ["Svar på spørsmål om montørapp", d(3)]);
   await akt(ider.moen, "samtale", d(-1), "Avtalt demo i butikken", null, ["Demo i butikken", d(8)]);
 
-  // Lead fra «Be om demo» (lagres som på /api/lead)
+  // Lead fra «Be om demo» (lagres som fra LeadInngang, worker/lead.js)
   const lead = await lagreLead(env.DB, { navn: "Silje Haugen", butikk: "Haugen Kjøkken & Bad AS", epost: "silje@haugenkjokken.no", tlf: "901 47 225", avdelinger: "1", melding: "Vi er tre selgere og to montører. Bruker Excel og e-post i dag. Kan vi se hvordan tilbud og montasje henger sammen?" });
   ider.haugen = lead.eier_id;
   await api("PATCH", `/api/eiere/${ider.haugen}`, { orgnr: "932118640", adresse: "Leirvikvegen 22", postnr: "5411", sted: "Stord", fylke: "Vestland" });

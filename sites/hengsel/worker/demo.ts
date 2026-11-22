@@ -2,7 +2,9 @@
  * POST /api/demo: demoskjemaet på /priser-og-demo (K-160). Kjører bare for denne stien (assets.run_worker_first i wrangler.jsonc).
  *
  * - Bare POST (andre metoder: 405 med Allow: POST). Origin-hodet må være nettstedets egen adresse (ellers 403).
- * - Body maks 8 KB (413), JSON eller application/x-www-form-urlencoded (ellers 415).
+ * - Body maks 8 KB, JSON eller application/x-www-form-urlencoded (ellers 415). Content-Length må være et heltall når den er med (ellers 400),
+ *   og over 8 KB gir 413 uten at kroppen leses. Kroppen leses som en strøm med tak: passerer den 8 KB (også uten Content-Length, f.eks. chunked),
+ *   avbrytes lesingen og svaret er 413. Content-Length kreves ikke, siden nettlesere ikke alltid sender den over HTTP/2 og HTTP/3.
  * - Honeypot: er det skjulte feltet «nettsted» utfylt, svarer ruten 200 {ok:true}, men sender ingenting.
  * - Tidssjekk: feltet «t» (millisekunder siden 1970, satt av skriptet når skjemaet ble vist) må være mellom 3 sekunder og 24 timer gammelt.
  * - Validering: navn 1–120 tegn, e-post (enkel sjekk) eller telefon (6–20 siffer), minst én av dem, butikk maks 120, «Hva vil dere se?»
@@ -13,20 +15,27 @@
  *   og siden viser mailto-lenken til hei@hengsel.no uten feilmelding. Slås e-posten på senere (send_email-blokken tilbake i wrangler.jsonc,
  *   se docs/k160-cloudflare-skjema.md), sendes e-posten uten kodeendring. Kastes det en feil ved sending, svarer ruten 503 {reserve:"mailto"}.
  * - Ingenting lagres, og det logges ingen persondata (bare feilkoden fra Cloudflare).
- * - Lead til Hengsel Admin (K-240): er variabelen LEAD_URL satt (f.eks. https://admin.hengsel.no/api/lead; AV som standard), sendes de samme
- *   feltene server til server dit etter at de er validert, med Origin = nettstedets egen adresse og, når hemmeligheten LEAD_NOKKEL er satt,
- *   «Authorization: Bearer …». Feiler leveringen, logges bare statuskoden; svaret til nettleseren påvirkes ikke.
+ * - Lead til Hengsel Admin (K-240): når variabelen LEAD_TIL_ADMIN er «1» (AV som standard), sendes de validerte feltene til Admin gjennom
+ *   service bindingen ADMIN_LEAD (RPC-metoden lagre på inngangspunktet LeadInngang i Admin-Workeren; ingen HTTP, ingen nøkler). Kallet kjører
+ *   med ctx.waitUntil etter at svaret er sendt, og gis opp etter LEAD_TIDSAVBRUDD ms. Feiler leveringen, logges bare feilkoden; svaret til
+ *   nettleseren påvirkes aldri.
  *
  * Importerer ingenting fra cloudflare:email på toppnivå, så filen kan testes i Node (scripts/demo.test.mjs).
  */
 
+/** Svaret fra LeadInngang.lagre i Admin (sites/admin/worker/lead.js, mottaLead) */
+export type LeadSvar = { ok: boolean; kode?: string; ny?: boolean; dublett?: boolean };
+
 export interface DemoEnv {
   DEMO_EPOST?: { send(melding: unknown): Promise<unknown> };
-  /** K-240: adressen til POST /api/lead i Hengsel Admin. Tom eller uten verdi = leaden sendes ikke (standard). */
-  LEAD_URL?: string;
-  /** K-240: valgfri delt hemmelighet (wrangler secret), sendes som Bearer når den er satt. */
-  LEAD_NOKKEL?: string;
+  /** K-240: service binding til Admin-Workeren, inngangspunktet LeadInngang (sites/hengsel/wrangler.jsonc: services). */
+  ADMIN_LEAD?: { lagre(felt: LeadFelt): Promise<LeadSvar> };
+  /** K-240: «1» = send leaden til Admin. Uten verdi sendes den ikke (standard). Vanlig variabel i dashbordet. */
+  LEAD_TIL_ADMIN?: string;
 }
+
+/** Det som trengs av ExecutionContext: waitUntil lar leaden gå ferdig etter at svaret er sendt. */
+export interface Vent { waitUntil(lofte: Promise<unknown>): void }
 
 export const AVSENDER = "demo@hengsel.no";
 export const MOTTAKER = "hei@hengsel.no";
@@ -34,10 +43,12 @@ export const MAKS_BODY = 8 * 1024; // byte
 export const MIN_ALDER = 3_000; // ms
 export const MAKS_ALDER = 24 * 60 * 60 * 1000; // ms
 const MAKS_FREMTID = 60_000; // ms: litt slingringsmonn for klokkeavvik
+export const LEAD_TIDSAVBRUDD = 5_000; // ms: så lenge venter vi på Admin før leaden gis opp
 export const AVDELINGER: Record<string, string> = { "1": "1", "2-3": "2–3", "4+": "4 eller flere" };
 const GRENSER = { navn: 120, butikk: 120, epost: 254, melding: 1000 } as const;
 
 export type Felt = { navn: string; butikk: string; epost: string; tlf: string; avdelinger: string; melding: string };
+export type LeadFelt = Felt;
 export type Feil = Record<string, string>;
 
 const JSON_HODER = {
@@ -56,7 +67,7 @@ export async function handterDemo(
   env: DemoEnv,
   na: number = Date.now(),
   lagMelding: (fra: string, til: string, raw: string) => Promise<unknown> = standardMelding,
-  hent: typeof fetch = fetch,
+  ctx?: Vent,
 ): Promise<Response> {
   if (req.method.toUpperCase() !== "POST") {
     return json(405, { ok: false, feil: { skjema: "Metoden er ikke tillatt." } }, { Allow: "POST" });
@@ -65,15 +76,18 @@ export async function handterDemo(
   if (req.headers.get("Origin") !== url.origin) {
     return json(403, { ok: false, feil: { skjema: "Forespørselen kom fra en annen adresse." } });
   }
-  const lengde = Number(req.headers.get("Content-Length") ?? "0");
-  if (lengde > MAKS_BODY) return json(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
+  const lengdeHode = req.headers.get("Content-Length");
+  if (lengdeHode !== null) {
+    if (!/^\d{1,15}$/.test(lengdeHode.trim())) return json(400, { ok: false, feil: { skjema: "Forespørselen kunne ikke leses." } });
+    if (Number(lengdeHode) > MAKS_BODY) return json(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
+  }
   const type = (req.headers.get("Content-Type") ?? "").toLowerCase();
   const erJson = type.startsWith("application/json");
   if (!erJson && !type.startsWith("application/x-www-form-urlencoded")) {
     return json(415, { ok: false, feil: { skjema: "Ukjent innholdstype." } });
   }
-  const bytes = new Uint8Array(await req.arrayBuffer());
-  if (bytes.byteLength > MAKS_BODY) return json(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
+  const bytes = await lesMedTak(req, MAKS_BODY);
+  if (!bytes) return json(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
   const rå = lesBody(new TextDecoder().decode(bytes), erJson);
   if (!rå) return json(400, { ok: false, feil: { skjema: "Forespørselen kunne ikke leses." } });
 
@@ -90,8 +104,10 @@ export async function handterDemo(
   const { felt, feil } = valider(rå);
   if (!felt) return json(400, { ok: false, feil });
 
-  // K-240: leaden til Hengsel Admin, bare når LEAD_URL er satt. Feil her stopper aldri svaret til nettleseren.
-  await sendLead(env, felt, rå.t, url.origin, hent);
+  // K-240: leaden til Hengsel Admin, bare når LEAD_TIL_ADMIN er «1». Går ferdig etter svaret (waitUntil); feil her stopper aldri svaret.
+  const lead = sendLead(env, felt);
+  if (ctx) ctx.waitUntil(lead);
+  else await lead;
 
   const bind = env.DEMO_EPOST;
   // Uten e-postbinding (ikke slått på ennå): ingen feil, siden viser mailto-lenken
@@ -107,20 +123,50 @@ export async function handterDemo(
   return json(200, { ok: true });
 }
 
-/** K-240: POST til Hengsel Admin (/api/lead) med de validerte feltene. Returnerer true når Admin svarte ok. */
-export async function sendLead(env: DemoEnv, f: Felt, t: string, origin: string, hent: typeof fetch = fetch): Promise<boolean> {
-  const adresse = (env.LEAD_URL ?? "").trim();
-  if (!/^https:\/\/[^\s/]+\/api\/lead$/.test(adresse)) return false;
-  const hoder: Record<string, string> = { "Content-Type": "application/json", Origin: origin, Accept: "application/json" };
-  if (env.LEAD_NOKKEL) hoder.Authorization = `Bearer ${env.LEAD_NOKKEL}`;
+/**
+ * K-240: leaden til Hengsel Admin gjennom service bindingen ADMIN_LEAD (RPC, ingen HTTP). Returnerer true når Admin svarte ok.
+ * Kaster aldri. Gir opp etter tidsavbrudd ms. Logger bare feilkoden, aldri feltene.
+ */
+export async function sendLead(env: DemoEnv, f: Felt, tidsavbrudd: number = LEAD_TIDSAVBRUDD): Promise<boolean> {
+  if (env.LEAD_TIL_ADMIN !== "1" || !env.ADMIN_LEAD) return false;
+  let tidtaker: ReturnType<typeof setTimeout> | undefined;
+  const tidenUte = new Promise<"tidsavbrudd">((ferdig) => { tidtaker = setTimeout(() => ferdig("tidsavbrudd"), tidsavbrudd); });
   try {
-    const r = await hent(adresse, { method: "POST", headers: hoder, body: JSON.stringify({ navn: f.navn, butikk: f.butikk, epost: f.epost, tlf: f.tlf, avdelinger: f.avdelinger, melding: f.melding, nettsted: "", t }) });
-    if (!r.ok) console.error("demo: lead ikke levert", r.status);
-    return r.ok;
+    const svar = await Promise.race([
+      env.ADMIN_LEAD.lagre({ navn: f.navn, butikk: f.butikk, epost: f.epost, tlf: f.tlf, avdelinger: f.avdelinger, melding: f.melding }),
+      tidenUte,
+    ]);
+    if (svar === "tidsavbrudd") { console.error("demo: lead tidsavbrudd"); return false; }
+    if (!svar?.ok) console.error("demo: lead ikke levert", svar?.kode ?? "ukjent");
+    return svar?.ok === true;
   } catch (e) {
     console.error("demo: lead feilet", (e as Error)?.name ?? "ukjent");
     return false;
+  } finally {
+    clearTimeout(tidtaker);
   }
+}
+
+/** Leser kroppen som en strøm og stopper (avbryter strømmen) så snart den passerer tak byte. null = for stor. */
+export async function lesMedTak(req: Request, tak: number): Promise<Uint8Array | null> {
+  if (!req.body) return new Uint8Array(0);
+  const leser = req.body.getReader();
+  const biter: Uint8Array[] = [];
+  let lengde = 0;
+  for (;;) {
+    const { done, value } = await leser.read();
+    if (done) break;
+    lengde += value.byteLength;
+    if (lengde > tak) {
+      await leser.cancel().catch(() => {});
+      return null;
+    }
+    biter.push(value);
+  }
+  const ut = new Uint8Array(lengde);
+  let i = 0;
+  for (const b of biter) { ut.set(b, i); i += b.byteLength; }
+  return ut;
 }
 
 async function standardMelding(fra: string, til: string, raw: string): Promise<unknown> {

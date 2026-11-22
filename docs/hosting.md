@@ -432,10 +432,14 @@ Preview command `-c sites/admin/wrangler.jsonc` (se tabellen øverst). Domene, A
 `database_id` i `wrangler.jsonc` settes inn av Oversikt før fletting). Migreringene ligger i `sites/admin/migrations/` og kjøres med
 `npx wrangler d1 migrations apply hengsel-admin --remote -c sites/admin/wrangler.jsonc` etter utrulling. Sider med id i adressen (`/salg/eiere/:id`,
 `/kunder/:id`, `/avtaler/:nr`) serveres fra én fil hver (`worker/ruter.js`); tilbudet som PDF lages i Workeren (`/salg/tilbud/:nr/:versjon.pdf`).
-`POST /api/lead` tar imot «Be om demo» fra hengsel.no og er unntatt Access-sjekken i Workeren; **Access-appen må ha en bypass-policy for stien
-`/api/lead`** (ellers stopper Access forespørselen før Workeren). Hemmeligheter (aldri i repoet): `PENNEO_API_KEY` (Penneo er av uten den) og
-`LEAD_NOKKEL` (valgfritt, samme verdi i hengsel-Workeren). Variabler: `LEAD_ORIGIN` (standard `https://hengsel.no`), `PENNEO_API_URL`.
-hengsel-Workeren sender leaden bare når variabelen `LEAD_URL` (`https://admin.hengsel.no/api/lead`) er satt; den er av som standard. Se `claude/k240-rapport.md`.
+Leads fra «Be om demo» på hengsel.no kommer **ikke over HTTP**: hengsel-Workeren kaller det navngitte inngangspunktet `LeadInngang` i Admin
+(`worker/inngang.js`, eksportert fra hovedmodulen `worker/main.js`) gjennom service bindingen `ADMIN_LEAD` i `sites/hengsel/wrangler.jsonc`
+(står kommentert ut til `admin` med `LeadInngang` er rullet ut; Cloudflare avviser en binding til et inngangspunkt som ikke finnes ennå).
+Et slikt kall kan bare komme fra en Worker i samme konto, så det trengs verken nøkkel eller åpning i Access. Den gamle ruten `/api/lead` er fjernet
+og går gjennom Access som alt annet (bypass-policyen for `/api/lead` kan fjernes). hengsel-Workeren sender leaden bare når variabelen
+`LEAD_TIL_ADMIN` er `1` (av som standard), etter at svaret er sendt (`ctx.waitUntil`, gis opp etter 5 s). **Rekkefølge:** rull ut `admin` med
+`LeadInngang` først, slå deretter på bindingen i `sites/hengsel/wrangler.jsonc` i en egen endring og rull ut `hengsel`, og sett `LEAD_TIL_ADMIN` til slutt. Hemmeligheter (aldri i repoet): `PENNEO_API_KEY` (Penneo er av uten den).
+Variabler: `PENNEO_API_URL`. Se `claude/k240-rapport.md` og `claude/lead-binding-rapport.md`.
 
 
 ## hengsel.no/kunde/sigdal (K-223; før K-229 lå den på /sigdal)

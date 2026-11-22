@@ -7,8 +7,10 @@
 // `npx wrangler secret put … -c sites/hengsel/wrangler.jsonc`, aldri i repoet.
 // Access (K-226): variablene ACCESS_TEAM_DOMAIN («<team>.cloudflareaccess.com») og ACCESS_AUD (AUD-taggen til Access-appen; flere skilles med komma) er ikke
 // hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her. keep_vars sørger for at utrulling ikke overskriver dem.
-// K-240: leaden fra /api/demo sendes også til Hengsel Admin når variabelen LEAD_URL (https://admin.hengsel.no/api/lead) er satt i dashbordet; AV som standard.
-// Hemmeligheten LEAD_NOKKEL (valgfri, samme verdi i begge Workerne) settes med `npx wrangler secret put LEAD_NOKKEL -c sites/hengsel/wrangler.jsonc`.
+// K-240: leaden fra /api/demo sendes også til Hengsel Admin når variabelen LEAD_TIL_ADMIN er «1» (settes i dashbordet; AV som standard) og
+// service bindingen ADMIN_LEAD finnes. Den går til inngangspunktet LeadInngang i Worker-en «admin» (RPC, ikke HTTP), så den trenger verken
+// LEAD_URL, LEAD_NOKKEL eller en åpning i Access. Bindingen står kommentert ut nederst: Cloudflare avviser utrulling av en Worker med binding
+// til et inngangspunkt som ikke er rullet ut ennå, så «admin» med LeadInngang må være i produksjon først. Slå den på i en egen endring etterpå.
 // Workers Builds: både Deploy command og Non-production branch deploy command må ha `-c sites/hengsel/wrangler.jsonc`.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
@@ -26,6 +28,9 @@
     // /personvern serverer personvern.html; /personvern.html sendes til /personvern
     "html_handling": "auto-trailing-slash"
   }
+  // K-240: leaden fra «Be om demo» til Hengsel Admin (worker/demo.ts, sendLead). Slå på (fjern // foran linjen under) først når «admin» er
+  // rullet ut i produksjon med LeadInngang (worker/main.js); se claude/lead-binding-rapport.md. Brukes bare når LEAD_TIL_ADMIN er «1».
+  // ,"services": [{ "binding": "ADMIN_LEAD", "service": "admin", "entrypoint": "LeadInngang" }]
   // Demoskjemaet (/api/demo): e-postsending er IKKE slått på ennå (Eirik 11.10). Uten send_email-bindingen svarer ruten 200 og siden viser
   // mailto-lenken til hei@hengsel.no uten feilmelding. Slå på e-post senere ved å legge denne blokken tilbake (ingen kodeendring) etter å ha
   // fulgt docs/k160-cloudflare-skjema.md (Email Routing på hengsel.no, hei@hengsel.no verifisert som destinasjon):

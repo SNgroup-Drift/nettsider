@@ -8,7 +8,6 @@ import { readFile } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { finnFil } from "../statisk-server.mjs";
 import { handterApi, tilbudPdf } from "../../sites/admin/worker/api.js";
-import { handterLead } from "../../sites/admin/worker/lead.js";
 import { stiTilFil, TILBUD_PDF } from "../../sites/admin/worker/ruter.js";
 import { kanSe, kanSkrive, utenInnlogging } from "../../sites/admin/worker/tilgang.js";
 import { utenBelopSvar } from "../../sites/admin/worker/belop.js";
@@ -61,7 +60,7 @@ export async function startAdminLokalt({ dist, env, bruker = BRUKER }) {
       for await (const d of req) deler.push(d);
       const body = Buffer.concat(deler);
       const request = new Request(url.href, { method: req.method, headers: req.headers, body: ["GET", "HEAD"].includes(req.method) ? undefined : body, duplex: "half" });
-      let svar = sti === "/api/lead" ? await handterLead(request, env) : pdf ? await tilbudPdf(env, pdf[1], Number(pdf[2]), { hentLogo }) : await handterApi(request, env, { bruker, hentLogo });
+      let svar = pdf ? await tilbudPdf(env, pdf[1], Number(pdf[2]), { hentLogo }) : await handterApi(request, env, { bruker, hentLogo });
       if (rolle && /^\/api\/eiere(?:\/|$)/.test(sti)) svar = await utenBelopSvar(svar); // K-469: support ser kundene uten beløp
       res.writeHead(svar.status, Object.fromEntries(svar.headers));
       res.end(Buffer.from(await svar.arrayBuffer()));

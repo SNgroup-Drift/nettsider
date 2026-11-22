@@ -1,20 +1,23 @@
 // Cloudflare Worker «admin» (admin.hengsel.no, K-184, K-240): Astro-sider fra ./dist bak Cloudflare Access, og et JSON-API mot D1.
-// ALLE forespørsler går gjennom worker/index.js først (run_worker_first), og Workeren avviser alt som ikke har en gyldig
-// Cf-Access-Jwt-Assertion for riktig Access-app og riktig e-postadresse (unntak: POST /api/lead fra hengsel.no, som har eget vern).
+// Hovedmodulen er worker/main.js: fetch-handleren fra worker/index.js og det navngitte inngangspunktet LeadInngang (worker/inngang.js).
+// ALLE HTTP-forespørsler går gjennom worker/index.js først (run_worker_first), og Workeren avviser alt som ikke har en gyldig
+// Cf-Access-Jwt-Assertion for riktig Access-app og riktig e-postadresse (unntak: POST /api/hjelp, som har eget vern).
+// Leads fra «Be om demo» kommer ikke over HTTP: hengsel-Workeren kaller LeadInngang gjennom service bindingen ADMIN_LEAD. Den gamle ruten
+// /api/lead er fjernet og går gjennom Access som alt annet; bypass-policyen for /api/lead i Access trengs ikke lenger.
 // Variablene ACCESS_TEAM_DOMAIN (f.eks. «<team>.cloudflareaccess.com») og ACCESS_AUD (Application Audience-taggen til Access-appen)
 // er ikke hemmeligheter, men settes i dashbordet (Worker → Settings → Variables and Secrets), ikke her; keep_vars sørger for at
 // utrulling ikke overskriver dem. Mangler en av dem, svarer Workeren 503 og viser ingenting.
 // K-240: Databasen er D1 med binding DB. Migreringene ligger i ./migrations og kjøres med
 //   npx wrangler d1 migrations apply hengsel-admin --remote -c sites/admin/wrangler.jsonc   (lokalt: --local)
-// Hemmeligheter (settes med `npx wrangler secret put <navn> -c sites/admin/wrangler.jsonc`, aldri her): PENNEO_API_KEY (Penneo er av uten den),
-// LEAD_NOKKEL (valgfritt ekstra vern på /api/lead). Variabler: LEAD_ORIGIN (standard https://hengsel.no), PENNEO_API_URL.
+// Hemmeligheter (settes med `npx wrangler secret put <navn> -c sites/admin/wrangler.jsonc`, aldri her): PENNEO_API_KEY (Penneo er av uten den).
+// Variabler: PENNEO_API_URL. (LEAD_NOKKEL og LEAD_ORIGIN brukes ikke lenger.)
 // K-259: Hemmelighet HJELP_NOKKEL (valgfri) for POST /api/hjelp. Skjermbilder fra «Hjelp» lagres i R2 med binding SKJERMBILDER; bøtta
 //   «hengsel-admin-skjermbilder» finnes ikke ennå, så bindingen står kommentert ut under. Uten den lagres saken uten bilde (claude/k259-rapport.md).
 // Workers Builds: både Deploy command og Preview command (eldre Workers: Non-production branch deploy command) må ha `-c sites/admin/wrangler.jsonc`. Se claude/k184-rapport.md og claude/k240-rapport.md.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "admin",
-  "main": "./worker/index.js",
+  "main": "./worker/main.js",
   "compatibility_date": "2026-10-01",
   "keep_vars": true,
   // N-4: «admin» er en ny Worker i Workers Builds, så grenbygg (forhåndsvisning) kjører Preview command `npx wrangler preview`, og den stopper

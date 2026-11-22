@@ -1,6 +1,6 @@
 /**
  * POST /api/hjelp: «Hjelp» fra Hengsel CRM og Hengsel Ute (K-259, 60-209 SB4). Lager en sak med kilde hjelp-crm eller hjelp-ute.
- * Ruten er unntatt Access-sjekken i Workeren (kundene er ikke innlogget i Admin), men har samme vern som /api/lead:
+ * Ruten er unntatt Access-sjekken i Workeren (kundene er ikke innlogget i Admin), men har eget vern (samme mønster som /api/demo på hengsel.no):
  *  - bare POST (og OPTIONS for CORS-forhåndssjekk), Origin må stå i innstillingen «hjelp_origins» (standard https://*.hengsel.no, der «*.»
  *    betyr alle underdomener = kundemiljøene). Uten Origin (Ute som app) slippes forespørselen bare inn når HJELP_NOKKEL er satt og stemmer.
  *  - honeypot «nettsted», tidsfeltet «t» (3 sekunder til 24 timer gammelt), lengdegrenser og kontrolltegn, innholdstype (JSON eller
