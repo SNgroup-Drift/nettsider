@@ -1,10 +1,10 @@
 /**
- * Ny forside (prøveside): eksempelprislisten til priskalkulatoren på hengsel.no. Bygger på prismodellen i Hengsel Admin (sites/admin/src/lib/pris.js,
+ * Ny forside (prøveside): eksempelprislisten til priskalkulatoren på hengsel.no. Bygger på prismodellen i Hengsel Admin (packages/pris/src/pris.js,
  * normaliserPrisliste() og beregn()), men ALLE TALL HER ER PLASSHOLDERE merket «Eksempel» – ikke prisene til Hengsel. Runde tall med vilje, så ingen
  * leser dem som ekte. Ekte priser ligger bare i prislisten i Admin (D1) og vises aldri på nettsidene.
  * Beløp i øre, som i pris.js.
  */
-import { beregn, kr, normaliserPrisliste, uteTekst } from "../../../admin/src/lib/pris.js";
+import { beregn, kr, normaliserPrisliste, uteTekst } from "../../../../packages/pris/src/pris.js";
 
 export const EKSEMPEL_PRISLISTE = normaliserPrisliste(
   {
