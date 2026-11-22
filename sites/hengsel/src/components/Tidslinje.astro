@@ -1,0 +1,88 @@
+---
+/**
+ * Ny forside (prøveside): «En dag i butikken» som klikkbar tidslinje (data fra EN_DAG i content/forside.ts).
+ * Klokkeslettene står på en linje; trykk på et klokkeslett for å se hva som skjer da. Faner etter ARIA-mønsteret (role="tablist", piltaster,
+ * Home/End), i scripts/tidslinje.ts. Ingen automatikk, så ingen pause trengs. Uten skript står hele dagen som en liste.
+ * Bare klasser og hidden settes fra skriptet; ingen style= (CSP). Bare tokens fra tokens.css, lys modus.
+ */
+import Flis from "./kit/Flis.astro";
+import Pille from "./kit/Pille.astro";
+
+interface Props {
+  id: string;
+  tittel: string;
+  rader: readonly (readonly string[])[];
+  mer: readonly string[];
+}
+const { id, tittel, rader, mer } = Astro.props;
+---
+<Flis bredde="1/1" tittel={tittel} id={id} klasse="tidslinjeflis">
+  <Pille slot="verktoy" tone="venter">Eksempeldag</Pille>
+  <div class="tidslinje" data-tidslinje>
+    <div class="tider" role="tablist" aria-label={`${tittel}: velg klokkeslett`}>
+      {rader.map(([kl, hva], i) => (
+        <button type="button" role="tab" class:list={["tid", { aktiv: i === 0 }]} id={`${id}-fane-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} data-fane>
+          <span class="punkt" aria-hidden="true"></span>
+          <span class="kl">{kl}</span>
+          <span class="hva">{hva}</span>
+        </button>
+      ))}
+    </div>
+    <ol class="paneler">
+      {rader.map(([kl, hva, hvor], i) => (
+        <li class="panel" id={`${id}-panel-${i}`} role="tabpanel" aria-labelledby={`${id}-fane-${i}`} data-panel>
+          <span class="pkl">{kl}</span>
+          <div class="pinnhold">
+            <h3 class="phva">{hva}</h3>
+            <p>{mer[i]}</p>
+            <span class="hvor">I Hengsel: <Pille tone="ny">{hvor}</Pille></span>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Flis>
+
+<script>
+  import "../scripts/tidslinje";
+</script>
+
+<style>
+  .tidslinje { display: flex; flex-direction: column; gap: 24px; margin-top: 8px; }
+  /* Uten skript: fanene er skjult og alle panelene står som en liste */
+  .tider { display: none; }
+  .tidslinje.klar .tider { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); position: relative; }
+  .tidslinje.klar .tider::before { content: ""; position: absolute; left: 0; right: 0; top: 15px; height: 2px; background: var(--kant); }
+  .tid { appearance: none; position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 0; padding: 8px 4px; border: 0; border-radius: var(--radius-kort-lite); background: transparent; color: var(--tekst); font: inherit; text-align: center; cursor: pointer; }
+  .punkt { width: 16px; height: 16px; border-radius: var(--radius-pille); border: 2px solid var(--kant); background: var(--flate-kort); box-sizing: border-box; transition: transform 0.2s ease, background-color 0.2s ease; }
+  .kl { font-size: 15px; line-height: 20px; font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; }
+  .hva { font-size: 12px; line-height: 16px; color: var(--tekst-dempet); max-width: 160px; }
+  .tid:hover .punkt { border-color: var(--aksent); }
+  .tid:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  .tid.aktiv .punkt { background: var(--aksent); border-color: var(--aksent); transform: scale(1.25); }
+  .tid.aktiv .kl { color: var(--aksent-tekst); }
+  .tid.aktiv .hva { color: var(--tekst); }
+
+  .paneler { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .panel { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .tidslinje.klar .panel { padding: 20px 24px; border-radius: var(--radius-kort-lite); background: var(--flate-senket); animation: inn 0.3s ease; }
+  .panel[hidden] { display: none; }
+  .pkl { font-family: var(--f-display); font-size: 32px; line-height: 36px; font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; color: var(--aksent-tekst); }
+  .pinnhold { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .phva { margin: 0; font-size: 18px; line-height: 24px; font-weight: var(--skrift-vekt-sterk); }
+  .pinnhold p { margin: 0; max-width: 640px; font-size: 15px; line-height: 23px; }
+  .hvor { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--tekst-dempet); }
+  @keyframes inn { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (max-width: 959px) {
+    .tidslinje.klar .tider { grid-auto-columns: minmax(64px, 1fr); overflow-x: auto; scrollbar-width: none; }
+    .hva { display: none; }
+    .panel { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .tidslinje.klar .panel { padding: 16px; }
+    .pkl { font-size: 24px; line-height: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .punkt { transition: none; }
+    .tidslinje.klar .panel { animation: none; }
+  }
+</style>

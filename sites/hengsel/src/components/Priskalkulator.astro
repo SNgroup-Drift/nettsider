@@ -1,0 +1,96 @@
+---
+/**
+ * Ny forside (prøveside): priskalkulatoren «Hva koster det?». Antall butikker, brukere per butikk og montører med Hengsel Ute gir en prisoppstilling.
+ * Regnestykket er prismodellen fra Hengsel Admin (beregn() i sites/admin/src/lib/pris.js), men prislisten er EKSEMPELTALL (content/kalkulator.ts),
+ * merket «Eksempel» i flisen og i oppstillingen. Ingen ekte priser.
+ * Siden tegnes med startverdiene (fungerer uten skript); scripts/priskalkulator.ts regner på nytt når tallene endres, med samme funksjon (oppstilling()).
+ * Bare tekst, klasser og hidden settes fra skriptet; ingen style= (CSP). Summen leses opp (aria-live="polite").
+ */
+import Flis from "./kit/Flis.astro";
+import Pille from "./kit/Pille.astro";
+import { KALKULATOR } from "../content/forside";
+import { RADER, oppstilling } from "../content/kalkulator";
+
+interface Props { id: string }
+const { id } = Astro.props;
+const felt = Object.entries(KALKULATOR.felt) as [keyof typeof KALKULATOR.felt, (typeof KALKULATOR.felt)[keyof typeof KALKULATOR.felt]][];
+const start = oppstilling({ butikker: KALKULATOR.felt.butikker.start, brukere: KALKULATOR.felt.brukere.start, montorer: KALKULATOR.felt.montorer.start });
+const SUM = new Set(["maned", "aar", "etablering"]);
+---
+<Flis bredde="1/1" tittel={KALKULATOR.tittel} id={id} klasse="kalkulatorflis">
+  <Pille slot="verktoy" tone="advarsel">Eksempel</Pille>
+  <p class="ingress">{KALKULATOR.ingress}</p>
+  <div class="kalkulator" data-kalkulator>
+    <form class="skjema" aria-label="Velg antall">
+      {felt.map(([navn, f]) => (
+        <div class="felt">
+          <label for={`${id}-${navn}`}>{f.navn}</label>
+          <span class="hjelp" id={`${id}-${navn}-hjelp`}>{f.hjelp}</span>
+          <div class="stepper">
+            <button type="button" class="steg" data-steg-ned={navn} aria-label={`Færre: ${f.navn}`} aria-controls={`${id}-${navn}`}>
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3" y="7.25" width="10" height="1.5" rx="0.75" /></svg>
+            </button>
+            <input id={`${id}-${navn}`} name={navn} type="number" inputmode="numeric" min={f.min} max={f.max} step="1" value={f.start} aria-describedby={`${id}-${navn}-hjelp`} data-felt={navn} />
+            <button type="button" class="steg" data-steg-opp={navn} aria-label={`Flere: ${f.navn}`} aria-controls={`${id}-${navn}`}>
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3" y="7.25" width="10" height="1.5" rx="0.75" /><rect x="7.25" y="3" width="1.5" height="10" rx="0.75" /></svg>
+            </button>
+          </div>
+        </div>
+      ))}
+    </form>
+    <div class="resultat">
+      <p class="merke"><Pille tone="advarsel">Eksempel</Pille> {KALKULATOR.merknad}</p>
+      <dl class="oppstilling">
+        {RADER.map((k) => (
+          <div class:list={["linje", { sum: SUM.has(k), stor: k === "maned" }]} data-rad={k} hidden={!start.rader[k].vis}>
+            <dt data-tekst>{start.rader[k].tekst}</dt>
+            <dd data-belop>{start.rader[k].belop}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="fot" aria-live="polite"><span data-mva>{start.mva}</span> <span data-neste>{start.neste}</span></p>
+      <a class="btn primary" href="/priser-og-demo#demo">Be om et ekte tilbud</a>
+    </div>
+  </div>
+</Flis>
+
+<script>
+  import "../scripts/priskalkulator";
+</script>
+
+<style>
+  .ingress { margin: 0 0 20px; max-width: 720px; font-size: 15px; line-height: 23px; color: var(--tekst); }
+  .kalkulator { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: start; }
+  .skjema { display: flex; flex-direction: column; gap: 20px; margin: 0; }
+  .felt { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "navn stepper" "hjelp stepper"; column-gap: 16px; align-items: center; }
+  label { grid-area: navn; font-size: 15px; line-height: 20px; font-weight: var(--skrift-vekt-sterk); }
+  .hjelp { grid-area: hjelp; font-size: 13px; line-height: 18px; color: var(--tekst-dempet); }
+  .stepper { grid-area: stepper; display: flex; align-items: stretch; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: var(--flate-kort); overflow: hidden; }
+  .stepper:focus-within { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  .steg { appearance: none; display: grid; place-items: center; width: 44px; min-height: 44px; margin: 0; padding: 0; border: 0; background: transparent; color: var(--tekst); cursor: pointer; }
+  .steg:hover { background: var(--flate-senket); }
+  .steg:disabled { color: var(--tekst-svak); cursor: default; background: transparent; }
+  .steg svg { width: 16px; height: 16px; fill: currentColor; }
+  input { appearance: textfield; -moz-appearance: textfield; width: 56px; margin: 0; padding: 0; border: 0; border-inline: 1px solid var(--linje); background: transparent; color: var(--tekst); font: inherit; font-size: 17px; font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; text-align: center; }
+  input:focus { outline: none; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .resultat { display: flex; flex-direction: column; gap: 12px; padding: 20px 24px; border: 1px dashed var(--kant); border-radius: var(--radius-kort-lite); background: var(--flate-side); }
+  .merke { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; color: var(--tekst-dempet); }
+  .oppstilling { margin: 0; display: flex; flex-direction: column; }
+  .linje { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--linje); }
+  .linje[hidden] { display: none; }
+  .linje dt { min-width: 0; font-size: 14px; line-height: 20px; color: var(--tekst); }
+  .linje dd { margin: 0; font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .linje.sum dt, .linje.sum dd { font-weight: var(--skrift-vekt-sterk); }
+  .linje.stor { border-top: 2px solid var(--kant); margin-top: 4px; }
+  .linje.stor dd { font-size: 22px; line-height: 28px; color: var(--aksent-tekst); }
+  .linje:last-child { border-bottom: 0; }
+  .fot { margin: 0; font-size: 13px; line-height: 18px; color: var(--tekst-dempet); }
+  .resultat .btn { align-self: flex-start; margin-top: 4px; }
+
+  @media (max-width: 959px) {
+    .kalkulator { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .resultat { padding: 16px; }
+  }
+</style>

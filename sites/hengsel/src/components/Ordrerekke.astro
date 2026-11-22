@@ -1,0 +1,120 @@
+---
+/**
+ * Ny forside (prøveside): den levende ordrerekka «Tilbud → Ordre → Bestilling → Montasje → Etterkalkyle».
+ * Stegene til venstre kan trykkes og bytter både skjermbildet i Studio Display-rammen og teksten. Rekka går av seg selv (ca. 3,5 s per steg).
+ *
+ * Bygger på simuleringene (N-6, regel 11) uten eget skript: hele rekka er én [data-sim-gruppe], og scripts/simulering.ts bytter bildene
+ * (Simulering, merker={false}) og tekstene ([data-simulering] med ett [data-steg] per tekst) i takt, med stegknappene ([data-merke]) og
+ * pause-knappen ([data-pause], WCAG 2.2.2). Serien holdes mens musen er over eller fokus er inne, går bare når den er synlig, og står på første
+ * steg ved prefers-reduced-motion (knappene bytter for hånd). Uten skript står første steg.
+ * Bildene kommer fra biblioteket (content/simuleringer.ts, K-233); et steg uten bilde hoppes over sammen med teksten. Ingen style= (CSP).
+ * Ferdige steg (før det aktive) markeres med CSS (:has), så skriptet trenger ikke vite om dem.
+ */
+import Simulering from "./Simulering.astro";
+import { finnes } from "@sngroup/hengsel-tokens/skjermbilder.mjs";
+import { kundeFra } from "../kunde";
+import type { Steg } from "../content/simuleringer";
+
+interface Props {
+  steg: readonly Steg[];
+  tekster: Record<string, { kort: string; tekst: string }>;
+  etikett: string;
+}
+const { steg, tekster, etikett } = Astro.props;
+const tema = kundeFra(Astro.url.pathname)?.nokkel ?? "hengsel";
+const med = steg.filter(([bilde]) => finnes(tema, bilde));
+const vist = med.length ? med : steg.slice(0, 1);
+---
+<div class="ordrerekke" data-sim-gruppe role="group" aria-label={etikett}>
+  <div class="venstre">
+    <div class="rekke" data-ordrerekke role="group" aria-label={`Steg: ${etikett}`}>
+      {vist.map(([, navn], i) => (
+        <button type="button" class:list={["rsteg", { aktiv: i === 0 }]} data-merke aria-pressed={i === 0 ? "true" : "false"}>
+          <span class="prikk" aria-hidden="true"><span class="nr">{i + 1}</span></span>
+          <span class="navn">{navn}</span>
+          <span class="kort">{tekster[navn]?.kort}</span>
+        </button>
+      ))}
+    </div>
+    <div class="tekster" data-simulering>
+      {vist.map(([, navn], i) => (
+        <div class:list={["tsteg", { aktiv: i === 0 }]} data-steg aria-hidden={i === 0 ? "false" : "true"}>
+          <h3 class="ttittel">{navn}</h3>
+          <p>{tekster[navn]?.tekst}</p>
+        </div>
+      ))}
+    </div>
+    <button type="button" class="pause" data-pause aria-pressed="false" aria-label="Pause ordrerekka" title="Pause ordrerekka">
+      <svg class="ikon ikon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3" y="2.5" width="3.6" height="11" rx="1" /><rect x="9.4" y="2.5" width="3.6" height="11" rx="1" /></svg>
+      <svg class="ikon ikon-spill" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.6 3.1v9.8c0 .9 1 1.4 1.7 1l7.6-4.9c.7-.4.7-1.5 0-1.9L6.3 2.1c-.7-.5-1.7 0-1.7 1z" /></svg>
+      <span class="ptekst">Pause</span>
+    </button>
+  </div>
+  <div class="hoyre">
+    <Simulering type="display" steg={vist} merker={false} etikett={etikett} />
+  </div>
+</div>
+
+<script>
+  import "../scripts/ordrerekke";
+</script>
+
+<style>
+  .ordrerekke { flex: 1 1 100%; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: center; }
+  .venstre { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .hoyre { min-width: 0; }
+
+  /* Stegene som en loddrett rekke med en strek mellom prikkene */
+  .rekke { display: flex; flex-direction: column; }
+  .rsteg { position: relative; appearance: none; display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 12px; align-items: center; margin: 0; padding: 8px 12px 8px 8px; border: 1px solid transparent; border-radius: var(--radius-kort-lite); background: transparent; color: var(--tekst); font: inherit; text-align: left; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
+  .prikk { grid-row: span 2; display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-pille); border: 2px solid var(--kant); background: var(--flate-kort); color: var(--tekst); box-sizing: border-box; position: relative; z-index: 1; }
+  .nr { font-size: 13px; line-height: 16px; font-weight: var(--skrift-vekt-sterk); font-variant-numeric: tabular-nums; }
+  .navn { font-size: 15px; line-height: 20px; font-weight: var(--skrift-vekt-sterk); }
+  .kort { font-size: 13px; line-height: 18px; color: var(--tekst-dempet); }
+  .rsteg:hover { background: var(--flate-senket); }
+  .rsteg:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  /* Ferdige steg: før det aktive */
+  .rsteg:has(~ .rsteg.aktiv) .prikk { background: var(--aksent-svak); border-color: var(--aksent); color: var(--aksent-tekst); }
+  /* Streken mellom prikkene (bare PC): grå, og i aksent fram til det aktive steget */
+  @media (min-width: 960px) {
+    .rsteg + .rsteg::before { content: ""; position: absolute; left: 23px; top: -10px; height: 20px; width: 2px; background: var(--kant); }
+    .rsteg:has(~ .rsteg.aktiv) + .rsteg::before { background: var(--aksent); }
+  }
+  /* Aktivt steg */
+  .rsteg.aktiv { background: var(--aksent-svak); border-color: var(--aksent); }
+  .rsteg.aktiv .prikk { background: var(--aksent); border-color: var(--aksent); color: var(--paa-aksent); }
+  .rsteg.aktiv .kort { color: var(--tekst); }
+
+  /* Teksten til steget */
+  .tekster { min-height: 104px; }
+  .tsteg { display: none; }
+  .tsteg.aktiv { display: block; animation: inn 0.4s ease; }
+  .ttittel { margin: 0 0 4px; font-size: 18px; line-height: 24px; font-weight: var(--skrift-vekt-sterk); }
+  .tsteg p { margin: 0; max-width: 520px; font-size: 15px; line-height: 23px; color: var(--tekst); }
+  @keyframes inn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* Pause-knappen (WCAG 2.2.2): skjult til skriptet har tatt den i bruk (klassen «klar»), aldri ved prefers-reduced-motion */
+  .pause { appearance: none; display: none; align-self: flex-start; align-items: center; gap: 6px; margin: 0; padding: 0 12px; min-height: 32px; border: 1px solid var(--kant); border-radius: var(--radius-felt); background: transparent; color: var(--tekst); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .pause.klar { display: inline-flex; }
+  .pause:hover { background: var(--flate-senket); }
+  .pause:focus-visible { outline: 2px solid var(--aksent); outline-offset: 2px; }
+  .pause[aria-pressed="true"] { background: var(--aksent); border-color: var(--aksent); color: var(--paa-aksent); }
+  .ikon { width: 14px; height: 14px; fill: currentColor; }
+  .pause[aria-pressed="true"] .ikon-pause, .pause[aria-pressed="false"] .ikon-spill { display: none; }
+
+  @media (max-width: 959px) {
+    .ordrerekke { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    /* Telefon: stegene som en vannrett rekke som kan sveipes, uten den korte setningen */
+    .rekke { flex-direction: row; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin: -2px; position: relative; }
+    .rsteg { flex: 0 0 auto; grid-template-columns: auto auto; column-gap: 8px; padding: 6px 12px 6px 6px; border-color: var(--kant); border-radius: var(--radius-pille); }
+    .kort { display: none; }
+    .prikk { grid-row: auto; width: 24px; height: 24px; }
+    .nr { font-size: 12px; }
+    .tekster { min-height: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rsteg { transition: none; }
+    .tsteg.aktiv { animation: none; }
+    .pause.klar { display: none; }
+  }
+</style>
