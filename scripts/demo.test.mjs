@@ -322,12 +322,18 @@ test("tiltak 7: sendLead gir opp etter tidsavbruddet (standard 5 s) og kaster ik
   assert.deepEqual(linjer, ["demo: lead tidsavbrudd"]);
 });
 
-test("tiltak 1 og 7: worker/index.ts gir ctx videre til handterDemo, og wrangler.jsonc har service bindingen til LeadInngang i «admin»", () => {
+test("tiltak 1 og 7: worker/index.ts gir ctx videre til handterDemo, og wrangler.jsonc har service bindingen til LeadInngang i «admin» klar (kommentert ut til admin er rullet ut)", () => {
   const rot = join(import.meta.dirname, "..", "sites", "hengsel");
   assert.match(readFileSync(join(rot, "worker", "index.ts"), "utf8"), /async fetch\(req: Request, env: Env, ctx\?: Vent\)[\s\S]*handterDemo\(req, env, Date\.now\(\), undefined, ctx\)/);
   const tekst = readFileSync(join(rot, "wrangler.jsonc"), "utf8");
   const w = JSON.parse(tekst.replace(/^\s*\/\/.*$/gm, ""));
-  assert.deepEqual(w.services, [{ binding: "ADMIN_LEAD", service: "admin", entrypoint: "LeadInngang" }]);
+  // Bindingen er av til «admin» med LeadInngang er i produksjon (Cloudflare krever at målet rulles ut først). Linjen som slår den på er riktig:
+  assert.equal(w.services, undefined);
+  const linje = /^\s*\/\/ ,("services": .*)$/m.exec(tekst);
+  assert.ok(linje, "den kommenterte services-linjen finnes");
+  assert.deepEqual(JSON.parse(`{${linje[1]}}`).services, [{ binding: "ADMIN_LEAD", service: "admin", entrypoint: "LeadInngang" }]);
+  const paa = JSON.parse(tekst.replace(linje[0], linje[0].replace("// ,", ",")).replace(/^\s*\/\/.*$/gm, ""));
+  assert.deepEqual(paa.services, [{ binding: "ADMIN_LEAD", service: "admin", entrypoint: "LeadInngang" }], "med // fjernet er fila gyldig og har bindingen");
   assert.equal(w.vars, undefined, "LEAD_TIL_ADMIN settes i dashbordet, av som standard");
   const kilde = readFileSync(join(rot, "worker", "demo.ts"), "utf8");
   assert.ok(!/LEAD_URL|LEAD_NOKKEL|Authorization|\bhent\(/.test(kilde), "ingen HTTP-kall eller nøkler for leaden");
