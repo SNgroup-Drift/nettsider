@@ -276,7 +276,7 @@ test("rolle: Eirik ser alt; en senere kunde-admin ser bare sin egen kundemappe",
 test("wrangler.jsonc: alle forespørsler går gjennom Workeren, variablene overskrives ikke, og ingen hemmeligheter står der", () => {
   const w = JSON.parse(utenKommentarer(les("wrangler.jsonc")));
   assert.equal(w.name, "admin");
-  assert.equal(w.main, "./worker/index.js");
+  assert.equal(w.main, "./worker/main.js", "main.js eksporterer fetch-handleren (index.js) og LeadInngang");
   assert.equal(w.assets.run_worker_first, true);
   assert.equal(w.assets.not_found_handling, "404-page");
   assert.equal(w.keep_vars, true);

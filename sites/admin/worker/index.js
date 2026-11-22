@@ -1,8 +1,9 @@
 /**
- * Worker-skriptet for admin.hengsel.no (K-184, K-240). Kjører for ALLE forespørsler (assets.run_worker_first = true).
+ * Fetch-handleren for admin.hengsel.no (K-184, K-240). Kjører for ALLE forespørsler (assets.run_worker_first = true). Hovedmodulen er
+ * worker/main.js, som også eksporterer LeadInngang (leads fra hengsel.no kommer gjennom service binding, ikke over HTTP; se worker/lead.js).
  *
- * - /api/lead (POST fra hengsel.no) og /api/hjelp («Hjelp» fra Hengsel CRM og Ute, K-259): unntatt Access, eget vern i worker/lead.js og
- *   worker/hjelp.js. Alt annet:
+ * - /api/hjelp («Hjelp» fra Hengsel CRM og Ute, K-259): unntatt Access, eget vern i worker/hjelp.js. /api/lead finnes ikke lenger som
+ *   HTTP-rute og går gjennom Access-sjekken som alt annet. Alt annet:
  * - Mangler ACCESS_TEAM_DOMAIN eller ACCESS_AUD: 503, ingenting vises (Access er ikke koblet til).
  * - Mangler Cf-Access-Jwt-Assertion eller tokenet er ugyldig: 401 (ADM-401). Sider (GET/HEAD) får innloggingskortet /logg-inn (26-001, N-4).
  * - Gyldig token, men e-postadressen står ikke i worker/tilgang.js (eller som aktiv supportperson i D1), eller stien er utenfor rollen: 403
@@ -20,7 +21,6 @@ const escHtml = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;
 import { sjekkAccess } from "./access.js";
 import { rolleFor, kanSe, kanSkrive, supportFraDb, utenInnlogging } from "./tilgang.js";
 import { handterApi, tilbudPdf } from "./api.js";
-import { handterLead } from "./lead.js";
 import { handterHjelp } from "./hjelp.js";
 import { SKJERMBILDE, skjermbilde } from "./api-support.js";
 import { stiTilFil, TILBUD_PDF } from "./ruter.js";
@@ -56,8 +56,6 @@ export default {
     const sti = url.pathname;
     const erApi = sti === "/api" || sti.startsWith("/api/");
 
-    // Lead fra «Be om demo»: eget vern, uten Access (hengsel.no kaller server til server)
-    if (sti === "/api/lead") return merk(await handterLead(req, env));
     if (sti === "/api/hjelp") return merk(await handterHjelp(req, env));
 
     // K-469 (26-001): stilark, skrifter, logo og favicon til innloggingskortene (ingen data, ingen skript)

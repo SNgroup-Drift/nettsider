@@ -1,84 +1,55 @@
 /**
- * POST /api/lead: «Be om demo» fra hengsel.no (K-240, 60-213 punkt a SA8 og k.5). Ruten er unntatt Access-sjekken i Workeren, men har samme
- * vern som /api/demo i sites/hengsel/worker/demo.ts: bare POST, Origin må være hengsel.no (LEAD_ORIGIN, standard https://hengsel.no),
- * maks 8 KB, honeypot «nettsted», tidsfeltet «t» (3 sekunder til 24 timer gammelt), lengdegrenser og kontrolltegn.
- * Valgfritt ekstra lag: er hemmeligheten LEAD_NOKKEL satt i Workeren, må forespørselen ha «Authorization: Bearer <nøkkel>» (hengsel-Workeren
- * sender den når den har samme hemmelighet). Ingen nøkler i koden.
+ * Lead fra «Be om demo» på hengsel.no (K-240, 60-213 punkt a SA8 og k.5).
+ *
+ * Leaden kommer ikke lenger over HTTP. hengsel-Workeren kaller Admin gjennom en service binding (ADMIN_LEAD i sites/hengsel/wrangler.jsonc)
+ * mot det navngitte inngangspunktet LeadInngang (worker/inngang.js, eksportert fra worker/main.js). Et slikt kall kan bare komme fra en
+ * Worker i samme Cloudflare-konto som har bindingen, aldri fra internett. Den gamle ruten POST /api/lead er fjernet: stien går nå gjennom
+ * Access-sjekken som alt annet (401 uten gyldig token). Honeypot, tidssjekk og Origin gjøres i /api/demo på hengsel.no før kallet.
+ *
+ * mottaLead(env, inn) sjekker likevel alt den får: et vanlig objekt med bare strengverdier, maks 8 KB som JSON, og de samme feltreglene som
+ * valider() i sites/hengsel/worker/demo.ts. Svaret er et vanlig objekt: { ok: true, ny, dublett } eller { ok: false, kode, feil? }.
  *
  * Et lead blir en eier med status Ny og kilde «be_om_demo», en kontakt, én butikk og én åpen mulighet, merket «Ny» i Oversikt (lead_ny)
- * og med neste steg «Ta kontakt innen 24 timer». Finnes kontakten fra før (samme e-post eller telefon), legges leadet som en aktivitet på
- * eieren i stedet for en ny eier.
+ * og med neste steg «Ta kontakt innen 24 timer». Finnes kontakten fra før (samme e-post eller telefon), endres verken kontakten eller
+ * eierens felt: leadet legges bare som en aktivitet på eieren, og eieren merkes «Ny». Samme melding fra samme eier innen 24 timer lagres
+ * ikke på nytt (dublett).
  */
-import { naa, idagOslo, ulid, json } from "./db.js";
+import { naa, idagOslo, ulid } from "./db.js";
 import { KONTROLL, EPOST_RE } from "./valider.js";
 
 export const MAKS_BODY = 8 * 1024;
-export const MIN_ALDER = 3_000;
-export const MAKS_ALDER = 24 * 60 * 60 * 1000;
-const MAKS_FREMTID = 60_000;
 export const AVDELINGER = { "1": { tekst: "1", antall: 1 }, "2-3": { tekst: "2–3", antall: 2 }, "4+": { tekst: "4 eller flere", antall: 4 } };
 const GRENSER = { navn: 120, butikk: 120, epost: 254, melding: 1000 };
-export const STANDARD_ORIGIN = "https://hengsel.no";
 export const NESTE_STEG = "Ta kontakt innen 24 timer";
 export const KANAL = "hengsel.no/priser-og-demo";
+export const DUBLETT_VINDU = 24 * 60 * 60 * 1000;
+const FELT = ["navn", "butikk", "epost", "tlf", "avdelinger", "melding"];
 
-const svar = (status, data) => json(status, data, { "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'" });
-
-export async function handterLead(req, env, na = Date.now()) {
-  if (req.method.toUpperCase() !== "POST") return svar(405, { ok: false, feil: { skjema: "Metoden er ikke tillatt." } });
-  const tillatt = (env.LEAD_ORIGIN ?? STANDARD_ORIGIN).trim().replace(/\/+$/, "");
-  if (req.headers.get("Origin") !== tillatt) return svar(403, { ok: false, feil: { skjema: "Forespørselen kom fra en annen adresse." } });
-  if (typeof env.LEAD_NOKKEL === "string" && env.LEAD_NOKKEL) {
-    const auth = req.headers.get("Authorization") ?? "";
-    if (!likeStrenger(auth, `Bearer ${env.LEAD_NOKKEL}`)) return svar(403, { ok: false, feil: { skjema: "Mangler nøkkel." } });
+/**
+ * Tar imot et lead fra LeadInngang. Kaster aldri: feil blir { ok: false, kode }.
+ * Koder: LEAD-400 (ikke et objekt eller feil type), LEAD-413 (for stort), LEAD-422 (feltfeil, med feil), ADM-504 (databasen).
+ */
+export async function mottaLead(env, inn, na = Date.now()) {
+  if (!inn || typeof inn !== "object" || Array.isArray(inn) || Object.getPrototypeOf(inn) !== Object.prototype) return { ok: false, kode: "LEAD-400" };
+  let tekst;
+  try { tekst = JSON.stringify(inn); } catch { return { ok: false, kode: "LEAD-400" }; }
+  if (new TextEncoder().encode(tekst).byteLength > MAKS_BODY) return { ok: false, kode: "LEAD-413" };
+  const rå = {};
+  for (const [k, v] of Object.entries(inn)) {
+    if (v === undefined || v === null) continue;
+    if (typeof v !== "string") return { ok: false, kode: "LEAD-400" };
+    if (FELT.includes(k)) rå[k] = v;
   }
-  if (!env.DB) return svar(503, { ok: false, kode: "ADM-504", feil: { skjema: "Databasen er ikke koblet til." } });
-  const lengde = Number(req.headers.get("Content-Length") ?? "0");
-  if (lengde > MAKS_BODY) return svar(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
-  const type = (req.headers.get("Content-Type") ?? "").toLowerCase();
-  const erJson = type.startsWith("application/json");
-  if (!erJson && !type.startsWith("application/x-www-form-urlencoded")) return svar(415, { ok: false, feil: { skjema: "Ukjent innholdstype." } });
-  const bytes = new Uint8Array(await req.arrayBuffer());
-  if (bytes.byteLength > MAKS_BODY) return svar(413, { ok: false, feil: { skjema: "Forespørselen er for stor." } });
-  const rå = lesBody(new TextDecoder().decode(bytes), erJson);
-  if (!rå) return svar(400, { ok: false, feil: { skjema: "Forespørselen kunne ikke leses." } });
-  // Honeypot: roboter fyller det skjulte feltet. De får samme svar som om det gikk bra.
-  if ((rå.nettsted ?? "") !== "") return svar(200, { ok: true });
-  const t = Number(rå.t);
-  if (!rå.t || !Number.isFinite(t)) return svar(400, { ok: false, feil: { skjema: "Forespørselen kunne ikke leses." } });
-  const alder = na - t;
-  if (alder < MIN_ALDER || alder > MAKS_ALDER || alder < -MAKS_FREMTID) return svar(400, { ok: false, feil: { skjema: "Forespørselen kunne ikke leses." } });
   const { felt, feil } = valider(rå);
-  if (!felt) return svar(400, { ok: false, feil });
+  if (!felt) return { ok: false, kode: "LEAD-422", feil };
+  if (!env?.DB) return { ok: false, kode: "ADM-504" };
   try {
-    await lagreLead(env.DB, felt, new Date(na));
+    const r = await lagreLead(env.DB, felt, new Date(na));
+    return { ok: true, ny: r.ny, dublett: r.dublett };
   } catch (e) {
     console.error("lead: lagring feilet", (e && e.name) || "ukjent");
-    return svar(503, { ok: false, kode: "ADM-504", feil: { skjema: "Kunne ikke lagre." } });
+    return { ok: false, kode: "ADM-504" };
   }
-  return svar(200, { ok: true });
-}
-
-function likeStrenger(a, b) {
-  if (a.length !== b.length) return false;
-  let ulik = 0;
-  for (let i = 0; i < a.length; i++) ulik |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return ulik === 0;
-}
-
-function lesBody(tekst, erJson) {
-  let ut;
-  if (erJson) {
-    try { const v = JSON.parse(tekst); if (!v || typeof v !== "object" || Array.isArray(v)) return null; ut = v; } catch { return null; }
-  } else ut = Object.fromEntries(new URLSearchParams(tekst));
-  const rent = {};
-  for (const [k, v] of Object.entries(ut)) {
-    if (v === undefined || v === null) continue;
-    if (typeof v === "number" && k === "t") { rent[k] = String(v); continue; }
-    if (typeof v !== "string") return null;
-    rent[k] = v;
-  }
-  return rent;
 }
 
 // eslint-disable-next-line no-control-regex
@@ -111,7 +82,7 @@ export function valider(rå) {
   return { felt: { navn, butikk, epost: epost.toLowerCase(), tlf, avdelinger, melding }, feil };
 }
 
-/** Lagrer leadet i D1. Eksportert for testene. Returnerer { eier_id, ny } */
+/** Lagrer leadet i D1. Eksportert for testene og eksempeldataene. Returnerer { eier_id, ny, dublett } */
 export async function lagreLead(db, f, d = new Date()) {
   const t = naa(d);
   const idag = idagOslo(d);
@@ -122,12 +93,16 @@ export async function lagreLead(db, f, d = new Date()) {
   if (!eksisterende && f.tlf) eksisterende = await db.prepare("SELECT eier_id FROM kontakt WHERE replace(replace(replace(telefon, ' ', ''), '-', ''), '+47', '') = ? LIMIT 1").bind(f.tlf.replace(/[\s().-]/g, "").replace(/^\+47/, "")).first();
   const melding = f.melding || null;
   if (eksisterende) {
+    // Tiltak 5: kontakten og eierens felt (lead_melding, lead_butikker, lead_tid, navn …) endres ikke. Bare en aktivitet og «Ny»-merket.
     const eierId = eksisterende.eier_id;
+    const fra = naa(new Date(d.getTime() - DUBLETT_VINDU));
+    const dublett = await db.prepare("SELECT id FROM aktivitet WHERE eier_id = ? AND hvem = ? AND COALESCE(tekst, '') = ? AND opprettet >= ? LIMIT 1").bind(eierId, KANAL, melding ?? "", fra).first();
+    if (dublett) return { eier_id: eierId, ny: false, dublett: true };
     await db.batch([
-      db.prepare("UPDATE eier SET lead_ny = 1, lead_tid = ?, lead_kanal = ?, lead_melding = COALESCE(?, lead_melding), lead_butikker = COALESCE(?, lead_butikker), endret = ? WHERE id = ?").bind(t, KANAL, melding, avd ? avd.tekst : null, t, eierId),
+      db.prepare("UPDATE eier SET lead_ny = 1, endret = ? WHERE id = ?").bind(t, eierId),
       db.prepare("INSERT INTO aktivitet (id, eier_id, type, dato, tittel, tekst, hvem, opprettet, endret) VALUES (?, ?, 'notat', ?, ?, ?, ?, ?, ?)").bind(ulid(d.getTime()), eierId, idag, "Nytt lead fra «Be om demo»", melding, KANAL, t, t),
     ]);
-    return { eier_id: eierId, ny: false };
+    return { eier_id: eierId, ny: false, dublett: false };
   }
   const eierId = ulid(d.getTime());
   const navnEier = f.butikk || f.navn;
@@ -143,5 +118,5 @@ export async function lagreLead(db, f, d = new Date()) {
     db.prepare("INSERT INTO aktivitet (id, eier_id, kontakt_id, mulighet_id, type, dato, tittel, tekst, hvem, neste_tekst, neste_dato, opprettet, endret) VALUES (?, ?, ?, ?, 'notat', ?, ?, ?, ?, ?, ?, ?, ?)")
       .bind(ulid(d.getTime()), eierId, kontaktId, mulighetId, idag, "Lead fra «Be om demo»", melding, KANAL, NESTE_STEG, idag, t, t),
   ]);
-  return { eier_id: eierId, ny: true };
+  return { eier_id: eierId, ny: true, dublett: false };
 }

@@ -8,7 +8,7 @@
  * /apptest og alt under videresendes med 301 til /kunde/apptest. Slik står ingen testere uten tilgang mens Access settes opp.
  */
 import apptest from "./apptest";
-import { handterDemo, type DemoEnv } from "./demo";
+import { handterDemo, type DemoEnv, type Vent } from "./demo";
 import { ER_KUNDE, handterKunde, type KundeEnv } from "./kunde";
 
 type Env = Parameters<typeof apptest.fetch>[1] & DemoEnv & KundeEnv & { APPTEST_VIDERE?: string };
@@ -22,10 +22,11 @@ export function apptestTilKunde(sti: string): string {
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx?: Vent): Promise<Response> {
     const { pathname, search } = new URL(req.url);
     if (ER_KUNDE(pathname)) return handterKunde(req, env);
-    if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env));
+    // ctx: leaden til Admin går ferdig med waitUntil etter at svaret er sendt (K-240)
+    if (pathname === "/api/demo") return merkDemo(await handterDemo(req, env, Date.now(), undefined, ctx));
     if (ER_APPTEST(pathname) && env.APPTEST_VIDERE === "1") {
       return new Response(null, { status: 301, headers: { Location: apptestTilKunde(pathname) + search, "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" } });
     }

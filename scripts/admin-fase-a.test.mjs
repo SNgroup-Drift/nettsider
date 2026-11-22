@@ -3,7 +3,8 @@
  *  1. Prisberegningen gir nøyaktig de tre regneeksemplene i 60-213 punkt e (og kontrolltallet fra 60-203), alle linjene.
  *  2. Migreringene: kjører i node:sqlite (D1-etterligning) og med ekte `wrangler d1 migrations apply --local`; prisliste 2026.2 er utkast med eksempel=1.
  *  3. API-tilgang: 401 uten Access, 403 for ukjent adresse, bare rollen eier kan skrive, lesere får 403 på POST.
- *  4. Lead-vernet på /api/lead: metode, Origin, honeypot, tidssjekk, lengdegrenser; gyldig lead blir eier + kontakt med status Ny.
+ *  4. Leads fra hengsel.no kommer gjennom service binding (LeadInngang), ikke HTTP: /api/lead går gjennom Access; mottaLead sjekker type,
+ *     størrelse og felt; gyldig lead blir eier + kontakt med status Ny; eksisterende kontakter overskrives ikke, og dubletter lagres ikke.
  *  5. Excel-import: .xlsx og .csv leses, dubletter på org.nr. gir «oppdateres», rader uten org.nr. merkes, ingenting lagres før import.
  *  6. Tilbud-PDF lages fra et lagret tilbud (gyldig PDF, riktige beløp i innholdet).
  *  7. Hele eksempeldataene kan legges inn gjennom API-et, og Oversikt, Tavle og Avtaler regner riktig.
@@ -18,7 +19,7 @@ import { lagTestdatabase, kjorMigreringer, lagD1 } from "./lib/d1-node.mjs";
 import { leggInnEksempeldata, lagApi, BRUKER } from "./lib/admin-eksempeldata.mjs";
 import { normaliserPrisliste, beregn, kr } from "../sites/admin/src/lib/pris.js";
 import { handterApi, tilbudPdf } from "../sites/admin/worker/api.js";
-import { handterLead } from "../sites/admin/worker/lead.js";
+import { mottaLead, lagreLead, MAKS_BODY as LEAD_MAKS } from "../sites/admin/worker/lead.js";
 import { lesCsv, lesXlsx, forhandsvis, importer, tolkRader } from "../sites/admin/worker/import.js";
 import { startSignering, registrerSignert, erKoblet } from "../sites/admin/worker/penneo.js";
 import { stiTilFil } from "../sites/admin/worker/ruter.js";
@@ -187,67 +188,110 @@ test("API: uten ACCESS-oppsett 503, og andre metoder enn GET/HEAD utenfor /api g
   assert.equal((await worker.fetch(be("/salg/tavle", await token(), "POST"), env)).status, 405);
 }));
 
-// ── 4. Lead-vernet ───────────────────────────────────────────────────────────────────────────────────────────────────────────
-const gyldigLead = { navn: "Silje Haugen", butikk: "Haugen Kjøkken & Bad AS", epost: "silje@haugenkjokken.no", tlf: "", avdelinger: "1", melding: "Vi er tre selgere og to montører.", nettsted: "" };
-function leadReq(kropp = gyldigLead, { metode = "POST", origin = "https://hengsel.no", type = "json", ekstra = {} } = {}) {
-  const hoder = { ...(origin ? { Origin: origin } : {}), ...ekstra };
-  // Tidsfeltet settes her (20 sekunder gammelt) så testen virker uansett klokke
-  if (kropp && typeof kropp === "object" && kropp.t === undefined) kropp = { ...kropp, t: String(Date.now() - 20_000) };
-  let body;
-  if (type === "json") { hoder["Content-Type"] = "application/json"; body = typeof kropp === "string" ? kropp : JSON.stringify(kropp); }
-  else if (type === "form") { hoder["Content-Type"] = "application/x-www-form-urlencoded"; body = new URLSearchParams(kropp).toString(); }
-  else { hoder["Content-Type"] = type; body = "x"; }
-  return new Request("https://admin.hengsel.no/api/lead", { method: metode, headers: hoder, body: metode === "GET" ? undefined : body });
-}
+// ── 4. Leads gjennom service binding (LeadInngang) ──────────────────────────────────────────────
+const gyldigLead = { navn: "Silje Haugen", butikk: "Haugen Kjøkken & Bad AS", epost: "silje@haugenkjokken.no", tlf: "", avdelinger: "1", melding: "Vi er tre selgere og to montører." };
+const tell = async (db, tabell) => Number(await db.prepare(`SELECT COUNT(*) AS n FROM ${tabell}`).first("n"));
 
-test("lead: gyldig forespørsel fra hengsel.no lager eier med status Ny, kontakt, butikk og mulighet, merket Ny i Oversikt", async () => {
+test("lead: gyldig lead lager eier med status Ny, kontakt, butikk og mulighet, merket Ny i Oversikt", async () => {
   const env = await envMed();
-  const r = await worker.fetch(leadReq(), env);
-  assert.equal(r.status, 200); assert.deepEqual(await r.json(), { ok: true });
+  assert.deepEqual(await mottaLead(env, gyldigLead), { ok: true, ny: true, dublett: false });
   const e = await env.DB.prepare("SELECT * FROM eier").first();
   assert.equal(e.navn, "Haugen Kjøkken & Bad AS"); assert.equal(e.status, "ny"); assert.equal(e.kilde, "be_om_demo"); assert.equal(e.lead_ny, 1);
-  assert.equal(e.neste_tekst, "Ta kontakt innen 24 timer"); assert.equal(e.lead_melding, gyldigLead.melding);
+  assert.equal(e.neste_tekst, "Ta kontakt innen 24 timer"); assert.equal(e.lead_melding, gyldigLead.melding); assert.equal(e.lead_butikker, "1");
   const k = await env.DB.prepare("SELECT * FROM kontakt WHERE eier_id = ?").bind(e.id).first();
   assert.equal(k.navn, "Silje Haugen"); assert.equal(k.epost, "silje@haugenkjokken.no");
   assert.equal(await env.DB.prepare("SELECT COUNT(*) AS n FROM mulighet WHERE eier_id = ? AND fase = 'ny'").bind(e.id).first("n"), 1);
-  // Samme kontakt igjen: ingen ny eier, men en aktivitet og Ny-merke
-  await worker.fetch(leadReq({ ...gyldigLead, melding: "Hei igjen" }), env);
-  assert.equal(await env.DB.prepare("SELECT COUNT(*) AS n FROM eier").first("n"), 1);
-  assert.equal(await env.DB.prepare("SELECT COUNT(*) AS n FROM aktivitet WHERE eier_id = ?").bind(e.id).first("n"), 2);
-  // Vises i Oversikt som lead
-  const api = lagApi(env);
-  const ov = await api("GET", "/api/oversikt");
+  const ov = await lagApi(env)("GET", "/api/oversikt");
   assert.equal(ov.leads.length, 1); assert.equal(ov.leads[0].navn, "Haugen Kjøkken & Bad AS");
-  // Skjemaformat virker også
-  assert.equal((await worker.fetch(leadReq({ ...gyldigLead, epost: "annen@eksempel.no" }, { type: "form" }), env)).status, 200);
+  // Felt utenfor skjemaet (honeypot, t, andre nøkler) ignoreres; e-posten lagres med små bokstaver
+  assert.equal((await mottaLead(env, { ...gyldigLead, epost: "ANNEN@Eksempel.no", nettsted: "", t: "1", ekstra: "x" })).ok, true);
+  assert.equal(await env.DB.prepare("SELECT COUNT(*) AS n FROM kontakt WHERE epost = 'annen@eksempel.no'").first("n"), 1);
 });
 
-test("lead: vernet er som /api/demo: metode, Origin, honeypot, tidssjekk, lengdegrenser, innholdstype, og valgfri LEAD_NOKKEL", async () => {
+test("lead (tiltak 5): eksisterende kontakt overskrives ikke; leadet blir en aktivitet, og samme melding innen 24 timer lagres ikke på nytt", async () => {
   const env = await envMed();
-  const antall = async () => Number(await env.DB.prepare("SELECT COUNT(*) AS n FROM eier").first("n"));
-  assert.equal((await worker.fetch(leadReq(gyldigLead, { metode: "GET" }), env)).status, 405);
-  for (const origin of ["https://eksempel.no", "http://hengsel.no", "https://hengsel.no.eksempel.no", "null", ""]) assert.equal((await worker.fetch(leadReq(gyldigLead, { origin }), env)).status, 403, origin);
-  const hp = await worker.fetch(leadReq({ ...gyldigLead, nettsted: "https://spam.example" }), env);
-  assert.equal(hp.status, 200); assert.equal(await antall(), 0, "honeypot lagrer ingenting");
-  const uten = { ...gyldigLead, t: "" };
-  for (const k of [uten, { ...gyldigLead, t: "abc" }, { ...gyldigLead, t: String(Date.now() - 1000) }, { ...gyldigLead, t: String(Date.now() - 25 * 3600 * 1000) }, { ...gyldigLead, t: String(Date.now() + 3600 * 1000) }]) assert.equal((await worker.fetch(leadReq(k), env)).status, 400, JSON.stringify(k.t));
-  for (const k of [{ ...gyldigLead, navn: "" }, { ...gyldigLead, navn: "x".repeat(121) }, { ...gyldigLead, epost: "", tlf: "" }, { ...gyldigLead, epost: "ikke-epost" }, { ...gyldigLead, melding: "x".repeat(1001) }, { ...gyldigLead, avdelinger: "99" }, { ...gyldigLead, navn: "a\u0000b" }]) {
-    const r = await worker.fetch(leadReq(k), env);
-    assert.equal(r.status, 400); assert.equal((await r.json()).ok, false);
+  const t0 = Date.UTC(2026, 10, 1, 10, 0, 0);
+  await mottaLead(env, { ...gyldigLead, tlf: "901 47 225" }, t0);
+  const eierFor = await env.DB.prepare("SELECT * FROM eier").first();
+  const kontaktFor = await env.DB.prepare("SELECT * FROM kontakt").first();
+  const aktiviteter = () => env.DB.prepare("SELECT COUNT(*) AS n FROM aktivitet WHERE eier_id = ?").bind(eierFor.id).first("n");
+  assert.equal(await aktiviteter(), 1);
+  await env.DB.prepare("UPDATE eier SET lead_ny = 0").run(); // som når kortet er åpnet
+
+  // Samme e-post, men annet navn, butikk, telefon, avdelinger og melding: ingenting på eier eller kontakt endres
+  const r = await mottaLead(env, { navn: "Falskt Navn", butikk: "Annen butikk", epost: gyldigLead.epost, tlf: "+47 400 00 000", avdelinger: "4+", melding: "Overskriv meg" }, t0 + 60_000);
+  assert.deepEqual(r, { ok: true, ny: false, dublett: false });
+  assert.equal(await tell(env.DB, "eier"), 1); assert.equal(await tell(env.DB, "kontakt"), 1);
+  assert.equal(await tell(env.DB, "butikk"), 1); assert.equal(await tell(env.DB, "mulighet"), 1);
+  const eierEtter = await env.DB.prepare("SELECT * FROM eier").first();
+  for (const f of ["navn", "lead_melding", "lead_butikker", "lead_tid", "lead_kanal", "status", "kilde", "neste_tekst", "neste_dato"]) assert.equal(eierEtter[f], eierFor[f], f);
+  assert.equal(eierEtter.lead_ny, 1, "eieren merkes Ny igjen");
+  assert.deepEqual(await env.DB.prepare("SELECT * FROM kontakt").first(), kontaktFor, "kontakten er uendret");
+  assert.equal(await aktiviteter(), 2);
+  const akt = await env.DB.prepare("SELECT * FROM aktivitet WHERE eier_id = ? ORDER BY opprettet DESC LIMIT 1").bind(eierFor.id).first();
+  assert.equal(akt.tekst, "Overskriv meg"); assert.equal(akt.tittel, "Nytt lead fra «Be om demo»");
+
+  // Samme melding igjen innen 24 timer (også via telefonnummeret): dublett, ingen ny aktivitet
+  assert.deepEqual(await mottaLead(env, { ...gyldigLead, melding: "Overskriv meg" }, t0 + 120_000), { ok: true, ny: false, dublett: true });
+  assert.equal((await mottaLead(env, { navn: "X", epost: "", tlf: "90147225", melding: "Overskriv meg" }, t0 + 180_000)).dublett, true);
+  // Uten melding: én gang, så dublett
+  assert.equal((await mottaLead(env, { ...gyldigLead, melding: "" }, t0 + 240_000)).dublett, false);
+  assert.equal((await mottaLead(env, { ...gyldigLead, melding: "" }, t0 + 300_000)).dublett, true);
+  assert.equal(await aktiviteter(), 3);
+  // Etter 24 timer lagres samme melding igjen
+  assert.equal((await mottaLead(env, { ...gyldigLead, melding: "Overskriv meg" }, t0 + 60_000 + 24 * 3600 * 1000 + 1)).dublett, false);
+  assert.equal(await aktiviteter(), 4);
+  // lagreLead brukt direkte (eksempeldataene) gir det samme
+  assert.equal((await lagreLead(env.DB, { ...gyldigLead, tlf: "", avdelinger: "", melding: "Overskriv meg" }, new Date(t0 + 25 * 3600 * 1000))).dublett, true);
+});
+
+test("lead (tiltak 6): mottaLead sjekker type, størrelse og felt, og kaster aldri", async () => {
+  const env = await envMed();
+  for (const [i, inn] of [null, undefined, "tekst", 42, [gyldigLead], new Map(), Object.create(null)].entries()) assert.deepEqual(await mottaLead(env, inn), { ok: false, kode: "LEAD-400" }, `nr. ${i}`);
+  for (const inn of [{ ...gyldigLead, navn: 1 }, { ...gyldigLead, melding: { a: 1 } }, { ...gyldigLead, epost: ["x"] }, { ...gyldigLead, t: 123 }]) assert.equal((await mottaLead(env, inn)).kode, "LEAD-400");
+  const sirkel = { ...gyldigLead }; sirkel.selv = sirkel;
+  assert.equal((await mottaLead(env, sirkel)).kode, "LEAD-400");
+  // Over 8 KB som JSON (også når det er ukjente felt eller flerbyte-tegn som gjør det stort)
+  assert.equal((await mottaLead(env, { ...gyldigLead, ekstra: "x".repeat(LEAD_MAKS) })).kode, "LEAD-413");
+  assert.equal((await mottaLead(env, { ...gyldigLead, melding: "ø".repeat(Math.ceil(LEAD_MAKS / 2)) })).kode, "LEAD-413");
+  for (const k of [{ ...gyldigLead, navn: "" }, { ...gyldigLead, navn: "x".repeat(121) }, { ...gyldigLead, navn: "Kari\r\nBcc: x" }, { ...gyldigLead, epost: "", tlf: "" }, { ...gyldigLead, epost: "ikke-epost" }, { ...gyldigLead, tlf: "12" }, { ...gyldigLead, melding: "x".repeat(1001) }, { ...gyldigLead, melding: "a\u0000b" }, { ...gyldigLead, avdelinger: "9" }]) {
+    const r = await mottaLead(env, k);
+    assert.equal(r.ok, false); assert.equal(r.kode, "LEAD-422"); assert.equal(typeof r.feil, "object");
   }
-  assert.equal((await worker.fetch(leadReq(gyldigLead, { type: "text/plain" }), env)).status, 415);
-  assert.equal((await worker.fetch(leadReq("x".repeat(9000)), env)).status, 413);
-  assert.equal(await antall(), 0);
-  // LEAD_NOKKEL satt: uten riktig Bearer 403, med 200. LEAD_ORIGIN kan endres.
-  const envN = { ...env, LEAD_NOKKEL: "testnokkel", LEAD_ORIGIN: "https://demo.hengsel.no" };
-  const ok = { ...gyldigLead };
-  assert.equal((await worker.fetch(leadReq(ok, { origin: "https://demo.hengsel.no" }), envN)).status, 403);
-  assert.equal((await worker.fetch(leadReq(ok, { origin: "https://demo.hengsel.no", ekstra: { Authorization: "Bearer feil" } }), envN)).status, 403);
-  assert.equal((await worker.fetch(leadReq(ok, { origin: "https://demo.hengsel.no", ekstra: { Authorization: "Bearer testnokkel" } }), envN)).status, 200);
-  assert.equal(await antall(), 1);
-  // Uten database: 503 ADM-504, ikke 200
-  const r = await handterLead(leadReq(ok), { DB: undefined }, Date.now());
-  assert.equal(r.status, 503);
+  assert.equal(await tell(env.DB, "eier"), 0, "ingenting lagret");
+  // Uten database eller når lagringen feiler: ADM-504, ikke ok
+  assert.deepEqual(await mottaLead({ DB: undefined }, gyldigLead), { ok: false, kode: "ADM-504" });
+  const feilDb = { prepare: () => { throw new Error("nede"); } };
+  const logg = console.error; console.error = () => {};
+  try { assert.deepEqual(await mottaLead({ DB: feilDb }, gyldigLead), { ok: false, kode: "ADM-504" }); } finally { console.error = logg; }
+});
+
+test("lead (tiltak 1): HTTP-ruten /api/lead er fjernet og går gjennom Access som alt annet", medNokler(async () => {
+  const env = await envMed({ LEAD_NOKKEL: "testnokkel" });
+  const kropp = JSON.stringify({ ...gyldigLead, nettsted: "", t: String(Date.now() - 20_000) });
+  const hoder = { Origin: "https://hengsel.no", "Content-Type": "application/json", Authorization: "Bearer testnokkel" };
+  const r = await worker.fetch(new Request("https://admin.hengsel.no/api/lead", { method: "POST", headers: hoder, body: kropp }), env);
+  assert.equal(r.status, 401); assert.equal((await r.json()).kode, "ADM-401");
+  // Heller ikke med gyldig Access-token blir det et lead (ruten finnes ikke i API-et)
+  const r2 = await worker.fetch(new Request("https://admin.hengsel.no/api/lead", { method: "POST", headers: { ...hoder, "Cf-Access-Jwt-Assertion": await token() }, body: kropp }), env);
+  assert.notEqual(r2.status, 200);
+  assert.equal(await tell(env.DB, "eier"), 0);
+  // Uten Access koblet til: 503, aldri åpent
+  assert.equal((await worker.fetch(new Request("https://admin.hengsel.no/api/lead", { method: "POST", headers: hoder, body: kropp }), { ...env, ACCESS_AUD: "" })).status, 503);
+  const kilde = readFileSync(join(rot, "sites/admin/worker/index.js"), "utf8");
+  assert.ok(!/handterLead|"\/api\/lead"/.test(kilde), "ingen /api/lead-rute i index.js");
+}));
+
+test("lead (tiltak 1): main.js eksporterer fetch-handleren og LeadInngang, som lagrer gjennom mottaLead med env fra Workeren", async () => {
+  await import("./lib/cloudflare-workers-stub.mjs");
+  const hoved = await import("../sites/admin/worker/main.js");
+  assert.equal(hoved.default, worker, "standardeksporten er fetch-handleren fra index.js");
+  const env = await envMed();
+  const inngang = new hoved.LeadInngang({ waitUntil() {} }, env);
+  assert.deepEqual(await inngang.lagre(gyldigLead), { ok: true, ny: true, dublett: false });
+  assert.equal((await inngang.lagre({ ...gyldigLead, navn: "" })).kode, "LEAD-422");
+  assert.equal(await tell(env.DB, "eier"), 1);
+  assert.match(readFileSync(join(rot, "sites/admin/worker/inngang.js"), "utf8"), /class LeadInngang extends WorkerEntrypoint/);
 });
 
 // ── 5. Excel-import ──────────────────────────────────────────────────────────────────────────────────────────────────────────
